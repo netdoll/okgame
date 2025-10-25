@@ -247,3 +247,33 @@
 [submodule "lib/retroarch-assets"]
 	path = lib/retroarch-assets
 	url = https://github.com/libretro/retroarch-assets
+[submodule "lib/picodrive"]
+	path = lib/picodrive
+	url = https://github.com/libretro/picodrive
+[submodule "lib/snes9x"]
+	path = lib/snes9x
+	url = https://github.com/libretro/snes9x
+[submodule "lib/gpsp"]
+	path = lib/gpsp
+	url = https://github.com/libretro/gpsp
+[submodule "lib/nestopia"]
+	path = lib/nestopia
+	url = https://github.com/libretro/nestopia
+[submodule "lib/libretro-samples"]
+	path = lib/libretro-samples
+	url = https://github.com/libretro/libretro-samples
+[submodule "lib/vba-next"]
+	path = lib/vba-next
+	url = https://github.com/libretro/vba-next
+[submodule "lib/gambatte-libretro"]
+	path = lib/gambatte-libretro
+	url = https://github.com/libretro/gambatte-libretro
+[submodule "lib/libretro-fceumm"]
+	path = lib/libretro-fceumm
+	url = https://github.com/libretro/libretro-fceumm
+[submodule "lib/libretro-common"]
+	path = lib/libretro-common
+	url = https://github.com/libretro/libretro-common
+[submodule "lib/libretro-lutro"]
+	path = lib/libretro-lutro
+	url = https://github.com/libretro/libretro-lutro
