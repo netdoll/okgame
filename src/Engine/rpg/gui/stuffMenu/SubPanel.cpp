@@ -22,7 +22,7 @@ SubPanel::SubPanel()
 	//   //----------------------
 	//   //setup layout inside scrollpane
 	//   //----------------------
-	//   insideLayout = ms<DialogLayout>();
+	//   insideLayout = new DialogLayout();
 	//   insideLayout->setTheme(GUIManager::emptyDialogLayoutTheme);
 	//   insideLayout->setCanAcceptKeyboardFocus(false);
 	//
@@ -31,7 +31,7 @@ SubPanel::SubPanel()
 	//   //setup scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = ms<ScrollPane>(insideLayout);
+	//   scrollPane = new ScrollPane(insideLayout);
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
 	//   scrollPane->setExpandContentSize(true);
@@ -85,42 +85,42 @@ void SubPanel::render()
 { //=========================================================================================================================
 }
 //
-//sp<BGClientEngine> SubPanel::getClientEngine()
+//BGClientEngine* SubPanel::getClientEngine()
 //{
 //	return Main::gameEngine;
 //}
 //
-//sp<EventManager> SubPanel::getEventManager()
+//EventManager* SubPanel::getEventManager()
 //{
 //	return getClientEngine()->eventManager;
 //}
 //
-//sp<Clock> SubPanel::getClock()
+//Clock* SubPanel::getClock()
 //{
 //	return getClientEngine()->clock;
 //}
 //
-//sp<GUIManager> SubPanel::getGUIManager()
+//GUIManager* SubPanel::getGUIManager()
 //{
 //	return getClientEngine()->guiManager;
 //}
 //
-//sp<StuffMenu> SubPanel::getStuffMenu()
+//StuffMenu* SubPanel::getStuffMenu()
 //{
 //	return getGUIManager()->stuffMenu;
 //}
 //
-//sp<GameStore> SubPanel::getGameStore()
+//GameStore* SubPanel::getGameStore()
 //{
 //	return getGUIManager()->gameStore;
 //}
 //
-//sp<PlayerEditMenu> SubPanel::getPlayerEditMenu()
+//PlayerEditMenu* SubPanel::getPlayerEditMenu()
 //{
 //	return getGUIManager()->playerEditMenu;
 //}
 //
-//sp<Player> SubPanel::getPlayer()
+//Player* SubPanel::getPlayer()
 //{
 //	return getClientEngine()->player;
 //}
@@ -130,32 +130,32 @@ void SubPanel::render()
 //	return getClientEngine()->nD;
 //}
 //
-//sp<Wallet> SubPanel::getWallet()
+//Wallet* SubPanel::getWallet()
 //{
 //	return getClientEngine()->wallet;
 //}
 //
-//sp<FriendManager> SubPanel::getFriendManager()
+//FriendManager* SubPanel::getFriendManager()
 //{
 //	return getClientEngine()->friendManager;
 //}
 //
-//sp<StatusBar> SubPanel::getStatusBar()
+//BobStatusBar* SubPanel::getBobStatusBar()
 //{
 //	return getClientEngine()->statusBar;
 //}
 //
-//sp<NotificationManager> SubPanel::getNotificationManager()
+//NotificationManager* SubPanel::getNotificationManager()
 //{
-//	return getStatusBar()->notificationManager;
+//	return getBobStatusBar()->notificationManager;
 //}
 //
-//sp<TCPServerConnection> SubPanel::getServerConnection()
+//TCPServerConnection* SubPanel::getServerConnection()
 //{
-//	return OKNet::tcpServerConnection;
+//	return BobNet::tcpServerConnection;
 //}
 //
-//sp<GameSave> SubPanel::getGameSave()
+//GameSave* SubPanel::getGameSave()
 //{
 //	return getServerConnection()->getGameSave_S();
 //}

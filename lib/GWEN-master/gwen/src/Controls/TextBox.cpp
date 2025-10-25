@@ -506,14 +506,14 @@ void TextBoxMultiline::Render( Skin::Base* skin )
 		int iSelectionStartPos =  (m_iCursorPos < m_iCursorEnd) ? m_iCursorPos : m_iCursorEnd;
 		int iSelectionEndPos =    (m_iCursorPos < m_iCursorEnd) ? m_iCursorEnd : m_iCursorPos;
 
-		int iFirstChar = 0;
-		int iLastChar = 0;
+		//int iFirstChar = 0;
+		//int iLastChar = 0;
 		skin->GetRender()->SetDrawColor( Gwen::Color( 50, 170, 255, 200 ) );
 		m_rectSelectionBounds.h = m_Text->GetFont()->size + 2;
 
 		for(int iLine = iSelectionStartLine; iLine <= iSelectionEndLine; ++iLine)
 		{
-			ControlsInternal::Text* line = m_Text->GetLine(iLine);
+			//ControlsInternal::Text* line = m_Text->GetLine(iLine);
 			Gwen::Rect box = m_Text->GetLineBox(iLine);
 			box.x+=m_Text->X();
 			box.y+=m_Text->Y();
@@ -580,8 +580,8 @@ void TextBoxMultiline::MakeCaratVisible()
 		//int iSlidingZone =  m_Text->GetFont()->size; //Width()*0.1f
 
 		// If the carat is already in a semi-good position, leave it.
-		int mi = GetPadding().top;
-		int ma = Height() - pos.h - GetPadding().bottom;
+		//int mi = GetPadding().top;
+		//int ma = Height() - pos.h - GetPadding().bottom;
 		if ( iRealCaratPos >= GetPadding().top && iRealCaratPos <= Height() - pos.h - GetPadding().bottom )
 			return;
 

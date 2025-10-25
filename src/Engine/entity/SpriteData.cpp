@@ -35,7 +35,7 @@ SpriteData::SpriteData
 	bool isItem,// = false, 
 	bool forceHQ2X,// = false, 
 	bool forceClientMD5Export,// = false, 
-	sp<EventData> eventData,// = -1, 
+	EventData* eventData,// = -1, 
 	const string& itemGameDescription,// = "",
 	float gamePrice,// = 0, 
 	int utilityOffsetXPixels1X,// = 0, 
@@ -92,10 +92,10 @@ SpriteData::SpriteData
 
 void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X)
 { //=========================================================================================================================
-	animationList->push_back(ms<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
+	animationList->add(new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
 }
 
-//sp<SpriteData> SpriteData::fromBase64ZippedJSON(const string& b64)
+//SpriteData* SpriteData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
@@ -106,11 +106,11 @@ void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, i
 //	return fromJSON(json);
 //}
 //
-//sp<SpriteData> SpriteData::fromJSON(const string& json)
+//SpriteData* SpriteData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<SpriteData> data = nullptr;// gson->fromJson(json, SpriteData::typeid);
+//	//Gson* gson = new Gson();
+//	SpriteData* data = nullptr;// gson->fromJson(json, SpriteData::typeid);
 //
 //
 //	return data;
@@ -209,72 +209,72 @@ string& SpriteData::initFromString(string& t)
 
 	t = t.substr(t.find("isNPC:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNPC = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isNPC = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isKid:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isKid = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isKid = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAdult:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAdult = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isAdult = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isMale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isMale = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isMale = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isFemale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isFemale = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isFemale = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isCar:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isCar = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isCar = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAnimal:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAnimal = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isAnimal = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("hasShadow:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	hasShadow = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	hasShadow = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isRandom:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isRandom = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isRandom = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isDoor:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isDoor = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isDoor = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isGame:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isGame = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isGame = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isItem:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isItem = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isItem = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceHQ2X:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceHQ2X = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	forceHQ2X = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceMD5Export:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceMD5Export = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	forceMD5Export = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 //
 //	t = t.substr(t.find("eventID:`") + 1);
@@ -313,7 +313,7 @@ string& SpriteData::initFromString(string& t)
 	t = t.substr(t.find("`,") + 2);
 
 
-	while(OKString::startsWith(t,"animationList:"))
+	while(String::startsWith(t,"animationList:"))
 	{
 		string frameSequenceName = "";
 		int frameStart = 0;
@@ -352,16 +352,16 @@ string& SpriteData::initFromString(string& t)
 		hitBoxFromBottomPixels1X = stoi(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 
-		sp<SpriteAnimationSequence>s = ms<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
-		animationList->push_back(s);
+		SpriteAnimationSequence *s = new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
+		animationList->add(s);
 	}
 
 
 	t = t.substr(t.find("eventData:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t, "}") == false)
+	while (String::startsWith(t, "}") == false)
 	{
-		sp<EventData> data = ms<EventData>();
+		EventData* data = new EventData();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -489,7 +489,7 @@ bool SpriteData::getForceHQ2X()
 	return forceHQ2X;
 }
 
-sp<EventData> SpriteData::getEventData()
+EventData* SpriteData::getEventData()
 {
 	return eventData;
 }
@@ -537,9 +537,9 @@ string& SpriteData::getPaletteMD5()
 	return paletteMD5;
 }
 
-sp<vector<sp<SpriteAnimationSequence>>> SpriteData::getAnimationList()
+ArrayList<SpriteAnimationSequence*>* SpriteData::getAnimationList()
 {
-	return ms<vector<sp<SpriteAnimationSequence>>>(animationList);
+	return animationList;
 }
 
 

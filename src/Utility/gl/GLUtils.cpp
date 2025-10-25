@@ -1,6 +1,20 @@
 #include "stdafx.h"
 #include <iostream>
 
+
+#ifdef ORBIS
+#include <EGL/egl.h>
+#include <piglet/piglet.h>
+//#include "src/orbis/SDL/SDL_image.h"
+#include "src/orbis/SDL/SDL_ttf.h"
+#include <GLES2/gl2.h>
+#include <GLES3/gl3.h>
+#include <GLES3/gl31.h>
+
+#define STB_IMAGE_IMPLEMENTATION 1
+#include "stb_image.h"
+#endif
+
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
@@ -12,104 +26,39 @@ Logger GLUtils::log = Logger("GLUtils");
 //#include "../../../lib/SDL_stbimage.h"
 //#define STB_IMAGE_IMPLEMENTATION
 
-sp<HashMap<string, sp<OKTexture>>> GLUtils::textureCache;
+HashMap<string, BobTexture*> GLUtils::textureCache;
 
 //-----------------------------------------------
 //OLD STUFF
 //-----------------------------------------------
-
-sp<SDL_Window> GLUtils::window = nullptr;
-sp<SDL_Renderer> GLUtils::renderer = nullptr;
+#ifndef ORBIS
+SDL_Window *GLUtils::window = nullptr;
+SDL_Renderer *GLUtils::renderer = nullptr;
 
 void(*glDrawTexiES)(int, int, int, int, int);
 
 //unsigned char* GLUtils::rgba_fbo_data = NULL; //framebuffer array
 //unsigned char* GLUtils::filtered_rgba_fbo_data = NULL;
 
-Uint32 GLUtils::rmask = 0;
-Uint32 GLUtils::gmask = 0;
-Uint32 GLUtils::bmask = 0;
-Uint32 GLUtils::amask = 0;
+SDL_DisplayMode GLUtils::currentDisplayMode;
+ArrayList<SDL_DisplayMode*> GLUtils::displayModes;
 
-//-----------------------------
-//render flags
-//-----------------------------
-//bool GLUtils::framebuffer = true;
-
-//bool GLUtils::GLOBAL_bg_layer_enabled[4] = { true,true,true,true };
-//bool GLUtils::GLOBAL_sprite_layer_enabled = true;
-
-//int GLUtils::fade_alpha = 0;
-//int GLUtils::fade_layer = 0;
-
-int GLUtils::GLOBAL_FRAMEBUFFER_FILTER_TYPE = GL_LINEAR;
-
-//int GLUtils::fade_vbl_counter = 0;
 
 SDL_Surface GLUtils::SDLSurface_screen;
 
-
-bool GLUtils::ZOOMlock = false;
-
-float GLUtils::ZOOM = 1.0f;
-float GLUtils::ZOOMto = 1.0f;
-
-//-----------------------------------------------
-//END OLD STUFF
-//-----------------------------------------------
-
-bool GLUtils::antiAlias = true;
-int GLUtils::texturesLoaded = 0;
-long long GLUtils::textureBytesLoaded = 0;
-sp<OKTexture> GLUtils::blankTexture = nullptr;
-sp<OKTexture> GLUtils::boxTexture = nullptr;
-float GLUtils::globalDrawScale = 1.0f;
+#endif
 
 
-sp<OKTexture> GLUtils::rect = nullptr;
+GLfloat* GLUtils::box = nullptr;
+GLfloat* GLUtils::col = nullptr;
+GLfloat* GLUtils::tex = nullptr;
 
-
-//static float* boxBuffer = BufferUtils.newFloatBuffer(12);
-//static float* colBuffer = BufferUtils.newFloatBuffer(16);
-//static float* texBuffer = BufferUtils.newFloatBuffer(8);
-
-GLfloat GLUtils::box[12];// = nullptr;
-GLfloat GLUtils::col[16];// = nullptr;
-GLfloat GLUtils::tex[8];// = nullptr;
-
-int GLUtils::windowWidth = 0;
-int GLUtils::windowHeight = 0;
-
-int GLUtils::lastWindowWidth = 0;
-int GLUtils::lastWindowHeight = 0;
-
-SDL_DisplayMode GLUtils::currentDisplayMode;
-sp<vector<sp<SDL_DisplayMode>>> GLUtils::displayModes;
-int GLUtils::monitorWidth = 0;
-int GLUtils::monitorHeight = 0;
-
-//int GLUtils::getViewportWidth() = 1280;
-//int GLUtils::getViewportHeight() = 720;
-
-
-bool GLUtils::usingVSync = true;
-bool GLUtils::disableVSync = false;
-bool GLUtils::noVSync_UpdateAndRenderEveryFrame = false;
-bool GLUtils::noVSync_DelayOff = true;
-
-
-bool GLUtils::useShaders = true;
-int GLUtils::lightShader = 0;
-int GLUtils::colorShader = 0;
+bool GLUtils::bgShaderFBOTextureToggle = false;
+float GLUtils::bloomIntensity = 1.0f;
 
 GLuint GLUtils::gaussianShader = 0;
 GLuint GLUtils::bloomMaskShader = 0;
 GLuint GLUtils::bloomShader = 0;
-//bool GLUtils::useFBO = true;
-int GLUtils::glVersionMajor = 0;
-
-
-
 
 GLuint GLUtils::postColorFilterFBO = 0;
 GLuint GLUtils::postColorFilterFBO_Texture_Attachment0 = 0;
@@ -128,29 +77,135 @@ GLuint GLUtils::bobsGame_bloomFBO = 0;
 GLuint GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment0 = 0;
 GLuint GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment1 = 0;
 
-int GLUtils::bobsGameFBO_Width = 0;
-int GLUtils::bobsGameFBO_Height = 0;
-
-
 GLuint GLUtils::bobsGame_bgShaderFBO = 0;
 GLuint GLUtils::bobsGame_bgShaderFBO_Texture_Attachment0 = 0;
 GLuint GLUtils::bobsGame_bgShaderFBO_Texture_Attachment1 = 0;
 
 
 
+uint32_t GLUtils::rmask = 0;
+uint32_t GLUtils::gmask = 0;
+uint32_t GLUtils::bmask = 0;
+uint32_t GLUtils::amask = 0;
+
+//-----------------------------
+//render flags
+//-----------------------------
+//bool GLUtils::framebuffer = true;
+
+//bool GLUtils::GLOBAL_bg_layer_enabled[4] = { true,true,true,true };
+//bool GLUtils::GLOBAL_sprite_layer_enabled = true;
+
+//int GLUtils::fade_alpha = 0;
+//int GLUtils::fade_layer = 0;
+#ifndef ORBIS
+int GLUtils::GLOBAL_FRAMEBUFFER_FILTER_TYPE = GL_LINEAR;
+#else
+int GLUtils::GLOBAL_FRAMEBUFFER_FILTER_TYPE = 0;
+#endif
+//int GLUtils::fade_vbl_counter = 0;
+
+
+bool GLUtils::ARBFBO = false;
+
+bool GLUtils::ZOOMlock = false;
+
+float GLUtils::ZOOM = 1.0f;
+float GLUtils::ZOOMto = 1.0f;
+
+//-----------------------------------------------
+//END OLD STUFF
+//-----------------------------------------------
+
+bool GLUtils::antiAlias = true;
+int GLUtils::texturesLoaded = 0;
+long long GLUtils::textureBytesLoaded = 0;
+BobTexture* GLUtils::blankTexture = nullptr;
+BobTexture* GLUtils::boxTexture = nullptr;
+float GLUtils::globalDrawScale = 1.0f;
+
+
+BobTexture* GLUtils::rect = nullptr;
+
+
+//static float* boxBuffer = BufferUtils.newFloatBuffer(12);
+//static float* colBuffer = BufferUtils.newFloatBuffer(16);
+//static float* texBuffer = BufferUtils.newFloatBuffer(8);
+
+
+
+int GLUtils::windowWidth = 0;
+int GLUtils::windowHeight = 0;
+
+int GLUtils::lastWindowWidth = 0;
+int GLUtils::lastWindowHeight = 0;
+
+int GLUtils::monitorWidth = 0;
+int GLUtils::monitorHeight = 0;
+
+//int GLUtils::getViewportWidth() = 1280;
+//int GLUtils::getViewportHeight() = 720;
+
+
+bool GLUtils::usingVSync = true;
+bool GLUtils::disableVSync = false;
+bool GLUtils::noVSync_UpdateAndRenderEveryFrame = false;
+bool GLUtils::noVSync_DelayOff = true;
+
+
+bool GLUtils::useShaders = true;
+GLuint GLUtils::lightShader = 0;
+GLuint GLUtils::colorShader = 0;
+
+#ifdef ORBIS
+GLuint GLUtils::uProgram = 0;
+#endif
+
+//bool GLUtils::useFBO = true;
+int GLUtils::glVersionMajor = 0;
 
 
 
 
 
-sp<vector<sp<Integer>>> GLUtils::bgShaders;
-//sp<vector<int>>GLUtils::bgShaders;
+
+int GLUtils::bobsGameFBO_Width = 0;
+int GLUtils::bobsGameFBO_Height = 0;
+
+
+
+
+
+
+
+
+
+
+
+ArrayList<Integer*> GLUtils::bgShaders;
+//ArrayList<int> GLUtils::bgShaders;
 int GLUtils::bgShaderCount = 80;
+
+
+#ifdef ORBIS
+EGLSurface GLUtils::surface;
+EGLDisplay GLUtils::display = EGL_NO_DISPLAY;
+#endif
 
 //=========================================================================================================================
 GLUtils::GLUtils()
 {//=========================================================================================================================
 
+}
+
+void GLUtils::bindTexture(BobTexture* bob_texture)
+{
+
+#ifndef ORBIS
+	glBindTexture(GL_TEXTURE_2D, bob_texture->getTextureID());
+#else
+
+#endif
 }
 
 //=========================================================================================================================
@@ -169,28 +224,34 @@ void GLUtils::initGL(char* windowName)
 	//-----------------------------
 	//set up display mode
 	//-----------------------------
+	uint64_t start = 0, now = 0, totalStart, totalNow;
+	start = System::getPerformanceCounter();
+	totalStart = System::getPerformanceCounter();
 
-	Uint64 start=0, now=0, totalStart, totalNow;
-	start = SDL_GetPerformanceCounter();
-	totalStart = SDL_GetPerformanceCounter();
+
+#ifndef ORBIS
+
 
 	SDL_DisplayMode dm;
 	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) 
 	{
 		log.error("SDL_GetDesktopDisplayMode failed: "+string(SDL_GetError()));
 	}
+
 	monitorWidth = dm.w;
 	monitorHeight = dm.h;
 	log.info("Desktop display mode is "+to_string(dm.w)+"x" + to_string(dm.h) + "px @ " + to_string(dm.refresh_rate) + "hz.");
+
 
 	checkSDLError("Get desktop display mode");
 
 
 	getAvailableDisplayModes();
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Get display modes took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+
+	now = System::getPerformanceCounter();
+	log.debug("Get display modes took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
 	//-----------------------------
 	//set up window
 	//-----------------------------
@@ -211,8 +272,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 
-
-	window = sp<SDL_Window>(SDL_CreateWindow(windowName,
+	window = SDL_CreateWindow(windowName,
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		w, h,
@@ -220,13 +280,13 @@ void GLUtils::initGL(char* windowName)
 //		SDL_WINDOW_FULLSCREEN_DESKTOP |
 //#endif
 		SDL_WINDOW_RESIZABLE |
-		SDL_WINDOW_OPENGL));
+		SDL_WINDOW_OPENGL);
 	checkSDLError("SDL_CreateWindow");
 
 
 
 	string path = Main::getPath() + "bobsgame.bmp";
-	SDL_SetWindowIcon(window.get(), SDL_LoadBMP(path.c_str()));
+	SDL_SetWindowIcon(window, SDL_LoadBMP(path.c_str()));
 	checkSDLError("SDL_SetWindowIcon");
 
 	if (window == nullptr)
@@ -235,13 +295,14 @@ void GLUtils::initGL(char* windowName)
 		exit(1);
 	}
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Create window took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+	now = System::getPerformanceCounter();
+	log.debug("Create window took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
 
 	getCurrentDisplayMode();
 
-	SDL_GetWindowSize(window.get(), &windowWidth, &windowHeight);
+	SDL_GetWindowSize(window,&windowWidth,&windowHeight);
+
 
 
 	log.info("Window Width: " + to_string(windowWidth));
@@ -255,19 +316,19 @@ void GLUtils::initGL(char* windowName)
 
 
 	//						  //if we want to disable deprecated GL functions below GL 3.3
-	//						  //			ContextAttribs ctxAttr = ms<ContextAttribs>(3, 3);
+	//						  //			ContextAttribs ctxAttr = new ContextAttribs(3, 3);
 	//						  //			ctxAttr = ctxAttr.withForwardCompatible(true);
 	//						  //			ctxAttr = ctxAttr.withProfileCore(true);
 	//						  //			ctxAttr = ctxAttr.withProfileCompatibility(false);
 	//						  //			ctxAttr = ctxAttr.withDebug(true);
 	//
-	//	createGLContext(); //ms<PixelFormat>(),ctxAttr);
+	//	createGLContext(); //new PixelFormat(),ctxAttr);
 
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
-	SDL_GLContext context = SDL_GL_CreateContext(window.get());
+	SDL_GLContext context = SDL_GL_CreateContext(window);
 
 	if (context == nullptr)
 	{
@@ -286,14 +347,14 @@ void GLUtils::initGL(char* windowName)
 
 	e("Created GL Context");
 
-	SDL_GL_MakeCurrent(window.get(), context);
+	SDL_GL_MakeCurrent(window, context);
 
 	e("SDL_GL_MakeCurrent");
 	
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Create GL context took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+	now = System::getPerformanceCounter();
+	log.debug("Create GL context took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
 
 
 	SDL_ShowCursor(1);
@@ -302,7 +363,8 @@ void GLUtils::initGL(char* windowName)
 
 
 	//set screen black here and swap buffer before loading
-	SDL_GL_SwapWindow(window.get());
+	SDL_GL_SwapWindow(window);
+
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	rmask = 0xff000000;
@@ -315,7 +377,6 @@ void GLUtils::initGL(char* windowName)
 	bmask = 0x00ff0000;
 	amask = 0xff000000;
 #endif
-
 
 	log.debug("GL info:");
 
@@ -454,9 +515,9 @@ void GLUtils::initGL(char* windowName)
 
 	e("Set GL state");
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Setup GL state took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+	now = System::getPerformanceCounter();
+	log.debug("Setup GL state took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
 
 
 	//-----------------------------
@@ -671,16 +732,238 @@ void GLUtils::initGL(char* windowName)
 	if (usingVSync)log.info("Using vsync.");
 	else log.warn("No vsync.");
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up swap took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+	now = System::getPerformanceCounter();
+	log.debug("Setting up swap took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
 
+#else
+
+
+
+
+
+
+//
+//	SceKernelModule l_hPiglet = -1;
+//
+//
+//	// Load the Piglet PR
+//	int startResult;
+//	l_hPiglet = sceKernelLoadStartModule("/app0/sce_module/libScePiglet.prx", 0, NULL, 0, NULL, &startResult);
+//	assert(l_hPiglet >= 0);
+//
+//
+//	// Configure piglet with the amount of memory it should allocate and the commandbuffer sizes.
+//	ScePigletConfiguration_t configuration;
+//	memset(&configuration, 0, sizeof(ScePigletConfiguration_t));
+//	configuration.uSize = sizeof(ScePigletConfiguration_t);
+//	// Set max memory usage.
+//	configuration.uSystemMemorySize = 250 * 1024 * 1024;
+//	configuration.uSharedVideoMemorySize = 350 * 1024 * 1024;
+//	configuration.uFlags = 0;
+//	configuration.uDrawCommandBufferSize = 1024 * 1024 * 1;
+//	configuration.uConstantCommandBufferSize = 1024 * 1024 * 1;
+//	configuration.uNumCommandBuffers = 2;
+//	// Set the configuration to piglet
+//	scePigletSetConfiguration(&configuration);
+//
+//
+//	EGLint nError = 0;
+//	EGLint nVersionMajor = 0;
+//	EGLint nVersionMinor = 0;
+//	EGLint nNumberOfAvailableConfigs = 0;
+//
+//
+//	//
+//	// Retrieve the default EGL display
+//	//
+//	display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+//	if (display == EGL_NO_DISPLAY)
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglGetDisplay(%d)", nError);
+//		//return -1;
+//	}
+//
+//	// 
+//	// Initialize EGL
+//	//
+//	if (!eglInitialize(display, &nVersionMajor, &nVersionMinor))
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglInitialize(%d)", nError);
+//		//return -1;
+//	}
+//
+//	//INFO_OUTPUT("EGL VERSION(%d.%d)", nVersionMajor, nVersionMinor);
+//
+//	if (!eglBindAPI(EGL_OPENGL_ES_API))
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglBindAPI(%d)", nError);
+//		//return -1;
+//	}
+//
+//	if (!eglGetConfigs(display, NULL, 0, &nNumberOfAvailableConfigs))
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglGetConfigs(%d) Count", nError);
+//		//return -1;
+//	}
+//
+//	EGLConfig eglConfigs[10];
+//	memset(eglConfigs, 0, sizeof(EGLConfig) * 10);
+//
+//	if (!eglGetConfigs(display, eglConfigs, 10, &nNumberOfAvailableConfigs))
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglGetConfigs(%d)", nError);
+//		//return -1;
+//	}
+//
+//
+//	// Setup surface requirements of EGL Configuration
+//	EGLint configAttribs[] =
+//	{
+//		EGL_RED_SIZE, 8,
+//		EGL_GREEN_SIZE, 8,
+//		EGL_BLUE_SIZE, 8,
+//		EGL_ALPHA_SIZE, 8,
+//		EGL_DEPTH_SIZE, 16,
+//		EGL_STENCIL_SIZE, 8,
+//		EGL_SAMPLE_BUFFERS, 0,
+//		EGL_SAMPLES,		0,
+//		EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+//		EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+//		EGL_NONE
+//	};
+//
+//	// Choose an approriate EGL surface configuration.
+//	GLint nNumberOfSuitableConfigs = 0;
+//	if (!eglChooseConfig(display, configAttribs, eglConfigs, nNumberOfAvailableConfigs, &nNumberOfSuitableConfigs))
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglChooseConfig(%d)", nError);
+//		//return -1;
+//	}
+//
+//	if (nNumberOfSuitableConfigs == 0)
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("No Suitable Configurations found(%d)", nError);
+//		//return -1;
+//	}
+//
+//
+//	_EGLNativeWindowType l_nativeWindow;
+//	l_nativeWindow.uID = 0;
+//	l_nativeWindow.uWidth = 1920;
+//	l_nativeWindow.uHeight = 1080;
+//	//return (void*)(&l_nativeWindow);
+//
+//
+//	// Create a window surface from the first egl configuration found, which should be the most suitable from the egl attributes
+//	//EGLSurface 
+//	surface = eglCreateWindowSurface(display, eglConfigs[0], (EGLNativeWindowType*)&l_nativeWindow, NULL);
+//	if (surface == EGL_NO_SURFACE)
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglCreateWindowSurface(%d)", nError);
+//		//return -1;
+//	}
+//
+//	EGLint contextAttrs[] =
+//	{
+//		EGL_CONTEXT_CLIENT_VERSION, 2,
+//		EGL_NONE
+//	};
+//
+//	// Create a OpenGL ES2 Context
+//	EGLContext context = eglCreateContext(display, eglConfigs[0], EGL_NO_CONTEXT, contextAttrs);
+//	if (context == EGL_NO_CONTEXT)
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglCreateContext(%d)", nError);
+//		//return -1;
+//	}
+//
+//	// Set the window surface and context as the current object
+//	if (!eglMakeCurrent(display, surface, surface, context))
+//	{
+//		nError = eglGetError();
+//		//ERROR_OUTPUT("eglMakeCurrent(%d)", nError);
+//		//return -1;
+//	}
+//
+//	e("eglMakeCurrent");
+//
+//	// Retrieve the settings of surface.
+//	EGLint nR, nG, nB, nA;
+//	EGLint nDepth, nStencilSize;
+//	EGLint value = 0;
+//	EGLint nSurfaceWidth, nSurfaceHeight;
+//
+//	eglGetConfigAttrib(display, eglConfigs[0], EGL_RED_SIZE, &value);
+//	nR = value;
+//	eglGetConfigAttrib(display, eglConfigs[0], EGL_GREEN_SIZE, &value);
+//	nG = value;
+//	eglGetConfigAttrib(display, eglConfigs[0], EGL_BLUE_SIZE, &value);
+//	nB = value;
+//	eglGetConfigAttrib(display, eglConfigs[0], EGL_ALPHA_SIZE, &value);
+//	nA = value;
+//	eglGetConfigAttrib(display, eglConfigs[0], EGL_DEPTH_SIZE, &value);
+//	nDepth = value;
+//	eglGetConfigAttrib(display, eglConfigs[0], EGL_STENCIL_SIZE, &value);
+//	nStencilSize = value;
+//
+//	eglQuerySurface(display, surface, EGL_WIDTH, &value);
+//	nSurfaceWidth = value;
+//	eglQuerySurface(display, surface, EGL_HEIGHT, &value);
+//	nSurfaceHeight = value;
+//
+//
+//
+//	glViewport(0, 0, nSurfaceWidth, nSurfaceHeight);
+//
+//	e("eglGetConfigAttrib");
+//
+//	GLUtils::windowWidth = nSurfaceWidth;
+//	GLUtils::windowHeight = nSurfaceHeight;
+//	GLUtils::monitorWidth = nSurfaceWidth;
+//	GLUtils::monitorHeight = nSurfaceHeight;
+//
+//
+//
+//	// Load shaders
+//	GLuint uProgram = 0;
+//	GLUtils::makeShader("uProgram", &uProgram, "data/shaders/simple_vs.essl.sb", "data/shaders/simple_fs.essl.sb", true);
+//		//CreateProgramFromFile("shaders/simple_vs.essl.sb", "shaders/simple_fs.essl.sb", true);
+//
+//	if (uProgram == 0)
+//	{
+//		//ERROR_OUTPUT("Failed to load shaders");
+//		//return -1;
+//
+//		log.error("Failed to load basic shader");
+//	}
+//
+//	e("load basic shader");
+//
+//
+//
+//	ARBFBO = true;
+
+#endif
+
+
+#ifndef ORBIS
 
 	//-----------------------------
 	//set up framebuffer
 	//-----------------------------
 
 	log.debug("Setting up FBO");
+
 
 
 	//ARB is newer than EXT for some reason I think, uses glFramebuffer() and not glFramebufferEXT()
@@ -710,7 +993,7 @@ void GLUtils::initGL(char* windowName)
 			log.error("FBO not supported.");
 
 			log.error("This game requires a newer graphics card that supports FBO.");
-			sp<Caption> c = ms<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, OKColor::white, OKColor::black);
+			Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, BobColor::white, BobColor::black);
 
 			System::updateRenderTimers();
 			System::updateStats();
@@ -741,8 +1024,7 @@ void GLUtils::initGL(char* windowName)
 		glGenTextures(1, &texID);
 		postColorFilterFBO_Texture_Attachment1_PreLighting = GLUtils::setupFBOTexture(texID, getViewportWidth(), getViewportHeight());
 		GLUtils::attachTextureToFBO(1, postColorFilterFBO_Texture_Attachment1_PreLighting);
-
-
+		
 		//=================================
 
 
@@ -816,15 +1098,17 @@ void GLUtils::initGL(char* windowName)
 		//switch back to normal framebuffer
 		GLUtils::bindFBO(0);
 
-		e();
+		//e();
 
 		e("Framebuffer creation");
 
 	}
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up FBO took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+	now = System::getPerformanceCounter();
+	log.debug("Setting up FBO took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
+
+
 
 
 
@@ -853,11 +1137,14 @@ void GLUtils::initGL(char* windowName)
 		useShaders = false;
 	}
 
+
 	if (useShaders)
 	{
 
 		//String shaderVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
 		//String glExtensions = glGetString(GL_EXTENSIONS);
+
+
 
 		GLboolean hasARBShadingLanguage100 = glewIsSupported("GL_ARB_shading_language_100");//alt: if(GLEW_ARB_shading_language_100); notice replace GL_ with GLEW_
 		GLboolean hasARBFragmentShader = glewIsSupported("GL_ARB_fragment_shader");
@@ -898,31 +1185,31 @@ void GLUtils::initGL(char* windowName)
 
 
 		//log.debug("createProgramObject");
-		lightShader = GLUtils::createProgramObject();
-		colorShader = GLUtils::createProgramObject();
-		gaussianShader = GLUtils::createProgramObject();
-		bloomMaskShader = GLUtils::createProgramObject();
-		bloomShader = GLUtils::createProgramObject();
-		e("createProgramObject");
+//		lightShader = GLUtils::createProgramObject();
+//		colorShader = GLUtils::createProgramObject();
+//		gaussianShader = GLUtils::createProgramObject();
+//		bloomMaskShader = GLUtils::createProgramObject();
+//		bloomShader = GLUtils::createProgramObject();
+//		e("createProgramObject");
 
 		//log.debug("makeShader");
-		if (GLUtils::makeShader("lightShader", lightShader, "data/shaders/texCoord.vert", "data/shaders/lightBlend.frag") == false)
+		if (GLUtils::makeShader("lightShader", &lightShader, "data/shaders/texCoord.vert", "data/shaders/lightBlend.frag") == false)
 		{
 			useShaders = false;
 		}
-		if (GLUtils::makeShader("colorShader", colorShader, "data/shaders/texCoord.vert", "data/shaders/colorAdjust.frag") == false)
+		if (GLUtils::makeShader("colorShader", &colorShader, "data/shaders/texCoord.vert", "data/shaders/colorAdjust.frag") == false)
 		{
 			useShaders = false;
 		}
-		if (GLUtils::makeShader("gaussianShader", gaussianShader, "data/shaders/bloom_blurspace.vert", "data/shaders/bloom_alpha_gaussian.frag") == false)
+		if (GLUtils::makeShader("gaussianShader", &gaussianShader, "data/shaders/bloom_blurspace.vert", "data/shaders/bloom_alpha_gaussian.frag") == false)
 		{
 			useShaders = false;
 		}
-		if (GLUtils::makeShader("maskShader", bloomMaskShader, "data/shaders/bloom_screenspace.vert", "data/shaders/bloom_alpha_threshold.frag") == false)
+		if (GLUtils::makeShader("maskShader", &bloomMaskShader, "data/shaders/bloom_screenspace.vert", "data/shaders/bloom_alpha_threshold.frag") == false)
 		{
 			useShaders = false;
 		}
-		if (GLUtils::makeShader("bloomShader", bloomShader, "data/shaders/bloom_screenspace.vert", "data/shaders/bloom_alpha_bloom.frag") == false)
+		if (GLUtils::makeShader("bloomShader", &bloomShader, "data/shaders/bloom_screenspace.vert", "data/shaders/bloom_alpha_bloom.frag") == false)
 		{
 			useShaders = false;
 		}
@@ -930,17 +1217,17 @@ void GLUtils::initGL(char* windowName)
 		//log.debug("createProgramObject bgShaderCount " + to_string(bgShaderCount));
 		if (useShaders)
 		{
-			for (int i = 0; i < bgShaderCount; i++)
-			{
-				int p = GLUtils::createProgramObject();
-				//log.debug("createProgramObject bg " + to_string(p));
-				e("createProgramObject");
-				bgShaders->push_back(ms<Integer>(p));
-			}
+//			for (int i = 0; i < bgShaderCount; i++)
+//			{
+//				int p = GLUtils::createProgramObject();
+//				//log.debug("createProgramObject bg " + to_string(p));
+//				e("createProgramObject");
+//				bgShaders.add(new Integer(p));
+//			}
 
 			int count = 0;
 
-			//log.debug("makeShader bg bgShaders size "+to_string(bgShaders->size()));
+			//log.debug("makeShader bg bgShaders size "+to_string(bgShaders.size()));
 			for (int i = 0; i < bgShaderCount; i++)
 			{
 				string name = to_string(count) + ".frag";
@@ -948,18 +1235,72 @@ void GLUtils::initGL(char* windowName)
 				{
 					name = "0" + name;
 				}
+				GLuint programID = 0;
 
-				if (GLUtils::makeShader(name, bgShaders->at(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
+				if (GLUtils::makeShader(name, &programID, "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
 				{
 					log.error("Could not make bg shader "+name);
 					bgShaderCount--;
-					bgShaders->erase(bgShaders->begin()+i);
+					//bgShaders.removeAt(i);
 					i--;
+				}
+				else
+				{
+					bgShaders.add(new Integer(programID));
 				}
 
 				count++;
 			}
 		}
+
+if (GLUtils::makeShader("lightShader", &lightShader, "data/shaders/texCoord.vert.sb", "data/shaders/lightBlend.frag.sb") == false)
+{
+	useShaders = false;
+}
+if (GLUtils::makeShader("colorShader", &colorShader, "data/shaders/texCoord.vert.sb", "data/shaders/colorAdjust.frag.sb") == false)
+{
+	useShaders = false;
+}
+if (GLUtils::makeShader("gaussianShader", &gaussianShader, "data/shaders/bloom_blurspace.vert.sb", "data/shaders/bloom_alpha_gaussian.frag.sb") == false)
+{
+	useShaders = false;
+}
+if (GLUtils::makeShader("maskShader", &bloomMaskShader, "data/shaders/bloom_screenspace.vert.sb", "data/shaders/bloom_alpha_threshold.frag.sb") == false)
+{
+	useShaders = false;
+}
+if (GLUtils::makeShader("bloomShader", &bloomShader, "data/shaders/bloom_screenspace.vert.sb", "data/shaders/bloom_alpha_bloom.frag.sb") == false)
+{
+	useShaders = false;
+}
+
+if (useShaders)
+{
+	int count = 0;
+
+	for (int i = 0; i < bgShaderCount; i++)
+	{
+		string name = to_string(count) + ".frag.sb";
+		if (count < 10)
+		{
+			name = "0" + name;
+		}
+		GLuint programID = 0;
+
+		if (GLUtils::makeShader(name, &programID, "data/shaders/texCoord.vert.sb", "data/shaders/bg/" + name) == false)
+		{
+			log.error("Could not make bg shader " + name);
+			bgShaderCount--;
+			i--;
+		}
+		else
+		{
+			bgShaders.add(new Integer(programID));
+		}
+		count++;
+	}
+}
+
 
 
 
@@ -1017,9 +1358,9 @@ void GLUtils::initGL(char* windowName)
 		log.warn("Shaders not supported.");
 	}
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up shaders took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+	now = System::getPerformanceCounter();
+	log.debug("Setting up shaders took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
 
 
 	log.debug("GL setup complete.");
@@ -1029,10 +1370,12 @@ void GLUtils::initGL(char* windowName)
 	blankTexture = GLUtils::getTextureFromPNGExePath("data/misc/blank.png");
 	boxTexture = GLUtils::getTextureFromPNGExePath("data/misc/box.png");
 
-	totalNow = SDL_GetPerformanceCounter();
-	log.debug("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "ms");
-	
+	totalNow = System::getPerformanceCounter();
+	log.debug("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / System::GetPerformanceFrequency()) + "ms");
 
+
+
+#endif
 
 }
 
@@ -1044,7 +1387,7 @@ void GLUtils::initGL(char* windowName)
 void GLUtils::checkSDLError(const string &whereErrorOccurredString)
 {//===========================================================================================================================
 	
-
+#ifndef ORBIS
 	const char *error = SDL_GetError();
 	if (*error) 
 	{
@@ -1052,6 +1395,10 @@ void GLUtils::checkSDLError(const string &whereErrorOccurredString)
 		SDL_ClearError();
 	}
 
+#else
+
+
+#endif
 
 //
 //	char sdlErrorMessageString[1024];
@@ -1071,6 +1418,8 @@ void GLUtils::checkSDLError(const string &whereErrorOccurredString)
 void GLUtils::checkGLError(const string &whereErrorOccurredString)
 {//===========================================================================================================================
 
+
+#ifndef ORBIS
 	int glErrorEnumArray[128] = { GL_NO_ERROR };
 
 	int i = 0;
@@ -1092,8 +1441,10 @@ void GLUtils::checkGLError(const string &whereErrorOccurredString)
 		if (val == GL_INVALID_ENUM)errorString = "GL_INVALID_ENUM";
 		else if (val == GL_INVALID_VALUE)errorString = "GL_INVALID_VALUE";
 		else if (val == GL_INVALID_OPERATION)errorString = "GL_INVALID_OPERATION";
+#ifndef ORBIS
 		else if (val == GL_STACK_OVERFLOW)errorString = "GL_STACK_OVERFLOW";
 		else if (val == GL_STACK_UNDERFLOW)errorString = "GL_STACK_UNDERFLOW";
+#endif
 		else if (val == GL_OUT_OF_MEMORY)errorString = "GL_OUT_OF_MEMORY";
 		//else if(val==GL_TABLE_TOO_LARGE)errorString = "GL_TABLE_TOO_LARGE";//deprecated
 		else errorString = "Unknown GL error";
@@ -1102,6 +1453,11 @@ void GLUtils::checkGLError(const string &whereErrorOccurredString)
 
 		i++;
 	}
+
+//#else
+
+
+#endif
 }
 
 //===========================================================================================================================
@@ -1167,6 +1523,8 @@ int GLUtils::getMonitorHeight()
 	return monitorHeight;
 }
 
+
+#ifndef ORBIS
 //=========================================================================================================================
 SDL_DisplayMode GLUtils::getCurrentDisplayMode()
 {//=========================================================================================================================
@@ -1192,10 +1550,10 @@ SDL_DisplayMode GLUtils::getCurrentDisplayMode()
 }
 
 //=========================================================================================================================
-sp<vector<sp<SDL_DisplayMode>>> GLUtils::getAvailableDisplayModes()
+ArrayList<SDL_DisplayMode*> GLUtils::getAvailableDisplayModes()
 {//=========================================================================================================================
 
-	if (displayModes->size() > 0)return ms<vector<sp<SDL_DisplayMode>>>(&displayModes);
+	if (displayModes.size() > 0)return displayModes;
 	int displayCount = 0;
 
 	displayCount = SDL_GetNumVideoDisplays();
@@ -1207,26 +1565,30 @@ sp<vector<sp<SDL_DisplayMode>>> GLUtils::getAvailableDisplayModes()
 		int numDisplayModes = SDL_GetNumDisplayModes(d);
 		for (int m = 0; m < numDisplayModes; m++)
 		{
-			sp<SDL_DisplayMode> mode = ms<SDL_DisplayMode>(SDL_DisplayMode());
+			SDL_DisplayMode *mode = new SDL_DisplayMode();
 
-			if (SDL_GetDisplayMode(d, m, mode.get()) != 0)
+			if (SDL_GetDisplayMode(d, m, mode) != 0)
 				SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
 
 			SDL_Log("SDL_GetDisplayMode:\t\t%i bpp\t%i x %i",
 				SDL_BITSPERPIXEL(mode->format), mode->w, mode->h);
 
-			displayModes->push_back(mode);
+			displayModes.add(mode);
 		}
 	}
 	checkSDLError("getAvailableDisplayModes");
 
-	return ms<vector<sp<SDL_DisplayMode>>>(&displayModes);
+	return displayModes;
 }
+#endif
 
 //=========================================================================================================================
 void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool fullscreen)
 { //=========================================================================================================================
 
+
+
+#ifndef ORBIS
 	currentDisplayMode = getCurrentDisplayMode();
 
 
@@ -1238,18 +1600,18 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	//	try
 	//	{
-	sp<SDL_DisplayMode> targetDisplayMode = nullptr;
+	SDL_DisplayMode* targetDisplayMode = nullptr;
 
-	sp<vector<sp<SDL_DisplayMode>>> modes = getAvailableDisplayModes();
+	ArrayList<SDL_DisplayMode*> modes = getAvailableDisplayModes();
 
 	{
 		//if(fullscreen)
 
 
 		int freq = 0;
-		for (int i = 0; i < modes->size(); i++)
+		for (int i = 0; i < modes.size(); i++)
 		{
-			sp<SDL_DisplayMode> m = modes->at(i);
+			SDL_DisplayMode* m = modes.get(i);
 
 			if ((m->w == width) && (m->h == height))
 			{
@@ -1282,9 +1644,9 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 
 
-	for (int i = 0; i < modes->size(); i++)
+	for (int i = 0; i < modes.size(); i++)
 	{
-		sp<SDL_DisplayMode> m = modes->at(i);
+		SDL_DisplayMode* m = modes.get(i);
 
 		log.info(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
 	}
@@ -1313,7 +1675,9 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 	//setFullscreenCompatibleDisplayMode(desktopDisplayWidth, desktopDisplayHeight, false);
 	//Display.setFullscreen(true);
 
+#else
 
+#endif
 
 
 	//setFullscreen(fullscreen);
@@ -1330,6 +1694,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 void GLUtils::attachTextureToFBO(int attachment, int textureID)
 { //=========================================================================================================================
 
+
 	if (ARBFBO)
 	{
 		if (attachment == 0)
@@ -1343,15 +1708,19 @@ void GLUtils::attachTextureToFBO(int attachment, int textureID)
 	}
 	else
 	{
+#ifndef ORBIS
 		if (attachment == 0)
 		{
 			glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, textureID, 0);
 		}
 		glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1_EXT, GL_TEXTURE_2D, textureID, 0);
+#endif
 	}
+
+
 }
 
-bool GLUtils::ARBFBO = false;
+
 
 //=========================================================================================================================
 void GLUtils::bindFBO(int fboID)
@@ -1363,13 +1732,19 @@ void GLUtils::bindFBO(int fboID)
 	}
 	else
 	{
+#ifndef ORBIS
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fboID);
+#endif
 	}
+
+
 }
 
 //=========================================================================================================================
 void GLUtils::drawIntoFBOAttachment(int i)
 { //=========================================================================================================================
+
+#ifndef ORBIS
 	if (ARBFBO)
 	{
 		if (i == 0)
@@ -1392,11 +1767,30 @@ void GLUtils::drawIntoFBOAttachment(int i)
 			glDrawBuffer(GL_COLOR_ATTACHMENT1_EXT);
 		}
 	}
+
+#else
+
+
+	if (i == 0)
+	{
+		GLenum bufs[1];
+		bufs[0] = GL_COLOR_ATTACHMENT0;
+		glDrawBuffers(1, bufs);
+	}
+	else
+	{
+		GLenum bufs[1];
+		bufs[0] = GL_COLOR_ATTACHMENT1;
+		glDrawBuffers(1, bufs);
+	}
+#endif
 }
 
 //=========================================================================================================================
 int GLUtils::genFBO()
 { //=========================================================================================================================
+
+
 	GLuint fbID = 0;
 
 	if (ARBFBO)
@@ -1407,21 +1801,25 @@ int GLUtils::genFBO()
 	else
 	//if ( check GL_EXT_framebuffer_object )
 	{
+#ifndef ORBIS
 		glGenFramebuffersEXT(1, &fbID);//If the extension GL_EXT_framebuffer_object is present
+#endif
 		return (int)fbID;
 	}
 
 
-	glGenFramebuffers(1, &fbID);//If the OpenGL version is >= 3.0 (in this version the FBO extension was added to the core)
-	return (int)fbID;
+
+
 }
 
 //=========================================================================================================================
 int GLUtils::setupFBOTexture(int tex, int width, int height)
 { //=========================================================================================================================
 
+
 	const int s = width * height * 4;
 	u8* data = (u8*)calloc(s,1);
+
 
 	//init FBO texture
 	glBindTexture(GL_TEXTURE_2D, tex);
@@ -1429,89 +1827,41 @@ int GLUtils::setupFBOTexture(int tex, int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+#ifndef ORBIS
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+#endif
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
 	free(data);
 
 	return tex;
+
+
 }
 
 
 bool GLUtils::ARBShader = false;
 
+
 //=========================================================================================================================
-int GLUtils::createProgramObject()
+void GLUtils::loadShaderBinary(const string& filename, GLuint shaderID)
 { //=========================================================================================================================
-	int i = 0;
 
-	if (useShaders == true)
-	{
-		if (ARBShader == false)
-		{
-			i = glCreateProgram();
-			e("glCreateProgram");
-			if (i == 0)
-			{
-				ARBShader = true;
-				log.warn("Core shaders failed. Trying ARB shaders.");
-			}
-		}
 
-		if (ARBShader)
-		{
-			i = glCreateProgramObjectARB();
-			e("glCreateProgramObjectARB");
-			if (i == 0)
-			{
-				useShaders = false;
-				log.warn("ARB shaders failed. Using no shaders.");
-			}
-		}
-	}
+	ByteArray* binaryData = FileUtils::loadByteFileFromExePath(filename);
 
-	return i;
+	glShaderBinary(1, &shaderID, 2/*CG profile*/, (const GLvoid*)binaryData->data(), binaryData->size());
 
 }
 
 
+
+
+
 //=========================================================================================================================
-int GLUtils::compileShaderObject(const string& filename, int type)
+void GLUtils::compileShaderFromText(const string& filename, GLuint shader)
 { //=========================================================================================================================
-	//will be non zero if successfully created
-	int shader = 0;
 
-
-	if (type == FRAG)
-	{
-		if (ARBShader)
-		{
-		    shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
-		}
-		else
-		{
-			shader = glCreateShader(GL_FRAGMENT_SHADER);
-		}
-	}
-	else
-	{
-		if (ARBShader)
-		{
-		    shader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
-		}
-		else
-		{
-			shader = glCreateShader(GL_VERTEX_SHADER);
-		}
-	}
-
-	e("glCreateShader");
-
-	//if created, convert the shader code to a String
-	if (shader == 0)
-	{
-		return 0;
-	}
 
 	string code = "";
 	string line;
@@ -1523,15 +1873,16 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 	{
 		log.error("Could not read code: " + filename);
 		log.error("Standard exception: " + string(e.what()));
-		return 0;
+		return;
 	}
 
 
 	if (ARBShader)
 	{
+#ifndef ORBIS
 		const char* c_str = code.c_str();
 
-		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const sp<GLcharARB>*strings,const sp<GLint>lengths)
+		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const GLcharARB **strings,const GLint *lengths)
 		glShaderSourceARB(shader, 1, &c_str, NULL);
 		e();
 		glCompileShaderARB(shader);
@@ -1563,6 +1914,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 
 			shader = 0;
 		}
+#endif
 	}
 	else
 	{
@@ -1601,51 +1953,107 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 	}
 
 
-	//if zero we won't be using the shader
-	return shader;
 }
 
 //=========================================================================================================================
-bool GLUtils::makeShader(const string& name, int shaderProgram, const string& vertPath, const string& fragPath)
+bool GLUtils::makeShader(const string& name, GLuint* shaderProgram, const string& vertPath, const string& fragPath, bool isBinary)
 { //=========================================================================================================================
 
-	int vertShader = 0;
-	int fragShader = 0;
 
-	//log.debug("compileShaderObject");
-	vertShader = GLUtils::compileShaderObject(vertPath, VERT);
-	fragShader = GLUtils::compileShaderObject(fragPath, FRAG);
+  //get shader objects
+	int vertShaderID = 0;
+	int fragShaderID = 0;
 
-	if (vertShader != 0 && fragShader != 0)
+	if (ARBShader)
 	{
+#ifndef ORBIS
+		fragShaderID = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+		vertShaderID = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
+#endif
+	}
+	else
+	{
+		fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+		vertShaderID = glCreateShader(GL_VERTEX_SHADER);
+	}
+	
+
+	if (vertShaderID != 0 && fragShaderID != 0)
+	{
+
+		if (isBinary)
+		{
+			GLUtils::loadShaderBinary(vertPath, vertShaderID);
+			GLUtils::loadShaderBinary(fragPath, fragShaderID);
+		}
+		else
+		{
+			GLUtils::compileShaderFromText(vertPath, vertShaderID);
+			GLUtils::compileShaderFromText(fragPath, fragShaderID);
+		}
+
+
+		//make shader program
+		if (useShaders == true)
+		{
+			if (ARBShader == false)
+			{
+				*shaderProgram = glCreateProgram();
+				e("glCreateProgram");
+				if (*shaderProgram == 0)
+				{
+					ARBShader = true;
+					log.warn("Core shaders failed. Trying ARB shaders.");
+				}
+			}
+
+			if (ARBShader)
+			{
+#ifndef ORBIS
+				*shaderProgram = glCreateProgramObjectARB();
+				e("glCreateProgramObjectARB");
+				if (*shaderProgram == 0)
+				{
+					useShaders = false;
+					log.warn("ARB shaders failed. Using no shaders.");
+				}
+#endif
+			}
+		}
+
+
+		//link shader objects together
 
 		//log.debug("glAttachShader");
 		if (ARBShader)
 		{
-			glAttachObjectARB(shaderProgram, vertShader);
+
+#ifndef ORBIS
+			glAttachObjectARB(*shaderProgram, vertShader);
 			e("glAttachObjectARB");
 
-			glAttachObjectARB(shaderProgram, fragShader);
+			glAttachObjectARB(*shaderProgram, fragShader);
 			e("glAttachObjectARB");
 
-			glLinkProgramARB(shaderProgram);
+			glLinkProgramARB(*shaderProgram);
 			e("glLinkProgramARB");
 
-			glValidateProgramARB(shaderProgram);
+			glValidateProgramARB(*shaderProgram);
 			e("glValidateProgramARB");
+#endif
 		}
 		else
 		{
-			glAttachShader(shaderProgram, vertShader);
+			glAttachShader(*shaderProgram, vertShaderID);
 			e("glAttachShader");
 
-			glAttachShader(shaderProgram, fragShader);
+			glAttachShader(*shaderProgram, fragShaderID);
 			e("glAttachShader");
 
-			glLinkProgram(shaderProgram);
+			glLinkProgram(*shaderProgram);
 			e("glLinkProgram");
 
-			glValidateProgram(shaderProgram);
+			glValidateProgram(*shaderProgram);
 			e("glValidateProgram");
 		}
 
@@ -1653,14 +2061,16 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 
 		if (ARBShader)
 		{
+
+#ifndef ORBIS
 			int logLength = 0;
-			glGetObjectParameterivARB(shaderProgram, GL_OBJECT_INFO_LOG_LENGTH_ARB, &logLength);//glGetObjectParameteriARB
+			glGetObjectParameterivARB(*shaderProgram, GL_OBJECT_INFO_LOG_LENGTH_ARB, &logLength);//glGetObjectParameteriARB
 			e("glGetObjectParameterivARB");
 			if (logLength > 0)
 			{
 				GLsizei returnLength = 0;
 				GLchar returnLog[1024];
-				glGetInfoLogARB(shaderProgram, 1024, &returnLength, returnLog);
+				glGetInfoLogARB(*shaderProgram, 1024, &returnLength, returnLog);
 				out = string(returnLog);
 
 
@@ -1671,17 +2081,18 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 				}
 				out = ("ProgramInfoLog: " + out);
 			}
+#endif
 		}
 		else
 		{
 			int logLength = 0;
-			glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &logLength);
+			glGetProgramiv(*shaderProgram, GL_INFO_LOG_LENGTH, &logLength);
 			e("glGetProgramiv");
 			if (logLength > 0)
 			{
 				GLsizei returnLength = 0;
 				GLchar returnLog[1024];
-				glGetProgramInfoLog(shaderProgram, 1024, &returnLength, returnLog);
+				glGetProgramInfoLog(*shaderProgram, 1024, &returnLength, returnLog);
 				out = string(returnLog);
 
 				e("glGetProgramInfoLog");
@@ -1699,7 +2110,7 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 
 //		if (
 //			lower.find("warning") != string::npos
-//			) //startsWith("Validation successful")==false && OKString::startsWith(status,"Validation warning! - Sampler")==false)
+//			) //startsWith("Validation successful")==false && String::startsWith(status,"Validation warning! - Sampler")==false)
 //		{
 //			log.warn(name + " status: " + out);
 //			return true;
@@ -1724,7 +2135,12 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 		log.warn(name + " did not compile!");
 		return false;
 	}
+
+
 }
+
+
+
 
 
 //=========================================================================================================================
@@ -1733,15 +2149,20 @@ void GLUtils::useShader(int shader)
 
 	//if(useShader==false)return;
 
+
 	if (ARBShader)
 	{
+#ifndef ORBIS
 		glUseProgramObjectARB(shader);
+#endif
 	}
 	else
 	{
 		glUseProgram(shader);
 	}
 	e("glUseProgram");
+
+
 }
 
 
@@ -1753,9 +2174,14 @@ void GLUtils::toggleFullscreen()
 	
 	fullscreen = !fullscreen;
 
-	if (fullscreen)SDL_SetWindowFullscreen(window.get(), SDL_WINDOW_FULLSCREEN_DESKTOP);
-	else SDL_SetWindowFullscreen(window.get(), 0);
+#ifndef ORBIS
+	if (fullscreen)SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else SDL_SetWindowFullscreen(window, 0);
 
+#else
+
+
+#endif
 	doResize();
 }
 
@@ -1772,63 +2198,456 @@ float GLUtils::BLOOM_FBO_SCALE = 0.25f;
 
 //=========================================================================================================================
 void GLUtils::setRealWindowViewport()
-{ //=========================================================================================================================
-  //	glViewport(0, 0, windowWidth, windowHeight);
-  //	glLoadIdentity();
-  //	glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
+{//=========================================================================================================================
 
-  //order does matter
+	//glViewport(0, 0, windowWidth, windowHeight);
+	//glLoadIdentity();
+	//glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
+
+	//order does matter
+
+#ifndef ORBIS
 	glLoadIdentity(); //reset selected transform matrix
 	glOrtho(0, getRealWindowWidth(), getRealWindowHeight(), 0, -1, 1);
+#endif
 
 	glViewport(0, 0, getRealWindowWidth(), getRealWindowHeight()); //order doesn't matter
 
 }
+
+
 //=========================================================================================================================
 void GLUtils::setPostColorFilterViewport()
-{ //=========================================================================================================================
-  //	glViewport(0, 0, windowWidth, windowHeight);
-  //	glLoadIdentity();
-  //	glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
+{//=========================================================================================================================
 
-  //order does matter
+	//glViewport(0, 0, windowWidth, windowHeight);
+	//glLoadIdentity();
+	//glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
+
+	//order does matter
+
+#ifndef ORBIS
 	glLoadIdentity(); //reset selected transform matrix
 	glOrtho(0, getViewportWidth(), getViewportHeight(), 0, -1, 1);
-
+#endif
 	glViewport(0, 0, getViewportWidth(), getViewportHeight()); //order doesn't matter
 
 }
 
+
+//=========================================================================================================================
 void GLUtils::setPreColorFilterViewport()
-{ //=========================================================================================================================
+{//=========================================================================================================================
+
 	glViewport(0, 0, (int)(getViewportWidth() * FBO_SCALE), (int)(getViewportHeight() * FBO_SCALE));
+#ifndef ORBIS
 	glLoadIdentity();
 	glOrtho(0, getViewportWidth() * FBO_SCALE, getViewportHeight() * FBO_SCALE, 0, -1, 1);
+#endif
 }
 
-void GLUtils::setOKGameMainFBOFilterViewport()
-{ //=========================================================================================================================
+
+//=========================================================================================================================
+void GLUtils::setBobsGameMainFBOFilterViewport()
+{//=========================================================================================================================
+
 
 	glViewport(0, 0, (int)(bobsGameFBO_Width * FBO_SCALE), (int)(bobsGameFBO_Height * FBO_SCALE));
+#ifndef ORBIS
 	glLoadIdentity();
 	glOrtho(0, bobsGameFBO_Width * FBO_SCALE, bobsGameFBO_Height * FBO_SCALE, 0, -1, 1);
-}
-void GLUtils::setBloomViewport()
-{ //=========================================================================================================================
-	glViewport(0, 0, (int)(bobsGameFBO_Width * FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_Height * FBO_SCALE * BLOOM_FBO_SCALE));
-	glLoadIdentity();
-	glOrtho(-1, 1, -1, 1, -1, 1);
+
+#endif
 }
 
-void GLUtils::setShaderViewport()
-{ //=========================================================================================================================
-	glViewport(0, 0, (int)(getViewportWidth() * FBO_SCALE * SHADER_FBO_SCALE), (int)(getViewportHeight() * FBO_SCALE * SHADER_FBO_SCALE));
+
+//=========================================================================================================================
+void GLUtils::setBloomViewport()
+{//=========================================================================================================================
+
+	glViewport(0, 0, (int)(bobsGameFBO_Width * FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_Height * FBO_SCALE * BLOOM_FBO_SCALE));
+#ifndef ORBIS
 	glLoadIdentity();
 	glOrtho(-1, 1, -1, 1, -1, 1);
+#endif
+}
+
+
+//=========================================================================================================================
+void GLUtils::setShaderViewport()
+{//=========================================================================================================================
+
+	glViewport(0, 0, (int)(getViewportWidth() * FBO_SCALE * SHADER_FBO_SCALE), (int)(getViewportHeight() * FBO_SCALE * SHADER_FBO_SCALE));
+#ifndef ORBIS
+	glLoadIdentity();
+	glOrtho(-1, 1, -1, 1, -1, 1);
+#endif
+}
+
+
+
+//=========================================================================================================================
+void GLUtils::setPreColorFilterFBO()
+{//=========================================================================================================================
+
+	GLUtils::bindFBO(GLUtils::preColorFilterFBO);
+	GLUtils::drawIntoFBOAttachment(0); //draw to nD FBO screen texture
+	GLUtils::setPreColorFilterViewport();
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::setPostColorFilterFBO()
+{//=========================================================================================================================
+
+	GLUtils::bindFBO(GLUtils::postColorFilterFBO);
+	GLUtils::drawIntoFBOAttachment(0); //draw to nD FBO screen texture
+	GLUtils::setPostColorFilterViewport();
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::setBobsGameMainFBO()
+{//=========================================================================================================================
+
+	GLUtils::bindFBO(GLUtils::bobsGame_mainGameFBO);
+	GLUtils::drawIntoFBOAttachment(0); //draw to mainGameFBO texture
+	GLUtils::setBobsGameMainFBOFilterViewport();
+
 }
 
 //=========================================================================================================================
-void GLUtils::resizeOKGameFBO(float w, float h)
+void GLUtils::setBobsGameMaskFBO()
+{//=========================================================================================================================
+
+	GLUtils::bindFBO(GLUtils::bobsGame_mainGameFBO);
+	GLUtils::drawIntoFBOAttachment(1);
+	GLUtils::setBobsGameMainFBOFilterViewport();
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::setBloomFBO()
+{//=========================================================================================================================
+
+	GLUtils::bindFBO(GLUtils::bobsGame_bloomFBO);
+	GLUtils::drawIntoFBOAttachment(0);
+	GLUtils::setBloomViewport();
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::setShaderFBO()
+{//=========================================================================================================================
+
+#ifndef ORBIS
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+#endif
+	glEnable(GL_DEPTH_TEST);
+
+	bgShaderFBOTextureToggle = !bgShaderFBOTextureToggle;
+
+	GLUtils::bindFBO(GLUtils::bobsGame_bgShaderFBO);
+	if (bgShaderFBOTextureToggle)
+	{
+		GLUtils::drawIntoFBOAttachment(0);
+	}
+	else
+	{
+		GLUtils::drawIntoFBOAttachment(1);
+	}
+
+	GLUtils::setShaderViewport();
+
+
+
+
+	glActiveTexture(GL_TEXTURE1);
+	glEnable(GL_TEXTURE_2D);
+
+	if (bgShaderFBOTextureToggle)
+	{
+		glBindTexture(GL_TEXTURE_2D, GLUtils::bobsGame_bgShaderFBO_Texture_Attachment1);
+	}
+	else
+	{
+		glBindTexture(GL_TEXTURE_2D, GLUtils::bobsGame_bgShaderFBO_Texture_Attachment0);
+	}
+
+	glActiveTexture(GL_TEXTURE0);
+	glEnable(GL_TEXTURE_2D);
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::unsetShaderFBO()
+{//=========================================================================================================================
+
+	GLUtils::useShader(0);
+
+	glDisable(GL_DEPTH_TEST);
+
+	//disable texture2D on texture unit 1
+	glActiveTexture(GL_TEXTURE1);
+	glDisable(GL_TEXTURE_2D);
+
+	//switch back to texture unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glDisable(GL_TEXTURE_2D);
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::setMainScreenFB()
+{//=========================================================================================================================
+
+	GLUtils::bindFBO(0); //set the framebuffer back to the screen buffer
+	GLUtils::setRealWindowViewport();
+
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::fillBufferWithBlack()
+{//=========================================================================================================================
+//#ifndef ORBIS
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+//#else
+
+	//ssg::GraphicsContext *context = Main::getMain()->getGraphicsContext();
+	//context->clearRenderTarget(0x00000000);//ARGB
+	//context->clearRenderTarget(0xFF000000);//ARGB
+//#endif
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::fillBufferWithTransparency()
+{//=========================================================================================================================
+//#ifndef ORBIS
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+//#else
+	//ssg::GraphicsContext *context = Main::getMain()->getGraphicsContext();
+	//context->clearRenderTarget(0x00000000);
+//#endif
+
+}
+
+//=========================================================================================================================
+void GLUtils::drawPreColorFilterFBOTexture()
+{//=========================================================================================================================
+
+	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	GLUtils::drawTexture(GLUtils::preColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getRealWindowWidth()), 0, (float)(GLUtils::getRealWindowHeight()), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
+	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::drawPostColorFilterFBOTexture()
+{//=========================================================================================================================
+
+	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); //this fixes the small shadow problems, and also makes the doorknob glow brighter.
+	GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getRealWindowWidth()), 0, (float)(GLUtils::getRealWindowHeight()), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
+	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::drawShaderFBOTexture()
+{//=========================================================================================================================
+
+	if (bgShaderFBOTextureToggle)
+	{
+		GLUtils::drawTexture(GLUtils::bobsGame_bgShaderFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0, (float)getViewportWidth(), 0, (float)getViewportHeight(), 1.0f, GLUtils::DEFAULT_SHADER_FBO_FILTER);
+	}
+	else
+	{
+		GLUtils::drawTexture(GLUtils::bobsGame_bgShaderFBO_Texture_Attachment1, 0.0f, 1.0f, 1.0f, 0.0f, 0, (float)getViewportWidth(), 0, (float)getViewportHeight(), 1.0f, GLUtils::DEFAULT_SHADER_FBO_FILTER);
+	}
+
+}
+
+//=========================================================================================================================
+void GLUtils::drawBobsGameFBO(float x0, float x1, float y0, float y1)
+{//=========================================================================================================================
+
+
+	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	//GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, x0, x1, y0, y1, 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
+
+	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+}
+
+//=========================================================================================================================
+void GLUtils::drawBobsGameMainFBOTexture0()
+{//=========================================================================================================================
+
+
+
+	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0, GLUtils::bobsGameFBO_Width, 0, GLUtils::bobsGameFBO_Height, 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
+	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::drawBobsGameFBOBloomMaskTexture()
+{//=========================================================================================================================
+
+
+	GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment1_BloomMask, 0, 1, 0, 1, -1, 1, -1, 1, 1.0f, GLUtils::DEFAULT_BLOOM_FBO_FILTER);//draw the blocks into ping pong 0
+
+
+}
+
+//=========================================================================================================================
+void GLUtils::drawBobsGameFBOBloomMaskTexture1()
+{//=========================================================================================================================
+
+
+	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment1_BloomMask, 0.0f, 1.0f, 1.0f, 0.0f, 0, GLUtils::bobsGameFBO_Width, 0, GLUtils::bobsGameFBO_Height, 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
+	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+}
+
+//=========================================================================================================================
+void GLUtils::setBlendSrcAlpha()
+{//=========================================================================================================================
+
+	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+}
+
+//=========================================================================================================================
+void GLUtils::drawBlocksUsingBloomShader()
+{//=========================================================================================================================
+
+	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment0);//has blurred blocks in it
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, GLUtils::bobsGame_mainGameFBO_Texture_Attachment1_BloomMask);//has original blocks in it
+
+	GLUtils::useShader(GLUtils::bloomShader);//draw the blurred and original blocks with bloom on top of shaders and playing field
+	{
+		GLUtils::setShaderVar1f(GLUtils::bloomShader, (char*)"OriginalIntensity", 0.8f);
+		GLUtils::setShaderVar1f(GLUtils::bloomShader, (char*)"BloomIntensity", bloomIntensity);
+		GLUtils::setShaderVar1i(GLUtils::bloomShader, (char*)"u_texture0", 0);//original blocks
+		GLUtils::setShaderVar1i(GLUtils::bloomShader, (char*)"u_texture1", 1);//blurred blocks
+		GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment1_BloomMask, 0.0f, 1.0f, 1.0f, 0.0f, 0, GLUtils::bobsGameFBO_Width, 0, GLUtils::bobsGameFBO_Height, 1.0f, GLUtils::DEFAULT_BLOOM_FBO_FILTER);
+	}
+	GLUtils::useShader(0);
+
+	//disable texture2D on texture unit 1
+	glActiveTexture(GL_TEXTURE1);
+	glDisable(GL_TEXTURE_2D);
+
+	//switch back to texture unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glDisable(GL_TEXTURE_2D);
+
+	glEnable(GL_TEXTURE_2D);
+
+	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+}
+
+
+//=========================================================================================================================
+void GLUtils::disableBlend()
+{//=========================================================================================================================
+
+	glDisable(GL_BLEND);
+	glDisable(GL_DEPTH_TEST);
+	glDepthMask(false);
+
+}
+
+//=========================================================================================================================
+void GLUtils::enableBlend()
+{//=========================================================================================================================
+
+	glEnable(GL_BLEND);
+
+}
+
+//=========================================================================================================================
+void GLUtils::setupBloomThresholdShader()
+{//=========================================================================================================================
+
+	GLUtils::useShader(GLUtils::bloomMaskShader);
+
+	glBindTexture(GL_TEXTURE_2D, GLUtils::bobsGame_mainGameFBO_Texture_Attachment1_BloomMask);//has the blocks in it
+	GLUtils::setShaderVar1i(GLUtils::bloomMaskShader, (char*)"u_texture0", 0);
+	float threshold = 0.1f;
+	GLUtils::setShaderVar2f(GLUtils::bloomMaskShader, (char*)"treshold", threshold, 1.0f / (1.0f - threshold));
+
+}
+
+//=========================================================================================================================
+void GLUtils::doBlurShader()
+{//=========================================================================================================================
+
+	// horizontal
+	GLUtils::drawIntoFBOAttachment(1);
+	{
+		GLUtils::useShader(GLUtils::gaussianShader);
+		{
+			GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"size", GLUtils::bobsGameFBO_Width*GLUtils::BLOOM_FBO_SCALE, GLUtils::bobsGameFBO_Height*GLUtils::BLOOM_FBO_SCALE);
+			GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"dir", 1.0f, 0.0f);
+			GLUtils::drawTexture(GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment0, 0, 1, 0, 1, -1, 1, -1, 1, 1.0f, GLUtils::DEFAULT_BLOOM_FBO_FILTER);
+		}
+		GLUtils::useShader(0);
+	}
+
+	// vertical
+	GLUtils::drawIntoFBOAttachment(0);
+	{
+		GLUtils::useShader(GLUtils::gaussianShader);
+		{
+			GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"size", GLUtils::bobsGameFBO_Width*GLUtils::BLOOM_FBO_SCALE, GLUtils::bobsGameFBO_Height*GLUtils::BLOOM_FBO_SCALE);
+			GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"dir", 0.0f, 1.0f);
+			GLUtils::drawTexture(GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment1, 0, 1, 0, 1, -1, 1, -1, 1, 1, GLUtils::DEFAULT_BLOOM_FBO_FILTER);
+
+		}
+		GLUtils::useShader(0);
+	}
+
+
+}
+
+
+
+
+//=========================================================================================================================
+void GLUtils::resizeBobsGameFBO(float w, float h)
 { //=========================================================================================================================
 
 	if (w == 0)w = 10;
@@ -1873,17 +2692,25 @@ void GLUtils::resizeOKGameFBO(float w, float h)
 
 }
 
+
 //=========================================================================================================================
 void GLUtils::doResize()
 { //=========================================================================================================================
 
-
+#ifndef ORBIS
 	lastWindowWidth = windowWidth;
 	lastWindowHeight = windowHeight;
 
+
+
 	int w;
 	int h;
-	SDL_GL_GetDrawableSize(window.get(), &w, &h);
+
+	
+
+	SDL_GL_GetDrawableSize(window, &w, &h);
+
+
 
 	windowWidth = w;
 	windowHeight = h;
@@ -2002,6 +2829,7 @@ void GLUtils::doResize()
 	//switch back to normal framebuffer
 	GLUtils::bindFBO(0);
 
+#endif
 
 }
 
@@ -2014,14 +2842,20 @@ void GLUtils::setBlendMode(int src, int dst)
 	//else
 	//if(Keyboard.isKeyDown(Keyboard.KEY_PERIOD))glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 	//else
+
+#ifndef ORBIS
 	glBlendFunc(src, dst);
+
+#else
+	glBlendFunc(src, dst);
+#endif
 }
 
 //=========================================================================================================================
 void GLUtils::setShaderVar1i(int shader, char* s, int i)
 { //=========================================================================================================================
 
-
+#ifndef ORBIS
 	if (ARBShader)
 	{
 		glUniform1iARB(glGetUniformLocationARB(shader, s), i);
@@ -2030,11 +2864,15 @@ void GLUtils::setShaderVar1i(int shader, char* s, int i)
 	{
 		glUniform1i(glGetUniformLocation(shader, s), i);
 	}
+#else
+	glUniform1i(glGetUniformLocation(shader, s), i);
+#endif
 }
 
 //=========================================================================================================================
 void GLUtils::setShaderVar1f(int shader, char* s, float f)
 { //=========================================================================================================================
+#ifndef ORBIS
 	if (ARBShader)
 	{
 		glUniform1fARB(glGetUniformLocationARB(shader, s), f);
@@ -2043,11 +2881,15 @@ void GLUtils::setShaderVar1f(int shader, char* s, float f)
 	{
 		glUniform1f(glGetUniformLocation(shader, s), f);
 	}
+#else
+	glUniform1f(glGetUniformLocation(shader, s), f);
+#endif
 }
 
 //=========================================================================================================================
 void GLUtils::setShaderVar2f(int shader, char* s, float f1, float f2)
 { //=========================================================================================================================
+#ifndef ORBIS
 	if (ARBShader)
 	{
 		glUniform2fARB(glGetUniformLocationARB(shader, s), f1, f2);
@@ -2056,6 +2898,9 @@ void GLUtils::setShaderVar2f(int shader, char* s, float f1, float f2)
 	{
 		glUniform2f(glGetUniformLocation(shader, s), f1, f2);
 	}
+#else
+	glUniform2f(glGetUniformLocation(shader, s), f1, f2);
+#endif
 }
 
 //=========================================================================================================================
@@ -2071,11 +2916,15 @@ void GLUtils::setDefaultTextureParams()
   //THIS WAS THE PROBLEM WITH TEXTURES SHOWING UP WHITE, NEEDED TO GENERATE MIPMAPS FOR SOME REASON
 
   //why don't i need to do this for captions????
-
+#ifndef ORBIS
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 2);//0=100% 1=50% 2=25%
   glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-
+#else
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 2);//0=100% 1=50% 2=25%
+	//glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+#endif
   //glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
@@ -2096,13 +2945,13 @@ void GLUtils::setDefaultTextureParams()
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sy0, int filter)//static
+void GLUtils::drawTexture(BobTexture* texture, float sx0, float sy0, int filter)//static
 {//=========================================================================================================================
 	drawTexture(texture, sx0, sy0, 1.0f, filter);
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sy0, float alpha, int filter)//static
+void GLUtils::drawTexture(BobTexture* texture, float sx0, float sy0, float alpha, int filter)//static
 {//=========================================================================================================================
 
 	float sx1 = sx0 + texture->getImageWidth();
@@ -2112,7 +2961,7 @@ void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sy0, float alp
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(BobTexture* texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 
 	float tXRatio = (float)texture->getImageWidth() / (float)texture->getTextureWidth();
@@ -2121,11 +2970,13 @@ void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sx1, float sy0
 	float ix0 = 0.0f;
 	float ix1 = 1.0f;
 
-	float iy0 = 0.0f;
-	float iy1 = 1.0f;
-
 	float tx0 = ix0 * tXRatio;
 	float tx1 = ix1 * tXRatio;
+
+
+
+	float iy0 = 0.0f;
+	float iy1 = 1.0f;
 
 	float ty0 = iy0 * tYRatio;
 	float ty1 = iy1 * tYRatio;
@@ -2134,20 +2985,20 @@ void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sx1, float sy0
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(sp<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(BobTexture* texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 	if (texture == nullptr)return;
 
-	//Sprite s = ms<Sprite>(texture);
+	//Sprite s = new Sprite(texture);
 
 
-	drawTexture(texture->getTextureID(), tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, alpha, filter);
+	drawTexture(texture, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1, 1, 1, alpha, filter);
+
 }
 
 //===========================================================================================================================
 void GLUtils::drawTexture(int textureID, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)
 {//===========================================================================================================================
-
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	drawTexture(tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, 1.0f, 1.0f, alpha, filter);
 }
@@ -2160,19 +3011,21 @@ void GLUtils::drawTexture(float tx0, float tx1, float ty0, float ty1, float sx0,
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(sp<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
+void GLUtils::drawTexture(BobTexture* texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
 {//===========================================================================================================================
-
+#ifndef ORBIS
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
+	
+#else
+	texture->bind();
+#endif
 	drawTexture(tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, r, g, b, a, filter);
 }
 
-
 //int roundCoords = 0;
-//===========================================================================================================================
-void roundMe(float &screenX0, float &screenX1, float &screenY0, float &screenY1)
-{//===========================================================================================================================
 
+void roundMe(float &screenX0, float &screenX1, float &screenY0, float &screenY1)
+{
 	screenX1 = (float)ceil(screenX1);
 	screenY1 = (float)ceil(screenY1);
 }
@@ -2197,9 +3050,9 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 	screenX1 *= globalDrawScale;
 	screenY0 *= globalDrawScale;
 	screenY1 *= globalDrawScale;
-
+//#ifndef ORBIS
 	glEnable(GL_TEXTURE_2D);
-	
+
 
 	if (filter == FILTER_FBO_LINEAR_NO_MIPMAPPING)//for FBO rendering only
 	{
@@ -2230,11 +3083,11 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE); //TODO:what does this do and why did i comment it out? i forget.
 
-
+#ifndef ORBIS
 	if (glVersionMajor < 2)
-	{	 		   
+	{
 
-		glColor4f(r,g,b,a);
+		glColor4f(r, g, b, a);
 		glBegin(GL_QUADS);
 
 		glTexCoord2f(textureX0, textureY0);
@@ -2253,13 +3106,11 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 
 		return;
 	}
+#endif
 
-
-
-
-	//if (box == nullptr)box = ms<GLfloat>(box)[12];
-	//if (col == nullptr)col = ms<GLfloat>[16];
-	//if (tex == nullptr)tex = ms<GLfloat>[8];
+	if (box == nullptr)box = new GLfloat[12];
+	if (col == nullptr)col = new GLfloat[16];
+	if (tex == nullptr)tex = new GLfloat[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2303,6 +3154,8 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 	tex[6] = textureX1;
 	tex[7] = textureY0;
 
+
+#ifndef ORBIS
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -2316,6 +3169,103 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#else
+
+
+
+
+	GLint uAttribLocationPosition = glGetAttribLocation(uProgram, "pos_attribute_vec4");
+	if (uAttribLocationPosition < 0)
+	{
+		//ERROR_OUTPUT("Couldn't find attribute");
+		//return -1;
+	}
+
+	GLint uAttribLocationColor = glGetAttribLocation(uProgram, "col_attribute_vec4");
+	if (uAttribLocationColor < 0)
+	{
+		//ERROR_OUTPUT("Couldn't find attribute");
+		//return -1;
+	}
+	GLint uAttribLocationTexturePosition = glGetAttribLocation(uProgram, "tex_attribute_vec2");
+	if (uAttribLocationTexturePosition < 0)
+	{
+		//ERROR_OUTPUT("Couldn't find attribute");
+		//return -1;
+	}
+
+	GLUtils::setShaderVar1i(uProgram, (char*)"tex_uniform_sampler2D", 0);
+
+	// Set screen clear color
+	//glClearColor(0.6f, 0.6f, 1.0f, 1.0f);
+
+	// Set shader program to use
+	glUseProgram(uProgram);
+
+	// Enable position and color attribute pointers
+	glEnableVertexAttribArray(uAttribLocationPosition);
+	glVertexAttribPointer(uAttribLocationPosition, 4, GL_FLOAT, 0, sizeof(float) * 3/*0*/, box);
+	glEnableVertexAttribArray(uAttribLocationColor);
+	glVertexAttribPointer(uAttribLocationColor, 4, GL_FLOAT, 0, sizeof(float)*4/*0*/, col);
+
+	glEnableVertexAttribArray(uAttribLocationTexturePosition);
+	glVertexAttribPointer(uAttribLocationTexturePosition, 4, GL_FLOAT, 0, sizeof(float) * 2, tex);
+
+	// Draw triangle
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+	// Cleanup all the state changes we did
+	glDisableVertexAttribArray(uAttribLocationPosition);
+	glDisableVertexAttribArray(uAttribLocationColor);
+	glDisableVertexAttribArray(uAttribLocationTexturePosition);
+
+	// Set shader
+	glUseProgram(0);
+
+	// Swap window surface / Present display buffer
+	//eglSwapBuffers(display, surface);
+	
+#endif
+
+
+
+//#else
+//
+//
+//
+//
+//	BobTexture *t = BobTexture::getLastBoundTexture();
+//	if (t != nullptr && t->texture != nullptr)
+//	{
+//	
+//	//Main::getSpriteRenderer()->drawTexture(Main::getGraphicsContext(), position, size, t->texture, rgba);
+//
+//
+//
+//		vecmath::Vector2 position = vecmath::Vector2(screenX0 / (float)getViewportWidth(), screenY0 / (float)getViewportHeight());
+//		vecmath::Vector2 size = vecmath::Vector2((screenX1 - screenX0) / (float)getViewportWidth(), (screenY1 - screenY0) / (float)getViewportHeight());
+//
+//		vecmath::Vector2 textureOffset = vecmath::Vector2(textureX0, textureY0);
+//		vecmath::Vector2 sizeInTexture = vecmath::Vector2(textureX1 - textureX0, textureY1 - textureY0);
+//		vecmath::Vector4 rgba = vecmath::Vector4(r, g, b, a);
+//
+//
+//		Main::getSpriteRenderer()->drawTexture(
+//			Main::getGraphicsContext(),
+//			position,
+//			size,
+//			textureOffset,
+//			sizeInTexture,
+//			t->texture,
+//			rgba);
+//
+//	}
+//
+//
+//
+//
+//
+//#endif
 
 
 
@@ -2394,36 +3344,37 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 //}
 
 //=========================================================================================================================
-void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, sp<OKColor> color)//static
+void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, BobColor* color)//static
 {//=========================================================================================================================
+
 
 	screenX0 *= globalDrawScale;
 	//screenX1*=globalDrawScale;
 	screenY0 *= globalDrawScale;
 	//screenY1*=globalDrawScale;
-
+//#ifndef ORBIS
 
 	SDL_Color textSDLColor = { (Uint8)color->ri() ,(Uint8)color->gi(),(Uint8)color->bi(),(Uint8)color->ai() };
 	//SDL_Color bgSDLColor = { 0,0,0,0 };
 
-	sp<TTF_Font> ttfFont = OKFont::ttf_8;
-	sp<TTF_Font> outlineFont = OKFont::ttf_outline_8;
+	TTF_Font *ttfFont = BobFont::ttf_8;
+	TTF_Font *outlineFont = BobFont::ttf_outline_8;
 
 	int OUTLINE_SIZE = 1;
 	// render text and text outline 
 
-	OKColor outlineOKColor = OKColor(*color);
-	outlineOKColor.darker();
-	outlineOKColor.darker();
-	SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
-	sp<SDL_Surface> surface = ms<SDL_Surface>(TTF_RenderText_Blended(outlineFont.get(), text.c_str(), outlineColor));
-	sp<SDL_Surface> fg_surface = ms<SDL_Surface>(TTF_RenderText_Blended(ttfFont.get(), text.c_str(), textSDLColor));
+	BobColor outlineBobColor = BobColor(*color);
+	outlineBobColor.darker();
+	outlineBobColor.darker();
+	SDL_Color outlineColor = { (Uint8)outlineBobColor.ri() ,(Uint8)outlineBobColor.gi(),(Uint8)outlineBobColor.bi(),(Uint8)outlineBobColor.ai() };
+	SDL_Surface* surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
+	SDL_Surface *fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
 	SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 	// blit text onto its outline 
-	SDL_SetSurfaceBlendMode(fg_surface.get(), SDL_BLENDMODE_BLEND);
-	SDL_BlitSurface(fg_surface.get(), NULL, surface.get(), &rect);
-	SDL_FreeSurface(fg_surface.get());
+	SDL_SetSurfaceBlendMode(fg_surface, SDL_BLENDMODE_BLEND);
+	SDL_BlitSurface(fg_surface, NULL, surface, &rect);
+	SDL_FreeSurface(fg_surface);
 
 	if (surface == NULL || surface == nullptr)
 	{
@@ -2433,9 +3384,10 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	int width = fg_surface->w + OUTLINE_SIZE * 2;
 	int height = fg_surface->h + OUTLINE_SIZE * 2;
 
-	sp<OKTexture> texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
-	SDL_FreeSurface(surface.get());
-	surface = nullptr;
+	BobTexture* texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
+	SDL_FreeSurface(surface);
+
+
 
 	int texWidth = texture->getTextureWidth();
 	int texHeight = texture->getTextureHeight();
@@ -2471,16 +3423,25 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 
 	GLUtils::drawTexture(texture, tx0, tx1, ty0, ty1, x0, x1, y0, y1, 1.0f, filter);
 
+//#else
+
+
+
+
+
+//#endif
+
+
  //
  //		if(font==null)
  //		{
  //			try
  //			{
- //				InputStream inputStream = FileUtils::getResourceAsStream("res/fonts/OKGame::ttf");
+ //				InputStream inputStream = FileUtils::getResourceAsStream("res/fonts/BobsGame::ttf");
  //
- //				OKFont awtFont = OKFont.createFont(OKFont.TRUETYPE_FONT, inputStream);
+ //				BobFont awtFont = BobFont.createFont(BobFont.TRUETYPE_FONT, inputStream);
  //				awtFont = awtFont.deriveFont(8f); // set font size
- //				font = ms<TrueTypeFont>(awtFont, antiAlias);
+ //				font = new TrueTypeFont(awtFont, antiAlias);
  //			}
  //			catch (Exception e)
  //			{
@@ -2488,7 +3449,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
  //			}
  //		}
 
- //if(font==null){log.error("OKFont is null");return;}
+ //if(font==null){log.error("BobFont is null");return;}
  //if(getText==null){log.error("Text is null");return;}
 
 
@@ -2514,7 +3475,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	//		font.drawString(screenX0-1,screenY0, getText, Color.black);
 	//		font.drawString(screenX0,screenY0+1, getText, Color.black);
 	//		font.drawString(screenX0,screenY0-1, getText, Color.black);
-	//		font.drawString(screenX0,screenY0, getText, ms<Color>(color.r(),color.g(),color.b()));
+	//		font.drawString(screenX0,screenY0, getText, new Color(color.r(),color.g(),color.b()));
 	//
 	//
 	//		//glEnable(GL_TEXTURE_2D);
@@ -2545,6 +3506,8 @@ void GLUtils::drawLine(float screenX0, float screenY0, float screenX1, float scr
 	screenY0 *= globalDrawScale;
 	screenY1 *= globalDrawScale;
 
+#ifndef ORBIS
+
 	glDisable(GL_TEXTURE_2D);
 
 	glColor4f(r, g, b, a);
@@ -2554,6 +3517,10 @@ void GLUtils::drawLine(float screenX0, float screenY0, float screenX1, float scr
 	glVertex2f(screenX0, screenY0);
 	glVertex2f(screenX1, screenY1);
 	glEnd();
+
+#else
+
+#endif
 }
 
 //===============================================================================================
@@ -2619,7 +3586,7 @@ void GLUtils::drawBox(float screenX0, float screenX1, float screenY0, float scre
 	screenY0 *= globalDrawScale;
 	screenY1 *= globalDrawScale;
 
-
+#ifndef ORBIS
 	glColor3f(r / 255.0f, g / 255.0f, b / 255.0f);
 
 	//top
@@ -2646,7 +3613,20 @@ void GLUtils::drawBox(float screenX0, float screenX1, float screenY0, float scre
 	glVertex2f(screenX1, screenY0);
 	glVertex2f(screenX1, screenY1);
 	glEnd();
+#else
 
+
+
+
+
+
+
+
+
+
+
+
+#endif
 
 	/*
 
@@ -2791,11 +3771,18 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 	screenY1 *= GLUtils::globalDrawScale;
 
 
+//#ifndef ORBIS
 	glDisable(GL_TEXTURE_2D);
+	//glColor4f(ri/255.0f,gi/255.0f,bi/255.0f, alpha);
 
-	// glColor4f(ri/255.0f,gi/255.0f,bi/255.0f, alpha);
+
+
+#ifndef ORBIS
 	glColor4ub(ri, gi, bi, (GLubyte)(alpha * 255));
+#endif
 
+
+#ifndef ORBIS
 	if (glVersionMajor < 2)
 	{
 		//top
@@ -2821,10 +3808,10 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 		glEnd();
 		return;
 	}
-
-	//if (box == nullptr)box = ms<GLfloat>[12];
-	//if (col == nullptr)col = ms<GLfloat>[16];
-	//if (tex == nullptr)tex = ms<GLfloat>[8];
+#endif
+	if (box == nullptr)box = new GLfloat[12];
+	if (col == nullptr)col = new GLfloat[16];
+	if (tex == nullptr)tex = new GLfloat[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2842,6 +3829,7 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 	//boxBuffer.put(box);
 	//boxBuffer.position(0);
 
+#ifndef ORBIS
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 3 * 4, box);
@@ -2849,6 +3837,82 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+#else
+
+	col[0] = ri / 255.0f;
+	col[1] = gi / 255.0f;
+	col[2] = bi / 255.0f;
+	col[3] = alpha;
+
+	col[4] = ri / 255.0f;
+	col[5] = gi / 255.0f;
+	col[6] = bi / 255.0f;
+	col[7] = alpha;
+
+	col[8] = ri / 255.0f;
+	col[9] = gi / 255.0f;
+	col[10] = bi / 255.0f;
+	col[11] = alpha;
+
+	col[12] = ri/255.0f;
+	col[13] = gi/255.0f;
+	col[14] = bi/255.0f;
+	col[15] = alpha;
+
+	GLint uAttribLocationPosition = glGetAttribLocation(uProgram, "pos_attribute_vec4");
+	if (uAttribLocationPosition < 0)
+	{
+		//ERROR_OUTPUT("Couldn't find attribute");
+		//return -1;
+	}
+
+	GLint uAttribLocationColor = glGetAttribLocation(uProgram, "col_attribute_vec4");
+	if (uAttribLocationColor < 0)
+	{
+		//ERROR_OUTPUT("Couldn't find attribute");
+		//return -1;
+	}
+
+	GLUtils::setShaderVar1i(uProgram, (char*)"tex_uniform_sampler2D", 0);
+
+	// Set screen clear color
+	//glClearColor(0.6f, 0.6f, 1.0f, 1.0f);
+
+	// Set shader program to use
+	glUseProgram(uProgram);
+
+	// Enable position and color attribute pointers
+	glEnableVertexAttribArray(uAttribLocationPosition);
+	glVertexAttribPointer(uAttribLocationPosition, 3, GL_FLOAT, 0, sizeof(float) * 3/*0*/, box);
+	glEnableVertexAttribArray(uAttribLocationColor);
+	glVertexAttribPointer(uAttribLocationColor, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 4/*0*/, col);
+
+	// Draw triangle
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+	// Cleanup all the state changes we did
+	glDisableVertexAttribArray(uAttribLocationPosition);
+	glDisableVertexAttribArray(uAttribLocationColor);
+
+	// Set shader
+	glUseProgram(0);
+
+	// Swap window surface / Present display buffer
+	//eglSwapBuffers(display, surface);
+
+#endif
+
+
+
+//#else
+//	vecmath::Vector2 position = vecmath::Vector2(screenX0/ (float)getViewportWidth(),screenY0 / (float)getViewportHeight());
+//	vecmath::Vector2 size = vecmath::Vector2((screenX1 - screenX0) / (float)getViewportWidth(), (screenY1 - screenY0) / (float)getViewportHeight());
+//	vecmath::Vector4 rgba = vecmath::Vector4((float)ri/255.0f, (float)gi / 255.0f, (float)bi / 255.0f, alpha);
+//
+//	Main::getSpriteRenderer()->fillRect(Main::getGraphicsContext(), position, size, rgba);
+//	
+//
+//#endif
 }
 
 //=========================================================================================================================
@@ -2929,10 +3993,10 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	if(rect==null)
 //	{
 //
-//		Pixmap pixmap = ms<Pixmap>( 1, 1, Format.RGBA8888 );
+//		Pixmap pixmap = new Pixmap( 1, 1, Format.RGBA8888 );
 //		pixmap.setColor( 1f, 1f, 1f, 1f );
 //		pixmap.fill();
-//		rect = ms<Texture>( pixmap );
+//		rect = new Texture( pixmap );
 //		pixmap.dispose();
 //
 ////			//int width = 1; //1 pixel wide
@@ -2957,7 +4021,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	}
 //
 //
-//	SpriteBatch batch=OKGame::spriteBatch;
+//	SpriteBatch batch=BobsGame::spriteBatch;
 //
 //	batch->begin();
 //	batch.draw(rect,x,y,width,thickness);
@@ -2978,16 +4042,16 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	if (rect == nullptr)
 //	{
 //
-//		//sp<Pixmap>pixmap = ms<Pixmap>(1, 1, Pixmap::Format::RGBA8888);
+//		//Pixmap *pixmap = new Pixmap(1, 1, Pixmap::Format::RGBA8888);
 //		//pixmap->setColor(1.0f, 1.0f, 1.0f, 1.0f);
 //		//pixmap->fill();
-//		//rect = ms<Texture>(pixmap);
+//		//rect = new Texture(pixmap);
 //		//pixmap->dispose();
 //	}
 //
 //
-//	float w = (float)OKGame::FBOWidth;
-//	float h = (float)OKGame::FBOHeight;
+//	float w = (float)BobsGame::FBOWidth;
+//	float h = (float)BobsGame::FBOHeight;
 //	float heightWidthRatio = h / w;
 //
 //	x = x / w;
@@ -2996,7 +4060,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	height = height / h; // * heightWidthRatio;
 //
 //
-//	//sp<SpriteBatch>spriteBatch = OKGame::spriteBatch;
+//	//SpriteBatch *spriteBatch = BobsGame::spriteBatch;
 //	//spriteBatch->setColor(r, g, b, a);
 //	//spriteBatch->draw(rect,x,y,width,height);
 //
@@ -3019,8 +4083,8 @@ void GLUtils::drawLine(float x1, float y1, float x2, float y2, int thickness)
 //	{//=========================================================================================================================
 //
 //
-//		float w = OKGame::FBOWidth;
-//		float h = OKGame::FBOHeight;
+//		float w = BobsGame::FBOWidth;
+//		float h = BobsGame::FBOHeight;
 //		float heightWidthRatio = h / w;
 //
 //		x = x/w;
@@ -3028,14 +4092,14 @@ void GLUtils::drawLine(float x1, float y1, float x2, float y2, int thickness)
 //		width = width/w;
 //		height = height/h;// * heightWidthRatio;
 //
-//		//Camera camera = OKGame::camera;
+//		//Camera camera = BobsGame::camera;
 //		//camera.update();
 //
 //
 //
 //
 //
-//		ShapeRenderer shapeRenderer = OKGame::shapeRenderer;
+//		ShapeRenderer shapeRenderer = BobsGame::shapeRenderer;
 //
 //		//shapeRenderer.setProjectionMatrix(camera.combined);
 //
@@ -3058,6 +4122,8 @@ void GLUtils::drawLine(float x1, float y1, float x2, float y2, int thickness)
 //===========================================================================================================================
 void GLUtils::old_clear()
 {//===========================================================================================================================
+
+#ifndef ORBIS
 	//if (useFBO)
 	{
 		//attach a texture to a framebuffer, render directly into texture
@@ -3068,6 +4134,9 @@ void GLUtils::old_clear()
 
 	glColor4f(1, 1, 1, 1);
 
+#else
+
+#endif
 }
 
 
@@ -3120,7 +4189,7 @@ void GLUtils::old_render()
 //		gl_draw_flipped(postColorFilterFBO_Texture_Attachment0, 0, -(phdiff * ZOOM), getViewportWidth() / 2 + (pwdiff * ZOOM), getViewportHeight() / 2 + (phdiff * ZOOM));
 //	}
 
-
+#ifndef ORBIS
 	//if (useFBO)
 	{
 		//Be sure to reset the rendering state afterwards by binding the zero framebuffer object (the screen):
@@ -3149,129 +4218,16 @@ void GLUtils::old_render()
 		);
 	}
 
+#else
 
-
-}
-
-
-
-
-//===========================================================================================================================
-sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> surfacein)
-{//===========================================================================================================================
-
-	sp<SDL_Surface> surface = surfacein;
-
-	glEnable(GL_TEXTURE_2D);
-
-	sp<OKTexture> tex = nullptr;
-
-	if (textureCache->containsKey(filename))
-	{
-		tex = textureCache->get(filename);
-		if (tex != nullptr)
-		{
-			return tex;
-		}
-	}
-
-
-	GLuint textureID = createTextureID();
-	tex = ms<OKTexture>(filename, textureID);
-
-	glBindTexture(GL_TEXTURE_2D, textureID);
-
-	int imageWidth = surface->w;
-	int imageHeight = surface->h;
-
-	bool hasAlpha = true;// surface->format->BytesPerPixel == 4;
-	int texWidth = Math::get2Fold(imageWidth);
-	int texHeight = Math::get2Fold(imageHeight);
-
-	tex->setImageWidth(imageWidth);
-	tex->setImageHeight(imageHeight);
-	tex->setTextureWidth(texWidth);
-	tex->setTextureHeight(texHeight);
-	tex->setAlpha(hasAlpha);
-
-
-	GLint maxTexSizeArray[16];// = ms<GLint>[16];
-	glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTexSizeArray);
-	int max = maxTexSizeArray[0];
-	if ((texWidth > max) || (texHeight > max))
-	{
-		log.error("Allocating a texture too big for the current hardware");
-	}
-	//delete[] maxTexSizeArray;
-	//maxTexSizeArray = nullptr;
-	//int srcPixelFormat = hasAlpha ? GL_RGBA : GL_RGB;
-
-
-
-	//have to do this because the surface is not power of 2
-	sp<SDL_Surface> temp = nullptr;
-	//bool freeTemp = false;
-
-	//if (surface->format->BytesPerPixel < 4)
-	{
-		//freeTemp = true;
-
-		//blit from bitmap to a temporary surface with 32 bits per pixel
-		temp = ms<SDL_Surface>(SDL_CreateRGBSurface(SDL_SWSURFACE, texWidth, texHeight, 32, rmask, gmask, bmask, amask));
-
-		SDL_Rect srcArea;
-		srcArea.x = 0;
-		srcArea.y = 0;
-		srcArea.w = imageWidth;
-		srcArea.h = imageHeight;
-
-		SDL_BlitSurface(surface.get(), &srcArea, temp.get(), NULL);
-
-		surface = temp;
-	}
-
-
-	GLUtils::setDefaultTextureParams();
-
-
-	if (SDL_MUSTLOCK(surface.get()))
-		SDL_LockSurface(surface.get());
-
-	/*
-	void glTexImage2D(GLenum target,
-	GLint level,
-	GLint internalFormat,
-	GLsizei width,
-	GLsizei height,
-	GLint border,
-	GLenum format,
-	GLenum type,
-	const sp<GLvoid> data);
-	*/
-	GLint level = 0;
-	GLint border = 0;
-	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-
-
-	if (SDL_MUSTLOCK(surface.get()))
-		SDL_UnlockSurface(surface.get());
-
-	//tex->setCacheName(filename);
-	textureCache->put(filename, tex);
-
-	GLUtils::texturesLoaded++;
-	GLUtils::textureBytesLoaded += (tex->getTextureWidth()*tex->getTextureHeight() * 4);
-
-
-	//free temporary surface
-	//if(freeTemp)
-		SDL_FreeSurface(temp.get());
-		temp = nullptr;
-
-	return tex;
+#endif
 
 }
 
+
+
+
+//#endif
 ////===========================================================================================================================
 //void GLUtils::delete_texture(texture_STRUCT* temp_TEXTURE)
 //{//===========================================================================================================================
@@ -3299,16 +4255,18 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> s
 void GLUtils::clearCache(const string &name)
 {//=========================================================================================================================
  //texturesLinear->erase(name);
-	textureCache->removeAt(name);
+	textureCache.removeAt(name);
 }
 
 //=========================================================================================================================
 void GLUtils::clearCache()
 {//=========================================================================================================================
  //texturesLinear->clear();
-	textureCache->clear();
+	textureCache.clear();
 }
 
+
+//#ifndef ORBIS
 //=========================================================================================================================
 GLuint GLUtils::createTextureID()
 {//=========================================================================================================================
@@ -3317,19 +4275,166 @@ GLuint GLUtils::createTextureID()
 
 	return t;
 }
+//#else
+
+
+
+//#endif
+
+
+
+//#ifndef ORBIS
+//===========================================================================================================================
+BobTexture* GLUtils::loadTextureFromSurface(string textureName, SDL_Surface* surfacein)
+{//===========================================================================================================================
+
+#ifndef ORBIS
+	glEnable(GL_TEXTURE_2D);
+#endif
+
+	SDL_Surface* surface = surfacein;
+
+	if (textureCache.containsKey(textureName))
+	{
+		BobTexture *tex = textureCache.get(textureName);
+		if (tex != nullptr)
+		{
+			return tex;
+		}
+	}
+
+#ifndef ORBIS
+	GLuint textureID = createTextureID();
+	BobTexture *bt = new BobTexture(textureName, textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+
+#endif
+
+	
+
+
+	int imageWidth = surface->w;
+	int imageHeight = surface->h;
+
+	bool hasAlpha = true;// surface->format->BytesPerPixel == 4;
+	int texWidth = Math::get2Fold(imageWidth);
+	int texHeight = Math::get2Fold(imageHeight);
+
+
+
+#ifndef ORBIS
+
+	bt->setImageWidth(imageWidth);
+	bt->setImageHeight(imageHeight);
+	bt->setTextureWidth(texWidth);
+	bt->setTextureHeight(texHeight);
+	bt->setAlpha(hasAlpha);
+
+
+	GLint *maxTexSizeArray = new GLint[16];
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTexSizeArray);
+	int max = maxTexSizeArray[0];
+	if ((texWidth > max) || (texHeight > max))
+	{
+		log.error("Allocating a texture too big for the current hardware");
+	}
+	delete[] maxTexSizeArray;
+	//int srcPixelFormat = hasAlpha ? GL_RGBA : GL_RGB;
+#endif
+
+
+	//have to do this because the surface is not power of 2
+	SDL_Surface* temp = nullptr;
+	//bool freeTemp = false;
+
+	//if (surface->format->BytesPerPixel < 4)
+	{
+		//freeTemp = true;
+
+		//blit from bitmap to a temporary surface with 32 bits per pixel
+		temp = SDL_CreateRGBSurface(SDL_SWSURFACE, texWidth, texHeight, 32, rmask, gmask, bmask, amask);
+
+		SDL_Rect srcArea;
+		srcArea.x = 0;
+		srcArea.y = 0;
+		srcArea.w = imageWidth;
+		srcArea.h = imageHeight;
+
+		SDL_BlitSurface(surface, &srcArea, temp, NULL);
+
+		surface = temp;
+	}
+
+
+	GLUtils::setDefaultTextureParams();
+
+
+	if (SDL_MUSTLOCK(surface))
+		SDL_LockSurface(surface);
+
+#ifndef ORBIS
+	/*
+	void glTexImage2D(GLenum target,
+	GLint level,
+	GLint internalFormat,
+	GLsizei width,
+	GLsizei height,
+	GLint border,
+	GLenum format,
+	GLenum type,
+	const GLvoid * data);
+	*/
+	GLint level = 0;
+	GLint border = 0;
+	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+#else
+
+	ByteArray* data = new ByteArray((u8*)surface->pixels, texWidth*texHeight * 4);
+
+	BobTexture *bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, texWidth, texHeight, data);
+
+	bt->setImageWidth(imageWidth);
+	bt->setImageHeight(imageHeight);
+	bt->setTextureWidth(texWidth);
+	bt->setTextureHeight(texHeight);
+	bt->setAlpha(hasAlpha);
+
+#endif
+
+	if (SDL_MUSTLOCK(surface))
+		SDL_UnlockSurface(surface);
+
+#ifdef ORBIS
+
+	data->bytes = nullptr;
+	delete data;
+#endif
+
+	//tex->setCacheName(filename);
+	textureCache.put(textureName, bt);
+
+	GLUtils::texturesLoaded++;
+	GLUtils::textureBytesLoaded += (bt->getTextureWidth()*bt->getTextureHeight() * 4);
+
+
+	//free temporary surface
+	//if(freeTemp)
+	SDL_FreeSurface(temp);
+
+	return bt;
+
+
+}
 
 //=========================================================================================================================
-sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, sp<ByteArray> data)
+BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data)
 {//=========================================================================================================================
 
 
-	glEnable(GL_TEXTURE_2D);
-
-	sp<OKTexture>tex = nullptr;
-
-	if (textureCache->containsKey(textureName))
+	if (textureCache.containsKey(textureName))
 	{
-		tex = textureCache->get(textureName);
+		BobTexture *tex = textureCache.get(textureName);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -3337,8 +4442,13 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 	}
 
 
+#ifndef ORBIS
+	glEnable(GL_TEXTURE_2D);
+
+
+
 	GLuint textureID = createTextureID();
-	tex = ms<OKTexture>(textureName, textureID);
+	BobTexture *bt = new BobTexture(textureName, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3349,11 +4459,11 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 	int texWidth = Math::get2Fold(imageWidth);
 	int texHeight = Math::get2Fold(imageHeight);
 
-	tex->setImageWidth(imageWidth);
-	tex->setImageHeight(imageHeight);
-	tex->setTextureWidth(texWidth);
-	tex->setTextureHeight(texHeight);
-	tex->setAlpha(hasAlpha);
+	bt->setImageWidth(imageWidth);
+	bt->setImageHeight(imageHeight);
+	bt->setTextureWidth(texWidth);
+	bt->setTextureHeight(texHeight);
+	bt->setAlpha(hasAlpha);
 
 
 	GLint maxTexSize[16];
@@ -3366,7 +4476,7 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 
 
 
-	sp<ByteArray> t = ms<ByteArray>(texWidth*texHeight * 4);
+	ByteArray* t = new ByteArray(texWidth*texHeight * 4);
 
 	for (int y = 0; y<imageHeight; y++)
 		for (int x = 0; x<imageWidth; x++)
@@ -3390,28 +4500,52 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const sp<GLvoid> data);
+	const GLvoid * data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
 	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, data->data());
 
-	//delete t;
-	t = nullptr;
+	delete t;
 
 
 	//tex->setCacheName(textureName);
-	textureCache->put(textureName, tex);
+	textureCache.put(textureName, bt);
 
 	GLUtils::texturesLoaded++;
-	GLUtils::textureBytesLoaded += (tex->getTextureWidth()*tex->getTextureHeight() * 4);
+	GLUtils::textureBytesLoaded += (bt->getTextureWidth()*bt->getTextureHeight() * 4);
+
+	return bt;
+#else
 
 
-	return tex;
+
+	BobTexture *bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, imageWidth, imageHeight, data);
+
+
+
+
+	//tex->setCacheName(filename);
+	textureCache.put(textureName, bt);
+
+
+	GLUtils::texturesLoaded++;
+	GLUtils::textureBytesLoaded += (bt->getTextureWidth()*bt->getTextureHeight() * 4);
+
+
+	return bt;
+
+	
+#endif
+
+	
 }
 
+
+
+
 //=========================================================================================================================
-sp<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, sp<vector<int>>&transparentRGB)
+BobTexture *GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
@@ -3420,52 +4554,70 @@ sp<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string
 
 }
 //=========================================================================================================================
-sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, sp<vector<int>>&transparentRGB)
+BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
-	glEnable(GL_TEXTURE_2D);
+	
 
-	sp<OKTexture>tex = nullptr;
-
-
-	if (textureCache->containsKey(filename))
+	if (textureCache.containsKey(filename))
 	{
-		tex = textureCache->get(filename);
+		BobTexture *tex = textureCache.get(filename);
 		if (tex != nullptr)
 		{
 			return tex;
 		}
 	}
 
+	
+
+//#ifndef ORBIS
+
+	
+	glEnable(GL_TEXTURE_2D);
 
 	GLuint textureID = createTextureID();
-	tex = ms<OKTexture>(filename, textureID);
+	BobTexture *bt = new BobTexture(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 
-	sp<SDL_Surface> imageSurface = ms< SDL_Surface>(IMG_Load(filename.c_str()));
-	//sp<SDL_Surface> imageSurface = STBIMG_Load(filename.c_str());
+
+#ifndef ORBIS
+	SDL_Surface* imageSurface = IMG_Load(filename.c_str());
+	//SDL_Surface* imageSurface = STBIMG_Load(filename.c_str());
 	if (imageSurface == NULL)
 	{
-		log.error("ERROR: Couldn't load "+ filename +": "+string(SDL_GetError()));
+		log.error("ERROR: Couldn't load " + filename);// +": " + string(SDL_GetError()));
 		//exit(1);
 		return nullptr;
 	}
 
-
 	int imageWidth = imageSurface->w;
 	int imageHeight = imageSurface->h;
 	bool hasAlpha = imageSurface->format->BytesPerPixel == 4;
+
+	u8* data = (u8*)imageSurface->pixels;
+#else
+	int imageWidth = 0;
+	int imageHeight = 0;
+	bool hasAlpha = true;
+	int components = 4;
+	int requestedComponents = 4;
+	u8* data = stbi_load(filename.c_str(), &imageWidth, &imageHeight, &components, requestedComponents);
+
+#endif
+
+
+
 	int texWidth = Math::get2Fold(imageWidth);
 	int texHeight = Math::get2Fold(imageHeight);
 
-	tex->setImageWidth(imageWidth);
-	tex->setImageHeight(imageHeight);
-	tex->setTextureWidth(texWidth);
-	tex->setTextureHeight(texHeight);
-	tex->setAlpha(true);
+	bt->setImageWidth(imageWidth);
+	bt->setImageHeight(imageHeight);
+	bt->setTextureWidth(texWidth);
+	bt->setTextureHeight(texHeight);
+	bt->setAlpha(true);
 
 
 	GLint maxTexSizeArray[16];
@@ -3476,9 +4628,8 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 		log.error("Allocating a texture too big for the current hardware");
 	}
 	
-	
 
-	u8* data = (u8*)imageSurface->pixels;
+	
 	u8* t = new u8[texWidth*texHeight * 4];
 
 	for(int i=0;i<texWidth*texHeight * 4;i++)t[i]=0;//fixes random white textures and outlines on lights???
@@ -3531,7 +4682,7 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const sp<GLvoid> data);
+	const GLvoid * data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3539,26 +4690,392 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 
 	delete[] t;
 
-	//log.info("SDL_FreeSurface");
-	SDL_FreeSurface(imageSurface.get());
 
+#ifndef ORBIS
+	//log.info("SDL_FreeSurface");
+	SDL_FreeSurface(imageSurface);
+#else
+	stbi_image_free(data);
+#endif
 
 
 
 	//tex->setCacheName(filename);
-	textureCache->put(filename, tex);
+	textureCache.put(filename, bt);
 
 
 	GLUtils::texturesLoaded++;
-	GLUtils::textureBytesLoaded += (tex->getTextureWidth()*tex->getTextureHeight() * 4);
+	GLUtils::textureBytesLoaded += (bt->getTextureWidth()*bt->getTextureHeight() * 4);
 
 
-	return tex;
+	return bt;
+
+//#else
+//
+//
+//
+//	if (BobFile::exists(filename) == false)
+//	{
+//
+//		Main::getMain()->m_baseService.m_topLevelHud.setSystemMessage(Main::getWString(filename));
+//		return nullptr;
+//	}
+//
+//	
+//
+//	BobTexture *bt = new BobTexture();
+//	
+//	Main::getBaseService()->m_resourceManager.m_graphicsLoader->createBobTextureFromFile(&bt, filename.c_str());
+//
+//
+//
+//	//tex->setCacheName(filename);
+//	textureCache.put(filename, bt);
+//
+//
+//	GLUtils::texturesLoaded++;
+//	GLUtils::textureBytesLoaded += (bt->getTextureWidth()*bt->getTextureHeight() * 4);
+//
+//
+//	return bt;
+//#endif
 }
 
+#ifdef ORBIS
 
+BobTexture *GLUtils::createBobTextureFromRGBAData(sce::SampleUtil::Graphics::GraphicsLoader *loader, string textureName, int imageWidth, int imageHeight, ByteArray* data)
+{
+
+	//	ssgi::ImageFile imageFile;
+	//	int ret = imageFile.openFromMemory(data, size);
+	//	if(ret != SCE_OK){
+	//		return ret;
+	//	}
+
+	ssgi::TextureImpl *t = new ssgi::TextureImpl();
+
+	int texWidth = Math::get2Fold(imageWidth);
+	int texHeight = Math::get2Fold(imageHeight);
+
+	t->initialize(Main::getBaseService()->m_resourceManager.m_graphicsLoader, texWidth, texHeight, 1, ssg::kTextureFormatA8B8G8R8Unorm);
+
+
+	char *bufptr = (char*)t->m_textureBuffer->beginWrite();
+
+
+	for (int y = 0; y<imageHeight; y++)
+		for (int x = 0; x<imageWidth; x++)
+		{
+			bufptr[(((y*texWidth) + x) * 4) + 0] = data->data()[(((y*imageWidth) + x) * 4) + 0];//bgra
+			bufptr[(((y*texWidth) + x) * 4) + 1] = data->data()[(((y*imageWidth) + x) * 4) + 1];
+			bufptr[(((y*texWidth) + x) * 4) + 2] = data->data()[(((y*imageWidth) + x) * 4) + 2];//bgra
+			bufptr[(((y*texWidth) + x) * 4) + 3] = data->data()[(((y*imageWidth) + x) * 4) + 3];
+
+		}
+
+	t->m_textureBuffer->endWrite();
+
+
+	//imageFile.close();
+
+
+	BobTexture *bt = new BobTexture(textureName, 0);
+
+	bt->imageHeight = imageHeight;
+	bt->imageWidth = imageWidth;
+	bt->texWidth = texWidth;
+	bt->texHeight = texHeight;
+	//The ratio of the width of the image to the texture
+	bt->widthRatio = (float)bt->imageWidth / (float)bt->texWidth;
+	// The ratio of the height of the image to the texture
+	bt->heightRatio = (float)bt->imageHeight / (float)bt->texHeight;
+	bt->alpha = false;
+	bt->cacheName = textureName;
+	bt->texture = t;
+	//t->name = textureName;
+
+	//return ret;
+
+	return bt;
+
+}
+
+#endif
+//
+//
+//
+////=========================================================================================================================
+//int ssgi::TextureImpl::initializeBobTextureFromRGBAData(ssg::GraphicsLoader *loader, BobTexture** outTexture, std::string textureName, int imageWidth, int imageHeight, ByteArray* data)
+//{//=========================================================================================================================
+//	if (loader == NULL) {
+//		return SCE_SAMPLE_UTIL_ERROR_NULL_POINTER;
+//	}
+//	if (data == NULL) {
+//		return SCE_SAMPLE_UTIL_ERROR_NULL_POINTER;
+//	}
+//
+//	//	ssgi::ImageFile imageFile;
+//	//	int ret = imageFile.openFromMemory(data, size);
+//	//	if(ret != SCE_OK){
+//	//		return ret;
+//	//	}
+//
+//	m_textureBuffer = new Texture2dBufferImpl();
+//	if (m_textureBuffer == NULL) {
+//		//imageFile.close();
+//		return SCE_SAMPLE_UTIL_ERROR_OUT_OF_MEMORY;
+//	}
+//
+//	int texWidth = getClosestPowerOf2GreaterThan(imageWidth);
+//	int texHeight = getClosestPowerOf2GreaterThan(imageHeight);
+//
+//	int ret = m_textureBuffer->initialize(
+//		dynamic_cast<ssgi::GraphicsLoaderImpl*>(loader),
+//		kBufferFormatX8X8X8X8,
+//		texWidth,
+//		texHeight,
+//		1,
+//		kBufferAccessModeGpuReadCpuWrite,
+//		kBufferBindFlagShaderResource,
+//		kMultisampleNone,
+//		textureName);
+//
+//
+//	if (ret != SCE_OK) {
+//		delete m_textureBuffer;
+//		//imageFile.close();
+//		return ret;
+//	}
+//
+//
+//	char *bufptr = (char*)m_textureBuffer->beginWrite();
+//
+//
+//	for (int y = 0; y<imageHeight; y++)
+//		for (int x = 0; x<imageWidth; x++)
+//		{
+//			bufptr[(((y*texWidth) + x) * 4) + 0] = data->data()[(((y*imageWidth) + x) * 4) + 0];//bgra
+//			bufptr[(((y*texWidth) + x) * 4) + 1] = data->data()[(((y*imageWidth) + x) * 4) + 1];
+//			bufptr[(((y*texWidth) + x) * 4) + 2] = data->data()[(((y*imageWidth) + x) * 4) + 2];//bgra
+//			bufptr[(((y*texWidth) + x) * 4) + 3] = data->data()[(((y*imageWidth) + x) * 4) + 3];
+//
+//		}
+//
+//	m_textureBuffer->endWrite();
+//
+//	uint32_t miplevel = 1;// (imageFile.getMipCount() == 0) ? 1 : imageFile.getMipCount();
+//
+//	sce::Gnm::TextureSpec spec;
+//	spec.init();
+//	spec.m_textureType = sce::Gnm::kTextureType2d;
+//	spec.m_width = m_textureBuffer->getWidth();
+//	spec.m_height = m_textureBuffer->getHeight();
+//	spec.m_depth = 1;
+//	spec.m_pitch = 0;
+//	spec.m_numMipLevels = miplevel;
+//	spec.m_numSlices = 1;
+//	spec.m_format = sce::Gnm::kDataFormatR8G8B8A8Unorm;
+//	spec.m_tileModeHint = sce::Gnm::kTileModeDisplay_LinearAligned;
+//	spec.m_minGpuMode = sce::Gnm::kGpuModeBase;
+//	spec.m_numFragments = sce::Gnm::kNumFragments1;
+//	int32_t status = m_texture.init(&spec);
+//	if (status != SCE_GNM_OK)
+//		return status;
+//	sce::Gnm::SizeAlign sizeAlign = m_texture.getSizeAlign();
+//
+//	(void)sizeAlign;
+//	SCE_SAMPLE_UTIL_ASSERT(sizeAlign.m_size == m_textureBuffer->getSize());
+//	m_texture.setBaseAddress(m_textureBuffer->getData());
+//
+//	m_sampler.init();
+//	m_sampler.setMipFilterMode(sce::Gnm::kMipFilterModeLinear);
+//	m_sampler.setXyFilterMode(sce::Gnm::kFilterModeBilinear, sce::Gnm::kFilterModeBilinear);
+//
+//	m_freeTexture = true;
+//	//imageFile.close();
+//
+//	BobTexture* bt = *outTexture;
+//
+//	bt->imageHeight = imageHeight;
+//	bt->imageWidth = imageWidth;
+//	bt->texWidth = texWidth;
+//	bt->texHeight = texHeight;
+//	//The ratio of the width of the image to the texture
+//	bt->widthRatio = (float)bt->imageWidth / (float)bt->texWidth;
+//	// The ratio of the height of the image to the texture
+//	bt->heightRatio = (float)bt->imageHeight / (float)bt->texHeight;
+//	bt->alpha = false;
+//	bt->cacheName = textureName;
+//	//bt->texture = this;
+//
+//	name = textureName;
+//
+//	return ret;
+//}
+//
+//
+//
+//
+////=========================================================================================================================
+//int ssgi::TextureImpl::initializeBobTextureFromFile(ssg::GraphicsLoader *loader, BobTexture** outTexture, const char *path)
+//{//=========================================================================================================================
+//	if (loader == NULL) {
+//		return SCE_SAMPLE_UTIL_ERROR_NULL_POINTER;
+//	}
+//	if (path == NULL) {
+//		return SCE_SAMPLE_UTIL_ERROR_NULL_POINTER;
+//	}
+//
+//
+//	ssgi::ImageFile imageFile;
+//	int ret = imageFile.open(path);
+//	if (ret != SCE_OK) {
+//		return ret;
+//	}
+//
+//
+//	m_textureBuffer = new Texture2dBufferImpl();
+//	if (m_textureBuffer == NULL) {
+//		imageFile.close();
+//		return SCE_SAMPLE_UTIL_ERROR_OUT_OF_MEMORY;
+//	}
+//
+//	int imageWidth = imageFile.getWidth();
+//	int imageHeight = imageFile.getHeight();
+//	//int texWidth = getClosestPowerOf2GreaterThan(imageWidth);
+//	//int texHeight = getClosestPowerOf2GreaterThan(imageHeight);
+//
+//	if (imageFile.getFileFormat() != ssgi::ImageFile::kGnf) {
+//
+//		ret = m_textureBuffer->initialize(
+//			dynamic_cast<ssgi::GraphicsLoaderImpl*>(loader),
+//			kBufferFormatX8X8X8X8,
+//			imageWidth,
+//			imageHeight,
+//			imageFile.getMipCount(),
+//			kBufferAccessModeGpuReadCpuWrite,
+//			kBufferBindFlagShaderResource,
+//			kMultisampleNone,
+//			string(path));
+//
+//	}
+//	else {
+//		ssgi::GnfFile *gnfFile = imageFile.getGnf();
+//		SCE_SAMPLE_UTIL_ASSERT(gnfFile != NULL);
+//		ret = m_textureBuffer->initializeAsUnknownBuffer(
+//			dynamic_cast<ssgi::GraphicsLoaderImpl*>(loader),
+//			gnfFile->getGnmSize(),
+//			0,
+//			imageWidth,
+//			imageHeight,
+//			imageFile.getMipCount(),
+//			kBufferAccessModeGpuReadCpuWrite,
+//			kBufferBindFlagShaderResource,
+//			kMultisampleNone,
+//			string(path));
+//
+//	}
+//	if (ret != SCE_OK) {
+//		delete m_textureBuffer;
+//		imageFile.close();
+//		return ret;
+//	}
+//
+//	u8 *bufptr = (u8*)m_textureBuffer->beginWrite();
+//	ret = imageFile.readData(bufptr);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+//	m_textureBuffer->endWrite();
+//
+//
+//
+//	//	u8* data = new u8[imageWidth*imageHeight * 4];
+//	//	ret = imageFile.readData(data);
+//	//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+//	//
+//	//
+//	//	u8 *bufptr = (u8*)m_textureBuffer->beginWrite();
+//	//
+//	//	for (int y = 0; y<imageHeight; y++)
+//	//		for (int x = 0; x<imageWidth; x++)
+//	//		{
+//	//			bufptr[(((y*texWidth) + x) * 4) + 0] = data[(((y*imageWidth) + x) * 4) + 0];//bgra
+//	//			bufptr[(((y*texWidth) + x) * 4) + 1] = data[(((y*imageWidth) + x) * 4) + 1];
+//	//			bufptr[(((y*texWidth) + x) * 4) + 2] = data[(((y*imageWidth) + x) * 4) + 2];//bgra
+//	//			bufptr[(((y*texWidth) + x) * 4) + 3] = data[(((y*imageWidth) + x) * 4) + 3];
+//	//		}
+//	//
+//	//	m_textureBuffer->endWrite();
+//	//
+//	//	delete[] data;
+//
+//
+//
+//	uint32_t miplevel = (imageFile.getMipCount() == 0) ? 1 : imageFile.getMipCount();
+//	sce::Gnm::SizeAlign sizeAlign;
+//	if (imageFile.getFileFormat() != ssgi::ImageFile::kGnf) {
+//
+//		sce::Gnm::TextureSpec spec;
+//		spec.init();
+//		spec.m_textureType = sce::Gnm::kTextureType2d;
+//		spec.m_width = m_textureBuffer->getWidth();
+//		spec.m_height = m_textureBuffer->getHeight();
+//		spec.m_depth = 1;
+//		spec.m_pitch = 0;
+//		spec.m_numMipLevels = miplevel;
+//		spec.m_numSlices = 1;
+//		spec.m_format = sce::Gnm::kDataFormatR8G8B8A8Unorm;
+//		spec.m_tileModeHint = sce::Gnm::kTileModeDisplay_LinearAligned;
+//		spec.m_minGpuMode = sce::Gnm::kGpuModeBase;
+//		spec.m_numFragments = sce::Gnm::kNumFragments1;
+//		int32_t status = m_texture.init(&spec);
+//		if (status != SCE_GNM_OK)
+//			return status;
+//		sizeAlign = m_texture.getSizeAlign();
+//	}
+//	else {
+//		ssgi::GnfFile *gnfFile = imageFile.getGnf();
+//		SCE_SAMPLE_UTIL_ASSERT(gnfFile != NULL);
+//		sizeAlign = gnfFile->getGnmSizeAlign();
+//		m_texture = gnfFile->getGnmTexture();
+//	}
+//	(void)sizeAlign;
+//	//printf(__FILE__"(%d) sizeAlign.m_size=%d, m_textureBuffer->getSize()=%d\n", __LINE__, sizeAlign.m_size, m_textureBuffer->getSize());
+//	SCE_SAMPLE_UTIL_ASSERT(sizeAlign.m_size == m_textureBuffer->getSize());
+//	m_texture.setBaseAddress(m_textureBuffer->getData());
+//
+//
+//	m_sampler.init();
+//	m_sampler.setMipFilterMode(sce::Gnm::kMipFilterModeLinear);
+//	m_sampler.setXyFilterMode(sce::Gnm::kFilterModeBilinear, sce::Gnm::kFilterModeBilinear);
+//
+//	m_freeTexture = true;
+//
+//	BobTexture* bt = *outTexture;
+//
+//	bt->imageHeight = imageHeight;
+//	bt->imageWidth = imageWidth;
+//	bt->texWidth = m_textureBuffer->getWidth();
+//	bt->texHeight = m_textureBuffer->getHeight();
+//	//The ratio of the width of the image to the texture
+//	bt->widthRatio = (float)bt->imageWidth / (float)bt->texWidth;
+//	// The ratio of the height of the image to the texture
+//	bt->heightRatio = (float)bt->imageHeight / (float)bt->texHeight;
+//	bt->alpha = false;
+//	bt->cacheName = path;
+//	//bt->texture = this;
+//
+//	name = path;
+//
+//	imageFile.close();
+//	return ret;
+//}
+//
+//#endif
+
+
+#ifndef ORBIS
 //===========================================================================================================================
-void GLUtils::draw_texture_struct(sp<texture_STRUCT> PLAYER_TEXTURE, float x, float y)
+void GLUtils::draw_texture_struct(texture_STRUCT* PLAYER_TEXTURE, float x, float y)
 {//===========================================================================================================================
 
 	GLuint texture_id = PLAYER_TEXTURE->texture_id;
@@ -3737,7 +5254,7 @@ void GLUtils::gl_draw_flipped(GLuint textureid, float x, float y, float w, float
 }
 
 //===========================================================================================================================
-void GLUtils::draw_sprite(sp<SPRITE> s)
+void GLUtils::draw_sprite(SPRITE* s)
 {//===========================================================================================================================
 	GLuint texid = s->texture_id;
 	float x = s->screen_x * ZOOM;
@@ -3943,3 +5460,4 @@ void GLUtils::set_zoom()
 	//SCREEN_HEIGHT_TILES = getViewportHeight() / 8.0f;//24
 }
 
+#endif

@@ -109,7 +109,7 @@ namespace Gwen
 			private:
 
 				Gwen::Rect m_rectClipRegion;
-				ICacheToTexture* m_RTT;
+				//ICacheToTexture* m_RTT;
 
 			public:
 

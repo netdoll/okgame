@@ -14,11 +14,11 @@
 Logger StadiumScreen::log = Logger("StadiumScreen");
 
 
-StadiumScreen::StadiumScreen(sp<Engine> g)
+StadiumScreen::StadiumScreen(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 
-	stadiumGameStateManager = ms<StateManager>();
+	stadiumGameStateManager = new BobStateManager();
 }
 
 void StadiumScreen::update()
@@ -30,7 +30,7 @@ void StadiumScreen::update()
 		return;
 	}
 
-	sp<Engine> s = stadiumGameStateManager->getCurrentState();
+	Engine* s = stadiumGameStateManager->getCurrentState();
 	if (s == nullptr)
 	{
 		return;
@@ -45,7 +45,7 @@ void StadiumScreen::update()
 	GLUtils::globalDrawScale = 1.0f;
 }
 
-void StadiumScreen::setGame(sp<MiniGameEngine> game, sp<Area> area)
+void StadiumScreen::setGame(MiniGameEngine* game, Area* area)
 { //=========================================================================================================================
 
 	this->area = area;
@@ -56,9 +56,9 @@ void StadiumScreen::setGame(sp<MiniGameEngine> game, sp<Area> area)
 	this->setActivated(true);
 }
 
-sp<MiniGameEngine> StadiumScreen::getGame()
+MiniGameEngine* StadiumScreen::getGame()
 { //=========================================================================================================================
-	return ms<MiniGameEngine>(stadiumGameStateManager->getCurrentState().get());
+	return static_cast<MiniGameEngine*>(stadiumGameStateManager->getCurrentState());
 }
 
 void StadiumScreen::render()
@@ -79,22 +79,22 @@ void StadiumScreen::render()
 		return;
 	}
 
-	float x0 = area->screenLeft();
-	float x1 = area->screenRight();
-	float y0 = area->screenTop();
-	float y1 = area->screenBottom();
+
 
 
 	//--------------------------
 	//set the framebuffer to the nD FBO
 	//--------------------------
+#ifndef ORBIS
 	GLUtils::bindFBO(GLUtils::preColorFilterFBO);
 	//glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
 	GLUtils::setPreColorFilterViewport();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+#else
 
+#endif
 	//--------------------------
 	//render the game, which should render the map and entities, etc first.
 	//--------------------------
@@ -106,8 +106,10 @@ void StadiumScreen::render()
 	//--------------------------
 	//set main FBO
 	//--------------------------
-
+#ifndef ORBIS
 	GLUtils::bindFBO(GLUtils::postColorFilterFBO); //set the framebuffer object to the MAIN FBO
+#else
+#endif
 	GLUtils::drawIntoFBOAttachment(0); //set which framebuffer object to draw into (whatever buffer is set with glBindFramebuffer)
 
 	//--------------------------
@@ -152,6 +154,14 @@ void StadiumScreen::render()
 
 	//draw the framebuffer with the lights drawn into it into the screen buffer  (upside down because FBO is flipped)
 	//if(!Keyboard.isKeyDown(Keyboard.KEY_SEMICOLON))
+
+#ifndef ORBIS
+
+	float x0 = area->screenLeft();
+	float x1 = area->screenRight();
+	float y0 = area->screenTop();
+	float y1 = area->screenBottom();
+
 	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); //this fixes the small shadow problems, and also makes the doorknob glow brighter.
 	//GLUtils.drawTexture(GLUtils.mainFBO_Texture, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, (int)(GLUtils.getViewportWidth()), 0.0f, (int)(GLUtils.getViewportHeight()), 1.0f, GLUtils.FILTER_FBO_NEAREST_NO_MIPMAPPING);
 
@@ -160,7 +170,9 @@ void StadiumScreen::render()
 	//GLUtils.drawTexture(GLUtils.mainFBO_Texture, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, (int)(GLUtils.getViewportWidth()), 0.0f, (int)(GLUtils.getViewportHeight()), 1.0f, GLUtils.FILTER_FBO_NEAREST_NO_MIPMAPPING);
 	//if(!Keyboard.isKeyDown(Keyboard.KEY_APOSTROPHE))
 	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#else
 
+#endif
 
 	if (GLUtils::useShaders)
 	{
@@ -209,10 +221,10 @@ void StadiumScreen::render()
 	//				glEnable(GL_TEXTURE_2D);
 	//
 	//
-	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("Tex0")), 0);
-	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("Tex1")), 1);
-	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("width")), Display.getWidth());
-	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("height")), Display.getHeight());
+	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, new StringBuffer("Tex0")), 0);
+	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, new StringBuffer("Tex1")), 1);
+	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, new StringBuffer("width")), Display.getWidth());
+	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, new StringBuffer("height")), Display.getHeight());
 	//
 	//
 	//				float lightOffset = 48*Cameraman().zoom;
@@ -250,12 +262,12 @@ void StadiumScreen::render()
 	//		{
 	//			glUseProgram(GLUtils.colorShader);
 	//
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameHue")), 1.0f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameSaturation")), 1.2f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameBrightness")), 1.0f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameContrast")), 1.2f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameGamma")), 1.0f);
-	//			glUniform1i(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("Tex0")), 0);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, new StringBuffer("gameHue")), 1.0f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, new StringBuffer("gameSaturation")), 1.2f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, new StringBuffer("gameBrightness")), 1.0f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, new StringBuffer("gameContrast")), 1.2f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, new StringBuffer("gameGamma")), 1.0f);
+	//			glUniform1i(glGetUniformLocation(GLUtils.colorShader, new StringBuffer("Tex0")), 0);
 	//		}
 	//
 	//		//draw the framebuffer with the lights drawn into it into the screen buffer  (upside down because FBO is flipped)

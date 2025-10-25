@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -16,8 +16,7 @@ class EventParameter : public EnginePart
 public:
 	static Logger log;
 
-	sp<Map> mapObject = nullptr;
-	sp<Entity> entityObject = nullptr;
+	void* object = nullptr;
 
 	int type = -1;
 
@@ -55,13 +54,13 @@ public:
 	string parameterString = "";
 
 
-	EventParameter(sp<Engine> g, const string& parameterString);
+	EventParameter(Engine* g, const string& parameterString);
 
 
 	void parsePrimitive(const string& typeString, const string& primitiveValueString);
 
 
-	void updateParameterVariablesFromString(sp<Event> event);
+	void updateParameterVariablesFromString(BobEvent* event);
 
 
 	string toString();
@@ -72,7 +71,7 @@ public:
 	//	{
 	//		if(type==TYPE_ERROR)
 	//		{
-	//			log->error("Error in Event Parameter: typeName:"+typeString+" String:"+s);
+	//			log.error("Error in BobEvent Parameter: typeName:"+typeString+" String:"+s);
 	//			return "ERROR."+s;
 	//		}
 	//
@@ -83,7 +82,7 @@ public:
 	//
 	//		if(object!=null)return object.getIDString();
 	//
-	//		log->error("Error in Event Parameter: typeName:"+typeString+" String:"+s);
+	//		log.error("Error in BobEvent Parameter: typeName:"+typeString+" String:"+s);
 	//		return "ERROR"+s;
 	//	}
 

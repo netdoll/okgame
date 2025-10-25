@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "AudioData.h"
 class Logger;
 
@@ -13,7 +13,7 @@ class Logger;
 
 class Logger;
 
-class AudioFile : public ServerObject, public std::enable_shared_from_this<AudioFile>
+class AudioFile : public ServerObject
 {
 public:
 	static Logger log;
@@ -24,21 +24,21 @@ protected:
 	bool startedDownloadThread = false;
 
 
-	sp<AudioData> data = nullptr;
+	AudioData* data = nullptr;
 
-	sp<ByteArray> byteData = nullptr;
+	ByteArray* byteData = nullptr;
 
 
 
 public:
 
 
-	AudioFile(sp<AudioData> data);
+	AudioFile(AudioData* data);
 
 	//Only for use for preloading sound files not on server, they do not have IDs
 	AudioFile(string filename);
 
-	sp<AudioData> getData();
+	AudioData* getData();
 
 	int getID();
 	string& getName();
@@ -60,10 +60,10 @@ public:
 	void setFileExists(bool i);
 
 public:
-	sp<ByteArray> getByteData();
+	ByteArray* getByteData();
 
 
-	void setData_S(sp<AudioData> data);
+	void setData_S(AudioData* data);
 
 
 	virtual void update() override;

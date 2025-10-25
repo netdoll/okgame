@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -31,7 +31,7 @@ public:
 	bool selected = false;
 
 
-	PingPaddle(sp<Engine> g);
+	PingPaddle(Engine* g);
 
 
 	void update();

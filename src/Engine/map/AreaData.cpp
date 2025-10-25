@@ -48,7 +48,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	sp<EventData> eventData,
+	EventData* eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -118,7 +118,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	sp<EventData> eventData,
+	EventData* eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -155,28 +155,28 @@ AreaData::AreaData
 
 void AreaData::addConnectionString(const string& s)
 { //=========================================================================================================================
-	connectionTYPEIDList->push_back(s);
+	connectionTYPEIDList->add(s);
 }
 
-//sp<AreaData> AreaData::fromBase64ZippedJSON(const string& b64)
+//AreaData* AreaData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//AreaData data = gson.fromJson(json,AreaData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//sp<AreaData> AreaData::fromJSON(const string& json)
+//AreaData* AreaData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<AreaData> data = nullptr;// gson->fromJson(json, AreaData::typeid);
+//	//Gson* gson = new Gson();
+//	AreaData* data = nullptr;// gson->fromJson(json, AreaData::typeid);
 //
 //
 //	return data;
@@ -223,10 +223,10 @@ void AreaData::addConnectionString(const string& s)
 //
 //
 //
-//	for (int i = 0; i<connectionTYPEIDList->size(); i++)
+//	for (int i = 0; i<connectionTYPEIDList.size(); i++)
 //	{
 //
-//		string t = connectionTYPEIDList->at(i);
+//		string t = connectionTYPEIDList.get(i);
 //
 //		while (t.contains("`"))
 //		{
@@ -234,7 +234,7 @@ void AreaData::addConnectionString(const string& s)
 //			string back = t.substr(t.find("`") + 1);
 //			t = front + back;
 //		}
-//		connectionTYPEIDList->remove(i);
+//		connectionTYPEIDList.remove(i);
 //		connectionTYPEIDList.add(i, t);
 //
 //	}
@@ -267,9 +267,9 @@ void AreaData::addConnectionString(const string& s)
 //	s += "comment:`" + comment + "`,";
 //	s += "mapID:`" + mapID + "`,";
 //	s += "stateID:`" + stateID + "`,";
-//	for (int i = 0; i<connectionTYPEIDList->size(); i++)
+//	for (int i = 0; i<connectionTYPEIDList.size(); i++)
 //	{
-//		s += "connectionTYPEIDList:`" + connectionTYPEIDList->at(i) + "`,";
+//		s += "connectionTYPEIDList:`" + connectionTYPEIDList.get(i) + "`,";
 //	}
 //	s += "destinationTYPEID:`" + destinationTYPEID + "`,";
 //	s += "arrivalXPixels1X:`" + arrivalXPixels1X + "`,";
@@ -314,12 +314,12 @@ string& AreaData::initFromString(string& t)
 
 	t = t.substr(t.find("randomPointOfInterestOrExit:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomPointOfInterestOrExit = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomPointOfInterestOrExit = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomNPCSpawnPoint:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomNPCSpawnPoint = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomNPCSpawnPoint = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("standSpawnDirection:`") + 1);
@@ -334,17 +334,17 @@ string& AreaData::initFromString(string& t)
 
 	t = t.substr(t.find("randomWaitTime:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomWaitTime = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomWaitTime = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("onlyOneAllowed:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	onlyOneAllowed = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	onlyOneAllowed = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomNPCStayHere:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomNPCStayHere = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomNPCStayHere = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnChance:`") + 1);
@@ -354,12 +354,12 @@ string& AreaData::initFromString(string& t)
 
 	t = t.substr(t.find("randomSpawnOnlyTryOnce:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnOnlyTryOnce = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnOnlyTryOnce = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnOnlyOffscreen:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnOnlyOffscreen = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnOnlyOffscreen = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnDelay:`") + 1);
@@ -369,42 +369,42 @@ string& AreaData::initFromString(string& t)
 
 	t = t.substr(t.find("randomSpawnKids:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnKids = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnKids = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnAdults:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnAdults = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnAdults = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnMales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnMales = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnMales = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnFemales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnFemales = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnFemales = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnCars:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnCars = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnCars = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("autoPilot:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	autoPilot = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	autoPilot = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("playerFaceDirection:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	playerFaceDirection = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	playerFaceDirection = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("suckPlayerIntoMiddle:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	suckPlayerIntoMiddle = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	suckPlayerIntoMiddle = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 //	t = t.substr(t.find("eventID:`") + 1);
@@ -427,7 +427,7 @@ string& AreaData::initFromString(string& t)
 //	stateID = stoi(t.substr(0, t.find("`")));
 //	t = t.substr(t.find("`,") + 2);
 
-	while(OKString::startsWith(t,"connectionTYPEIDList:`"))
+	while(String::startsWith(t,"connectionTYPEIDList:`"))
 	{
 		t = t.substr(t.find("connectionTYPEIDList:`") + 1);
 		t = t.substr(t.find("`") + 1);
@@ -452,7 +452,7 @@ string& AreaData::initFromString(string& t)
 
 	t = t.substr(t.find("isWarpArea:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isWarpArea = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isWarpArea = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("destinationMapName:`") + 1);
@@ -468,9 +468,9 @@ string& AreaData::initFromString(string& t)
 
 	t = t.substr(t.find("eventData:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t,"}") == false)
+	while (String::startsWith(t,"}") == false)
 	{
-		sp<EventData> data = ms<EventData>();
+		EventData* data = new EventData();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -653,12 +653,12 @@ bool AreaData::getSuckPlayerIntoMiddle()
 	return suckPlayerIntoMiddle;
 }
 
-sp<EventData> AreaData::getEventData()
+EventData* AreaData::getEventData()
 {
 	return eventData;
 }
 
-sp<vector<string>> AreaData::getConnectionTYPEIDList()
+ArrayList<string>* AreaData::getConnectionTYPEIDList()
 {
 	return connectionTYPEIDList;
 }

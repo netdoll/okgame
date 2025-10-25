@@ -14,7 +14,7 @@
 Logger Door::log = Logger("Door");
 
 
-Door::Door(sp<Engine> g, sp<DoorData> doorAsset, sp<Map> m)
+Door::Door(Engine* g, DoorData* doorAsset, Map* m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -27,8 +27,8 @@ Door::Door(sp<Engine> g, sp<DoorData> doorAsset, sp<Map> m)
 
 	if (getEventData() != nullptr)
 	{
-		this->event = ms<Event>(g, getEventData(), this);
-		//sp<Event> e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		this->event = new BobEvent(g, getEventData(), this);
+		//BobEvent* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		//event->door = this;
 		//event->entity = this;
 	}
@@ -164,14 +164,14 @@ void Door::update()
 						//TODO: don't spawn if there are too many randoms, have map limit?
 
 
-						sp<vector<string>> targetTYPEIDList;// = ms<vector><string>();
+						ArrayList<string>* targetTYPEIDList = new ArrayList<string>();
 
 						//if this door has connections, set target to one of this door's connections
 						if (getConnectionTYPEIDList()->size() > 0)
 						{
 							for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 							{
-								targetTYPEIDList->push_back(getConnectionTYPEIDList()->at(i));
+								targetTYPEIDList->add(getConnectionTYPEIDList()->get(i));
 							}
 						}
 						else
@@ -186,26 +186,26 @@ void Door::update()
 
 							while (targetTYPEIDList->size() > 0)
 							{
-								int i = Math::randLessThan((int)targetTYPEIDList->size());
+								int i = Math::randLessThan(targetTYPEIDList->size());
 
 								//don't count this door
-								if (targetTYPEIDList->at(i) == "DOOR." + getName())
+								if (targetTYPEIDList->get(i) == "DOOR." + getName())
 								{
-									targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
+									targetTYPEIDList->removeAt(i);
 									continue;
 								}
 
 								bool canMakeRandom = false;
 
 								//if there is another exit, keep pumping out randoms, they will go there.
-								if (OKString::startsWith(targetTYPEIDList->at(i), "DOOR."))
+								if (String::startsWith(targetTYPEIDList->get(i), "DOOR."))
 								{
 									canMakeRandom = true;
 								}
 								else
 								{
 									//else we should check to make sure there is a random point of interest to go to, otherwise he will have nowhere to go and just stand there.
-									sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->at(i));
+									Area* a = getMap()->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->get(i));
 
 									if (a != nullptr)
 									{
@@ -215,7 +215,7 @@ void Door::update()
 										//entMan().isAnyoneTryingToGoToArea(a)==true
 										//||
 										{
-											targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
+											targetTYPEIDList->removeAt(i);
 											continue;
 										}
 										else
@@ -225,15 +225,15 @@ void Door::update()
 									}
 									else
 									{
-										targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
+										targetTYPEIDList->removeAt(i);
 										//this is a serious error, prints out on System.err in getAreaOrWarpAreaByName
 									}
 								}
 
 								if (canMakeRandom == true)
 								{
-									sp<RandomCharacter> r = ms<RandomCharacter>(getEngine(), getMap(), (int)(arrivalXPixelsHQ() + 8) / 2, (int)(arrivalYPixelsHQ() + 8) / 2, randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), false);
-									r->currentAreaTYPEIDTarget = targetTYPEIDList->at(i);
+									RandomCharacter* r = new RandomCharacter(getEngine(), getMap(), (int)(arrivalXPixelsHQ() + 8) / 2, (int)(arrivalYPixelsHQ() + 8) / 2, randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), false);
+									r->currentAreaTYPEIDTarget = targetTYPEIDList->get(i);
 									r->cameFrom = "DOOR." + getName();
 									targetTYPEIDList->clear();
 									open = true;
@@ -282,18 +282,18 @@ void Door::enter()
 	}
 	else
 	{
-		sp<Map> map = getMapManager()->getMapByNameBlockUntilLoaded(destinationMapName());
+		Map* map = getMapManager()->getMapByNameBlockUntilLoaded(destinationMapName());
 
 
-		for (int i = 0; i < (int)map->doorList->size(); i++)
+		for (int i = 0; i < (int)map->doorList.size(); i++)
 		{
-			sp<Door> d = map->doorList->at(i);
+			Door* d = map->doorList.get(i);
 
 			if (d->getName() == destinationDoorName())
 			{
 				open = true;
 
-				getMapManager()->doorEntered = shared_from_this();
+				getMapManager()->doorEntered = this;
 				getMapManager()->doorExited = d;
 
 				d->open = true;
@@ -327,7 +327,7 @@ void Door::renderActionIcon()
 
 	//get distance from player
 
-	sp<OKTexture> actionTexture = getSpriteManager()->actionTexture;
+	BobTexture* actionTexture = getSpriteManager()->actionTexture;
 
 	if (actionTexture == nullptr)
 	{
@@ -393,15 +393,15 @@ void Door::renderDebugBoxes()
 	for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (OKString::startsWith(getConnectionTYPEIDList()->at(i), "DOOR."))
+		if (String::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
-			for (int d = 0; d < (int)getMap()->doorList->size(); d++)
+			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
 			{
-				sp<Door> door = getMap()->doorList->at(d);
+				Door* door = getMap()->doorList.get(d);
 				if (door->getMap() == getMap())
 				{
-					if (getConnectionTYPEIDList()->at(i) == "DOOR." + door->getName())
+					if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
 					{
 						float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 						float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -415,18 +415,18 @@ void Door::renderDebugBoxes()
 		{
 			//draw connections to areas
 			//go through area hashlist
-			//         java::util::Iterator<sp<Area>> aEnum = getMap()->currentState->areaByNameHashtable.elements();
+			//         java::util::Iterator<Area*> aEnum = getMap()->currentState->areaByNameHashtable.elements();
 			//         //areas
 			//         while (aEnum->hasMoreElements())
 			//         {
-			//            sp<Area> a = aEnum->nextElement();
+			//            Area* a = aEnum->nextElement();
 
-			sp<vector<sp<Area>>>areas = getMap()->currentState->areaByNameHashtable->getAllValues();
+			ArrayList<Area*> *areas = getMap()->currentState->areaByNameHashtable.getAllValues();
 			for (int n = 0; n<areas->size(); n++)
 			{
-				sp<Area> a = areas->at(n);
+				Area* a = areas->get(n);
 
-				if (getConnectionTYPEIDList()->at(i) == a->getName())
+				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -436,11 +436,11 @@ void Door::renderDebugBoxes()
 			}
 
 			//if not found, go through warparea list
-			for (int j = 0; j < (int)getMap()->warpAreaList->size(); j++)
+			for (int j = 0; j < (int)getMap()->warpAreaList.size(); j++)
 			{
-				sp<Area> a = getMap()->warpAreaList->at(j);
+				Area* a = getMap()->warpAreaList.get(j);
 
-				if (getConnectionTYPEIDList()->at(i) == a->getName())
+				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -463,30 +463,30 @@ void Door::renderDebugInfo()
 	int strings = -1;
 
 
-	GLUtils::drawOutlinedString("entityID: " + getName(), x, y - 18, OKColor::yellow);
+	GLUtils::drawOutlinedString("entityID: " + getName(), x, y - 18, BobColor::yellow);
 
 
-	GLUtils::drawOutlinedString("assetName: " + sprite->getName(), x, y - 9, OKColor::white);
+	GLUtils::drawOutlinedString("assetName: " + sprite->getName(), x, y - 9, BobColor::white);
 
 
-	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y + (++strings * 9), ms<OKColor>(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y + (++strings * 9), new BobColor(200, 0, 255));
 
 	if (destinationTYPEIDString() == "DOOR." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self")
 	{
-		GLUtils::drawOutlinedString("Has no destination!", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("Has no destination!", x, y + (++strings * 9), BobColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString("Goes to: " + destinationMapName() + "." + destinationDoorName(), x, y + (++strings * 9), ms<OKColor>(200, 0, 255));
+	GLUtils::drawOutlinedString("Goes to: " + destinationMapName() + "." + destinationDoorName(), x, y + (++strings * 9), new BobColor(200, 0, 255));
 
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), OKColor::magenta);
+		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
 	}
 
 	if (randomNPCSpawnPoint())
@@ -508,12 +508,12 @@ void Door::renderDebugInfo()
 		{
 			allowedTypes = allowedTypes + " Females";
 		}
-		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), OKColor::magenta);
+		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
 	}
 
 	if (randomPointOfInterestOrExit())
 	{
-		GLUtils::drawOutlinedString("Random Exit (Point Of Interest)", x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("Random Exit (Point Of Interest)", x, y + (++strings * 9), BobColor::white);
 	}
 
 
@@ -533,20 +533,20 @@ void Door::renderDebugInfo()
 	boolean getRandomSpawnFemales;
 	               
 	               
-	sp<vector<String>>getBehaviorList = ms<vector><String>();
-	sp<vector<String>>connectionList = ms<vector><String>();
+	ArrayList<String> getBehaviorList = new ArrayList<String>();
+	ArrayList<String> connectionList = new ArrayList<String>();
 	               
 	               */
 }
 
-sp<EntityData> Door::getData()
+EntityData* Door::getData()
 {
 	return data;
 }
 
-sp<DoorData> Door::getDoorData()
+DoorData* Door::getDoorData()
 {
-	return (ms<DoorData>(getData().get()));
+	return ((DoorData*)getData());
 }
 
 float Door::arrivalXPixelsHQ()

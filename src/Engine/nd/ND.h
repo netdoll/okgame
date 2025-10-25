@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "src/Engine/state/StateManager.h"
 class Logger;
 
@@ -19,7 +19,7 @@ public:
 	static Logger log;
 
 
-	sp<OKTexture> texture = nullptr;
+	BobTexture* texture = nullptr;
 
 	float nDDrawAlpha = 1.0f;
 	float nDZoom = 0.01f;
@@ -37,10 +37,10 @@ public:
 	
 
 
-	sp<StateManager> nDGameStateManager = nullptr;
+	BobStateManager* nDGameStateManager = nullptr;
 
 
-	sp<Light> light = nullptr;
+	Light* light = nullptr;
 	float lightAlpha = 1.0f;
 	bool lightFadeInOutToggle = false;
 
@@ -49,7 +49,7 @@ public:
 	float lightMinAlpha = 0.70f;
 
 
-	sp<ConsoleText> ndZoomText = nullptr;// = Console::debug("ndZoomText");
+	ConsoleText* ndZoomText = nullptr;// = Console::debug("ndZoomText");
 
 
 	long long fadeOutMeshTicks = 0;
@@ -67,9 +67,9 @@ public:
 	virtual void update() override;
 
 
-	void setGame(sp<NDGameEngine> game);
+	void setGame(NDGameEngine* game);
 
-	sp<NDGameEngine> getGame();
+	NDGameEngine* getGame();
 
 
 	virtual void toggleActivated() override;

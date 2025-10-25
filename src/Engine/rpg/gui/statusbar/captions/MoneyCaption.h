@@ -4,12 +4,12 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
 
-class MoneyCaption : public StatusBarCaption
+class MoneyCaption : public BobStatusBarCaption
 {
 public:
 
@@ -17,7 +17,7 @@ public:
 
 	int dividerX = 0;
 
-	MoneyCaption(sp<BGClientEngine> g);
+	MoneyCaption(BGClientEngine* g);
 
 	virtual void init() override;
 

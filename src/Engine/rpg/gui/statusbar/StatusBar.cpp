@@ -13,34 +13,34 @@
 
 
 
-Logger StatusBar::log = Logger("StatusBar");
+Logger BobStatusBar::log = Logger("BobStatusBar");
 
 
-sp<OKTexture> StatusBar::blackBackgroundTexture = nullptr;
-sp<OKTexture> StatusBar::blackForegroundTexture = nullptr;
-sp<OKTexture> StatusBar::whiteBackgroundTexture = nullptr;
-sp<OKTexture> StatusBar::whiteForegroundTexture = nullptr;
-sp<OKTexture> StatusBar::backgroundTexture = nullptr;
-sp<OKTexture> StatusBar::foregroundTexture = nullptr;
-sp<OKTexture> StatusBar::glowTexture = nullptr;
-sp<OKTexture> StatusBar::dividerTexture = nullptr;
-int StatusBar::sizeY = 26;
-float StatusBar::glossAlpha = 1.0f;
-bool StatusBar::useLightTheme = false;
+BobTexture* BobStatusBar::blackBackgroundTexture = nullptr;
+BobTexture* BobStatusBar::blackForegroundTexture = nullptr;
+BobTexture* BobStatusBar::whiteBackgroundTexture = nullptr;
+BobTexture* BobStatusBar::whiteForegroundTexture = nullptr;
+BobTexture* BobStatusBar::backgroundTexture = nullptr;
+BobTexture* BobStatusBar::foregroundTexture = nullptr;
+BobTexture* BobStatusBar::glowTexture = nullptr;
+BobTexture* BobStatusBar::dividerTexture = nullptr;
+int BobStatusBar::sizeY = 26;
+float BobStatusBar::glossAlpha = 1.0f;
+bool BobStatusBar::useLightTheme = false;
 
-StatusBar::StatusBar(sp<BGClientEngine> g)
+BobStatusBar::BobStatusBar(BGClientEngine* g)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	clockCaption = ms<ClockCaption>(g);
-	dayCaption = ms<DayCaption>(g);
-	moneyCaption = ms<MoneyCaption>(g);
-	ndButton = ms<NDButton>(g);
-	gameStoreButton = ms<GameStoreButton>(g);
-	stuffButton = ms<StuffButton>(g);
+	clockCaption = new ClockCaption(g);
+	dayCaption = new DayCaption(g);
+	moneyCaption = new MoneyCaption(g);
+	ndButton = new NDButton(g);
+	gameStoreButton = new GameStoreButton(g);
+	stuffButton = new StuffButton(g);
 
-	notificationManager = ms<NotificationManager>(g);
+	notificationManager = new NotificationManager(g);
 
 
 	blackBackgroundTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/blackbarbackground.png");
@@ -57,7 +57,7 @@ StatusBar::StatusBar(sp<BGClientEngine> g)
 	dividerTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/dividerLine.png");
 }
 
-void StatusBar::init()
+void BobStatusBar::init()
 { //=========================================================================================================================
 
 	clockCaption->init();
@@ -70,7 +70,7 @@ void StatusBar::init()
 	notificationManager->init();
 }
 
-void StatusBar::update()
+void BobStatusBar::update()
 { //=========================================================================================================================
 	clockCaption->update();
 	dayCaption->update();
@@ -83,7 +83,7 @@ void StatusBar::update()
 	notificationManager->update();
 }
 
-void StatusBar::setLightTheme()
+void BobStatusBar::setLightTheme()
 { //=========================================================================================================================
 
 	if (useLightTheme == false)
@@ -93,13 +93,13 @@ void StatusBar::setLightTheme()
 		foregroundTexture = whiteForegroundTexture;
 
 
-		clockCaption->setColors(ms<OKColor>(200, 0, 0), OKColor::lightRed, nullptr);
-		dayCaption->setColors(OKColor::black, OKColor::lighterGray, nullptr);
-		moneyCaption->setColors(OKColor::green, OKColor::darkerGreen, nullptr);
+		clockCaption->setColors(new BobColor(200, 0, 0), BobColor::lightRed, nullptr);
+		dayCaption->setColors(BobColor::black, BobColor::lighterGray, nullptr);
+		moneyCaption->setColors(BobColor::green, BobColor::darkerGreen, nullptr);
 	}
 }
 
-void StatusBar::setDarkTheme()
+void BobStatusBar::setDarkTheme()
 { //=========================================================================================================================
 	if (useLightTheme == true)
 	{
@@ -108,18 +108,18 @@ void StatusBar::setDarkTheme()
 		foregroundTexture = blackForegroundTexture;
 
 
-		clockCaption->setColors(OKColor::red, OKColor::darkerRed, nullptr);
-		dayCaption->setColors(OKColor::white, OKColor::darkerGray, nullptr);
-		moneyCaption->setColors(OKColor::green, OKColor::darkerGreen, nullptr);
+		clockCaption->setColors(BobColor::red, BobColor::darkerRed, nullptr);
+		dayCaption->setColors(BobColor::white, BobColor::darkerGray, nullptr);
+		moneyCaption->setColors(BobColor::green, BobColor::darkerGreen, nullptr);
 	}
 }
 
-void StatusBar::setEnabled(bool b)
+void BobStatusBar::setEnabled(bool b)
 { //=========================================================================================================================
 	enabled = b;
 }
 
-void StatusBar::render()
+void BobStatusBar::render()
 { //=========================================================================================================================
 
 
@@ -158,7 +158,7 @@ void StatusBar::render()
 	notificationManager->render(1); //nothing yet
 }
 
-void StatusBar::render(int layer)
+void BobStatusBar::render(int layer)
 { //=========================================================================================================================
 
 	if (enabled == false)
@@ -166,7 +166,7 @@ void StatusBar::render(int layer)
 		return;
 	}
 
-	sp<OKTexture> texture = nullptr;
+	BobTexture* texture = nullptr;
 	if (layer == 0)
 	{
 		texture = backgroundTexture;

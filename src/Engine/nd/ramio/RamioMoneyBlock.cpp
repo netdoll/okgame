@@ -14,7 +14,7 @@
 Logger RamioMoneyBlock::log = Logger("RamioMoneyBlock");
 
 
-RamioMoneyBlock::RamioMoneyBlock(sp<Engine> g)
+RamioMoneyBlock::RamioMoneyBlock(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }

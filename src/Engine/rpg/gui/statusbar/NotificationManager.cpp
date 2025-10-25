@@ -16,10 +16,10 @@
 Logger NotificationManager::log = Logger("NotificationManager");
 
 
-sp<OKTexture> NotificationManager::loadingBarTexture = nullptr;
-sp<OKTexture> NotificationManager::loadingBarBackgroundTexture = nullptr;
+BobTexture* NotificationManager::loadingBarTexture = nullptr;
+BobTexture* NotificationManager::loadingBarBackgroundTexture = nullptr;
 
-NotificationManager::NotificationManager(sp<BGClientEngine> g)
+NotificationManager::NotificationManager(BGClientEngine* g)
 { //=========================================================================================================================
 
 
@@ -44,7 +44,7 @@ void NotificationManager::update()
 
 	for (int i = 0; i < notificationList->size(); i++)
 	{
-		notificationList->at(i)->update();
+		notificationList->get(i)->update();
 	}
 }
 
@@ -52,28 +52,20 @@ void NotificationManager::render(int layer)
 { //=========================================================================================================================
 	for (int i = 0; i < notificationList->size(); i++)
 	{
-		notificationList->at(i)->render(layer);
+		notificationList->get(i)->render(layer);
 	}
 }
 
-void NotificationManager::add(sp<Notification> n)
+void NotificationManager::add(Notification* n)
 { //=========================================================================================================================
 
 
-	notificationList->push_back(n);
+	notificationList->add(n);
 }
 
-void NotificationManager::remove(sp<Notification> n)
+void NotificationManager::remove(Notification* n)
 { //=========================================================================================================================
 
-	for (int i = 0; i < notificationList->size(); i++)
-	{
-		if (notificationList->at(i).get() == n.get())
-		{
-			notificationList->erase(notificationList->begin() + i);
-			i--;
-		}
-		
-	}
+	notificationList->remove(n);
 }
 

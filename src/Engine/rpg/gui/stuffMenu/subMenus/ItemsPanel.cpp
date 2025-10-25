@@ -38,41 +38,41 @@ void ItemsPanel::updateItems()
 { //=========================================================================================================================
 
 
-	sp<vector<sp<Item>>>items;
+	ArrayList<Item*>* items = new ArrayList<Item*>();
 
-	for (int i = 0; i < (int)getEventManager()->itemList->size(); i++)
+	for (int i = 0; i < (int)getEventManager()->itemList.size(); i++)
 	{
-		if (getEventManager()->itemList->at(i)->getHaveItemValue_S() == true)
+		if (getEventManager()->itemList.get(i)->getHaveItemValue_S() == true)
 		{
-			items->push_back(getEventManager()->itemList->at(i));
+			items->add(getEventManager()->itemList.get(i));
 		}
 	}
 	//
 	//
-	//   itemDialogLayout = sp<vector<sp<DialogLayout>>>(items->size());
+	//   itemDialogLayout = ArrayList<DialogLayout*>(items->size());
 	//
 	//   for (int n = 0; n < items->size(); n++)
 	//   {
-	//      itemDialogLayout[n] = ms<DialogLayout>();
+	//      itemDialogLayout[n] = new DialogLayout();
 	//      itemDialogLayout[n]->setCanAcceptKeyboardFocus(false);
 	//      itemDialogLayout[n]->setTheme("itemBox");
 	//
 	//
-	//      sp<Item> i = items[n];
-	//      sp<Label> nameLabel = ms<Label>(i->name());
+	//      Item* i = items[n];
+	//      Label* nameLabel = new Label(i->name());
 	//      nameLabel->setCanAcceptKeyboardFocus(false);
 	//      nameLabel->setTheme("itemLabel");
 	//
 	//
-	//      //Label descriptionLabel = ms<Label>(i.description);
+	//      //Label descriptionLabel = new Label(i.description);
 	//      //descriptionLabel.setCanAcceptKeyboardFocus(false);
 	//      //descriptionLabel.setTheme("");
 	//
 	//
-	//      sp<SimpleTextAreaModel> textAreaModel = ms<SimpleTextAreaModel>();
+	//      SimpleTextAreaModel* textAreaModel = new SimpleTextAreaModel();
 	//
 	//
-	//      sp<TextArea> textArea = ms<TextArea>(textAreaModel);
+	//      TextArea* textArea = new TextArea(textAreaModel);
 	//      textArea->setTheme("textarea");
 	//
 	//      textArea->setBorderSize(0, 0);

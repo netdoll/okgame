@@ -19,7 +19,7 @@ RamioBlock::RamioBlock()
 }
 
 
-RamioBlock::RamioBlock(sp<Engine> g)
+RamioBlock::RamioBlock(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }

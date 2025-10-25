@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -14,6 +14,6 @@ class Logger;
 class CountryCodes
 {
 public:
-	static sp<vector<string>> getCountryList();
+	static vector<string>* getCountryList();
 };
 

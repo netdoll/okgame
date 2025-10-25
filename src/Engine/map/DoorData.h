@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -57,14 +57,14 @@ public:
 	DoorData();
 
 
-	DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, sp<EventData> eventData, const string& comment);
+	DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, EventData* eventData, const string& comment);
 
 
 	DoorData(int id, const string& name);
 
 
-	//static sp<DoorData> fromBase64ZippedJSON(const string& b64);
-	//static sp<DoorData> fromJSON(const string& json);
+	//static DoorData* fromBase64ZippedJSON(const string& b64);
+	//static DoorData* fromJSON(const string& json);
 
 
 	string& initFromString(string& t) override;

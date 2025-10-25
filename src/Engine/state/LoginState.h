@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -21,7 +21,7 @@ public:
 
 
 	//GUI* loginScreenGUI = nullptr;
-	sp<LoginMenuPanel> loginMenuPanel = nullptr;
+	LoginMenuPanel* loginMenuPanel = nullptr;
 
 
 	LoginState();
@@ -48,7 +48,7 @@ public:
 	static Logger log;
 
 
-	sp<OKMenu>loginMenu = nullptr;
+	BobMenu *loginMenu = nullptr;
 	int loginMenuCursorPosition = 0;
 	bool textStarted = false;
 	string userNameOrEmailText = "";
@@ -60,51 +60,51 @@ public:
 	string confirmPasswordStarsText = "";
 	bool stayLoggedIn = true;
 
-	sp<Caption> errorLabel = nullptr;
-	sp<Caption> statusLabel = nullptr;
+	Caption* errorLabel = nullptr;
+	Caption* statusLabel = nullptr;
 
 	int lastMX = 0;
 	int lastMY = 0;
 
-	//   sp<DialogLayout> loginPanel;
-	//   sp<EditField> emailEditField;
-	//   sp<EditField> passwordEditField;
-	//   sp<Button> loginWithFacebookButton;
-	//   sp<Button> loginButton;
-	//   sp<Button> createNewAccountButton;
-	//   sp<Button> forgotPasswordButton;
+	//   DialogLayout* loginPanel;
+	//   EditField* emailEditField;
+	//   EditField* passwordEditField;
+	//   Button* loginWithFacebookButton;
+	//   Button* loginButton;
+	//   Button* createNewAccountButton;
+	//   Button* forgotPasswordButton;
 	//
-	//   sp<Label> errorLabel;
-	//   sp<Label> statusLabel;
+	//   Label* errorLabel;
+	//   Label* statusLabel;
 	//
 	//
-	//   sp<Label> emailLabel;
-	//   sp<Label> passwordLabel;
+	//   Label* emailLabel;
+	//   Label* passwordLabel;
 	//
 	bool loggedIn = false;
 	//bool leaveMenu = false;
 	bool createNewAccount = false;
 	//
 	//
-	//   sp<Label> sendStatsQuestionMark;
+	//   Label* sendStatsQuestionMark;
 	//
-	//   sp<Label> stayLoggedInToggleButtonLabel;
-	//   sp<ToggleButton>const stayLoggedInToggleButton = ms<ToggleButton>("");
+	//   Label* stayLoggedInToggleButtonLabel;
+	//   ToggleButton*const stayLoggedInToggleButton = new ToggleButton("");
 	//
-	//   sp<Label> sendStatsToggleButtonLabel;
-	//   sp<ToggleButton>const sendStatsToggleButton = ms<ToggleButton>("");
+	//   Label* sendStatsToggleButtonLabel;
+	//   ToggleButton*const sendStatsToggleButton = new ToggleButton("");
 	//
 	//
-	LoginMenuPanel(sp<Engine> e);
+	LoginMenuPanel(Engine* e);
 	//
 	//private:
 	//   class CallbackAnonymousInnerClassHelper : public EditField::Callback
 	//   {
 	//   private:
-	//      sp<LoginScreen> outerInstance;
+	//      LoginScreen* outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper(sp<LoginScreen> outerInstance);
+	//      CallbackAnonymousInnerClassHelper(LoginScreen* outerInstance);
 	//
 	//      void callback(int key);
 	//   };

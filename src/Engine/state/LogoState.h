@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -21,7 +21,7 @@ public:
 
 
 	//GUI* loginScreenGUI = nullptr;
-	//sp<LoginScreen> loginScreen = nullptr;
+	//LoginScreen* loginScreen = nullptr;
 
 
 	int frame = 0;
@@ -29,8 +29,8 @@ public:
 
 	int count = 0;
 
-	sp<OKTexture> logo = nullptr;
-	sp<OKTexture> gradient = nullptr;
+	BobTexture* logo = nullptr;
+	BobTexture* gradient = nullptr;
 
 	long long totalTicksPassed = 0;
 	long long ticksToShow = 2000;

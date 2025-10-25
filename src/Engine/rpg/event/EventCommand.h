@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -14,7 +14,7 @@ class Logger;
 class EventParameter;
 
 
-class EventCommand : public EnginePart, public std::enable_shared_from_this<EventCommand>
+class EventCommand : public EnginePart
 {
 public:
 
@@ -30,31 +30,31 @@ public:
 	static int TYPE_QUALIFIER_FALSE;
 
 
-	sp<vector<sp<EventParameter>>>parameterList;// = ms<vector><sp<EventParameter>>();
+	ArrayList<EventParameter*>* parameterList = new ArrayList<EventParameter*>();
 
-	sp<EventCommand> parent = nullptr;
-
-
-	sp<vector<sp<EventCommand>>>children;// = ms<vector><sp<EventCommand>>();
+	EventCommand* parent = nullptr;
 
 
-	EventCommand(sp<Engine> g, const string& command, sp<vector<sp<EventParameter>>>&parameterList, int type);
+	ArrayList<EventCommand*>* children = new ArrayList<EventCommand*>();
+
+
+	EventCommand(Engine* g, const string& command, ArrayList<EventParameter*>* parameterList, int type);
 
 	int getNumParams();
 
 
-	static sp<EventCommand> parseEventCommandFromCommandString(sp<Engine> g, sp<Event> event, string commandString);
+	static EventCommand* parseEventCommandFromCommandString(Engine* g, BobEvent* event, string commandString);
 
 
-	sp<EventCommand> getParent();
+	EventCommand* getParent();
 
 
-	void addChild(sp<EventCommand> e);
+	void addChild(EventCommand* e);
 
 
 	int currentChildIndex = 0;
 
 
-	sp<EventCommand> getNextChild();
+	EventCommand* getNextChild();
 };
 

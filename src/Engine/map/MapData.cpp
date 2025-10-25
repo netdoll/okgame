@@ -123,25 +123,25 @@ MapData::MapData(int id, const string& name, int widthTiles1X, int heightTiles1X
 	//		this.heightPixelsHQ2X = getHeightTiles1X*2*8; //hq2x pixel width
 }
 
-//sp<MapData> MapData::fromBase64ZippedJSON(const string& b64)
+//MapData* MapData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//MapData data = gson.fromJson(json,MapData.class);
 //
 //	return fromJSON(json);
 //}
 //
-//sp<MapData> MapData::fromJSON(const string& json)
+//MapData* MapData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<MapData> data = nullptr;// gson->fromJson(json, MapData::typeid);
+//	//Gson* gson = new Gson();
+//	MapData* data = nullptr;// gson->fromJson(json, MapData::typeid);
 //
 //
 //	return data;
@@ -177,12 +177,12 @@ string& MapData::initFromString(string& t)
 
 	t = t.substr(t.find("isOutside:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isOutside = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isOutside = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("preload:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	preload = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	preload = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("groundLayerMD5:`") + 1);
@@ -262,33 +262,33 @@ string& MapData::initFromString(string& t)
 
 	t = t.substr(t.find("stateDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t,"}") == false)
+	while (String::startsWith(t,"}") == false)
 	{
-		sp<MapStateData>data = ms<MapStateData>();
+		MapStateData *data = new MapStateData();
 		t = data->initFromString(t);
-		stateDataList->push_back(data);
+		stateDataList->add(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
 
 	t = t.substr(t.find("eventDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t, "}") == false)
+	while (String::startsWith(t, "}") == false)
 	{
-		sp<EventData>data = ms<EventData>();
+		EventData *data = new EventData();
 		t = data->initFromString(t);
-		eventDataList->push_back(data);
+		eventDataList->add(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
 
 	t = t.substr(t.find("doorDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t,"}") == false)
+	while (String::startsWith(t,"}") == false)
 	{
-		sp<DoorData>data = ms<DoorData>();
+		DoorData *data = new DoorData();
 		t = data->initFromString(t);
-		doorDataList->push_back(data);
+		doorDataList->add(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -439,17 +439,17 @@ int MapData::getHeightPixelsHQ()
 	return getHeightTiles1X() * 8 * 2;
 }
 
-sp<vector<sp<MapStateData>>> MapData::getStateDataList()
+ArrayList<MapStateData*>* MapData::getStateDataList()
 {
 	return stateDataList;
 }
 
-sp<vector<sp<EventData>>> MapData::getEventDataList()
+ArrayList<EventData*>* MapData::getEventDataList()
 {
 	return eventDataList;
 }
 
-sp<vector<sp<DoorData>>> MapData::getDoorDataList()
+ArrayList<DoorData*>* MapData::getDoorDataList()
 {
 	return doorDataList;
 }

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -13,28 +13,28 @@ class Logger;
 
 class RamioGuy;
 
-class RamioOKa : public Entity
+class RamioBoba : public Entity
 {
 public:
 
 	static Logger log;
 
 
-	RamioOKa(sp<Engine> g);
+	RamioBoba(Engine* g);
 
 
 	bool dead = false;
 
 
-	bool checkHitLayerBlocksAndOtherOKas(int dir);
+	bool checkHitLayerBlocksAndOtherBobas(int dir);
 
 
 	virtual void update() override;
 
 
-	bool checkStomp(sp<RamioGuy> guy);
+	bool checkStomp(RamioGuy* guy);
 
 
-	bool checkRunningInto(sp<RamioGuy> guy);
+	bool checkRunningInto(RamioGuy* guy);
 };
 

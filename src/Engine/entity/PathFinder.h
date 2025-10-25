@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 #include <deque>
 
@@ -19,7 +19,7 @@ class TilePath;
 class PathTile
 { //=========================================================================================================================
 private:
-	sp<TilePath> outerInstance = nullptr;
+	//TilePath* outerInstance = nullptr;
 
 
 public:
@@ -27,7 +27,7 @@ public:
 	int tileY = 0;
 
 
-	PathTile(sp<TilePath> outerInstance, int tileX, int tileY);
+	PathTile(int tileX, int tileY);//TilePath* outerInstance, 
 
 
 	int getX();
@@ -47,20 +47,20 @@ public:
 class TilePath
 { //=========================================================================================================================
 private:
-	sp<PathFinder> outerInstance = nullptr;
+	//PathFinder* outerInstance = nullptr;
 
 
 public:
-	deque<sp<PathTile>>* pathTiles = new deque<sp<PathTile>>();
+	deque<PathTile*>* pathTiles = new deque<PathTile*>();
 
 
-	TilePath(sp<PathFinder> outerInstance);
+	TilePath();// PathFinder* outerInstance);
 
 
 	int getLength();
 
 
-	sp<PathTile> getTileForPathIndex(int index);
+	PathTile* getTileForPathIndex(int index);
 
 
 	int getTileXForPathIndex(int index);
@@ -84,15 +84,15 @@ public:
 class SortedList
 { //=========================================================================================================================
 private:
-	sp<PathFinder> outerInstance = nullptr;
+	//PathFinder* outerInstance = nullptr;
 
 public:
-	SortedList(sp<PathFinder> outerInstance);
+	SortedList();// PathFinder* outerInstance);
 
 	/// <summary>
 	/// The list of elements </summary>
 private:
-	sp<vector<sp<PotentialTile>>>list;// = ms<vector><sp<PotentialTile>>();
+	ArrayList<PotentialTile*>* list = new ArrayList<PotentialTile*>();
 
 
 	/// <summary>
@@ -100,7 +100,7 @@ private:
 	/// </summary>
 	/// <returns> The first element from the list </returns>
 public:
-	sp<PotentialTile> first();
+	PotentialTile* first();
 
 
 	/// <summary>
@@ -109,22 +109,22 @@ public:
 	void clear();
 
 
-	void addAndSort(sp<PotentialTile> o);
+	void addAndSort(PotentialTile* o);
 
 
-	void remove(sp<PotentialTile> o);
+	void remove(PotentialTile* o);
 
 
 	int size();
 
 
-	bool contains(sp<PotentialTile> o);
+	bool contains(PotentialTile* o);
 };
 
 class PotentialTile
 { //=========================================================================================================================
 public:
-	sp<PathFinder> outerInstance = nullptr;
+	//PathFinder* outerInstance = nullptr;
 
 
 	/// <summary>
@@ -138,7 +138,7 @@ public:
 	float cumulativePathCost = 0;
 	/// <summary>
 	/// The parent of this node, how we reached it in the search </summary>
-	sp<PotentialTile> parent;
+	PotentialTile* parent;
 	/// <summary>
 	/// The heuristic cost of this node </summary>
 	float heuristicCost = 0;
@@ -153,12 +153,12 @@ public:
 
 
 	//=========================================================================================================================
-	int setParentTile(sp<PotentialTile> parent);
+	int setParentTile(PotentialTile* parent);
 
 
 	/// <seealso cref= Comparable#compareTo(Object) </seealso>
 	//=========================================================================================================================
-	int compareTo(sp<PotentialTile> o);
+	int compareTo(PotentialTile* o);
 };
 
 
@@ -177,14 +177,14 @@ private:
 
 
 public:
-	sp<TilePath> path = nullptr;
+	TilePath* path = nullptr;
 
 private:
-	sp<vector<sp<PotentialTile>>>blockedPotentialTilesList;// = ms<vector><sp<PotentialTile>>();
-	sp<SortedList> openPotentialTilesList = ms<SortedList>(this);
+	ArrayList<PotentialTile*>* blockedPotentialTilesList = new ArrayList<PotentialTile*>();
+	SortedList* openPotentialTilesList = new SortedList();
 
-	//sp<vector<vector<sp<PotentialTile>>>>* potentialTiles = ms<vector><vector<sp<PotentialTile>>>();
-	sp<vector<sp<PotentialTile>>>potentialTiles;// = nullptr;
+	//ArrayList<ArrayList<PotentialTile*>*>* potentialTiles = new ArrayList<ArrayList<PotentialTile*>*>();
+	vector<PotentialTile*> *potentialTiles = nullptr;
 	bool* checkedTileArray = nullptr;
 
 
@@ -192,7 +192,7 @@ private:
 	bool allowDiagMovement = false;
 
 public:
-	sp<Entity> e = nullptr;
+	Entity* e = nullptr;
 
 
 	int w = 0;
@@ -200,11 +200,11 @@ public:
 
 
 	//=========================================================================================================================
-	PathFinder(sp<Entity> e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X);
+	PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X);
 
 
 	//=========================================================================================================================
-	sp<TilePath> findPath(int startTileX, int startTileY, int toTileX, int toTileY);
+	TilePath* findPath(int startTileX, int startTileY, int toTileX, int toTileY);
 
 
 	//=========================================================================================================================

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	PingBackground(sp<Engine> g);
+	PingBackground(Engine* g);
 
 
 	bool tvRolling = false;
@@ -27,7 +27,7 @@ public:
 	bool tvScanlinesColorPulseToggle = false;
 
 	bool backgroundInit = false;
-	sp<OKTexture> backgroundTexture = nullptr;
+	BobTexture* backgroundTexture = nullptr;
 	int screenX = 0;
 	int screenY = 0;
 

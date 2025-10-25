@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -17,7 +17,7 @@ public:
 	static Logger log;
 
 protected:
-	sp<AreaData> data = nullptr;
+	AreaData* data = nullptr;
 
 public:
 	long long ticksSinceSpawnTry = 0;
@@ -30,16 +30,16 @@ public:
 
 	bool showActionIcon = true;
 
-	sp<Map> map = nullptr;
+	Map* map = nullptr;
 
 	Area();
-	Area(sp<Engine> g, sp<Map> m);
+	Area(Engine* g, Map* m);
 
-	Area(sp<Engine> g, sp<AreaData> a, sp<Map> m);
+	Area(Engine* g, AreaData* a, Map* m);
 
-	sp<Event> event = nullptr;
+	BobEvent* event = nullptr;
 
-	sp<Map> getMap();
+	Map* getMap();
 
 	bool fadingInOut = false;
 	float fadeAlpha = 0.0f;
@@ -57,51 +57,51 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	sp<OKBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
 	void tellServerTalkedToToday();
 
 	bool isWithinScreenBounds();
 
-	bool inRangeOfEntityByAmount(sp<Entity> e, int amt);
+	bool inRangeOfEntityByAmount(Entity* e, int amt);
 
-	float getDistanceFromEntity(sp<Entity> e);
+	float getDistanceFromEntity(Entity* e);
 
-	bool isEntityHitBoxTouchingMyBoundary(sp<Entity> e);
+	bool isEntityHitBoxTouchingMyBoundary(Entity* e);
 
-	bool isAreaCenterTouchingMyBoundary(sp<Area> a);
+	bool isAreaCenterTouchingMyBoundary(Area* a);
 
-	bool isAreaBoundaryTouchingMyBoundary(sp<Area> a);
+	bool isAreaBoundaryTouchingMyBoundary(Area* a);
 
 	bool isXYTouchingMyBoundary(float x, float y);
 
 	bool isXYXYTouchingMyBoundary(float left, float top, float right, float bottom);
 
-	bool isAreaBoundaryTouchingMyCenter(sp<Area> a);
+	bool isAreaBoundaryTouchingMyCenter(Area* a);
 
-	bool isEntityMiddleXYTouchingMyCenter(sp<Entity> e);
+	bool isEntityMiddleXYTouchingMyCenter(Entity* e);
 
-	bool isAreaCenterTouchingMyCenter(sp<Area> a);
+	bool isAreaCenterTouchingMyCenter(Area* a);
 
 	bool isXYTouchingMyCenter(float x, float y);
 
 	bool isXYXYTouchingMyCenter(float left, float top, float right, float bottom);
 
-	bool isEntityHitBoxTouchingMyBoundaryByAmount(sp<Entity> e, int amt);
+	bool isEntityHitBoxTouchingMyBoundaryByAmount(Entity* e, int amt);
 
-	bool isAreaCenterTouchingMyBoundaryByAmount(sp<Area> a, int amt);
+	bool isAreaCenterTouchingMyBoundaryByAmount(Area* a, int amt);
 
-	bool isAreaBoundaryTouchingMyBoundaryByAmount(sp<Area> a, int amt);
+	bool isAreaBoundaryTouchingMyBoundaryByAmount(Area* a, int amt);
 
 	bool isXYTouchingMyBoundaryByAmount(float x, float y, int amt);
 
 	bool isXYXYTouchingMyBoundaryByAmount(float left, float top, float right, float bottom, int amt);
 
-	bool isAreaBoundaryTouchingMyCenterByAmount(sp<Area> a, int amt);
+	bool isAreaBoundaryTouchingMyCenterByAmount(Area* a, int amt);
 
-	bool isEntityMiddleXYTouchingMyCenterByAmount(sp<Entity> e, int amt);
+	bool isEntityMiddleXYTouchingMyCenterByAmount(Entity* e, int amt);
 
-	bool isAreaCenterTouchingMyCenterByAmount(sp<Area> a, int amt);
+	bool isAreaCenterTouchingMyCenterByAmount(Area* a, int amt);
 
 	bool isXYTouchingMyCenterByAmount(float x, float y, int amt);
 
@@ -136,7 +136,7 @@ public:
 
 	float screenBottom();
 
-	sp<AreaData> getData();
+	AreaData* getData();
 
 	float getX();
 	float getY();
@@ -173,8 +173,8 @@ public:
 	bool autoPilot();
 	bool playerFaceDirection();
 	bool suckPlayerIntoMiddle();
-	sp<EventData> getEventData();
-	sp<vector<string>> connectionTYPEIDList();
+	EventData* getEventData();
+	ArrayList<string>* connectionTYPEIDList();
 
 	string getTYPEIDString();
 

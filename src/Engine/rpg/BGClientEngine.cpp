@@ -47,20 +47,20 @@ void BGClientEngine::init()
 #endif
 	
 
-	clock = ms<Clock>(this);
+	clock = new Clock(this);
 
-	player = ms<Player>(this);
+	player = new Player(this);
 	normalPlayer = player;
 
-	guiManager = ms<GUIManager>(this);
+	guiManager = new GUIManager(this);
 
-	statusBar = ms<StatusBar>(this);
-	wallet = ms<Wallet>(this);
+	statusBar = new BobStatusBar(this);
+	wallet = new Wallet(this);
 
-	friendManager = ms<FriendManager>(this);
+	friendManager = new FriendManager(this);
 
 	nD = new ND();
-	stadiumScreen = ms<StadiumScreen>(this);
+	stadiumScreen = new StadiumScreen(this);
 
 
 	if (Main::previewClientInEditor == false)
@@ -78,34 +78,34 @@ void BGClientEngine::init()
 
 	nD->init();
 
-	sp<NDMenu> nDMenu = ms<NDMenu>(nD);
+	NDMenu* nDMenu = new NDMenu(nD);
 	nDMenu->init();
 	
 
-	sp<OKGame> bobsgame = ms<OKGame>(nD);
+	BobsGame* bobsgame = new BobsGame(nD);
 	bobsgame->init();
 	
 
-	sp<Ping> ping = ms<Ping>(nD);
+	Ping* ping = new Ping(nD);
 	ping->init();
 	
 
-	sp<Ramio> ramio = ms<Ramio>(nD);
+	Ramio* ramio = new Ramio(nD);
 	ramio->init();
 	
 
 
-	nDMenu->addGame(ping, "Ping", OKColor::blue);
-	nDMenu->addGame(ramio,"Ramio",OKColor::red);
-	nDMenu->addGame(bobsgame,"\"bob's game\"",OKColor::green);
+	nDMenu->addGame(ping, "Ping", BobColor::blue);
+	nDMenu->addGame(ramio,"Ramio",BobColor::red);
+	nDMenu->addGame(bobsgame,"\"bob's game\"",BobColor::green);
 
 	nD->setGame(nDMenu);
 
 
 	friendManager->init();
 
-	//mapManager->changeMap("ALPHAOKApartment","atDesk");
-	//mapManager->changeMap("ALPHAOKElevator","center");
+	//mapManager->changeMap("ALPHABobsApartment","atDesk");
+	//mapManager->changeMap("ALPHABobElevator","center");
 	//mapManager->changeMap("TOWNYUUDownstairs",30,18);
 	//mapManager.changeMap("TOWNVideoRentAdultRoom",10,10);
 	//mapManager.changeMap("CITYTheCafe",10,10);
@@ -127,13 +127,13 @@ void BGClientEngine::init()
 	cameraman->setXYToTarget(); //TODO: fix this so it goes to xtarget (camstop tiles) instead of just npc target (player)
 
 
-	//itemManager.ITEM_get_no_caption(ms<Item>("nD","The indie handheld Game() console. A juggernaut of disposable technology, devised as a vengeful scheme to destroy the traditional Game() industry. Invented by a secretive, notoriously stubborn developer whose first Game() was held back by corrupt, obsolete corporate policy. So cheap and ubiquitous that every kid has two or three- making it a modern societal requirement."));
-	//itemManager.ITEM_get_no_caption(ms<Item>("Wallet","This holds your old receipts, slowly rubbing the ink off so the paper can be reused to write down phone numbers- if only you had a pen!"));
-	//itemManager.ITEM_get_no_caption(ms<Item>("Keys","These relics of long-antiquated technology give an illusion of security. Easily lost, they weigh down your pants, scratch everything in your pockets, and are generally uncomfortable, noisy metal daggers. Don't ever leave home without them!"));
-	//itemManager.ITEM_get_no_caption(ms<Item>("Smartphone","This infinitely helpful device keeps you constantly distracted and tracks your every move for a huge monthly fee. Sometimes you begin to wonder if it is making you more impulsive and helpless, and are fortunately comforted by its glow just as panic sets in. Scientists are pretty sure it doesn't cause brain cancer!"));
+	//itemManager.ITEM_get_no_caption(new Item("nD","The indie handheld Game() console. A juggernaut of disposable technology, devised as a vengeful scheme to destroy the traditional Game() industry. Invented by a secretive, notoriously stubborn developer whose first Game() was held back by corrupt, obsolete corporate policy. So cheap and ubiquitous that every kid has two or three- making it a modern societal requirement."));
+	//itemManager.ITEM_get_no_caption(new Item("Wallet","This holds your old receipts, slowly rubbing the ink off so the paper can be reused to write down phone numbers- if only you had a pen!"));
+	//itemManager.ITEM_get_no_caption(new Item("Keys","These relics of long-antiquated technology give an illusion of security. Easily lost, they weigh down your pants, scratch everything in your pockets, and are generally uncomfortable, noisy metal daggers. Don't ever leave home without them!"));
+	//itemManager.ITEM_get_no_caption(new Item("Smartphone","This infinitely helpful device keeps you constantly distracted and tracks your every move for a huge monthly fee. Sometimes you begin to wonder if it is making you more impulsive and helpless, and are fortunately comforted by its glow just as panic sets in. Scientists are pretty sure it doesn't cause brain cancer!"));
 
 
-	//ms<EasingTest>();
+	//new EasingTest();
 
 	//cinematicsManager.toggleLetterbox(true);
 	//textManager.getText("Yuu normal font <TINY>tiny font <SMALL><GREEN>small font <WHITE><HUGE>huge font <.><SMALL><NORMAL><NEXTLINE>next line <1>top getText box<0>bottom getText box");
@@ -143,8 +143,8 @@ void BGClientEngine::init()
 	//captionManager.CAPTION_make_caption(Caption.CAPTION_CENTERED_X,0,Caption.CAPTION_DELETE_WHEN_MAIN_SPRITE_MOVES,"CAPTION_CENTERED_X",0,Color.white,Color.black,4,1.0f,0);
 
 
-	//ms<Notification>("This is the notification area.");
-	//ms<Notification>("This is the notification area. Important messages will show up here periodically to let you know about events or whatever.");
+	//new Notification("This is the notification area.");
+	//new Notification("This is the notification area. Important messages will show up here periodically to let you know about events or whatever.");
 }
 
 
@@ -191,7 +191,7 @@ void BGClientEngine::update()
 
 	if (Main::introMode == true)
 	{
-		//getServerConnection()->setGameSave_S(ms<GameSave>());
+		//getServerConnection()->setGameSave_S(new GameSave());
 		getServerConnection()->setInitialGameSaveReceived_S(true);
 		setGameInitializedFromSave_S(true);
 
@@ -556,7 +556,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	bool debug = true;
 
 
-	sp<vector<string>> b64List = nullptr;
+	ArrayList<string>* b64List = nullptr;
 
 
 	try
@@ -571,13 +571,13 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				sp<SkillData> data = ms<SkillData>(); data->initFromString(s);
+				SkillData* data = new SkillData(); data->initFromString(s);
 
-				//sp<Skill> skill =
-                ms<Skill>(this, data);//adds itself to eventManager skill list in constructor
+				//Skill* skill =
+                new Skill(this, data);//adds itself to eventManager skill list in constructor
 				//getEventManager()->skillList.add(skill);
 
 				if (debug)
@@ -594,18 +594,18 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				sp<DialogueData> data = ms<DialogueData>(); data->initFromString(s);
-				//sp<Dialogue> m =
-                ms<Dialogue>(this, data);
+				DialogueData* data = new DialogueData(); data->initFromString(s);
+				//Dialogue* m =
+                new Dialogue(this, data);
 				//getEventManager()->dialogueList.add(m);
 				if (debug)
 				{
@@ -621,18 +621,18 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				sp<FlagData> data = ms<FlagData>(); data->initFromString(s);
-				//sp<Flag> m =
-                ms<Flag>(this, data);
+				FlagData* data = new FlagData(); data->initFromString(s);
+				//Flag* m =
+                new Flag(this, data);
 				//getEventManager()->flagList.add(m);
 				if (debug)
 				{
@@ -648,18 +648,18 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				sp<GameStringData> data = ms<GameStringData>(); data->initFromString(s);
-				//sp<GameString> m =
-                ms<GameString>(this, data);
+				GameStringData* data = new GameStringData(); data->initFromString(s);
+				//GameString* m =
+                new GameString(this, data);
 				//getEventManager()->gameStringList.add(m);
 				if (debug)
 				{
@@ -675,22 +675,22 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				sp<EventData> data = ms<EventData>(); data->initFromString(s);
-				//sp<Event> m =
-                ms<Event>(this, data, "cutscene");
+				EventData* data = new EventData(); data->initFromString(s);
+				//BobEvent* m =
+                new BobEvent(this, data, "cutscene");
 				//getEventManager()->eventList.add(m);
 				if (debug)
 				{
-					log.debug("Preload Event id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload BobEvent id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -702,25 +702,25 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 
 			if (s.length() > 0)
 			{
-				sp<SpriteData> data = ms<SpriteData>(); data->initFromString(s);
+				SpriteData* data = new SpriteData(); data->initFromString(s);
 
-				if (getSpriteManager()->spriteByIDHashMap->containsKey(data->getID()) == false)
+				if (getSpriteManager()->spriteByIDHashMap.containsKey(data->getID()) == false)
 				{
-					sp<Sprite> sprite = ms<Sprite>(this);
+					Sprite* sprite = new Sprite(this);
 					sprite->initializeWithSpriteData(data);
 
-					getSpriteManager()->spriteByNameHashMap->put(data->getName(), sprite);
-					getSpriteManager()->spriteByIDHashMap->put(data->getID(), sprite);
+					getSpriteManager()->spriteByNameHashMap.put(data->getName(), sprite);
+					getSpriteManager()->spriteByIDHashMap.put(data->getID(), sprite);
 				}
 				else
 				{
@@ -744,22 +744,22 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 
 			if (s.length() > 0)
 			{
-				sp<AudioData> data = ms<AudioData>(); data->initFromString(s);
+				AudioData* data = new AudioData(); data->initFromString(s);
 
-				sp<AudioFile> m = AudioManager::getAudioFileByName(data->getName());
+				AudioFile* m = AudioManager::getAudioFileByName(data->getName());
 				if (m == nullptr)
 				{
-					ms<AudioFile>(data);
+					new AudioFile(data);
 				}
 				else
 				{
@@ -788,22 +788,22 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 
 			if (s.length() > 0)
 			{
-				sp<AudioData> data = ms<AudioData>(); data->initFromString(s);
+				AudioData* data = new AudioData(); data->initFromString(s);
 
-				sp<AudioFile> m = AudioManager::getAudioFileByName(data->getName());
+				AudioFile* m = AudioManager::getAudioFileByName(data->getName());
 				if (m == nullptr)
 				{
-					ms<AudioFile>(data);
+					new AudioFile(data);
 				}
 				else
 				{
@@ -827,25 +827,25 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->>printStackTrace();
+		//e->printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->at(i);
+			string s = b64List->get(i);
 
 			if (s.length() > 0)
 			{
-				sp<MapData> data = ms<MapData>(); data->initFromString(s);
+				MapData* data = new MapData(); data->initFromString(s);
 
-				if (getMapManager()->mapByIDHashMap->containsKey(data->getID()) == false)
+				if (getMapManager()->mapByIDHashMap.containsKey(data->getID()) == false)
 				{
-					sp<Map> m = ms<Map>(this, data);
+					Map* m = new Map(this, data);
 
-					getMapManager()->mapList->push_back(m);
-					getMapManager()->mapByNameHashMap->put(data->getName(), m);
-					getMapManager()->mapByIDHashMap->put(data->getID(), m);
+					getMapManager()->mapList.add(m);
+					getMapManager()->mapByNameHashMap.put(data->getName(), m);
+					getMapManager()->mapByIDHashMap.put(data->getID(), m);
 				}
 				else
 				{
@@ -901,7 +901,7 @@ void BGClientEngine::initializeGameFromSave_S()
 			itemsHeld = itemsHeld.substr(itemsHeld.find(",") + 1);
 
 
-			sp<Item> f = getEventManager()->getItemByID(itemID);
+			Item* f = getEventManager()->getItemByID(itemID);
 			f->initHaveItemValue_S(value, timeSet);
 		}
 	}
@@ -941,7 +941,7 @@ void BGClientEngine::initializeGameFromSave_S()
 
 			flagsSet = flagsSet.substr(flagsSet.find(",") + 1);
 
-			sp<Flag> f = getEventManager()->getFlagByIDCreateIfNotExist(flagID);
+			Flag* f = getEventManager()->getFlagByIDCreateIfNotExist(flagID);
 			f->initValueFromGameSave_S(value, timeSet);
 		}
 	}
@@ -979,7 +979,7 @@ void BGClientEngine::initializeGameFromSave_S()
 
 			dialoguesDone = dialoguesDone.substr(dialoguesDone.find(",") + 1);
 
-			sp<Dialogue> d = getEventManager()->getDialogueByIDCreateIfNotExist(dialogueID);
+			Dialogue* d = getEventManager()->getDialogueByIDCreateIfNotExist(dialogueID);
 			d->initDialogueDoneValueFromGameSave_S(value, timeSet);
 		}
 	}
@@ -1026,12 +1026,12 @@ void BGClientEngine::initializeGameFromSave_S()
 
 			skillValues = skillValues.substr(skillValues.find(",") + 1);
 
-			sp<Skill> skill = getEventManager()->getSkillByIDCreateIfNotExist(skillID);
+			Skill* skill = getEventManager()->getSkillByIDCreateIfNotExist(skillID);
 			skill->initValueFromGameSave_S(value, timeSet);
 		}
 	}
 
-	//mapManager.changeMap("ALPHAOKApartment",18,15);//g.lastKnownRoom, g.lastKnownX/8, g.lastKnownY/8);
+	//mapManager.changeMap("ALPHABobsApartment",18,15);//g.lastKnownRoom, g.lastKnownX/8, g.lastKnownY/8);
 	//mapManager.changeMap(g.lastKnownRoom, g.lastKnownX/8, g.lastKnownY/8);
 
 
@@ -1049,7 +1049,7 @@ void BGClientEngine::setPlayerAppearanceFromGameSave_S()
 	player->setCharacterNameAndCaption(getNameColor(g.accountRank), g.characterName, getAccountRankColor(g.accountRank), getAccountRankString(g.accountRank));
 }
 
-sp<OKColor> BGClientEngine::getNameColor(int accountType)
+BobColor* BGClientEngine::getNameColor(int accountType)
 { //=========================================================================================================================
 	return getAccountRankColor(accountType);
 }
@@ -1122,68 +1122,68 @@ string BGClientEngine::getAccountRankString(int accountRank)
 	return accountRankString;
 }
 
-sp<OKColor> BGClientEngine::getAccountRankColor(int accountRank)
+BobColor* BGClientEngine::getAccountRankColor(int accountRank)
 { //=========================================================================================================================
-	sp<OKColor> accountRankColor = OKColor::white;
+	BobColor* accountRankColor = BobColor::white;
 	if (accountRank == 0)
 	{
-		accountRankColor = OKColor::white; //"Free";
+		accountRankColor = BobColor::white; //"Free";
 	}
 	if (accountRank == 1)
 	{
-		accountRankColor = OKColor::purple; //"Premium";
+		accountRankColor = BobColor::purple; //"Premium";
 	}
 	if (accountRank == 2)
 	{
-		accountRankColor = OKColor::blue; //"nD Dev";
+		accountRankColor = BobColor::blue; //"nD Dev";
 	}
 	if (accountRank == 3)
 	{
-		accountRankColor = OKColor::red; //"Mod";
+		accountRankColor = BobColor::red; //"Mod";
 	}
 	if (accountRank == 4)
 	{
-		accountRankColor = OKColor::red; //"Admin";
+		accountRankColor = BobColor::red; //"Admin";
 	}
 	if (accountRank == 5)
 	{
-		accountRankColor = OKColor::red; //"Champion";
+		accountRankColor = BobColor::red; //"Champion";
 	}
 	if (accountRank == 6)
 	{
-		accountRankColor = OKColor::red; //"Legend";
+		accountRankColor = BobColor::red; //"Legend";
 	}
 	if (accountRank == 7)
 	{
-		accountRankColor = OKColor::red; //"Saint";
+		accountRankColor = BobColor::red; //"Saint";
 	}
 	if (accountRank == 8)
 	{
-		accountRankColor = OKColor::red; //"Prophet";
+		accountRankColor = BobColor::red; //"Prophet";
 	}
 	if (accountRank == 9)
 	{
-		accountRankColor = OKColor::red; //"Genius";
+		accountRankColor = BobColor::red; //"Genius";
 	}
 	if (accountRank == 10)
 	{
-		accountRankColor = OKColor::red; //"Uberman";
+		accountRankColor = BobColor::red; //"Uberman";
 	}
 	if (accountRank == 11)
 	{
-		accountRankColor = OKColor::red; //"Angel";
+		accountRankColor = BobColor::red; //"Angel";
 	}
 	if (accountRank == 12)
 	{
-		accountRankColor = OKColor::red; //"Christ";
+		accountRankColor = BobColor::red; //"Christ";
 	}
 	if (accountRank == 13)
 	{
-		accountRankColor = OKColor::red; //"God";
+		accountRankColor = BobColor::red; //"God";
 	}
 	if (accountRank == 14)
 	{
-		accountRankColor = OKColor::green; //"\"bob\"";
+		accountRankColor = BobColor::green; //"\"bob\"";
 	}
 
 	return accountRankColor;
@@ -1191,10 +1191,11 @@ sp<OKColor> BGClientEngine::getAccountRankColor(int accountRank)
 
 
 
-void BGClientEngine::setPlayerToTempPlayerWithSprite(sp<Sprite> s)
+void BGClientEngine::setPlayerToTempPlayerWithSprite(Sprite* s)
 { //=========================================================================================================================
 
-	sp<Player> p = ms<Player>(this, s->getName());
+
+	Player* p = new Player(this, s->getName());
 
 	p->update();
 
@@ -1203,21 +1204,14 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(sp<Sprite> s)
 	p->setSpawnXPixelsHQ(player->getX());
 	p->setSpawnYPixelsHQ(player->getY());
 
+
 	if (getCurrentMap() != nullptr)
 	{
-		for (int i = 0; i < getCurrentMap()->activeEntityList->size(); i++)
+		if (getCurrentMap()->activeEntityList.contains(player))
 		{
-			if (getCurrentMap()->activeEntityList->at(i).get() == player.get())
-			{
-				getCurrentMap()->activeEntityList->erase(getCurrentMap()->activeEntityList->begin()+i);
-				getCurrentMap()->activeEntityList->push_back(p);
-			}
+			getCurrentMap()->activeEntityList.remove(player);
+			getCurrentMap()->activeEntityList.add(p);
 		}
-		//if (getCurrentMap()->activeEntityList.contains(player))
-		//{
-		//	getCurrentMap()->activeEntityList->remove(player);
-		//	getCurrentMap()->activeEntityList->push_back(p);
-		//}
 	}
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)
@@ -1233,20 +1227,11 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 	if (getCurrentMap() != nullptr)
 	{
-
-		for (int i = 0; i < getCurrentMap()->activeEntityList->size(); i++)
+		if (getCurrentMap()->activeEntityList.contains(player))
 		{
-			if (getCurrentMap()->activeEntityList->at(i).get() == player.get())
-			{
-				getCurrentMap()->activeEntityList->erase(getCurrentMap()->activeEntityList->begin() + i);
-				getCurrentMap()->activeEntityList->push_back(normalPlayer);
-			}
+			getCurrentMap()->activeEntityList.remove(player);
+			getCurrentMap()->activeEntityList.add(normalPlayer);
 		}
-		//if (getCurrentMap()->activeEntityList.contains(player))
-		//{
-		//	getCurrentMap()->activeEntityList->remove(player);
-		//	getCurrentMap()->activeEntityList->push_back(normalPlayer);
-		//}
 	}
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)
@@ -1259,32 +1244,32 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 
 
-sp<Clock> BGClientEngine::getClock()
+Clock* BGClientEngine::getClock()
 {
 	return clock;
 }
 
-sp<GUIManager> BGClientEngine::getGUIManager()
+GUIManager* BGClientEngine::getGUIManager()
 {
 	return guiManager;
 }
 
-sp<StuffMenu> BGClientEngine::getStuffMenu()
+StuffMenu* BGClientEngine::getStuffMenu()
 {
 	return getGUIManager()->stuffMenu;
 }
 
-sp<GameStore> BGClientEngine::getGameStore()
+GameStore* BGClientEngine::getGameStore()
 {
 	return getGUIManager()->gameStore;
 }
 
-sp<PlayerEditMenu> BGClientEngine::getPlayerEditMenu()
+PlayerEditMenu* BGClientEngine::getPlayerEditMenu()
 {
 	return getGUIManager()->playerEditMenu;
 }
 
-sp<Player> BGClientEngine::getPlayer()
+Player* BGClientEngine::getPlayer()
 {
 	return player;
 }
@@ -1294,31 +1279,31 @@ ND* BGClientEngine::getND()
 	return nD;
 }
 
-sp<Wallet> BGClientEngine::getWallet()
+Wallet* BGClientEngine::getWallet()
 {
 	return wallet;
 }
 
-sp<FriendManager> BGClientEngine::getFriendManager()
+FriendManager* BGClientEngine::getFriendManager()
 {
 	return friendManager;
 }
 
-sp<StatusBar> BGClientEngine::getStatusBar()
+BobStatusBar* BGClientEngine::getBobStatusBar()
 {
 	return statusBar;
 }
 
-sp<NotificationManager> BGClientEngine::getNotificationManager()
+NotificationManager* BGClientEngine::getNotificationManager()
 {
-	return getStatusBar()->notificationManager;
+	return getBobStatusBar()->notificationManager;
 }
 
 
 
 
 
-bool BGClientEngine::serverMessageReceived(string e)// sp<ChannelHandlerContext> ctx, sp<MessageEvent> e)
+bool BGClientEngine::serverMessageReceived(string e)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
 
 	if(super::serverMessageReceived(e))
@@ -1326,7 +1311,7 @@ bool BGClientEngine::serverMessageReceived(string e)// sp<ChannelHandlerContext>
 		return true;
 	}
 	else
-	if (OKString::startsWith(e, OKNet::Load_Event_Response))
+	if (String::startsWith(e, BobNet::Load_Event_Response))
 	{
 		incomingLoadEventResponse(e);
 		return true;
@@ -1336,27 +1321,27 @@ bool BGClientEngine::serverMessageReceived(string e)// sp<ChannelHandlerContext>
 }
 void BGClientEngine::sendProjectLoadEventRequest()
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Load_Event_Request + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Load_Event_Request + BobNet::endline);
 }
 
 void BGClientEngine::incomingLoadEventResponse(string s)
 { //=========================================================================================================================
 
-  //Event:id-name:eventData
+  //BobEvent:id-name:eventData
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
 
-	sp<EventData> data = ms<EventData>(); 
+	EventData* data = new EventData(); 
 	data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log.error("Load Event could not be decompressed.");
+		log.error("Load BobEvent could not be decompressed.");
 	}
 	else
 	{
-		sp<Event> d = getEventManager()->getEventByIDCreateIfNotExist(data->getID());
+		BobEvent* d = getEventManager()->getEventByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 
 		setProjectLoadEventID_S(data->getID());

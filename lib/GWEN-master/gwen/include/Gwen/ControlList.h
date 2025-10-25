@@ -84,13 +84,13 @@ namespace Gwen
 			void SetValue( const Gwen::TextObject & value );
 
 			template <typename T>
-			void SetAction( Gwen::Event::Handler* ob,
-							void ( T::*f )( Gwen::Event::Info ),
-							const Gwen::Event::Packet & packet )
+			void SetAction(Gwen::Event::Handler* ob,
+							void (T::*f)(Gwen::Event::Info),
+							void* packet)
 			{
 				SetActionInternal( ob,
 								   static_cast<void ( Gwen::Event::Handler::* )( Gwen::Event::Info ) > ( f ),
-								   packet );
+								   (void*)packet );
 			}
 
 			void MoveBy( const Gwen::Point & point );
@@ -101,7 +101,7 @@ namespace Gwen
 
 			void SetActionInternal( Gwen::Event::Handler* pObject,
 									void ( Gwen::Event::Handler::*f )( Gwen::Event::Info ),
-									const Gwen::Event::Packet & packet );
+									void* packet );
 	};
 
 };

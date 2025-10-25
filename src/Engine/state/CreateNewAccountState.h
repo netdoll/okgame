@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -20,30 +20,30 @@ public:
 
 	static Logger log;
 
-	//   sp<EditField> emailEditField;
+	//   EditField* emailEditField;
 	//
-	//   sp<EditField> passwordEditField;
-	//   sp<EditField> confirmPasswordEditField;
+	//   EditField* passwordEditField;
+	//   EditField* confirmPasswordEditField;
 	//
 	//
-	//   sp<Button> okButton;
-	//   sp<Button> cancelButton;
+	//   Button* okButton;
+	//   Button* cancelButton;
 	//
 	//   string nameString = "";
 	//
 	//
-	//   sp<DialogLayout> panel;
-	//   sp<DialogLayout> emailDialogLayout;
-	//   sp<DialogLayout> passwordDialogLayout;
-	//   sp<DialogLayout> socialDialogLayout;
+	//   DialogLayout* panel;
+	//   DialogLayout* emailDialogLayout;
+	//   DialogLayout* passwordDialogLayout;
+	//   DialogLayout* socialDialogLayout;
 	//
-	//   sp<Label> errorLabel;
-	//   sp<Label> statusLabel;
+	//   Label* errorLabel;
+	//   Label* statusLabel;
 	//
 	//
-	//   sp<Label> emailLabel;
-	//   sp<Label> passwordLabel;
-	//   sp<Label> confirmPasswordLabel;
+	//   Label* emailLabel;
+	//   Label* passwordLabel;
+	//   Label* confirmPasswordLabel;
 	//
 	//
 	CreateNewAccountMenuPanel();
@@ -52,10 +52,10 @@ public:
 	//   class CallbackAnonymousInnerClassHelper : public EditField::Callback
 	//   {
 	//   private:
-	//      sp<CreateNewAccount> outerInstance;
+	//      CreateNewAccount* outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper(sp<CreateNewAccount> outerInstance);
+	//      CallbackAnonymousInnerClassHelper(CreateNewAccount* outerInstance);
 	//
 	//      virtual void callback(int key) override;
 	//   };
@@ -64,10 +64,10 @@ public:
 	//   class CallbackAnonymousInnerClassHelper2 : public EditField::Callback
 	//   {
 	//   private:
-	//      sp<CreateNewAccount> outerInstance;
+	//      CreateNewAccount* outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper2(sp<CreateNewAccount> outerInstance);
+	//      CallbackAnonymousInnerClassHelper2(CreateNewAccount* outerInstance);
 	//
 	//      void callback(int key);
 	//   };
@@ -76,10 +76,10 @@ public:
 	//   class CallbackAnonymousInnerClassHelper3 : public EditField::Callback
 	//   {
 	//   private:
-	//      sp<CreateNewAccount> outerInstance;
+	//      CreateNewAccount* outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper3(sp<CreateNewAccount> outerInstance);
+	//      CallbackAnonymousInnerClassHelper3(CreateNewAccount* outerInstance);
 	//
 	//      void callback(int key);
 	//   };
@@ -119,7 +119,7 @@ public:
 	static Logger log;
 
 
-	sp<CreateNewAccountMenuPanel> createNewAccountMenuPanel = nullptr;
+	CreateNewAccountMenuPanel* createNewAccountMenuPanel = nullptr;
 	//GUI* createNewAccountGUI = nullptr;
 
 

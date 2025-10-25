@@ -5,20 +5,20 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
 
 
-class Item : public ServerObject, public std::enable_shared_from_this<Item>
+class Item : public ServerObject
 {
 public:
 
 	static Logger log;
 
 
-	sp<Sprite> sprite = nullptr;
+	Sprite* sprite = nullptr;
 
 	string spriteAssetName = "";
 	int spriteAssetID = -1;
@@ -29,13 +29,13 @@ private:
 
 
 public:
-	Item(sp<Engine> g, const string& spriteAssetName);
+	Item(Engine* g, const string& spriteAssetName);
 
 
-	Item(sp<Engine> g, int spriteAssetID);
+	Item(Engine* g, int spriteAssetID);
 
 
-	Item(sp<Engine> g, sp<Sprite> sprite);
+	Item(Engine* g, Sprite* sprite);
 
 
 	void sendServerRequest();

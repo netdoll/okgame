@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -34,21 +34,21 @@ public:
 	bool car = false;
 
 
-	RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car);
+	RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car);
 
 
-	sp<Map> getCurrentMap() override;
-
-
-	//The following method was originally marked 'synchronized':
-	sp<ByteArray> getByteBuffer_S();
+	Map* getCurrentMap() override;
 
 
 	//The following method was originally marked 'synchronized':
-	void setByteBuffer_S(sp<ByteArray> bb);
+	ByteArray* getByteBuffer_S();
 
 
-	sp<ByteArray> textureByteBuffer_S = nullptr;
+	//The following method was originally marked 'synchronized':
+	void setByteBuffer_S(ByteArray* bb);
+
+
+	ByteArray* textureByteBuffer_S = nullptr;
 
 	int eyeSet = -1;
 	int skinSet = -1;
@@ -59,7 +59,7 @@ public:
 	int carSet = -1;
 
 
-	int selectRandomSet(sp<Sprite> s);
+	int selectRandomSet(Sprite* s);
 
 
 	bool createdThread = false;

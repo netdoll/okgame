@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	RamioGuy(sp<Engine> g, sp<Map>m);
+	RamioGuy(Engine* g, Map *m);
 
 
 	int framesSincePressedA = 0;
@@ -94,6 +94,6 @@ public:
 	void move(int direction, float floatPixels);
 
 
-	virtual void render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture) override;
+	virtual void render(float alpha, BobTexture* texture, BobTexture* shadowTexture) override;
 };
 

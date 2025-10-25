@@ -24,16 +24,16 @@ Entity::Entity()
 { //=========================================================================================================================
 }
 
-Entity::Entity(sp<Engine> g, sp<Map> m)
+Entity::Entity(Engine* g, Map* m)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->map = m;
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
-Entity::Entity(sp<Engine> g, sp<EntityData> entityData, sp<Map> m)
+Entity::Entity(Engine* g, EntityData* entityData, Map* m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -42,15 +42,15 @@ Entity::Entity(sp<Engine> g, sp<EntityData> entityData, sp<Map> m)
 
 	this->map = m;
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
-void Entity::initEntity(sp<EntityData> entityData)
+void Entity::initEntity(EntityData* entityData)
 { //=========================================================================================================================
 
 	if (entityData == nullptr)
 	{
-		entityData = ms<EntityData>(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
+		entityData = new EntityData(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
 		log.warn("entityData was null in Entity.init()");
 	}
 	this->data = entityData;
@@ -94,7 +94,7 @@ void Entity::update()
 
 	if (event != nullptr)
 	{
-		//sp<Event> e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//BobEvent* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
@@ -210,14 +210,14 @@ void Entity::renderDebugBoxes()
 	for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (OKString::startsWith(getConnectionTYPEIDList()->at(i), "DOOR."))
+		if (String::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
-			for (int d = 0; d < (int)getMap()->doorList->size(); d++)
+			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
 			{
-				sp<Door> door = getMap()->doorList->at(d);
+				Door* door = getMap()->doorList.get(d);
 
-				if (getConnectionTYPEIDList()->at(i) == "DOOR." + door->getName())
+				if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
 				{
 					float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 					float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -238,11 +238,11 @@ void Entity::renderDebugBoxes()
 				//					{
 				//						Area a = aEnum.nextElement();
 
-				for (int j = 0; j < (int)getMap()->currentState->areaList->size(); j++)
+				for (int j = 0; j < (int)getMap()->currentState->areaList.size(); j++)
 				{
-					sp<Area> a = getMap()->currentState->areaList->at(j);
+					Area* a = getMap()->currentState->areaList.get(j);
 
-					if (getConnectionTYPEIDList()->at(i) == a->getName())
+					if (getConnectionTYPEIDList()->get(i) == a->getName())
 					{
 						float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 						float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -253,11 +253,11 @@ void Entity::renderDebugBoxes()
 			}
 
 			//if not found, go through warparea list
-			for (int j = 0; j < (int)getMap()->warpAreaList->size(); j++)
+			for (int j = 0; j < (int)getMap()->warpAreaList.size(); j++)
 			{
-				sp<Area> a = getMap()->warpAreaList->at(j);
+				Area* a = getMap()->warpAreaList.get(j);
 
-				if (getConnectionTYPEIDList()->at(i) == a->getName())
+				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -279,20 +279,20 @@ void Entity::renderDebugInfo()
 
 	if (sprite->getDisplayName() == "No Name" == false)
 	{
-		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 36, OKColor::yellow);
-		GLUtils::drawOutlinedString("displayName: " + sprite->getDisplayName(), x, y - 27, OKColor::green);
+		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 36, BobColor::yellow);
+		GLUtils::drawOutlinedString("displayName: " + sprite->getDisplayName(), x, y - 27, BobColor::green);
 	}
 	else
 	{
-		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 27, OKColor::yellow);
+		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 27, BobColor::yellow);
 	}
 
-	GLUtils::drawOutlinedString("id: " + to_string(getID()), x, y - 18, OKColor::white);
-	GLUtils::drawOutlinedString("SpriteAsset Name: " + sprite->getName(), x, y - 9, OKColor::white);
+	GLUtils::drawOutlinedString("id: " + to_string(getID()), x, y - 18, BobColor::white);
+	GLUtils::drawOutlinedString("SpriteAsset Name: " + sprite->getName(), x, y - 9, BobColor::white);
 
 	if (getEventData() != nullptr)
 	{
-		GLUtils::drawOutlinedString("Has Event: " + to_string(getEventData()->getID()), x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("Has BobEvent: " + to_string(getEventData()->getID()), x, y + (++strings * 9), BobColor::red);
 	}
 
 	//GL.drawOutlinedString("mapX: "+getMapXPixelsHQ+" mapY: "+getMapYPixelsHQ, x, y+(++strings*9),Color.white);
@@ -307,84 +307,82 @@ void Entity::renderDebugInfo()
 	//if(movementDirection==RIGHT)GL.drawOutlinedString("movementDirection: Right", x, y+(++strings*9),Color.white);
 
 	//if (this->getClass().equals(char::typeid) || this->getClass().equals(Player::typeid) || this->getClass().equals(RandomCharacter::typeid))
-	if (dynamic_cast<Character*>(this) != nullptr || 
-		dynamic_cast<Player*>(this) != nullptr || 
-		dynamic_cast<RandomCharacter*>(this) != nullptr)
+	if (dynamic_cast<Character*>(this) != nullptr || dynamic_cast<Player*>(this) != nullptr || dynamic_cast<RandomCharacter*>(this) != nullptr)
 	{
-		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), OKColor::white);
-		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), BobColor::white);
 	}
 
 	//GL.drawOutlinedString("animationTicksCounter: "+animationTicksCounter, x, y+(++strings*9),Color.white);
 
 	if (getRandomFrames())
 	{
-		GLUtils::drawOutlinedString("Random Frames", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("Random Frames", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getDisableShadow())
 	{
-		GLUtils::drawOutlinedString("Disable Shadow", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("Disable Shadow", x, y + (++strings * 9), BobColor::red);
 	}
 
 	if (getRenderOrder() != RenderOrder::GROUND)
 	{
-		GLUtils::drawOutlinedString("RenderOrder: " + to_string((int)getRenderOrder()), x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("RenderOrder: " + to_string((int)getRenderOrder()), x, y + (++strings * 9), BobColor::red);
 	}
 	if (getAlwaysOnTop())
 	{
-		GLUtils::drawOutlinedString("getAlwaysOnTop", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getAlwaysOnTop", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getAboveWhenEqual())
 	{
-		GLUtils::drawOutlinedString("getAboveWhenEqual", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getAboveWhenEqual", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getAboveTopLayer())
 	{
-		GLUtils::drawOutlinedString("getAboveTopLayer", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getAboveTopLayer", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getAlwaysOnBottom())
 	{
-		GLUtils::drawOutlinedString("getAlwaysOnBottom", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getAlwaysOnBottom", x, y + (++strings * 9), BobColor::red);
 	}
 	if (isWalkingIntoPlayerThisFrame)
 	{
-		GLUtils::drawOutlinedString("isWalkingIntoPlayerThisFrame", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("isWalkingIntoPlayerThisFrame", x, y + (++strings * 9), BobColor::red);
 	}
 	if (isWalkingIntoWallThisFrame)
 	{
-		GLUtils::drawOutlinedString("isWalkingIntoWallThisFrame", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("isWalkingIntoWallThisFrame", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getIgnoreHitPlayer())
 	{
-		GLUtils::drawOutlinedString("getIgnoreHitPlayer", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getIgnoreHitPlayer", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getMovementAnimationDisabled())
 	{
-		GLUtils::drawOutlinedString("getMovementAnimationDisabled", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getMovementAnimationDisabled", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getPushable())
 	{
-		GLUtils::drawOutlinedString("getPushable", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getPushable", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getNonWalkable())
 	{
-		GLUtils::drawOutlinedString("getNonWalkable", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getNonWalkable", x, y + (++strings * 9), BobColor::red);
 	}
 	if (getIgnoreHitLayer())
 	{
-		GLUtils::drawOutlinedString("getIgnoreHitLayer", x, y + (++strings * 9), OKColor::red);
+		GLUtils::drawOutlinedString("getIgnoreHitLayer", x, y + (++strings * 9), BobColor::red);
 	}
 	//if(ignore_fx_layer)GL.drawOutlinedString("ignore_fx_layer", x, y+(++strings*9),Color.red);
 
-	GLUtils::drawOutlinedString("MiddleY: " + to_string(getMiddleY()), x, y + (++strings * 9), OKColor::green);
+	GLUtils::drawOutlinedString("MiddleY: " + to_string(getMiddleY()), x, y + (++strings * 9), BobColor::green);
 
 	if (currentAreaTYPEIDTarget != "" && currentAreaTYPEIDTarget.length() > 0)
 	{
-		GLUtils::drawOutlinedString("Current Target TYPEID: " + currentAreaTYPEIDTarget, x, y + (++strings * 9), OKColor::green);
+		GLUtils::drawOutlinedString("Current Target TYPEID: " + currentAreaTYPEIDTarget, x, y + (++strings * 9), BobColor::green);
 	}
 	if (currentAreaTYPEIDTarget != "" && currentAreaTYPEIDTarget.length() > 0)
 	{
-		GLUtils::drawOutlinedString("Current Target Name: " + getCurrentAreaTargetName(), x, y + (++strings * 9), OKColor::green);
+		GLUtils::drawOutlinedString("Current Target Name: " + getCurrentAreaTargetName(), x, y + (++strings * 9), BobColor::green);
 	}
 
 	/*
@@ -417,8 +415,8 @@ void Entity::renderDebugInfo()
 	int movementsThisFrame = 0;
 	public float pixelsToMoveThisFrame = 0;
 	               
-	sp<vector<String>>getBehaviorList = ms<vector><String>();
-	sp<vector<String>>connectionList = ms<vector><String>();
+	ArrayList<String> getBehaviorList = new ArrayList<String>();
+	ArrayList<String> connectionList = new ArrayList<String>();
 	               
 	               */
 }
@@ -426,7 +424,7 @@ void Entity::renderDebugInfo()
 
 string Entity::getCurrentAreaTargetName()
 { //=========================================================================================================================
-	sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+	Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 	if (a == nullptr)
 	{
 		return "ERROR: Area not found.";
@@ -447,7 +445,7 @@ void Entity::render(float mapAlpha)
 	//overrode this so i can send in arbitrary texture, really only used for random sprites which contain their own unique texture reference, and not the one contained in the spriteAsset object.
 }
 
-void Entity::render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture)
+void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();
@@ -493,8 +491,10 @@ void Entity::render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowText
 		{
 			if (clipShadow == true && shadowClipPerPixel != nullptr)
 			{
+
 				//bind texture here.
-				glBindTexture(GL_TEXTURE_2D, shadowTexture->getTextureID());
+				GLUtils::bindTexture(shadowTexture);
+				
 
 				for (int x = 0; x < sprite->getImageWidth(); x++)
 				{
@@ -575,7 +575,7 @@ void Entity::render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowText
 	}
 }
 
-sp<Map> Entity::getCurrentMap()
+Map* Entity::getCurrentMap()
 { //=========================================================================================================================
 
 	log.warn("getCurrentMap() in Entity");
@@ -584,7 +584,7 @@ sp<Map> Entity::getCurrentMap()
 	return EnginePart::getCurrentMap();
 }
 
-sp<Map> Entity::getMap()
+Map* Entity::getMap()
 { //=========================================================================================================================
 
 	if (this->map == nullptr)
@@ -592,7 +592,7 @@ sp<Map> Entity::getMap()
 		return EnginePart::getCurrentMap();
 	}
 
-	//sp<Map> map = getMapManager()->getMapByIDBlockUntilLoaded(getMapID());
+	//Map* map = getMapManager()->getMapByIDBlockUntilLoaded(getMapID());
 
 	return this->map;
 }
@@ -784,24 +784,24 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 	{
 		//go through all mapsprites, check if map characters
 
-		for (int i = 0; i < (int)getMap()->activeEntityList->size(); i++)
+		for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
 		{
-			sp<Entity> m = getMap()->activeEntityList->at(i);
+			Entity* m = getMap()->activeEntityList.get(i);
 
-			if (m.get() != this &&
-				(dynamic_cast<Door*>(m.get()) != NULL) == false &&
-				(dynamic_cast<RandomCharacter*>(m.get()) != NULL) == false &&
-				(dynamic_cast<Character*>(m.get()) != NULL) == false &&
+			if (m != this &&
+				(dynamic_cast<Door*>(m) != NULL) == false &&
+				(dynamic_cast<RandomCharacter*>(m) != NULL) == false &&
+				(dynamic_cast<Character*>(m) != NULL) == false &&
 				m->getNonWalkable() == true && x < m->getRight() && x > m->getLeft() && y < m->getBottom() && y > m->getTop())
 			{
 				return true; //TODO use touching functions - using full hitbox.
 			}
 
-			if (m.get() != this &&
+			if (m != this &&
 				(
-					(dynamic_cast<Character*>(m.get()) != NULL) ||
-					(dynamic_cast<RandomCharacter*>(m.get()) != NULL) ||
-					(dynamic_cast<Player*>(m.get()) != NULL)
+					(dynamic_cast<Character*>(m) != NULL) ||
+					(dynamic_cast<RandomCharacter*>(m) != NULL) ||
+					(dynamic_cast<Player*>(m) != NULL)
 				)
 				&& x < m->getMiddleX() + 6 && x > m->getMiddleX() - 6 && y < m->getMiddleY() + 6 && y > m->getMiddleY() - 6)
 			{
@@ -820,16 +820,16 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 		return false;
 	}
 
-	for (int s = 0; s < (int)getMap()->activeEntityList->size(); s++)
+	for (int s = 0; s < (int)getMap()->activeEntityList.size(); s++)
 	{
-		sp<Entity> e = getMap()->activeEntityList->at(s);
+		Entity* e = getMap()->activeEntityList.get(s);
 
 		if (e->getNonWalkable() == false)
 		{
 			continue;
 		}
 
-		if (e.get() == this)
+		if (e == this)
 		{
 			continue;
 		}
@@ -845,9 +845,9 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 		}
 	}
 
-	for (int s = 0; s < (int)getMap()->doorList->size(); s++)
+	for (int s = 0; s < (int)getMap()->doorList.size(); s++)
 	{
-		sp<Door> e = getMap()->doorList->at(s);
+		Door* e = getMap()->doorList.get(s);
 
 		if (e->getNonWalkable() == false || e->isOpen())
 		{
@@ -1042,7 +1042,7 @@ bool Entity::haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks)
 	}
 }
 
-sp<SpriteAnimationSequence> Entity::getCurrentAnimation()
+SpriteAnimationSequence* Entity::getCurrentAnimation()
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
@@ -1055,7 +1055,7 @@ sp<SpriteAnimationSequence> Entity::getCurrentAnimation()
 	return currentAnimation;
 }
 
-void Entity::setCurrentAnimation(sp<SpriteAnimationSequence> a)
+void Entity::setCurrentAnimation(SpriteAnimationSequence* a)
 { //=========================================================================================================================
 	currentAnimation = a;
 }
@@ -1067,7 +1067,7 @@ void Entity::setCurrentAnimationByName(const string& name)
 		log.error("Sprite is null in Entity: " + getName() + " while setting AnimationByName");
 		return;
 	}
-	sp<SpriteAnimationSequence> a = sprite->getAnimationByName(name);
+	SpriteAnimationSequence* a = sprite->getAnimationByName(name);
 	if (a == nullptr)
 	{
 		log.error("Animation name: " + name + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
@@ -1117,7 +1117,7 @@ void Entity::setCurrentAnimationByDirection(int dir)
 		log.error("Sprite is null in Entity: " + getName() + " while setting AnimationByName");
 		return;
 	}
-	sp<SpriteAnimationSequence> a = sprite->getAnimationByName(sequenceName);
+	SpriteAnimationSequence* a = sprite->getAnimationByName(sequenceName);
 	if (a == nullptr)
 	{
 		log.error("Animation name: " + sequenceName + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
@@ -1139,13 +1139,13 @@ int Entity::getSpriteLastFrame()
 	return sprite->getNumFrames() - 1;
 }
 
-sp<SpriteAnimationSequence> Entity::getAnimationBySpriteFrame(int frame)
+SpriteAnimationSequence* Entity::getAnimationBySpriteFrame(int frame)
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
 		log.error("Sprite is null in Entity: " + getName() + " while getting AnimationByFrame");
 	}
-	sp<SpriteAnimationSequence> a = sprite->getAnimationByFrame(frame);
+	SpriteAnimationSequence* a = sprite->getAnimationByFrame(frame);
 
 	if (a == nullptr && sprite->getName() == "Camera" == false && sprite->getName() == "none" == false)
 	{
@@ -1457,28 +1457,20 @@ void Entity::fadeOutAndDelete()
 void Entity::deleteFromMapEntityListAndReleaseTexture()
 { //=========================================================================================================================
 
-	sp<Map>m = getMap();
+	Map *m = getMap();
 	if (m != nullptr)
 	{
-		for (int i=0; i<m->activeEntityList->size();i++)
+		if (m->activeEntityList.contains(this))
 		{
-			sp<Entity> se = m->activeEntityList->at(i);
-			if (se.get() == this)
-			{
-				m->activeEntityList->erase(m->activeEntityList->begin() + i);
-			}
+			m->activeEntityList.remove(this);
 		}
-		//if (m->activeEntityList.contains(this))
-		//{
-		//	m->activeEntityList->remove(this);
-		//}
 	}
 
 	if ((dynamic_cast<Player*>(this) != NULL) || (dynamic_cast<Character*>(this) != NULL) || (dynamic_cast<RandomCharacter*>(this) != NULL))
 	{
 		Character* r = static_cast<Character*>(this);
 		r->uniqueTexture->release();
-		//delete r->uniqueTexture;
+		delete r->uniqueTexture;
 		r->uniqueTexture = nullptr;
 
 	}
@@ -1486,13 +1478,13 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 
 void Entity::addEventBehavior(const string& s)
 { //=========================================================================================================================
-	eventBehaviorList->push_back(s); //TODO: handle this stuff right!
+	eventBehaviorList->add(s); //TODO: handle this stuff right!
 }
 
-sp<OKBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
+BobBool* Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
 {
 	// TODO
-	return ms<OKBool>();
+	return new BobBool();
 }
 
 void Entity::tellServerTalkedToToday()
@@ -1500,23 +1492,23 @@ void Entity::tellServerTalkedToToday()
 	// TODO
 }
 
-float Entity::getDistanceFromEntity(sp<Entity> e)
+float Entity::getDistanceFromEntity(Entity* e)
 { //=========================================================================================================================
 	return Math::distance(getMiddleX(), getMiddleY(), e->getMiddleX(), e->getMiddleY());
 }
 
-sp<Entity> Entity::findNearestEntity()
+Entity* Entity::findNearestEntity()
 { //=========================================================================================================================
 
-	sp<Entity> nearestEntity = nullptr;
+	Entity* nearestEntity = nullptr;
 
 	int shortestdist = 65535;
 
-	for (int n = 0; n < (int)getMap()->activeEntityList->size(); n++)
+	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		sp<Entity> currentEntity = getMap()->activeEntityList->at(n);
+		Entity* currentEntity = getMap()->activeEntityList.get(n);
 
-		if (this != currentEntity.get())
+		if (this != currentEntity)
 		{
 			float x = getMiddleX() - (currentEntity->getMiddleX());
 			float y = getMiddleY() - (currentEntity->getMiddleY());
@@ -1537,23 +1529,23 @@ sp<Entity> Entity::findNearestEntity()
 	return nearestEntity;
 }
 
-sp<Entity> Entity::findNearestEntityInDirection(int dir)
+Entity* Entity::findNearestEntityInDirection(int dir)
 { //=========================================================================================================================
 
 	//this checks a direction and finds the closest entity within the entity boundaries in that direction
 
-	sp<Entity> nearest_entity = nullptr;
+	Entity* nearest_entity = nullptr;
 
 	float shortestdist = 65535;
 
 	float radiusX = getWidth() / 2;
 	float radiusY = (getHeight() - getHitBoxFromTop()) / 2;
 
-	for (int n = 0; n < (int)getMap()->activeEntityList->size(); n++)
+	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		sp<Entity> e = getMap()->activeEntityList->at(n);
+		Entity* e = getMap()->activeEntityList.get(n);
 
-		if (this != e.get())
+		if (this != e)
 		{
 			float eMiddleX = e->getMiddleX();
 			float eMiddleY = e->getMiddleY();
@@ -1623,7 +1615,7 @@ sp<Entity> Entity::findNearestEntityInDirection(int dir)
 	return nearest_entity;
 }
 
-bool Entity::isWalkingIntoEntity(sp<Entity> entity)
+bool Entity::isWalkingIntoEntity(Entity* entity)
 { //=========================================================================================================================
 
 	bool walkingIntoDoor = false;
@@ -1778,7 +1770,7 @@ bool Entity::isWalkingIntoEntity(sp<Entity> entity)
 	return walkingIntoDoor;
 }
 
-bool Entity::isWalkingIntoArea(sp<Area> area)
+bool Entity::isWalkingIntoArea(Area* area)
 { //=========================================================================================================================
 
 	bool walkingIntoArea = false;
@@ -1936,7 +1928,7 @@ bool Entity::isWalkingIntoArea(sp<Area> area)
 	return walkingIntoArea;
 }
 
-bool Entity::isEntityHitBoxTouchingMyHitBox(sp<Entity> e)
+bool Entity::isEntityHitBoxTouchingMyHitBox(Entity* e)
 { //=========================================================================================================================
 	return isEntityHitBoxTouchingMyHitBoxByAmount(e, 0);
 }
@@ -1946,12 +1938,12 @@ bool Entity::isNearestEntityHitBoxTouchingMyHitBox()
 	return isNearestEntityHitBoxTouchingMyHitBoxByAmount(0);
 }
 
-bool Entity::isAreaCenterTouchingMyHitBox(sp<Area> a)
+bool Entity::isAreaCenterTouchingMyHitBox(Area* a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyHitBoxByAmount(a, 0);
 }
 
-bool Entity::isAreaBoundaryTouchingMyHitBox(sp<Area> a)
+bool Entity::isAreaBoundaryTouchingMyHitBox(Area* a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyHitBoxByAmount(a, 0);
 }
@@ -1966,17 +1958,17 @@ bool Entity::isXYXYTouchingMyHitBox(float left, float top, float right, float bo
 	return isXYXYTouchingMyHitBoxByAmount(left, top, right, bottom, 0);
 }
 
-bool Entity::isAreaBoundaryTouchingMyMiddleXY(sp<Area> a)
+bool Entity::isAreaBoundaryTouchingMyMiddleXY(Area* a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyMiddleXYByAmount(a, 0);
 }
 
-bool Entity::isEntityMiddleXYTouchingMyMiddleXY(sp<Entity> e)
+bool Entity::isEntityMiddleXYTouchingMyMiddleXY(Entity* e)
 { //=========================================================================================================================
 	return isEntityMiddleXYTouchingMyMiddleXYByAmount(e, 1);
 }
 
-bool Entity::isAreaCenterTouchingMyMiddleXY(sp<Area> a)
+bool Entity::isAreaCenterTouchingMyMiddleXY(Area* a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyMiddleXYByAmount(a, 1);
 }
@@ -1991,7 +1983,7 @@ bool Entity::isXYXYTouchingMyMiddleXY(float left, float top, float right, float 
 	return isXYXYTouchingMyMiddleXYByAmount(left, top, right, bottom, 0);
 }
 
-bool Entity::isEntityHitBoxTouchingMyHitBoxByAmount(sp<Entity> e, int amt)
+bool Entity::isEntityHitBoxTouchingMyHitBoxByAmount(Entity* e, int amt)
 { //=========================================================================================================================
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), amt);
 }
@@ -2001,12 +1993,12 @@ bool Entity::isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt)
 	return isEntityHitBoxTouchingMyHitBoxByAmount(findNearestEntity(), amt);
 }
 
-bool Entity::isAreaCenterTouchingMyHitBoxByAmount(sp<Area> a, int amt)
+bool Entity::isAreaCenterTouchingMyHitBoxByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyHitBoxByAmount(a->middleX(), a->middleY(), amt);
 }
 
-bool Entity::isAreaBoundaryTouchingMyHitBoxByAmount(sp<Area> a, int amt)
+bool Entity::isAreaBoundaryTouchingMyHitBoxByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyHitBoxByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
@@ -2021,17 +2013,17 @@ bool Entity::isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, 
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), left, top, right, bottom, amt);
 }
 
-bool Entity::isAreaBoundaryTouchingMyMiddleXYByAmount(sp<Area> a, int amt)
+bool Entity::isAreaBoundaryTouchingMyMiddleXYByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyMiddleXYByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
 
-bool Entity::isEntityMiddleXYTouchingMyMiddleXYByAmount(sp<Entity> e, int amt)
+bool Entity::isEntityMiddleXYTouchingMyMiddleXYByAmount(Entity* e, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyMiddleXYByAmount(e->getMiddleX(), e->getMiddleY(), amt);
 }
 
-bool Entity::isAreaCenterTouchingMyMiddleXYByAmount(sp<Area> a, int amt)
+bool Entity::isAreaCenterTouchingMyMiddleXYByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyMiddleXYByAmount(a->middleX(), a->middleY(), amt);
 }
@@ -2065,7 +2057,7 @@ bool Entity::isTouchingPlayerInDirection(int dir)
 	{
 		return false;
 	}
-	if (this == getPlayer().get())
+	if (this == getPlayer())
 	{
 		return false;
 	}
@@ -2111,7 +2103,7 @@ bool Entity::isTouchingPlayerInDirection(int dir)
 	return touching_player_entity;
 }
 
-bool Entity::isHitBoxTouchingEntityInDirectionByAmount(sp<Entity> e, int direction, int amt)
+bool Entity::isHitBoxTouchingEntityInDirectionByAmount(Entity* e, int direction, int amt)
 { //=========================================================================================================================
 	return isHitBoxTouchingXYXYInDirectionByAmount(e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), direction, amt);
 }
@@ -2288,7 +2280,7 @@ float Entity::getScreenX()
 		screenXPixelsHQ = (left - screenleft);
 	}
 
-	return screenXPixelsHQ > zoom;
+	return screenXPixelsHQ * zoom;
 }
 
 float Entity::getScreenY()
@@ -2316,7 +2308,7 @@ float Entity::getScreenY()
 		screenYPixelsHQ = top - screentop;
 	}
 
-	return screenYPixelsHQ > zoom;
+	return screenYPixelsHQ * zoom;
 }
 
 float Entity::getScreenLeft()
@@ -2455,7 +2447,7 @@ float Entity::getHeight()
 	}
 }
 
-sp<EntityData> Entity::getData()
+EntityData* Entity::getData()
 {
 	return data;
 }
@@ -2582,7 +2574,7 @@ float Entity::getTicksPerPixelMoved()
 	return getData()->getTicksPerPixelMoved();
 }
 
-sp<EventData> Entity::getEventData()
+EventData* Entity::getEventData()
 {
 	return getData()->getEventData();
 }
@@ -2635,12 +2627,12 @@ bool Entity::getLoopAnimation()
 	return getData()->getLoopAnimation();
 }
 
-sp<vector<string>> Entity::getConnectionTYPEIDList()
+ArrayList<string>* Entity::getConnectionTYPEIDList()
 {
 	return getData()->getConnectionTYPEIDList();
 }
 
-sp<vector<string>> Entity::getBehaviorList()
+ArrayList<string>* Entity::getBehaviorList()
 {
 	return getData()->getBehaviorList();
 }

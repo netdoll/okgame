@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//static sp<vector<sp<Label>>>label;
+	//static ArrayList<Label*> label;
 
 	//static DialogLayout::Group* horizontalGroup;
 	//static DialogLayout::Group* verticalGroup;

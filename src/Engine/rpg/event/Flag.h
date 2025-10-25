@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -15,30 +15,30 @@ class Logger;
 
 class FlagData;
 
-class Flag : public ServerObject, public std::enable_shared_from_this<Flag>
+class Flag : public ServerObject
 {
 private:
 	bool value = false;
 	long long timeSet = -1;
 
-	sp<FlagData> data = nullptr;
+	FlagData* data = nullptr;
 
 
 public:
 
 
 	static Logger log;
-	Flag(sp<Engine> g, int id);
+	Flag(Engine* g, int id);
 
 
-	Flag(sp<Engine> g, sp<FlagData> data);
+	Flag(Engine* g, FlagData* data);
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(sp<FlagData> data);
+	void setData_S(FlagData* data);
 
 
-	sp<FlagData> getData();
+	FlagData* getData();
 
 
 	int getID();

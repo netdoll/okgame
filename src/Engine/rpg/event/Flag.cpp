@@ -14,53 +14,53 @@
 Logger Flag::log = Logger("Flag");
 
 
-Flag::Flag(sp<Engine> g, int id)
+Flag::Flag(Engine* g, int id)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = ms<FlagData>(id, "");
+	this->data = new FlagData(id, "");
 
-	for (int i = 0; i < (int)getEventManager()->flagList->size(); i++)
+	for (int i = 0; i < (int)getEventManager()->flagList.size(); i++)
 	{
-		if (getEventManager()->flagList->at(i)->getID() == data->getID())
+		if (getEventManager()->flagList.get(i)->getID() == data->getID())
 		{
 			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->flagList->push_back(shared_from_this());
+	getEventManager()->flagList.add(this);
 
 	//we don't particularly need to know what the actual flag name is... ID is fine.
 	//so, don't really care about getting the flag name from the server.
 	//it's a good idea for debugging.
 }
 
-Flag::Flag(sp<Engine> g, sp<FlagData> data)
+Flag::Flag(Engine* g, FlagData* data)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->flagList->size(); i++)
+	for (int i = 0; i < (int)getEventManager()->flagList.size(); i++)
 	{
-		if (getEventManager()->flagList->at(i)->getID() == data->getID())
+		if (getEventManager()->flagList.get(i)->getID() == data->getID())
 		{
 			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->flagList->push_back(shared_from_this());
+	getEventManager()->flagList.add(this);
 }
 
 //The following method was originally marked 'synchronized':
-void Flag::setData_S(sp<FlagData> data)
+void Flag::setData_S(FlagData* data)
 { //=========================================================================================================================
 	this->data = data;
 	setInitialized_S(true);
 }
 
-sp<FlagData> Flag::getData()
+FlagData* Flag::getData()
 {
 	return data;
 }

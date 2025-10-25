@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 #include "src/Utility/HashMap.h"
 #include "src/Utility/ArrayList.h"
@@ -24,10 +24,10 @@ public:
 	static Logger log;
 
 
-	sp<Caption> actionCaption = nullptr;
+	Caption* actionCaption = nullptr;
 
 
-	sp<ScreenSprite> actionIconScreenSprite = nullptr;
+	ScreenSprite* actionIconScreenSprite = nullptr;
 
 
 	int ACTION_in_action_range = 0;
@@ -44,20 +44,20 @@ public:
 	class Coords
 	{
 	private:
-		sp<ActionManager> outerInstance = nullptr;
+		//ActionManager* outerInstance = nullptr;
 
 	public:
 		int x = 0;
 		int y = 0;
 
-		Coords(sp<ActionManager> outerInstance, int x, int y);
+		Coords(int x, int y);//ActionManager* outerInstance, 
 	};
 
 public:
-	sp<vector<sp<Coords>>>actionsThisFrame;// = ms<vector><sp<Coords>>();
+	ArrayList<Coords*>* actionsThisFrame = new ArrayList<Coords*>();
 
 
-	ActionManager(sp<Engine> g);
+	ActionManager(Engine* g);
 
 
 
@@ -122,16 +122,16 @@ public:
 	bool xy(int x, int y, const string& label);
 
 
-	bool area(sp<Area> a, const string& label);
+	bool area(Area* a, const string& label);
 
 
 	bool xyxy(int x, int y, int x2, int y2, const string& label);
 
 
-	bool entity(sp<Entity> e, const string& label);
+	bool entity(Entity* e, const string& label);
 
 
-	bool checkAll(int x, int y, int x2, int y2, const string& label, int type, sp<Entity> e, sp<Area> a);
+	bool checkAll(int x, int y, int x2, int y2, const string& label, int type, Entity* e, Area* a);
 
 
 	void deleteCaptionNoSound();

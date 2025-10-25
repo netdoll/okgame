@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -93,8 +93,8 @@ public:
 
 	string& initFromString(string& t);
 
-	//static sp<DialogueData> fromBase64ZippedJSON(const string& b64);
-	//static sp<DialogueData> fromJSON(const string& json);
+	//static DialogueData* fromBase64ZippedJSON(const string& b64);
+	//static DialogueData* fromJSON(const string& json);
 
 
 	string getTYPEIDString();

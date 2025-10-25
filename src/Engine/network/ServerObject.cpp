@@ -15,7 +15,7 @@ ServerObject::ServerObject()
 { //=========================================================================================================================
 }
 
-ServerObject::ServerObject(sp<Engine> g)
+ServerObject::ServerObject(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -43,7 +43,7 @@ void ServerObject::sendServerRequest()
 
 		if (ticksPassed > 1000)
 		{
-			getEngine()->sendServerObjectRequest(shared_from_this());
+			getEngine()->sendServerObjectRequest(this);
 			lastTimeRequestedFromServer = currentTime;
 		}
 	}

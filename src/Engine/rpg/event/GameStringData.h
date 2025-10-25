@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "src/Utility/AssetData.h"
 class Logger;
 
@@ -29,9 +29,9 @@ public:
 
 	GameStringData(int id, const string& name, const string& text);
 
-	//static sp<GameStringData> fromBase64ZippedJSON(const string& b64);
+	//static GameStringData* fromBase64ZippedJSON(const string& b64);
 
-	//static sp<GameStringData> fromJSON(const string& json);
+	//static GameStringData* fromJSON(const string& json);
 
 	string& initFromString(string& t);
 

@@ -5,25 +5,25 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "GameLogic.h"
-#include "src/Utility/OKColor.h"
+#include "src/Utility/Color.h"
 
 //=========================================================================================================================
-class PuzzlePlayer : public std::enable_shared_from_this<PuzzlePlayer>
+class PuzzlePlayer
 {//=========================================================================================================================
 public:
 	//=========================================================================================================================
-	PuzzlePlayer(sp<GameLogic>g)
+	PuzzlePlayer(GameLogic *g)
 	{//=========================================================================================================================
 		this->gameLogic = g;
-		if (g != nullptr)g->player = shared_from_this();
+		if (g != nullptr)g->player = this;
 	}
 	//=========================================================================================================================
 	~PuzzlePlayer()
 	{//=========================================================================================================================
-		//if (gameLogic != nullptr)delete gameLogic;
-		//if (menu != nullptr)delete menu;
+		if (gameLogic != nullptr)delete gameLogic;
+		if (menu != nullptr)delete menu;
 		if (nameCaption != nullptr)
 		{
 			nameCaption->setToBeDeletedImmediately();
@@ -44,7 +44,7 @@ public:
 	string getID()
 	{//=========================================================================================================================
 		if (peerConnection != nullptr)return to_string(peerConnection->peerUserID) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
-		else return to_string(((gameLogic.get())->getEngine().get())->getUserID_S()) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
+		else return to_string(gameLogic->getEngine()->getUserID_S()) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
 	}
 	//=========================================================================================================================
 	bool isNetworkPlayer()
@@ -53,9 +53,9 @@ public:
 		return false;
 	}
 
-	sp<GameLogic> gameLogic = nullptr;
+	GameLogic* gameLogic = nullptr;
 	bool confirmed = false;
-	sp<OKMenu>menu = nullptr;
+	BobMenu *menu = nullptr;
 	bool selectGameSequenceOrSingleGameTypeMiniMenuShowing = true;
 	bool selectGameSequenceMiniMenuShowing = false;
 	bool gameSequenceOptionsMiniMenuShowing = false;
@@ -85,21 +85,21 @@ public:
 	
 
 	bool useKeyboard = false;
-	sp<GameController>gameController = nullptr;
+	GameController *gameController = nullptr;
 
-	//sp<OKGameNetwork>network = nullptr;
-	sp<UDPPeerConnection>peerConnection = nullptr;
-	sp<Caption> nameCaption = nullptr;
-	sp<Caption> gameCaption = nullptr;
-	sp<Caption> difficultyCaption = nullptr;
-
-
+	//BobsGameNetwork *network = nullptr;
+	UDPPeerConnection *peerConnection = nullptr;
+	Caption* nameCaption = nullptr;
+	Caption* gameCaption = nullptr;
+	Caption* difficultyCaption = nullptr;
 
 
-	sp<OKColor>gridBorderColor = ms<OKColor>(255, 255, 255);//TODO: move these to user settings!
-	sp<OKColor>gridCheckeredBackgroundColor1 = OKColor::black;
-	sp<OKColor>gridCheckeredBackgroundColor2 = ms<OKColor>(8, 8, 8);
-	sp<OKColor>screenBackgroundColor = OKColor::black;
+
+
+	BobColor *gridBorderColor = new BobColor(255, 255, 255);//TODO: move these to user settings!
+	BobColor *gridCheckeredBackgroundColor1 = BobColor::black;
+	BobColor *gridCheckeredBackgroundColor2 = new BobColor(8, 8, 8);
+	BobColor *screenBackgroundColor = BobColor::black;
 	bool gridRule_showWarningForFieldThreeQuartersFilled = true;//TODO: move these to user settings!
 
 

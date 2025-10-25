@@ -5,9 +5,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-sp<Logger> Engine::log = ms<Logger>("Engine");
+Logger Engine::log = Logger("Engine");
 
-//sp<BGClientEngine> Engine::clientGameEngine = nullptr;
+//BGClientEngine* Engine::clientGameEngine = nullptr;
 
 //bool Engine::callNanoTimeForEachCall = false;
 
@@ -20,14 +20,14 @@ long long Engine::totalTicks = 0;
 long long Engine::ticksThisSecond = 0;
 int Engine::framesSkipped = 0;
 
-sp<vector<sp<UDPPeerConnection>>> Engine::onlineFriends;
+ArrayList<UDPPeerConnection*> Engine::onlineFriends;
 
 
 //=========================================================================================================================
 Engine::Engine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log->debug("Engine()");
+	log.debug("Engine()");
 #endif
 
 }
@@ -36,18 +36,18 @@ Engine::Engine()
 Engine::~Engine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log->debug("~Engine()");
+	log.debug("~Engine()");
 #endif
-	//delete audioManager;
-	//delete spriteManager;
-	//delete mapManager;
-	//delete cinematicsManager;
-	//delete captionManager;
-	//delete textManager;
-	//delete eventManager;
-	//delete cameraman;
-	//delete actionManager;
-	//delete controlsManager;
+	delete audioManager;
+	delete spriteManager;
+	delete mapManager;
+	delete cinematicsManager;
+	delete captionManager;
+	delete textManager;
+	delete eventManager;
+	delete cameraman;
+	delete actionManager;
+	delete controlsManager;
 }
 
 //=========================================================================================================================
@@ -57,23 +57,23 @@ void Engine::init()
 	//super::init();
 
 //#ifdef _DEBUG
-//	log->debug("Engine::init()");
+//	log.debug("Engine::init()");
 //#endif
 
 
 
-	audioManager = ms<AudioManager>(this);//(shared_from_this()); ???
-	spriteManager = ms < SpriteManager>(this);
-	mapManager = ms < MapManager>(this);
-	cinematicsManager = ms < CinematicsManager>(this);
-	captionManager = ms < CaptionManager>(this);
-	textManager = ms < TextManager>(this);
-	eventManager = ms < EventManager>(this);
-	cameraman = ms < Cameraman>(this);
-	actionManager = ms < ActionManager>(this);
+	audioManager = new AudioManager(this);
+	spriteManager = new SpriteManager(this);
+	mapManager = new MapManager(this);
+	cinematicsManager = new CinematicsManager(this);
+	captionManager = new CaptionManager(this);
+	textManager = new TextManager(this);
+	eventManager = new EventManager(this);
+	cameraman = new Cameraman(this);
+	actionManager = new ActionManager(this);
 
-	controlsManager = ms<ControlsManager>(this);
-	chatControlsManager = ms<ControlsManager>(this);
+	controlsManager = new ControlsManager();
+	chatControlsManager = new ControlsManager();
 
 	activeControlsManager = controlsManager;
 
@@ -82,7 +82,7 @@ void Engine::init()
 
 	GLUtils::e();
 
-	Main::bobNet->addEngineToForwardMessagesTo(shared_from_this());
+	Main::bobNet->addEngineToForwardMessagesTo(this);
 
 
 }
@@ -97,25 +97,14 @@ void Engine::cleanup()
 void Engine::update()
 { //=========================================================================================================================
 
-	onlineFriends->clear();
-	for (int i = 0; i < (int)OKNet::udpConnections->size(); i++)
+	onlineFriends.clear();
+	for (int i = 0; i < (int)BobNet::udpConnections.size(); i++)
 	{
-		sp<UDPPeerConnection> f = OKNet::udpConnections->at(i);
-		if (f->getConnectedToPeer_S() == true && 
-			f->getGotFriendData_S() == true && 
-			f->peerStatus == OKNet::status_AVAILABLE)
+		UDPPeerConnection* f = BobNet::udpConnections.get(i);
+		if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true && f->peerStatus == BobNet::status_AVAILABLE)
 		{
-			bool contains = false;
-			for (int j = 0; j < onlineFriends->size(); j++)
-			{
-				if (onlineFriends->at(j).get() == f.get())
-				{
-					contains = true;
-				}
-			}
-			if (contains == false)
-				onlineFriends->push_back(f);
-
+			if (onlineFriends.contains(f) == false)
+				onlineFriends.add(f);
 		}
 	}
 
@@ -168,9 +157,9 @@ void Engine::updateChatConsole()
 		}
 		else
 		{
-			if (!textStarted) { SDL_StartTextInput(); chatControlsManager->text = ""; textStarted = true; }
+			if (!textStarted) { Main::StartTextInput(); chatControlsManager->text = ""; textStarted = true; }
 
-			if (chatConsoleText == nullptr) { chatConsoleText = Main::rightConsole->add("Say: ",OKColor::magenta); chatConsoleText->alwaysOnBottom = true; }
+			if (chatConsoleText == nullptr) { chatConsoleText = Main::rightConsole->add("Say: ",BobColor::magenta); chatConsoleText->alwaysOnBottom = true; }
 
 			chatConsoleText->text = "Say: "+chatControlsManager->text;
 		}
@@ -181,7 +170,7 @@ void Engine::updateChatConsole()
 			chatFocused = false;
 			activeControlsManager = controlsManager;
 			
-			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+			if (textStarted) { Main::StopTextInput(); textStarted = false; }
 
 			chatControlsManager->text = "";
 			if (chatConsoleText != nullptr)
@@ -305,150 +294,150 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	}
 	catch (exception)
 	{
-		log->error("Could not parse id in typeIDName");
+		log.error("Could not parse id in typeIDName");
 	}
 	
 
 
 	//global objects
-	if (OKString::startsWith(typeIDName, "MAP."))
+	if (String::startsWith(typeIDName, "MAP."))
 	{
-		return getMapManager()->getMapByIDBlockUntilLoaded(id).get();
+		return getMapManager()->getMapByIDBlockUntilLoaded(id);
 	}
-	if (OKString::startsWith(typeIDName, "SPRITE."))
+	if (String::startsWith(typeIDName, "SPRITE."))
 	{
-		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id).get();
+		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "DIALOGUE."))
+	if (String::startsWith(typeIDName, "DIALOGUE."))
 	{
-		return getEventManager()->getDialogueByIDCreateIfNotExist(id).get();
+		return getEventManager()->getDialogueByIDCreateIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "CUTSCENEEVENT."))
+	if (String::startsWith(typeIDName, "CUTSCENEEVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
+		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "EVENT."))
+	if (String::startsWith(typeIDName, "EVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
+		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "FLAG."))
+	if (String::startsWith(typeIDName, "FLAG."))
 	{
-		return getEventManager()->getFlagByIDCreateIfNotExist(id).get();
+		return getEventManager()->getFlagByIDCreateIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "SKILL."))
+	if (String::startsWith(typeIDName, "SKILL."))
 	{
-		return getEventManager()->getSkillByIDCreateIfNotExist(id).get();
+		return getEventManager()->getSkillByIDCreateIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "GAMESTRING."))
+	if (String::startsWith(typeIDName, "GAMESTRING."))
 	{
-		return getEventManager()->getGameStringByIDCreateIfNotExist(id).get();
+		return getEventManager()->getGameStringByIDCreateIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "MUSIC."))
+	if (String::startsWith(typeIDName, "MUSIC."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
 	}
-	if (OKString::startsWith(typeIDName, "SOUND."))
+	if (String::startsWith(typeIDName, "SOUND."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
 	}
 
 
 	//map objects (will only exist within the current map)
-	if (OKString::startsWith(typeIDName, "STATE."))
+	if (String::startsWith(typeIDName, "STATE."))
 	{
-		return getMapManager()->getMapStateByID(id).get();
+		return getMapManager()->getMapStateByID(id);
 	}
-	if (OKString::startsWith(typeIDName, "ENTITY."))
+	if (String::startsWith(typeIDName, "ENTITY."))
 	{
-		return getMapManager()->getEntityByID(id).get();
+		return getMapManager()->getEntityByID(id);
 	}
-	if (OKString::startsWith(typeIDName, "AREA."))
+	if (String::startsWith(typeIDName, "AREA."))
 	{
-		return getMapManager()->getAreaByID(id).get();
+		return getMapManager()->getAreaByID(id);
 	}
-	if (OKString::startsWith(typeIDName, "LIGHT."))
+	if (String::startsWith(typeIDName, "LIGHT."))
 	{
-		return getMapManager()->getLightByID(id).get();
+		return getMapManager()->getLightByID(id);
 	}
-	if (OKString::startsWith(typeIDName, "DOOR."))
+	if (String::startsWith(typeIDName, "DOOR."))
 	{
-		return getMapManager()->getDoorByID(id).get();
+		return getMapManager()->getDoorByID(id);
 	}
 
 
 	return nullptr;
 }
 
-sp<Cameraman> Engine::getCameraman()
+Cameraman* Engine::getCameraman()
 {
 	return cameraman;
 }
 
-sp<MapManager> Engine::getMapManager()
+MapManager* Engine::getMapManager()
 {
 	return mapManager;
 }
 
-sp<SpriteManager> Engine::getSpriteManager()
+SpriteManager* Engine::getSpriteManager()
 {
 	return spriteManager;
 }
 
-sp<ActionManager> Engine::getActionManager()
+ActionManager* Engine::getActionManager()
 {
 	return actionManager;
 }
 
-sp<TextManager> Engine::getTextManager()
+TextManager* Engine::getTextManager()
 {
 	return textManager;
 }
 
-sp<AudioManager> Engine::getAudioManager()
+AudioManager* Engine::getAudioManager()
 {
 	return audioManager;
 }
 
-sp<CaptionManager> Engine::getCaptionManager()
+CaptionManager* Engine::getCaptionManager()
 {
 	return captionManager;
 }
 
-sp<EventManager> Engine::getEventManager()
+EventManager* Engine::getEventManager()
 {
 	return eventManager;
 }
 
-sp<CinematicsManager> Engine::getCinematicsManager()
+CinematicsManager* Engine::getCinematicsManager()
 {
 	return cinematicsManager;
 }
 
-sp<Map> Engine::getCurrentMap()
+Map* Engine::getCurrentMap()
 {
-	sp<Map> m = mapManager->currentMap;
+	Map* m = mapManager->currentMap;
 	if (m == nullptr)
 	{
-		m = ms<Map>(this, ms<MapData>(-1, "none", 0, 0));
+		m = new Map(this, new MapData(-1, "none", 0, 0));
 	}
 	return m;
 }
 
 
-//void Engine::setClientGameEngine(sp<BGClientEngine> clientGameEngine)
+//void Engine::setClientGameEngine(BGClientEngine* clientGameEngine)
 //{
 //	Engine::clientGameEngine = clientGameEngine;
 //	EnginePart::setClientGameEngine(clientGameEngine);
 //}
 
 
-//void Engine::setControlsManager(sp<ControlsManager> controlsManager)
+//void Engine::setControlsManager(ControlsManager* controlsManager)
 //{
 //	controlsManager = controlsManager;
 //	
 //}
 
-//sp<BGClientEngine> Engine::getClientGameEngine()
+//BGClientEngine* Engine::getClientGameEngine()
 //{
 //	return clientGameEngine;
 //}
@@ -467,7 +456,7 @@ void Engine::updateTimers()
 	{
 		ticksThisSecond = 0;
 
-		//log->info("" + to_string(rendersThisSecond));
+		//log.info("" + to_string(rendersThisSecond));
 		framesThisSecond = 0;
 	}
 
@@ -540,24 +529,24 @@ void Engine::setButtonStates()
 	getActiveControlsManager()->setButtonStates();
 }
 
-sp<ControlsManager> Engine::getControlsManager()
+ControlsManager* Engine::getControlsManager()
 {
 	return controlsManager;
 }
 
-sp<ControlsManager> Engine::getActiveControlsManager()
+ControlsManager* Engine::getActiveControlsManager()
 {
 	return activeControlsManager;
 }
 
-sp<BGClientEngine> Engine::getClientGameEngine()
+BGClientEngine* Engine::getClientGameEngine()
 {
 	return Main::gameEngine;
 }
 
-sp<TCPServerConnection> Engine::getServerConnection()
+TCPServerConnection* Engine::getServerConnection()
 {
-	return Main::bobNet->tcpServerConnection;
+	return &(Main::bobNet->tcpServerConnection);
 }
 
 long long Engine::getUserID_S()
@@ -590,7 +579,7 @@ int Engine::getHeight()
 	return GLUtils::getViewportHeight();
 }
 
-bool Engine::udpPeerMessageReceived(sp<UDPPeerConnection> c, string s)
+bool Engine::udpPeerMessageReceived(UDPPeerConnection* c, string s)
 {
 	return false;
 }
@@ -615,7 +604,7 @@ float Engine::getHeightRelativeToZoom()
 
 
 
-bool Engine::serverMessageReceived(string e)// sp<ChannelHandlerContext> ctx, sp<MessageEvent> e)
+bool Engine::serverMessageReceived(string e)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
 
 
@@ -623,7 +612,7 @@ bool Engine::serverMessageReceived(string e)// sp<ChannelHandlerContext> ctx, sp
   //
   //   try
   //   {
-  //      Thread::currentThread().setName("ClientTCP_OKGameClientHandler");
+  //      Thread::currentThread().setName("ClientTCP_BobsGameClientHandler");
   //   }
   //   catch (SecurityException ex)
   //   {
@@ -640,55 +629,55 @@ bool Engine::serverMessageReceived(string e)// sp<ChannelHandlerContext> ctx, sp
 //		return true;
 //	}
 //	else
-	if (OKString::startsWith(s, OKNet::Sprite_Response))
+	if (String::startsWith(s, BobNet::Sprite_Response))
 	{
 		incomingSpriteData(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::Map_Response))
+	if (String::startsWith(s, BobNet::Map_Response))
 	{
 		incomingMapData(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::Dialogue_Response))
+	if (String::startsWith(s, BobNet::Dialogue_Response))
 	{
 		incomingDialogue(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::Flag_Response))
+	if (String::startsWith(s, BobNet::Flag_Response))
 	{
 		incomingFlag(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::Skill_Response))
+	if (String::startsWith(s, BobNet::Skill_Response))
 	{
 		incomingSkill(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::Event_Response))
+	if (String::startsWith(s, BobNet::Event_Response))
 	{
 		incomingEvent(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::GameString_Response))
+	if (String::startsWith(s, BobNet::GameString_Response))
 	{
 		incomingGameString(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::Music_Response))
+	if (String::startsWith(s, BobNet::Music_Response))
 	{
 		incomingMusic(s);
 		return true;
 	}
 	else
-	if (OKString::startsWith(s, OKNet::Sound_Response))
+	if (String::startsWith(s, BobNet::Sound_Response))
 	{
 		incomingSound(s);
 		return true;
@@ -703,12 +692,12 @@ bool Engine::serverMessageReceived(string e)// sp<ChannelHandlerContext> ctx, sp
 
 void Engine::sendSpriteDataRequestByName(string spriteAssetName)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Sprite_Request_By_Name + spriteAssetName + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Sprite_Request_By_Name + spriteAssetName + BobNet::endline);
 }
 
 void Engine::sendSpriteDataRequestByID(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Sprite_Request_By_ID + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Sprite_Request_By_ID + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingSpriteData(string s)
@@ -718,39 +707,39 @@ void Engine::incomingSpriteData(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	sp<SpriteData> data = ms<SpriteData>(); data->initFromString(s);
+	SpriteData* data = new SpriteData(); data->initFromString(s);
 
 
 	if (data == nullptr)
 	{
-		log->error("Sprite could not be decompressed.");
+		log.error("Sprite could not be decompressed.");
 	}
 	else
 	{
-		sp<Sprite> sprite = nullptr;
-		if(getSpriteManager()->spriteByNameHashMap->containsKey(data->getName()))
-		sprite = getSpriteManager()->spriteByNameHashMap->get(data->getName());
+		Sprite* sprite = nullptr;
+		if(getSpriteManager()->spriteByNameHashMap.containsKey(data->getName()))
+		sprite = getSpriteManager()->spriteByNameHashMap.get(data->getName());
 
 		if (sprite == nullptr)
 		{
-			sprite = ms<Sprite>(this);
+			sprite = new Sprite(this);
 		}
 
 		sprite->initializeWithSpriteData(data);
 
-		getSpriteManager()->spriteByNameHashMap->put(sprite->getName(), sprite);
-		getSpriteManager()->spriteByIDHashMap->put(sprite->getID(), sprite);
+		getSpriteManager()->spriteByNameHashMap.put(sprite->getName(), sprite);
+		getSpriteManager()->spriteByIDHashMap.put(sprite->getID(), sprite);
 	}
 }
 
 void Engine::sendMapDataRequestByName(string mapName)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Map_Request_By_Name + mapName + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Map_Request_By_Name + mapName + BobNet::endline);
 }
 
 void Engine::sendMapDataRequestByID(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Map_Request_By_ID + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Map_Request_By_ID + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingMapData(string s)
@@ -760,56 +749,56 @@ void Engine::incomingMapData(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	sp<MapData> data = ms<MapData>(); data->initFromString(s);
+	MapData* data = new MapData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("Map could not be decompressed.");
+		log.error("Map could not be decompressed.");
 	}
 	else
 	{
-		if (getMapManager()->mapByNameHashMap->containsKey(data->getName()) == false)
+		if (getMapManager()->mapByNameHashMap.containsKey(data->getName()) == false)
 		{
-			sp<Map> m = ms<Map>(this, data);
-			getMapManager()->mapList->push_back(m);
-			getMapManager()->mapByNameHashMap->put(data->getName(), m);
-			getMapManager()->mapByIDHashMap->put(data->getID(), m);
+			Map* m = new Map(this, data);
+			getMapManager()->mapList.add(m);
+			getMapManager()->mapByNameHashMap.put(data->getName(), m);
+			getMapManager()->mapByIDHashMap.put(data->getID(), m);
 		}
 	}
 }
 
-void Engine::sendServerObjectRequest(sp<ServerObject> serverObject)
+void Engine::sendServerObjectRequest(ServerObject* serverObject)
 { //====================================================
-     if(dynamic_cast<Dialogue*>(serverObject.get()) != nullptr)
+     if(dynamic_cast<Dialogue*>(serverObject) != nullptr)
      {
-        sendDialogueRequest((static_cast<Dialogue*>(serverObject.get()))->getID());
+        sendDialogueRequest((static_cast<Dialogue*>(serverObject))->getID());
      }
-     if (dynamic_cast<Flag*>(serverObject.get()) != nullptr)
+     if (dynamic_cast<Flag*>(serverObject) != nullptr)
      {
-        sendFlagRequest((static_cast<Flag*>(serverObject.get()))->getID());
+        sendFlagRequest((static_cast<Flag*>(serverObject))->getID());
      }
-     if (dynamic_cast<GameString*>(serverObject.get()) != nullptr)
+     if (dynamic_cast<GameString*>(serverObject) != nullptr)
      {
-        sendGameStringRequest((static_cast<GameString*>(serverObject.get()))->getID());
+        sendGameStringRequest((static_cast<GameString*>(serverObject))->getID());
      }
-     if (dynamic_cast<Skill*>(serverObject.get()) != nullptr)
+     if (dynamic_cast<Skill*>(serverObject) != nullptr)
      {
-        sendSkillRequest((static_cast<Skill*>(serverObject.get()))->getID());
+        sendSkillRequest((static_cast<Skill*>(serverObject))->getID());
      }
-     if (dynamic_cast<Event*>(serverObject.get()) != nullptr)
+     if (dynamic_cast<BobEvent*>(serverObject) != nullptr)
      {
-        sendEventRequest((static_cast<Event*>(serverObject.get()))->getID());
+        sendEventRequest((static_cast<BobEvent*>(serverObject))->getID());
      }
-     if (dynamic_cast<AudioFile*>(serverObject.get()) != nullptr)
+     if (dynamic_cast<AudioFile*>(serverObject) != nullptr)
      {
-        sendSoundRequest((static_cast<AudioFile*>(serverObject.get()))->getID());
+        sendSoundRequest((static_cast<AudioFile*>(serverObject))->getID());
      }
 
 }
 
 void Engine::sendDialogueRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Dialogue_Request + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Dialogue_Request + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingDialogue(string s)
@@ -820,15 +809,15 @@ void Engine::incomingDialogue(string s)
 
 								   //Dialogue:id-name:base64Blob
 
-	sp<DialogueData> data = ms<DialogueData>(); data->initFromString(s);
+	DialogueData* data = new DialogueData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("Dialogue could not be decompressed.");
+		log.error("Dialogue could not be decompressed.");
 	}
 	else
 	{
-		sp<Dialogue> d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
+		Dialogue* d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 }
@@ -836,34 +825,34 @@ void Engine::incomingDialogue(string s)
 
 void Engine::sendEventRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Event_Request + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Event_Request + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingEvent(string s)
 { //=========================================================================================================================
 
-  //Event:id-name:eventData
+  //BobEvent:id-name:eventData
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
 
-	sp<EventData> data = ms<EventData>(); data->initFromString(s);
+	EventData* data = new EventData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("Event could not be decompressed.");
+		log.error("BobEvent could not be decompressed.");
 	}
 	else
 	{
-		//sp<Event> d = 
+		//BobEvent* d = 
 			getEventManager()->getEventByIDCreateIfNotExist(data->getID());
-		//if (d == nullptr)d = ms<Event>(this, data, "cutscene");
+		//if (d == nullptr)d = new BobEvent(this, data, "cutscene");
 	}
 }
 
 void Engine::sendGameStringRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::GameString_Request + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::GameString_Request + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingGameString(string s)
@@ -874,22 +863,22 @@ void Engine::incomingGameString(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	sp<GameStringData> data = ms<GameStringData>(); data->initFromString(s);
+	GameStringData* data = new GameStringData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("GameString could not be decompressed.");
+		log.error("GameString could not be decompressed.");
 	}
 	else
 	{
-		sp<GameString> gameString = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
+		GameString* gameString = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
 		gameString->setData_S(data);
 	}
 }
 
 void Engine::sendFlagRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Flag_Request + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Flag_Request + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingFlag(string s)
@@ -900,22 +889,22 @@ void Engine::incomingFlag(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	sp<FlagData> data = ms<FlagData>(); data->initFromString(s);
+	FlagData* data = new FlagData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("Flag could not be decompressed.");
+		log.error("Flag could not be decompressed.");
 	}
 	else
 	{
-		sp<Flag> flag = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
+		Flag* flag = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
 		flag->setData_S(data);
 	}
 }
 
 void Engine::sendSkillRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Skill_Request + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Skill_Request + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingSkill(string s)
@@ -926,22 +915,22 @@ void Engine::incomingSkill(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	sp<SkillData> data = ms<SkillData>(); data->initFromString(s);
+	SkillData* data = new SkillData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("Skill could not be decompressed.");
+		log.error("Skill could not be decompressed.");
 	}
 	else
 	{
-		sp<Skill> skill = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
+		Skill* skill = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
 		skill->setData_S(data);
 	}
 }
 
 void Engine::sendMusicRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Music_Request + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Music_Request + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingMusic(string s)
@@ -951,22 +940,22 @@ void Engine::incomingMusic(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	sp<AudioData> data = ms<AudioData>(); data->initFromString(s);
+	AudioData* data = new AudioData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("Music could not be decompressed.");
+		log.error("Music could not be decompressed.");
 	}
 	else
 	{
-		sp<AudioFile> music = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
+		AudioFile* music = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
 		music->setData_S(data);
 	}
 }
 
 void Engine::sendSoundRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Sound_Request + to_string(id) + OKNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Sound_Request + to_string(id) + BobNet::endline);
 }
 
 void Engine::incomingSound(string s)
@@ -977,15 +966,15 @@ void Engine::incomingSound(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	sp<AudioData> data = ms<AudioData>(); data->initFromString(s);
+	AudioData* data = new AudioData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
-		log->error("Sound could not be decompressed.");
+		log.error("Sound could not be decompressed.");
 	}
 	else
 	{
-		sp<AudioFile> sound = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
+		AudioFile* sound = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
 		sound->setData_S(data);
 	}
 }

@@ -171,6 +171,7 @@ Layout::TableRow* ListBox::GetRow(int n)
 		i++;
 
 	}
+	return nullptr;
 }
 
 Gwen::String ListBox::GetSelectedRowName()

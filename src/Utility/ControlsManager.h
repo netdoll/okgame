@@ -5,13 +5,214 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
+#include "src/main.h"
+#include "input_output_devices/api_pad_mouse/basic/api_mouse.h"
+
 class Logger;
 
 
 
-class Logger;
 #include "src/Utility/HashMap.h"
+
+
+#ifdef ORBIS
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <pad.h>
+#include <libsysmodule.h>
+#include <map>
+
+#include <sampleutil.h>
+#include <sampleutil/audio.h>
+#include <sampleutil/graphics.h>
+#include <sampleutil/input.h>
+#include <sampleutil/system.h>
+#include <sampleutil/sampleutil_common.h>
+#include <sampleutil/skeleton.h>
+#include <sampleutil/debug/menu.h>
+#include <sampleutil/debug/console.h>
+#include <scebase_common.h>
+
+#include <sampleutil/input.h>
+#include <sampleutil/input/pad_common.h>
+#include <sampleutil/input/controller.h>
+
+namespace vecmath = sce::Vectormath::Simd::Aos;
+namespace ssg = sce::SampleUtil::Graphics;
+namespace ssin = sce::SampleUtil::Input;
+namespace ssa = sce::SampleUtil::Audio;
+
+namespace ssii = sce::SampleUtil::Input::Impl;
+
+namespace sce
+{
+	namespace SampleUtil
+	{
+		namespace Input
+		{
+			namespace Impl
+			{
+				class PadContextForOrbisImpl;
+			}
+		}
+	}
+}
+
+//=========================================================================================================================
+class PS4InputToSDLEventConverter
+{//=========================================================================================================================
+ //need to initialize ps4 controllers
+
+ //start a thread and constantly poll the controllers maybe every 10ms
+
+ //create SDL event struct
+
+
+
+	const vecmath::Vector4 g_white = vecmath::Vector4(1.0, 1.0, 1.0, 1.0);
+	const vecmath::Vector4 g_whitem_gray = vecmath::Vector4(0.8, 0.8, 0.8, 1.0);
+	const vecmath::Vector4 g_gray = vecmath::Vector4(0.5, 0.5, 0.5, 1.0);
+
+	const vecmath::Vector4 g_red = vecmath::Vector4(1.0, 0.0, 0.0, 1.0);
+	const vecmath::Vector4 g_green = vecmath::Vector4(0.0, 1.0, 0.0, 1.0);
+	const vecmath::Vector4 g_blue = vecmath::Vector4(0.0, 0.0, 1.0, 1.0);
+	const vecmath::Vector4 g_purple = vecmath::Vector4(0.6, 0.0, 0.8, 1.0);
+	const vecmath::Vector4 g_brown = vecmath::Vector4(0.5, 0.0, 0.0, 1.0);
+	const vecmath::Vector4 g_orange = vecmath::Vector4(1.0, 0.5, 0.0, 1.0);
+	const vecmath::Vector4 g_skyblue = vecmath::Vector4(0.0, 1.0, 1.0, 1.0);
+	const vecmath::Vector4 g_yellow = vecmath::Vector4(1.0, 1.0, 0.0, 1.0);
+	const vecmath::Vector4 g_pink = vecmath::Vector4(1.0, 0.0, 1.0, 1.0);
+	const vecmath::Vector4 g_black = vecmath::Vector4(0.0, 0.0, 0.0, 1.0);
+
+
+public:
+
+	//DebugMenu::State m_state;
+
+	ssin::PadData *m_padData;
+	bool m_pressedOptionButton;
+	int  m_frequencyCountOfUpdate;
+	bool m_enabledConsoleOutput;
+	int  m_currentUserName;
+	static const uint8_t INVALID_TOUCH_ID = 255;
+
+	int m_updateNum;
+	int m_touchColorTable[SCE_PAD_MAX_TOUCH_NUM];
+
+	typedef enum TouchColor
+	{
+		TOUCH_COLOR1 = 0,
+		TOUCH_COLOR2,
+		TOUCH_COLOR3,
+		TOUCH_COLOR4,
+		TOUCH_COLOR5,
+		MAX_TOUCH_COLOR
+	} TouchColor;
+
+	typedef enum LoginLogoutStatus
+	{
+		INVALID = -1,
+		LOGOUT = 0,
+		LOGIN = 1
+	} LoginLogoutStatus;
+
+	vecmath::Vector4 m_upButtonColor;
+	vecmath::Vector4 m_downButtonColor;
+	vecmath::Vector4 m_leftButtonColor;
+	vecmath::Vector4 m_rightButtonColor;
+
+	vecmath::Vector4 m_triangleButtonColor;
+	vecmath::Vector4 m_crossButtonColor;
+	vecmath::Vector4 m_squareButtonColor;
+	vecmath::Vector4 m_circleButtonColor;
+
+	vecmath::Vector4 m_touchPadColor;
+
+	vecmath::Vector4 m_L1ButtonColor;
+	vecmath::Vector4 m_R1ButtonColor;
+	vecmath::Vector4 m_L2ButtonColor;
+	vecmath::Vector4 m_R2ButtonColor;
+	vecmath::Vector4 m_L3ButtonColor;
+	vecmath::Vector4 m_R3ButtonColor;
+
+	vecmath::Vector4 m_optionButtonColor;
+
+	ssin::TouchPadData m_currentTouchData[SCE_PAD_MAX_TOUCH_NUM];
+
+	float m_touchPadAspectRatio;
+
+	vecmath::Vector3 m_eulerAngles;
+	vecmath::Quat m_orientation;
+
+	vecmath::Vector3 m_angularVelocity;
+	vecmath::Vector3 m_acceleration;
+
+	//ssg::Collada::ColladaData		  *m_collada;
+	//ssg::Collada::ColladaLoader       *m_loader;
+	//ssg::Collada::InstanceVisualScene *m_instanceVisualScene;
+
+	//Camera		m_camera;
+	//DebugMenu	m_debug;
+
+	sce::SampleUtil::System::UserIdManager *m_userIdManager;
+	int m_currentMaxUser;
+	sce::SampleUtil::System::UserId m_currentUserId;
+
+
+
+	
+
+
+
+	struct UserInfo
+	{
+		int								userNum;
+		sce::SampleUtil::System::UserId userId;
+		std::string						userName;
+		ssii::PadContextForOrbisImpl *padContext;
+
+		bool enabledMotionSensor;
+		bool enabledAngularVelocityDeadBand;
+		bool enabledTiltCorrection;
+		ScePadVibrationParam padVibrationParam;
+		ScePadLightBarParam padLightBarParam;
+
+		ApiMouse		apiMouse;
+
+		void reset(void)
+		{
+			userNum = -1;
+			userId = sce::SampleUtil::System::kInvalidUserId;
+			userName.clear();
+		}
+	};
+
+	typedef std::map<sce::SampleUtil::System::UserId, UserInfo> UserMap;
+	UserMap m_userMap;
+
+
+	int _setUserColorToLightBar(sce::SampleUtil::System::UserColor m_userColor, ScePadLightBarParam &padLightBarParam);
+
+	float m_displayWidth;
+	float m_displayHeight;
+
+	int getDisplaySize(ssg::GraphicsContext *graphicsContext, float *width, float *height);
+
+
+public:
+
+	virtual int initialize(void);
+
+	virtual int update(void);
+
+	virtual int finalize(void);
+
+#endif
+};
+
+
 
 
 
@@ -19,9 +220,15 @@ class GameController
 {
 public:
 
+#ifndef ORBIS
 	SDL_JoystickID id;
-	sp<SDL_Haptic >haptic = nullptr;
+	SDL_Haptic *haptic = nullptr;
 	//int hapticID = -1;
+#else
+
+	sce::SampleUtil::System::UserId userId;
+	PS4InputToSDLEventConverter::UserInfo userInfo;
+#endif
 
 	bool UP_HELD = false;
 	bool DOWN_HELD = false;
@@ -124,6 +331,27 @@ public:
 		START_PRESSED = false;
 		SELECT_PRESSED = false;
 	}
+	void unsetHeld()
+	{
+		UP_HELD = false;
+		DOWN_HELD = false;
+		LEFT_HELD = false;
+		RIGHT_HELD = false;
+		ANALOGUP_HELD = false;
+		ANALOGDOWN_HELD = false;
+		ANALOGLEFT_HELD = false;
+		ANALOGRIGHT_HELD = false;
+		A_HELD = false;
+		B_HELD = false;
+		X_HELD = false;
+		Y_HELD = false;
+		L_HELD = false;
+		R_HELD = false;
+		L2_HELD = false;
+		R2_HELD = false;
+		START_HELD = false;
+		SELECT_HELD = false;
+	}
 
 	void setButtonStates()
 	{
@@ -178,23 +406,33 @@ public:
 
 	ControlsManager();
 
-	sp<vector<SDL_Event>>events;
+	
 
 	static int numControllers;
 	static string controllerNames;
 
 	static int DEADZONE;
 
+#ifndef ORBIS
+	ArrayList<SDL_Event> events;
 	//static SDL_Event event;
-	//static HashMap<int,sp<SDL_GameController>> *controllersByJoystickNum;
-	static sp<HashMap<SDL_JoystickID, sp<SDL_GameController>>> controllersByJoystickID;
+	//static HashMap<int,SDL_GameController*> *controllersByJoystickNum;
+	static HashMap<SDL_JoystickID, SDL_GameController*> controllersByJoystickID;
+
+
+#else
+
+
+#endif
+
+	static ArrayList<GameController*> gameControllers;// = new ArrayList<GameController*>();
 
 	static float MAXZOOM;
 	static float MINZOOM;
 	static float ZOOMINCREMENT;
 
 
-	static sp<vector<sp<GameController>>>gameControllers;// = ms<vector><sp<GameController>>();
+	
 
 
 	//------------------------------------
@@ -614,9 +852,9 @@ public:
 
 		if (key_RETURN_Pressed())return true;
 
-		for (int i = 0; i < gameControllers->size(); i++)
+		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers->at(i);
+			GameController *g = gameControllers.get(i);
 			if (g->start_Pressed())return true;
 		}
 		return false;
@@ -629,9 +867,9 @@ public:
 
 		if (key_ESC_Pressed())return true;
 
-		for (int i = 0; i < gameControllers->size(); i++)
+		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers->at(i);
+			GameController *g = gameControllers.get(i);
 			if (g->select_Pressed())return true;
 		}
 		return false;
@@ -642,9 +880,9 @@ public:
 		//if (MINIGAME_ACTION_PRESSED) { MINIGAME_ACTION_PRESSED = false; return true; }return false;
 		if (key_SPACE_Pressed())return true;
 
-		for (int i = 0; i < gameControllers->size(); i++)
+		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers->at(i);
+			GameController *g = gameControllers.get(i);
 			if (g->b_Pressed())return true;
 		}
 		return false;
@@ -656,9 +894,9 @@ public:
 
 		if (key_LSHIFT_Pressed())return true;
 
-		for (int i = 0; i < gameControllers->size(); i++)
+		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers->at(i);
+			GameController *g = gameControllers.get(i);
 			if (g->a_Pressed())return true;
 		}
 		return false;
@@ -729,7 +967,7 @@ public:
 
 	static void cleanup();
 
-	void doHaptic(sp<GameController>g, int length, int magnitude = 32767, int attackLength = 500, int fadeLength = 500, int wavePeriod = 500);
+	void doHaptic(GameController *g, int length, int magnitude = 32767, int attackLength = 500, int fadeLength = 500, int wavePeriod = 500);
 	int getMouseX();
 	int getMouseY();
 };

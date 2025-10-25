@@ -18,7 +18,7 @@ MenuPanel::MenuPanel()
 
 }
 
-MenuPanel::MenuPanel(sp<Engine>e)
+MenuPanel::MenuPanel(Engine *e)
 { //=========================================================================================================================
 
 	this->e = e;
@@ -30,7 +30,7 @@ MenuPanel::MenuPanel(sp<Engine>e)
 	//   //outside panel, just attached to "nothing"
 	//   //----------------------
 	//
-	//   mainPanelLayout = ms<DialogLayout>();
+	//   mainPanelLayout = new DialogLayout();
 	//
 	//   //if(stuffMenu().lightTheme==true)
 	//   //mainPanelLayout.setTheme(GUIManager.lightThemeString);
@@ -42,7 +42,7 @@ MenuPanel::MenuPanel(sp<Engine>e)
 	//   //this goes inside the scrollpane which goes inside mainPanelLayout. for the stuff menu we just attach it directly to mainPanelLayout because the submenus have scrollpanes.
 	//   //----------------------
 	//
-	//   insideScrollPaneLayout = ms<DialogLayout>();
+	//   insideScrollPaneLayout = new DialogLayout();
 	//   insideScrollPaneLayout->setTheme(GUIManager::emptyDialogLayoutTheme);
 	//   insideScrollPaneLayout->setCanAcceptKeyboardFocus(false);
 }
@@ -258,12 +258,12 @@ void MenuPanel::render()
 }
 
 //
-//sp<BGClientEngine> MenuPanel::getClientGameEngine()
+//BGClientEngine* MenuPanel::getClientGameEngine()
 //{
 //	return Main::gameEngine;
 //}
 //
-//sp<Clock> MenuPanel::getClock()
+//Clock* MenuPanel::getClock()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -272,7 +272,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->clock;
 //}
 //
-//sp<GUIManager> MenuPanel::getGUIManager()
+//GUIManager* MenuPanel::getGUIManager()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -281,7 +281,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->guiManager;
 //}
 //
-//sp<StuffMenu> MenuPanel::getStuffMenu()
+//StuffMenu* MenuPanel::getStuffMenu()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -290,7 +290,7 @@ void MenuPanel::render()
 //	return getGUIManager()->stuffMenu;
 //}
 //
-//sp<GameStore> MenuPanel::getGameStore()
+//GameStore* MenuPanel::getGameStore()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -299,7 +299,7 @@ void MenuPanel::render()
 //	return getGUIManager()->gameStore;
 //}
 //
-//sp<PlayerEditMenu> MenuPanel::getPlayerEditMenu()
+//PlayerEditMenu* MenuPanel::getPlayerEditMenu()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -308,7 +308,7 @@ void MenuPanel::render()
 //	return getGUIManager()->playerEditMenu;
 //}
 //
-//sp<Player> MenuPanel::getPlayer()
+//Player* MenuPanel::getPlayer()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -326,7 +326,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->nD;
 //}
 //
-//sp<Wallet> MenuPanel::getWallet()
+//Wallet* MenuPanel::getWallet()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -335,7 +335,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->wallet;
 //}
 //
-//sp<FriendManager> MenuPanel::getFriendManager()
+//FriendManager* MenuPanel::getFriendManager()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -344,7 +344,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->friendManager;
 //}
 //
-//sp<StatusBar> MenuPanel::getStatusBar()
+//BobStatusBar* MenuPanel::getBobStatusBar()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -353,21 +353,21 @@ void MenuPanel::render()
 //	return getClientGameEngine()->statusBar;
 //}
 //
-//sp<NotificationManager> MenuPanel::getNotificationManager()
+//NotificationManager* MenuPanel::getNotificationManager()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
 //		return nullptr;
 //	}
-//	return getStatusBar()->notificationManager;
+//	return getBobStatusBar()->notificationManager;
 //}
 //
-//sp<TCPServerConnection> MenuPanel::getServerConnection()
+//TCPServerConnection* MenuPanel::getServerConnection()
 //{
-//	return OKNet::tcpServerConnection;
+//	return BobNet::tcpServerConnection;
 //}
 //
-//sp<GameSave> MenuPanel::getGameSave()
+//GameSave* MenuPanel::getGameSave()
 //{
 //	return getServerConnection()->getGameSave_S();
 //}

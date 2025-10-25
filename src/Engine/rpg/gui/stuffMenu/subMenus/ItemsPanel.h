@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//sp<vector<sp<DialogLayout>>>itemDialogLayout;
+	//ArrayList<DialogLayout*> itemDialogLayout;
 
 	//DialogLayout::Group* horizontalGroup = nullptr;
 	//DialogLayout::Group* verticalGroup = nullptr;

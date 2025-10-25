@@ -4,18 +4,18 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 #include "StatusBarCaption.h"
 
-class ClockCaption : public StatusBarCaption
+class ClockCaption : public BobStatusBarCaption
 {
 public:
 
 	static Logger log;
 
-	ClockCaption(sp<BGClientEngine> g);
+	ClockCaption(BGClientEngine* g);
 
 	virtual void init() override;
 
@@ -25,17 +25,17 @@ public:
 
 	void setLightTheme();
 
-	sp<OKColor> pausedFGColor = OKColor::darkGray;
-	sp<OKColor> pausedAAColor = OKColor::gray;
-	sp<OKColor> pausedBGColor = OKColor::lightGray;
+	BobColor* pausedFGColor = BobColor::darkGray;
+	BobColor* pausedAAColor = BobColor::gray;
+	BobColor* pausedBGColor = BobColor::lightGray;
 
-	sp<OKColor> fastFGColor = OKColor::darkerBlue;
-	sp<OKColor> fastAAColor = OKColor::darkBlue;
-	sp<OKColor> fastBGColor = OKColor::blue;
+	BobColor* fastFGColor = BobColor::darkerBlue;
+	BobColor* fastAAColor = BobColor::darkBlue;
+	BobColor* fastBGColor = BobColor::blue;
 
-	sp<OKColor> unknownFGColor = OKColor::white;
-	sp<OKColor> unknownAAColor = OKColor::lightGray;
-	sp<OKColor> unknownBGColor = OKColor::black;
+	BobColor* unknownFGColor = BobColor::white;
+	BobColor* unknownAAColor = BobColor::lightGray;
+	BobColor* unknownBGColor = BobColor::black;
 
 	void setPausedColor();
 
@@ -43,6 +43,6 @@ public:
 
 	void setFastColor();
 
-	void setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg) override;
+	void setColors(BobColor* fg, BobColor* aa, BobColor* bg) override;
 };
 

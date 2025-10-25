@@ -22,7 +22,7 @@ string GUIManager::buttonTheme = "oppositeThemeButton";
 string GUIManager::checkboxTheme = "checkbox";
 string GUIManager::scrollPaneTheme = "themedScrollPane";
 
-GUIManager::GUIManager(sp<BGClientEngine> g)
+GUIManager::GUIManager(BGClientEngine* g)
 { //=========================================================================================================================
 
 
@@ -41,10 +41,10 @@ GUIManager::GUIManager(sp<BGClientEngine> g)
 	//glClear(GL_COLOR_BUFFER_BIT);
 
 
-	stuffMenu = ms<StuffMenu>();
-	playerEditMenu = ms<PlayerEditMenu>();
-	gameStore = ms<GameStore>();
-	keyboardScreen = ms<KeyboardMenuPanel>();
+	stuffMenu = new StuffMenu();
+	playerEditMenu = new PlayerEditMenu();
+	gameStore = new GameStore();
+	keyboardScreen = new KeyboardMenuPanel();
 	//
 	//   
 	//   stuffMenuGUI = new GUI(stuffMenu, GLUtils::TWLrenderer);
@@ -87,7 +87,7 @@ void GUIManager::update()
 
 	for (int i = 0; i < gameChallenges->size(); i++)
 	{
-		sp<GameChallengeNotificationPanel> g = gameChallenges->at(i);
+		GameChallengeNotificationPanel* g = gameChallenges->get(i);
 		g->update();
 	}
 }
@@ -126,7 +126,7 @@ void GUIManager::render()
 	//
 	//   for (int i = 0; i < gameChallenges->size(); i++)
 	//   {
-	//      sp<GameChallengeNotificationPanel> g = gameChallenges[i];
+	//      GameChallengeNotificationPanel* g = gameChallenges[i];
 	//      GUI* gui = gameChallengesGUIs[i];
 	//      if (g->getIsActivated())
 	//      {
@@ -138,29 +138,29 @@ void GUIManager::render()
 }
 
 //The following method was originally marked 'synchronized':
-sp<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(sp<FriendCharacter> friend_in, const string& gameName)
+GameChallengeNotificationPanel* GUIManager::makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName)
 { //=========================================================================================================================
-	sp<GameChallengeNotificationPanel> g = ms<GameChallengeNotificationPanel>(friend_in, gameName);
-	gameChallenges->push_back(g);
+	GameChallengeNotificationPanel* g = new GameChallengeNotificationPanel(friend_in, gameName);
+	gameChallenges->add(g);
 
 	//   GUI* gui = new GUI(g, GLUtils::TWLrenderer);
 	//   gui->applyTheme(GLUtils::TWLthemeManager);
-	//   gameChallengesGUIs->push_back(gui);
+	//   gameChallengesGUIs.push_back(gui);
 
 	g->setActivated(true);
 
 	return g;
 }
 
-void GUIManager::removeGameNotification(sp<GameChallengeNotificationPanel> g)
+void GUIManager::removeGameNotification(GameChallengeNotificationPanel* g)
 { //=========================================================================================================================
 
 	for (int i = 0; i < gameChallenges->size(); i++)
 	{
 		//      if (gameChallenges[i] == g)
 		//      {
-		//         gameChallenges->remove(i);
-		//         GUI* gui = gameChallengesGUIs->remove(i);
+		//         gameChallenges.remove(i);
+		//         GUI* gui = gameChallengesGUIs.remove(i);
 		//
 		//         gui->destroy();
 		//      }
@@ -180,8 +180,8 @@ void GUIManager::cleanup()
 	//
 	//   for (int i = 0; i < gameChallenges->size(); i++)
 	//   {
-	//      gameChallenges->remove(i);
-	//      GUI* gui = gameChallengesGUIs->remove(i);
+	//      gameChallenges.remove(i);
+	//      GUI* gui = gameChallengesGUIs.remove(i);
 	//      gui->destroy();
 	//   }
 }
@@ -191,7 +191,7 @@ void GUIManager::setDarkTheme()
 
 	lightTheme = false;
 
-	getStatusBar()->setDarkTheme();
+	getBobStatusBar()->setDarkTheme();
 
 
 	//   stuffMenu->mainPanelLayout->setTheme(GUIManager::darkThemeString);
@@ -218,7 +218,7 @@ void GUIManager::setLightTheme()
 
 	lightTheme = true;
 
-	getStatusBar()->setLightTheme();
+	getBobStatusBar()->setLightTheme();
 
 	//   stuffMenu->mainPanelLayout->setTheme(GUIManager::lightThemeString);
 	//   stuffMenu->mainPanelLayout->reapplyTheme();

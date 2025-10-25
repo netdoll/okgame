@@ -19,19 +19,19 @@ bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
 
-sp<HashMap<string, sp<OKTexture>>> MapManager::lightTextureHashMap;
+HashMap<string, BobTexture*> MapManager::lightTextureHashMap;
 
 
-sp<HashMap<string, bool>> MapManager::_lightTextureFileExistsHashtable;
+HashMap<string, bool> MapManager::_lightTextureFileExistsHashtable;
 mutex MapManager::_lightTextureFileExistsHashtable_Mutex;
 
-MapManager::MapManager(sp<Engine> g)
+MapManager::MapManager(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
-	//mapByNameHashMap = ms<HashMap><string, sp<Map>>();
-	//mapByIDHashMap = ms<HashMap><int, sp<Map>>();
-	//lightTextureHashMap = ms<HashMap><string, sp<OKTexture>>();
-	//lightTextureFileExistsHashtable = ms<HashMap><string, sp<OKBool>>();
+	//mapByNameHashMap = new HashMap<string, Map*>();
+	//mapByIDHashMap = new HashMap<int, Map*>();
+	//lightTextureHashMap = new HashMap<string, BobTexture*>();
+	//lightTextureFileExistsHashtable = new HashMap<string, BobBool*>();
 }
 
 
@@ -102,8 +102,10 @@ void MapManager::render()
 	}
 
 
-	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr)//GLUtils::useFBO && 
+	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)//GLUtils::useFBO && 
 	{
+
+#ifndef ORBIS
 		GLUtils::bindFBO(GLUtils::postColorFilterFBO); //set the framebuffer object to the MAIN FBO
 
 		GLUtils::drawIntoFBOAttachment(0); //set which framebuffer object to draw into (whatever buffer is set with glBindFramebufferEXT)
@@ -111,7 +113,9 @@ void MapManager::render()
 		//clear the main FBO
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);//TODO: set all these to 0,0,0,1
 		glClear(GL_COLOR_BUFFER_BIT);
+#else
 
+#endif
 		//DONE: need to resize the fbo texture when the screen size changes
 
 		//DONE: also need to send the fbo size into the lights shader, it is currently hardcoded
@@ -123,10 +127,15 @@ void MapManager::render()
 		currentMap->renderEntities(RenderOrder::GROUND);
 		getCaptionManager()->render(RenderOrder::GROUND);
 
-
+#ifndef ORBIS
 		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+#else
+#endif
 		getCinematicsManager()->render(RenderOrder::GROUND);
+#ifndef ORBIS
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#else
+#endif
 
 		//GLUtils.setBlendMode(GL_SRC_ALPHA, GL_ONE);
 		currentMap->render(RenderOrder::ABOVE);
@@ -136,11 +145,16 @@ void MapManager::render()
 
 
 		//if(!Keyboard.isKeyDown(Keyboard.KEY_COMMA))
+#ifndef ORBIS
 		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+#else
+#endif
 		getCinematicsManager()->render(RenderOrder::ABOVE); //screen overlay under lights
 		//if(!Keyboard.isKeyDown(Keyboard.KEY_PERIOD))
+#ifndef ORBIS
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+#else
+#endif
 		//getGameEngine()->stadiumScreen->render();
 
 		//			if(Keyboard.isKeyDown(Keyboard.KEY_LBRACKET))GLUtils.setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -161,9 +175,9 @@ void MapManager::render()
 
 			bool flip = true;
 
-			for (int i = 0; i < (int)currentMap->sortedLightsLayers->size(); i++)
+			for (int i = 0; i < (int)currentMap->sortedLightsLayers.size(); i++)
 			{
-				sp<vector<sp<Light>>> thisLayer = currentMap->sortedLightsLayers->at(i);
+				ArrayList<Light*>* thisLayer = currentMap->sortedLightsLayers.get(i);
 
 
 				if (flip == true)
@@ -173,17 +187,20 @@ void MapManager::render()
 
 					//switch to LIGHTS buffer attachment
 					GLUtils::drawIntoFBOAttachment(1); //draws into postColorFilterFBO_Texture_Attachment1_PreLighting
+#ifndef ORBIS
 					glClear(GL_COLOR_BUFFER_BIT);
 
 					//draw the main FBO texture into the LIGHTS buffer attachment
 					GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getViewportWidth()), 0, (float)(GLUtils::getViewportHeight()), 1.0f, GLUtils::FILTER_FBO_NEAREST_NO_MIPMAPPING);
-
+#else
+#endif
 					//switch to MAIN buffer attachment
 					GLUtils::drawIntoFBOAttachment(0); //draws into postColorFilterFBO_Texture_Attachment0
 				}
 
 				GLUtils::useShader(GLUtils::lightShader);
 
+#ifndef ORBIS
 				//set the LIGHTS FBO texture to texture 0, we drew the main FBO (maps and sprites) into it and we are going to use it to blend
 				glActiveTexture(GL_TEXTURE0);
 				glEnable(GL_TEXTURE_2D);
@@ -193,7 +210,10 @@ void MapManager::render()
 				glActiveTexture(GL_TEXTURE1); //switch to texture 1, we are going to bind the light textures to this when we draw them.
 				glEnable(GL_TEXTURE_2D);
 				//each light texture will be bound to texture1 as they are drawn
+#else
 
+
+#endif
 
 				//then we set the shader vars, we will blend texture0 with texture1
 				GLUtils::setShaderVar1i(GLUtils::lightShader, (char*)"Tex0", 0);//this is the full map and sprites
@@ -212,7 +232,7 @@ void MapManager::render()
 				//this is "ping pong" rendering technique.
 				for (int n = 0; n < thisLayer->size(); n++)
 				{
-					sp<Light> l = thisLayer->at(n);
+					Light* l = thisLayer->get(n);
 					if (l->getName().find("mover") != string::npos == false) //skip mover lights, draw them afterwards.
 					{
 						if (l->renderLight() == true)
@@ -222,13 +242,16 @@ void MapManager::render()
 					}
 				}
 
+#ifndef ORBIS
 				//disable texture2D on texture unit 1
 				glActiveTexture(GL_TEXTURE1);
 				glDisable(GL_TEXTURE_2D);
 
 				//switch back to texture unit 0
 				glActiveTexture(GL_TEXTURE0);
-				
+#else
+
+#endif
 
 				GLUtils::useShader(0);
 			}
@@ -239,9 +262,9 @@ void MapManager::render()
 				if (currentMap->currentState != nullptr)
 				{
 					//draw mover lights after finished drawing blended lights.
-					for (int i = 0; i < (int)currentMap->currentState->lightList->size(); i++)
+					for (int i = 0; i < (int)currentMap->currentState->lightList.size(); i++)
 					{
-						sp<Light> l = currentMap->currentState->lightList->at(i);
+						Light* l = currentMap->currentState->lightList.get(i);
 						if (l->getName().find("mover") != string::npos)
 						{
 							l->renderLight();
@@ -253,8 +276,11 @@ void MapManager::render()
 
 			GLUtils::bindFBO(0); //set the framebuffer back to the screen buffer
 			GLUtils::setRealWindowViewport();
+#ifndef ORBIS
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);//TODO: set all these to 0,0,0,1
+#else
 
+#endif
 
 			setEffectsShaderEffects();
 
@@ -263,10 +289,14 @@ void MapManager::render()
 
 			//draw the framebuffer with the lights drawn into it into the screen buffer
 			//if(!Keyboard.isKeyDown(Keyboard.KEY_SLASH))
-			GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); //this fixes the small shadow problems, and also makes the doorknob glow brighter.
+
+
+#ifndef ORBIS
+			GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);//this fixes the small shadow problems, and also makes the doorknob glow brighter.
 			GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getRealWindowWidth()), 0, (float)(GLUtils::getRealWindowHeight()), 1.0f, GLUtils::FILTER_FBO_NEAREST_NO_MIPMAPPING);
 			GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+#else
+#endif
 
 			//set back to normal rendering
 			//if(useColorShader)
@@ -276,9 +306,11 @@ void MapManager::render()
 		{
 			GLUtils::bindFBO(0); //set the framebuffer back to the screen buffer
 			GLUtils::setRealWindowViewport();
+#ifndef ORBIS
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);//TODO: set all these to 0,0,0,1
 
 			//draw mainFBO (which contains all the map layers drawn into it) to the screen buffer
+
 			GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getRealWindowWidth()), 0, (float)(GLUtils::getRealWindowHeight()), 1.0f, GLUtils::FILTER_FBO_NEAREST_NO_MIPMAPPING);
 			GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -288,6 +320,9 @@ void MapManager::render()
 			//clear the lights FBO
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);//TODO: set all these to 0,0,0,1
 			glClear(GL_COLOR_BUFFER_BIT);
+
+#else
+#endif
 
 			//draw the lights into mainFBO
 			currentMap->renderAllLightsUnsorted();
@@ -300,9 +335,12 @@ void MapManager::render()
 			setTextureRotation();
 
 			//draw mainFBO (which now contains lights) into the screen buffer
+#ifndef ORBIS
 			GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getRealWindowWidth()), 0, (float)(GLUtils::getRealWindowHeight()), 1.0f, GLUtils::FILTER_FBO_NEAREST_NO_MIPMAPPING);
 			GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#else
+#endif
 		}
 	}
 	else //not using FBO
@@ -341,9 +379,9 @@ void MapManager::renderLastMap()
 		lastMap->renderEntities(RenderOrder::GROUND);
 
 
-		//			for(int i=0;i<lastMap.doorList->size();i++)
+		//			for(int i=0;i<lastMap.doorList.size();i++)
 		//			{
-		//				Door d = lastMap.doorList->at(i);
+		//				Door d = lastMap.doorList.get(i);
 		//
 		//				{
 		//					if(d!=doorEntered)
@@ -411,12 +449,16 @@ void MapManager::setTextureRotation()
 { //=========================================================================================================================
 	if (drawAngle != 0.0f)
 	{
+
+#ifndef ORBIS
 		glMatrixMode(GL_TEXTURE);
 		glLoadIdentity();
 		glTranslated(0.5f, 0.5f, 0.0f);
 		glRotated(drawAngle, 0.0f, 0.0f, 1.0f);
 		glTranslated(-0.5f, -0.5f, 0.0f);
 		glMatrixMode(GL_MODELVIEW);
+#else
+#endif
 	}
 }
 
@@ -430,7 +472,11 @@ void MapManager::renderDebug()
 
 	//org.newdawn.slick.Color.white.bind();
 	//glEnable(GL_TEXTURE_2D);
+
+#ifndef ORBIS
 	glDisable(GL_TEXTURE_2D);
+#else
+#endif
 
 	if (getEngine()->debugLayerEnabled == true)
 	{
@@ -611,7 +657,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	lastMap = currentMap;
 
 
-	sp<Map> m = getMapByNameBlockUntilLoaded(mapName);
+	Map* m = getMapByNameBlockUntilLoaded(mapName);
 	if (m == nullptr)
 	{
 		log.error("Could not load map: " + mapName);
@@ -627,30 +673,11 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	setTransitionOffsets();
 
 
-	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr)
+	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)
 	{
 		if (lastMap != nullptr)
 		{
-			//lastMap->activeEntityList->remove(getPlayer()); //DONE: each map should just render its own entities, so we can fade out the last map's entities along with the map.
-
-			for (auto it = lastMap->activeEntityList->begin(); it != lastMap->activeEntityList->end(); )
-			{
-				if (it->get() == getPlayer().get()) { lastMap->activeEntityList->erase(it++); break; }
-				else { ++it; }
-			}
-			//failed attempt to remove at index without iterator
-			//for (int i = 0; i < lastMap->activeEntityList->size(); i++)
-			//{
-			//	if (lastMap->activeEntityList->at(i).get() == getPlayer().get())
-			//	{
-			//		lastMap->activeEntityList->erase(lastMap->activeEntityList->at(i));
-			//		i = lastMap->activeEntityList->size();
-			//		break;
-			//	}
-			//}
-
-
-
+			lastMap->activeEntityList.remove(getPlayer()); //DONE: each map should just render its own entities, so we can fade out the last map's entities along with the map.
 		}
 		//so we should actually clear the entities after the last map is faded out.
 		//remove the entitymanager entirely.
@@ -672,34 +699,34 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	//currentMap->load();//this is exported by tools, lights, areas, entities are created here per-map in overridden function.
 }
 
-void MapManager::changeMap(sp<Map> m, int mapXTiles1X, int mapYTiles1X)
+void MapManager::changeMap(Map* m, int mapXTiles1X, int mapYTiles1X)
 { //=========================================================================================================================
 	changeMap(m->getName(), mapXTiles1X * 2 * 8, mapYTiles1X * 2 * 8);
 }
 
-void MapManager::changeMap(sp<Map> m, sp<Door> door)
+void MapManager::changeMap(Map* m, Door* door)
 { //=========================================================================================================================
 	changeMap(m->getName(), (int)door->arrivalXPixelsHQ(), (int)door->arrivalYPixelsHQ());
 }
 
-void MapManager::changeMap(sp<Map> m, sp<Area> area)
+void MapManager::changeMap(Map* m, Area* area)
 { //=========================================================================================================================
 	changeMap(m->getName(), (int)(area->middleX()), (int)(area->middleY()));
 }
 
-void MapManager::changeMap(sp<Map> m, sp<WarpArea> area)
+void MapManager::changeMap(Map* m, WarpArea* area)
 { //=========================================================================================================================
 	changeMap(m->getName(), (int)area->arrivalXPixelsHQ(), (int)area->arrivalYPixelsHQ());
 }
 
 void MapManager::changeMap(const string& mapName, const string& areaName)
 { //=========================================================================================================================
-	sp<Map> m = getMapByNameBlockUntilLoaded(mapName);
-	sp<Area> a = m->getAreaOrWarpAreaByName(areaName);
+	Map* m = getMapByNameBlockUntilLoaded(mapName);
+	Area* a = m->getAreaOrWarpAreaByName(areaName);
 	changeMap(m, a);
 }
 
-sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
+Map* MapManager::getMapByIDBlockUntilLoaded(int id)
 { //=========================================================================================================================
 
 	if (id == -1)
@@ -710,10 +737,10 @@ sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 
 
 	
-	sp<Map> m = nullptr;
+	Map* m = nullptr;
 
-	if (mapByIDHashMap->containsKey(id))
-		m = mapByIDHashMap->get(id);
+	if (mapByIDHashMap.containsKey(id))
+		m = mapByIDHashMap.get(id);
 	
 
 	if (m == nullptr)
@@ -741,7 +768,7 @@ sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 
 
 
-			m = mapByIDHashMap->get(id);
+			m = mapByIDHashMap.get(id);
 		}
 
 		log.warn("Map finished loading from network.");
@@ -750,7 +777,7 @@ sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 	return m;
 }
 
-sp<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
+Map* MapManager::getMapByNameBlockUntilLoaded(const string& name)
 { //=========================================================================================================================
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
@@ -760,11 +787,11 @@ sp<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 	}
 
 
-	sp<Map> m = nullptr;
+	Map* m = nullptr;
 	
-	if (mapByNameHashMap->containsKey(name))
+	if (mapByNameHashMap.containsKey(name))
 	{
-		m = mapByNameHashMap->get(name);
+		m = mapByNameHashMap.get(name);
 	}
 
 	if (m == nullptr)
@@ -791,8 +818,8 @@ sp<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 			Main::delay(1000);
 
 
-			if (mapByNameHashMap->containsKey(name))
-				m = mapByNameHashMap->get(name);
+			if (mapByNameHashMap.containsKey(name))
+				m = mapByNameHashMap.get(name);
 			
 		}
 
@@ -814,11 +841,11 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 
 
 
-	sp<Map> m = nullptr;
+	Map* m = nullptr;
 
-	if (mapByNameHashMap->containsKey(name))
+	if (mapByNameHashMap.containsKey(name))
 	{
-		m = mapByNameHashMap->get(name);
+		m = mapByNameHashMap.get(name);
 	}
 	if (m == nullptr)
 	{
@@ -826,12 +853,12 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 	}
 }
 
-sp<MapState> MapManager::getMapStateByID(int id)
+MapState* MapManager::getMapStateByID(int id)
 { //=========================================================================================================================
 
 
 	//first check the current map.
-	sp<MapState> s = getCurrentMap()->getMapStateByID(id);
+	MapState* s = getCurrentMap()->getMapStateByID(id);
 
 	if (s != nullptr)
 	{
@@ -844,13 +871,13 @@ sp<MapState> MapManager::getMapStateByID(int id)
 	return nullptr;
 }
 
-sp<Area> MapManager::getAreaByID(int id)
+Area* MapManager::getAreaByID(int id)
 { //=========================================================================================================================
 
 	// first check the current state of the current map
 	if (currentMap != nullptr)
 	{
-		sp<Area> a = currentMap->getAreaOrWarpAreaByTYPEID("AREA." + to_string(id));
+		Area* a = currentMap->getAreaOrWarpAreaByTYPEID("AREA." + to_string(id));
 		if (a != nullptr)
 		{
 			return a;
@@ -860,15 +887,15 @@ sp<Area> MapManager::getAreaByID(int id)
 	//TODO: then check all states of current map
 
 	//then check all states of all maps
-	for (int i = 0; i < mapList->size(); i++)
+	for (int i = 0; i < mapList.size(); i++)
 	{
-		sp<Map> m = mapList->at(i);
-		for (int k = 0; k < (int)m->stateList->size(); k++)
+		Map* m = mapList.get(i);
+		for (int k = 0; k < (int)m->stateList.size(); k++)
 		{
-			sp<MapState> s = m->stateList->at(k);
-			for (int l = 0; l < (int)s->areaList->size(); l++)
+			MapState* s = m->stateList.get(k);
+			for (int l = 0; l < (int)s->areaList.size(); l++)
 			{
-				sp<Area> a = s->areaList->at(l);
+				Area* a = s->areaList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -876,11 +903,11 @@ sp<Area> MapManager::getAreaByID(int id)
 			}
 		}
 
-		for (int n = 0; n < (int)m->warpAreaList->size(); n++)
+		for (int n = 0; n < (int)m->warpAreaList.size(); n++)
 		{
-			if (m->warpAreaList->at(n)->getID() == id)
+			if (m->warpAreaList.get(n)->getID() == id)
 			{
-				return m->warpAreaList->at(n);
+				return m->warpAreaList.get(n);
 			}
 		}
 	}
@@ -888,40 +915,40 @@ sp<Area> MapManager::getAreaByID(int id)
 	return nullptr;
 }
 
-sp<Entity> MapManager::getEntityByID(int id)
+Entity* MapManager::getEntityByID(int id)
 { //=========================================================================================================================
 	//TODO: first check the current state of the current map
 
 	//TODO: then check all states of current map
 
 	//then check all states of all maps
-	for (int i = 0; i < mapList->size(); i++)
+	for (int i = 0; i < mapList.size(); i++)
 	{
-		sp<Map> m = mapList->at(i);
-		for (int k = 0; k < (int)m->stateList->size(); k++)
+		Map* m = mapList.get(i);
+		for (int k = 0; k < (int)m->stateList.size(); k++)
 		{
-			sp<MapState> s = m->stateList->at(k);
-			for (int l = 0; l < (int)s->entityList->size(); l++)
+			MapState* s = m->stateList.get(k);
+			for (int l = 0; l < (int)s->entityList.size(); l++)
 			{
-				sp<Entity> a = s->entityList->at(l);
+				Entity* a = s->entityList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
 				}
 			}
 
-			for (int l = 0; l < (int)s->characterList->size(); l++)
+			for (int l = 0; l < (int)s->characterList.size(); l++)
 			{
-				sp<Entity> a = s->characterList->at(l);
+				Entity* a = s->characterList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
 				}
 			}
 
-			for (int l = 0; l < (int)s->lightList->size(); l++)
+			for (int l = 0; l < (int)s->lightList.size(); l++)
 			{
-				sp<Entity> a = s->lightList->at(l);
+				Entity* a = s->lightList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -929,50 +956,50 @@ sp<Entity> MapManager::getEntityByID(int id)
 			}
 		}
 
-		for (int n = 0; n < (int)m->doorList->size(); n++)
+		for (int n = 0; n < (int)m->doorList.size(); n++)
 		{
-			if (m->doorList->at(n)->getID() == id)
+			if (m->doorList.get(n)->getID() == id)
 			{
-				return m->doorList->at(n);
+				return m->doorList.get(n);
 			}
 		}
 
-		for (int n = 0; n < (int)m->activeEntityList->size(); n++)
+		for (int n = 0; n < (int)m->activeEntityList.size(); n++)
 		{
-			if (m->activeEntityList->at(n)->getID() == id)
+			if (m->activeEntityList.get(n)->getID() == id)
 			{
-				return m->activeEntityList->at(n);
+				return m->activeEntityList.get(n);
 			}
 		}
 	}
 
-	for (int n = 0; n < (int)getSpriteManager()->screenSpriteList->size(); n++)
+	for (int n = 0; n < (int)getSpriteManager()->screenSpriteList.size(); n++)
 	{
-		if (getSpriteManager()->screenSpriteList->at(n)->getID() == id)
+		if (getSpriteManager()->screenSpriteList.get(n)->getID() == id)
 		{
-			return getSpriteManager()->screenSpriteList->at(n);
+			return getSpriteManager()->screenSpriteList.get(n);
 		}
 	}
 
 	return nullptr;
 }
 
-sp<Light> MapManager::getLightByID(int id)
+Light* MapManager::getLightByID(int id)
 { //=========================================================================================================================
 	//TODO: first check the current state of the current map
 
 	//TODO: then check all states of current map
 
 	//then check all states of all maps
-	for (int i = 0; i < mapList->size(); i++)
+	for (int i = 0; i < mapList.size(); i++)
 	{
-		sp<Map> m = mapList->at(i);
-		for (int k = 0; k < (int)m->stateList->size(); k++)
+		Map* m = mapList.get(i);
+		for (int k = 0; k < (int)m->stateList.size(); k++)
 		{
-			sp<MapState> s = m->stateList->at(k);
-			for (int l = 0; l < (int)s->lightList->size(); l++)
+			MapState* s = m->stateList.get(k);
+			for (int l = 0; l < (int)s->lightList.size(); l++)
 			{
-				sp<Light> a = s->lightList->at(l);
+				Light* a = s->lightList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -984,19 +1011,19 @@ sp<Light> MapManager::getLightByID(int id)
 	return nullptr;
 }
 
-sp<Door> MapManager::getDoorByID(int id)
+Door* MapManager::getDoorByID(int id)
 { //=========================================================================================================================
 
 	//TODO: first check current map
 
 	//then check all maps
-	for (int i = 0; i < mapList->size(); i++)
+	for (int i = 0; i < mapList.size(); i++)
 	{
-		sp<Map> m = mapList->at(i);
+		Map* m = mapList.get(i);
 
-		for (int l = 0; l < (int)m->doorList->size(); l++)
+		for (int l = 0; l < (int)m->doorList.size(); l++)
 		{
-			sp<Door> a = m->doorList->at(l);
+			Door* a = m->doorList.get(l);
 			if (a->getID() == id)
 			{
 				return a;

@@ -15,7 +15,7 @@ Area::Area()
 { //=========================================================================================================================
 }
 
-Area::Area(sp<Engine> g, sp<Map> m)
+Area::Area(Engine* g, Map* m)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -23,7 +23,7 @@ Area::Area(sp<Engine> g, sp<Map> m)
 
 }
 
-Area::Area(sp<Engine> g, sp<AreaData> a, sp<Map> m)
+Area::Area(Engine* g, AreaData* a, Map* m)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -37,16 +37,16 @@ Area::Area(sp<Engine> g, sp<AreaData> a, sp<Map> m)
 	if (getEventData() != nullptr)
 	{
 
-		this->event = ms<Event>(g, getEventData(), this);
+		this->event = new BobEvent(g, getEventData(), this);
 		//this->event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		//event->area = this;
 	}
 }
 
-sp<Map> Area::getMap()
+Map* Area::getMap()
 { //=========================================================================================================================
 
-	//sp<Map> map = getMapManager()->getMapByIDBlockUntilLoaded(mapID());
+	//Map* map = getMapManager()->getMapByIDBlockUntilLoaded(mapID());
 
 	return this->map;
 }
@@ -176,7 +176,7 @@ void Area::renderActionIcon()
 		doorAlpha = 1.0f;
 	}
 
-	sp<OKTexture> actionTexture = getSpriteManager()->actionTexture;
+	BobTexture* actionTexture = getSpriteManager()->actionTexture;
 	float tx0 = 0.0f;
 	float tx1 = 32.0f / ((float)(actionTexture->getTextureWidth()));
 	float ty0 = (float)(32.0f * 10) / ((float)(actionTexture->getTextureHeight()));
@@ -194,11 +194,11 @@ void Area::update()
 
 	if (event != nullptr)
 	{
-		//sp<Event> e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//BobEvent* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
 
-	sp<Map> map = getMap();
+	Map* map = getMap();
 
 	if (map == getEngine()->getCurrentMap())
 	{
@@ -227,7 +227,7 @@ void Area::update()
 								if (spawned == false)
 								{
 									spawned = true;
-									sp<RandomCharacter> r = ms<RandomCharacter>(getEngine(), map, (int)middleX(), (int)middleY(), randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), randomSpawnCars());
+									RandomCharacter* r = new RandomCharacter(getEngine(), map, (int)middleX(), (int)middleY(), randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), randomSpawnCars());
 
 									r->currentAreaTYPEIDTarget = "stayHere";
 									r->cameFrom = getName();
@@ -254,14 +254,14 @@ void Area::update()
 							}
 							else
 							{
-								sp<vector<string>> targetTYPEIDList;// = ms<vector><string>();
+								ArrayList<string>* targetTYPEIDList = new ArrayList<string>();
 
 								//if this door has connections, set target to one of this door's connections
 								if (connectionTYPEIDList()->size() > 0)
 								{
 									for (int i = 0; i < connectionTYPEIDList()->size(); i++)
 									{
-										targetTYPEIDList->push_back(connectionTYPEIDList()->at(i));
+										targetTYPEIDList->add(connectionTYPEIDList()->get(i));
 									}
 								}
 								else
@@ -274,26 +274,26 @@ void Area::update()
 									//don't spawn if all the possible random points are full
 									while (targetTYPEIDList->size() > 0)
 									{
-										int i = Math::randLessThan((int)targetTYPEIDList->size());
+										int i = Math::randLessThan(targetTYPEIDList->size());
 
 										//don't count this door
-										if (targetTYPEIDList->at(i) == getTYPEIDString())
+										if (targetTYPEIDList->get(i) == getTYPEIDString())
 										{
-											targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
+											targetTYPEIDList->removeAt(i);
 											continue;
 										}
 
 										bool canMakeRandom = false;
 
 										//if there is another exit, keep pumping out randoms, they will go there.
-										if (OKString::startsWith(targetTYPEIDList->at(i), "DOOR."))
+										if (String::startsWith(targetTYPEIDList->get(i), "DOOR."))
 										{
 											canMakeRandom = true;
 										}
 										else
 										{
 											//else we should check to make sure there is a random point of interest to go to, otherwise he will have nowhere to go and just stand there.
-											sp<Area> a = map->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->at(i));
+											Area* a = map->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->get(i));
 
 											if (a != nullptr)
 											{
@@ -303,7 +303,7 @@ void Area::update()
 												//entMan().isAnyoneTryingToGoToArea(a)==true
 												//||
 												{
-													targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
+													targetTYPEIDList->removeAt(i);
 													continue;
 												}
 												else
@@ -313,16 +313,16 @@ void Area::update()
 											}
 											else
 											{
-												targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
+												targetTYPEIDList->removeAt(i);
 												//this is a serious error, prints out on System.err in getAreaOrWarpAreaByName
 											}
 										}
 
 										if (canMakeRandom == true)
 										{
-											sp<RandomCharacter> r = ms<RandomCharacter>(getEngine(), map, (int)middleX(), (int)middleY(), randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), randomSpawnCars());
+											RandomCharacter* r = new RandomCharacter(getEngine(), map, (int)middleX(), (int)middleY(), randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), randomSpawnCars());
 
-											r->currentAreaTYPEIDTarget = targetTYPEIDList->at(i);
+											r->currentAreaTYPEIDTarget = targetTYPEIDList->get(i);
 											r->cameFrom = getName();
 
 											if (standSpawnDirection() != -1)
@@ -375,13 +375,13 @@ void Area::renderDebugBoxes()
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();
-	sp<Map> map = getMap();
+	Map* map = getMap();
 
 	int r = 0;
 	int g = 0;
 	int b = 0;
 
-	if (dynamic_cast<WarpArea*>(this) != NULL)
+	if ((dynamic_cast<WarpArea*>(this) != NULL))
 	{
 		r = 200;
 		g = 0;
@@ -412,8 +412,8 @@ void Area::renderDebugBoxes()
 	//warparea arrival point
 	if ((dynamic_cast<WarpArea*>(this) != NULL))
 	{
-		float ax = map->getScreenX(((WarpArea*)this)->arrivalXPixelsHQ(), 16);
-		float ay = map->getScreenY(((WarpArea*)this)->arrivalYPixelsHQ(), 16);
+		float ax = map->getScreenX((static_cast<WarpArea*>(this))->arrivalXPixelsHQ(), 16);
+		float ay = map->getScreenY((static_cast<WarpArea*>(this))->arrivalYPixelsHQ(), 16);
 
 		GLUtils::drawBox(ax, ax + (16 * zoom) - 1, ay, ay + (16 * zoom) - 1, 200, 0, 255);
 
@@ -423,14 +423,14 @@ void Area::renderDebugBoxes()
 	for (int i = 0; i < connectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (OKString::startsWith(connectionTYPEIDList()->at(i), "DOOR."))
+		if (String::startsWith(connectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
-			for (int d = 0; d < (int)map->doorList->size(); d++)
+			for (int d = 0; d < (int)map->doorList.size(); d++)
 			{
-				sp<Door> door = map->doorList->at(d);
+				Door* door = map->doorList.get(d);
 
-				if (connectionTYPEIDList()->at(i) == door->getTYPEIDString())
+				if (connectionTYPEIDList()->get(i) == door->getTYPEIDString())
 				{
 					float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 					float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -443,11 +443,11 @@ void Area::renderDebugBoxes()
 		{
 			//draw connections to areas
 			//go through area hashlist
-			//         java::util::Iterator<sp<Area>> aEnum = map->currentState::areaByNameHashtable::elements();
+			//         java::util::Iterator<Area*> aEnum = map->currentState::areaByNameHashtable::elements();
 			//         //areas
 			//         while (aEnum->hasMoreElements())
 			//         {
-			//            sp<Area> area = aEnum->nextElement();
+			//            Area* area = aEnum->nextElement();
 			//            if (getConnectionTYPEIDList()->get(i) == area->getTYPEIDString())
 			//            {
 			//               float ax = area->getScreenLeft() + (area->getWidth() / 2) * zoom;
@@ -457,12 +457,12 @@ void Area::renderDebugBoxes()
 			//            }
 			//         }
 
-			sp<vector<sp<Area>>>areas = map->currentState->areaByNameHashtable->getAllValues();
+			ArrayList<Area*> *areas = map->currentState->areaByNameHashtable.getAllValues();
 			for (int n = 0; n<areas->size(); n++)
 			{
-				sp<Area> a = areas->at(n);
+				Area* a = areas->get(n);
 
-				if (connectionTYPEIDList()->at(i) == a->getTYPEIDString())
+				if (connectionTYPEIDList()->get(i) == a->getTYPEIDString())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -472,11 +472,11 @@ void Area::renderDebugBoxes()
 			}
 
 			//if not found, go through warparea list
-			for (int j = 0; j < (int)map->warpAreaList->size(); j++)
+			for (int j = 0; j < (int)map->warpAreaList.size(); j++)
 			{
-				sp<Area> area = map->warpAreaList->at(j);
+				Area* area = map->warpAreaList.get(j);
 
-				if (connectionTYPEIDList()->at(i) == area->getTYPEIDString())
+				if (connectionTYPEIDList()->get(i) == area->getTYPEIDString())
 				{
 					float ax = area->screenLeft() + (area->getWidth() / 2) * zoom;
 					float ay = area->screenTop() + (area->getHeight() / 2) * zoom;
@@ -498,63 +498,63 @@ void Area::renderDebugInfo()
 
 	if ((dynamic_cast<WarpArea*>(this) != nullptr) == false)
 	{
-		GLUtils::drawOutlinedString(getName(), x, y - 9, OKColor::white);
+		GLUtils::drawOutlinedString(getName(), x, y - 9, BobColor::white);
 	}
 
 	//if(isAnAction)GL.drawOutlinedString("Is An Action", x, y+(++strings*9),Color.red);
 	if (getEventData() != nullptr)
 	{
-		GLUtils::drawOutlinedString("Event ID: " + to_string(getEventData()->getID()), x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("BobEvent ID: " + to_string(getEventData()->getID()), x, y + (++strings * 9), BobColor::white);
 	}
 	if (waitHereTicks() == -1)
 	{
-		GLUtils::drawOutlinedString("Stop Here", x, y + (++strings * 9), OKColor::yellow);
+		GLUtils::drawOutlinedString("Stop Here", x, y + (++strings * 9), BobColor::yellow);
 	}
 	if (waitHereTicks() > 0 && randomWaitTime() == false)
 	{
-		GLUtils::drawOutlinedString("Wait " + to_string(waitHereTicks()), x, y + (++strings * 9), OKColor::yellow);
+		GLUtils::drawOutlinedString("Wait " + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
 	}
 	if (waitHereTicks() > 0 && randomWaitTime() == true)
 	{
-		GLUtils::drawOutlinedString("Wait Random < " + to_string(waitHereTicks()), x, y + (++strings * 9), OKColor::yellow);
+		GLUtils::drawOutlinedString("Wait Random < " + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
 	}
 	if (onlyOneAllowed())
 	{
-		GLUtils::drawOutlinedString("Only 1", x, y + (++strings * 9), OKColor::green);
+		GLUtils::drawOutlinedString("Only 1", x, y + (++strings * 9), BobColor::green);
 	}
 	if (standSpawnDirection() != -1)
 	{
 		if (standSpawnDirection() == 0)
 		{
-			GLUtils::drawOutlinedString("Dir: Up", x, y + (++strings * 9), OKColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Up", x, y + (++strings * 9), BobColor::yellow);
 		}
 		if (standSpawnDirection() == 1)
 		{
-			GLUtils::drawOutlinedString("Dir: Down", x, y + (++strings * 9), OKColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Down", x, y + (++strings * 9), BobColor::yellow);
 		}
 		if (standSpawnDirection() == 2)
 		{
-			GLUtils::drawOutlinedString("Dir: Left", x, y + (++strings * 9), OKColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Left", x, y + (++strings * 9), BobColor::yellow);
 		}
 		if (standSpawnDirection() == 3)
 		{
-			GLUtils::drawOutlinedString("Dir: Right", x, y + (++strings * 9), OKColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Right", x, y + (++strings * 9), BobColor::yellow);
 		}
 	}
 
 	if (randomPointOfInterestOrExit())
 	{
-		GLUtils::drawOutlinedString("Random Point Of Interest Or Exit", x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("Random Point Of Interest Or Exit", x, y + (++strings * 9), BobColor::white);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), OKColor::magenta);
+		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
 	}
 
 	if (randomNPCSpawnPoint())
@@ -580,26 +580,26 @@ void Area::renderDebugInfo()
 		{
 			allowedTypes = allowedTypes + " Cars";
 		}
-		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), OKColor::magenta);
+		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
 	}
 	if (randomNPCStayHere())
 	{
-		GLUtils::drawOutlinedString("Random Stay Here", x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("Random Stay Here", x, y + (++strings * 9), BobColor::white);
 	}
 	if (randomSpawnOnlyTryOnce())
 	{
-		GLUtils::drawOutlinedString("Random Only Try Once: " + to_string(randomSpawnChance()), x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("Random Only Try Once: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::white);
 	}
 	if (randomSpawnOnlyOffscreen())
 	{
-		GLUtils::drawOutlinedString("Random Only Offscreen", x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("Random Only Offscreen", x, y + (++strings * 9), BobColor::white);
 	}
 }
 
-sp<OKBool> Area::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
+BobBool* Area::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
 {
 	// TODO
-	return ms<OKBool>();
+	return new BobBool();
 }
 
 void Area::tellServerTalkedToToday()
@@ -639,7 +639,7 @@ bool Area::isWithinScreenBounds()
 	}
 }
 
-bool Area::inRangeOfEntityByAmount(sp<Entity> e, int amt)
+bool Area::inRangeOfEntityByAmount(Entity* e, int amt)
 { //=========================================================================================================================
 
 	float eX = e->getMiddleX();
@@ -655,7 +655,7 @@ bool Area::inRangeOfEntityByAmount(sp<Entity> e, int amt)
 	}
 }
 
-float Area::getDistanceFromEntity(sp<Entity> e)
+float Area::getDistanceFromEntity(Entity* e)
 { //=========================================================================================================================
 
 	float eX = e->getMiddleX();
@@ -664,17 +664,17 @@ float Area::getDistanceFromEntity(sp<Entity> e)
 	return Math::distance(middleX(), middleY(), eX, eY);
 }
 
-bool Area::isEntityHitBoxTouchingMyBoundary(sp<Entity> e)
+bool Area::isEntityHitBoxTouchingMyBoundary(Entity* e)
 { //=========================================================================================================================
 	return isEntityHitBoxTouchingMyBoundaryByAmount(e, 0);
 }
 
-bool Area::isAreaCenterTouchingMyBoundary(sp<Area> a)
+bool Area::isAreaCenterTouchingMyBoundary(Area* a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyBoundaryByAmount(a, 0);
 }
 
-bool Area::isAreaBoundaryTouchingMyBoundary(sp<Area> a)
+bool Area::isAreaBoundaryTouchingMyBoundary(Area* a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyBoundaryByAmount(a, 0);
 }
@@ -689,17 +689,17 @@ bool Area::isXYXYTouchingMyBoundary(float left, float top, float right, float bo
 	return isXYXYTouchingMyBoundaryByAmount(left, top, right, bottom, 0);
 }
 
-bool Area::isAreaBoundaryTouchingMyCenter(sp<Area> a)
+bool Area::isAreaBoundaryTouchingMyCenter(Area* a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyCenterByAmount(a, 0);
 }
 
-bool Area::isEntityMiddleXYTouchingMyCenter(sp<Entity> e)
+bool Area::isEntityMiddleXYTouchingMyCenter(Entity* e)
 { //=========================================================================================================================
 	return isEntityMiddleXYTouchingMyCenterByAmount(e, 1);
 }
 
-bool Area::isAreaCenterTouchingMyCenter(sp<Area> a)
+bool Area::isAreaCenterTouchingMyCenter(Area* a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyCenterByAmount(a, 0);
 }
@@ -714,17 +714,17 @@ bool Area::isXYXYTouchingMyCenter(float left, float top, float right, float bott
 	return isXYXYTouchingMyCenterByAmount(left, top, right, bottom, 0);
 }
 
-bool Area::isEntityHitBoxTouchingMyBoundaryByAmount(sp<Entity> e, int amt)
+bool Area::isEntityHitBoxTouchingMyBoundaryByAmount(Entity* e, int amt)
 { //=========================================================================================================================
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), amt);
 }
 
-bool Area::isAreaCenterTouchingMyBoundaryByAmount(sp<Area> a, int amt)
+bool Area::isAreaCenterTouchingMyBoundaryByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyBoundaryByAmount(a->middleX(), a->middleY(), amt);
 }
 
-bool Area::isAreaBoundaryTouchingMyBoundaryByAmount(sp<Area> a, int amt)
+bool Area::isAreaBoundaryTouchingMyBoundaryByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyBoundaryByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
@@ -739,17 +739,17 @@ bool Area::isXYXYTouchingMyBoundaryByAmount(float left, float top, float right, 
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), left, top, right, bottom, amt);
 }
 
-bool Area::isAreaBoundaryTouchingMyCenterByAmount(sp<Area> a, int amt)
+bool Area::isAreaBoundaryTouchingMyCenterByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyCenterByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
 
-bool Area::isEntityMiddleXYTouchingMyCenterByAmount(sp<Entity> e, int amt)
+bool Area::isEntityMiddleXYTouchingMyCenterByAmount(Entity* e, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyCenterByAmount(e->getMiddleX(), e->getMiddleY(), amt);
 }
 
-bool Area::isAreaCenterTouchingMyCenterByAmount(sp<Area> a, int amt)
+bool Area::isAreaCenterTouchingMyCenterByAmount(Area* a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyCenterByAmount(a->middleX(), a->middleY(), amt);
 }
@@ -887,7 +887,7 @@ float Area::screenBottom()
 	return screenY() + (float)(getHeight()) * getCameraman()->getZoom();
 }
 
-sp<AreaData> Area::getData()
+AreaData* Area::getData()
 {
 	return data;
 }
@@ -1042,12 +1042,12 @@ bool Area::suckPlayerIntoMiddle()
 	return getData()->getSuckPlayerIntoMiddle();
 }
 
-sp<EventData> Area::getEventData()
+EventData* Area::getEventData()
 {
 	return getData()->getEventData();
 }
 
-sp<vector<string>> Area::connectionTYPEIDList()
+ArrayList<string>* Area::connectionTYPEIDList()
 {
 	return getData()->getConnectionTYPEIDList();
 }

@@ -23,26 +23,26 @@ MapStateData::MapStateData(int id, const string& name)
 	AssetData(id, name);
 }
 
-//sp<MapStateData> MapStateData::fromBase64ZippedJSON(const string& b64)
+//MapStateData* MapStateData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//MapStateData data = gson.fromJson(json,MapStateData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//sp<MapStateData> MapStateData::fromJSON(const string& json)
+//MapStateData* MapStateData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<MapStateData> data = nullptr;// gson->fromJson(json, MapStateData::typeid);
+//	//Gson* gson = new Gson();
+//	MapStateData* data = nullptr;// gson->fromJson(json, MapStateData::typeid);
 //
 //
 //	return data;
@@ -64,12 +64,12 @@ string& MapStateData::initFromString(string& t)
 
 	t = t.substr(t.find("lightDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t,"}") == false)
+	while (String::startsWith(t,"}") == false)
 	{
 
-		sp<LightData>data = ms<LightData>();
+		LightData *data = new LightData();
 		t = data->initFromString(t);
-		lightDataList->push_back(data);
+		lightDataList.add(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -77,11 +77,11 @@ string& MapStateData::initFromString(string& t)
 
 	t = t.substr(t.find("entityDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t,"}") == false)
+	while (String::startsWith(t,"}") == false)
 	{
-		sp<EntityData>data = ms<EntityData>();
+		EntityData *data = new EntityData();
 		t = data->initFromString(t);
-		entityDataList->push_back(data);
+		entityDataList.add(data);
 
 	}
 	t = t.substr(t.find("}") + 1);
@@ -90,11 +90,11 @@ string& MapStateData::initFromString(string& t)
 
 	t = t.substr(t.find("areaDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t,"}") == false)
+	while (String::startsWith(t,"}") == false)
 	{
-		sp<AreaData>data = ms<AreaData>();
+		AreaData *data = new AreaData();
 		t = data->initFromString(t);
-		areaDataList->push_back(data);
+		areaDataList.add(data);
 
 	}
 	t = t.substr(t.find("}") + 1);
@@ -113,19 +113,19 @@ string MapStateData::getTYPEIDString()
 	return "STATE." + to_string(getID());
 }
 
-sp<vector<sp<LightData>>> MapStateData::getLightDataList()
+ArrayList<LightData*>* MapStateData::getLightDataList()
 {
-	return lightDataList;
+	return &lightDataList;
 }
 
-sp<vector<sp<EntityData>>> MapStateData::getEntityDataList()
+ArrayList<EntityData*>* MapStateData::getEntityDataList()
 {
-	return entityDataList;
+	return &entityDataList;
 }
 
-sp<vector<sp<AreaData>>> MapStateData::getAreaDataList()
+ArrayList<AreaData*>* MapStateData::getAreaDataList()
 {
-	return areaDataList;
+	return &areaDataList;
 }
 
 int MapStateData::getMapID()

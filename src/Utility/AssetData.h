@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -27,10 +27,10 @@ public:
 	//	public String toJSON()
 	//	{
 	//
-	//		Gson gson = ms<Gson>();
+	//		Gson gson = new Gson();
 	//		String json = gson.toJson(this);
 	//
-	////		ObjectMapper mapper = ms<ObjectMapper>();
+	////		ObjectMapper mapper = new ObjectMapper();
 	////		String json = "";
 	////
 	////		try

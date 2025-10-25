@@ -17,7 +17,7 @@ StatusPanel::StatusPanel()
 	SubPanel();
 
 	//
-	//   sp<Label> statusPanelLabel = ms<Label>("Status");
+	//   Label* statusPanelLabel = new Label("Status");
 	//   statusPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   statusPanelLabel->setTheme("bigLabel");
 	//
@@ -26,7 +26,7 @@ StatusPanel::StatusPanel()
 	//
 	//
 	//   string moneyToolTip = "";
-	//   //				"Support \"bob\" ( That's me! ) by adding OKCoin$ to your account to buy more nD minigames and other stuff! (Coming Soon!)\n" +
+	//   //				"Support \"bob\" ( That's me! ) by adding BobCoin$ to your account to buy more nD minigames and other stuff! (Coming Soon!)\n" +
 	//   //				"\n"+
 	//   //				"The games you buy can be played by your friends, even if they don't own them!\n" +
 	//   //				"Plus, they're really cheap, and you can use them for bonuses in various places in the game.\n" +
@@ -40,14 +40,14 @@ StatusPanel::StatusPanel()
 	//   //				"It's win-win all around!"
 	//   //				;
 	//
-	//   moneyDescriptionLabel = ms<Label>("OKCoin$: ");
+	//   moneyDescriptionLabel = new Label("BobCoin$: ");
 	//   moneyDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   moneyDescriptionLabel->setTheme("descriptionLabel");
-	//   moneyLabel = ms<Label>(" ");
+	//   moneyLabel = new Label(" ");
 	//   moneyLabel->setCanAcceptKeyboardFocus(false);
 	//   moneyLabel->setTheme("valueLabel");
 	//
-	//   addMoneyButton = ms<Button>("Support \"bob!\" - Add OKCoin$");
+	//   addMoneyButton = new Button("Support \"bob!\" - Add BobCoin$");
 	//   addMoneyButton->setCanAcceptKeyboardFocus(false);
 	//   addMoneyButton->setTheme("smallButton");
 	//   //addMoneyButton.setTooltipContent(moneyToolTip);
@@ -58,23 +58,23 @@ StatusPanel::StatusPanel()
 	//   );
 	//
 	//
-	//   addMoneyButtonQuestionMark = ms<Label>("?!");
+	//   addMoneyButtonQuestionMark = new Label("?!");
 	//   addMoneyButtonQuestionMark->setCanAcceptKeyboardFocus(false);
 	//   addMoneyButtonQuestionMark->setTheme("bigLabel");
 	//   addMoneyButtonQuestionMark->setTooltipContent(moneyToolTip);
 	//   //--------
 	//
 	//
-	//   string accountToolTip = string("Support \"bob\" with a OKPass for a one-time price of $12 a year.\n") + "\n" + "   - Avatar Vanity sp<Plate> (Make everyone else jealous- the spice of life!)\n" + "   - More sp<Friends> - (Make my servers explode!)\n" + "   - Forum sp<Membership> - (Come and spew hatred where I could read it and ruin my day!)\n" + "   - Bug sp<Reports> - (See how much crap I have to fix! Pay to do work for me!)\n" + "   - Beta sp<Minigames> - (Play em' before they work!)\n" + "   - Make A Custom Avatar - Coming Soon!\n" + "   - Design And Script Your House - Coming Soon!\n" + "   - Whatever else I come up with!\n" + "\n" + "Plus, I'll think you're really cool, and my intense psychic energy will \n" + "resonate in the collective subconscious, improving your life telepathically!**\n" + "\n" + "\n" + "*Features will be rolled out shortly!\n" + "**Results may vary.";
-	//   //"   - Bonus OKCoin$ Added To Your Account (Why the heck not!)\n" +
-	//   accountTypeDescriptionLabel = ms<Label>("Account Type: ");
+	//   string accountToolTip = string("Support \"bob\" with a BobPass for a one-time price of $12 a year.\n") + "\n" + "   - Avatar Vanity Plate* (Make everyone else jealous- the spice of life!)\n" + "   - More Friends* - (Make my servers explode!)\n" + "   - Forum Membership* - (Come and spew hatred where I could read it and ruin my day!)\n" + "   - Bug Reports* - (See how much crap I have to fix! Pay to do work for me!)\n" + "   - Beta Minigames* - (Play em' before they work!)\n" + "   - Make A Custom Avatar - Coming Soon!\n" + "   - Design And Script Your House - Coming Soon!\n" + "   - Whatever else I come up with!\n" + "\n" + "Plus, I'll think you're really cool, and my intense psychic energy will \n" + "resonate in the collective subconscious, improving your life telepathically!**\n" + "\n" + "\n" + "*Features will be rolled out shortly!\n" + "**Results may vary.";
+	//   //"   - Bonus BobCoin$ Added To Your Account (Why the heck not!)\n" +
+	//   accountTypeDescriptionLabel = new Label("Account Type: ");
 	//   accountTypeDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   accountTypeDescriptionLabel->setTheme("descriptionLabel");
-	//   accountTypeLabel = ms<Label>(" ");
+	//   accountTypeLabel = new Label(" ");
 	//   accountTypeLabel->setCanAcceptKeyboardFocus(false);
 	//   accountTypeLabel->setTheme("valueLabel");
 	//
-	//   goPremiumButton = ms<Button>("Support \"bob!\" - Buy A OKPass");
+	//   goPremiumButton = new Button("Support \"bob!\" - Buy A BobPass");
 	//   goPremiumButton->setCanAcceptKeyboardFocus(false);
 	//   goPremiumButton->setTheme("smallButton");
 	//   //goPremiumButton.setTooltipContent(accountToolTip);
@@ -84,7 +84,7 @@ StatusPanel::StatusPanel()
 	//      }
 	//   );
 	//
-	//   goPremiumButtonQuestionMark = ms<Label>("?!");
+	//   goPremiumButtonQuestionMark = new Label("?!");
 	//   goPremiumButtonQuestionMark->setCanAcceptKeyboardFocus(false);
 	//   goPremiumButtonQuestionMark->setTheme("bigLabel");
 	//   goPremiumButtonQuestionMark->setTooltipContent(accountToolTip);
@@ -93,15 +93,15 @@ StatusPanel::StatusPanel()
 	//
 	//   //public String characterName = "";
 	//
-	//   characterNameDescriptionLabel = ms<Label>("Character Name: ");
+	//   characterNameDescriptionLabel = new Label("Character Name: ");
 	//   characterNameDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   characterNameDescriptionLabel->setTheme("descriptionLabel");
-	//   characterNameLabel = ms<Label>(" ");
+	//   characterNameLabel = new Label(" ");
 	//   characterNameLabel->setCanAcceptKeyboardFocus(false);
 	//   characterNameLabel->setTheme("valueLabel");
 	//
 	//
-	//   editCharacterButton = ms<Button>("Edit Character");
+	//   editCharacterButton = new Button("Edit Character");
 	//   editCharacterButton->setCanAcceptKeyboardFocus(false);
 	//   editCharacterButton->setTheme("smallButton");
 	//   editCharacterButton->addCallback([&] ()
@@ -116,10 +116,10 @@ StatusPanel::StatusPanel()
 	//   delete emailAddressDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete emailAddressLabel;
-	//   emailAddressDescriptionLabel = ms<Label>("Email Address: ");
+	//   emailAddressDescriptionLabel = new Label("Email Address: ");
 	//   emailAddressDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   emailAddressDescriptionLabel->setTheme("descriptionLabel");
-	//   emailAddressLabel = ms<Label>(" ");
+	//   emailAddressLabel = new Label(" ");
 	//   emailAddressLabel->setCanAcceptKeyboardFocus(false);
 	//   emailAddressLabel->setTheme("valueLabel");
 	//
@@ -129,10 +129,10 @@ StatusPanel::StatusPanel()
 	//   delete accountCreatedTimeDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete accountCreatedTimeLabel;
-	//   accountCreatedTimeDescriptionLabel = ms<Label>("Account Created Time: ");
+	//   accountCreatedTimeDescriptionLabel = new Label("Account Created Time: ");
 	//   accountCreatedTimeDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   accountCreatedTimeDescriptionLabel->setTheme("descriptionLabel");
-	//   accountCreatedTimeLabel = ms<Label>(" ");
+	//   accountCreatedTimeLabel = new Label(" ");
 	//   accountCreatedTimeLabel->setCanAcceptKeyboardFocus(false);
 	//   accountCreatedTimeLabel->setTheme("valueLabel");
 	//
@@ -142,10 +142,10 @@ StatusPanel::StatusPanel()
 	//   delete lastLoginTimeDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete lastLoginTimeLabel;
-	//   lastLoginTimeDescriptionLabel = ms<Label>("Last Login Time: ");
+	//   lastLoginTimeDescriptionLabel = new Label("Last Login Time: ");
 	//   lastLoginTimeDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   lastLoginTimeDescriptionLabel->setTheme("descriptionLabel");
-	//   lastLoginTimeLabel = ms<Label>(" ");
+	//   lastLoginTimeLabel = new Label(" ");
 	//   lastLoginTimeLabel->setCanAcceptKeyboardFocus(false);
 	//   lastLoginTimeLabel->setTheme("valueLabel");
 	//
@@ -155,10 +155,10 @@ StatusPanel::StatusPanel()
 	//   delete timesLoggedInDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete timesLoggedInLabel;
-	//   timesLoggedInDescriptionLabel = ms<Label>("Times Logged In: ");
+	//   timesLoggedInDescriptionLabel = new Label("Times Logged In: ");
 	//   timesLoggedInDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   timesLoggedInDescriptionLabel->setTheme("descriptionLabel");
-	//   timesLoggedInLabel = ms<Label>(" ");
+	//   timesLoggedInLabel = new Label(" ");
 	//   timesLoggedInLabel->setCanAcceptKeyboardFocus(false);
 	//   timesLoggedInLabel->setTheme("valueLabel");
 	//
@@ -168,15 +168,15 @@ StatusPanel::StatusPanel()
 	//   delete lastIPDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete lastIPLabel;
-	//   lastIPDescriptionLabel = ms<Label>("Last IP Address: ");
+	//   lastIPDescriptionLabel = new Label("Last IP Address: ");
 	//   lastIPDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   lastIPDescriptionLabel->setTheme("descriptionLabel");
-	//   lastIPLabel = ms<Label>(" ");
+	//   lastIPLabel = new Label(" ");
 	//   lastIPLabel->setCanAcceptKeyboardFocus(false);
 	//   lastIPLabel->setTheme("valueLabel");
 	//
 	//
-	//   accountPanelLabel = ms<Label>("Account Stuff");
+	//   accountPanelLabel = new Label("Account Stuff");
 	//   accountPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   accountPanelLabel->setTheme("bigLabel");
 	//
@@ -184,7 +184,7 @@ StatusPanel::StatusPanel()
 	//   //account box
 	//   //---------------------------------------------------------
 	//
-	//   accountDialogLayout = ms<DialogLayout>();
+	//   accountDialogLayout = new DialogLayout();
 	//   accountDialogLayout->setCanAcceptKeyboardFocus(false);
 	//
 	//   accountDialogLayout->setHorizontalGroup(accountDialogLayout->createParallelGroup(accountDialogLayout->createSequentialGroup().addGap().addWidget(accountPanelLabel).addGap(), accountDialogLayout->createSequentialGroup(accountDialogLayout->createParallelGroup(emailAddressDescriptionLabel, accountCreatedTimeDescriptionLabel, lastLoginTimeDescriptionLabel, timesLoggedInDescriptionLabel, lastIPDescriptionLabel), accountDialogLayout->createParallelGroup(emailAddressLabel, accountCreatedTimeLabel, lastLoginTimeLabel, timesLoggedInLabel, lastIPLabel))));
@@ -195,10 +195,10 @@ StatusPanel::StatusPanel()
 	//   //		//public String realName = "";
 	//   //		realNameDescriptionLabel = null;
 	//   //		realNameLabel = null;
-	//   //		realNameDescriptionLabel = ms<Label>("Real Name: ");
+	//   //		realNameDescriptionLabel = new Label("Real Name: ");
 	//   //		realNameDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		realNameDescriptionLabel.setTheme("descriptionLabel");
-	//   //		realNameLabel = ms<Label>(" ");
+	//   //		realNameLabel = new Label(" ");
 	//   //		realNameLabel.setCanAcceptKeyboardFocus(false);
 	//   //		realNameLabel.setTheme("valueLabel");
 	//
@@ -206,10 +206,10 @@ StatusPanel::StatusPanel()
 	//   //public long birthdayTime = 0;
 	//   //		birthdayTimeDescriptionLabel = null;
 	//   //		birthdayTimeLabel = null;
-	//   //		birthdayTimeDescriptionLabel = ms<Label>("Birthday Time: ");
+	//   //		birthdayTimeDescriptionLabel = new Label("Birthday Time: ");
 	//   //		birthdayTimeDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		birthdayTimeDescriptionLabel.setTheme("descriptionLabel");
-	//   //		birthdayTimeLabel = ms<Label>(" ");
+	//   //		birthdayTimeLabel = new Label(" ");
 	//   //		birthdayTimeLabel.setCanAcceptKeyboardFocus(false);
 	//   //		birthdayTimeLabel.setTheme("valueLabel");
 	//
@@ -219,10 +219,10 @@ StatusPanel::StatusPanel()
 	//   delete postalCodeDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete postalCodeLabel;
-	//   postalCodeDescriptionLabel = ms<Label>("Postal/Zip Code: ");
+	//   postalCodeDescriptionLabel = new Label("Postal/Zip Code: ");
 	//   postalCodeDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   postalCodeDescriptionLabel->setTheme("descriptionLabel");
-	//   postalCodeLabel = ms<Label>(" ");
+	//   postalCodeLabel = new Label(" ");
 	//   postalCodeLabel->setCanAcceptKeyboardFocus(false);
 	//   postalCodeLabel->setTheme("valueLabel");
 	//
@@ -231,10 +231,10 @@ StatusPanel::StatusPanel()
 	//   delete countryNameDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete countryNameLabel;
-	//   countryNameDescriptionLabel = ms<Label>("Country Name: ");
+	//   countryNameDescriptionLabel = new Label("Country Name: ");
 	//   countryNameDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   countryNameDescriptionLabel->setTheme("descriptionLabel");
-	//   countryNameLabel = ms<Label>(" ");
+	//   countryNameLabel = new Label(" ");
 	//   countryNameLabel->setCanAcceptKeyboardFocus(false);
 	//   countryNameLabel->setTheme("valueLabel");
 	//
@@ -243,10 +243,10 @@ StatusPanel::StatusPanel()
 	//   delete isoCountryCodeDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete isoCountryCodeLabel;
-	//   isoCountryCodeDescriptionLabel = ms<Label>("Country Code: ");
+	//   isoCountryCodeDescriptionLabel = new Label("Country Code: ");
 	//   isoCountryCodeDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   isoCountryCodeDescriptionLabel->setTheme("descriptionLabel");
-	//   isoCountryCodeLabel = ms<Label>(" ");
+	//   isoCountryCodeLabel = new Label(" ");
 	//   isoCountryCodeLabel->setCanAcceptKeyboardFocus(false);
 	//   isoCountryCodeLabel->setTheme("valueLabel");
 	//
@@ -255,10 +255,10 @@ StatusPanel::StatusPanel()
 	//   delete placeNameDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete placeNameLabel;
-	//   placeNameDescriptionLabel = ms<Label>("Place Name: ");
+	//   placeNameDescriptionLabel = new Label("Place Name: ");
 	//   placeNameDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   placeNameDescriptionLabel->setTheme("descriptionLabel");
-	//   placeNameLabel = ms<Label>(" ");
+	//   placeNameLabel = new Label(" ");
 	//   placeNameLabel->setCanAcceptKeyboardFocus(false);
 	//   placeNameLabel->setTheme("valueLabel");
 	//
@@ -268,10 +268,10 @@ StatusPanel::StatusPanel()
 	//   delete stateNameDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete stateNameLabel;
-	//   stateNameDescriptionLabel = ms<Label>("State Name: ");
+	//   stateNameDescriptionLabel = new Label("State Name: ");
 	//   stateNameDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   stateNameDescriptionLabel->setTheme("descriptionLabel");
-	//   stateNameLabel = ms<Label>(" ");
+	//   stateNameLabel = new Label(" ");
 	//   stateNameLabel->setCanAcceptKeyboardFocus(false);
 	//   stateNameLabel->setTheme("valueLabel");
 	//
@@ -281,10 +281,10 @@ StatusPanel::StatusPanel()
 	//   delete latDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete latLabel;
-	//   latDescriptionLabel = ms<Label>("Latitude: ");
+	//   latDescriptionLabel = new Label("Latitude: ");
 	//   latDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   latDescriptionLabel->setTheme("descriptionLabel");
-	//   latLabel = ms<Label>(" ");
+	//   latLabel = new Label(" ");
 	//   latLabel->setCanAcceptKeyboardFocus(false);
 	//   latLabel->setTheme("valueLabel");
 	//
@@ -293,10 +293,10 @@ StatusPanel::StatusPanel()
 	//   delete lonDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete lonLabel;
-	//   lonDescriptionLabel = ms<Label>("Longitude: ");
+	//   lonDescriptionLabel = new Label("Longitude: ");
 	//   lonDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   lonDescriptionLabel->setTheme("descriptionLabel");
-	//   lonLabel = ms<Label>(" ");
+	//   lonLabel = new Label(" ");
 	//   lonLabel->setCanAcceptKeyboardFocus(false);
 	//   lonLabel->setTheme("valueLabel");
 	//
@@ -305,15 +305,15 @@ StatusPanel::StatusPanel()
 	//   delete timeZoneDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete timeZoneLabel;
-	//   timeZoneDescriptionLabel = ms<Label>("Time Zone: ");
+	//   timeZoneDescriptionLabel = new Label("Time Zone: ");
 	//   timeZoneDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   timeZoneDescriptionLabel->setTheme("descriptionLabel");
-	//   timeZoneLabel = ms<Label>(" ");
+	//   timeZoneLabel = new Label(" ");
 	//   timeZoneLabel->setCanAcceptKeyboardFocus(false);
 	//   timeZoneLabel->setTheme("valueLabel");
 	//
 	//
-	//   locationPanelLabel = ms<Label>("Location Stuff");
+	//   locationPanelLabel = new Label("Location Stuff");
 	//   locationPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   locationPanelLabel->setTheme("bigLabel");
 	//
@@ -321,7 +321,7 @@ StatusPanel::StatusPanel()
 	//   //location box
 	//   //---------------------------------------------------------
 	//
-	//   locationDialogLayout = ms<DialogLayout>();
+	//   locationDialogLayout = new DialogLayout();
 	//   locationDialogLayout->setCanAcceptKeyboardFocus(false);
 	//
 	//   locationDialogLayout->setHorizontalGroup(locationDialogLayout->createParallelGroup(locationDialogLayout->createSequentialGroup().addGap().addWidget(locationPanelLabel).addGap(), locationDialogLayout->createSequentialGroup(locationDialogLayout->createParallelGroup(postalCodeDescriptionLabel, countryNameDescriptionLabel, isoCountryCodeDescriptionLabel, placeNameDescriptionLabel, stateNameDescriptionLabel, latDescriptionLabel, lonDescriptionLabel, timeZoneDescriptionLabel), locationDialogLayout->createParallelGroup(postalCodeLabel, countryNameLabel, isoCountryCodeLabel, placeNameLabel, stateNameLabel, latLabel, lonLabel, timeZoneLabel))));
@@ -334,10 +334,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookEmailDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookEmailLabel;
-	//   facebookEmailDescriptionLabel = ms<Label>("Facebook Email: ");
+	//   facebookEmailDescriptionLabel = new Label("Facebook Email: ");
 	//   facebookEmailDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookEmailDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookEmailLabel = ms<Label>(" ");
+	//   facebookEmailLabel = new Label(" ");
 	//   facebookEmailLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookEmailLabel->setTheme("valueLabel");
 	//
@@ -347,10 +347,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookBirthdayDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookBirthdayLabel;
-	//   facebookBirthdayDescriptionLabel = ms<Label>("Facebook Birthday: ");
+	//   facebookBirthdayDescriptionLabel = new Label("Facebook Birthday: ");
 	//   facebookBirthdayDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookBirthdayDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookBirthdayLabel = ms<Label>(" ");
+	//   facebookBirthdayLabel = new Label(" ");
 	//   facebookBirthdayLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookBirthdayLabel->setTheme("valueLabel");
 	//
@@ -360,10 +360,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookFirstNameDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookFirstNameLabel;
-	//   facebookFirstNameDescriptionLabel = ms<Label>("Facebook First Name: ");
+	//   facebookFirstNameDescriptionLabel = new Label("Facebook First Name: ");
 	//   facebookFirstNameDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookFirstNameDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookFirstNameLabel = ms<Label>(" ");
+	//   facebookFirstNameLabel = new Label(" ");
 	//   facebookFirstNameLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookFirstNameLabel->setTheme("valueLabel");
 	//
@@ -373,10 +373,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookLastNameDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookLastNameLabel;
-	//   facebookLastNameDescriptionLabel = ms<Label>("Facebook Last Name: ");
+	//   facebookLastNameDescriptionLabel = new Label("Facebook Last Name: ");
 	//   facebookLastNameDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookLastNameDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookLastNameLabel = ms<Label>(" ");
+	//   facebookLastNameLabel = new Label(" ");
 	//   facebookLastNameLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookLastNameLabel->setTheme("valueLabel");
 	//
@@ -386,10 +386,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookGenderDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookGenderLabel;
-	//   facebookGenderDescriptionLabel = ms<Label>("Facebook Gender: ");
+	//   facebookGenderDescriptionLabel = new Label("Facebook Gender: ");
 	//   facebookGenderDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookGenderDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookGenderLabel = ms<Label>(" ");
+	//   facebookGenderLabel = new Label(" ");
 	//   facebookGenderLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookGenderLabel->setTheme("valueLabel");
 	//
@@ -399,10 +399,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookLocaleDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookLocaleLabel;
-	//   facebookLocaleDescriptionLabel = ms<Label>("Facebook Locale: ");
+	//   facebookLocaleDescriptionLabel = new Label("Facebook Locale: ");
 	//   facebookLocaleDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookLocaleDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookLocaleLabel = ms<Label>(" ");
+	//   facebookLocaleLabel = new Label(" ");
 	//   facebookLocaleLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookLocaleLabel->setTheme("valueLabel");
 	//
@@ -412,10 +412,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookTimeZoneDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookTimeZoneLabel;
-	//   facebookTimeZoneDescriptionLabel = ms<Label>("Facebook Time Zone: ");
+	//   facebookTimeZoneDescriptionLabel = new Label("Facebook Time Zone: ");
 	//   facebookTimeZoneDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookTimeZoneDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookTimeZoneLabel = ms<Label>(" ");
+	//   facebookTimeZoneLabel = new Label(" ");
 	//   facebookTimeZoneLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookTimeZoneLabel->setTheme("valueLabel");
 	//
@@ -425,10 +425,10 @@ StatusPanel::StatusPanel()
 	//   delete facebookUsernameDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookUsernameLabel;
-	//   facebookUsernameDescriptionLabel = ms<Label>("Facebook Username: ");
+	//   facebookUsernameDescriptionLabel = new Label("Facebook Username: ");
 	//   facebookUsernameDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookUsernameDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookUsernameLabel = ms<Label>(" ");
+	//   facebookUsernameLabel = new Label(" ");
 	//   facebookUsernameLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookUsernameLabel->setTheme("valueLabel");
 	//
@@ -438,15 +438,15 @@ StatusPanel::StatusPanel()
 	//   delete facebookWebsiteDescriptionLabel;
 	//   //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 	//   delete facebookWebsiteLabel;
-	//   facebookWebsiteDescriptionLabel = ms<Label>("Facebook Website: ");
+	//   facebookWebsiteDescriptionLabel = new Label("Facebook Website: ");
 	//   facebookWebsiteDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookWebsiteDescriptionLabel->setTheme("descriptionLabel");
-	//   facebookWebsiteLabel = ms<Label>(" ");
+	//   facebookWebsiteLabel = new Label(" ");
 	//   facebookWebsiteLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookWebsiteLabel->setTheme("valueLabel");
 	//
 	//
-	//   facebookPanelLabel = ms<Label>("Facebook Stuff");
+	//   facebookPanelLabel = new Label("Facebook Stuff");
 	//   facebookPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   facebookPanelLabel->setTheme("bigLabel");
 	//
@@ -454,7 +454,7 @@ StatusPanel::StatusPanel()
 	//   //facebook box
 	//   //---------------------------------------------------------
 	//
-	//   facebookDialogLayout = ms<DialogLayout>();
+	//   facebookDialogLayout = new DialogLayout();
 	//   facebookDialogLayout->setCanAcceptKeyboardFocus(false);
 	//
 	//   facebookDialogLayout->setHorizontalGroup(facebookDialogLayout->createParallelGroup(facebookDialogLayout->createSequentialGroup().addGap().addWidget(facebookPanelLabel).addGap(), facebookDialogLayout->createSequentialGroup(facebookDialogLayout->createParallelGroup(facebookEmailDescriptionLabel, facebookBirthdayDescriptionLabel, facebookFirstNameDescriptionLabel, facebookLastNameDescriptionLabel, facebookGenderDescriptionLabel, facebookLocaleDescriptionLabel, facebookTimeZoneDescriptionLabel, facebookUsernameDescriptionLabel, facebookWebsiteDescriptionLabel), facebookDialogLayout->createParallelGroup(facebookEmailLabel, facebookBirthdayLabel, facebookFirstNameLabel, facebookLastNameLabel, facebookGenderLabel, facebookLocaleLabel, facebookTimeZoneLabel, facebookUsernameLabel, facebookWebsiteLabel))));
@@ -462,144 +462,144 @@ StatusPanel::StatusPanel()
 	//   facebookDialogLayout->setVerticalGroup(facebookDialogLayout->createSequentialGroup(facebookDialogLayout->createParallelGroup().addWidgets(facebookPanelLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookEmailDescriptionLabel, facebookEmailLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookBirthdayDescriptionLabel, facebookBirthdayLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookFirstNameDescriptionLabel, facebookFirstNameLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookLastNameDescriptionLabel, facebookLastNameLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookGenderDescriptionLabel, facebookGenderLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookLocaleDescriptionLabel, facebookLocaleLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookTimeZoneDescriptionLabel, facebookTimeZoneLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookUsernameDescriptionLabel, facebookUsernameLabel), facebookDialogLayout->createParallelGroup().addWidgets(facebookWebsiteDescriptionLabel, facebookWebsiteLabel)));
 	//
 	//
-	//   //		playerGooglePlusNameDescriptionLabel = ms<Label>("Google+ Name: ");
+	//   //		playerGooglePlusNameDescriptionLabel = new Label("Google+ Name: ");
 	//   //		playerGooglePlusNameDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		playerGooglePlusNameDescriptionLabel.setTheme("descriptionLabel");
-	//   //		playerGooglePlusNameLabel = ms<Label>("bobsgame");
+	//   //		playerGooglePlusNameLabel = new Label("bobsgame");
 	//   //		playerGooglePlusNameLabel.setCanAcceptKeyboardFocus(false);
 	//   //		playerGooglePlusNameLabel.setTheme("valueLabel");
 	//   //
-	//   //		playerTwitterNameDescriptionLabel = ms<Label>("Twitter Name: ");
+	//   //		playerTwitterNameDescriptionLabel = new Label("Twitter Name: ");
 	//   //		playerTwitterNameDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		playerTwitterNameDescriptionLabel.setTheme("descriptionLabel");
-	//   //		playerTwitterNameLabel = ms<Label>("bobsgame");
+	//   //		playerTwitterNameLabel = new Label("bobsgame");
 	//   //		playerTwitterNameLabel.setCanAcceptKeyboardFocus(false);
 	//   //		playerTwitterNameLabel.setTheme("valueLabel");
 	//   //
 	//   //
-	//   //		totalTimePlayedDescriptionLabel = ms<Label>("Total Time Played: ");
+	//   //		totalTimePlayedDescriptionLabel = new Label("Total Time Played: ");
 	//   //		totalTimePlayedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		totalTimePlayedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		totalTimePlayedLabel = ms<Label>("20000:00");
+	//   //		totalTimePlayedLabel = new Label("20000:00");
 	//   //		totalTimePlayedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		totalTimePlayedLabel.setTheme("valueLabel");
 	//   //
-	//   //		sessionTimePlayedDescriptionLabel = ms<Label>("Time Played This Session: ");
+	//   //		sessionTimePlayedDescriptionLabel = new Label("Time Played This Session: ");
 	//   //		sessionTimePlayedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		sessionTimePlayedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		sessionTimePlayedLabel = ms<Label>("0:00");
+	//   //		sessionTimePlayedLabel = new Label("0:00");
 	//   //		sessionTimePlayedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		sessionTimePlayedLabel.setTheme("valueLabel");
 	//   //
-	//   //		averageTimePlayedDescriptionLabel = ms<Label>("Average Session Time: ");
+	//   //		averageTimePlayedDescriptionLabel = new Label("Average Session Time: ");
 	//   //		averageTimePlayedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		averageTimePlayedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		averageTimePlayedLabel = ms<Label>("0:02");
+	//   //		averageTimePlayedLabel = new Label("0:02");
 	//   //		averageTimePlayedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		averageTimePlayedLabel.setTheme("valueLabel");
 	//   //
-	//   //		gamesPurchasedDescriptionLabel = ms<Label>("Games Purchased: ");
+	//   //		gamesPurchasedDescriptionLabel = new Label("Games Purchased: ");
 	//   //		gamesPurchasedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		gamesPurchasedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		gamesPurchasedLabel = ms<Label>("15");
+	//   //		gamesPurchasedLabel = new Label("15");
 	//   //		gamesPurchasedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		gamesPurchasedLabel.setTheme("valueLabel");
 	//   //
-	//   //		gamesSoldDescriptionLabel = ms<Label>("Games Sold: ");
+	//   //		gamesSoldDescriptionLabel = new Label("Games Sold: ");
 	//   //		gamesSoldDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		gamesSoldDescriptionLabel.setTheme("descriptionLabel");
-	//   //		gamesSoldLabel = ms<Label>("0");
+	//   //		gamesSoldLabel = new Label("0");
 	//   //		gamesSoldLabel.setCanAcceptKeyboardFocus(false);
 	//   //		gamesSoldLabel.setTheme("valueLabel");
 	//   //
-	//   //		friendsInGameDescriptionLabel = ms<Label>("Friends In Game: ");
+	//   //		friendsInGameDescriptionLabel = new Label("Friends In Game: ");
 	//   //		friendsInGameDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		friendsInGameDescriptionLabel.setTheme("descriptionLabel");
-	//   //		friendsInGameLabel = ms<Label>("1");
+	//   //		friendsInGameLabel = new Label("1");
 	//   //		friendsInGameLabel.setCanAcceptKeyboardFocus(false);
 	//   //		friendsInGameLabel.setTheme("valueLabel");
 	//   //
-	//   //		totalGamesPlayedDescriptionLabel = ms<Label>("Total Games Played: ");
+	//   //		totalGamesPlayedDescriptionLabel = new Label("Total Games Played: ");
 	//   //		totalGamesPlayedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		totalGamesPlayedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		totalGamesPlayedLabel = ms<Label>("0");
+	//   //		totalGamesPlayedLabel = new Label("0");
 	//   //		totalGamesPlayedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		totalGamesPlayedLabel.setTheme("valueLabel");
 	//   //
-	//   //		timesChallengedDescriptionLabel = ms<Label>("Times Challenged By Others: ");
+	//   //		timesChallengedDescriptionLabel = new Label("Times Challenged By Others: ");
 	//   //		timesChallengedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesChallengedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		timesChallengedLabel = ms<Label>("0");
+	//   //		timesChallengedLabel = new Label("0");
 	//   //		timesChallengedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesChallengedLabel.setTheme("valueLabel");
 	//   //
-	//   //		timesChallengerDescriptionLabel = ms<Label>("Times Challenged Others: ");
+	//   //		timesChallengerDescriptionLabel = new Label("Times Challenged Others: ");
 	//   //		timesChallengerDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesChallengerDescriptionLabel.setTheme("descriptionLabel");
-	//   //		timesChallengerLabel = ms<Label>("0");
+	//   //		timesChallengerLabel = new Label("0");
 	//   //		timesChallengerLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesChallengerLabel.setTheme("valueLabel");
 	//   //
-	//   //		timesWonDescriptionLabel = ms<Label>("Times You Won: ");
+	//   //		timesWonDescriptionLabel = new Label("Times You Won: ");
 	//   //		timesWonDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesWonDescriptionLabel.setTheme("descriptionLabel");
-	//   //		timesWonLabel = ms<Label>("99999");
+	//   //		timesWonLabel = new Label("99999");
 	//   //		timesWonLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesWonLabel.setTheme("valueLabel");
 	//   //
-	//   //		timesLostDescriptionLabel = ms<Label>("Times You Lost: ");
+	//   //		timesLostDescriptionLabel = new Label("Times You Lost: ");
 	//   //		timesLostDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesLostDescriptionLabel.setTheme("descriptionLabel");
-	//   //		timesLostLabel = ms<Label>("0");
+	//   //		timesLostLabel = new Label("0");
 	//   //		timesLostLabel.setCanAcceptKeyboardFocus(false);
 	//   //		timesLostLabel.setTheme("valueLabel");
 	//   //
-	//   //		betsWonDescriptionLabel = ms<Label>("Bets Won: ");
+	//   //		betsWonDescriptionLabel = new Label("Bets Won: ");
 	//   //		betsWonDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		betsWonDescriptionLabel.setTheme("descriptionLabel");
-	//   //		betsWonLabel = ms<Label>("99999");
+	//   //		betsWonLabel = new Label("99999");
 	//   //		betsWonLabel.setCanAcceptKeyboardFocus(false);
 	//   //		betsWonLabel.setTheme("valueLabel");
 	//   //
-	//   //		betsLostDescriptionLabel = ms<Label>("Bets Lost: ");
+	//   //		betsLostDescriptionLabel = new Label("Bets Lost: ");
 	//   //		betsLostDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		betsLostDescriptionLabel.setTheme("descriptionLabel");
-	//   //		betsLostLabel = ms<Label>("0");
+	//   //		betsLostLabel = new Label("0");
 	//   //		betsLostLabel.setCanAcceptKeyboardFocus(false);
 	//   //		betsLostLabel.setTheme("valueLabel");
 	//   //
-	//   //		pointsEarnedDescriptionLabel = ms<Label>("Total Points Earned: ");
+	//   //		pointsEarnedDescriptionLabel = new Label("Total Points Earned: ");
 	//   //		pointsEarnedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		pointsEarnedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		pointsEarnedLabel = ms<Label>("99999999");
+	//   //		pointsEarnedLabel = new Label("99999999");
 	//   //		pointsEarnedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		pointsEarnedLabel.setTheme("valueLabel");
 	//   //
-	//   //		globalRankingDescriptionLabel = ms<Label>("Global Ranking: ");
+	//   //		globalRankingDescriptionLabel = new Label("Global Ranking: ");
 	//   //		globalRankingDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		globalRankingDescriptionLabel.setTheme("descriptionLabel");
-	//   //		globalRankingLabel = ms<Label>("1st Place");
+	//   //		globalRankingLabel = new Label("1st Place");
 	//   //		globalRankingLabel.setCanAcceptKeyboardFocus(false);
 	//   //		globalRankingLabel.setTheme("valueLabel");
 	//   //
-	//   //		regionalRankingDescriptionLabel = ms<Label>("Regional Ranking: ");
+	//   //		regionalRankingDescriptionLabel = new Label("Regional Ranking: ");
 	//   //		regionalRankingDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		regionalRankingDescriptionLabel.setTheme("descriptionLabel");
-	//   //		regionalRankingLabel = ms<Label>("1st Place");
+	//   //		regionalRankingLabel = new Label("1st Place");
 	//   //		regionalRankingLabel.setCanAcceptKeyboardFocus(false);
 	//   //		regionalRankingLabel.setTheme("valueLabel");
 	//   //
-	//   //		stepsWalkedDescriptionLabel = ms<Label>("Total Steps Walked: ");
+	//   //		stepsWalkedDescriptionLabel = new Label("Total Steps Walked: ");
 	//   //		stepsWalkedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		stepsWalkedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		stepsWalkedLabel = ms<Label>("2452757542");
+	//   //		stepsWalkedLabel = new Label("2452757542");
 	//   //		stepsWalkedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		stepsWalkedLabel.setTheme("valueLabel");
 	//   //
-	//   //		buttonsPushedDescriptionLabel = ms<Label>("Total Buttons Pushed: ");
+	//   //		buttonsPushedDescriptionLabel = new Label("Total Buttons Pushed: ");
 	//   //		buttonsPushedDescriptionLabel.setCanAcceptKeyboardFocus(false);
 	//   //		buttonsPushedDescriptionLabel.setTheme("descriptionLabel");
-	//   //		buttonsPushedLabel = ms<Label>("32652357");
+	//   //		buttonsPushedLabel = new Label("32652357");
 	//   //		buttonsPushedLabel.setCanAcceptKeyboardFocus(false);
 	//   //		buttonsPushedLabel.setTheme("valueLabel");
 	//
@@ -697,7 +697,7 @@ void StatusPanel::doGoPremiumButton()
 	//      URL* url = nullptr;
 	//      try
 	//      {
-	//         url = new URL("http://www.bobsgame.com/buyOKPass.php?u=" + getGameSave()->userID);
+	//         url = new URL("http://www.bobsgame.com/buyBobPass.php?u=" + getGameSave()->userID);
 	//      }
 	//      catch (MalformedURLException e)
 	//      {
@@ -711,13 +711,13 @@ void StatusPanel::doGoPremiumButton()
 	//      try
 	//      {
 	//         //open browser window, we can't get it with JS as a desktop client so we need to redirect to PHP or something which stores it in SQL
-	//         string url = "http://www.bobsgame.com/buyOKPass.php?u=" + getGameSave()->userID;
+	//         string url = "http://www.bobsgame.com/buyBobPass.php?u=" + getGameSave()->userID;
 	//
 	//         java::awt::Desktop::getDesktop().browse(java::net::URI::create(url));
 	//      }
 	//      catch (java::io::IOException e)
 	//      {
-	//         log->error("Could not open browser: " + e->getMessage());
+	//         log.error("Could not open browser: " + e->getMessage());
 	//      }
 	//   }
 }
@@ -733,7 +733,7 @@ void StatusPanel::doAddMoneyButton()
 	//      URL* url = nullptr;
 	//      try
 	//      {
-	//         url = new URL("http://www.bobsgame.com/buyOKCoins.php?u=" + getGameSave()->userID);
+	//         url = new URL("http://www.bobsgame.com/buyBobCoins.php?u=" + getGameSave()->userID);
 	//      }
 	//      catch (MalformedURLException e)
 	//      {
@@ -747,13 +747,13 @@ void StatusPanel::doAddMoneyButton()
 	//      try
 	//      {
 	//         //open browser window, we can't get it with JS as a desktop client so we need to redirect to PHP or something which stores it in SQL
-	//         string url = "http://www.bobsgame.com/buyOKCoins.php?u=" + getGameSave()->userID;
+	//         string url = "http://www.bobsgame.com/buyBobCoins.php?u=" + getGameSave()->userID;
 	//
 	//         java::awt::Desktop::getDesktop().browse(java::net::URI::create(url));
 	//      }
 	//      catch (java::io::IOException e)
 	//      {
-	//         log->error("Could not open browser: " + e->getMessage());
+	//         log.error("Could not open browser: " + e->getMessage());
 	//      }
 	//   }
 }
@@ -802,18 +802,18 @@ void StatusPanel::setVisible(bool b)
 	//   if (b == true)
 	//   {
 	//      //String birthdayString = "?";
-	//      //if(getGameSave()->birthdayTime>0)birthdayString = ms<SimpleDateFormat>("yyyy-MM-dd").format(ms<Date>(getGameSave()->birthdayTime));
+	//      //if(getGameSave()->birthdayTime>0)birthdayString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(getGameSave()->birthdayTime));
 	//
 	//      string accountCreatedTimeString = "?";
 	//      if (getGameSave()->accountCreatedTime > 0)
 	//      {
-	//         accountCreatedTimeString = (ms<SimpleDateFormat>("yyyy-MM-dd-HH:mm"))->format(ms<Date>(getGameSave()->accountCreatedTime));
+	//         accountCreatedTimeString = (new SimpleDateFormat("yyyy-MM-dd-HH:mm"))->format(new Date(getGameSave()->accountCreatedTime));
 	//      }
 	//
 	//      string lastLoginTimeString = "?";
 	//      if (getGameSave()->lastLoginTime > 0)
 	//      {
-	//         lastLoginTimeString = (ms<SimpleDateFormat>("yyyy-MM-dd-HH:mm"))->format(ms<Date>(getGameSave()->lastLoginTime));
+	//         lastLoginTimeString = (new SimpleDateFormat("yyyy-MM-dd-HH:mm"))->format(new Date(getGameSave()->lastLoginTime));
 	//      }
 	//
 	//      string accountTypeString = ClientEngine()->getAccountTypeString(getGameSave()->accountType);

@@ -17,28 +17,28 @@
 Logger Cameraman::log = Logger("Cameraman");
 
 
-sp<ConsoleText> Cameraman::currentSpeedXText = ms<ConsoleText>();
-sp<ConsoleText> Cameraman::currentSpeedYText = ms<ConsoleText>();
-sp<ConsoleText> Cameraman::targetSpeedXText = ms<ConsoleText>();
-sp<ConsoleText> Cameraman::targetSpeedYText = ms<ConsoleText>();
+ConsoleText* Cameraman::currentSpeedXText = new ConsoleText();
+ConsoleText* Cameraman::currentSpeedYText = new ConsoleText();
+ConsoleText* Cameraman::targetSpeedXText = new ConsoleText();
+ConsoleText* Cameraman::targetSpeedYText = new ConsoleText();
 
-Cameraman::Cameraman(sp<Engine> g)
+Cameraman::Cameraman(Engine* g)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	sp<EntityData> data = ms<EntityData>(-1, "Camera", "Camera", 0, 0);
+	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0);
 	initEntity(data);
 
 	//set target
 
 	//set map x and map y to target x y
 
-	targetEntity = shared_from_this();
+	targetEntity = this;
 
 	getData()->setDisableShadow(true);
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
 void Cameraman::initCurrentAnimationFromSprite()
@@ -49,13 +49,13 @@ void Cameraman::initCurrentAnimationFromSprite()
 	setXYToTarget();
 }
 
-//sp<Map> Cameraman::getMap()
+//Map* Cameraman::getMap()
 //{ //=========================================================================================================================
 //
 //	return getMapManager()->getCurrentMap();
 //}
 
-sp<Map> Cameraman::getCurrentMap()
+Map* Cameraman::getCurrentMap()
 { //=========================================================================================================================
 
 	return getMapManager()->getCurrentMap();
@@ -178,7 +178,7 @@ void Cameraman::update()
 	float maxDistY = (float)getEngine()->getHeight();
 
 
-	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr)
+	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)
 	{
 		float playerSpeedX = ((abs(getPlayer()->forceX * (getPlayer()->pixelsToMoveThisFrame + 1))) / getEngine()->engineTicksPassed()) / 0.01f;
 		float playerSpeedY = ((abs(getPlayer()->forceY * (getPlayer()->pixelsToMoveThisFrame + 1))) / getEngine()->engineTicksPassed()) / 0.01f;
@@ -403,7 +403,7 @@ void Cameraman::setZoomTO(float ZOOMto)
 	this->ZOOMto = ZOOMto;
 }
 
-void Cameraman::setZoomToFitArea(sp<Area> a)
+void Cameraman::setZoomToFitArea(Area* a)
 {
 	//float screenWidth = (float)getEngine()->getWidth();
 	//float areaWidth = (float)a->getWidth();
@@ -567,7 +567,7 @@ void Cameraman::updateZoom()
 	      //round to nearest 0.25 (higher)
 	      //1.77-> 2.0f
 	      //1.74-> 1.75
-	      ZOOMto=((float)(((((int)(sp<ZOOMto>100))/25)+1)*25))/100.0f;
+	      ZOOMto=((float)(((((int)(ZOOMto*100))/25)+1)*25))/100.0f;
 	      //Math.floor(ZOOMto);
 	            
 	      if(ZOOMto<MINZOOM)ZOOMto=MINZOOM;
@@ -579,7 +579,7 @@ void Cameraman::updateZoom()
 	   //if((float)Display.getHeight()>(float)maxCamHeight*ZOOMto)
 	   {
 	      ZOOMto=(float)Display.getHeight()/(float)maxCamHeight;
-	      ZOOMto=((float)(((((int)(sp<ZOOMto>100))/25)+1)*25))/100.0f;
+	      ZOOMto=((float)(((((int)(ZOOMto*100))/25)+1)*25))/100.0f;
 	            
 	      if(ZOOMto<MINZOOM)ZOOMto=MINZOOM;
 	      if(ZOOMto>MAXZOOM)ZOOMto=MAXZOOM;
@@ -756,10 +756,10 @@ int Cameraman::getYTarget()
 
 	int statusBarSize = 0;
 
-	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != NULL)
+	if (dynamic_cast<BGClientEngine*>(getEngine()) != NULL)
 	// if (getEngine()->getClass().equals(BGClientEngine::typeid))
 	{
-		//statusBarSize = StatusBar::sizeY;
+		//statusBarSize = BobStatusBar::sizeY;
 	}
 
 
@@ -937,7 +937,7 @@ void Cameraman::setXYToTarget()
 	setY(targetEntity->getY() + (targetEntity->getHeight() / 2));
 }
 
-void Cameraman::setTarget(sp<Entity> t)
+void Cameraman::setTarget(Entity* t)
 { //=========================================================================================================================
 	if (t == nullptr)
 	{
@@ -956,17 +956,17 @@ void Cameraman::setTarget(sp<Entity> t)
 
 void Cameraman::setTarget(float mapXPixelsHQ, float mapYPixelsHQ)
 { //=========================================================================================================================
-	targetEntity = ms<Entity>(getEngine(), ms<EntityData>(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2), nullptr);
+	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2), nullptr);
 }
 
-void Cameraman::setTarget(sp<Area> area)
+void Cameraman::setTarget(Area* area)
 { //=========================================================================================================================
-	targetEntity = ms<Entity>(getEngine(), ms<EntityData>(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2), nullptr);
+	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2), nullptr);
 }
 
 void Cameraman::setDummyTarget()
 { //=========================================================================================================================
-	targetEntity = shared_from_this(); //ms<Entity>(getEngine(),ms<EntityData>(-1,"Null Target","",getX(),getY()));
+	targetEntity = this; //new Entity(getEngine(),new EntityData(-1,"Null Target","",getX(),getY()));
 }
 
 void Cameraman::setAutoZoomByPlayerMovement(bool b)

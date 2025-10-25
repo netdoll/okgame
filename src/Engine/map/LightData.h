@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -70,9 +70,9 @@ public:
 
 	LightData(int id, const string& name);
 
-	//static sp<LightData> fromBase64ZippedJSON(const string& b64);
+	//static LightData* fromBase64ZippedJSON(const string& b64);
 
-	//static sp<LightData> fromJSON(const string& json);
+	//static LightData* fromJSON(const string& json);
 
 	string& initFromString(string& t) override;
 

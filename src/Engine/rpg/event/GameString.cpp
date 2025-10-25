@@ -14,53 +14,49 @@
 Logger GameString::log = Logger("GameString");
 
 
-GameString::GameString(sp<Engine> g, int id)
+GameString::GameString(Engine* g, int id)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = ms<GameStringData>(id, "", "");
+	this->data = new GameStringData(id, "", "");
 
-	for (int i = 0; i < (int)getEventManager()->gameStringList->size(); i++)
+	for (int i = 0; i < (int)getEventManager()->gameStringList.size(); i++)
 	{
-		if (getEventManager()->gameStringList->at(i)->getID() == data->getID())
+		if (getEventManager()->gameStringList.get(i)->getID() == data->getID())
 		{
 			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}
-
-	getEventManager()->gameStringList->push_back(shared_from_this());
-
+	getEventManager()->gameStringList.add(this);
 }
 
-GameString::GameString(sp<Engine> g, sp<GameStringData> data)
+GameString::GameString(Engine* g, GameStringData* data)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->gameStringList->size(); i++)
+	for (int i = 0; i < (int)getEventManager()->gameStringList.size(); i++)
 	{
-		if (getEventManager()->gameStringList->at(i)->getID() == data->getID())
+		if (getEventManager()->gameStringList.get(i)->getID() == data->getID())
 		{
 			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}
-
-	getEventManager()->gameStringList->push_back(shared_from_this());
-
+	getEventManager()->gameStringList.add(this);
 }
 
 //The following method was originally marked 'synchronized':
-void GameString::setData_S(sp<GameStringData> data)
+void GameString::setData_S(GameStringData* data)
 { //=========================================================================================================================
 	this->data = data;
 	setInitialized_S(true);
 }
 
-sp<GameStringData> GameString::getData()
+GameStringData* GameString::getData()
 {
 	return data;
 }

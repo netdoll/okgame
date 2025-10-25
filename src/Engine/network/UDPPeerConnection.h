@@ -4,9 +4,9 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include <src/Engine/rpg/FriendCharacter.h>
-#include "OKNet.h"
+#include "BobNet.h"
 #include <src/Engine/EnginePart.h>
 #include <queue>
 #include <mutex>
@@ -84,7 +84,7 @@ public:
 
 	long long peerUserID = -1;
 	int peerType = -1;
-	int peerStatus = OKNet::status_AVAILABLE;// TODO need to send current status, away, busy, private, do not disturb, playing nD game, etc.
+	int peerStatus = BobNet::status_AVAILABLE;// TODO need to send current status, away, busy, private, do not disturb, playing nD game, etc.
 
 	static const int FACEBOOK_TYPE = 0;
 	static const int USERNAME_TYPE = 1;
@@ -108,10 +108,10 @@ private:
 	bool threadStarted = false;
 	thread t;
 public:
-	static void updateThreadLoop(sp<UDPPeerConnection>u);
+	static void updateThreadLoop(UDPPeerConnection *u);
 	//------------------------------------
 private:
-	static sp<Logger> _threadLog;
+	static Logger* _threadLog;
 	mutex threadLog_Mutex;
 public:
 	void threadLogDebug_S(string s)
@@ -150,6 +150,7 @@ public:
 		_packetCounter++;
 	}
 
+#ifndef ORBIS
 	//------------------------------------
 private:
 	UDPsocket _socket = UDPsocket();
@@ -181,6 +182,9 @@ public:
 		lock_guard<mutex> lock(_socketSet_Mutex);
 		_socketSet = s;
 	}
+#else
+
+#endif
 
 	//------------------------------------
 private:
@@ -214,12 +218,14 @@ public:
 	}
 
 	//------------------------------------
+
+#ifndef ORBIS
 private:
-	sp<IPaddress> _peerIPAddress_S = nullptr;
+	IPaddress* _peerIPAddress_S = nullptr;
 	int _peerPort_S = -1;
 	mutex _peerIPAddress_Mutex;
 public:
-	sp<IPaddress> getPeerIPAddress_S()
+	IPaddress* getPeerIPAddress_S()
 	{
 		lock_guard<mutex> lock(_peerIPAddress_Mutex);
 		return _peerIPAddress_S;
@@ -236,17 +242,17 @@ public:
 #endif
 			if (_peerIPAddress_S != nullptr)
 			{
-				//delete _peerIPAddress_S;
+				delete _peerIPAddress_S;
 				_peerIPAddress_S = nullptr;
 			}
 			_peerPort_S = port;
 		}
 		else
 		{
-			_peerIPAddress_S = ms<IPaddress>();
+			_peerIPAddress_S = new IPaddress();
 			_peerPort_S = port;
 
-			if (SDLNet_ResolveHost(_peerIPAddress_S.get(), ipAddressString.c_str(), port) < 0)
+			if (SDLNet_ResolveHost(_peerIPAddress_S, ipAddressString.c_str(), port) < 0)
 			{
 				threadLogWarn_S("Could not resolve peer host: " + string(SDLNet_GetError()));
 				SDL_ClearError();
@@ -256,6 +262,9 @@ public:
 			//threadLogDebug_S("Internal address looks like " + to_string(_peerIPAddress_S->host) + ":" + to_string(_peerIPAddress_S->port));
 		}
 	}
+
+#else
+#endif
 	//------------------------------------
 
 private:
@@ -285,11 +294,12 @@ public:
 
 	//------------------------------------
 
+#ifndef ORBIS
 private:
-	queue<sp<UDPpacket>> *_sentPacketQueue = new queue<sp<UDPpacket>>();
+	queue<UDPpacket*> *_sentPacketQueue = new queue<UDPpacket*>();
 	mutex _sentPacketQueue_Mutex;
 public:
-	sp<UDPpacket> sentPacketQueueFront_S()
+	UDPpacket* sentPacketQueueFront_S()
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
 		return _sentPacketQueue->front();
@@ -304,11 +314,16 @@ public:
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
 		_sentPacketQueue->pop();
 	}
-	void sentPacketQueuePush_S(sp<UDPpacket> p)
+	void sentPacketQueuePush_S(UDPpacket* p)
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
 		_sentPacketQueue->push(p);
 	}
+
+#else
+
+
+#endif
 	//------------------------------------
 
 private:
@@ -489,7 +504,7 @@ private:
 	long long _lastWrotePacketTime = 0;
 	long long _writePacketWait = 0;
 	long long _lastConnectAttemptTime = 0;
-	int _connectTries = 0;
+	//int _connectTries = 0;
 	long long _lastSentPingTime = 0;
 	long long _lastSentFriendDataRequestTime = 0;
 	bool _gotFriendData_NonThreaded = false;
@@ -505,14 +520,19 @@ private:
 		long long timeGotACK = 0;
 	};
 	typedef HashMap<long long, long long> HashMapLongLongLongLong;
-	sp<HashMapLongLongLongLong>_frameSentTimes = ms<HashMapLongLongLongLong>();
-	sp<vector<long long>>_frameRoundaboutTicks;// = ms<vector><long long>();
+	HashMapLongLongLongLong *_frameSentTimes = new HashMapLongLongLongLong();
+	ArrayList<long long> *_frameRoundaboutTicks = new ArrayList<long long>();
 	//------------------------------------
 	//thread only functions
 	//------------------------------------
 	bool _ensureSocketIsOpen();
 	void _checkForIncomingPeerTraffic();
-	sp<UDPpacket> makePacket(string s);
+
+#ifndef ORBIS
+	UDPpacket* makePacket(string s);
+#else
+
+#endif
 	void _processQueuedMessagesIntoPackets();
 	void _writeQueuedPackets();
 	void _getAddressFromSTUNServer();
@@ -535,20 +555,20 @@ public:
 	//bool bobsGameHosting = false;
 	//bool bobsGamePlaying = false;
 	//string hostedRoomUUID = "";
-	//sp<Caption>caption = nullptr;
+	//Caption *caption = nullptr;
 	//bool multiplayer_AllowDifferentDifficulties = true;
 	//bool multiplayer_AllowDifferentGameSequences = true;
 	//bool multiplayer_GameEndsWhenOnePlayerRemains = true;
 	//bool multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
 	//bool multiplayer_DisableVSGarbage = false;
-	//sp<GameSequence>multiplayer_SelectedGameSequence = nullptr;
+	//GameSequence *multiplayer_SelectedGameSequence = nullptr;
 	//string multiplayer_SelectedDifficultyName = "Beginner";
 
 	//engine parts to forward udp messages to, they also get forwarded to engines which dispatch them
-	sp<vector<sp<EnginePart>>>engineParts;
-	void addEnginePartToForwardMessagesTo(sp<EnginePart> e);
-	void removeEnginePartToForwardMessagesTo(sp<EnginePart> e);
+	ArrayList<EnginePart*> engineParts;
+	void addEnginePartToForwardMessagesTo(EnginePart* e);
+	void removeEnginePartToForwardMessagesTo(EnginePart* e);
 
-	static sp<TCPServerConnection> getServerConnection();
+	static TCPServerConnection* getServerConnection();
 
 };

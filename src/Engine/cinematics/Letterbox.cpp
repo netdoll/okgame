@@ -15,7 +15,7 @@ Logger Letterbox::log = Logger("Letterbox");
 
 class Easing;
 
-Letterbox::Letterbox(sp<Engine> g)
+Letterbox::Letterbox(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }

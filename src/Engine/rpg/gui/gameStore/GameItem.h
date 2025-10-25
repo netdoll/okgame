@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,18 +18,18 @@ public:
 	static Logger log;
 
 
-	//   sp<Label> gameTitleLabel = nullptr;
+	//   Label* gameTitleLabel = nullptr;
 	//
-	//   sp<TextArea> textArea;
-	//   sp<SimpleTextAreaModel> textAreaModel;
+	//   TextArea* textArea;
+	//   SimpleTextAreaModel* textAreaModel;
 	//
-	//   sp<Widget> iconWidget;
-	//   sp<AnimatedImage> gamePreview;
+	//   Widget* iconWidget;
+	//   AnimatedImage* gamePreview;
 	//
-	//   sp<DialogLayout> thisDialogLayout;
+	//   DialogLayout* thisDialogLayout;
 	//
-	//   sp<Button> buyButton;
-	//   sp<Label> priceLabel;
+	//   Button* buyButton;
+	//   Label* priceLabel;
 
 
 	GameItem();

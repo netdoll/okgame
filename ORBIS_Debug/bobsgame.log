@@ -1,0 +1,3 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Platforms\ORBIS\Microsoft.CppBuild.orbis.targets(100,5): warning MSB8028: The intermediate directory (ORBIS_Debug\) contains files shared from another project (Boost_Filesystem.vcxproj, Boost_Serialization.vcxproj, common.vcxproj, freetype.vcxproj, Gnmx.vcxproj, libSceSampleUtil.vcxproj, tinyxml.vcxproj, _dbg_font.vcxproj, _framework.vcxproj, _toolkit.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  GLUtils.cpp
+  bobsgame.vcxproj -> C:\Users\bob\workspace\bobsgame PS4\ORBIS_Debug\bobsgame.elf

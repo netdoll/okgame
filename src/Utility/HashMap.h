@@ -1,5 +1,5 @@
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 #include <unordered_map>
 
@@ -29,7 +29,7 @@ public:
 	int size();
 	V get(K k);
 	K getFirstKey(V v);
-	sp<vector<V>> getAllValues();
+	ArrayList<V>* getAllValues();
 
 
 
@@ -152,16 +152,12 @@ V HashMap<K, V>::get(K k)
 //}
 
 template <typename K, typename V>
-sp<vector<V>> HashMap<K, V>::getAllValues()
+ArrayList<V>* HashMap<K, V>::getAllValues()
 {
 	//typename HashMap<K, V>::iterator it;
-	sp<vector<V>> s = ms<vector<V>>();
-	for (int i=0; i<m->size();i++) 
-	{ 
-		s->push_back(m->at(i)); 
-	}
-	return s;
-
+	ArrayList<V> *v = new ArrayList<V>();
+	for (auto it = m->begin(); it != m->end(); ++it)v->add(it->second);
+	return v;
 }
 
 

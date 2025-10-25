@@ -14,7 +14,7 @@
 Logger ScreenOverlay::log = Logger("ScreenOverlay");
 
 
-ScreenOverlay::ScreenOverlay(sp<Engine> g)
+ScreenOverlay::ScreenOverlay(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -23,7 +23,7 @@ void ScreenOverlay::init()
 { //=========================================================================================================================
 }
 
-void ScreenOverlay::doTransition(sp<OKColor> color, float fromAlpha, float toAlpha, int ticks)
+void ScreenOverlay::doTransition(BobColor* color, float fromAlpha, float toAlpha, int ticks)
 { //=========================================================================================================================
 
 	this->color = color;
@@ -48,7 +48,7 @@ void ScreenOverlay::doTransition(sp<OKColor> color, float fromAlpha, float toAlp
 	this->transitionType = TYPE_ONE_WAY;
 }
 
-void ScreenOverlay::doToAndFromTransition(sp<OKColor> color, int ticks, float toAlpha)
+void ScreenOverlay::doToAndFromTransition(BobColor* color, int ticks, float toAlpha)
 { //=========================================================================================================================
 
 
@@ -66,7 +66,7 @@ void ScreenOverlay::doToAndFromTransition(sp<OKColor> color, int ticks, float to
 	this->transitionType = TYPE_ROUNDTRIP;
 }
 
-void ScreenOverlay::setInstantOverlay(sp<OKColor> color, float alpha)
+void ScreenOverlay::setInstantOverlay(BobColor* color, float alpha)
 { //=========================================================================================================================
 
 	this->color = color;
@@ -139,7 +139,7 @@ void ScreenOverlay::clearOverlays()
 	alpha = 0;
 	toAlpha = 0;
 	transitionType = TYPE_INSTANT;
-	color = OKColor::black;
+	color = BobColor::black;
 }
 
 void ScreenOverlay::render()

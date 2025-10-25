@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -22,10 +22,10 @@ public:
 	static Logger log;
 
 
-	NDMenuWheel(sp<Engine> g);
+	NDMenuWheel(Engine* g);
 
 
-	static sp<vector<sp<NDMenuWheelItem>>>wheelItems;
+	static ArrayList<NDMenuWheelItem*>* wheelItems;
 
 
 	int selectedWheelItem = 0;
@@ -38,7 +38,7 @@ public:
 	static int COUNTERCLOCKWISE;
 
 
-	sp<OKTexture> selectedItemColorSpinTexture[15];
+	BobTexture* selectedItemColorSpinTexture[15];
 
 
 	float cartSlideX = 0;
@@ -61,7 +61,7 @@ public:
 	void init();
 
 
-	void addGame(sp<NDGameEngine> game, const string& name, sp<OKColor> color);
+	void addGame(NDGameEngine* game, const string& name, BobColor* color);
 
 
 	void render();

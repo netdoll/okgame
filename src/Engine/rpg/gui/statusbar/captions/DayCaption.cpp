@@ -14,7 +14,7 @@
 Logger DayCaption::log = Logger("DayCaption");
 
 
-DayCaption::DayCaption(sp<BGClientEngine> g)
+DayCaption::DayCaption(BGClientEngine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -22,11 +22,11 @@ DayCaption::DayCaption(sp<BGClientEngine> g)
 void DayCaption::init()
 { //=========================================================================================================================
 
-	light = ms<Light>(getEngine(), "dayLight", -100, 4, 10, 2, 255, 255, 255, 90, 16, 2.0f, 1.0f, 0, true, true);
+	light = new Light(getEngine(), "dayLight", -100, 4, 10, 2, 255, 255, 255, 90, 16, 2.0f, 1.0f, 0, true, true);
 
-	defaultFGColor = OKColor::white;
-	defaultAAColor = OKColor::gray;
-	defaultBGColor = OKColor::clear;
+	defaultFGColor = BobColor::white;
+	defaultAAColor = BobColor::gray;
+	defaultBGColor = BobColor::clear;
 
 	currentFGColor = defaultFGColor;
 	currentAAColor = defaultAAColor;

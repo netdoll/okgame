@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class UDPPeerConnection;
 class TCPServerConnection;
 class Logger;
@@ -35,10 +35,10 @@ class GameStore;
 class PlayerEditMenu;
 class ND;
 class FriendManager;
-class StatusBar;
+class BobStatusBar;
 class NotificationManager;
 
-class EnginePart// : public std::enable_shared_from_this<EnginePart>
+class EnginePart
 {
 public:
 	virtual ~EnginePart()
@@ -48,11 +48,11 @@ public:
 	static Logger log;
 
 protected:
-	sp<Engine> e = nullptr;
+	Engine* e = nullptr;
 
 private:
-	//static sp<BGClientEngine> clientGameEngine;
-	//sp<ControlsManager> controlsManager = nullptr;
+	//static BGClientEngine* clientGameEngine;
+	//ControlsManager* controlsManager = nullptr;
 
 	
 	bool isActivated = false;
@@ -61,9 +61,9 @@ private:
 
 public:
 	EnginePart();
-	EnginePart(sp<Engine> e);
+	EnginePart(Engine* e);
 
-	//void setControlsManager(sp<ControlsManager> controlsManager);
+	//void setControlsManager(ControlsManager* controlsManager);
 
 	virtual void toggleActivated();
 	virtual void setActivated(bool b);
@@ -77,42 +77,42 @@ public:
 	int getSecondsSinceLastHere();
 	int getMinutesSinceLastHere();
 
-	sp<Engine> getEngine();
-	sp<Cameraman> getCameraman();
-	sp<MapManager> getMapManager();
-	sp<SpriteManager> getSpriteManager();
-	sp<ActionManager> getActionManager();
-	sp<TextManager> getTextManager();
-	sp<AudioManager> getAudioManager();
-	virtual sp<CaptionManager> getCaptionManager();
-	sp<EventManager> getEventManager();
-	sp<CinematicsManager> getCinematicsManager();
+	Engine* getEngine();
+	Cameraman* getCameraman();
+	MapManager* getMapManager();
+	SpriteManager* getSpriteManager();
+	ActionManager* getActionManager();
+	TextManager* getTextManager();
+	AudioManager* getAudioManager();
+	virtual CaptionManager* getCaptionManager();
+	EventManager* getEventManager();
+	CinematicsManager* getCinematicsManager();
 
-	virtual sp<Map> getCurrentMap();
+	virtual Map* getCurrentMap();
 
-	sp<ControlsManager> getControlsManager();
+	ControlsManager* getControlsManager();
 
-	//static void setClientGameEngine(sp<BGClientEngine> gameEngine);
+	//static void setClientGameEngine(BGClientEngine* gameEngine);
 
-	static sp<BGClientEngine> getClientGameEngine();
+	static BGClientEngine* getClientGameEngine();
 
-	static sp<TCPServerConnection> getServerConnection();
+	static TCPServerConnection* getServerConnection();
 
-	static sp<Clock> getClock();
-	static sp<GUIManager> getGUIManager();
-	static sp<StuffMenu> getStuffMenu();
-	static sp<GameStore> getGameStore();
-	static sp<PlayerEditMenu> getPlayerEditMenu();
-	static sp<Player> getPlayer();
+	static Clock* getClock();
+	static GUIManager* getGUIManager();
+	static StuffMenu* getStuffMenu();
+	static GameStore* getGameStore();
+	static PlayerEditMenu* getPlayerEditMenu();
+	static Player* getPlayer();
 	static ND* getND();
-	static sp<Wallet> getWallet();
-	static sp<FriendManager> getFriendManager();
-	static sp<StatusBar> getStatusBar();
-	static sp<NotificationManager> getNotificationManager();
+	static Wallet* getWallet();
+	static FriendManager* getFriendManager();
+	static BobStatusBar* getBobStatusBar();
+	static NotificationManager* getNotificationManager();
 	//The following method was originally marked 'synchronized':
 	static GameSave getGameSave();
 
-	virtual bool udpPeerMessageReceived(sp<UDPPeerConnection> c, string e);
+	virtual bool udpPeerMessageReceived(UDPPeerConnection* c, string e);
 	//
 	//	public String getIDString()
 	//	{

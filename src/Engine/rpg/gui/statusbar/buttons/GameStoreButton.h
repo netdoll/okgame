@@ -4,18 +4,18 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 #include "StatusBarButton.h"
 
-class GameStoreButton : public StatusBarButton
+class GameStoreButton : public BobStatusBarButton
 {
 public:
 
 	static Logger log;
 
-	GameStoreButton(sp<BGClientEngine> g);
+	GameStoreButton(BGClientEngine* g);
 
 	virtual void init() override;
 

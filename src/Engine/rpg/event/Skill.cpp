@@ -14,42 +14,42 @@
 Logger Skill::log = Logger("Skill");
 
 
-Skill::Skill(sp<Engine> g, int id)
+Skill::Skill(Engine* g, int id)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = ms<SkillData>(id, "");
+	this->data = new SkillData(id, "");
 
-	for (int i = 0; i < (int)getEventManager()->skillList->size(); i++)
+	for (int i = 0; i < (int)getEventManager()->skillList.size(); i++)
 	{
-		if (getEventManager()->skillList->at(i)->getID() == data->getID())
+		if (getEventManager()->skillList.get(i)->getID() == data->getID())
 		{
 			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->skillList->push_back(shared_from_this());
+	getEventManager()->skillList.add(this);
 }
 
-Skill::Skill(sp<Engine> g, sp<SkillData> data)
+Skill::Skill(Engine* g, SkillData* data)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->skillList->size(); i++)
+	for (int i = 0; i < (int)getEventManager()->skillList.size(); i++)
 	{
-		if (getEventManager()->skillList->at(i)->getID() == data->getID())
+		if (getEventManager()->skillList.get(i)->getID() == data->getID())
 		{
 			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->skillList->push_back(shared_from_this());
+	getEventManager()->skillList.add(this);
 }
 
-sp<SkillData> Skill::getData()
+SkillData* Skill::getData()
 {
 	return data;
 }
@@ -82,7 +82,7 @@ void Skill::setName(const string& name)
 }
 
 //The following method was originally marked 'synchronized':
-void Skill::setData_S(sp<SkillData> data)
+void Skill::setData_S(SkillData* data)
 { //=========================================================================================================================
 	this->data = data;
 	setInitialized_S(true);

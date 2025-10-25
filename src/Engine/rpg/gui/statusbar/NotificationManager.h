@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -22,13 +22,13 @@ public:
 	static Logger log;
 
 
-	sp<vector<sp<Notification>>>notificationList;// = ms<vector><sp<Notification>>();
+	ArrayList<Notification*>* notificationList = new ArrayList<Notification*>();
 
-	static sp<OKTexture> loadingBarTexture;
-	static sp<OKTexture> loadingBarBackgroundTexture;
+	static BobTexture* loadingBarTexture;
+	static BobTexture* loadingBarBackgroundTexture;
 
 
-	NotificationManager(sp<BGClientEngine> g);
+	NotificationManager(BGClientEngine* g);
 
 
 	void init();
@@ -40,9 +40,9 @@ public:
 	void render(int layer);
 
 
-	void add(sp<Notification> n);
+	void add(Notification* n);
 
 
-	void remove(sp<Notification> n);
+	void remove(Notification* n);
 };
 

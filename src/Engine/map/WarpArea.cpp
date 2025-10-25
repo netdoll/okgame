@@ -14,7 +14,7 @@
 Logger WarpArea::log = Logger("WarpArea");
 
 
-WarpArea::WarpArea(sp<Engine> g, sp<AreaData> a, sp<Map> m)
+WarpArea::WarpArea(Engine* g, AreaData* a, Map* m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -29,8 +29,8 @@ WarpArea::WarpArea(sp<Engine> g, sp<AreaData> a, sp<Map> m)
 
 	if (getEventData() != nullptr)
 	{
-		this->event = ms<Event>(g, getEventData(), this);
-		//sp<Event> event = EnginePart::getEventManager()->getEventByIDCreateIfNotExist(Area::getEventData()->getID());
+		this->event = new BobEvent(g, getEventData(), this);
+		//BobEvent* event = EnginePart::getEventManager()->getEventByIDCreateIfNotExist(Area::getEventData()->getID());
 		//event->area = this;
 	}
 }
@@ -64,13 +64,13 @@ void WarpArea::enter()
 	}
 
 
-	sp<Map> map = getMapManager()->getMapByNameBlockUntilLoaded(getDestinationMapName());
+	Map* map = getMapManager()->getMapByNameBlockUntilLoaded(getDestinationMapName());
 
 	if (map != nullptr)
 	{
-		for (int i = 0; i < (int)map->warpAreaList->size(); i++)
+		for (int i = 0; i < (int)map->warpAreaList.size(); i++)
 		{
-			sp<WarpArea> w = map->warpAreaList->at(i);
+			WarpArea* w = map->warpAreaList.get(i);
 
 
 			//if(w.mapAsset==getMapManager()->getMapByName(getDestinationMapName()))//should always be true since we are checking the destination map above
@@ -78,7 +78,7 @@ void WarpArea::enter()
 
 			if (w->getName() == getDestinationWarpAreaName())
 			{
-				getMapManager()->warpEntered = shared_from_this();
+				getMapManager()->warpEntered = this;
 				getMapManager()->warpExited = w;
 
 
@@ -115,17 +115,17 @@ void WarpArea::renderDebugInfo()
 
 	float x = screenLeft();
 	float y = screenTop();
-	GLUtils::drawOutlinedString(getName(), x, y - 36, OKColor::white);
+	GLUtils::drawOutlinedString(getName(), x, y - 36, BobColor::white);
 
 
-	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y - 27, ms<OKColor>(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y - 27, new BobColor(200, 0, 255));
 
 	if (destinationTYPEIDString() == "AREA." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self") //if it doesn't have a destination set, mark it as problematic
 	{
-		GLUtils::drawOutlinedString("WarpArea: Has no destination!", x, y - 18, OKColor::red);
+		GLUtils::drawOutlinedString("WarpArea: Has no destination!", x, y - 18, BobColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString("WarpArea: Goes to Map.Name: " + getDestinationMapName() + "." + getDestinationWarpAreaName(), x, y - 9, ms<OKColor>(200, 0, 255, 255));
+	GLUtils::drawOutlinedString("WarpArea: Goes to Map.Name: " + getDestinationMapName() + "." + getDestinationWarpAreaName(), x, y - 9, new BobColor(200, 0, 255, 255));
 
 
 	Area::renderDebugInfo();

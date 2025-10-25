@@ -1,10 +1,67 @@
 #pragma once
+#ifndef bobstdafx_h
+#define bobstdafx_h
 
-#include "oktypes.h"
 
 
+#include "bobtypes.h"
 
 #include <string>
+
+#ifdef ORBIS
+
+
+
+
+
+
+
+#endif
+
+
+
+#ifndef ORBIS
+#pragma warning (push) 
+#pragma warning( disable : 4244 )
+#else
+
+
+
+#define __OpenBSD__ 1
+#undef __GNUC__
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wexpansion-to-defined"
+#pragma clang diagnostic ignored "-Wunused-variable"
+
+#endif
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+
+
+#include <boost/uuid/uuid.hpp>            // uuid class
+#include <boost/uuid/uuid_generators.hpp> // generators
+#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+
+#ifndef ORBIS
+#pragma warning (pop) 
+#else
+#undef __OpenBSD__
+//#define __GNUC__ 4
+
+#pragma clang diagnostic pop
+
+
+
+#endif
+
 
 
 
@@ -13,13 +70,13 @@
 
 
 #include "src/Utility/Logger.h"
-#include "src/Utility/OKColor.h"
+#include "src/Utility/Color.h"
 #include "src/Utility/stringconverter.h"
 #include "src/Utility/Easing.h"
-#include "src/Utility/OKMath.h"
-#include "src/Utility/OKString.h"
+#include "src/Utility/BobMath.h"
+#include "src/Utility/BobString.h"
 #include "src/../lib/HQ2X/HQ2X.h"
-#include "src/Utility/OKBool.h"
+#include "src/Utility/BobBool.h"
 #include "src/Utility/AssetData.h"
 #include "src/Utility/BufferedImage.h"
 #include "src/Utility/ControlsManager.h"
@@ -31,20 +88,20 @@
 #include "src/Utility/audio/Sound.h"
 //#include "src/Utility/audio/SoundData.h"
 #include "src/Utility/FileUtils.h"
-#include "src/Utility/Console.h"
+#include "src/Utility/BobConsole.h"
 #include "src/Utility/ConsoleText.h"
 #include "src/Utility/System.h"
 #include "src/Utility/gl/GLUtils.h"
-#include "src/Utility/gl/Texture.h"
-#include "src/Utility/OKFont.h"
+#include "src/Utility/gl/BobTexture.h"
+#include "src/Utility/BobFont.h"
 #include "src/Utility/Caption.h"
 #include "src/Utility/CaptionManager.h"
-#include "src/Utility/OKMenu.h"
+#include "src/Utility/BobMenu.h"
 
 
 
 #include "src/Puzzle/Block.h"
-#include "src/Puzzle/OKGame.h"
+#include "src/Puzzle/BobsGame.h"
 #include "src/Puzzle/GameLogic.h"
 #include "src/Puzzle/Grid.h"
 #include "src/Puzzle/Piece.h"
@@ -65,14 +122,14 @@
 #include "src/Engine/entity/PathFinder.h"
 #include "src/Engine/entity/RandomCharacter.h"
 #include "src/Engine/entity/ScreenSprite.h"
-#include "src/Engine/entity/Sprite.h"
+#include "src/Engine/entity/BobSprite.h"
 #include "src/Engine/entity/SpriteAnimationSequence.h"
 #include "src/Engine/entity/SpriteData.h"
 #include "src/Engine/entity/SpriteManager.h"
 #include "src/Engine/rpg/event/ActionManager.h"
 #include "src/Engine/rpg/event/Dialogue.h"
 #include "src/Engine/rpg/event/DialogueData.h"
-#include "src/Engine/rpg/event/Event.h"
+#include "src/Engine/rpg/event/BobEvent.h"
 #include "src/Engine/rpg/event/EventCommand.h"
 #include "src/Engine/rpg/event/EventData.h"
 #include "src/Engine/rpg/event/EventManager.h"
@@ -140,10 +197,10 @@
 #include "src/Engine/nd/ramio/RamioGuy.h"
 #include "src/Engine/nd/ramio/RamioMoneyBlock.h"
 #include "src/Engine/nd/ramio/Ramio.h"
-#include "src/Engine/stadium/OKGameStadium.h"
+#include "src/Engine/stadium/BobsGameStadium.h"
 #include "src/Engine/stadium/StadiumScreen.h"
 #include "src/Engine/network/ServerObject.h"
-#include "src/Engine/network/OKNet.h"
+#include "src/Engine/network/BobNet.h"
 #include "src/Engine/network/TCPServerConnection.h"
 #include "src/Engine/network/UDPPeerConnection.h"
 #include "src/Engine/map/Area.h"
@@ -180,3 +237,4 @@
 #include "src/Engine/rpg/BGClientEngine.h"
 #include "src/Engine/MiniGameEngine.h"
 
+#endif

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,17 +18,17 @@ public:
 	static Logger log;
 
 
-	sp<Engine> e = nullptr;
+	Engine* e = nullptr;
 
 
 public:
 	class GlowTile
 	{
 	private:
-		sp<GlowTileBackgroundMenuPanel> outerInstance = nullptr;
+		//GlowTileBackgroundMenuPanel* outerInstance = nullptr;
 
 	public:
-		GlowTile(sp<GlowTileBackgroundMenuPanel> outerInstance);
+		GlowTile();// GlowTileBackgroundMenuPanel* outerInstance);
 
 		int tileX = 0;
 		int tileY = 0;
@@ -38,9 +38,9 @@ public:
 	};
 
 public:
-	sp<vector<sp<GlowTile>>>glowTiles;// = ms<vector><sp<GlowTile>>();
-	sp<vector<sp<OKTexture>>>glowTileFramesTexture;// = ms<vector><sp<OKTexture>>();
-	sp<OKTexture> bgScrollTexture = nullptr;
+	ArrayList<GlowTile*>* glowTiles = new ArrayList<GlowTile*>();
+	ArrayList<BobTexture*>* glowTileFramesTexture = new ArrayList<BobTexture*>();
+	BobTexture* bgScrollTexture = nullptr;
 	float bgScrollX = 0;
 	float bgScrollY = 0;
 	long long ticksPassed = 0;
@@ -60,7 +60,7 @@ public:
 	GlowTileBackgroundMenuPanel();
 
 
-	GlowTileBackgroundMenuPanel(sp<Engine> g);
+	GlowTileBackgroundMenuPanel(Engine* g);
 
 
 	virtual void init();

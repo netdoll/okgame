@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -16,34 +16,34 @@ class MapState
 	//these hold the Light objects themselves, created in the constructor for this map.
 	//these both hold the same thing for convenience.
 public:
-	sp<vector<sp<Light>>>lightList;
-	sp<HashMap<string, sp<Light>>> lightByNameHashtable;//ms<HashMap><string, sp<Light>>();
+	ArrayList<Light*> lightList;
+	HashMap<string, Light*> lightByNameHashtable;//new HashMap<string, Light*>();
 
 
-	sp<vector<sp<Entity>>>entityList;
-	sp<HashMap<string, sp<Entity>>> entityByNameHashtable;//ms<HashMap><string, sp<Entity>>();
+	ArrayList<Entity*> entityList;
+	HashMap<string, Entity*> entityByNameHashtable;//new HashMap<string, Entity*>();
 
-	sp<vector<sp<Character>>>characterList;
-	sp<HashMap<string, sp<Character>>> characterByNameHashtable;//ms<HashMap><string, sp<Character>>();
-
-
-	sp<vector<sp<Area>>>areaList;
-	sp<HashMap<string, sp<Area>>> areaByNameHashtable;//ms<HashMap><string, sp<Area>>();
-	sp<HashMap<string, sp<Area>>> areaByTYPEIDHashtable;//ms<HashMap><string, sp<Area>>();
+	ArrayList<Character*> characterList;
+	HashMap<string, Character*> characterByNameHashtable;//new HashMap<string, Character*>();
 
 
+	ArrayList<Area*> areaList;
+	HashMap<string, Area*> areaByNameHashtable;//new HashMap<string, Area*>();
+	HashMap<string, Area*> areaByTYPEIDHashtable;//new HashMap<string, Area*>();
 
-	sp<Map> map = nullptr;
+
+
+	Map* map = nullptr;
 
 private:
-	sp<MapStateData> data = nullptr;
+	MapStateData* data = nullptr;
 
 
 public:
-	MapState(sp<MapStateData> mapStateData, sp<Map> m);
+	MapState(MapStateData* mapStateData, Map* m);
 
 
-	sp<MapStateData> getData();
+	MapStateData* getData();
 
 	int getID();
 	string& getName();

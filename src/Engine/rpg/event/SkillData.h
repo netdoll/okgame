@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "src/Utility/AssetData.h"
 class Logger;
 
@@ -26,8 +26,8 @@ public:
 	SkillData(int id, const string& name);
 
 
-	//static sp<SkillData> fromBase64ZippedJSON(const string& b64);
-	//static sp<SkillData> fromJSON(const string& json);
+	//static SkillData* fromBase64ZippedJSON(const string& b64);
+	//static SkillData* fromJSON(const string& json);
 
 
 	string& initFromString(string& t);

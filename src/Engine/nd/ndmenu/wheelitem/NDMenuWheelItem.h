@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,8 +18,8 @@ public:
 	static Logger log;
 
 
-	static sp<OKTexture> wheelItemBackgroundTexture;
-	static sp<OKTexture> wheelItemGlossyOverlayTexture;
+	static BobTexture* wheelItemBackgroundTexture;
+	static BobTexture* wheelItemGlossyOverlayTexture;
 
 	static int firstCartY; //((getViewportHeight()/2)-(wheelItemHeight/2));
 
@@ -37,15 +37,15 @@ public:
 	int slot = 0;
 	string name = "";
 
-	sp<NDGameEngine> game = nullptr;
+	NDGameEngine* game = nullptr;
 
-	sp<OKColor> color = OKColor::black;
-
-
-	sp<Caption> caption = nullptr;
+	BobColor* color = BobColor::black;
 
 
-	NDMenuWheelItem(sp<Engine> g, sp<NDGameEngine> game, const string& name, sp<OKColor> color);
+	Caption* caption = nullptr;
+
+
+	NDMenuWheelItem(Engine* g, NDGameEngine* game, const string& name, BobColor* color);
 
 
 	float top();

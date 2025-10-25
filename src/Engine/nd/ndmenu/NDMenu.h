@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -28,17 +28,17 @@ public:
 	int quit = 0;
 
 
-	sp<NDMenuWheel> wheel = ms<NDMenuWheel>(this);
-	sp<NDMenuBackground> background = ms<NDMenuBackground>(this);
+	NDMenuWheel* wheel = new NDMenuWheel(this);
+	NDMenuBackground* background = new NDMenuBackground(this);
 
 
-	sp<OKColor> WHITE = ms<OKColor>(255, 255, 255);
-	sp<OKColor> BLACK = ms<OKColor>(0, 0, 0);
-	sp<OKColor> RED = ms<OKColor>(255, 0, 0);
-	sp<OKColor> GREEN = ms<OKColor>(0, 255, 0);
-	sp<OKColor> BLUE = ms<OKColor>(0, 0, 255);
-	sp<OKColor> MAGENTA = ms<OKColor>(255, 0, 255);
-	sp<OKColor> YELLOW = ms<OKColor>(0, 127, 127);
+	BobColor* WHITE = new BobColor(255, 255, 255);
+	BobColor* BLACK = new BobColor(0, 0, 0);
+	BobColor* RED = new BobColor(255, 0, 0);
+	BobColor* GREEN = new BobColor(0, 255, 0);
+	BobColor* BLUE = new BobColor(0, 0, 255);
+	BobColor* MAGENTA = new BobColor(255, 0, 255);
+	BobColor* YELLOW = new BobColor(0, 127, 127);
 
 
 	static bool actionButtonPressed;
@@ -76,7 +76,7 @@ public:
 	long long fadeOutTicks = 0;
 
 
-	void addGame(sp<NDGameEngine> game, const string& name, sp<OKColor> color);
+	void addGame(NDGameEngine* game, const string& name, BobColor* color);
 	virtual void update() override;
 	virtual void cleanup() override;
 	virtual void render() override;

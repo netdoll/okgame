@@ -14,7 +14,7 @@
 Logger GameChallengeNotificationPanel::log = Logger("GameChallengeNotificationPanel");
 
 
-GameChallengeNotificationPanel::GameChallengeNotificationPanel(sp<FriendCharacter> friend_in, const string& gameName)
+GameChallengeNotificationPanel::GameChallengeNotificationPanel(FriendCharacter* friend_in, const string& gameName)
 { //=========================================================================================================================
 
 	MenuPanel();
@@ -25,24 +25,24 @@ GameChallengeNotificationPanel::GameChallengeNotificationPanel(sp<FriendCharacte
 	this->gameName = gameName;
 
 	//
-	//   notificationPanel = ms<DialogLayout>();
+	//   notificationPanel = new DialogLayout();
 	//   notificationPanel->setTheme("darkLayout");
 	//
 	//
-	//   sp<Label> notificationPanelLabel = ms<Label>("Game Challenge!");
+	//   Label* notificationPanelLabel = new Label("Game Challenge!");
 	//   notificationPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   notificationPanelLabel->setTheme("bigLabel");
 	//
-	//   sp<Label> challengeTextLabel = ms<Label>("" + friend->name() + " has challenged you to play " + gameName);
+	//   Label* challengeTextLabel = new Label("" + friend->name() + " has challenged you to play " + gameName);
 	//   challengeTextLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   timeLeftLabel = ms<Label>("");
+	//   timeLeftLabel = new Label("");
 	//   timeLeftLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   //---------------------------------------------------------
 	//   //yes
 	//   //---------------------------------------------------------
-	//   yesButton = ms<Button>("Yes");
+	//   yesButton = new Button("Yes");
 	//   yesButton->setCanAcceptKeyboardFocus(false);
 	//   yesButton->addCallback([&] ()
 	//      {
@@ -54,7 +54,7 @@ GameChallengeNotificationPanel::GameChallengeNotificationPanel(sp<FriendCharacte
 	//   //---------------------------------------------------------
 	//   //no
 	//   //---------------------------------------------------------
-	//   noButton = ms<Button>("No");
+	//   noButton = new Button("No");
 	//   noButton->setCanAcceptKeyboardFocus(false);
 	//   noButton->addCallback([&] ()
 	//      {
@@ -101,7 +101,7 @@ GameChallengeNotificationPanel::GameChallengeNotificationPanel(sp<FriendCharacte
 	//   //		//scrollpane
 	//   //		//----------------------
 	//   //
-	//   //		scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
+	//   //		scrollPane = new ScrollPane(insideScrollPaneLayout);
 	//   //
 	//   //		scrollPane.setTheme(GUIManager.scrollPaneTheme);
 	//   //		scrollPane.setCanAcceptKeyboardFocus(false);
@@ -220,8 +220,7 @@ void GameChallengeNotificationPanel::doNo()
 		friendCharacter->setOutgoingGameChallengeResponse(NDGameEngine::gameChallengeResponse_DECLINE);
 
 		//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-		//delete friendCharacter->gameChallengeNotification;
-		friendCharacter->gameChallengeNotification = nullptr;
+		delete friendCharacter->gameChallengeNotification;
 
 		setActivated(false);
 
@@ -246,8 +245,7 @@ void GameChallengeNotificationPanel::doYes()
 		//getGUIManager()->openND();
 
 		//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-		//delete friendCharacter->gameChallengeNotification;
-		friendCharacter->gameChallengeNotification = nullptr;
+		delete friendCharacter->gameChallengeNotification;
 
 		setActivated(false);
 

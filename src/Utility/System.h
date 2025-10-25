@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 class ConsoleText;
@@ -109,21 +109,21 @@ public:
 	static void initClockAndTimeZone();
 
 
-	static sp<ConsoleText> totalRendersText;
-	static sp<ConsoleText> totalUpdatesText;
-	static sp<ConsoleText> rendersPerSecondText;
-	static sp<ConsoleText> averageRendersPerSecondText;
-	static sp<ConsoleText> updatesPerSecondText;
-	static sp<ConsoleText> rendersSkippedText;
-	static sp<ConsoleText> updatesSkippedText;
-	static sp<ConsoleText> averageTicksPerFrameText;
-	static sp<ConsoleText> averageTicksPerUpdateText;
-	static sp<ConsoleText> onlineStatusText;
+	static ConsoleText* totalRendersText;
+	static ConsoleText* totalUpdatesText;
+	static ConsoleText* rendersPerSecondText;
+	static ConsoleText* averageRendersPerSecondText;
+	static ConsoleText* updatesPerSecondText;
+	static ConsoleText* rendersSkippedText;
+	static ConsoleText* updatesSkippedText;
+	static ConsoleText* averageTicksPerFrameText;
+	static ConsoleText* averageTicksPerUpdateText;
+	static ConsoleText* onlineStatusText;
 
-	static sp<ConsoleText> upTimeText;
+	static ConsoleText* upTimeText;
 
 	const static int amtTicksTexts = 10;
-	static sp<ConsoleText> ticksText[amtTicksTexts];
+	static ConsoleText* ticksText[amtTicksTexts];
 
 
 private:
@@ -136,11 +136,11 @@ private:
 
 public:
 
-	static sp<ConsoleText> mxThreadCountText;
+	static ConsoleText* mxThreadCountText;
 
-	static sp<ConsoleText> memoryText;
-	static sp<ConsoleText> texturesLoadedText;// = Console::debug("texturesLoadedText");
-	static sp<ConsoleText> textureBytesLoadedText;// = Console::debug("textureBytesLoadedText");
+	static ConsoleText* memoryText;
+	static ConsoleText* texturesLoadedText;// = Console::debug("texturesLoadedText");
+	static ConsoleText* textureBytesLoadedText;// = Console::debug("textureBytesLoadedText");
 
 
 	static int mb;
@@ -158,7 +158,7 @@ public:
 	//DebugText memPoolThresholdCountText;
 	//DebugText mxOSInfoSystemLoadText;
 
-	sp<ConsoleText> vramText = nullptr;
+	ConsoleText* vramText = nullptr;
 
 
 	//mxbean
@@ -243,7 +243,10 @@ public:
 	static int getTotalRenderTicksPassed();
 	static void resetTotalRenderTicksPassed();
 
-private:
+
+
+	static uint64_t GetPerformanceFrequency();
+
 	static long long getPerformanceCounter();
 };
 

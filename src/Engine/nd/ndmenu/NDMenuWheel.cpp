@@ -16,15 +16,15 @@
 Logger NDMenuWheel::log = Logger("NDMenuWheel");
 
 
-sp<OKTexture> NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
-sp<OKTexture> NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
+BobTexture* NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
+BobTexture* NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
 
-NDMenuWheel::NDMenuWheel(sp<Engine> g)
+NDMenuWheel::NDMenuWheel(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
 
-sp<vector<sp<NDMenuWheelItem>>> NDMenuWheel::wheelItems;// = sp<vector<sp<NDMenuWheelItem>>>();
+ArrayList<NDMenuWheelItem*>* NDMenuWheel::wheelItems = new ArrayList<NDMenuWheelItem*>();
 int NDMenuWheel::CLOCKWISE = 0;
 int NDMenuWheel::COUNTERCLOCKWISE = 1;
 float NDMenuWheel::highlightColor = 0;
@@ -64,36 +64,36 @@ void NDMenuWheel::init()
 	NDMenuWheelItem::wheelItemGlossyOverlayTexture = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/glossyOverlay.png");
 
 
-	wheelItems->push_back(ms<NDMenuWheelItem>(getEngine(), nullptr, "GameStore", OKColor::magenta));
-	wheelItems->push_back(ms<NDMenuWheelItem>(getEngine(), nullptr, "Settings", OKColor::green));
+	wheelItems->add(new NDMenuWheelItem(getEngine(), nullptr, "GameStore", BobColor::magenta));
+	wheelItems->add(new NDMenuWheelItem(getEngine(), nullptr, "Settings", BobColor::green));
 }
 
-void NDMenuWheel::addGame(sp<NDGameEngine> game, const string& name, sp<OKColor> color)
+void NDMenuWheel::addGame(NDGameEngine* game, const string& name, BobColor* color)
 { //=========================================================================================================================
 
-	wheelItems->push_back(ms<NDMenuWheelItem>(getEngine(), game, name, color));
+	wheelItems->add(new NDMenuWheelItem(getEngine(), game, name, color));
 
 
 	//------------------------------------------
 	//set up wheel items
 	//------------------------------------------
 
-	//			wheelItems->at(0).labelTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
-	//			wheelItems->at(0).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
+	//			wheelItems.get(0).labelTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
+	//			wheelItems.get(0).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
 	//
-	//			wheelItems->at(1).labelTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame.png");
-	//			wheelItems->at(1).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame_glow.png");
+	//			wheelItems.get(1).labelTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame.png");
+	//			wheelItems.get(1).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame_glow.png");
 	//
-	//			wheelItems->at(2).labelTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
-	//			wheelItems->at(2).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
+	//			wheelItems.get(2).labelTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
+	//			wheelItems.get(2).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
 	//
-	//			wheelItems->at(0).name="Game Store";
-	//			wheelItems->at(1).name="\"bob's game\"";
-	//			wheelItems->at(2).name="Settings";
+	//			wheelItems.get(0).name="Game Store";
+	//			wheelItems.get(1).name="\"bob's game\"";
+	//			wheelItems.get(2).name="Settings";
 	//
-	//			wheelItems->at(0).color = Color.red;
-	//			wheelItems->at(1).color = Color.green;
-	//			wheelItems->at(2).color = Color.yellow;
+	//			wheelItems.get(0).color = Color.red;
+	//			wheelItems.get(1).color = Color.green;
+	//			wheelItems.get(2).color = Color.yellow;
 	//
 
 
@@ -116,13 +116,13 @@ void NDMenuWheel::render()
 	//draw each wheel item
 	//------------------------------------------
 
-	for (int c = 0; c < (int)wheelItems->size(); c++)
+	for (int c = 0; c < wheelItems->size(); c++)
 	{
-		wheelItems->at(c)->render(c == selectedWheelItem);
+		wheelItems->get(c)->render(c == selectedWheelItem);
 	}
 
 
-	sp<NDMenuWheelItem> selected = wheelItems->at(selectedWheelItem);
+	NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
 	//------------------------------------------
 	//draw selection box
 	//------------------------------------------
@@ -134,14 +134,14 @@ void NDMenuWheel::render()
 
 void NDMenuWheel::renderGameTitleCentered()
 { //=========================================================================================================================
-	//sp<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
+	//NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
 	//draw game title
 	//NDGame.drawTexture(selected.labelTexture,ND.getViewportWidth()/2-selected.labelTexture.getImageWidth()/2,ND.getViewportHeight()/2-selected.labelTexture.getImageHeight()/2);
 }
 
 void NDMenuWheel::renderGameTitleCenteredGlow()
 { //=========================================================================================================================
-	//sp<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
+	//NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
 	//draw game title glow
 	//NDGame.drawTextureAlpha(selected.labelGlowTexture,ND.getViewportWidth()/2-selected.labelTexture.getImageWidth()/2,ND.getViewportHeight()/2-selected.labelTexture.getImageHeight()/2,NDMenu.actionFadeCounter/255.0f);
 }
@@ -154,7 +154,7 @@ void NDMenuWheel::spinWheel(int dir)
 		//wheelSpinDirection=wheelClockwise;
 		selectedWheelItem++;
 
-		if (selectedWheelItem >= (int)wheelItems->size())
+		if (selectedWheelItem >= wheelItems->size())
 		{
 			selectedWheelItem = 0;
 		}
@@ -170,7 +170,7 @@ void NDMenuWheel::spinWheel(int dir)
 
 			if (selectedWheelItem < 0)
 			{
-				selectedWheelItem = (int)wheelItems->size() - 1;
+				selectedWheelItem = wheelItems->size() - 1;
 			}
 
 			wheelSoundQueue++;
@@ -201,7 +201,7 @@ void NDMenuWheel::update()
 	}
 
 
-	sp<NDMenuWheelItem> selected = wheelItems->at(selectedWheelItem);
+	NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
 
 
 	float screenMiddleY = (float)(GLUtils::getViewportHeight() / 2);
@@ -247,7 +247,7 @@ void NDMenuWheel::update()
 			wheelSpinDirection = NDMenuWheel::CLOCKWISE;
 			for (int c = 0; c < wheelItems->size(); c++)
 			{
-				wheelItems->at(c)->y -= amt;
+				wheelItems->get(c)->y -= amt;
 			}
 
 			//SWI.y-=wheelTicksPassed*getDistanceToCenter()/300.0f;
@@ -258,7 +258,7 @@ void NDMenuWheel::update()
 			wheelSpinDirection = NDMenuWheel::COUNTERCLOCKWISE;
 			for (int c = 0; c < wheelItems->size(); c++)
 			{
-				wheelItems->at(c)->y += amt;
+				wheelItems->get(c)->y += amt;
 			}
 			//SWI.y+=wheelTicksPassed*getDistanceToCenter()/300.0f;
 			//if(SWI.getMiddleY()>screenMiddleY)SWI.y=screenMiddleY-(wheelItemHeight/2.0f);
@@ -284,20 +284,20 @@ void NDMenuWheel::update()
 		//------------------------------------------
 
 
-		sp<NDMenuWheelItem> bottomItem = wheelItems->at(0);
-		sp<NDMenuWheelItem> topItem = bottomItem;
+		NDMenuWheelItem* bottomItem = wheelItems->get(0);
+		NDMenuWheelItem* topItem = bottomItem;
 
 		for (int c = 0; c < wheelItems->size(); c++)
 		{
 			//if(c==selectedWheelItem)continue;
 
-			if (wheelItems->at(c)->y > bottomItem->y)
+			if (wheelItems->get(c)->y > bottomItem->y)
 			{
-				bottomItem = wheelItems->at(c);
+				bottomItem = wheelItems->get(c);
 			}
-			if (wheelItems->at(c)->y < topItem->y)
+			if (wheelItems->get(c)->y < topItem->y)
 			{
-				topItem = wheelItems->at(c);
+				topItem = wheelItems->get(c);
 			}
 		}
 		//------------------------------------------
@@ -398,13 +398,13 @@ void NDMenuWheel::update()
 		//------------------------------------------
 
 		//tempWheelItemXY.y = wheelItem->get(c).y;//(y%cart_size_y)+((c-1)*cart_size_y);
-		wheelItems->at(c)->x = (float)((GLUtils::getViewportWidth() / 2.0f) + 25.0f - (40.0f * (sin((float)(((wheelItems->at(c)->y + 2.0f)) / 66.0f)))));
+		wheelItems->get(c)->x = (float)((GLUtils::getViewportWidth() / 2.0f) + 25.0f - (40.0f * (sin((float)(((wheelItems->get(c)->y + 2.0f)) / 66.0f)))));
 	}
 
 	//------------------------------------------
 	//slide out selected item
 	//------------------------------------------
-	wheelItems->at(selectedWheelItem)->x -= cartSlideX;
+	wheelItems->get(selectedWheelItem)->x -= cartSlideX;
 
 
 	if (selectionColorSpinEnabled == true)

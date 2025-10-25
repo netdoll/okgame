@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -17,10 +17,10 @@ public:
 	static Logger log;
 
 
-	//sp<DialogLayout> keyboardPanel = nullptr;
+	//DialogLayout* keyboardPanel = nullptr;
 
 
-	//sp<Button> okButton = nullptr;
+	//Button* okButton = nullptr;
 
 
 	KeyboardMenuPanel();
@@ -29,10 +29,10 @@ private:
 	class WidgetAnonymousInnerClassHelper// : public Widget
 	{
 	private:
-		sp<KeyboardMenuPanel> outerInstance = nullptr;
+		KeyboardMenuPanel* outerInstance = nullptr;
 
 	public:
-		WidgetAnonymousInnerClassHelper(sp<KeyboardMenuPanel> outerInstance);
+		WidgetAnonymousInnerClassHelper(KeyboardMenuPanel* outerInstance);
 
 		void layout();
 	};

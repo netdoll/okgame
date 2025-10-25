@@ -30,24 +30,24 @@ DialogueData::DialogueData(int id, const string& name, const string& caption, co
 	this->text = text;
 }
 
-//sp<DialogueData> DialogueData::fromBase64ZippedJSON(const string& b64)
+//DialogueData* DialogueData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//DialogueData data = gson.fromJson(json,DialogueData.class);
 //
 //	return fromJSON(json);
 //}
 //
-//sp<DialogueData> DialogueData::fromJSON(const string& json)
+//DialogueData* DialogueData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
-//	// sp<Gson> gson = ms<Gson>();
-//	sp<DialogueData> data = nullptr;// gson->fromJson(json, DialogueData::typeid);
+//	// Gson* gson = new Gson();
+//	DialogueData* data = nullptr;// gson->fromJson(json, DialogueData::typeid);
 //
 //
 //	return data;

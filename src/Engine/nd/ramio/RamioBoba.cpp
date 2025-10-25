@@ -11,27 +11,27 @@
 
 
 
-Logger RamioOKa::log = Logger("RamioOKa");
+Logger RamioBoba::log = Logger("RamioBoba");
 
 
-RamioOKa::RamioOKa(sp<Engine> g)
+RamioBoba::RamioBoba(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
 
-bool RamioOKa::checkHitLayerBlocksAndOtherOKas(int dir)
+bool RamioBoba::checkHitLayerBlocksAndOtherBobas(int dir)
 {
 	return false;
 }
 
-void RamioOKa::update()
+void RamioBoba::update()
 { //=========================================================================================================================
 
 
 	if (dead == false)
 	{
 		//check down
-		if (checkHitLayerBlocksAndOtherOKas(DOWN) == false)
+		if (checkHitLayerBlocksAndOtherBobas(DOWN) == false)
 		{
 			incY();
 		}
@@ -40,7 +40,7 @@ void RamioOKa::update()
 		if (movementDirection == LEFT)
 		{
 			//check getHit
-			if (checkHitLayerBlocksAndOtherOKas(LEFT) == false)
+			if (checkHitLayerBlocksAndOtherBobas(LEFT) == false)
 			{
 				//move left
 				decX();
@@ -54,7 +54,7 @@ void RamioOKa::update()
 		if (movementDirection == RIGHT)
 		{
 			//heck getHit
-			if (checkHitLayerBlocksAndOtherOKas(RIGHT) == false)
+			if (checkHitLayerBlocksAndOtherBobas(RIGHT) == false)
 			{
 				//move right
 				incX();
@@ -81,7 +81,7 @@ void RamioOKa::update()
 	}
 }
 
-bool RamioOKa::checkStomp(sp<RamioGuy> guy)
+bool RamioBoba::checkStomp(RamioGuy* guy)
 {
 	// int r=rand()%5;
 	// if(r==0)CAPTION_make_caption(&yuu_ramio_caption, 1,CAPTION_CENTERED_OVER_SPRITE,PLAYER_npc->screen_y-10,3,"Squish!",FONT_NORMAL_ID,WHITE,BLACK,1,1);
@@ -98,7 +98,7 @@ bool RamioOKa::checkStomp(sp<RamioGuy> guy)
 	return false;
 }
 
-bool RamioOKa::checkRunningInto(sp<RamioGuy> guy)
+bool RamioBoba::checkRunningInto(RamioGuy* guy)
 {
 	// TODO
 	return false;

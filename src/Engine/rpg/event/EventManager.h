@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -19,37 +19,38 @@ public:
 
 	static Logger log;
 
-	//sp<vector<sp<Event>>>cutsceneEventList;//project events and unattached events
-	sp<vector<sp<Event>>>eventList;//all events get put here for global lookup
-	sp<vector<sp<Dialogue>>>dialogueList;
-	sp<vector<sp<GameString>>>gameStringList;
-	sp<vector<sp<Flag>>>flagList;
-	sp<vector<sp<Skill>>>skillList;
-	sp<vector<sp<Item>>>itemList;
-	sp<vector<sp<Event>>>runningEventQueue;
+	//ArrayList<BobEvent*> cutsceneEventList;//project events and unattached events
+	ArrayList<BobEvent*> eventList;//all events get put here for global lookup
+	ArrayList<Dialogue*> dialogueList;
+	ArrayList<GameString*> gameStringList;
+	ArrayList<Flag*> flagList;
+	ArrayList<Skill*> skillList;
+	ArrayList<Item*> itemList;
 
-	EventManager(sp<Engine> g);
+	ArrayList<BobEvent*> runningEventQueue;
+
+	EventManager(Engine* g);
 
 
 	void update();
 
-	void addToEventQueueIfNotThere(sp<Event> event);
+	void addToEventQueueIfNotThere(BobEvent* event);
 
-	bool isEventInQueue(sp<Event> event);
+	bool isEventInQueue(BobEvent* event);
 
 	void unloadCurrentMapEvents();
 
-	sp<Item> getItemByID(int id);
+	Item* getItemByID(int id);
 
-	sp<Dialogue> getDialogueByIDCreateIfNotExist(int id);
+	Dialogue* getDialogueByIDCreateIfNotExist(int id);
 
-	//sp<Event> getCutsceneEventByID(int id);
-	sp<Event> getEventByIDCreateIfNotExist(int id);
+	//BobEvent* getCutsceneEventByID(int id);
+	BobEvent* getEventByIDCreateIfNotExist(int id);
 
-	sp<Skill> getSkillByIDCreateIfNotExist(int id);
+	Skill* getSkillByIDCreateIfNotExist(int id);
 
-	sp<GameString> getGameStringByIDCreateIfNotExist(int id);
+	GameString* getGameStringByIDCreateIfNotExist(int id);
 
-	sp<Flag> getFlagByIDCreateIfNotExist(int id);
+	Flag* getFlagByIDCreateIfNotExist(int id);
 };
 

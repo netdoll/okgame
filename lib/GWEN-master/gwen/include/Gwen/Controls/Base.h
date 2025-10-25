@@ -108,7 +108,7 @@ namespace Gwen
 				virtual void Dock( int iDock );
 				virtual int GetDock();
 
-				virtual void RestrictToParent( bool restrict ) { m_bRestrictToParent = restrict; }
+				virtual void RestrictToParent( bool r ) { m_bRestrictToParent = r; }
 				virtual bool ShouldRestrictToParent() { return m_bRestrictToParent; }
 
 				virtual int X() const { return m_Bounds.x; }
@@ -517,7 +517,7 @@ namespace Gwen
 				virtual TextObject GetValue();
 				virtual void SetValue( const TextObject & strValue );
 				virtual void DoAction() {};
-				virtual void SetAction( Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet & packet ) {};
+				virtual void SetAction(Event::Handler* pObject, Handler::FunctionWithInformation pFunction, void* data) {};// const Gwen::Event::Packet & packet ) {};
 
 				virtual int GetNamedChildren( Gwen::ControlList & list, const Gwen::String & strName, bool bDeep = true );
 				virtual Gwen::ControlList GetNamedChildren( const Gwen::String & strName, bool bDeep = true );

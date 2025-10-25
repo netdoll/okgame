@@ -16,56 +16,56 @@
 //Logger EasingTest::log = Logger("EasingTest");
 
 
-sp<Caption> EasingTest::linearTweenCaption = nullptr;
-sp<Caption> EasingTest::easeInQuadCaption = nullptr;
-sp<Caption> EasingTest::easeInCubicCaption = nullptr;
-sp<Caption> EasingTest::easeInQuartCaption = nullptr;
-sp<Caption> EasingTest::easeInQuintCaption = nullptr;
-sp<Caption> EasingTest::easeInExpoCaption = nullptr;
-sp<Caption> EasingTest::easeInCircCaption = nullptr;
-sp<Caption> EasingTest::easeInSineCaption = nullptr;
-sp<Caption> EasingTest::easeOutQuadCaption = nullptr;
-sp<Caption> EasingTest::easeOutCubicCaption = nullptr;
-sp<Caption> EasingTest::easeOutQuartCaption = nullptr;
-sp<Caption> EasingTest::easeOutQuintCaption = nullptr;
-sp<Caption> EasingTest::easeOutExpoCaption = nullptr;
-sp<Caption> EasingTest::easeOutCircCaption = nullptr;
-sp<Caption> EasingTest::easeOutSineCaption = nullptr;
-sp<Caption> EasingTest::easeInOutQuadCaption = nullptr;
-sp<Caption> EasingTest::easeInOutCubicCaption = nullptr;
-sp<Caption> EasingTest::easeInOutQuartCaption = nullptr;
-sp<Caption> EasingTest::easeInOutQuintCaption = nullptr;
-sp<Caption> EasingTest::easeInOutExpoCaption = nullptr;
-sp<Caption> EasingTest::easeInOutCircCaption = nullptr;
-sp<Caption> EasingTest::easeInOutSineCaption = nullptr;
+Caption* EasingTest::linearTweenCaption = nullptr;
+Caption* EasingTest::easeInQuadCaption = nullptr;
+Caption* EasingTest::easeInCubicCaption = nullptr;
+Caption* EasingTest::easeInQuartCaption = nullptr;
+Caption* EasingTest::easeInQuintCaption = nullptr;
+Caption* EasingTest::easeInExpoCaption = nullptr;
+Caption* EasingTest::easeInCircCaption = nullptr;
+Caption* EasingTest::easeInSineCaption = nullptr;
+Caption* EasingTest::easeOutQuadCaption = nullptr;
+Caption* EasingTest::easeOutCubicCaption = nullptr;
+Caption* EasingTest::easeOutQuartCaption = nullptr;
+Caption* EasingTest::easeOutQuintCaption = nullptr;
+Caption* EasingTest::easeOutExpoCaption = nullptr;
+Caption* EasingTest::easeOutCircCaption = nullptr;
+Caption* EasingTest::easeOutSineCaption = nullptr;
+Caption* EasingTest::easeInOutQuadCaption = nullptr;
+Caption* EasingTest::easeInOutCubicCaption = nullptr;
+Caption* EasingTest::easeInOutQuartCaption = nullptr;
+Caption* EasingTest::easeInOutQuintCaption = nullptr;
+Caption* EasingTest::easeInOutExpoCaption = nullptr;
+Caption* EasingTest::easeInOutCircCaption = nullptr;
+Caption* EasingTest::easeInOutSineCaption = nullptr;
 
-EasingTest::EasingTest(sp<Engine> g) : EnginePart(g)
+EasingTest::EasingTest(Engine* g) : EnginePart(g)
 {
-	linearTweenCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 2, -1, "linear", OKFont::font_small_8_outlined, OKColor::white, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	linearTweenCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 2, -1, "linear", BobFont::font_small_8_outlined, BobColor::white, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
 
-	easeInQuadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 3, -1, "x^2", OKFont::font_small_8_outlined, OKColor::red, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInCubicCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 4, -1, "x^3", OKFont::font_small_8_outlined, OKColor::red, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInQuartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 5, -1, "x^4", OKFont::font_small_8_outlined, OKColor::red, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInQuintCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 6, -1, "x^5", OKFont::font_small_8_outlined, OKColor::red, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInExpoCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 7, -1, "2^x", OKFont::font_small_8_outlined, OKColor::red, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInCircCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 8, -1, "sqrt(1-x^2)", OKFont::font_small_8_outlined, OKColor::red, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInSineCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 9, -1, "sin(x)", OKFont::font_small_8_outlined, OKColor::red, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInQuadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 3, -1, "x^2", BobFont::font_small_8_outlined, BobColor::red, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInCubicCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 4, -1, "x^3", BobFont::font_small_8_outlined, BobColor::red, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInQuartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 5, -1, "x^4", BobFont::font_small_8_outlined, BobColor::red, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInQuintCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 6, -1, "x^5", BobFont::font_small_8_outlined, BobColor::red, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInExpoCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 7, -1, "2^x", BobFont::font_small_8_outlined, BobColor::red, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInCircCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 8, -1, "sqrt(1-x^2)", BobFont::font_small_8_outlined, BobColor::red, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInSineCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 9, -1, "sin(x)", BobFont::font_small_8_outlined, BobColor::red, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
 
-	easeOutQuadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 12, -1, "x^2", OKFont::font_small_8_outlined, OKColor::green, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeOutCubicCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 13, -1, "x^3", OKFont::font_small_8_outlined, OKColor::green, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeOutQuartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 14, -1, "x^4", OKFont::font_small_8_outlined, OKColor::green, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeOutQuintCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 15, -1, "x^5", OKFont::font_small_8_outlined, OKColor::green, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeOutExpoCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 16, -1, "2^x", OKFont::font_small_8_outlined, OKColor::green, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeOutCircCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 17, -1, "sqrt(1-x^2)", OKFont::font_small_8_outlined, OKColor::green, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeOutSineCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 18, -1, "sin(x)", OKFont::font_small_8_outlined, OKColor::green, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeOutQuadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 12, -1, "x^2", BobFont::font_small_8_outlined, BobColor::green, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeOutCubicCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 13, -1, "x^3", BobFont::font_small_8_outlined, BobColor::green, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeOutQuartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 14, -1, "x^4", BobFont::font_small_8_outlined, BobColor::green, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeOutQuintCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 15, -1, "x^5", BobFont::font_small_8_outlined, BobColor::green, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeOutExpoCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 16, -1, "2^x", BobFont::font_small_8_outlined, BobColor::green, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeOutCircCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 17, -1, "sqrt(1-x^2)", BobFont::font_small_8_outlined, BobColor::green, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeOutSineCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 18, -1, "sin(x)", BobFont::font_small_8_outlined, BobColor::green, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
 
-	easeInOutQuadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 21, -1, "^2", OKFont::font_small_8_outlined, OKColor::yellow, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInOutCubicCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 22, -1, "^3", OKFont::font_small_8_outlined, OKColor::yellow, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInOutQuartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 23, -1, "^4", OKFont::font_small_8_outlined, OKColor::yellow, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInOutQuintCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 24, -1, "^5", OKFont::font_small_8_outlined, OKColor::yellow, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInOutExpoCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 25, -1, "2^x", OKFont::font_small_8_outlined, OKColor::yellow, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInOutCircCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 26, -1, "sqrt(1-x^2)", OKFont::font_small_8_outlined, OKColor::yellow, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
-	easeInOutSineCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 27, -1, "sin(x)", OKFont::font_small_8_outlined, OKColor::yellow, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInOutQuadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 21, -1, "^2", BobFont::font_small_8_outlined, BobColor::yellow, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInOutCubicCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 22, -1, "^3", BobFont::font_small_8_outlined, BobColor::yellow, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInOutQuartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 23, -1, "^4", BobFont::font_small_8_outlined, BobColor::yellow, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInOutQuintCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 24, -1, "^5", BobFont::font_small_8_outlined, BobColor::yellow, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInOutExpoCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 25, -1, "2^x", BobFont::font_small_8_outlined, BobColor::yellow, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInOutCircCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 26, -1, "sqrt(1-x^2)", BobFont::font_small_8_outlined, BobColor::yellow, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
+	easeInOutSineCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 27, -1, "sin(x)", BobFont::font_small_8_outlined, BobColor::yellow, nullptr, BobColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
 }
 
 float EasingTest::ticksCount = 0;

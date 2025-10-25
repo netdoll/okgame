@@ -28,8 +28,19 @@ namespace Gwen
 				virtual void SetVertical()  { m_bHorizontal = false; }
 				virtual void SetHorizontal() { m_bHorizontal = true; }
 
-				virtual void SetValue( float val );
+				
+
+#if defined(ORBIS) || defined(__ORBIS__) || defined(__MACOSX__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#endif
+				virtual void SetValue(float val);
 				virtual float GetValue() const { return m_fProgress; }
+#if defined(ORBIS) || defined(__ORBIS__) || defined(__MACOSX__)
+#pragma clang diagnostic pop
+#endif
+
+				
 
 				virtual void SetAutoLabel( bool b ) { m_bAutoLabel = b; }
 

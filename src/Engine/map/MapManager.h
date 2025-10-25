@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -14,25 +14,25 @@ class Logger;
 class MapManager : public EnginePart
 {
 public:
-	sp<vector<sp<Map>>>mapList;
-	sp<HashMap<string, sp<Map>>> mapByNameHashMap;//ms<HashMap><string, sp<Map>>();
-	sp<HashMap<int, sp<Map>>> mapByIDHashMap;//ms<HashMap><int, sp<Map>>();
+	ArrayList<Map*> mapList;
+	HashMap<string, Map*> mapByNameHashMap;//new HashMap<string, Map*>();
+	HashMap<int, Map*> mapByIDHashMap;//new HashMap<int, Map*>();
 
 	static Logger log;
 	
 
-	sp<Map> currentMap = nullptr;
+	Map* currentMap = nullptr;
 private:
-	sp<Map> lastMap = nullptr;
+	Map* lastMap = nullptr;
 
 
-	//	private final KahluaConverterManager converterManager = ms<KahluaConverterManager>();
+	//	private final KahluaConverterManager converterManager = new KahluaConverterManager();
 	//	private final J2SEPlatform platform = new J2SEPlatform();
 	//	private final KahluaTable env = platform.newEnvironment();
-	//	private final KahluaThread thread = ms<KahluaThread>(platform, env);
-	//	private final LuaCaller caller = ms<LuaCaller>(converterManager);
+	//	private final KahluaThread thread = new KahluaThread(platform, env);
+	//	private final LuaCaller caller = new LuaCaller(converterManager);
 	//
-	//	private final LuaJavaClassExposer exposer = ms<LuaJavaClassExposer>(converterManager, platform, env);
+	//	private final LuaJavaClassExposer exposer = new LuaJavaClassExposer(converterManager, platform, env);
 
 public:
 	static bool useThreads;
@@ -41,20 +41,20 @@ public:
 
 
 	//textures mapped to light filenames
-	static sp<HashMap<string, sp<OKTexture>>> lightTextureHashMap;//ms<HashMap><string, sp<Texture>>();
+	static HashMap<string, BobTexture*> lightTextureHashMap;//new HashMap<string, Texture*>();
 
 
 
 
 	//threadsafe HashMap mapped to light filename, and boolean set whether it exists (so multiple threads don't check if file exists at same time)
-	static sp<HashMap<string, bool>> _lightTextureFileExistsHashtable;
+	static HashMap<string, bool> _lightTextureFileExistsHashtable;
 	static mutex _lightTextureFileExistsHashtable_Mutex;
 																  
 	static void setLightTexturePNGFileExists_S(string filename, bool exists)
 	{ //===============================================================================================
 
 		lock_guard<mutex> lock(_lightTextureFileExistsHashtable_Mutex);
-		_lightTextureFileExistsHashtable->put(filename, exists);
+		_lightTextureFileExistsHashtable.put(filename, exists);
 	}
 
 	static bool getLightTexturePNGFileExists_S(string filename)
@@ -64,9 +64,9 @@ public:
 		bool existsInHashtable = false;
 
 
-		if (_lightTextureFileExistsHashtable->containsKey(filename))
+		if (_lightTextureFileExistsHashtable.containsKey(filename))
 		{
-			existsInHashtable = _lightTextureFileExistsHashtable->get(filename);
+			existsInHashtable = _lightTextureFileExistsHashtable.get(filename);
 
 		}
 
@@ -76,11 +76,11 @@ public:
 
 
 
-	sp<Door> doorEntered = nullptr;
-	sp<Door> doorExited = nullptr;
+	Door* doorEntered = nullptr;
+	Door* doorExited = nullptr;
 
-	sp<WarpArea> warpEntered = nullptr;
-	sp<WarpArea> warpExited = nullptr;
+	WarpArea* warpEntered = nullptr;
+	WarpArea* warpExited = nullptr;
 
 
 	float drawAngle = 0; //TODO
@@ -96,7 +96,7 @@ public:
 	bool effectsBlackAndWhite = false; //TODO
 
 
-	MapManager(sp<Engine> g);
+	MapManager(Engine* g);
 	~MapManager();
 
 
@@ -172,42 +172,42 @@ public:
 	void changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixelsHQ, bool updateGameSave);
 
 
-	void changeMap(sp<Map> m, int mapXTiles1X, int mapYTiles1X);
+	void changeMap(Map* m, int mapXTiles1X, int mapYTiles1X);
 
 
-	void changeMap(sp<Map> m, sp<Door> door);
+	void changeMap(Map* m, Door* door);
 
 
-	void changeMap(sp<Map> m, sp<Area> area);
+	void changeMap(Map* m, Area* area);
 
 
-	void changeMap(sp<Map> m, sp<WarpArea> area);
+	void changeMap(Map* m, WarpArea* area);
 
 
 	void changeMap(const string& mapName, const string& areaName);
 
 
-	sp<Map> getMapByIDBlockUntilLoaded(int id);
+	Map* getMapByIDBlockUntilLoaded(int id);
 
 
-	sp<Map> getMapByNameBlockUntilLoaded(const string& name);
+	Map* getMapByNameBlockUntilLoaded(const string& name);
 
 
 	void requestMapDataIfNotLoadedYet(const string& name);
 
 
-	sp<MapState> getMapStateByID(int id);
+	MapState* getMapStateByID(int id);
 
 
-	sp<Area> getAreaByID(int id);
+	Area* getAreaByID(int id);
 
 
-	sp<Entity> getEntityByID(int id);
+	Entity* getEntityByID(int id);
 
 
-	sp<Light> getLightByID(int id);
+	Light* getLightByID(int id);
 
 
-	sp<Door> getDoorByID(int id);
+	Door* getDoorByID(int id);
 };
 

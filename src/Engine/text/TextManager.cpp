@@ -16,16 +16,16 @@
 Logger TextManager::log = Logger("TextManager");
 
 
-sp<OKTexture> TextManager::questionMarkTexture = nullptr;
+BobTexture* TextManager::questionMarkTexture = nullptr;
 
-TextManager::TextManager(sp<Engine> g)
+TextManager::TextManager(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 
 
 	if (actionIconScreenSprite == nullptr)
 	{
-		actionIconScreenSprite = ms<ScreenSprite>(g, "button", "actionIcon"); //HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,actionx-8,actiony+1,255);
+		actionIconScreenSprite = new ScreenSprite(g, "button", "actionIcon"); //HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,actionx-8,actiony+1,255);
 		actionIconScreenSprite->draw = false;
 
 		actionIconScreenSprite->setScale(2);
@@ -67,8 +67,8 @@ void TextManager::init()
 	 * // load a default java font
 	 * try
 	 * {
-	 * OKFont awtFont = ms<OKFont>("bobsgame", OKFont.PLAIN, 8);
-	 * font = ms<TrueTypeFont>(awtFont, antiAlias);
+	 * BobFont awtFont = new BobFont("bobsgame", BobFont.PLAIN, 8);
+	 * font = new TrueTypeFont(awtFont, antiAlias);
 	 * }
 	 * catch (Exception e)
 	 * {
@@ -79,11 +79,11 @@ void TextManager::init()
 	// load font from file
 	//   try
 	//   {
-	//      sp<InputStream> inputStream = FileUtils::getResourceAsStream("res/fonts/bobsgame.ttf");
+	//      InputStream* inputStream = FileUtils::getResourceAsStream("res/fonts/bobsgame.ttf");
 	//
-	//      java::awt::Osp<KFont> awtFont = java::awt::OKFont::createFont(java::awt::OKFont::TRUETYPE_FONT, inputStream);
+	//      java::awt::BobFont* awtFont = java::awt::BobFont::createFont(java::awt::BobFont::TRUETYPE_FONT, inputStream);
 	//      awtFont = awtFont->deriveFont(8.0f); // set font size
-	//      ttfFont = ms<TrueTypeFont>(awtFont, antiAlias);
+	//      ttfFont = new TrueTypeFont(awtFont, antiAlias);
 	//   }
 	//   catch (exception& e)
 	//   {
@@ -102,23 +102,23 @@ void TextManager::init()
 	//pow2TexHeight = Math::getClosestPowerOfTwo(height);
 
 	textBox->clear();
-	textBox->push_back(ms<TextWindow>(getEngine()));
-	textBox->push_back(ms<TextWindow>(getEngine()));
+	textBox->add(new TextWindow(getEngine()));
+	textBox->add(new TextWindow(getEngine()));
 
-	textBox->at(0)->init();
-	textBox->at(1)->init();
+	textBox->get(0)->init();
+	textBox->get(1)->init();
 }
 
 void TextManager::reset()
 { //=========================================================================================================================
 
 
-	font = OKFont::font_normal_8;
+	font = BobFont::font_normal_8;
 
-	textBGColor = OKColor::black;
-	textColor = OKColor::white;
-	textAAColor = OKColor::darkerGray;
-	textShadowColor = OKColor::darkerGray;
+	textBGColor = BobColor::black;
+	textColor = BobColor::white;
+	textAAColor = BobColor::darkerGray;
+	textShadowColor = BobColor::darkerGray;
 
 	selectedTextbox = BOTTOM;
 	topBoxActivated = false;
@@ -129,22 +129,22 @@ void TextManager::reset()
 	waitingForCancelButtonUnpress = false;
 	getActionManager()->deleteCaptionWithBlipSound();
 
-	textBox->at(0)->scrollPercent = 0;
-	textBox->at(1)->scrollPercent = 0;
+	textBox->get(0)->scrollPercent = 0;
+	textBox->get(1)->scrollPercent = 0;
 
-	textBox->at(0)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
-	textBox->at(1)->setSpriteWindow(getCameraman()->targetEntity, questionMarkTexture, "???");
+	textBox->get(0)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
+	textBox->get(1)->setSpriteWindow(getCameraman()->targetEntity, questionMarkTexture, "???");
 
 
 	int i = 0;
 	for (i = 0; i < 2; i++)
 	{
-		textBox->at(i)->clearByteArray();
+		textBox->get(i)->clearByteArray();
 
-		textBox->at(i)->line = 0;
-		textBox->at(i)->xInLine = 0;
+		textBox->get(i)->line = 0;
+		textBox->get(i)->xInLine = 0;
 
-		textBox->at(i)->redraw = true;
+		textBox->get(i)->redraw = true;
 	}
 }
 
@@ -167,13 +167,13 @@ void TextManager::render()
 
 	if (textEngineState != TextEngineState::CLOSED)
 	{
-		if (textBox->at(0) != nullptr)
+		if (textBox->get(0) != nullptr)
 		{
-			textBox->at(0)->render();
+			textBox->get(0)->render();
 		}
-		if (textBox->at(1) != nullptr)
+		if (textBox->get(1) != nullptr)
 		{
-			textBox->at(1)->render();
+			textBox->get(1)->render();
 		}
 	}
 }
@@ -245,11 +245,11 @@ void TextManager::update()
 					reset();
 
 					// zoom the camera to the talking NPC
-					getCameraman()->setTarget(textBox->at(0)->spriteWindowEntity);
+					getCameraman()->setTarget(textBox->get(0)->spriteWindowEntity);
 					getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 					getCameraman()->ignoreCameraFXBoundaries = true; // avoid camera boundaries
 
-					getAudioManager()->playSound("blah", 0.5f, textBox->at(selectedTextbox)->voicePitch + Math::randLessThanFloat(2.0f), 1);
+					getAudioManager()->playSound("blah", 0.5f, textBox->get(selectedTextbox)->voicePitch + Math::randLessThanFloat(2.0f), 1);
 
 					scrollingUp = true; // wait for the getText box to scroll up before drawing getText in it.
 
@@ -267,10 +267,10 @@ void TextManager::update()
 						keepOpenForNewText = false;
 
 						// start a new line of getText.
-						textBox->at(selectedTextbox)->xInLine = 0;
-						textBox->at(selectedTextbox)->line++;
+						textBox->get(selectedTextbox)->xInLine = 0;
+						textBox->get(selectedTextbox)->line++;
 
-						if (textBox->at(selectedTextbox)->line > MAX_LINES)
+						if (textBox->get(selectedTextbox)->line > MAX_LINES)
 						{
 							waitingForButtonForNewPage = true;
 						}
@@ -320,8 +320,8 @@ void TextManager::update()
 
 		doScrolling(ticksPassed);
 
-		textBox->at(0)->updateTextureFromByteArray();
-		textBox->at(1)->updateTextureFromByteArray();
+		textBox->get(0)->updateTextureFromByteArray();
+		textBox->get(1)->updateTextureFromByteArray();
 	}
 
 
@@ -334,171 +334,171 @@ void TextManager::parseColorizedTags()
 
 		// automatically colorize "Yuu"
 
-		if (position < length - 2 && OKString::startsWith(currentText.substr(position), "Yuu"))
+		if (position < length - 2 && String::startsWith(currentText.substr(position), "Yuu"))
 		{
 			tC0 = textBGColor;
 			tC1 = textColor;
 			tC2 = textAAColor;
 			tC3 = textShadowColor;
 
-			textColor = OKColor::purple;
-			if (textBGColor == OKColor::black)
+			textColor = BobColor::purple;
+			if (textBGColor == BobColor::black)
 			{
-				textAAColor = OKColor::darkerPurple;
+				textAAColor = BobColor::darkerPurple;
 			}
 			else
 			{
-				textAAColor = OKColor::lightPurple;
+				textAAColor = BobColor::lightPurple;
 			}
-			if (textBGColor == OKColor::black)
+			if (textBGColor == BobColor::black)
 			{
-				textShadowColor = OKColor::darkerPurple;
+				textShadowColor = BobColor::darkerPurple;
 			}
 			else
 			{
-				textShadowColor = OKColor::lightPurple;
+				textShadowColor = BobColor::lightPurple;
 			}
 		}
 
 		//"bob's game"
 		else
 		{
-			if (position < length - 11 && OKString::startsWith(currentText.substr(position), "\"bob's game\""))
+			if (position < length - 11 && String::startsWith(currentText.substr(position), "\"bob's game\""))
 			{
 				tC0 = textBGColor;
 				tC1 = textColor;
 				tC2 = textAAColor;
 				tC3 = textShadowColor;
 
-				textColor = OKColor::green;
-				if (textBGColor == OKColor::black)
+				textColor = BobColor::green;
+				if (textBGColor == BobColor::black)
 				{
-					textAAColor = OKColor::darkerGreen;
+					textAAColor = BobColor::darkerGreen;
 				}
 				else
 				{
-					textAAColor = OKColor::lightGreen;
+					textAAColor = BobColor::lightGreen;
 				}
 
-				if (textBGColor == OKColor::black)
+				if (textBGColor == BobColor::black)
 				{
-					textShadowColor = OKColor::darkerGreen;
+					textShadowColor = BobColor::darkerGreen;
 				}
 				else
 				{
-					textShadowColor = OKColor::lightGreen;
+					textShadowColor = BobColor::lightGreen;
 				}
 			}
 			else
 			{
-				if (position < length - 9 && OKString::startsWith(currentText.substr(position), "bob's game") && (position >= length - 10 || OKString::startsWith(currentText.substr(position), "bob's game\"") == false))
+				if (position < length - 9 && String::startsWith(currentText.substr(position), "bob's game") && (position >= length - 10 || String::startsWith(currentText.substr(position), "bob's game\"") == false))
 				{
 					tC0 = textBGColor;
 					tC1 = textColor;
 					tC2 = textAAColor;
 					tC3 = textShadowColor;
 
-					textColor = OKColor::green;
-					if (textBGColor == OKColor::black)
+					textColor = BobColor::green;
+					if (textBGColor == BobColor::black)
 					{
-						textAAColor = OKColor::darkerGreen;
+						textAAColor = BobColor::darkerGreen;
 					}
 					else
 					{
-						textAAColor = OKColor::lightGreen;
+						textAAColor = BobColor::lightGreen;
 					}
 
-					if (textBGColor == OKColor::black)
+					if (textBGColor == BobColor::black)
 					{
-						textShadowColor = OKColor::darkerGreen;
+						textShadowColor = BobColor::darkerGreen;
 					}
 					else
 					{
-						textShadowColor = OKColor::lightGreen;
+						textShadowColor = BobColor::lightGreen;
 					}
 				}
 				else //bob's
 				{
-					if (position < length - 4 && OKString::startsWith(currentText.substr(position), "bob's") && (position >= length - 9 || OKString::startsWith(currentText.substr(position), "bob's game") == false))
+					if (position < length - 4 && String::startsWith(currentText.substr(position), "bob's") && (position >= length - 9 || String::startsWith(currentText.substr(position), "bob's game") == false))
 					{
 						tC0 = textBGColor;
 						tC1 = textColor;
 						tC2 = textAAColor;
 						tC3 = textShadowColor;
 
-						textColor = OKColor::green;
-						if (textBGColor == OKColor::black)
+						textColor = BobColor::green;
+						if (textBGColor == BobColor::black)
 						{
-							textAAColor = OKColor::darkGreen;
+							textAAColor = BobColor::darkGreen;
 						}
 						else
 						{
-							textAAColor = OKColor::lightGreen;
+							textAAColor = BobColor::lightGreen;
 						}
 
-						if (textBGColor == OKColor::black)
+						if (textBGColor == BobColor::black)
 						{
-							textShadowColor = OKColor::darkerGreen;
+							textShadowColor = BobColor::darkerGreen;
 						}
 						else
 						{
-							textShadowColor = OKColor::lightGreen;
+							textShadowColor = BobColor::lightGreen;
 						}
 					}
 					else //bob
 					{
-						if (position < length - 2 && OKString::startsWith(currentText.substr(position), "bob") && (position >= length - 4 || OKString::startsWith(currentText.substr(position), "bob's") == false))
+						if (position < length - 2 && String::startsWith(currentText.substr(position), "bob") && (position >= length - 4 || String::startsWith(currentText.substr(position), "bob's") == false))
 						{
 							tC0 = textBGColor;
 							tC1 = textColor;
 							tC2 = textAAColor;
 							tC3 = textShadowColor;
 
-							textColor = OKColor::green;
-							if (textBGColor == OKColor::black)
+							textColor = BobColor::green;
+							if (textBGColor == BobColor::black)
 							{
-								textAAColor = OKColor::darkerGreen;
+								textAAColor = BobColor::darkerGreen;
 							}
 							else
 							{
-								textAAColor = OKColor::lightGreen;
+								textAAColor = BobColor::lightGreen;
 							}
 
-							if (textBGColor == OKColor::black)
+							if (textBGColor == BobColor::black)
 							{
-								textShadowColor = OKColor::darkerGreen;
+								textShadowColor = BobColor::darkerGreen;
 							}
 							else
 							{
-								textShadowColor = OKColor::lightGreen;
+								textShadowColor = BobColor::lightGreen;
 							}
 						}
 						else //nD
 						{
-							if (position < length - 1 && OKString::startsWith(currentText.substr(position), "nD"))
+							if (position < length - 1 && String::startsWith(currentText.substr(position), "nD"))
 							{
 								tC0 = textBGColor;
 								tC1 = textColor;
 								tC2 = textAAColor;
 								tC3 = textShadowColor;
 
-								textColor = OKColor::green;
-								if (textBGColor == OKColor::black)
+								textColor = BobColor::green;
+								if (textBGColor == BobColor::black)
 								{
-									textAAColor = OKColor::darkerGreen;
+									textAAColor = BobColor::darkerGreen;
 								}
 								else
 								{
-									textAAColor = OKColor::lightGreen;
+									textAAColor = BobColor::lightGreen;
 								}
 
-								if (textBGColor == OKColor::black)
+								if (textBGColor == BobColor::black)
 								{
-									textShadowColor = OKColor::darkerGreen;
+									textShadowColor = BobColor::darkerGreen;
 								}
 								else
 								{
-									textShadowColor = OKColor::lightGreen;
+									textShadowColor = BobColor::lightGreen;
 								}
 							}
 						}
@@ -514,7 +514,7 @@ void TextManager::postparseColorizedTags()
 
 	// automatically colorize "Yuu" back to white
 
-	if (position >= 2 && OKString::startsWith(currentText.substr(position - 2), "Yuu"))
+	if (position >= 2 && String::startsWith(currentText.substr(position - 2), "Yuu"))
 	{
 		textBGColor = tC0;
 		textColor = tC1;
@@ -525,7 +525,7 @@ void TextManager::postparseColorizedTags()
 	//"bob's game"
 	else
 	{
-		if (position >= 11 && OKString::startsWith(currentText.substr(position - 11), "\"bob's game\""))
+		if (position >= 11 && String::startsWith(currentText.substr(position - 11), "\"bob's game\""))
 		{
 			textBGColor = tC0;
 			textColor = tC1;
@@ -534,7 +534,7 @@ void TextManager::postparseColorizedTags()
 		}
 		else
 		{
-			if (position >= 9 && OKString::startsWith(currentText.substr(position - 9), "bob's game") && (position >= length - 1 || OKString::startsWith(currentText.substr(position - 9), "bob's game\"") == false))
+			if (position >= 9 && String::startsWith(currentText.substr(position - 9), "bob's game") && (position >= length - 1 || String::startsWith(currentText.substr(position - 9), "bob's game\"") == false))
 			{
 				textBGColor = tC0;
 				textColor = tC1;
@@ -543,7 +543,7 @@ void TextManager::postparseColorizedTags()
 			}
 			else
 			{
-				if (position >= 4 && OKString::startsWith(currentText.substr(position - 4), "bob's") && (position >= length - 5 || OKString::startsWith(currentText.substr(position - 4), "bob's game") == false))
+				if (position >= 4 && String::startsWith(currentText.substr(position - 4), "bob's") && (position >= length - 5 || String::startsWith(currentText.substr(position - 4), "bob's game") == false))
 				{
 					textBGColor = tC0;
 					textColor = tC1;
@@ -552,7 +552,7 @@ void TextManager::postparseColorizedTags()
 				}
 				else
 				{
-					if (position >= 2 && OKString::startsWith(currentText.substr(position - 2), "bob") && (position >= length - 2 || OKString::startsWith(currentText.substr(position - 2), "bob's") == false))
+					if (position >= 2 && String::startsWith(currentText.substr(position - 2), "bob") && (position >= length - 2 || String::startsWith(currentText.substr(position - 2), "bob's") == false))
 					{
 						textBGColor = tC0;
 						textColor = tC1;
@@ -561,7 +561,7 @@ void TextManager::postparseColorizedTags()
 					}
 					else
 					{
-						if (position >= 1 && OKString::startsWith(currentText.substr(position - 1), "nD"))
+						if (position >= 1 && String::startsWith(currentText.substr(position - 1), "nD"))
 						{
 							textBGColor = tC0;
 							textColor = tC1;
@@ -570,24 +570,24 @@ void TextManager::postparseColorizedTags()
 						}
 						else
 						{
-							if (OKString::startsWith(currentText.substr(position), "nD"))
+							if (String::startsWith(currentText.substr(position), "nD"))
 							{
-								textColor = OKColor::purple;
-								if (textBGColor == OKColor::black)
+								textColor = BobColor::purple;
+								if (textBGColor == BobColor::black)
 								{
-									textAAColor = OKColor::darkerPurple;
+									textAAColor = BobColor::darkerPurple;
 								}
 								else
 								{
-									textAAColor = OKColor::lightPurple;
+									textAAColor = BobColor::lightPurple;
 								}
-								if (textBGColor == OKColor::black)
+								if (textBGColor == BobColor::black)
 								{
-									textShadowColor = OKColor::darkerPurple;
+									textShadowColor = BobColor::darkerPurple;
 								}
 								else
 								{
-									textShadowColor = OKColor::lightPurple;
+									textShadowColor = BobColor::lightPurple;
 								}
 							}
 						}
@@ -639,7 +639,7 @@ void TextManager::drawText(long long ticksPassed)
 				if (currentText[position] == ' ')
 				{
 					// get next word length including the space
-					int nextWordLength = OKFont::getNextWordLength(currentText, position, font);
+					int nextWordLength = BobFont::getNextWordLength(currentText, position, font);
 
 					// THIS SKIPS WORDS LONGER THEN THE MAXIMUM LENGTH
 					if (nextWordLength > getLineSizeX())
@@ -650,12 +650,12 @@ void TextManager::drawText(long long ticksPassed)
 						Main::console->error(e);
 						log.error(e);
 
-						nextWordLength = OKFont::getNextWordLength(currentText, position, font);
+						nextWordLength = BobFont::getNextWordLength(currentText, position, font);
 					}
 
 					// see if it fits on the current line
-					int pixelsLeftInLine = getLineSizeX() - textBox->at(selectedTextbox)->xInLine;
-					if (textBox->at(selectedTextbox)->line == MAX_LINES)
+					int pixelsLeftInLine = getLineSizeX() - textBox->get(selectedTextbox)->xInLine;
+					if (textBox->get(selectedTextbox)->line == MAX_LINES)
 					{
 						pixelsLeftInLine -= 32; // for the getText button icon
 					}
@@ -663,11 +663,11 @@ void TextManager::drawText(long long ticksPassed)
 					// if it doesnt fit, go to the next line
 					if (pixelsLeftInLine < nextWordLength)
 					{
-						textBox->at(selectedTextbox)->xInLine = 0;
-						textBox->at(selectedTextbox)->line++;
+						textBox->get(selectedTextbox)->xInLine = 0;
+						textBox->get(selectedTextbox)->line++;
 
 						// if we're on the last line, wait for input
-						if (textBox->at(selectedTextbox)->line > MAX_LINES)
+						if (textBox->get(selectedTextbox)->line > MAX_LINES)
 						{
 							waitingForButtonForNewPage = true;
 						}
@@ -678,7 +678,7 @@ void TextManager::drawText(long long ticksPassed)
 					// else MusicAndSoundManager().playSound("blah",127,TEXT_textbox[TEXT_selected_textbox].voice_pitch+(rand()%20000),0);
 
 					// only draw the space if we're not at the beginning of the getText box
-					if (textBox->at(selectedTextbox)->xInLine != 0)
+					if (textBox->get(selectedTextbox)->xInLine != 0)
 					{
 						drawLetter();
 					}
@@ -693,7 +693,7 @@ void TextManager::drawText(long long ticksPassed)
 			postparseColorizedTags();
 
 
-			if (position + 1 < length - 3 && OKString::startsWith(currentText.substr(position + 1), "<.") == false)
+			if (position + 1 < length - 3 && String::startsWith(currentText.substr(position + 1), "<.") == false)
 			{
 				//auto delay on punctuation
 				if ((currentText[position] == '.' || currentText[position] == '?' || currentText[position] == '!'))
@@ -716,14 +716,14 @@ void TextManager::drawText(long long ticksPassed)
 
 				if (currentText[position] == '!')
 				{
-					textBox->at(selectedTextbox)->shakeTicksYTotal = 300;//300
-					//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
+					textBox->get(selectedTextbox)->shakeTicksYTotal = 300;//300
+					//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
 				}
 
 				if (currentText[position] == '?')
 				{
-					textBox->at(selectedTextbox)->shakeTicksXTotal = 300;//300
-					//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
+					textBox->get(selectedTextbox)->shakeTicksXTotal = 300;//300
+					//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
 				}
 			}
 			// increment the string
@@ -764,11 +764,11 @@ void TextManager::handleInput()
 			{
 				if (selectedTextbox == BOTTOM)
 				{
-					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox->at(0).screen_y+64-8-2,255);
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
 				}
 				if (selectedTextbox == TOP)
 				{
-					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
 				}
 				buttonIconIsOn = true;
 			}
@@ -793,19 +793,19 @@ void TextManager::handleInput()
 				if (buttonIconIsOn == true)
 				{
 					buttonIconIsOn = false;
-					// HARDWARE_delete_sprite(TEXT_textbox->at(0).button_sprite);
+					// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
 				}
 
 				buttonAUnpressed = false;
-				textBox->at(selectedTextbox)->clearByteArray();
+				textBox->get(selectedTextbox)->clearByteArray();
 
 				if (waitingForButtonPressToClose == false && textEngineState != TextEngineState::CLOSING)
 				{
-					textBox->at(selectedTextbox)->redraw = true;
+					textBox->get(selectedTextbox)->redraw = true;
 				}
 
-				textBox->at(selectedTextbox)->line = 0;
-				textBox->at(selectedTextbox)->xInLine = 0;
+				textBox->get(selectedTextbox)->line = 0;
+				textBox->get(selectedTextbox)->xInLine = 0;
 				waitingForButtonForNewPage = false;
 			}
 		}
@@ -836,13 +836,13 @@ void TextManager::handleInput()
 			{
 				if (selectedTextbox == BOTTOM)
 				{
-					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox->at(0).screen_y+64-8-2,255);
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
 				}
 
 
 				if (selectedTextbox == TOP)
 				{
-					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
 				}
 
 
@@ -869,7 +869,7 @@ void TextManager::handleInput()
 				{
 					buttonIconIsOn = false;
 
-					// HARDWARE_delete_sprite(TEXT_textbox->at(0).button_sprite);
+					// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
 				}
 
 				buttonAUnpressed = false;
@@ -935,49 +935,49 @@ void TextManager::doScrolling(long long ticksPassed)
 	 */
 
 
-	textBox->at(0)->alpha = textBox->at(0)->scrollPercent;
-	textBox->at(1)->alpha = textBox->at(1)->scrollPercent;
+	textBox->get(0)->alpha = textBox->get(0)->scrollPercent;
+	textBox->get(1)->alpha = textBox->get(1)->scrollPercent;
 
 
 	float fastScroll = 0.003f * ticksPassed;
 	//float mediumScroll = 0.001f * ticksPassed;
 
 
-	if (topBoxActivated == true && textBox->at(1)->scrollPercent != 1.0f)
+	if (topBoxActivated == true && textBox->get(1)->scrollPercent != 1.0f)
 	{
-		textBox->at(1)->scrollPercent += fastScroll;
-		if (textBox->at(1)->scrollPercent > 1.0f)
+		textBox->get(1)->scrollPercent += fastScroll;
+		if (textBox->get(1)->scrollPercent > 1.0f)
 		{
-			textBox->at(1)->scrollPercent = 1.0f;
+			textBox->get(1)->scrollPercent = 1.0f;
 		}
 	}
 
 
-	if (topBoxActivated == false && textBox->at(1)->scrollPercent != 0.0f)
+	if (topBoxActivated == false && textBox->get(1)->scrollPercent != 0.0f)
 	{
-		textBox->at(1)->scrollPercent -= fastScroll;
-		if (textBox->at(1)->scrollPercent < 0.0f)
+		textBox->get(1)->scrollPercent -= fastScroll;
+		if (textBox->get(1)->scrollPercent < 0.0f)
 		{
-			textBox->at(1)->scrollPercent = 0.0f;
+			textBox->get(1)->scrollPercent = 0.0f;
 		}
 	}
 
 
 	if (textEngineState == TextEngineState::ANSWER_BOX_ON) // ANSWER BOX TURNED ON,SCROLL TEXT BOX UP,ANSWER BOX UP
 	{
-		//			if(textBox->at(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
+		//			if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
 		//			{
-		//				textBox->at(0).scrollPercent-=mediumScroll;
-		//				if(textBox->at(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
-		//					textBox->at(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2;
+		//				textBox->get(0).scrollPercent-=mediumScroll;
+		//				if(textBox->get(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
+		//					textBox->get(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2;
 		//			}
 		//
-		//			if(textBox->at(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
+		//			if(textBox->get(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
 		//			{
-		//				if(answerBoxY>textBox->at(0).scrollPercent+textWindowHeight+8-2)
+		//				if(answerBoxY>textBox->get(0).scrollPercent+textWindowHeight+8-2)
 		//				{
 		//					answerBoxY-=fastScroll;
-		//					if(answerBoxY<textBox->at(0).scrollPercent+textWindowHeight+8-2) answerBoxY=textBox->at(0).scrollPercent+textWindowHeight+8-2;
+		//					if(answerBoxY<textBox->get(0).scrollPercent+textWindowHeight+8-2) answerBoxY=textBox->get(0).scrollPercent+textWindowHeight+8-2;
 		//				}
 		//			}
 
@@ -1000,13 +1000,13 @@ void TextManager::doScrolling(long long ticksPassed)
 			{
 				cursorPixelUpDownToggle = false;
 				//if(cursorScreenSprite!=null)
-				//cursorScreenSprite.screenXPixelsHQ=textBox->at(0).getScreenX+(64*3)-(64*4)-8-1;//TODO
+				//cursorScreenSprite.screenXPixelsHQ=textBox->get(0).getScreenX+(64*3)-(64*4)-8-1;//TODO
 			}
 			else
 			{
 				cursorPixelUpDownToggle = true;
 				//if(cursorScreenSprite!=null)
-				//cursorScreenSprite.screenXPixelsHQ=textBox->at(0).getScreenX+(64*3)-(64*4)-8;
+				//cursorScreenSprite.screenXPixelsHQ=textBox->get(0).getScreenX+(64*3)-(64*4)-8;
 			}
 		}
 	}
@@ -1017,11 +1017,11 @@ void TextManager::doScrolling(long long ticksPassed)
 			answerBoxY += fastScroll;
 		}
 
-		//			if(textBox->at(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y)
+		//			if(textBox->get(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y)
 		//			{
-		//				textBox->at(0).scrollPercent+=mediumScroll;
-		//				if(textBox->at(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y)
-		//					textBox->at(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y;
+		//				textBox->get(0).scrollPercent+=mediumScroll;
+		//				if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y)
+		//					textBox->get(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y;
 		//			}
 		//			else
 		//			{
@@ -1030,18 +1030,18 @@ void TextManager::doScrolling(long long ticksPassed)
 	}
 	else if (textEngineState == TextEngineState::KEYBOARD_ON) // KEYBOARD TURNED ON,SCROLL TEXT BOX UP,KEYBOARD BOX UP
 	{
-		//			if(textBox->at(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-64-2)
+		//			if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-64-2)
 		//			{
-		//				textBox->at(0).scrollPercent-=mediumScroll;
-		//				if(textBox->at(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-64-2) textBox->at(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-64-2;
+		//				textBox->get(0).scrollPercent-=mediumScroll;
+		//				if(textBox->get(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-64-2) textBox->get(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-64-2;
 		//			}
 		//
-		//			if(textBox->at(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-64-2)
+		//			if(textBox->get(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-64-2)
 		//			{
-		//				if(keyboardY>textBox->at(0).scrollPercent+64+8-2)
+		//				if(keyboardY>textBox->get(0).scrollPercent+64+8-2)
 		//				{
 		//					keyboardY-=fastScroll;
-		//					if(keyboardY<textBox->at(0).scrollPercent+64+8-2) keyboardY=textBox->at(0).scrollPercent+64+8-2;
+		//					if(keyboardY<textBox->get(0).scrollPercent+64+8-2) keyboardY=textBox->get(0).scrollPercent+64+8-2;
 		//
 		//					if(keyboardScreenSprite!=null) keyboardScreenSprite.screenYPixelsHQ=keyboardY;
 		//				}
@@ -1059,12 +1059,12 @@ void TextManager::doScrolling(long long ticksPassed)
 				keyboardScreenSprite->screenYPixelsHQ = keyboardY;
 			}
 		}
-		if (textBox->at(0)->scrollPercent > 0.0f)
+		if (textBox->get(0)->scrollPercent > 0.0f)
 		{
-			textBox->at(0)->scrollPercent -= fastScroll;
-			if (textBox->at(0)->scrollPercent < 0.0f)
+			textBox->get(0)->scrollPercent -= fastScroll;
+			if (textBox->get(0)->scrollPercent < 0.0f)
 			{
-				textBox->at(0)->scrollPercent = 0.0f;
+				textBox->get(0)->scrollPercent = 0.0f;
 			}
 		}
 		else
@@ -1078,14 +1078,14 @@ void TextManager::doScrolling(long long ticksPassed)
 	{
 		if (textEngineState == TextEngineState::OPEN) // ==================================TEXT BOX IS IN RUNNING STATE==============================
 		{
-			if (textBox->at(0)->scrollPercent >= 1.0f)
+			if (textBox->get(0)->scrollPercent >= 1.0f)
 			{
-				textBox->at(0)->scrollPercent = 1.0f;
+				textBox->get(0)->scrollPercent = 1.0f;
 				scrollingUp = false;
 			}
-			else if (textBox->at(0)->scrollPercent < 1.0f)
+			else if (textBox->get(0)->scrollPercent < 1.0f)
 			{
-				textBox->at(0)->scrollPercent += fastScroll;
+				textBox->get(0)->scrollPercent += fastScroll;
 				scrollingUp = true;
 			}
 
@@ -1093,101 +1093,101 @@ void TextManager::doScrolling(long long ticksPassed)
 
 			for (int i = 0; i < 2; i++)
 			{
-				if (textBox->at(i)->shakeTicksXTotal > 0)
+				if (textBox->get(i)->shakeTicksXTotal > 0)
 				{
-					if (textBox->at(i)->shakeTicksXTotal > 0)
+					if (textBox->get(i)->shakeTicksXTotal > 0)
 					{
-						textBox->at(i)->shakeTicksXTotal -= (int)ticksPassed;
+						textBox->get(i)->shakeTicksXTotal -= (int)ticksPassed;
 					}
-					if (textBox->at(i)->shakeTicksXTotal < 0)
+					if (textBox->get(i)->shakeTicksXTotal < 0)
 					{
-						textBox->at(i)->shakeTicksXTotal = 0;
+						textBox->get(i)->shakeTicksXTotal = 0;
 					}
 
 
-					textBox->at(i)->shakeTicksLeftRightCounter += (int)ticksPassed;
+					textBox->get(i)->shakeTicksLeftRightCounter += (int)ticksPassed;
 
-					if (textBox->at(i)->shakeTicksLeftRightCounter > 10)
+					if (textBox->get(i)->shakeTicksLeftRightCounter > 10)
 					{
-						textBox->at(i)->shakeTicksLeftRightCounter = 0;
+						textBox->get(i)->shakeTicksLeftRightCounter = 0;
 
-						if (textBox->at(i)->shakeLeftRightToggle == true)
+						if (textBox->get(i)->shakeLeftRightToggle == true)
 						{
-							textBox->at(i)->shakeX++;
-							if (textBox->at(i)->shakeX >= textBox->at(i)->shakeMaxX)
+							textBox->get(i)->shakeX++;
+							if (textBox->get(i)->shakeX >= textBox->get(i)->shakeMaxX)
 							{
-								textBox->at(i)->shakeLeftRightToggle = !textBox->at(i)->shakeLeftRightToggle;
+								textBox->get(i)->shakeLeftRightToggle = !textBox->get(i)->shakeLeftRightToggle;
 							}
 						}
 						else
 						{
-							textBox->at(i)->shakeX--;
-							if (textBox->at(i)->shakeX <= 0 - textBox->at(i)->shakeMaxX)
+							textBox->get(i)->shakeX--;
+							if (textBox->get(i)->shakeX <= 0 - textBox->get(i)->shakeMaxX)
 							{
-								textBox->at(i)->shakeLeftRightToggle = !textBox->at(i)->shakeLeftRightToggle;
+								textBox->get(i)->shakeLeftRightToggle = !textBox->get(i)->shakeLeftRightToggle;
 							}
 						}
 					}
 				}
 				else
 				{
-					textBox->at(i)->shakeX = 0;
+					textBox->get(i)->shakeX = 0;
 				}
 
 
-				if (textBox->at(i)->shakeTicksYTotal > 0)
+				if (textBox->get(i)->shakeTicksYTotal > 0)
 				{
-					if (textBox->at(i)->shakeTicksYTotal > 0)
+					if (textBox->get(i)->shakeTicksYTotal > 0)
 					{
-						textBox->at(i)->shakeTicksYTotal -= (int)ticksPassed;
+						textBox->get(i)->shakeTicksYTotal -= (int)ticksPassed;
 					}
-					if (textBox->at(i)->shakeTicksYTotal < 0)
+					if (textBox->get(i)->shakeTicksYTotal < 0)
 					{
-						textBox->at(i)->shakeTicksYTotal = 0;
+						textBox->get(i)->shakeTicksYTotal = 0;
 					}
 
 
-					textBox->at(i)->shakeTicksUpDownCounter += (int)ticksPassed;
+					textBox->get(i)->shakeTicksUpDownCounter += (int)ticksPassed;
 
-					if (textBox->at(i)->shakeTicksUpDownCounter > 10)
+					if (textBox->get(i)->shakeTicksUpDownCounter > 10)
 					{
-						textBox->at(i)->shakeTicksUpDownCounter = 0;
+						textBox->get(i)->shakeTicksUpDownCounter = 0;
 
-						if (textBox->at(i)->shakeUpDownToggle == true)
+						if (textBox->get(i)->shakeUpDownToggle == true)
 						{
-							textBox->at(i)->shakeY++;
-							if (textBox->at(i)->shakeY >= textBox->at(i)->shakeMaxY)
+							textBox->get(i)->shakeY++;
+							if (textBox->get(i)->shakeY >= textBox->get(i)->shakeMaxY)
 							{
-								textBox->at(i)->shakeUpDownToggle = !textBox->at(i)->shakeUpDownToggle;
+								textBox->get(i)->shakeUpDownToggle = !textBox->get(i)->shakeUpDownToggle;
 							}
 						}
 						else
 						{
-							textBox->at(i)->shakeY--;
-							if (textBox->at(i)->shakeY <= 0 - textBox->at(i)->shakeMaxY)
+							textBox->get(i)->shakeY--;
+							if (textBox->get(i)->shakeY <= 0 - textBox->get(i)->shakeMaxY)
 							{
-								textBox->at(i)->shakeUpDownToggle = !textBox->at(i)->shakeUpDownToggle;
+								textBox->get(i)->shakeUpDownToggle = !textBox->get(i)->shakeUpDownToggle;
 							}
 						}
 					}
 				}
 				else
 				{
-					textBox->at(i)->shakeY = 0;
+					textBox->get(i)->shakeY = 0;
 				}
 			}
 		} // END IF TEXT BOX ON
 
 		else if (textEngineState == TextEngineState::CLOSING) // ===========================TEXT BOX IS IN SCROLLING DOWN STATE. WHEN FINISHED,DELETE TEXT BOX===================
 		{
-			if (textBox->at(0)->scrollPercent > 0.0f)
+			if (textBox->get(0)->scrollPercent > 0.0f)
 			{
-				textBox->at(0)->scrollPercent -= fastScroll;
+				textBox->get(0)->scrollPercent -= fastScroll;
 			}
 
-			if (textBox->at(0)->scrollPercent < 0.0f)
+			if (textBox->get(0)->scrollPercent < 0.0f)
 			{
-				textBox->at(0)->scrollPercent = 0.0f;
+				textBox->get(0)->scrollPercent = 0.0f;
 
 
 				getCameraman()->ignoreCameraFXBoundaries = false; // TODO: restore previous state
@@ -1202,8 +1202,8 @@ void TextManager::doScrolling(long long ticksPassed)
 
 		else if (textEngineState == TextEngineState::CLOSED)
 		{
-			textBox->at(0)->scrollPercent = 0.0f;
-			textBox->at(1)->scrollPercent = 0.0f;
+			textBox->get(0)->scrollPercent = 0.0f;
+			textBox->get(1)->scrollPercent = 0.0f;
 		}
 	}
 
@@ -1212,11 +1212,11 @@ void TextManager::doScrolling(long long ticksPassed)
 	//		{
 	//
 	//			// if(TEXT_selected_textbox==false)
-	//			// HARDWARE_set_sprite_xy(TEXT_textbox->at(0).button_sprite,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox->at(0).screen_y+64-8-(TEXT_button_icon_down*2));
+	//			// HARDWARE_set_sprite_xy(TEXT_textbox->get(0).button_sprite,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-(TEXT_button_icon_down*2));
 	//
 	//
 	//			// if(TEXT_selected_textbox==true)
-	//			// HARDWARE_set_sprite_xy(TEXT_textbox->at(0).button_sprite,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-(TEXT_button_icon_down*2));
+	//			// HARDWARE_set_sprite_xy(TEXT_textbox->get(0).button_sprite,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-(TEXT_button_icon_down*2));
 	//
 	//			if(buttonTimer>500)
 	//			{
@@ -1239,26 +1239,26 @@ void TextManager::drawLetter()
 { //=========================================================================================================================
 
 
-	int letterIndex = OKFont::getFontIndexForChar(currentText[position]);
+	int letterIndex = BobFont::getFontIndexForChar(currentText[position]);
 	if (letterIndex == -1)
 	{
 		return;
 	}
 
 
-	int letterWidth = OKFont::getCharWidth(letterIndex, font);
+	int letterWidth = BobFont::getCharWidth(letterIndex, font);
 
 
 	// play sound sometimes, for vowels
-	if ((textBox->at(selectedTextbox)->xInLine == 0 && textBox->at(selectedTextbox)->line == 0) || (position % 2 == 0 && position < length - 1 && (OKFont::is_a_vowel(currentText[position - 1]) != OKFont::is_a_vowel(currentText[position]) || OKFont::is_a_vowel(currentText[position]) != OKFont::is_a_vowel(currentText[position + 1]))))
+	if ((textBox->get(selectedTextbox)->xInLine == 0 && textBox->get(selectedTextbox)->line == 0) || (position % 2 == 0 && position < length - 1 && (BobFont::is_a_vowel(currentText[position - 1]) != BobFont::is_a_vowel(currentText[position]) || BobFont::is_a_vowel(currentText[position]) != BobFont::is_a_vowel(currentText[position + 1]))))
 	{
-		if (font == OKFont::font_bob_16)
+		if (font == BobFont::font_bob_16)
 		{
-			getAudioManager()->playSound("blah", 0.5f, textBox->at(selectedTextbox)->voicePitch + ((10 + Math::randUpToIncluding(20)) / 10.0f), 1);
+			getAudioManager()->playSound("blah", 0.5f, textBox->get(selectedTextbox)->voicePitch + ((10 + Math::randUpToIncluding(20)) / 10.0f), 1);
 		}
 		else
 		{
-			getAudioManager()->playSound("blah", 0.5f, textBox->at(selectedTextbox)->voicePitch + (Math::randUpToIncluding(20) / 10.0f), 1);
+			getAudioManager()->playSound("blah", 0.5f, textBox->get(selectedTextbox)->voicePitch + (Math::randUpToIncluding(20) / 10.0f), 1);
 		}
 
 		delay = true; // /why do i do this? slight delay on vowels so the sound has time to play?
@@ -1271,14 +1271,14 @@ void TextManager::drawLetter()
 	int xInLetter = 0;
 	for (xInLetter = 0; xInLetter < letterWidth; xInLetter++)
 	{
-		if (textBox->at(selectedTextbox)->xInLine > getLineSizeX())
+		if (textBox->get(selectedTextbox)->xInLine > getLineSizeX())
 		{
-			textBox->at(selectedTextbox)->xInLine = 0;
-			textBox->at(selectedTextbox)->line++;
+			textBox->get(selectedTextbox)->xInLine = 0;
+			textBox->get(selectedTextbox)->line++;
 		}
 
 
-		if (textBox->at(selectedTextbox)->line > MAX_LINES)
+		if (textBox->get(selectedTextbox)->line > MAX_LINES)
 		{
 			// PAUSE,CLEAR,START OVER
 			waitingForButtonForNewPage = true;
@@ -1286,16 +1286,16 @@ void TextManager::drawLetter()
 
 
 		// it it's a space on the last tile/chunk/pixel, skip it
-		if (currentText[position] == ' ' && textBox->at(selectedTextbox)->xInLine >= getLineSizeX())
+		if (currentText[position] == ' ' && textBox->get(selectedTextbox)->xInLine >= getLineSizeX())
 		{
-			textBox->at(selectedTextbox)->xInLine = 0;
-			textBox->at(selectedTextbox)->line++;
+			textBox->get(selectedTextbox)->xInLine = 0;
+			textBox->get(selectedTextbox)->line++;
 
 			xInLetter = letterWidth;
 
 			putInSpaceAlready = true;
 
-			if (textBox->at(selectedTextbox)->line > MAX_LINES)
+			if (textBox->get(selectedTextbox)->line > MAX_LINES)
 			{
 				waitingForButtonForNewPage = true;
 			}
@@ -1303,8 +1303,8 @@ void TextManager::drawLetter()
 
 		if (waitingForButtonForNewPage == false && putInSpaceAlready == false)
 		{
-			textBox->at(selectedTextbox)->drawColumn(letterIndex, xInLetter, false);
-			textBox->at(selectedTextbox)->xInLine++;
+			textBox->get(selectedTextbox)->drawColumn(letterIndex, xInLetter, false);
+			textBox->get(selectedTextbox)->xInLine++;
 		}
 	}
 
@@ -1313,25 +1313,25 @@ void TextManager::drawLetter()
 	// if(getText[TEXT_string_position]==' ')put_in_space_already=true; breaks the pixel length count.. i'd have to make it width-1 in get_text_length
 
 
-	if (textBox->at(selectedTextbox)->line <= MAX_LINES && textBox->at(selectedTextbox)->xInLine < getLineSizeX() && putInSpaceAlready == false)
+	if (textBox->get(selectedTextbox)->line <= MAX_LINES && textBox->get(selectedTextbox)->xInLine < getLineSizeX() && putInSpaceAlready == false)
 	{
-		textBox->at(selectedTextbox)->drawColumn(0, 0, true);
-		textBox->at(selectedTextbox)->xInLine++;
+		textBox->get(selectedTextbox)->drawColumn(0, 0, true);
+		textBox->get(selectedTextbox)->xInLine++;
 
-//		textBox->at(selectedTextbox)->drawColumn(0, 0, true);
-//		textBox->at(selectedTextbox)->xInLine++;
+//		textBox->get(selectedTextbox)->drawColumn(0, 0, true);
+//		textBox->get(selectedTextbox)->xInLine++;
 
 		putInSpaceAlready = true;
 	}
 
-	if (textBox->at(selectedTextbox)->xInLine > getLineSizeX())
+	if (textBox->get(selectedTextbox)->xInLine > getLineSizeX())
 	{
-		textBox->at(selectedTextbox)->xInLine = 0;
-		textBox->at(selectedTextbox)->line++;
+		textBox->get(selectedTextbox)->xInLine = 0;
+		textBox->get(selectedTextbox)->line++;
 	}
 
 
-	if (textBox->at(selectedTextbox)->line > MAX_LINES)
+	if (textBox->get(selectedTextbox)->line > MAX_LINES)
 	{
 		// PAUSE,CLEAR,START OVER
 		waitingForButtonForNewPage = true;
@@ -1340,7 +1340,7 @@ void TextManager::drawLetter()
 
 	// END INSERT SPACE===================================================================
 	// /TEXT_update_textbox_sprite_textures();
-	textBox->at(selectedTextbox)->redraw = true;
+	textBox->get(selectedTextbox)->redraw = true;
 }
 
 void TextManager::parseOption()
@@ -1416,14 +1416,14 @@ void TextManager::parseOption()
 	else if (optionBuffer == "0" || optionBuffer == "BOTTOM")
 	{
 		selectedTextbox = BOTTOM;
-		getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity); // if is not null!! else yuu
+		getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity); // if is not null!! else yuu
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "1" || optionBuffer == "TOP")
 	{
 		selectedTextbox = TOP;
 		topBoxActivated = true;
-		getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+		getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "PAUSE")
@@ -1432,209 +1432,209 @@ void TextManager::parseOption()
 	}
 	else if (optionBuffer == "BOB")
 	{
-		font = OKFont::font_bob_16;
+		font = BobFont::font_bob_16;
 	}
 	else if (optionBuffer == "SMALL")
 	{
-		font = OKFont::font_small_16;
+		font = BobFont::font_small_16;
 	}
 	else if (optionBuffer == "NORMAL")
 	{
-		font = OKFont::font_normal_16;
+		font = BobFont::font_normal_16;
 	}
 	else if (optionBuffer == "BLACK")
 	{
-		textBGColor = OKColor::white;
-		textColor = OKColor::black;
-		textAAColor = OKColor::lightGray;
-		textShadowColor = OKColor::gray;
+		textBGColor = BobColor::white;
+		textColor = BobColor::black;
+		textAAColor = BobColor::lightGray;
+		textShadowColor = BobColor::gray;
 	}
 	else if (optionBuffer == "WHITE")
 	{
-		textBGColor = OKColor::black;
-		textColor = OKColor::white;
-		textAAColor = OKColor::gray;
-		textShadowColor = OKColor::darkGray;
+		textBGColor = BobColor::black;
+		textColor = BobColor::white;
+		textAAColor = BobColor::gray;
+		textShadowColor = BobColor::darkGray;
 	}
 	else if (optionBuffer == "GRAY")
 	{
-		textColor = OKColor::gray;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::gray;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkGray;
+			textAAColor = BobColor::darkGray;
 		}
 		else
 		{
-			textAAColor = OKColor::lightGray;
+			textAAColor = BobColor::lightGray;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerGray;
+			textShadowColor = BobColor::darkerGray;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightGray;
+			textShadowColor = BobColor::lightGray;
 		}
 	}
 	else if (optionBuffer == "RED")
 	{
-		textColor = OKColor::red;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::red;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkRed;
+			textAAColor = BobColor::darkRed;
 		}
 		else
 		{
-			textAAColor = OKColor::lightRed;
+			textAAColor = BobColor::lightRed;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerRed;
+			textShadowColor = BobColor::darkerRed;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightRed;
+			textShadowColor = BobColor::lightRed;
 		}
 	}
 	else if (optionBuffer == "ORANGE")
 	{
-		textColor = OKColor::orange;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::orange;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkOrange;
+			textAAColor = BobColor::darkOrange;
 		}
 		else
 		{
-			textAAColor = OKColor::lightOrange;
+			textAAColor = BobColor::lightOrange;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerOrange;
+			textShadowColor = BobColor::darkerOrange;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightOrange;
+			textShadowColor = BobColor::lightOrange;
 		}
 	}
 	else if (optionBuffer == "YELLOW")
 	{
-		textColor = OKColor::yellow;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::yellow;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkYellow;
+			textAAColor = BobColor::darkYellow;
 		}
 		else
 		{
-			textAAColor = OKColor::lightYellow;
+			textAAColor = BobColor::lightYellow;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerYellow;
+			textShadowColor = BobColor::darkerYellow;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightYellow;
+			textShadowColor = BobColor::lightYellow;
 		}
 	}
 	else if (optionBuffer == "GREEN")
 	{
-		textColor = OKColor::green;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::green;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkGreen;
+			textAAColor = BobColor::darkGreen;
 		}
 		else
 		{
-			textAAColor = OKColor::lightGreen;
+			textAAColor = BobColor::lightGreen;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerGreen;
+			textShadowColor = BobColor::darkerGreen;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightGreen;
+			textShadowColor = BobColor::lightGreen;
 		}
 	}
 	else if (optionBuffer == "BLUE")
 	{
-		textColor = OKColor::blue;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::blue;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkBlue;
+			textAAColor = BobColor::darkBlue;
 		}
 		else
 		{
-			textAAColor = OKColor::lightBlue;
+			textAAColor = BobColor::lightBlue;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerBlue;
+			textShadowColor = BobColor::darkerBlue;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightBlue;
+			textShadowColor = BobColor::lightBlue;
 		}
 	}
 	else if (optionBuffer == "PURPLE")
 	{
-		textColor = OKColor::purple;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::purple;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkPurple;
+			textAAColor = BobColor::darkPurple;
 		}
 		else
 		{
-			textAAColor = OKColor::lightPurple;
+			textAAColor = BobColor::lightPurple;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerPurple;
+			textShadowColor = BobColor::darkerPurple;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightPurple;
+			textShadowColor = BobColor::lightPurple;
 		}
 	}
 	else if (optionBuffer == "PINK")
 	{
-		textColor = OKColor::pink;
-		if (textBGColor == OKColor::black)
+		textColor = BobColor::pink;
+		if (textBGColor == BobColor::black)
 		{
-			textAAColor = OKColor::darkPink;
+			textAAColor = BobColor::darkPink;
 		}
 		else
 		{
-			textAAColor = OKColor::lightPink;
+			textAAColor = BobColor::lightPink;
 		}
-		if (textBGColor == OKColor::black)
+		if (textBGColor == BobColor::black)
 		{
-			textShadowColor = OKColor::darkerPink;
+			textShadowColor = BobColor::darkerPink;
 		}
 		else
 		{
-			textShadowColor = OKColor::lightPink;
+			textShadowColor = BobColor::lightPink;
 		}
 	}
 	else if (optionBuffer == "BGBLACK")
 	{
-		textBGColor = OKColor::black;
+		textBGColor = BobColor::black;
 		// TODO: if(textColor==COLOR)textAAColor=DARKCOLOR;
 	}
 	else if (optionBuffer == "BGWHITE")
 	{
-		textBGColor = OKColor::white;
+		textBGColor = BobColor::white;
 		// TODO: if(textColor==COLOR)textAAColor=LIGHTCOLOR;
 	}
 
 	else if (optionBuffer == "CAM0" || optionBuffer == "CAMBOTTOM")
 	{
-		getCameraman()->setTarget(textBox->at(BOTTOM)->spriteWindowEntity);
+		getCameraman()->setTarget(textBox->get(BOTTOM)->spriteWindowEntity);
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "CAM1" || optionBuffer == "CAMTOP")
 	{
-		getCameraman()->setTarget(textBox->at(TOP)->spriteWindowEntity);
+		getCameraman()->setTarget(textBox->get(TOP)->spriteWindowEntity);
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "CLOSE1" || optionBuffer == "CLOSETOP")
@@ -1644,16 +1644,16 @@ void TextManager::parseOption()
 	}
 	else if (optionBuffer == "SHAKE1SEC")
 	{
-		textBox->at(selectedTextbox)->shakeTicksXTotal = 1000;
-		//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
+		textBox->get(selectedTextbox)->shakeTicksXTotal = 1000;
+		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
 	}
 	else if (optionBuffer == "SHAKE2SEC")
 	{
-		textBox->at(selectedTextbox)->shakeTicksXTotal = 2000;
-		//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
+		textBox->get(selectedTextbox)->shakeTicksXTotal = 2000;
+		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
 	}
 
-	else if (OKString::startsWith(optionBuffer, "SHAKE:"))
+	else if (String::startsWith(optionBuffer, "SHAKE:"))
 	{
 		int ticks = 0;
 		try
@@ -1664,24 +1664,24 @@ void TextManager::parseOption()
 		{
 			log.error("Could not parse ticks in optionBuffer");
 		}
-		textBox->at(selectedTextbox)->shakeTicksXTotal = ticks;
-		//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
+		textBox->get(selectedTextbox)->shakeTicksXTotal = ticks;
+		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
 	}
 	else
 	{
 		if (optionBuffer == "CLEAR")
 		{
-			textBox->at(selectedTextbox)->line = 0;
-			textBox->at(selectedTextbox)->xInLine = 0;
-			textBox->at(selectedTextbox)->clearByteArray();
+			textBox->get(selectedTextbox)->line = 0;
+			textBox->get(selectedTextbox)->xInLine = 0;
+			textBox->get(selectedTextbox)->clearByteArray();
 			// /TEXT_update_textbox_sprite_textures();
-			textBox->at(selectedTextbox)->redraw = true;
+			textBox->get(selectedTextbox)->redraw = true;
 		}
 		else if (optionBuffer == "NEXTLINE" || optionBuffer == "NEWLINE")
 		{
-			textBox->at(selectedTextbox)->xInLine = 0;
-			textBox->at(selectedTextbox)->line++;
-			if (textBox->at(selectedTextbox)->line > MAX_LINES)
+			textBox->get(selectedTextbox)->xInLine = 0;
+			textBox->get(selectedTextbox)->line++;
+			if (textBox->get(selectedTextbox)->line > MAX_LINES)
 			{
 				waitingForButtonForNewPage = true;
 			}
@@ -1711,7 +1711,7 @@ void TextManager::parseOption()
 			delay = true;
 			delayTicks = 2000;
 		}
-		else if (OKString::startsWith(optionBuffer, "DELAY:"))
+		else if (String::startsWith(optionBuffer, "DELAY:"))
 		{
 			int ticks = 0;
 			try
@@ -1725,7 +1725,7 @@ void TextManager::parseOption()
 			delay = true;
 			delayTicks = ticks;
 		}
-		else if (OKString::startsWith(optionBuffer, "TICKSPERLETTER:"))
+		else if (String::startsWith(optionBuffer, "TICKSPERLETTER:"))
 		{
 			int ticks = 0;
 			try
@@ -1751,111 +1751,111 @@ void TextManager::parseOption()
 		{
 			if (getPlayer() != nullptr)
 			{
-				textBox->at(selectedTextbox)->setSpriteWindow(getPlayer(), nullptr, "");
-				getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+				textBox->get(selectedTextbox)->setSpriteWindow(getPlayer(), nullptr, "");
+				getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 			}
 			else
 			{
-				textBox->at(selectedTextbox)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
+				textBox->get(selectedTextbox)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
 			}
 		}
 		else if (optionBuffer == "MOM")
 		{
-			sp<Entity> e = getCurrentMap()->getEntityByName("mom");
+			Entity* e = getCurrentMap()->getEntityByName("mom");
 			if (e == nullptr)
 			{
 				return;
 			}
-			textBox->at(selectedTextbox)->setSpriteWindow(e, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(e, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "DAD")
 		{
-			sp<Entity> e = getCurrentMap()->getEntityByName("dad");
+			Entity* e = getCurrentMap()->getEntityByName("dad");
 			if (e == nullptr)
 			{
 				return;
 			}
-			textBox->at(selectedTextbox)->setSpriteWindow(e, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(e, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "BROTHER")
 		{
-			sp<Entity> e = getCurrentMap()->getEntityByName("brother");
+			Entity* e = getCurrentMap()->getEntityByName("brother");
 			if (e == nullptr)
 			{
 				return;
 			}
-			textBox->at(selectedTextbox)->setSpriteWindow(e, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(e, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC1")
 		{
-			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity1, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity1, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC2")
 		{
-			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity2, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity2, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC3")
 		{
-			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity3, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity3, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC4")
 		{
-			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity4, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity4, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC5")
 		{
-			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity5, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity5, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC6")
 		{
-			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity6, nullptr, "");
-			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
+			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity6, nullptr, "");
+			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
-		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOENTITY:"))
+		else if (String::startsWith(optionBuffer, "SETSPRITEBOX0TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			sp<Entity> e = getCurrentMap()->getEntityByName(s);
+			Entity* e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
-				textBox->at(0)->setSpriteWindow(e, nullptr, "");
+				textBox->get(0)->setSpriteWindow(e, nullptr, "");
 			}
 		}
-		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOENTITY:"))
+		else if (String::startsWith(optionBuffer, "SETSPRITEBOX1TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			sp<Entity> e = getCurrentMap()->getEntityByName(s);
+			Entity* e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
-				textBox->at(1)->setSpriteWindow(e, nullptr, "");
+				textBox->get(1)->setSpriteWindow(e, nullptr, "");
 			}
 		}
-		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOSPRITE:"))
+		else if (String::startsWith(optionBuffer, "SETSPRITEBOX0TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			sp<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
+			Sprite* e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
-				textBox->at(0)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
+				textBox->get(0)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
 			}
 		}
-		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOSPRITE:"))
+		else if (String::startsWith(optionBuffer, "SETSPRITEBOX1TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			sp<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
+			Sprite* e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
-				textBox->at(1)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
+				textBox->get(1)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
 			}
 		}
-		else if (OKString::startsWith(optionBuffer, "PITCH:"))
+		else if (String::startsWith(optionBuffer, "PITCH:"))
 		{
 			float pitch = 1.0f;
 			try
@@ -1867,9 +1867,9 @@ void TextManager::parseOption()
 				log.error("Could not parse pitch");
 			}
 
-			textBox->at(selectedTextbox)->voicePitch = pitch;
+			textBox->get(selectedTextbox)->voicePitch = pitch;
 		}
-		else if (OKString::startsWith(optionBuffer, "Q:"))
+		else if (String::startsWith(optionBuffer, "Q:"))
 		{
 			getAnswerToQuestionWithQuestionBox(optionBuffer, optionLength);
 		}
@@ -1890,7 +1890,7 @@ void TextManager::parseOption()
 	}
 }
 
-void TextManager::dialogue(sp<Dialogue> d)
+void TextManager::dialogue(Dialogue* d)
 {
 	// TODO
 

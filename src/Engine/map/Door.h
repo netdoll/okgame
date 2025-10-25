@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 class DoorData;
@@ -31,7 +31,7 @@ public:
 	bool showActionIcon = true;
 
 
-	Door(sp<Engine> g, sp<DoorData> doorAsset, sp<Map> m);
+	Door(Engine* g, DoorData* doorAsset, Map* m);
 
 
 	bool isOpen();
@@ -63,8 +63,8 @@ public:
 	virtual void renderDebugInfo() override;
 
 
-	virtual sp<EntityData> getData() override;//was return DoorData but covarient problem
-	sp<DoorData> getDoorData();
+	virtual EntityData* getData() override;//was return DoorData but covarient problem
+	DoorData* getDoorData();
 
 
 	float arrivalXPixelsHQ();

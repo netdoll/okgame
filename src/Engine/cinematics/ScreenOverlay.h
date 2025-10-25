@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -30,7 +30,7 @@ public:
 
 	static Logger log;
 
-	sp<OKColor> color = OKColor::black;
+	BobColor* color = BobColor::black;
 
 
 private:
@@ -57,18 +57,18 @@ private:
 	/// speed should be low, 0.0f01f * ticks(16) = 0.0f16f* 60 fps = 0.96 seconds to full opacity.
 	/// </summary>
 public:
-	ScreenOverlay(sp<Engine> g);
+	ScreenOverlay(Engine* g);
 
 
 	void init();
 
 
-	void doTransition(sp<OKColor> color, float fromAlpha, float toAlpha, int ticks);
+	void doTransition(BobColor* color, float fromAlpha, float toAlpha, int ticks);
 
 
-	void doToAndFromTransition(sp<OKColor> color, int ticks, float toAlpha);
+	void doToAndFromTransition(BobColor* color, int ticks, float toAlpha);
 
-	void setInstantOverlay(sp<OKColor> color, float alpha);
+	void setInstantOverlay(BobColor* color, float alpha);
 
 
 	void update();

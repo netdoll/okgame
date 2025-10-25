@@ -4,18 +4,18 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
 
-class NDButton : public StatusBarButton
+class NDButton : public BobStatusBarButton
 {
 public:
 
 	static Logger log;
 
-	NDButton(sp<BGClientEngine> g);
+	NDButton(BGClientEngine* g);
 
 	virtual void init() override;
 

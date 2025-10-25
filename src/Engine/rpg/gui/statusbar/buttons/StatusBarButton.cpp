@@ -9,35 +9,35 @@
 
 
 
-Logger StatusBarButton::log = Logger("StatusBarButton");
+Logger BobStatusBarButton::log = Logger("BobStatusBarButton");
 
-StatusBarButton::StatusBarButton()
+BobStatusBarButton::BobStatusBarButton()
 { //=========================================================================================================================
 }
 
-StatusBarButton::StatusBarButton(sp<BGClientEngine> g)
+BobStatusBarButton::BobStatusBarButton(BGClientEngine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
 
-void StatusBarButton::init()
+void BobStatusBarButton::init()
 { //=========================================================================================================================
 }
 
-void StatusBarButton::setOffsets()
+void BobStatusBarButton::setOffsets()
 { //=========================================================================================================================
 }
 
-void StatusBarButton::clicked()
+void BobStatusBarButton::clicked()
 { //=========================================================================================================================
 }
 
-bool StatusBarButton::isAssociatedMenuActive()
+bool BobStatusBarButton::isAssociatedMenuActive()
 { //=========================================================================================================================
 	return false;
 }
 
-void StatusBarButton::update()
+void BobStatusBarButton::update()
 { //=========================================================================================================================
 
 	if (enabled == false)
@@ -47,7 +47,7 @@ void StatusBarButton::update()
 
 	setOffsets();
 
-	if (getControlsManager()->getMouseX() > clickX0 && getControlsManager()->getMouseX() < clickX1 && getControlsManager()->getMouseY() > (GLUtils::getViewportHeight() - StatusBar::sizeY))
+	if (getControlsManager()->getMouseX() > clickX0 && getControlsManager()->getMouseX() < clickX1 && getControlsManager()->getMouseY() > (GLUtils::getViewportHeight() - BobStatusBar::sizeY))
 	{
 		glow = true;
 		glowAlpha = 1.0f;
@@ -111,12 +111,12 @@ void StatusBarButton::update()
 	}
 }
 
-void StatusBarButton::setEnabled(bool b)
+void BobStatusBarButton::setEnabled(bool b)
 { //=========================================================================================================================
 	enabled = b;
 }
 
-void StatusBarButton::render(int layer)
+void BobStatusBarButton::render(int layer)
 { //=========================================================================================================================
 
 	if (enabled == false)
@@ -133,20 +133,20 @@ void StatusBarButton::render(int layer)
 	{
 		if (glow)
 		{
-			GLUtils::drawTexture(StatusBar::glowTexture, (float)glowX0, (float)glowX1, (float)glowY0, (float)glowY1, glowAlpha, GLUtils::FILTER_LINEAR);
+			GLUtils::drawTexture(BobStatusBar::glowTexture, (float)glowX0, (float)glowX1, (float)glowY0, (float)glowY1, glowAlpha, GLUtils::FILTER_LINEAR);
 		}
 
-		GLUtils::drawTexture(texture, (float)offsetX0, (float)offsetX1, (float)offsetY0 + pressedOffsetY, (float)(StatusBar::sizeY - offsetY1) + pressedOffsetY, 1.0f, GLUtils::FILTER_LINEAR);
+		GLUtils::drawTexture(texture, (float)offsetX0, (float)offsetX1, (float)offsetY0 + pressedOffsetY, (float)(BobStatusBar::sizeY - offsetY1) + pressedOffsetY, 1.0f, GLUtils::FILTER_LINEAR);
 
 		if (glow)
 		{
-			GLUtils::drawTexture(StatusBar::glowTexture, (float)glowX0, (float)glowX1, (float)glowY0, (float)glowY1, 0.2f, GLUtils::FILTER_LINEAR);
+			GLUtils::drawTexture(BobStatusBar::glowTexture, (float)glowX0, (float)glowX1, (float)glowY0, (float)glowY1, 0.2f, GLUtils::FILTER_LINEAR);
 		}
 	}
 
 	if (layer == 1)
 	{
-		GLUtils::drawTexture(StatusBar::dividerTexture, (float)dividerX, (float)dividerX + 3, 0, (float)StatusBar::sizeY - 1, 1.0f, GLUtils::FILTER_LINEAR);
+		GLUtils::drawTexture(BobStatusBar::dividerTexture, (float)dividerX, (float)dividerX + 3, 0, (float)BobStatusBar::sizeY - 1, 1.0f, GLUtils::FILTER_LINEAR);
 	}
 }
 

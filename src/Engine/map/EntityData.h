@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -67,18 +67,18 @@ private:
 	
 	bool pullPlayer = false;
 	bool pushPlayer = false;
-	sp<vector<string>>behaviorList;// = ms<vector><string>();
-	sp<vector<string>>connectionTYPEIDList;// = ms<vector><string>();
+	ArrayList<string>* behaviorList = new ArrayList<string>();
+	ArrayList<string>* connectionTYPEIDList = new ArrayList<string>();
 	string comment = "";
 	bool isNPC = false; //only used for export from tools for now to determine whether to spawn a character or an entity. determined from the SPRITE.getIsNPC, which is where it should be.
 
-	sp<EventData> eventData = nullptr;
+	EventData* eventData = nullptr;
 
 public:
 	EntityData();
 
-	EntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, sp<EventData> eventData = nullptr, const string& comment = "");
-	void initEntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, sp<EventData> eventData = nullptr, const string& comment = "");
+	EntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, EventData* eventData = nullptr, const string& comment = "");
+	void initEntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, EventData* eventData = nullptr, const string& comment = "");
 
 	//	
 	//	public void addConnection(String s)
@@ -93,8 +93,8 @@ public:
 	//	}
 
 	virtual string& initFromString(string& t) override;
-	//static sp<EntityData> fromBase64ZippedJSON(const string& b64);
-	//static sp<EntityData> fromJSON(const string& json);
+	//static EntityData* fromBase64ZippedJSON(const string& b64);
+	//static EntityData* fromJSON(const string& json);
 
 	virtual string getTYPEIDString();
 
@@ -137,11 +137,11 @@ public:
 	bool getDontUsePathfinding();
 	bool getPullPlayer();
 	bool getPushPlayer();
-	sp<EventData> getEventData();
+	EventData* getEventData();
 	//int getMapID();
 	//int getStateID();
-	sp<vector<string>> getConnectionTYPEIDList();
-	sp<vector<string>> getBehaviorList();
+	ArrayList<string>* getConnectionTYPEIDList();
+	ArrayList<string>* getBehaviorList();
 
 	//set
 

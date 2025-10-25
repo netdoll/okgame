@@ -14,10 +14,10 @@
 
 
 Logger TextWindow::log = Logger("TextWindow");
-sp<OKTexture> TextWindow::borderTexture = nullptr;
+BobTexture* TextWindow::borderTexture = nullptr;
 
 //=========================================================================================================================
-TextWindow::TextWindow(sp<Engine> g)
+TextWindow::TextWindow(Engine* g)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -33,17 +33,17 @@ void TextWindow::init()
 
 	if (spriteWindowEntity != nullptr)
 	{
-		//delete spriteWindowEntity;
+		delete spriteWindowEntity;
 		spriteWindowEntity = nullptr;
 	}
 
 	if (textBoxTextureByteArray != nullptr)
 	{
-		//delete textBoxTextureByteArray;
+		delete textBoxTextureByteArray;
 		textBoxTextureByteArray = nullptr;
 	}
 
-	textBoxTextureByteArray = ms<ByteArray>(getTextManager()->width * getTextManager()->height * 4);
+	textBoxTextureByteArray = new ByteArray(getTextManager()->width * getTextManager()->height * 4);
 
 
 	//		for(int i=0;i<getTextManager()->textureWidth*getTextManager()->textureHeight;i++)
@@ -66,11 +66,11 @@ void TextWindow::init()
 
 	if (spriteWindowTextureByteArray != nullptr)
 	{
-		//delete spriteWindowTextureByteArray;
+		delete spriteWindowTextureByteArray;
 		spriteWindowTextureByteArray = nullptr;
 	}
 
-	spriteWindowTextureByteArray = ms<ByteArray>(((64) * (64)) * 4);
+	spriteWindowTextureByteArray = new ByteArray(((64) * (64)) * 4);
 
 
 	for (int i = 0; i < (64) * (64); i++)
@@ -147,11 +147,11 @@ void TextWindow::render()
 	float startScrollPosition = (float)getEngine()->getHeight();
 	float finalScrollPosition = getEngine()->getHeight() - totalScaledHeight - 16;
 
-	if (this == getTextManager()->textBox->at(1).get())
+	if (this == getTextManager()->textBox->get(1))
 	{
 		//scroll from top
 		startScrollPosition = (float)0 - totalScaledHeight;
-		finalScrollPosition = (float)0 + StatusBar::sizeY + 16;
+		finalScrollPosition = (float)0 + BobStatusBar::sizeY + 16;
 	}
 	y = (startScrollPosition + (finalScrollPosition - startScrollPosition) * scrollPercent) + shakeY;
 
@@ -265,7 +265,7 @@ void TextWindow::render()
 	//getTextManager()->ttfFont.drawString(x0+48,y1+10-6,label,Color.white);//TODO
 
 
-	if (this == getTextManager()->textBox->at(getTextManager()->selectedTextbox).get())
+	if (this == getTextManager()->textBox->get(getTextManager()->selectedTextbox))
 	{
 		tx0 = 0.0f;
 		tx1 = 1.0f;
@@ -290,7 +290,7 @@ void TextWindow::updateSpriteWindowTexture()
 { //=========================================================================================================================
 
 
-	sp<ByteArray> oldtex = spriteWindowTexture->getTextureData();
+	ByteArray* oldtex = spriteWindowTexture->getTextureData();
 	int size_x = spriteWindowTexture->getTextureWidth();
 	int size_y = spriteWindowTexture->getTextureHeight();
 
@@ -327,7 +327,7 @@ void TextWindow::updateSpriteWindowTexture()
 
 
 	// make 64 * 64 pixel box
-	sp<ByteArray> newtex = ms<ByteArray>(boxXY * boxXY * 4);
+	ByteArray* newtex = new ByteArray(boxXY * boxXY * 4);
 
 	// fill with transparent
 	for (int i = 0; i < boxXY * boxXY * 4; i++)
@@ -453,13 +453,11 @@ void TextWindow::updateSpriteWindowTexture()
 
 	// make texture from new 64*64 array
 
-	//delete spriteWindowTextureByteArray;
-	spriteWindowTextureByteArray = nullptr;
+	delete spriteWindowTextureByteArray;
 	spriteWindowTextureByteArray = newtex;
 
 	spriteBoxTexture->release();
-	//delete spriteBoxTexture;
-	spriteBoxTexture = nullptr;
+	delete spriteBoxTexture;
 	spriteBoxTexture = GLUtils::getTextureFromData("spriteWindow", 64, 64, spriteWindowTextureByteArray);
 
 	/*
@@ -481,7 +479,7 @@ void TextWindow::updateSpriteWindowTexture()
 	 */
 }
 
-void TextWindow::setSpriteWindow(sp<Entity> entity, sp<OKTexture> texture, const string& newLabel)
+void TextWindow::setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel)
 { //=========================================================================================================================
 
 	if (entity != nullptr || texture != nullptr)
@@ -491,14 +489,14 @@ void TextWindow::setSpriteWindow(sp<Entity> entity, sp<OKTexture> texture, const
 		{
 			voicePitch = entity->getVoicePitch();
 
-			if ((dynamic_cast<Player*>(entity.get()) != NULL))
+			if ((dynamic_cast<Player*>(entity) != NULL))
 			{
-				texture = (static_cast<Player*>(entity.get()))->uniqueTexture;
+				texture = (static_cast<Player*>(entity))->uniqueTexture;
 			}
 
-			if ((dynamic_cast<RandomCharacter*>(entity.get()) != NULL))
+			if ((dynamic_cast<RandomCharacter*>(entity) != NULL))
 			{
-				texture = (static_cast<RandomCharacter*>(entity.get()))->uniqueTexture;
+				texture = (static_cast<RandomCharacter*>(entity))->uniqueTexture;
 			}
 
 
@@ -572,8 +570,7 @@ void TextWindow::updateTextureFromByteArray()
 		// TODO: it might actually be more efficient to overwrite the previous texture, the way i had it before, instead of releasing and recreating.
 
 		textBoxTexture->release();
-		//delete textBoxTexture;
-		textBoxTexture = nullptr;
+		delete textBoxTexture;
 		textBoxTexture = GLUtils::getTextureFromData("textBox", getTextManager()->width, getTextManager()->height, textBoxTextureByteArray);
 
 		redraw = false;
@@ -633,12 +630,12 @@ int TextWindow::getPixelValue(int letter_index, int y, int x_in_letter, bool bla
 		return 0;
 	}
 
-	int index = OKFont::getFontPixelValueAtIndex((letter_index * getTextManager()->font->blockHeight * getTextManager()->font->blockWidth) + (y * getTextManager()->font->blockWidth) + x_in_letter, getTextManager()->font);
+	int index = BobFont::getFontPixelValueAtIndex((letter_index * getTextManager()->font->blockHeight * getTextManager()->font->blockWidth) + (y * getTextManager()->font->blockWidth) + x_in_letter, getTextManager()->font);
 
 	return index;
 }
 
-void TextWindow::setPixel(int index, sp<OKColor> c)
+void TextWindow::setPixel(int index, BobColor* c)
 { //=========================================================================================================================
 
 
@@ -648,7 +645,7 @@ void TextWindow::setPixel(int index, sp<OKColor> c)
 	textBoxTextureByteArray->data()[index + 3] = c->ai(); // was 255
 }
 
-sp<ByteArray> OKFont::font_Palette_ByteArray = nullptr;
+ByteArray* BobFont::font_Palette_ByteArray = nullptr;
 
 void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 { //=========================================================================================================================
@@ -679,7 +676,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 
 		if (index != 0)
 		{
-			sp<OKColor> pixelColor = getTextManager()->textColor;
+			BobColor* pixelColor = getTextManager()->textColor;
 			if (index == 0)
 			{
 				pixelColor = getTextManager()->textBGColor;
@@ -701,14 +698,14 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 			if (index > 2)
 			{
 				// get the gray color from the getText palette
-				int byte1 = (int)(OKFont::font_Palette_ByteArray->data()[index * 2 + 0] & 255);
-				//int byte2 = (int)(OKFont::font_Palette_ByteArray[index * 2 + 1] & 255);
+				int byte1 = (int)(BobFont::font_Palette_ByteArray->data()[index * 2 + 0] & 255);
+				//int byte2 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 1] & 255);
 				//int abgr1555 = (byte2 << 8) + byte1;
 				int r = 255 - (int)((((byte1 & 31)) / 32.0f) * 255.0f);
 
 
 				// int r = 255-(int)((((byte1&0b00011111))/32.0f)*255.0f);
-				// Color gray = ms<Color>(b,b,b);
+				// Color gray = new Color(b,b,b);
 
 
 				// now r is the gray value (since r=g=b)
@@ -718,7 +715,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 				{
 					a = 0;
 				}
-				pixelColor = ms<OKColor>(pixelColor->ri(), pixelColor->gi(), pixelColor->bi(), a);
+				pixelColor = new BobColor(pixelColor->ri(), pixelColor->gi(), pixelColor->bi(), a);
 			}
 
 
@@ -729,7 +726,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 				u8 b = (int)(min(255,(int)(pixelColor->bi() + (((float)(h - y) / (float)(h))*255.0f))));
 
 
-				pixelColor = ms<OKColor>(r, g, b);
+				pixelColor = new BobColor(r, g, b);
 			}
 
 
@@ -762,7 +759,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 			// if this value is 1 and the value of x_in_letter+1 is 0, set x_in_letter+1 to 3
 			if (index == 1)
 			{
-				sp<OKColor> shadowColor = getTextManager()->textShadowColor;
+				BobColor* shadowColor = getTextManager()->textShadowColor;
 
 				if (draw2X)
 				{

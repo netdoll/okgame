@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -15,7 +15,7 @@ class ServerObject;
 class DialogueData;
 
 
-class Dialogue : public ServerObject, public std::enable_shared_from_this<Dialogue>
+class Dialogue : public ServerObject
 {
 public:
 
@@ -26,21 +26,21 @@ private:
 	bool doneValue_S = false;
 	long long timeSet = -1;
 
-	sp<DialogueData> data = nullptr;
+	DialogueData* data = nullptr;
 
 
 public:
-	Dialogue(sp<Engine> g, int id);
+	Dialogue(Engine* g, int id);
 
 
-	Dialogue(sp<Engine> g, sp<DialogueData> data);
+	Dialogue(Engine* g, DialogueData* data);
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(sp<DialogueData> data);
+	void setData_S(DialogueData* data);
 
 
-	sp<DialogueData> getData();
+	DialogueData* getData();
 
 	int getID();
 	string& getName();

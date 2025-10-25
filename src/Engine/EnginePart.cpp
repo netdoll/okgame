@@ -11,22 +11,22 @@
 
 Logger EnginePart::log = Logger("EnginePart");
 
-//sp<BGClientEngine> EnginePart::clientGameEngine = nullptr;
-//sp<ControlsManager> EnginePart::controlsManager = nullptr;
+//BGClientEngine* EnginePart::clientGameEngine = nullptr;
+//ControlsManager* EnginePart::controlsManager = nullptr;
 
 EnginePart::EnginePart()
 { //=========================================================================================================================
 }
 
-EnginePart::EnginePart(sp<Engine> g)
+EnginePart::EnginePart(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 
-	//if(g==null)log->error("e is null");
+	//if(g==null)log.error("e is null");
 }
 
 //
-//void EnginePart::setControlsManager(sp<ControlsManager> controlsManager)
+//void EnginePart::setControlsManager(ControlsManager* controlsManager)
 //{
 //	EnginePart::controlsManager = controlsManager;
 //}
@@ -133,63 +133,63 @@ int EnginePart::getMinutesSinceLastHere()
 	return (int)((ticksPassed / 1000) / 60);
 }
 
-sp<Engine> EnginePart::getEngine()
+Engine* EnginePart::getEngine()
 {
 	if(e==nullptr)return Main::gameEngine;
 	return e;
 }
 
-sp<Cameraman> EnginePart::getCameraman()
+Cameraman* EnginePart::getCameraman()
 {
 	return getEngine()->cameraman;
 }
 
-sp<MapManager> EnginePart::getMapManager()
+MapManager* EnginePart::getMapManager()
 {
 	return getEngine()->mapManager;
 }
 
-sp<SpriteManager> EnginePart::getSpriteManager()
+SpriteManager* EnginePart::getSpriteManager()
 {
 	return getEngine()->spriteManager;
 }
 
-sp<ActionManager> EnginePart::getActionManager()
+ActionManager* EnginePart::getActionManager()
 {
 	return getEngine()->actionManager;
 }
 
-sp<TextManager> EnginePart::getTextManager()
+TextManager* EnginePart::getTextManager()
 {
 	return getEngine()->textManager;
 }
 
-sp<AudioManager> EnginePart::getAudioManager()
+AudioManager* EnginePart::getAudioManager()
 {
 	return getEngine()->audioManager;
 }
 
-sp<CaptionManager> EnginePart::getCaptionManager()
+CaptionManager* EnginePart::getCaptionManager()
 {
 	return getEngine()->captionManager;
 }
 
-sp<EventManager> EnginePart::getEventManager()
+EventManager* EnginePart::getEventManager()
 {
 	return getEngine()->eventManager;
 }
 
-sp<CinematicsManager> EnginePart::getCinematicsManager()
+CinematicsManager* EnginePart::getCinematicsManager()
 {
 	return getEngine()->cinematicsManager;
 }
 
-sp<Map> EnginePart::getCurrentMap()
+Map* EnginePart::getCurrentMap()
 {
-	sp<Map> m = getEngine()->mapManager->currentMap;
+	Map* m = getEngine()->mapManager->currentMap;
 //	if (m == nullptr)
 //	{
-//		m = ms<Map>(e, ms<MapData>(-1, "none", 0, 0));
+//		m = new Map(e, new MapData(-1, "none", 0, 0));
 //	}
 	return m;
 }
@@ -197,53 +197,53 @@ sp<Map> EnginePart::getCurrentMap()
 
 
 
-//void EnginePart::setClientGameEngine(sp<BGClientEngine> gameEngine)
+//void EnginePart::setClientGameEngine(BGClientEngine* gameEngine)
 //{
 //	EnginePart::clientGameEngine = gameEngine;
 //}
 
-sp<BGClientEngine> EnginePart::getClientGameEngine()
+BGClientEngine* EnginePart::getClientGameEngine()
 {
 	return Main::gameEngine;
 }
 
-sp<ControlsManager> EnginePart::getControlsManager()
+ControlsManager* EnginePart::getControlsManager()
 {
 	return getEngine()->getControlsManager();
 }
 
 
-sp<Clock> EnginePart::getClock()
+Clock* EnginePart::getClock()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->clock;
 }
 
-sp<GUIManager> EnginePart::getGUIManager()
+GUIManager* EnginePart::getGUIManager()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->guiManager;
 }
 
-sp<StuffMenu> EnginePart::getStuffMenu()
+StuffMenu* EnginePart::getStuffMenu()
 {
 	if (getGUIManager() == nullptr)return nullptr;
 	return getGUIManager()->stuffMenu;
 }
 
-sp<GameStore> EnginePart::getGameStore()
+GameStore* EnginePart::getGameStore()
 {
 	if (getGUIManager() == nullptr)return nullptr;
 	return getGUIManager()->gameStore;
 }
 
-sp<PlayerEditMenu> EnginePart::getPlayerEditMenu()
+PlayerEditMenu* EnginePart::getPlayerEditMenu()
 {
 	if (getGUIManager() == nullptr)return nullptr;
 	return getGUIManager()->playerEditMenu;
 }
 
-sp<Player> EnginePart::getPlayer()
+Player* EnginePart::getPlayer()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->player;
@@ -255,33 +255,33 @@ ND* EnginePart::getND()
 	return getClientGameEngine()->nD;
 }
 
-sp<Wallet> EnginePart::getWallet()
+Wallet* EnginePart::getWallet()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->wallet;
 }
 
-sp<FriendManager> EnginePart::getFriendManager()
+FriendManager* EnginePart::getFriendManager()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->friendManager;
 }
 
-sp<StatusBar> EnginePart::getStatusBar()
+BobStatusBar* EnginePart::getBobStatusBar()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->statusBar;
 }
 
-sp<NotificationManager> EnginePart::getNotificationManager()
+NotificationManager* EnginePart::getNotificationManager()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
-	return getStatusBar()->notificationManager;
+	return getBobStatusBar()->notificationManager;
 }
 
-sp<TCPServerConnection> EnginePart::getServerConnection()
+TCPServerConnection* EnginePart::getServerConnection()
 {
-	return OKNet::tcpServerConnection;
+	return &BobNet::tcpServerConnection;
 }
 
 GameSave EnginePart::getGameSave()
@@ -290,7 +290,7 @@ GameSave EnginePart::getGameSave()
 }
 
 //=========================================================================================================================
-bool EnginePart::udpPeerMessageReceived(sp<UDPPeerConnection> c, string e)
+bool EnginePart::udpPeerMessageReceived(UDPPeerConnection* c, string e)
 {//=========================================================================================================================
 
 	string s = e;

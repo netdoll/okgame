@@ -1,0 +1,249 @@
+[submodule "lib/boost"]
+	path = lib/boost
+	url = https://github.com/boostorg/boost
+[submodule "lib/CTPL"]
+	path = lib/CTPL
+	url = https://github.com/vit-vit/CTPL
+[submodule "lib/glew"]
+	path = lib/glew
+	url = https://github.com/nigels-com/glew
+[submodule "lib/GWEN"]
+	path = lib/GWEN
+	url = https://github.com/robertpelloni/GWEN
+[submodule "lib/sigar"]
+	path = lib/sigar
+	url = https://github.com/hyperic/sigar
+[submodule "lib/imgui"]
+	path = lib/imgui
+	url = https://github.com/ocornut/imgui
+[submodule "lib/libmodplug"]
+	path = lib/libmodplug
+	url = https://github.com/Konstanty/libmodplug
+[submodule "lib/lz4-java"]
+	path = lib/lz4-java
+	url = https://github.com/lz4/lz4-java
+[submodule "lib/MicroPather"]
+	path = lib/MicroPather
+	url = https://github.com/robertpelloni/MicroPather
+[submodule "lib/miniz"]
+	path = lib/miniz
+	url = https://github.com/richgel999/miniz
+[submodule "lib/MODPlay"]
+	path = lib/MODPlay
+	url = https://github.com/prochazkaml/MODPlay
+[submodule "lib/nanogui"]
+	path = lib/nanogui
+	url = https://github.com/wjakob/nanogui
+[submodule "lib/nanogui-sdl"]
+	path = lib/nanogui-sdl
+	url = https://gitlab.com/MrPepperoni/nanogui-sdl
+[submodule "lib/nanovg"]
+	path = lib/nanovg
+	url = https://github.com/memononen/nanovg
+[submodule "lib/nngui"]
+	path = lib/nngui
+	url = https://github.com/draekko/nngui
+[submodule "lib/poco"]
+	path = lib/poco
+	url = https://github.com/pocoproject/poco
+[submodule "lib/SDL"]
+	path = lib/SDL
+	url = https://github.com/libsdl-org/SDL
+[submodule "lib/SDL_image"]
+	path = lib/SDL_image
+	url = https://github.com/libsdl-org/SDL_image
+[submodule "lib/SDL_ttf"]
+	path = lib/SDL_ttf
+	url = https://github.com/libsdl-org/SDL_ttf
+[submodule "lib/SDL_mixer"]
+	path = lib/SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer
+[submodule "lib/SDL_net"]
+	path = lib/SDL_net
+	url = https://github.com/libsdl-org/SDL_net
+[submodule "lib/sdl2-compat"]
+	path = lib/sdl2-compat
+	url = https://github.com/libsdl-org/sdl2-compat
+[submodule "lib/SDL_rtf"]
+	path = lib/SDL_rtf
+	url = https://github.com/libsdl-org/SDL_rtf
+[submodule "lib/libtiff"]
+	path = lib/libtiff
+	url = https://github.com/libsdl-org/libtiff
+[submodule "lib/SDL_gesture"]
+	path = lib/SDL_gesture
+	url = https://github.com/libsdl-org/SDL_gesture
+[submodule "lib/Maelstrom"]
+	path = lib/Maelstrom
+	url = https://github.com/libsdl-org/Maelstrom
+[submodule "lib/SDL_native_midi"]
+	path = lib/SDL_native_midi
+	url = https://github.com/libsdl-org/SDL_native_midi
+[submodule "lib/jpeg"]
+	path = lib/jpeg
+	url = https://github.com/libsdl-org/jpeg
+[submodule "lib/harfbuzz"]
+	path = lib/harfbuzz
+	url = https://github.com/libsdl-org/harfbuzz
+[submodule "lib/freetype"]
+	path = lib/freetype
+	url = https://github.com/libsdl-org/freetype
+[submodule "lib/mpg123"]
+	path = lib/mpg123
+	url = https://github.com/libsdl-org/mpg123
+[submodule "lib/dav1d"]
+	path = lib/dav1d
+	url = https://github.com/libsdl-org/dav1d
+[submodule "lib/libjxl"]
+	path = lib/libjxl
+	url = https://github.com/libsdl-org/libjxl
+[submodule "lib/aom"]
+	path = lib/aom
+	url = https://github.com/libsdl-org/aom
+[submodule "lib/highway"]
+	path = lib/highway
+	url = https://github.com/libsdl-org/highway
+[submodule "lib/libavif"]
+	path = lib/libavif
+	url = https://github.com/libsdl-org/libavif
+[submodule "lib/libpng"]
+	path = lib/libpng
+	url = https://github.com/libsdl-org/libpng
+[submodule "lib/flac"]
+	path = lib/flac
+	url = https://github.com/libsdl-org/flac
+[submodule "lib/game-music-emu"]
+	path = lib/game-music-emu
+	url = https://github.com/libsdl-org/game-music-emu
+[submodule "lib/stb"]
+	path = lib/stb
+	url = https://github.com/libsdl-org/stb
+[submodule "lib/plutovg"]
+	path = lib/plutovg
+	url = https://github.com/libsdl-org/plutovg
+[submodule "lib/libxmp"]
+	path = lib/libxmp
+	url = https://github.com/libsdl-org/libxmp
+[submodule "lib/libwebp"]
+	path = lib/libwebp
+	url = https://github.com/libsdl-org/libwebp
+[submodule "lib/plutosvg"]
+	path = lib/plutosvg
+	url = https://github.com/libsdl-org/plutosvg
+[submodule "lib/vorbis"]
+	path = lib/vorbis
+	url = https://github.com/libsdl-org/vorbis
+[submodule "lib/brotli"]
+	path = lib/brotli
+	url = https://github.com/libsdl-org/brotli
+[submodule "lib/WavPack"]
+	path = lib/WavPack
+	url = https://github.com/libsdl-org/WavPack
+[submodule "lib/opusfile"]
+	path = lib/opusfile
+	url = https://github.com/libsdl-org/opusfile
+[submodule "lib/opus"]
+	path = lib/opus
+	url = https://github.com/libsdl-org/opus
+[submodule "lib/ogg"]
+	path = lib/ogg
+	url = https://github.com/libsdl-org/ogg
+[submodule "lib/zlib"]
+	path = lib/zlib
+	url = https://github.com/libsdl-org/zlib
+[submodule "lib/tremor"]
+	path = lib/tremor
+	url = https://github.com/libsdl-org/tremor
+[submodule "lib/SDL2_gfx"]
+	path = lib/SDL2_gfx
+	url = https://github.com/giroletm/SDL2_gfx
+[submodule "lib/glad"]
+	path = lib/glad
+	url = https://github.com/Dav1dde/glad
+[submodule "lib/glfw"]
+	path = lib/glfw
+	url = https://github.com/glfw/glfw
+[submodule "lib/NanoVG"]
+	path = lib/NanoVG
+	url = https://github.com/memononen/NanoVG
+[submodule "lib/cppcodec"]
+	path = lib/cppcodec
+	url = https://github.com/tplgy/cppcodec
+[submodule "lib/Snippets"]
+	path = lib/Snippets
+	url = https://github.com/DanielGibson/Snippets
+[submodule "lib/md5-c"]
+	path = lib/md5-c
+	url = https://github.com/Zunawe/md5-c
+[submodule "lib/paulxstretch"]
+	path = lib/paulxstretch
+	url = https://github.com/essej/paulxstretch
+[submodule "lib/soundtouch"]
+	path = lib/soundtouch
+	url = https://codeberg.org/soundtouch/soundtouch
+[submodule "lib/mpv"]
+	path = lib/mpv
+	url = https://github.com/mpv-player/mpv
+[submodule "lib/raylib"]
+	path = lib/raylib
+	url = https://github.com/raysan5/raylib
+[submodule "lib/lvgl"]
+	path = lib/lvgl
+	url = https://github.com/lvgl/lvgl
+[submodule "lib/sumatrapdf"]
+	path = lib/sumatrapdf
+	url = https://github.com/sumatrapdfreader/sumatrapdf
+[submodule "lib/CNTK"]
+	path = lib/CNTK
+	url = https://github.com/microsoft/CNTK
+[submodule "lib/libusb"]
+	path = lib/libusb
+	url = https://github.com/libusb/libusb
+[submodule "lib/UACME"]
+	path = lib/UACME
+	url = https://github.com/hfiref0x/UACME
+[submodule "lib/Nuklear"]
+	path = lib/Nuklear
+	url = https://github.com/Immediate-Mode-UI/Nuklear
+[submodule "lib/Craft"]
+	path = lib/Craft
+	url = https://github.com/fogleman/Craft
+[submodule "lib/libretro-super"]
+	path = lib/libretro-super
+	url = https://github.com/libretro/libretro-super
+[submodule "lib/melonDS"]
+	path = lib/melonDS
+	url = https://github.com/melonDS-emu/melonDS
+[submodule "lib/desmume"]
+	path = lib/desmume
+	url = https://github.com/TASEmulators/desmume
+[submodule "lib/Genesis-Plus-GX"]
+	path = lib/Genesis-Plus-GX
+	url = https://github.com/ekeeke/Genesis-Plus-GX
+[submodule "lib/snes9x2010"]
+	path = lib/snes9x2010
+	url = https://github.com/libretro/snes9x2010
+[submodule "lib/mgba"]
+	path = lib/mgba
+	url = https://github.com/libretro/mgba
+[submodule "lib/CLove"]
+	path = lib/CLove
+	url = https://gitlab.com/Murii/CLove
+[submodule "lib/libretro-database"]
+	path = lib/libretro-database
+	url = https://github.com/libretro/libretro-database
+[submodule "lib/vbam-libretro"]
+	path = lib/vbam-libretro
+	url = https://github.com/libretro/vbam-libretro
+[submodule "lib/RetroArch"]
+	path = lib/RetroArch
+	url = https://github.com/libretro/RetroArch
+[submodule "lib/retroarch-joypad-autoconfig"]
+	path = lib/retroarch-joypad-autoconfig
+	url = https://github.com/libretro/retroarch-joypad-autoconfig
+[submodule "lib/FBNeo"]
+	path = lib/FBNeo
+	url = https://github.com/libretro/FBNeo
+[submodule "lib/retroarch-assets"]
+	path = lib/retroarch-assets
+	url = https://github.com/libretro/retroarch-assets

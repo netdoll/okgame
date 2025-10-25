@@ -21,16 +21,16 @@ int Light::DRAWING = 1;
 int Light::OVERLAPS_SOMETHING = 2;
 int Light::DRAWN = 3;
 
-Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight)
+Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight)
 { //=========================================================================================================================
 
 
 	this->e = g;
-	sp<LightData> data = ms<LightData>(-1, "", "", name, mapXPixels1X, mapYPixels1X, widthPixels1X, heightPixels1X, red, green, blue, alpha, radiusPixels1X, blendFalloff, decayExponent, focusRadius1X, isDayLight, isNightLight, false, false, false, -1, -1, 0, 0, false, false);
+	LightData* data = new LightData(-1, "", "", name, mapXPixels1X, mapYPixels1X, widthPixels1X, heightPixels1X, red, green, blue, alpha, radiusPixels1X, blendFalloff, decayExponent, focusRadius1X, isDayLight, isNightLight, false, false, false, -1, -1, 0, 0, false, false);
 	initEntity(data);
 	initLight(data);
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 
 
 	isScreenLight = true;
@@ -38,7 +38,7 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 
 	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == false)
 	{
-		sp<OKFile> textureFile = ms<OKFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
+		BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + getFileName());
 		if (textureFile->exists())
 		{
 			MapManager::setLightTexturePNGFileExists_S(getFileName(),true);
@@ -53,9 +53,9 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 
 	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == true)
 	{
-		sp<OKFile> textureFile = nullptr;
+		BobFile* textureFile = nullptr;
 
-		textureFile = ms<OKFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
+		textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + getFileName());
 
 
 		if (textureFile->exists() == false)
@@ -64,10 +64,10 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 		}
 
 
-		sp<OKTexture> t = nullptr;
+		BobTexture* t = nullptr;
 
-		if (getMapManager()->lightTextureHashMap->containsKey(getFileName()))
-			t = getMapManager()->lightTextureHashMap->get(getFileName());
+		if (getMapManager()->lightTextureHashMap.containsKey(getFileName()))
+			t = getMapManager()->lightTextureHashMap.get(getFileName());
 
 		
 
@@ -78,7 +78,7 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 			//				if(t==null || t==GLUtils.boxTexture)
 			//				{
 			//
-			//					log->error("Light graphic could not be created. Retrying...");
+			//					log.error("Light graphic could not be created. Retrying...");
 			//
 			//					createLightTexturePNG(FileUtils.cacheDir+"l"+FileUtils.slash+getFileName());
 			//
@@ -95,7 +95,7 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 			//
 			//				}
 
-			getMapManager()->lightTextureHashMap->put(getFileName(), t);
+			getMapManager()->lightTextureHashMap.put(getFileName(), t);
 		}
 
 
@@ -103,7 +103,7 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 	}
 }
 
-Light::Light(sp<Engine> g, sp<LightData> lightAsset, sp<Map> m)
+Light::Light(Engine* g, LightData* lightAsset, Map* m)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -112,10 +112,10 @@ Light::Light(sp<Engine> g, sp<LightData> lightAsset, sp<Map> m)
 	initEntity(lightAsset);
 	initLight(lightAsset);
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
-void Light::initLight(sp<LightData> lightAsset)
+void Light::initLight(LightData* lightAsset)
 {
 	this->data = lightAsset;
 
@@ -276,10 +276,10 @@ bool Light::checkEdgeAgainstHitLayerAndOtherLightsInDirection(int dir)
 	float myBottom = getMiddleY() + getRadiusPixelsHQ() / 2;
 
 
-	for (int i = 0; i < (int)getMap()->currentState->lightList->size(); i++)
+	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
 	{
-		sp<Light> l = getMap()->currentState->lightList->at(i);
-		if (l.get() != this && l->getName().find("mover") != string::npos)//&& l->getName() != getName()
+		Light* l = getMap()->currentState->lightList.get(i);
+		if (l != this  && l->getName().find("mover") != string::npos)//&& l->getName() != getName()
 		{
 			int r = 8 + Math::randLessThan(16);
 
@@ -644,7 +644,7 @@ bool Light::renderLight(float screenX0, float screenX1, float screenY0, float sc
 	float y1;
 
 
-	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
+	GLUtils::bindTexture(texture);
 
 	//lower right quadrant (default)
 
@@ -741,9 +741,9 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	int centerX = 0; //lightBoxX+lightBoxWidth/2;
 	int centerY = 0; //lightBoxY+lightBoxHeight/2;
 
-	sp<BufferedImage> lightImage = ms<BufferedImage>(maxRadius + lightBoxWidth / 2, maxRadius + lightBoxHeight / 2);
+	BufferedImage* lightImage = new BufferedImage(maxRadius + lightBoxWidth / 2, maxRadius + lightBoxHeight / 2);
 
-	//sp<Graphics> lightImageGraphics = lightImage->getGraphics();
+	//Graphics* lightImageGraphics = lightImage->getGraphics();
 
 	float distanceFromBoxEdgeToXY = 0;
 	float totalDistanceFromCenterToXY = 0;
@@ -829,27 +829,25 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 					}
 				}
 
-				sp<OKColor>c = ms<OKColor>(r, g, b, alpha);
+				BobColor *c = new BobColor(r, g, b, alpha);
 				lightImage->setColor(c);
 				//set pixel
 				lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
 				//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 				//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 				//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)-yFromCenter),1,1);
-				//delete c;
-				c = nullptr;
+				delete c;
 			}
 		}
 	}
 	else
 	{
 		{
-			sp<OKColor>c = ms<OKColor>(r, g, b, maxBrightness);
+			BobColor *c = new BobColor(r, g, b, maxBrightness);
 			lightImage->setColor(c);
 			//lightImageGraphics.fillRect(lightBoxX, lightBoxY, lightBoxWidth, lightBoxHeight);
 			lightImage->fillRect(centerX, centerY, lightBoxWidth / 2, lightBoxHeight / 2);
-			//delete c;
-			c = nullptr;
+			delete c;
 		}
 
 		int xFromCenter = 0;
@@ -904,9 +902,9 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 					}
 
 
-					//log->debug("X: "+xFromCenter+" | Y: "+yFromCenter);
-					//log->debug("Angle from center to x,y (radians): "+angle+" | Degrees: "+Math.toDegrees(angle));
-					//log->debug("Distance to edge of box from center: "+distanceToEdgeFromCenter);
+					//log.debug("X: "+xFromCenter+" | Y: "+yFromCenter);
+					//log.debug("Angle from center to x,y (radians): "+angle+" | Degrees: "+Math.toDegrees(angle));
+					//log.debug("Distance to edge of box from center: "+distanceToEdgeFromCenter);
 
 					if (distanceFromBoxEdgeToXY <= maxDistFromBox)
 					{
@@ -914,16 +912,16 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 
 						int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-						sp<OKColor>c = nullptr;
+						BobColor *c = nullptr;
 
 						if (alpha > 255 || alpha < 0)
 						{
-							c = (ms<OKColor>(255, 0, 255, 255));
+							c = (new BobColor(255, 0, 255, 255));
 						}
 						else
 						{
 							//set color
-							c = (ms<OKColor>(r, g, b, alpha));
+							c = (new BobColor(r, g, b, alpha));
 						}
 						lightImage->setColor(c);
 						//set pixel
@@ -931,8 +929,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 						//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 						//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 						//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)-yFromCenter),1,1);
-						//delete c;
-						c = nullptr;
+						delete c;
 					}
 				}
 			}
@@ -948,22 +945,21 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			sp<OKColor>c = nullptr;
+			BobColor *c = nullptr;
 			if (alpha > 255)
 			{
-				c = (ms<OKColor>(255, 0, 255, 255));
+				c = (new BobColor(255, 0, 255, 255));
 			}
 			else
 			{
-				c = (ms<OKColor>(r, g, b, alpha));
+				c = (new BobColor(r, g, b, alpha));
 			}
 			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
 			//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 			//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)+yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)+yFromCenter),1,1);
-			//delete c;
-			c = nullptr;
+			delete c;
 		}
 
 		xFromCenter = 0;
@@ -980,22 +976,21 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			sp<OKColor>c = nullptr;
+			BobColor *c = nullptr;
 			if (alpha > 255)
 			{
-				c = (ms<OKColor>(255, 0, 255, 255));
+				c = (new BobColor(255, 0, 255, 255));
 			}
 			else
 			{
-				c = (ms<OKColor>(r, g, b, alpha));
+				c = (new BobColor(r, g, b, alpha));
 			}
 			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
 			//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)+xFromCenter),(centerY+yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)+xFromCenter),((centerY-1)-yFromCenter),1,1);
-			//delete c;
-			c = nullptr;
+			delete c;
 		}
 	}
 
@@ -1007,7 +1002,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	/*
 	try
 	{
-	   texture = TextureLoader.get().getTexture((ImageData)ms<BufferedImageData>(lightImage),GL_NEAREST);
+	   texture = TextureLoader.get().getTexture((ImageData)new BufferedImageData(lightImage),GL_NEAREST);
 	}
 	catch (IOException e)
 	{
@@ -1019,8 +1014,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 
 	//lightImage->flush();
 	//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	//delete lightImage;
-	lightImage = nullptr;
+	delete lightImage;
 
 	//System.runFinalization();
 	//System.gc();
@@ -1038,7 +1032,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	//then figure out how to blend it with alpha shader
 }
 
-//BufferedImageData::BufferedImageData(sp<Light> outerInstance, sp<BufferedImage> bufferedImage) : outerInstance(outerInstance)
+//BufferedImageData::BufferedImageData(Light* outerInstance, BufferedImage* bufferedImage) : outerInstance(outerInstance)
 //{
 //	this->width = bufferedImage->getWidth();
 //	this->height = bufferedImage->getHeight();
@@ -1218,9 +1212,9 @@ float Light::getHitBoxFromBottom()
 	return 0;
 }
 
-sp<LightData> Light::getLightData()
+LightData* Light::getLightData()
 {
-	return ms<LightData>(data.get());
+	return static_cast<LightData*>(data);
 }
 
 float Light::getWidth()

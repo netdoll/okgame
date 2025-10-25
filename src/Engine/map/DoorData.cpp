@@ -18,7 +18,7 @@ DoorData::DoorData()
 { //=========================================================================================================================
 }
 
-DoorData::DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, sp<EventData> eventData, const string& comment)
+DoorData::DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, EventData* eventData, const string& comment)
 { //=========================================================================================================================
 
 
@@ -46,25 +46,25 @@ DoorData::DoorData(int id, const string& name)
 	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
 }
 
-//sp<DoorData> DoorData::fromBase64ZippedJSON(const string& b64)
+//DoorData* DoorData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//DoorData data = gson.fromJson(json,DoorData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//sp<DoorData> DoorData::fromJSON(const string& json)
+//DoorData* DoorData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<DoorData> data = nullptr;// gson->fromJson(json, DoorData::typeid);
+//	//Gson* gson = new Gson();
+//	DoorData* data = nullptr;// gson->fromJson(json, DoorData::typeid);
 //
 //
 //	return data;
@@ -94,7 +94,7 @@ string& DoorData::initFromString(string& t)
 
 	t = t.substr(t.find("randomNPCSpawnPoint:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomNPCSpawnPoint = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomNPCSpawnPoint = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnChance:`") + 1);
@@ -104,7 +104,7 @@ string& DoorData::initFromString(string& t)
 
 	t = t.substr(t.find("randomPointOfInterestOrExit:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomPointOfInterestOrExit = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomPointOfInterestOrExit = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnDelay:`") + 1);
@@ -114,22 +114,22 @@ string& DoorData::initFromString(string& t)
 
 	t = t.substr(t.find("randomSpawnKids:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnKids = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnKids = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnAdults:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnAdults = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnAdults = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnMales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnMales = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnMales = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnFemales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnFemales = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnFemales = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("destinationMapName:`") + 1);

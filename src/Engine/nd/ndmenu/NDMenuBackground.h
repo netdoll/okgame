@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -15,14 +15,14 @@ class Logger;
 #include "../../state/GlowTileBackgroundMenuPanel.h"
 
 
-class NDMenuBackground : public GlowTileBackgroundMenuPanel, public std::enable_shared_from_this<NDMenuBackground>
+class NDMenuBackground : public GlowTileBackgroundMenuPanel
 {
 public:
 
 	static Logger log;
 
 
-	NDMenuBackground(sp<Engine> g);
+	NDMenuBackground(Engine* g);
 
 
 	virtual void init() override;

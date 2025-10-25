@@ -4,11 +4,11 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
-class ScreenSprite : public Entity, public std::enable_shared_from_this<ScreenSprite>
+class ScreenSprite : public Entity
 {
 public:
 
@@ -26,7 +26,7 @@ public:
 	bool centerX = false;
 	bool centerY = false;
 
-	ScreenSprite(sp<Engine> g, const string& name, const string& spriteName);
+	ScreenSprite(Engine* g, const string& name, const string& spriteName);
 
 	virtual float getScreenLeft() override;
 
@@ -50,6 +50,6 @@ public:
 
 	virtual void deleteFromMapEntityListAndReleaseTexture() override;
 
-	virtual void render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture) override;
+	virtual void render(float alpha, BobTexture* texture, BobTexture* shadowTexture) override;
 };
 

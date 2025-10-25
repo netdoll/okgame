@@ -5,32 +5,32 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
 
 class SkillData;
 
-class Skill : public ServerObject, public std::enable_shared_from_this<Skill>
+class Skill : public ServerObject
 {
 private:
 	long long timeSet = -1;
 	float value = 0.0f;
 
-	sp<SkillData> data = nullptr;
+	SkillData* data = nullptr;
 
 
 public:
 	static Logger log;
 
-	Skill(sp<Engine> g, int id);
+	Skill(Engine* g, int id);
 
 
-	Skill(sp<Engine> g, sp<SkillData> data);
+	Skill(Engine* g, SkillData* data);
 
 
-	sp<SkillData> getData();
+	SkillData* getData();
 
 
 	int getID();
@@ -44,7 +44,7 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(sp<SkillData> data);
+	void setData_S(SkillData* data);
 
 
 	//The following method was originally marked 'synchronized':
@@ -103,7 +103,7 @@ public:
 	//	
 	//	public synchronized void setServerValue(float f)
 	//	{
-	//		serverValue = ms<Float>(f);
+	//		serverValue = new Float(f);
 	//	}
 	//	
 	//	public synchronized Float getServerValue()
@@ -145,7 +145,7 @@ public:
 	//	
 	//	/**
 	//	 * This will keep sending a flag value to the server and then checking it to make sure it was set. Returns true after it confirms.
-	//	 * Event commands should repeatedly call this until it returns true.
+	//	 * BobEvent commands should repeatedly call this until it returns true.
 	//	 */
 	//	public boolean setServerValueAndReturnTrueWhenConfirmed(float f)
 	//	{

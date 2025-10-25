@@ -20,13 +20,13 @@ ControlsPanel::ControlsPanel()
 	SubPanel();
 	//
 	//
-	//   sp<Label> mainControlsLabel = ms<Label>("Main Controls");
+	//   Label* mainControlsLabel = new Label("Main Controls");
 	//   mainControlsLabel->setCanAcceptKeyboardFocus(false);
 	//   mainControlsLabel->setTheme("helpLabelBig");
 	//
 	//
 	//   /*
-	//      Label wasdLabel = ms<Label>("(You can also control movement with \"WASD\")");
+	//      Label wasdLabel = new Label("(You can also control movement with \"WASD\")");
 	//      wasdLabel.setCanAcceptKeyboardFocus(false);
 	//      wasdLabel.setTheme("helpLabelSmall");
 	//                           */
@@ -42,68 +42,68 @@ ControlsPanel::ControlsPanel()
 	//   //TODO: add gameController support
 	//
 	//
-	//   sp<Widget> keyboardImagePanel = ms<WidgetAnonymousInnerClassHelper>(this);
+	//   Widget* keyboardImagePanel = new WidgetAnonymousInnerClassHelper(this);
 	//   keyboardImagePanel->setTheme("keyboardImagePanel");
 	//
 	//
-	//   //		Label otherControlsLabel = ms<Label>("Other Controls:");
+	//   //		Label otherControlsLabel = new Label("Other Controls:");
 	//   //		otherControlsLabel.setCanAcceptKeyboardFocus(false);
 	//   //		otherControlsLabel.setTheme("helpLabelBig");
 	//   //
-	//   //		Label otherControlsTextLabel = ms<Label>("F12 - Take Screenshot");
+	//   //		Label otherControlsTextLabel = new Label("F12 - Take Screenshot");
 	//   //		otherControlsTextLabel.setCanAcceptKeyboardFocus(false);
 	//   //		otherControlsTextLabel.setTheme("helpLabelSmall");
 	//
 	//
-	//   sp<Label> gameControllerSetupLabel = ms<Label>("Game Controller Setup");
+	//   Label* gameControllerSetupLabel = new Label("Game Controller Setup");
 	//   gameControllerSetupLabel->setCanAcceptKeyboardFocus(false);
 	//   gameControllerSetupLabel->setTheme("helpLabelBig");
 	//
 	//
-	//   sp<Label> gameControllerInfoLabel = ms<Label>("\"bob's game\" supports most USB Game Controllers. Please plug your controller in before starting the game.");
+	//   Label* gameControllerInfoLabel = new Label("\"bob's game\" supports most USB Game Controllers. Please plug your controller in before starting the game.");
 	//   gameControllerInfoLabel->setCanAcceptKeyboardFocus(false);
 	//   gameControllerInfoLabel->setTheme("helpLabelSmall");
 	//
 	//
 	//   /*
-	//         Label scrollDownLabel = ms<Label>("In the \"Stuff Menu,\" you can click with the mouse and scroll down with the mouse wheel.");
+	//         Label scrollDownLabel = new Label("In the \"Stuff Menu,\" you can click with the mouse and scroll down with the mouse wheel.");
 	//         scrollDownLabel.setCanAcceptKeyboardFocus(false);
 	//         scrollDownLabel.setTheme("helpLabelSmall");
 	//   */
 	//
 	//
-	//   sp<DialogLayout> gameControllerLayout = ms<DialogLayout>();
+	//   DialogLayout* gameControllerLayout = new DialogLayout();
 	//   gameControllerLayout->setCanAcceptKeyboardFocus(false);
 	//   gameControllerLayout->setTheme("gameControllerSetupLayout");
 	//
 	//
 	//   int buttons = 10;
 	//
-	//   sp<vector<sp<Label>>>buttonLabel(buttons);
-	//   buttonValueLabel = sp<vector<sp<Label>>>(buttons);
-	//   sp<vector<sp<Button>>>buttonButton(buttons);
+	//   ArrayList<Label*> buttonLabel(buttons);
+	//   buttonValueLabel = ArrayList<Label*>(buttons);
+	//   ArrayList<Button*> buttonButton(buttons);
 	//
-	//   sp<vector<sp<DialogLayout>>>buttonLayout(buttons);
+	//   ArrayList<DialogLayout*> buttonLayout(buttons);
 	//
 	//
 	//   for (int i = 0; i < buttons; i++)
 	//   {
-	//      buttonLabel[i] = ms<Label>("");
+	//      buttonLabel[i] = new Label("");
 	//      buttonLabel[i]->setCanAcceptKeyboardFocus(false);
 	//      buttonLabel[i]->setTheme("font16PurpleOutline");
 	//
-	//      buttonValueLabel[i] = ms<Label>("NONE");
+	//      buttonValueLabel[i] = new Label("NONE");
 	//      buttonValueLabel[i]->setCanAcceptKeyboardFocus(false);
 	//      buttonValueLabel[i]->setTheme("font11WhiteOutline");
 	//
-	//      buttonButton[i] = ms<Button>("Set");
+	//      buttonButton[i] = new Button("Set");
 	//      buttonButton[i]->setCanAcceptKeyboardFocus(false);
 	//
 	//      const int threadi = i;
 	//
 	//      buttonButton[i]->addCallback([&] () //even though this is a runnable, it is NOT a thread. fireCallback just calls Runnable.run() which does not create a thread.
 	//         {
-	//            ms<Thread>([&] ()
+	//            new Thread([&] ()
 	//               {
 	//                  try
 	//                  {
@@ -146,7 +146,7 @@ ControlsPanel::ControlsPanel()
 	//
 	//                     while (Controllers->next() == true)
 	//                     {
-	//                        sp<Controller> c = Controllers::getEventSource();
+	//                        Controller* c = Controllers::getEventSource();
 	//
 	//
 	//                        float val = 0.0f;
@@ -453,7 +453,7 @@ ControlsPanel::ControlsPanel()
 	//      );
 	//
 	//
-	//      buttonLayout[i] = ms<DialogLayout>();
+	//      buttonLayout[i] = new DialogLayout();
 	//      buttonLayout[i]->setCanAcceptKeyboardFocus(false);
 	//
 	//      buttonLayout[i]->setHorizontalGroup(buttonLayout[i]->createParallelGroup(buttonLayout[i]->createParallelGroup(buttonLayout[i]->createSequentialGroup().addWidget(buttonButton[i]).addGap().addWidgets(buttonLabel[i], buttonValueLabel[i]).addGap())));
@@ -493,7 +493,7 @@ ControlsPanel::ControlsPanel()
 	//   //insideLayout.createSequentialGroup(scrollDownLabel),
 }
 
-ControlsPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(sp<ControlsPanel> outerInstance)
+ControlsPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(ControlsPanel* outerInstance)
 {
 	this->outerInstance = outerInstance;
 }

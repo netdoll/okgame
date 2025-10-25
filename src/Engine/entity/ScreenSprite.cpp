@@ -14,18 +14,18 @@
 Logger ScreenSprite::log = Logger("ScreenSprite");
 
 
-ScreenSprite::ScreenSprite(sp<Engine> g, const string& name, const string& spriteName)
+ScreenSprite::ScreenSprite(Engine* g, const string& name, const string& spriteName)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	initEntity(ms<EntityData>(-1, name, spriteName, 0, 0));
+	initEntity(new EntityData(-1, name, spriteName, 0, 0));
 
 	setRenderOrder(RenderOrder::OVER_TEXT);
 
-	getSpriteManager()->screenSpriteList->push_back(shared_from_this());
+	getSpriteManager()->screenSpriteList.add(this);
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
 float ScreenSprite::getScreenLeft()
@@ -144,23 +144,13 @@ bool ScreenSprite::shouldDraw()
 
 void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 { //=========================================================================================================================
-
-	//if (getSpriteManager()->screenSpriteList.contains(shared_from_this()))
-	//{
-	//	getSpriteManager()->screenSpriteList->remove(shared_from_this());
-	///}
-
-	for (int i = 0; i < getSpriteManager()->screenSpriteList->size(); i++)
+	if (getSpriteManager()->screenSpriteList.contains(this))
 	{
-		sp<ScreenSprite> se = getSpriteManager()->screenSpriteList->at(i);
-		if (se.get() == this)
-		{
-			getSpriteManager()->screenSpriteList->erase(getSpriteManager()->screenSpriteList->begin() + i);
-		}
+		getSpriteManager()->screenSpriteList.remove(this);
 	}
 }
 
-void ScreenSprite::render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture)
+void ScreenSprite::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 { //=========================================================================================================================
 
 

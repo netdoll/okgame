@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -19,7 +19,7 @@ public:
 	static Logger log;
 
 
-	RamioBackground(sp<Engine> g);
+	RamioBackground(Engine* g);
 
 
 	int RAMIO_screen_x = 0;

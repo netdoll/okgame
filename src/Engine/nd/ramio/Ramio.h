@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -29,7 +29,7 @@ public:
 	static int ticksToAddForMoneyBlock;
 
 
-	sp<Caption> RAMIO_timercaption = nullptr;
+	Caption* RAMIO_timercaption = nullptr;
 
 	bool easymode = true;
 
@@ -56,12 +56,12 @@ public:
 	int dieSequenceStep = 0;
 
 
-	sp<vector<sp<RamioOKa>>>bobas;// = ms<vector><sp<RamioOKa>>();
-	sp<vector<sp<RamioBrickBlock>>>brickBlocks;/// = ms<vector><sp<RamioBrickBlock>>();
-	sp<vector<sp<RamioMoneyBlock>>>moneyBlocks;// = ms<vector><sp<RamioMoneyBlock>>();
+	ArrayList<RamioBoba*>* bobas = new ArrayList<RamioBoba*>();
+	ArrayList<RamioBrickBlock*>* brickBlocks = new ArrayList<RamioBrickBlock*>();
+	ArrayList<RamioMoneyBlock*>* moneyBlocks = new ArrayList<RamioMoneyBlock*>();
 
 
-	sp<RamioGuy> guy = nullptr;
+	RamioGuy* guy = nullptr;
 
 
 	void updateScore();
@@ -79,7 +79,7 @@ public:
 	void doDeathSequence();
 
 
-	sp<ConsoleText> ramioText = Main::console->add("ramioText", OKColor::green);
+	ConsoleText* ramioText = Main::console->add("ramioText", BobColor::green);
 
 	virtual void update() override;
 

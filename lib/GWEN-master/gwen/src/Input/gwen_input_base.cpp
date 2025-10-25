@@ -26,7 +26,7 @@
 // THE SOFTWARE.
 //
 
-#include "Gwen.h"
+#include "Gwen/Gwen.h"
 #include "Gwen/Input/gwen_input_base.h"
 
 #include "Gwen/Controls/Base.h"

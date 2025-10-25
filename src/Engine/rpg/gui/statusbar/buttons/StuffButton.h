@@ -5,20 +5,20 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
 
 
-class StuffButton : public StatusBarButton
+class StuffButton : public BobStatusBarButton
 {
 public:
 
 	static Logger log;
 
 
-	StuffButton(sp<BGClientEngine> g);
+	StuffButton(BGClientEngine* g);
 
 
 	virtual void init() override;

@@ -16,7 +16,7 @@
 Logger GameStoreButton::log = Logger("GameStoreButton");
 
 
-GameStoreButton::GameStoreButton(sp<BGClientEngine> g)
+GameStoreButton::GameStoreButton(BGClientEngine* g)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -52,7 +52,7 @@ void GameStoreButton::init()
 void GameStoreButton::setOffsets()
 { //=========================================================================================================================
 
-	offsetX0 = getStatusBar()->ndButton->dividerX + 20; // 120
+	offsetX0 = getBobStatusBar()->ndButton->dividerX + 20; // 120
 	offsetX1 = offsetX0 + 124; // 244
 	dividerX = offsetX1 + 16; // 260
 	glowX0 = offsetX0 - 60; // 60

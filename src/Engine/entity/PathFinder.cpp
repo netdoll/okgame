@@ -15,9 +15,9 @@
 //Logger TilePath::log = Logger("TilePath");
 
 
-TilePath::TilePath(sp<PathFinder> outerInstance)
+TilePath::TilePath()//PathFinder* outerInstance)
 {
-	this->outerInstance = outerInstance;
+	//this->outerInstance = outerInstance;
 }
 
 int TilePath::getLength()
@@ -25,9 +25,9 @@ int TilePath::getLength()
 	return (int)pathTiles->size();
 }
 
-sp<PathTile> TilePath::getTileForPathIndex(int index)
+PathTile* TilePath::getTileForPathIndex(int index)
 {
-	return static_cast<sp<PathTile>>(pathTiles->at(index));
+	return static_cast<PathTile*>(pathTiles->at(index));
 }
 
 int TilePath::getTileXForPathIndex(int index)
@@ -42,20 +42,20 @@ int TilePath::getTileYForPathIndex(int index)
 
 void TilePath::addPathTileToEnd(int x, int y)
 {
-	pathTiles->push_back(ms<PathTile>(this, x, y));
+	pathTiles->push_back(new PathTile(x, y));
 }
 
 void TilePath::addPathTileToBeginning(int x, int y)
 {
-	pathTiles->push_front(ms<PathTile>(this, x, y));
+	pathTiles->push_front(new PathTile(x, y));
 }
 
 bool TilePath::doesPathContain(int tileX, int tileY)
 {
-	return find(pathTiles->begin(), pathTiles->end(), ms<PathTile>(this, tileX, tileY)) != pathTiles->end();
+	return find(pathTiles->begin(), pathTiles->end(), new PathTile(tileX, tileY)) != pathTiles->end();
 }
 
-PathTile::PathTile(sp<TilePath> outerInstance, int tileX, int tileY) : outerInstance(outerInstance)
+PathTile::PathTile(int tileX, int tileY)// : outerInstance(outerInstance)
 {
 	this->tileX = tileX;
 	this->tileY = tileY;
@@ -78,9 +78,9 @@ int PathTile::hashCode()
 
 //bool PathTile::equals(void* other)
 //{
-//   if (dynamic_cast<sp<PathTile>>(other) != nullptr)
+//   if (dynamic_cast<PathTile*>(other) != nullptr)
 //   {
-//      sp<PathTile> o = static_cast<sp<PathTile>>(other);
+//      PathTile* o = static_cast<PathTile*>(other);
 //      return (o->tileX == tileX) && (o->tileY == tileY);
 //   }
 //
@@ -88,14 +88,14 @@ int PathTile::hashCode()
 //}
 
 
-SortedList::SortedList(sp<PathFinder> outerInstance)
+SortedList::SortedList()//PathFinder* outerInstance)
 {
-	this->outerInstance = outerInstance;
+	//this->outerInstance = outerInstance;
 }
 
-sp<PotentialTile> SortedList::first()
+PotentialTile* SortedList::first()
 {
-	return list->at(0);
+	return list->get(0);
 }
 
 void SortedList::clear()
@@ -103,32 +103,25 @@ void SortedList::clear()
 	list->clear();
 }
 
-void SortedList::addAndSort(sp<PotentialTile> o)
+void SortedList::addAndSort(PotentialTile* o)
 {
-	list->push_back(o);
-	sort(list->begin(), list->end());
+	list->add(o);
+	sort(list->v.begin(), list->v.end());
 }
 
-void SortedList::remove(sp<PotentialTile> o)
+void SortedList::remove(PotentialTile* o)
 {
-	for (int i = 0; i < list->size(); i++)
-	{
-		if (list->at(i).get() == o.get())
-		{
-			list->erase(list->begin() + i);
-			i--;
-		}
-	}
+	list->remove(o);
 }
 
 int SortedList::size()
 {
-	return (int)list->size();
+	return list->size();
 }
 
-bool SortedList::contains(sp<PotentialTile> o)
+bool SortedList::contains(PotentialTile* o)
 {
-	return find(list->begin(), list->end(), o) != list->end();
+	return find(list->v.begin(), list->v.end(), o) != list->v.end();
 }
 
 PotentialTile::PotentialTile(int x, int y)
@@ -137,7 +130,7 @@ PotentialTile::PotentialTile(int x, int y)
 	this->y = y;
 }
 
-int PotentialTile::setParentTile(sp<PotentialTile> parent)
+int PotentialTile::setParentTile(PotentialTile* parent)
 { //=========================================================================================================================
 	depth = parent->depth + 1;
 	this->parent = parent;
@@ -145,7 +138,7 @@ int PotentialTile::setParentTile(sp<PotentialTile> parent)
 	return depth;
 }
 
-int PotentialTile::compareTo(sp<PotentialTile> o)
+int PotentialTile::compareTo(PotentialTile* o)
 { //=========================================================================================================================
 
 	float f = heuristicCost + cumulativePathCost;
@@ -165,7 +158,7 @@ int PotentialTile::compareTo(sp<PotentialTile> o)
 	}
 }
 
-PathFinder::PathFinder(sp<Entity> e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X)
+PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X)
 { //=========================================================================================================================
 
 
@@ -421,19 +414,19 @@ PathFinder::PathFinder(sp<Entity> e, float middleStartXPixelsHQ, float middleSta
 	this->allowDiagMovement = false;
 
 
-	//ORIGINAL LINE: potentialTiles = ms<PotentialTile>[w][h];
-	potentialTiles->clear();// = new sp<vector<sp<PotentialTile>>>(w * h);
+	//ORIGINAL LINE: potentialTiles = new PotentialTile[w][h];
+	potentialTiles = new vector<PotentialTile*>(w*h);
 
 
 	for (int x = 0; x < w; x++)
 	{
-		//potentialTiles->add(ms<vector><sp<PotentialTile>>());
+		//potentialTiles->add(new ArrayList<PotentialTile*>());
 
 
 		for (int y = 0; y < h; y++)
 		{
-			//potentialTiles->get(x)->add(ms<PotentialTile>(x, y));
-			potentialTiles->at(y*w + x) = ms<PotentialTile>(x, y);
+			//potentialTiles->get(x)->add(new PotentialTile(x, y));
+			(*potentialTiles)[y*w + x] = new PotentialTile(x, y);
 		}
 	}
 
@@ -441,7 +434,7 @@ PathFinder::PathFinder(sp<Entity> e, float middleStartXPixelsHQ, float middleSta
 	path = findPath(startTileX, startTileY, finishTileX, finishTileY);
 }
 
-sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, int toTileY)
+TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int toTileY)
 { //=========================================================================================================================
 
 
@@ -454,13 +447,13 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 
 	// initial state for A*. The closed group is empty. Only the starting
 	// tile is in the open list and it's cost is zero, i.e. we're already there
-	potentialTiles->at(startTileY*w+startTileX)->cumulativePathCost = 0;
-	potentialTiles->at(startTileY*w+startTileX)->depth = 0;
+	(*potentialTiles)[startTileY*w+startTileX]->cumulativePathCost = 0;
+	(*potentialTiles)[startTileY*w+startTileX]->depth = 0;
 	blockedPotentialTilesList->clear();
 	openPotentialTilesList->clear();
-	openPotentialTilesList->addAndSort(potentialTiles->at(startTileY*w + startTileX));
+	openPotentialTilesList->addAndSort((*potentialTiles)[startTileY*w + startTileX]);
 
-	potentialTiles->at(toTileY*w + toTileX)->parent = nullptr;
+	(*potentialTiles)[toTileY*w + toTileX]->parent = nullptr;
 
 	// while we haven't found the goal and haven't exceeded our max search depth
 	int maxDepth = 0;
@@ -470,14 +463,14 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 	{
 		// pull out the first node in our open list, this is determined to
 		// be the most likely to be the next step based on our heuristic
-		sp<PotentialTile> current = openPotentialTilesList->first();
-		if (current == potentialTiles->at(toTileY*w + toTileX))
+		PotentialTile* current = openPotentialTilesList->first();
+		if (current == (*potentialTiles)[toTileY*w + toTileX])
 		{
 			break;
 		}
 
 		openPotentialTilesList->remove(current);
-		blockedPotentialTilesList->push_back(current);
+		blockedPotentialTilesList->add(current);
 
 		// search through all the neighbours of the current node evaluating
 		// them as next steps
@@ -512,7 +505,7 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 					// in the sorted open list
 					float nextStepCost = current->cumulativePathCost + getTileTypeCost(current->x, current->y, xp, yp);
 
-					sp<PotentialTile> neighbour = potentialTiles->at(yp*w + xp);
+					PotentialTile* neighbour = (*potentialTiles)[yp*w + xp];
 
 					setTileChecked(xp, yp);
 
@@ -527,42 +520,22 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 							openPotentialTilesList->remove(neighbour);
 						}
 
-
-						for (int i = 0; i < blockedPotentialTilesList->size(); i++)
+						if (blockedPotentialTilesList->contains(neighbour))
 						{
-							if (blockedPotentialTilesList->at(i).get() == neighbour.get())
-							{
-								blockedPotentialTilesList->erase(blockedPotentialTilesList->begin() + i);
-								i--;
-							}
+							blockedPotentialTilesList->remove(neighbour);
 						}
-
 					}
 
 					// if the node hasn't already been processed and discarded then
 					// reset it's cost to our current cost and add it as a next possible
 					// step (i.e. to the open list)
-					if (
-						!openPotentialTilesList->contains(neighbour)
-						)
-						
+					if (!openPotentialTilesList->contains(neighbour) && !(blockedPotentialTilesList->contains(neighbour)))
 					{
-						bool contains = false;
-
-						for (int i = 0; i < blockedPotentialTilesList->size(); i++)
-						{
-							if (blockedPotentialTilesList->at(i).get() == neighbour.get())contains = true;
-						}
-
-						if(contains==false)
-						{
-							neighbour->cumulativePathCost = nextStepCost;
-							neighbour->heuristicCost = (float)getHeuristicCost(xp, yp, toTileX, toTileY);
-							maxDepth = max(maxDepth, neighbour->setParentTile(current));
-							openPotentialTilesList->addAndSort(neighbour);
-						}
+						neighbour->cumulativePathCost = nextStepCost;
+						neighbour->heuristicCost = (float)getHeuristicCost(xp, yp, toTileX, toTileY);
+						maxDepth = max(maxDepth,neighbour->setParentTile(current));
+						openPotentialTilesList->addAndSort(neighbour);
 					}
-
 				}
 			}
 		}
@@ -570,7 +543,7 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 
 	// since we've got an empty open list or we've run out of search
 	// there was no path. Just return null
-	if (potentialTiles->at(toTileY * w + toTileX)->parent == nullptr)
+	if ((*potentialTiles)[toTileY*w + toTileX]->parent == nullptr)
 	{
 		return nullptr;
 	}
@@ -582,9 +555,9 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 	// At this point we've definitely found a path so we can uses the parent
 	// references of the nodes to find out way from the target location back
 	// to the start recording the nodes on the way.
-	sp<TilePath> path = ms<TilePath>(this);
-	sp<PotentialTile> target = potentialTiles->at(toTileY*w + toTileX);
-	while (target != potentialTiles->at(startTileY*w + startTileX))
+	TilePath* path = new TilePath();
+	PotentialTile* target = (*potentialTiles)[toTileY*w + toTileX];
+	while (target != (*potentialTiles)[startTileY*w + startTileX])
 	{
 		path->addPathTileToBeginning(target->x, target->y);
 		target = target->parent;

@@ -22,7 +22,7 @@ version.txt
 log.html
 src/Puzzle/Legacy.h
 _just steam.bat
-*.bak
+
 
 
 # Compiled Object files
@@ -30,6 +30,7 @@ _just steam.bat
 *.lo
 *.obj
 *.xcuserstate
+*.o
 
 # Precompiled Headers
 *.gch
@@ -37,3 +38,4 @@ _just steam.bat
 *.ipch
 
 
+ORBIS_Debug/bobsgame.elf

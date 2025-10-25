@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -107,7 +107,7 @@ public:
 
 
 
-	//GameSave(sp<ResultSet>databaseResultSet);
+	//GameSave(ResultSet *databaseResultSet);
 
 
 	GameSave();

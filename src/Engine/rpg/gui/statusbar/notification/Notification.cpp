@@ -14,7 +14,7 @@
 Logger Notification::log = Logger("Notification");
 
 
-Notification::Notification(sp<BGClientEngine> g, const string& s)
+Notification::Notification(BGClientEngine* g, const string& s)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -41,7 +41,7 @@ Notification::Notification(sp<BGClientEngine> g, const string& s)
 
 	if (caption == nullptr)
 	{
-		caption = ms<Caption>(g, Caption::Position::NONE, 0, 5, -1, notificationString, OKFont::font_normal_11_shadow1, OKColor::purple, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
+		caption = new Caption(g, Caption::Position::NONE, 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
 		caption->setAlphaImmediately(1.0f);
 	}
 
@@ -49,7 +49,7 @@ Notification::Notification(sp<BGClientEngine> g, const string& s)
 	fadeIn = true;
 
 
-	getStatusBar()->notificationManager->add(shared_from_this());
+	getBobStatusBar()->notificationManager->add(this);
 }
 
 void Notification::update()
@@ -58,7 +58,7 @@ void Notification::update()
 
 	if (caption == nullptr)
 	{
-		caption = ms<Caption>(getEngine(), Caption::Position::NONE, 0, 5, -1, notificationString, OKFont::font_normal_11_shadow1, OKColor::purple, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
+		caption = new Caption(getEngine(), Caption::Position::NONE, 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
 		caption->setAlphaImmediately(1.0f);
 	}
 
@@ -91,17 +91,17 @@ void Notification::update()
 
 		if (alpha == 0.0f)
 		{
-			getStatusBar()->notificationManager->remove(shared_from_this());
+			getBobStatusBar()->notificationManager->remove(this);
 
 
 			if (caption->texture != nullptr)
 			{
 				caption->texture->release();
-				//delete caption->texture;
+				delete caption->texture;
 				caption->texture = nullptr;
 			}
 
-			//delete caption;
+			delete caption;
 			caption = nullptr;
 
 			return;
@@ -109,13 +109,13 @@ void Notification::update()
 	}
 
 
-	float maxWidth = (GLUtils::getViewportWidth() - caption->screenX) - (GLUtils::getViewportWidth() - (getStatusBar()->moneyCaption->dividerX));
+	float maxWidth = (GLUtils::getViewportWidth() - caption->screenX) - (GLUtils::getViewportWidth() - (getBobStatusBar()->moneyCaption->dividerX));
 
 	if (scrolling == false && maxWidth < caption->texture->getImageWidth())
 	{
 		scrolling = true;
 		scrollX = maxWidth;
-		caption->screenX = (float)getStatusBar()->stuffButton->dividerX + 3; //we want to scroll right up to the divider
+		caption->screenX = (float)getBobStatusBar()->stuffButton->dividerX + 3; //we want to scroll right up to the divider
 	}
 	//else scrolling=false;
 
@@ -129,7 +129,7 @@ void Notification::update()
 	}
 	else
 	{
-		caption->screenX = (float)getStatusBar()->stuffButton->dividerX + 3 + 10; //we want to stay 10 pixels away from the divider
+		caption->screenX = (float)getBobStatusBar()->stuffButton->dividerX + 3 + 10; //we want to stay 10 pixels away from the divider
 	}
 
 
@@ -162,8 +162,8 @@ void Notification::render(int layer)
 
 	if (layer == 0)
 	{
-		float screenX = (float)getStatusBar()->stuffButton->dividerX + 3;
-		float maxWidth = (GLUtils::getViewportWidth() - screenX) - (GLUtils::getViewportWidth() - (getStatusBar()->moneyCaption->dividerX));
+		float screenX = (float)getBobStatusBar()->stuffButton->dividerX + 3;
+		float maxWidth = (GLUtils::getViewportWidth() - screenX) - (GLUtils::getViewportWidth() - (getBobStatusBar()->moneyCaption->dividerX));
 
 
 		if (hasProgressBar == true)
@@ -180,7 +180,7 @@ void Notification::render(int layer)
 			GL.drawTexture(bg,0,bgtx1,0,bgty1,getScreenX,getScreenX+maxWidth,0,25,1.0f,1);*/
 
 
-			sp<OKTexture> fg = NotificationManager::loadingBarTexture;
+			BobTexture* fg = NotificationManager::loadingBarTexture;
 			int fgImageWidth = fg->getImageWidth();
 			int fgTextureWidth = fg->getTextureWidth();
 			int fgImageHeight = fg->getImageHeight();
@@ -274,7 +274,7 @@ void Notification::render(int layer)
 	}
 }
 
-sp<Notification> Notification::fadeOutAndDelete()
+Notification* Notification::fadeOutAndDelete()
 {
 	fadeOut = true;
 

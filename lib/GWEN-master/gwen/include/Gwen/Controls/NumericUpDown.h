@@ -50,7 +50,15 @@ namespace Gwen
 
 				virtual void SetMin( int i );
 				virtual void SetMax( int i );
+
+#if defined(ORBIS) || defined(__ORBIS__) || defined(__MACOSX__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#endif
 				virtual void SetValue( int i );
+#if defined(ORBIS) || defined(__ORBIS__) || defined(__MACOSX__)
+#pragma clang diagnostic pop
+#endif
 
 				Event::Caller	onChanged;
 

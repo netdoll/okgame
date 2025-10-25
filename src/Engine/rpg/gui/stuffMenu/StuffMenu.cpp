@@ -23,22 +23,22 @@ StuffMenu::StuffMenu()
 	//setTheme("stuffmenu");
 
 
-	statusPanel = ms<StatusPanel>();
-	itemsPanel = ms<ItemsPanel>();
-	messagesPanel = ms<MessagesPanel>();
-	friendsPanel = ms<FriendsPanel>();
-	logsPanel = ms<LogsPanel>();
-	controlsPanel = ms<ControlsPanel>();
-	settingsPanel = ms<SettingsPanel>();
-	debugInfoPanel = ms<DebugInfoPanel>();
+	statusPanel = new StatusPanel();
+	itemsPanel = new ItemsPanel();
+	messagesPanel = new MessagesPanel();
+	friendsPanel = new FriendsPanel();
+	logsPanel = new LogsPanel();
+	controlsPanel = new ControlsPanel();
+	settingsPanel = new SettingsPanel();
+	debugInfoPanel = new DebugInfoPanel();
 
 	//
-	//   stuffMenuTabs = sp<vector<sp<ToggleButton>>>(8);
-	//   sp<SimpleIntegerModel> startMenuTabsIntModel = ms<SimpleIntegerModel>(1, stuffMenuTabs->size(), 0);
+	//   stuffMenuTabs = ArrayList<ToggleButton*>(8);
+	//   SimpleIntegerModel* startMenuTabsIntModel = new SimpleIntegerModel(1, stuffMenuTabs->size(), 0);
 	//
 	//   for (int i = 0; i < stuffMenuTabs->size(); i++)
 	//   {
-	//      stuffMenuTabs[i] = ms<ToggleButton>(ms<OptionBooleanModel>(startMenuTabsIntModel, i + 1));
+	//      stuffMenuTabs[i] = new ToggleButton(new OptionBooleanModel(startMenuTabsIntModel, i + 1));
 	//      stuffMenuTabs[i]->setCanAcceptKeyboardFocus(false);
 	//      stuffMenuTabs[i]->setTheme(GUIManager::buttonTheme);
 	//   }
@@ -146,7 +146,7 @@ StuffMenu::StuffMenu()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = ms<ScrollPane>();
+	//   scrollPane = new ScrollPane();
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -173,7 +173,7 @@ StuffMenu::StuffMenu()
 void StuffMenu::setActivated(bool b)
 { //=========================================================================================================================
 
-	if (b == true && (getStatusBar()->stuffButton->enabled == false || getEnabled() == false))
+	if (b == true && (getBobStatusBar()->stuffButton->enabled == false || getEnabled() == false))
 	{
 		return;
 	}
@@ -193,7 +193,7 @@ void StuffMenu::setAllInvisible()
 	itemsPanel->setVisible(false);
 }
 
-void StuffMenu::openSubMenu()//sp<SubPanel> subPanel)
+void StuffMenu::openSubMenu()//SubPanel* subPanel)
 { //=========================================================================================================================
 	setAllInvisible();
 	//subPanel->setVisible(true);

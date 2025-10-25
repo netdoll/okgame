@@ -14,7 +14,7 @@
 Logger EventParameter::log = Logger("EventParameter");
 
 
-EventParameter::EventParameter(sp<Engine> g, const string& parameterString)
+EventParameter::EventParameter(Engine* g, const string& parameterString)
 { //===============================================================================================
 
 	this->e = g;
@@ -24,12 +24,12 @@ EventParameter::EventParameter(sp<Engine> g, const string& parameterString)
 void EventParameter::parsePrimitive(const string& typeString, const string& primitiveValueString)
 { //===============================================================================================
 
-	if (OKString::startsWith(typeString, "BOOL"))
+	if (String::startsWith(typeString, "BOOL"))
 	{
 		//type=TYPE_BOOL;
 		try
 		{
-			this->b = OKBoolean::parseBoolean(primitiveValueString);
+			this->b = BobBoolean::parseBoolean(primitiveValueString);
 		}
 		catch (exception)
 		{
@@ -39,7 +39,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 	}
 	else
 	{
-		if (OKString::startsWith(typeString, "INT"))
+		if (String::startsWith(typeString, "INT"))
 		{
 			//type=TYPE_INT;
 			try
@@ -53,7 +53,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 		}
 		else
 		{
-			if (OKString::startsWith(typeString, "FLOAT"))
+			if (String::startsWith(typeString, "FLOAT"))
 			{
 				//type=TYPE_FLOAT;
 				try
@@ -69,31 +69,31 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 	}
 }
 
-void EventParameter::updateParameterVariablesFromString(sp<Event> event)
+void EventParameter::updateParameterVariablesFromString(BobEvent* event)
 { //===============================================================================================
 
 	//parameterName is always OBJECT.id
 
 
-	if (OKString::startsWith(parameterString, "BOOL."))
+	if (String::startsWith(parameterString, "BOOL."))
 	{
 		parsePrimitive("BOOL", parameterString.substr(parameterString.find(".") + 1));
 	}
 	else
 	{
-		if (OKString::startsWith(parameterString, "INT."))
+		if (String::startsWith(parameterString, "INT."))
 		{
 			parsePrimitive("INT", parameterString.substr(parameterString.find(".") + 1));
 		}
 		else
 		{
-			if (OKString::startsWith(parameterString, "FLOAT."))
+			if (String::startsWith(parameterString, "FLOAT."))
 			{
 				parsePrimitive("FLOAT", parameterString.substr(parameterString.find(".") + 1));
 			}
 			else
 			{
-				if (OKString::startsWith(parameterString, "STRING."))
+				if (String::startsWith(parameterString, "STRING."))
 				{
 					parsePrimitive("STRING", parameterString.substr(parameterString.find(".") + 1));
 				}
@@ -101,13 +101,13 @@ void EventParameter::updateParameterVariablesFromString(sp<Event> event)
 				{
 					if (parameterString == "PLAYER")
 					{
-						this->entityObject = (sp<Entity>)getPlayer().get();
+						this->object = getPlayer();
 					}
 					else
 					{
 						if (parameterString == "THIS")
 						{
-							sp<Entity> o = nullptr;
+							Entity* o = nullptr;
 
 							if (event->door != nullptr)
 							{
@@ -118,22 +118,22 @@ void EventParameter::updateParameterVariablesFromString(sp<Event> event)
 								o = event->entity;
 							}
 
-							this->entityObject = o;
+							this->object = o;
 						}
 						else
 						{
 							//if we made it here, it's a map object.
-							sp<Map> o = ms<Map>(getEngine()->getGameObjectByTYPEIDName(parameterString));
+							Map* o = (Map*)getEngine()->getGameObjectByTYPEIDName(parameterString);
 
 							if (o == nullptr)
 							{
-								log.error("Could not find GameObject: " + parameterString + " when parsing Event Parameter.");
+								log.error("Could not find GameObject: " + parameterString + " when parsing BobEvent Parameter.");
 							}
 							else
 							{
 								//String newTypeString = parameterString.substring(parameterString.indexOf("."));
 
-								this->mapObject = o;
+								this->object = o;
 							}
 						}
 					}

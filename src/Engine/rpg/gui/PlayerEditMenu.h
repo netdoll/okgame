@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -14,68 +14,68 @@ class PlayerEditMenu : public MenuPanel
 public:
 	static Logger log;
 
-	//   sp<DialogLayout> editPanel;
-	//   sp<DialogLayout> animPanel;
+	//   DialogLayout* editPanel;
+	//   DialogLayout* animPanel;
 	//
-	//   sp<Label> playerEditPanelLabel;
+	//   Label* playerEditPanelLabel;
 	//
-	//   sp<Label> errorLabel;
-	//   sp<Label> statusLabel;
-	//
-	//
-	//   sp<Label> nameLabel;
-	//   sp<EditField> nameEditField;
-	//
-	//   sp<Label> zipCodeLabel;
-	//   sp<EditField> zipCodeEditField;
+	//   Label* errorLabel;
+	//   Label* statusLabel;
 	//
 	//
-	//   sp<Label> addSocialAccountsLabel;
-	//   sp<Label> facebookAccountLabel;
-	//   sp<Button> addFacebookAccountButton;
+	//   Label* nameLabel;
+	//   EditField* nameEditField;
 	//
-	//   sp<Label> googlePlusAccountLabel;
+	//   Label* zipCodeLabel;
+	//   EditField* zipCodeEditField;
+	//
+	//
+	//   Label* addSocialAccountsLabel;
+	//   Label* facebookAccountLabel;
+	//   Button* addFacebookAccountButton;
+	//
+	//   Label* googlePlusAccountLabel;
 	//   //Button addGooglePlusAccountButton;
 	//
-	//   sp<Label> genderLabel;
-	//   sp<vector<sp<Label>>>genderButtonLabels;
-	//   sp<SimpleIntegerModel> genderOptionModel;
-	//   sp<vector<sp<ToggleButton>>>genderButtons;
+	//   Label* genderLabel;
+	//   ArrayList<Label*> genderButtonLabels;
+	//   SimpleIntegerModel* genderOptionModel;
+	//   ArrayList<ToggleButton*> genderButtons;
 	//
-	//   sp<Label> countryLabel;
+	//   Label* countryLabel;
 	//   SimpleChangableListModel<string>* countryStrings;
 	//   ComboBox<string>* countryComboBox;
 	//
-	//   sp<Label> archetypeLabel;
+	//   Label* archetypeLabel;
 	//   SimpleChangableListModel<string>* archetypeStrings;
 	//   ComboBox<string>* archetypeComboBox;
 	//
-	//   sp<Label> hairColorLabel;
+	//   Label* hairColorLabel;
 	//   SimpleChangableListModel<string>* hairColorStrings;
 	//   ComboBox<string>* hairColorComboBox;
 	//
-	//   sp<Label> skinColorLabel;
+	//   Label* skinColorLabel;
 	//   SimpleChangableListModel<string>* skinColorStrings;
 	//   ComboBox<string>* skinColorComboBox;
 	//
-	//   sp<Label> eyeColorLabel;
+	//   Label* eyeColorLabel;
 	//   SimpleChangableListModel<string>* eyeColorStrings;
 	//   ComboBox<string>* eyeColorComboBox;
 	//
-	//   sp<Label> shirtColorLabel;
+	//   Label* shirtColorLabel;
 	//   SimpleChangableListModel<string>* shirtColorStrings;
 	//   ComboBox<string>* shirtColorComboBox;
 	//
-	//   sp<Label> pantsColorLabel;
+	//   Label* pantsColorLabel;
 	//   SimpleChangableListModel<string>* pantsColorStrings;
 	//   ComboBox<string>* pantsColorComboBox;
 	//
-	//   sp<Label> shoeColorLabel;
+	//   Label* shoeColorLabel;
 	//   SimpleChangableListModel<string>* shoeColorStrings;
 	//   ComboBox<string>* shoeColorComboBox;
 	//
-	//   sp<Button> randomButton;
-	//   sp<Button> okButton;
+	//   Button* randomButton;
+	//   Button* okButton;
 
 	string nameString = "";
 
@@ -89,7 +89,7 @@ public:
 	int pantsColorIndex = 0;
 	int shoeColorIndex = 0;
 
-	sp<Caption> playerNameCaption = nullptr;
+	Caption* playerNameCaption = nullptr;
 
 	bool initRandom = false;
 
@@ -101,29 +101,29 @@ public:
 
 	PlayerEditMenu();
 
-private:
-	class CallbackAnonymousInnerClassHelper// : public EditField::Callback
-	{
-	private:
-		sp<PlayerEditMenu> outerInstance = nullptr;
-
-	public:
-		CallbackAnonymousInnerClassHelper(sp<PlayerEditMenu> outerInstance);
-
-		virtual void callback(int key);//;
-	};
-
-private:
-	class CallbackAnonymousInnerClassHelper2// : public EditField::Callback
-	{
-	private:
-		sp<PlayerEditMenu> outerInstance = nullptr;
-
-	public:
-		CallbackAnonymousInnerClassHelper2(sp<PlayerEditMenu> outerInstance);
-
-		virtual void callback(int key);//;
-	};
+//private:
+//	class CallbackAnonymousInnerClassHelper// : public EditField::Callback
+//	{
+//	private:
+//		PlayerEditMenu* outerInstance = nullptr;
+//
+//	public:
+//		CallbackAnonymousInnerClassHelper(PlayerEditMenu* outerInstance);
+//
+//		virtual void callback(int key);//;
+//	};
+//
+//private:
+//	class CallbackAnonymousInnerClassHelper2// : public EditField::Callback
+//	{
+//	private:
+//		PlayerEditMenu* outerInstance = nullptr;
+//
+//	public:
+//		CallbackAnonymousInnerClassHelper2(PlayerEditMenu* outerInstance);
+//
+//		virtual void callback(int key);//;
+//	};
 
 public:
 	void init();
@@ -134,10 +134,10 @@ public:
 	class AddressInfo
 	{
 	private:
-		sp<PlayerEditMenu> outerInstance = nullptr;
+		//PlayerEditMenu* outerInstance = nullptr;
 
 	public:
-		AddressInfo(sp<PlayerEditMenu> outerInstance);
+		AddressInfo();
 
 		string postalCode = "";
 		string stateName = "";
@@ -149,9 +149,9 @@ public:
 	};
 
 public:
-	sp<AddressInfo> queryYahooGeocodingAPI(const string& address);
+	AddressInfo* queryYahooGeocodingAPI(const string& address);
 
-	sp<AddressInfo> queryGoogleGeocodingAPI(const string& address);
+	AddressInfo* queryGoogleGeocodingAPI(const string& address);
 
 	void doOKButton();
 

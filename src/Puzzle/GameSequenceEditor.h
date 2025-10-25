@@ -1,5 +1,5 @@
 
-#include "oktypes.h"
+#include "bobtypes.h"
 
 #include "Gwen/Platform.h"
 #include <Gwen/Controls/Base.h>
@@ -58,7 +58,7 @@ public:
 	}
 	const char* GetTypeName() { return "GameSequenceEditorControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",sp<OKGame>b = nullptr);
+	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",BobsGame *b = nullptr);
     
     
 	void openLoadOrCreateDialog(bool allowedToClose);
@@ -91,7 +91,7 @@ public:
 	void populateGameTypesListBox();
 	void populateGameSequencesListBox();
 	void saveCurrentGameSequenceToXML();
-	//sp<GameSequence> getGameSequenceByName(string name);
+	//GameSequence* getGameSequenceByName(string name);
 	void saveGameSequenceListToCurrentGameSequence();
 	void onGameSequencesListSelect(Gwen::Controls::Base* control);
 	void initFromCurrentGameSequence();
@@ -105,16 +105,16 @@ private:
 	Gwen::Controls::Base* leftBase = nullptr;
 	Gwen::Controls::Base* rightBase = nullptr;
 	Gwen::Controls::HorizontalSplitter *mainWindowSplitter = nullptr;
-	Gwen::Controls::HorizontalSplitter *currentGameSequenceSplitter = nullptr;
+	//Gwen::Controls::HorizontalSplitter *currentGameSequenceSplitter = nullptr;
     
 	Gwen::Controls::Base* gameTypesListBoxBase = nullptr;
 	Gwen::Controls::Base* gameTypesAddRemoveButtonsBase = nullptr;
 	Gwen::Controls::ListBox* gameTypesListBox = nullptr;
-	Gwen::Controls::Base* gameTypesButtonBase = nullptr;
-	Gwen::Controls::Button* downloadGameTypesButton = nullptr;
+	//Gwen::Controls::Base* gameTypesButtonBase = nullptr;
+	//Gwen::Controls::Button* downloadGameTypesButton = nullptr;
 	Gwen::Controls::WindowControl* currentGameSequenceWindow = nullptr;
-	Gwen::Controls::Base* currentGameSequenceListBase = nullptr;
-	Gwen::Controls::Base* currentGameSequencePropertiesBase = nullptr;
+	//Gwen::Controls::Base* currentGameSequenceListBase = nullptr;
+	//Gwen::Controls::Base* currentGameSequencePropertiesBase = nullptr;
 	Gwen::Controls::Base* currentGameSequenceButtonBase = nullptr;
 	Gwen::Controls::Base* currentGameSequenceTextBoxesBase = nullptr;
 	Gwen::Controls::Base* currentGameSequenceNameTextBoxBase = nullptr;
@@ -127,8 +127,8 @@ private:
 	Gwen::Controls::ListBox* gameSequencesListBox = nullptr;
     
 	//Controls::TabButton* settingsTab = nullptr;
-	//sp<ListBox> blockSelectionListBox = nullptr;
-	//sp<ListBox> pieceSelectionListBox = nullptr;
+	//ListBox* blockSelectionListBox = nullptr;
+	//ListBox* pieceSelectionListBox = nullptr;
     
     
 private:
@@ -145,8 +145,8 @@ private:
     
 	Gwen::Controls::WindowControl* gameTypesWindow = nullptr;
     
-	//sp<ScrollControl> settingsScrollControl = nullptr;
-	//sp<PropertyTree> settingsPropTree = nullptr;
+	//ScrollControl* settingsScrollControl = nullptr;
+	//PropertyTree* settingsPropTree = nullptr;
 	//int settingsPropTreeNumChildren = 0;
     
     
@@ -154,7 +154,7 @@ private:
     
 	Gwen::Controls::Button* askToSaveYesButton = nullptr;
 	Gwen::Controls::Button* askToSaveNoButton = nullptr;
-	//sp<Button> cancelExitButton = nullptr;
+	//Button* cancelExitButton = nullptr;
     
 public:
 	Gwen::Controls::WindowControl* loadOrCreateGameSequenceWindow = nullptr;
@@ -169,23 +169,23 @@ private:
 	Gwen::Controls::Button* duplicateGameSequenceButton = nullptr;
 	Gwen::Controls::Button* deleteGameSequenceButton = nullptr;
     
-	sp<GameSequence>currentGameSequence = nullptr;
+	GameSequence *currentGameSequence = nullptr;
     
     
-	//sp<WindowControl> selectWindow = nullptr;
-	//sp<ListBox> selectListBox = nullptr;
-	//sp<ListBox> chosenTypesListBox = nullptr;
-	//sp<Base> selectAddRemoveButtonBase = nullptr;
-	//sp<Base> selectConfirmCancelButtonBase = nullptr;
+	//WindowControl* selectWindow = nullptr;
+	//ListBox* selectListBox = nullptr;
+	//ListBox* chosenTypesListBox = nullptr;
+	//Base* selectAddRemoveButtonBase = nullptr;
+	//Base* selectConfirmCancelButtonBase = nullptr;
 	Gwen::Controls::Button* selectAddButton = nullptr;
 	Gwen::Controls::Button* selectRemoveButton = nullptr;
-	Gwen::Controls::Button* selectConfirmButton = nullptr;
-	Gwen::Controls::Button* selectCancelButton = nullptr;
+	//Gwen::Controls::Button* selectConfirmButton = nullptr;
+	//Gwen::Controls::Button* selectCancelButton = nullptr;
     
     
 public:
 	bool windowOpen = false;
-	sp<OKGame> bobsGame = nullptr;
+	BobsGame* bobsGame = nullptr;
     
     
 	int fontHeight = 20;

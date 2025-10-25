@@ -5,31 +5,31 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
 
 
-class StateManager
+class BobStateManager
 {
 public:
 
 	static Logger log;
 
 
-	sp<vector<sp<Engine>>>states;
+	ArrayList<Engine*> states;
 
-	//sp<Engine> currentState = nullptr;
-
-
-	StateManager();
+	//Engine* currentState = nullptr;
 
 
-	sp<Engine> getCurrentState();
+	BobStateManager();
 
 
-	void pushState(sp<Engine> s);
+	Engine* getCurrentState();
+
+
+	void pushState(Engine* s);
 	void popState();
 
 

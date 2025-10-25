@@ -14,7 +14,7 @@
 Logger RandomCharacter::log = Logger("RandomCharacter");
 
 
-RandomCharacter::RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car)
+RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car)
 { //=========================================================================================================================
 
 	//DONE: randomly decide what kind of character to create
@@ -22,88 +22,88 @@ RandomCharacter::RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, 
 	//spawn at mapX, mapY
 
 
-	sp<EntityData> data = ms<EntityData>(-1, "Random", "", spawnXPixels1X, spawnYPixels1X);
+	EntityData* data = new EntityData(-1, "Random", "", spawnXPixels1X, spawnYPixels1X);
 	initEntity(data);
 	initCharacter();
 
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 
-	sp<vector<string>>spriteNameList;// = ms<vector><string>;
+	ArrayList<string>* spriteNameList = new ArrayList<string>;
 
 	if (kid == true)
 	{
 		if (male == true)
 		{
-			spriteNameList->push_back("RANDOMBoyBuzzedHairLongSleeve");
-			spriteNameList->push_back("RANDOMBoyBuzzedHairShortSleeve");
-			spriteNameList->push_back("RANDOMBoyBuzzedHairLongSleeveShorts");
-			spriteNameList->push_back("RANDOMBoyBuzzedHairShortSleeveShorts");
-			spriteNameList->push_back("RANDOMBoyMessyHairLongSleeve");
-			spriteNameList->push_back("RANDOMBoyMessyHairShortSleeve");
-			spriteNameList->push_back("RANDOMBoyMessyHairLongSleeveShorts");
-			spriteNameList->push_back("RANDOMBoyMessyHairShortSleeveShorts");
-			spriteNameList->push_back("RANDOMBoyNormalHairLongSleeve");
-			spriteNameList->push_back("RANDOMBoyNormalHairShortSleeve");
-			spriteNameList->push_back("RANDOMBoyNormalHairLongSleeveShorts");
-			spriteNameList->push_back("RANDOMBoyNormalHairShortSleeveShorts");
-			spriteNameList->push_back("RANDOMBoyShortHairLongSleeve");
-			spriteNameList->push_back("RANDOMBoyShortHairShortSleeve");
-			spriteNameList->push_back("RANDOMBoyShortHairLongSleeveShorts");
-			spriteNameList->push_back("RANDOMBoyShortHairShortSleeveShorts");
-			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairLongSleeve");
-			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairShortSleeve");
-			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairLongSleeveShorts");
-			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairShortSleeveShorts");
-			spriteNameList->push_back("RANDOMLittleBoyMessyHairLongSleeve");
-			spriteNameList->push_back("RANDOMLittleBoyMessyHairShortSleeve");
-			spriteNameList->push_back("RANDOMLittleBoyMessyHairLongSleeveShorts");
-			spriteNameList->push_back("RANDOMLittleBoyMessyHairShortSleeveShorts");
-			spriteNameList->push_back("RANDOMLittleBoyNormalHairLongSleeve");
-			spriteNameList->push_back("RANDOMLittleBoyNormalHairShortSleeve");
-			spriteNameList->push_back("RANDOMLittleBoyNormalHairLongSleeveShorts");
-			spriteNameList->push_back("RANDOMLittleBoyNormalHairShortSleeveShorts");
+			spriteNameList->add("RANDOMBoyBuzzedHairLongSleeve");
+			spriteNameList->add("RANDOMBoyBuzzedHairShortSleeve");
+			spriteNameList->add("RANDOMBoyBuzzedHairLongSleeveShorts");
+			spriteNameList->add("RANDOMBoyBuzzedHairShortSleeveShorts");
+			spriteNameList->add("RANDOMBoyMessyHairLongSleeve");
+			spriteNameList->add("RANDOMBoyMessyHairShortSleeve");
+			spriteNameList->add("RANDOMBoyMessyHairLongSleeveShorts");
+			spriteNameList->add("RANDOMBoyMessyHairShortSleeveShorts");
+			spriteNameList->add("RANDOMBoyNormalHairLongSleeve");
+			spriteNameList->add("RANDOMBoyNormalHairShortSleeve");
+			spriteNameList->add("RANDOMBoyNormalHairLongSleeveShorts");
+			spriteNameList->add("RANDOMBoyNormalHairShortSleeveShorts");
+			spriteNameList->add("RANDOMBoyShortHairLongSleeve");
+			spriteNameList->add("RANDOMBoyShortHairShortSleeve");
+			spriteNameList->add("RANDOMBoyShortHairLongSleeveShorts");
+			spriteNameList->add("RANDOMBoyShortHairShortSleeveShorts");
+			spriteNameList->add("RANDOMLittleBoyBuzzedHairLongSleeve");
+			spriteNameList->add("RANDOMLittleBoyBuzzedHairShortSleeve");
+			spriteNameList->add("RANDOMLittleBoyBuzzedHairLongSleeveShorts");
+			spriteNameList->add("RANDOMLittleBoyBuzzedHairShortSleeveShorts");
+			spriteNameList->add("RANDOMLittleBoyMessyHairLongSleeve");
+			spriteNameList->add("RANDOMLittleBoyMessyHairShortSleeve");
+			spriteNameList->add("RANDOMLittleBoyMessyHairLongSleeveShorts");
+			spriteNameList->add("RANDOMLittleBoyMessyHairShortSleeveShorts");
+			spriteNameList->add("RANDOMLittleBoyNormalHairLongSleeve");
+			spriteNameList->add("RANDOMLittleBoyNormalHairShortSleeve");
+			spriteNameList->add("RANDOMLittleBoyNormalHairLongSleeveShorts");
+			spriteNameList->add("RANDOMLittleBoyNormalHairShortSleeveShorts");
 		}
 
 
 		if (female == true)
 		{
-			spriteNameList->push_back("RANDOMGirlLongHairDress");
-			spriteNameList->push_back("RANDOMGirlLongHairSkirt");
-			spriteNameList->push_back("RANDOMGirlLongHairSkirtHalter");
-			spriteNameList->push_back("RANDOMGirlLongHairJeans");
-			spriteNameList->push_back("RANDOMGirlLongHairJeansHalter");
-			spriteNameList->push_back("RANDOMGirlLongHairShortsHalter");
-			spriteNameList->push_back("RANDOMGirlPonytailDress");
-			spriteNameList->push_back("RANDOMGirlPonytailSkirt");
-			spriteNameList->push_back("RANDOMGirlPonytailSkirtHalter");
-			spriteNameList->push_back("RANDOMGirlPonytailJeans");
-			spriteNameList->push_back("RANDOMGirlPonytailJeansHalter");
-			spriteNameList->push_back("RANDOMGirlPonytailShortsHalter");
-			spriteNameList->push_back("RANDOMGirlShortHairDress");
-			spriteNameList->push_back("RANDOMGirlShortHairSkirt");
-			spriteNameList->push_back("RANDOMGirlShortHairSkirtHalter");
-			spriteNameList->push_back("RANDOMGirlShortHairJeans");
-			spriteNameList->push_back("RANDOMGirlShortHairJeansHalter");
-			spriteNameList->push_back("RANDOMGirlShortHairShortsHalter");
-			spriteNameList->push_back("RANDOMLittleGirlLongHairDress");
-			spriteNameList->push_back("RANDOMLittleGirlLongHairSkirt");
-			spriteNameList->push_back("RANDOMLittleGirlLongHairSkirtHalter");
-			spriteNameList->push_back("RANDOMLittleGirlLongHairJeans");
-			spriteNameList->push_back("RANDOMLittleGirlLongHairJeansHalter");
-			spriteNameList->push_back("RANDOMLittleGirlLongHairShortsHalter");
-			spriteNameList->push_back("RANDOMLittleGirlPonytailDress");
-			spriteNameList->push_back("RANDOMLittleGirlPonytailSkirt");
-			spriteNameList->push_back("RANDOMLittleGirlPonytailSkirtHalter");
-			spriteNameList->push_back("RANDOMLittleGirlPonytailJeans");
-			spriteNameList->push_back("RANDOMLittleGirlPonytailJeansHalter");
-			spriteNameList->push_back("RANDOMLittleGirlPonytailShortsHalter");
-			spriteNameList->push_back("RANDOMLittleGirlShortHairDress");
-			spriteNameList->push_back("RANDOMLittleGirlShortHairSkirt");
-			spriteNameList->push_back("RANDOMLittleGirlShortHairSkirtHalter");
-			spriteNameList->push_back("RANDOMLittleGirlShortHairJeans");
-			spriteNameList->push_back("RANDOMLittleGirlShortHairJeansHalter");
-			spriteNameList->push_back("RANDOMLittleGirlShortHairShortsHalter");
+			spriteNameList->add("RANDOMGirlLongHairDress");
+			spriteNameList->add("RANDOMGirlLongHairSkirt");
+			spriteNameList->add("RANDOMGirlLongHairSkirtHalter");
+			spriteNameList->add("RANDOMGirlLongHairJeans");
+			spriteNameList->add("RANDOMGirlLongHairJeansHalter");
+			spriteNameList->add("RANDOMGirlLongHairShortsHalter");
+			spriteNameList->add("RANDOMGirlPonytailDress");
+			spriteNameList->add("RANDOMGirlPonytailSkirt");
+			spriteNameList->add("RANDOMGirlPonytailSkirtHalter");
+			spriteNameList->add("RANDOMGirlPonytailJeans");
+			spriteNameList->add("RANDOMGirlPonytailJeansHalter");
+			spriteNameList->add("RANDOMGirlPonytailShortsHalter");
+			spriteNameList->add("RANDOMGirlShortHairDress");
+			spriteNameList->add("RANDOMGirlShortHairSkirt");
+			spriteNameList->add("RANDOMGirlShortHairSkirtHalter");
+			spriteNameList->add("RANDOMGirlShortHairJeans");
+			spriteNameList->add("RANDOMGirlShortHairJeansHalter");
+			spriteNameList->add("RANDOMGirlShortHairShortsHalter");
+			spriteNameList->add("RANDOMLittleGirlLongHairDress");
+			spriteNameList->add("RANDOMLittleGirlLongHairSkirt");
+			spriteNameList->add("RANDOMLittleGirlLongHairSkirtHalter");
+			spriteNameList->add("RANDOMLittleGirlLongHairJeans");
+			spriteNameList->add("RANDOMLittleGirlLongHairJeansHalter");
+			spriteNameList->add("RANDOMLittleGirlLongHairShortsHalter");
+			spriteNameList->add("RANDOMLittleGirlPonytailDress");
+			spriteNameList->add("RANDOMLittleGirlPonytailSkirt");
+			spriteNameList->add("RANDOMLittleGirlPonytailSkirtHalter");
+			spriteNameList->add("RANDOMLittleGirlPonytailJeans");
+			spriteNameList->add("RANDOMLittleGirlPonytailJeansHalter");
+			spriteNameList->add("RANDOMLittleGirlPonytailShortsHalter");
+			spriteNameList->add("RANDOMLittleGirlShortHairDress");
+			spriteNameList->add("RANDOMLittleGirlShortHairSkirt");
+			spriteNameList->add("RANDOMLittleGirlShortHairSkirtHalter");
+			spriteNameList->add("RANDOMLittleGirlShortHairJeans");
+			spriteNameList->add("RANDOMLittleGirlShortHairJeansHalter");
+			spriteNameList->add("RANDOMLittleGirlShortHairShortsHalter");
 		}
 	}
 
@@ -111,82 +111,82 @@ RandomCharacter::RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, 
 	{
 		if (male == true)
 		{
-			spriteNameList->push_back("RANDOMManBaldUndershirt");
-			spriteNameList->push_back("RANDOMManBaldShortSleeve");
-			spriteNameList->push_back("RANDOMManBaldSuit");
-			spriteNameList->push_back("RANDOMManBaldSweats");
-			spriteNameList->push_back("RANDOMManBaldLongSleeve");
-			spriteNameList->push_back("RANDOMManBaldingUndershirt");
-			spriteNameList->push_back("RANDOMManBaldingShortSleeve");
-			spriteNameList->push_back("RANDOMManBaldingSuit");
-			spriteNameList->push_back("RANDOMManBaldingSweats");
-			spriteNameList->push_back("RANDOMManBaldingLongSleeve");
-			spriteNameList->push_back("RANDOMManBeardUndershirt");
-			spriteNameList->push_back("RANDOMManBeardShortSleeve");
-			spriteNameList->push_back("RANDOMManBeardSuit");
-			spriteNameList->push_back("RANDOMManBeardSweats");
-			spriteNameList->push_back("RANDOMManBeardLongSleeve");
-			spriteNameList->push_back("RANDOMManNormalHairUndershirt");
-			spriteNameList->push_back("RANDOMManNormalHairShortSleeve");
-			spriteNameList->push_back("RANDOMManNormalHairSuit");
-			spriteNameList->push_back("RANDOMManNormalHairSweats");
-			spriteNameList->push_back("RANDOMManNormalHairLongSleeve");
-			spriteNameList->push_back("RANDOMManShortHairUndershirt");
-			spriteNameList->push_back("RANDOMManShortHairShortSleeve");
-			spriteNameList->push_back("RANDOMManShortHairSuit");
-			spriteNameList->push_back("RANDOMManShortHairSweats");
-			spriteNameList->push_back("RANDOMManShortHairLongSleeve");
+			spriteNameList->add("RANDOMManBaldUndershirt");
+			spriteNameList->add("RANDOMManBaldShortSleeve");
+			spriteNameList->add("RANDOMManBaldSuit");
+			spriteNameList->add("RANDOMManBaldSweats");
+			spriteNameList->add("RANDOMManBaldLongSleeve");
+			spriteNameList->add("RANDOMManBaldingUndershirt");
+			spriteNameList->add("RANDOMManBaldingShortSleeve");
+			spriteNameList->add("RANDOMManBaldingSuit");
+			spriteNameList->add("RANDOMManBaldingSweats");
+			spriteNameList->add("RANDOMManBaldingLongSleeve");
+			spriteNameList->add("RANDOMManBeardUndershirt");
+			spriteNameList->add("RANDOMManBeardShortSleeve");
+			spriteNameList->add("RANDOMManBeardSuit");
+			spriteNameList->add("RANDOMManBeardSweats");
+			spriteNameList->add("RANDOMManBeardLongSleeve");
+			spriteNameList->add("RANDOMManNormalHairUndershirt");
+			spriteNameList->add("RANDOMManNormalHairShortSleeve");
+			spriteNameList->add("RANDOMManNormalHairSuit");
+			spriteNameList->add("RANDOMManNormalHairSweats");
+			spriteNameList->add("RANDOMManNormalHairLongSleeve");
+			spriteNameList->add("RANDOMManShortHairUndershirt");
+			spriteNameList->add("RANDOMManShortHairShortSleeve");
+			spriteNameList->add("RANDOMManShortHairSuit");
+			spriteNameList->add("RANDOMManShortHairSweats");
+			spriteNameList->add("RANDOMManShortHairLongSleeve");
 		}
 
 
 		if (female == true)
 		{
-			spriteNameList->push_back("RANDOMWomanBunDress");
-			spriteNameList->push_back("RANDOMWomanBunSkirt");
-			spriteNameList->push_back("RANDOMWomanBunSkirtHalter");
-			spriteNameList->push_back("RANDOMWomanBunJeans");
-			spriteNameList->push_back("RANDOMWomanBunJeansHalter");
-			spriteNameList->push_back("RANDOMWomanBunShortsHalter");
-			spriteNameList->push_back("RANDOMWomanLongHairDress");
-			spriteNameList->push_back("RANDOMWomanLongHairSkirt");
-			spriteNameList->push_back("RANDOMWomanLongHairSkirtHalter");
-			spriteNameList->push_back("RANDOMWomanLongHairJeans");
-			spriteNameList->push_back("RANDOMWomanLongHairJeansHalter");
-			spriteNameList->push_back("RANDOMWomanLongHairShortsHalter");
-			spriteNameList->push_back("RANDOMWomanPonytailDress");
-			spriteNameList->push_back("RANDOMWomanPonytailSkirt");
-			spriteNameList->push_back("RANDOMWomanPonytailSkirtHalter");
-			spriteNameList->push_back("RANDOMWomanPonytailJeans");
-			spriteNameList->push_back("RANDOMWomanPonytailJeansHalter");
-			spriteNameList->push_back("RANDOMWomanPonytailShortsHalter");
-			spriteNameList->push_back("RANDOMWomanPoofyHairDress");
-			spriteNameList->push_back("RANDOMWomanPoofyHairSkirt");
-			spriteNameList->push_back("RANDOMWomanPoofyHairSkirtHalter");
-			spriteNameList->push_back("RANDOMWomanPoofyHairJeans");
-			spriteNameList->push_back("RANDOMWomanPoofyHairJeansHalter");
-			spriteNameList->push_back("RANDOMWomanPoofyHairShortsHalter");
-			spriteNameList->push_back("RANDOMWomanShortHairDress");
-			spriteNameList->push_back("RANDOMWomanShortHairSkirt");
-			spriteNameList->push_back("RANDOMWomanShortHairSkirtHalter");
-			spriteNameList->push_back("RANDOMWomanShortHairJeans");
-			spriteNameList->push_back("RANDOMWomanShortHairJeansHalter");
-			spriteNameList->push_back("RANDOMWomanShortHairShortsHalter");
+			spriteNameList->add("RANDOMWomanBunDress");
+			spriteNameList->add("RANDOMWomanBunSkirt");
+			spriteNameList->add("RANDOMWomanBunSkirtHalter");
+			spriteNameList->add("RANDOMWomanBunJeans");
+			spriteNameList->add("RANDOMWomanBunJeansHalter");
+			spriteNameList->add("RANDOMWomanBunShortsHalter");
+			spriteNameList->add("RANDOMWomanLongHairDress");
+			spriteNameList->add("RANDOMWomanLongHairSkirt");
+			spriteNameList->add("RANDOMWomanLongHairSkirtHalter");
+			spriteNameList->add("RANDOMWomanLongHairJeans");
+			spriteNameList->add("RANDOMWomanLongHairJeansHalter");
+			spriteNameList->add("RANDOMWomanLongHairShortsHalter");
+			spriteNameList->add("RANDOMWomanPonytailDress");
+			spriteNameList->add("RANDOMWomanPonytailSkirt");
+			spriteNameList->add("RANDOMWomanPonytailSkirtHalter");
+			spriteNameList->add("RANDOMWomanPonytailJeans");
+			spriteNameList->add("RANDOMWomanPonytailJeansHalter");
+			spriteNameList->add("RANDOMWomanPonytailShortsHalter");
+			spriteNameList->add("RANDOMWomanPoofyHairDress");
+			spriteNameList->add("RANDOMWomanPoofyHairSkirt");
+			spriteNameList->add("RANDOMWomanPoofyHairSkirtHalter");
+			spriteNameList->add("RANDOMWomanPoofyHairJeans");
+			spriteNameList->add("RANDOMWomanPoofyHairJeansHalter");
+			spriteNameList->add("RANDOMWomanPoofyHairShortsHalter");
+			spriteNameList->add("RANDOMWomanShortHairDress");
+			spriteNameList->add("RANDOMWomanShortHairSkirt");
+			spriteNameList->add("RANDOMWomanShortHairSkirtHalter");
+			spriteNameList->add("RANDOMWomanShortHairJeans");
+			spriteNameList->add("RANDOMWomanShortHairJeansHalter");
+			spriteNameList->add("RANDOMWomanShortHairShortsHalter");
 		}
 	}
 
 	if (car == true)
 	{
-		spriteNameList->push_back("RANDOMcar");
-		spriteNameList->push_back("RANDOMmotorcycle");
-		spriteNameList->push_back("RANDOMvan");
-		spriteNameList->push_back("RANDOMtruck");
-		spriteNameList->push_back("RANDOMsuv");
-		spriteNameList->push_back("RANDOMferrari");
-		spriteNameList->push_back("RANDOMminivan");
+		spriteNameList->add("RANDOMcar");
+		spriteNameList->add("RANDOMmotorcycle");
+		spriteNameList->add("RANDOMvan");
+		spriteNameList->add("RANDOMtruck");
+		spriteNameList->add("RANDOMsuv");
+		spriteNameList->add("RANDOMferrari");
+		spriteNameList->add("RANDOMminivan");
 	}
 
 
-	getData()->setSpriteName(spriteNameList->at(Math::randLessThan((int)spriteNameList->size())));
+	getData()->setSpriteName(spriteNameList->get(Math::randLessThan(spriteNameList->size())));
 
 	this->sprite = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist(getSpriteName());
 
@@ -229,7 +229,7 @@ RandomCharacter::RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, 
 	setY(mapY - (getMiddleY() - getY()));
 }
 
-sp<Map> RandomCharacter::getCurrentMap()
+Map* RandomCharacter::getCurrentMap()
 { //=========================================================================================================================
 
 
@@ -239,18 +239,18 @@ sp<Map> RandomCharacter::getCurrentMap()
 }
 
 //The following method was originally marked 'synchronized':
-sp<ByteArray> RandomCharacter::getByteBuffer_S()
+ByteArray* RandomCharacter::getByteBuffer_S()
 { //=========================================================================================================================
 	return textureByteBuffer_S;
 }
 
 //The following method was originally marked 'synchronized':
-void RandomCharacter::setByteBuffer_S(sp<ByteArray> bb)
+void RandomCharacter::setByteBuffer_S(ByteArray* bb)
 { //=========================================================================================================================
 	textureByteBuffer_S = bb;
 }
 
-int RandomCharacter::selectRandomSet(sp<Sprite> s)
+int RandomCharacter::selectRandomSet(Sprite* s)
 { //=========================================================================================================================
 
 	int set = 0;
@@ -313,14 +313,14 @@ void RandomCharacter::createRandomTexture()
 		//               Thread::currentThread().setName("RandomCharacter_createRandomSpriteTexture");
 		//
 		//
-		//               sp<ByteArray> bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
+		//               ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
 		//               setByteBuffer_S(bb);
 		//            }
 		//         );
 		//      }
 		//      else
 		{
-			sp<ByteArray> bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
+			ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
 			setByteBuffer_S(bb);
 		}
 
@@ -368,14 +368,13 @@ void RandomCharacter::update()
 			{
 				//we're waiting for the thread to finish generating the bytebuffer
 
-				sp<ByteArray> bb = getByteBuffer_S();
+				ByteArray* bb = getByteBuffer_S();
 				if (bb != nullptr)
 				{
 					uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
 
 					setByteBuffer_S(nullptr);
-					//delete bb;
-					bb = nullptr;
+					delete bb;
 				}
 			}
 		}
@@ -414,10 +413,10 @@ void RandomCharacter::update()
 				//if we aren't there yet, let's go there.
 				if (gotThere == false)
 				{
-					if (OKString::startsWith(currentAreaTYPEIDTarget, "DOOR.") == true)
+					if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == true)
 					{
 						//handle walking through door.
-						sp<Door> d = getMap()->getDoorByTYPEID(currentAreaTYPEIDTarget);
+						Door* d = getMap()->getDoorByTYPEID(currentAreaTYPEIDTarget);
 
 						//walk towards x and y
 						int there = 0;
@@ -445,10 +444,10 @@ void RandomCharacter::update()
 					}
 					else //find current area
 					{
-						if (OKString::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
+						if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
 						{
 							//get current area x and y
-							sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+							Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 
 
 							//TODO: if the area is a single tile, just touching the edge should be fine.
@@ -587,10 +586,10 @@ void RandomCharacter::update()
 				{
 					if (gotThere == true) //this is only for areas. doors will just immediately delete the entity. this is so we can change modes and be getPushable after we've reached our destination and waiting for a new one.
 					{
-						if (OKString::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
+						if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
 						{
 							//get current area x and y
-							sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+							Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 
 
 							//avoid_nearest_entity(32);
@@ -615,7 +614,7 @@ void RandomCharacter::update()
 								currentAreaTYPEIDTarget = "stayHere";
 							}
 
-							if ((dynamic_cast<WarpArea*>(a.get()) != nullptr) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
+							if ((dynamic_cast<WarpArea*>(a) != nullptr) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
 							{
 								fadeOutAndDelete();
 							}
@@ -678,43 +677,43 @@ string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 { //=========================================================================================================================
 
 
-	sp<vector<string>> areaTYPEIDList = getMap()->getListOfRandomPointsOfInterestTYPEIDs();
+	ArrayList<string>* areaTYPEIDList = getMap()->getListOfRandomPointsOfInterestTYPEIDs();
 
 
-	if (areaTYPEIDList->empty())
+	if (areaTYPEIDList->isEmpty())
 	{
 		return currentAreaTYPEIDTarget;
 	}
 
 
-	int index = Math::randLessThan((int)areaTYPEIDList->size());
+	int index = Math::randLessThan(areaTYPEIDList->size());
 
 
 	//don't select the target we already have
 	if (areaTYPEIDList->size() > 1)
 	{
-		while (areaTYPEIDList->at(index) == currentAreaTYPEIDTarget)
+		while (areaTYPEIDList->get(index) == currentAreaTYPEIDTarget)
 		{
-			index = Math::randLessThan((int)areaTYPEIDList->size());
+			index = Math::randLessThan(areaTYPEIDList->size());
 		}
 	}
 
 
-	string nextTYPEIDTarget = areaTYPEIDList->at(index);
+	string nextTYPEIDTarget = areaTYPEIDList->get(index);
 	{
 		//don't select targets more than a screen away
 
 
 		float distance = 0;
 
-		if (OKString::startsWith(nextTYPEIDTarget, "DOOR.") == true)
+		if (String::startsWith(nextTYPEIDTarget, "DOOR.") == true)
 		{
-			sp<Door> d = getMap()->getDoorByTYPEID(nextTYPEIDTarget);
+			Door* d = getMap()->getDoorByTYPEID(nextTYPEIDTarget);
 			distance = Math::distance(getMiddleX(), getMiddleY(), d->getMiddleX(), d->getMiddleY());
 		}
 		else
 		{
-			sp<Area> n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
+			Area* n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
 
 			distance = Math::distance(getMiddleX(), getMiddleY(), n->middleX(), n->middleY());
 		}
@@ -730,11 +729,11 @@ string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 	//TODO: don't go to doors or warp areas that are exits AND don't spawn my type.
 
 
-	if (OKString::startsWith(nextTYPEIDTarget, "DOOR.") == false)
+	if (String::startsWith(nextTYPEIDTarget, "DOOR.") == false)
 	{
 		//go through all other entities, if this target is "only one allowed" and any of them have this area as a target, find another one.
 
-		sp<Area> n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
+		Area* n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
 
 		if (n != nullptr && n->onlyOneAllowed())
 		{
@@ -753,15 +752,15 @@ string RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
 { //=========================================================================================================================
 
 
-	sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
-	string nextTargetTYPEID = a->connectionTYPEIDList()->at(Math::randLessThan((int)a->connectionTYPEIDList()->size()));
+	Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+	string nextTargetTYPEID = a->connectionTYPEIDList()->get(Math::randLessThan(a->connectionTYPEIDList()->size()));
 
 
-	if (OKString::startsWith(nextTargetTYPEID, "DOOR.") == false)
+	if (String::startsWith(nextTargetTYPEID, "DOOR.") == false)
 	{
 		//go through all other entities, if this target is "only one allowed" and any of them have this area as a target, find another one.
 
-		sp<Area> n = getMap()->getAreaOrWarpAreaByTYPEID(nextTargetTYPEID);
+		Area* n = getMap()->getAreaOrWarpAreaByTYPEID(nextTargetTYPEID);
 
 		if (n != nullptr && n->onlyOneAllowed())
 		{

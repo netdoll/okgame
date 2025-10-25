@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -23,7 +23,7 @@ public:
 	float lastMoney = -1;
 
 
-	Wallet(sp<BGClientEngine> g);
+	Wallet(BGClientEngine* g);
 
 
 	void init();

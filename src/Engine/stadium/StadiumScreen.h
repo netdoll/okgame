@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -25,22 +25,22 @@ public:
 	//static const int FBO_SCALE = 1;
 
 
-	sp<StateManager> stadiumGameStateManager = nullptr;
+	BobStateManager* stadiumGameStateManager = nullptr;
 
 
-	sp<Area> area = nullptr;
+	Area* area = nullptr;
 
 
-	StadiumScreen(sp<Engine> g);
+	StadiumScreen(Engine* g);
 
 
 	void update();
 
 
-	void setGame(sp<MiniGameEngine> game, sp<Area> area);
+	void setGame(MiniGameEngine* game, Area* area);
 
 
-	sp<MiniGameEngine> getGame();
+	MiniGameEngine* getGame();
 
 
 	void render();

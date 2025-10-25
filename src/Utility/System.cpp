@@ -62,36 +62,30 @@ Logger System::log = Logger("System");
 //string System::glExtensions = "";
 
 
-sp<ConsoleText> System::totalRendersText = nullptr;
-sp<ConsoleText> System::totalUpdatesText = nullptr;
-sp<ConsoleText> System::rendersPerSecondText = nullptr;
-sp<ConsoleText> System::averageRendersPerSecondText = nullptr;
-sp<ConsoleText> System::updatesPerSecondText = nullptr;
-sp<ConsoleText> System::rendersSkippedText = nullptr;
-sp<ConsoleText> System::updatesSkippedText = nullptr;
-sp<ConsoleText> System::averageTicksPerFrameText = nullptr;
-sp<ConsoleText> System::averageTicksPerUpdateText = nullptr;
-sp<ConsoleText> System::onlineStatusText = nullptr;
+ConsoleText* System::totalRendersText = nullptr;
+ConsoleText* System::totalUpdatesText = nullptr;
+ConsoleText* System::rendersPerSecondText = nullptr;
+ConsoleText* System::averageRendersPerSecondText = nullptr;
+ConsoleText* System::updatesPerSecondText = nullptr;
+ConsoleText* System::rendersSkippedText = nullptr;
+ConsoleText* System::updatesSkippedText = nullptr;
+ConsoleText* System::averageTicksPerFrameText = nullptr;
+ConsoleText* System::averageTicksPerUpdateText = nullptr;
+ConsoleText* System::onlineStatusText = nullptr;
 
-sp<ConsoleText> System::upTimeText = nullptr;
+ConsoleText* System::upTimeText = nullptr;
 
-sp<ConsoleText> System::ticksText[amtTicksTexts] = {nullptr};
-
-
-sp<ConsoleText> System::mxThreadCountText = nullptr;
-
-sp<ConsoleText> System::memoryText = nullptr;
-sp<ConsoleText> System::texturesLoadedText = nullptr;// = Console::debug("texturesLoadedText");
-sp<ConsoleText> System::textureBytesLoadedText = nullptr;// = Console::debug("textureBytesLoadedText");
+ConsoleText* System::ticksText[amtTicksTexts] = {nullptr};
 
 
+ConsoleText* System::mxThreadCountText = nullptr;
 
-//
-//#include "Poco/Path.h"
-//using Poco::Path;
+ConsoleText* System::memoryText = nullptr;
+ConsoleText* System::texturesLoadedText = nullptr;// = Console::debug("texturesLoadedText");
+ConsoleText* System::textureBytesLoadedText = nullptr;// = Console::debug("textureBytesLoadedText");
 
-#include "Poco/Environment.h"
-using Poco::Environment;
+
+
 
 
 #ifdef __WINDOWS__
@@ -114,10 +108,12 @@ void System::initSystemInfo()
 	log.debug("Init system info");
 
 
+#ifndef ORBIS
+	uint64_t start=0, now=0, totalStart, totalNow;
+	start = System::getPerformanceCounter();
+	totalStart = System::getPerformanceCounter();
 
-	Uint64 start=0, now=0, totalStart, totalNow;
-	start = SDL_GetPerformanceCounter();
-	totalStart = SDL_GetPerformanceCounter();
+
 
 	//audio
 	int numAudioDevices = SDL_GetNumAudioDevices(0);
@@ -147,10 +143,10 @@ void System::initSystemInfo()
 	//os
 	log.info("SDL_GetBasePath:" + string(SDL_GetBasePath()));
 
-	log.info("SDL_GetPerformanceCounter:" + to_string(SDL_GetPerformanceCounter()));
-	log.info("SDL_GetPerformanceFrequency:" + to_string(SDL_GetPerformanceFrequency()));
+	log.info("Main::GetPerformanceCounter:" + to_string(System::getPerformanceCounter()));
+	log.info("Main::GetPerformanceFrequency:" + to_string(System::GetPerformanceFrequency()));
 	log.info("SDL_GetPlatform:" + string(SDL_GetPlatform()));
-	log.info("SDL_GetPrefPath:" + string(SDL_GetPrefPath("OK Corporation", "bob's game")));
+	log.info("SDL_GetPrefPath:" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
 	log.info("SDL_GetRevision:" + string(SDL_GetRevision()));
 	log.info("SDL_GetRevisionNumber:" + to_string(SDL_GetRevisionNumber()));
 	log.info("SDL_GetSystemRAM:" + to_string(SDL_GetSystemRAM()));
@@ -167,13 +163,13 @@ void System::initSystemInfo()
 
 	//window
 	//SDL_GetGrabbedWindow();
-	log.info("SDL_GetWindowBrightness:" + to_string(SDL_GetWindowBrightness(GLUtils::window.get())));
-	log.info("SDL_GetWindowDisplayIndex:" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window.get())));
-	log.info("SDL_GetWindowFlags:" + to_string(SDL_GetWindowFlags(GLUtils::window.get())));
-	log.info("SDL_GetWindowGrab:" + to_string(SDL_GetWindowGrab(GLUtils::window.get())));
-	log.info("SDL_GetWindowID:" + to_string(SDL_GetWindowID(GLUtils::window.get())));
-	log.info("SDL_GetWindowPixelFormat:" + to_string(SDL_GetWindowPixelFormat(GLUtils::window.get())));
-	log.info("SDL_GetWindowTitle:" + string(SDL_GetWindowTitle(GLUtils::window.get())));
+	log.info("SDL_GetWindowBrightness:" + to_string(SDL_GetWindowBrightness(GLUtils::window)));
+	log.info("SDL_GetWindowDisplayIndex:" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
+	log.info("SDL_GetWindowFlags:" + to_string(SDL_GetWindowFlags(GLUtils::window)));
+	log.info("SDL_GetWindowGrab:" + to_string(SDL_GetWindowGrab(GLUtils::window)));
+	log.info("SDL_GetWindowID:" + to_string(SDL_GetWindowID(GLUtils::window)));
+	log.info("SDL_GetWindowPixelFormat:" + to_string(SDL_GetWindowPixelFormat(GLUtils::window)));
+	log.info("SDL_GetWindowTitle:" + string(SDL_GetWindowTitle(GLUtils::window)));
 
 
 	//mouse
@@ -203,9 +199,9 @@ void System::initSystemInfo()
 	log.info("SDL_GetNumVideoDisplays:" + to_string(SDL_GetNumVideoDisplays()));
 	log.info("SDL_GetNumVideoDrivers:" + to_string(SDL_GetNumVideoDrivers()));
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("SDL info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
+	now = System::getPerformanceCounter();
+	log.debug("SDL info took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+	start = System::getPerformanceCounter();
 
 
 	log.info("Poco::libraryVersion:" + to_string(Environment::libraryVersion()));
@@ -213,6 +209,7 @@ void System::initSystemInfo()
 	log.info("Poco::osVersion:" + string(Environment::osVersion()));
 	log.info("Poco::processorCount:" + to_string(Environment::processorCount()));
 
+#endif
 
 #ifdef USE_SIGAR
 
@@ -320,12 +317,12 @@ else
 
 sigar_close(sigar);
 
-now = SDL_GetPerformanceCounter();
-log.debug("Sigar info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-start = SDL_GetPerformanceCounter();
+now = System::getPerformanceCounter();
+log.debug("Sigar info took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
+start = System::getPerformanceCounter();
 
 
-#endif
+
 
 
 
@@ -349,26 +346,14 @@ start = SDL_GetPerformanceCounter();
 	//log.info("Window Height:" + to_string(GLUtils::getRealWindowHeight()));
 
 
-totalNow = SDL_GetPerformanceCounter();
-log.debug("Init system info took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+totalNow = System::getPerformanceCounter();
+log.debug("Init system info took " + to_string((double)((totalNow - totalStart) * 1000) / System::GetPerformanceFrequency()) + "ms");
 
+
+#endif
 
 }
 
-//#include "Poco/DateTime.h"
-//using Poco::DateTime;
-//#include "Poco/LocalDateTime.h"
-//using Poco::LocalDateTime;
-//#include "Poco/Timezone.h"
-//#include "Poco/Timestamp.h"
-//using Poco::Timezone;
-//using Poco::Timestamp;
-#undef INADDR_ANY       
-#undef INADDR_LOOPBACK  
-#undef INADDR_BROADCAST 
-#undef INADDR_NONE  
-#include <Poco/Net/NTPClient.h>
-using namespace Poco::Net;
 
 void System::initClockAndTimeZone()
 { //=========================================================================================================================
@@ -538,15 +523,17 @@ void System::initTimers()
 
 
 
-	highResolutionTicksPerSecond = SDL_GetPerformanceFrequency();
+	highResolutionTicksPerSecond = System::GetPerformanceFrequency();
 
 	cpuFreq = double(highResolutionTicksPerSecond) / 1000.0;
 
+	// @GranPC (thank you -Bob)
 	// Take an initial sampling of the time at startup
 	// This stops the value from being ridiculously high if the
 	// player's computer has been on for a few days, which would
 	// cause precision issues if casted to a float
-	timerOffset = SDL_GetPerformanceCounter();
+	timerOffset = System::getPerformanceCounter();
+	timerOffset = System::getPerformanceCounter();
 
 	highResTimer = getPerformanceCounter();
 	currentHighResTime = highResTimer;
@@ -704,19 +691,19 @@ void System::updateStats()
 	updatesSkippedText->text = "Updates Skipped: " + to_string(updatesSkipped);
 
 
-	if(Main::bobNet->tcpServerConnection->getConnectedToServer_S()==true)
+	if(Main::bobNet->tcpServerConnection.getConnectedToServer_S()==true)
 	{
-		if (Main::bobNet->tcpServerConnection->serverStats != nullptr)
+		if (Main::bobNet->tcpServerConnection.serverStats != nullptr)
 		{
-			int usersOnline = Main::bobNet->tcpServerConnection->serverStats->usersOnline;
+			int usersOnline = Main::bobNet->tcpServerConnection.serverStats->usersOnline;
 			if(usersOnline==1)onlineStatusText->text = "Connected: " + to_string(usersOnline) + " player online";
 			else onlineStatusText->text = "Connected: " + to_string(usersOnline) + " players online";
-			onlineStatusText->color = OKColor::green;
+			onlineStatusText->color = BobColor::green;
 		}
 		else
 		{
 			onlineStatusText->text = "Connected";
-			onlineStatusText->color = OKColor::green;
+			onlineStatusText->color = BobColor::green;
 		}
 	}
 	else
@@ -740,11 +727,11 @@ void System::updateStats()
 		else
 			if (rendersThisSecond >= 30)
 			{
-				rendersPerSecondText->color = OKColor::yellow;
+				rendersPerSecondText->color = BobColor::yellow;
 			}
 			else
 			{
-				rendersPerSecondText->color = OKColor::red;
+				rendersPerSecondText->color = BobColor::red;
 			}
 
 
@@ -755,11 +742,11 @@ void System::updateStats()
 		else
 			if (updatesThisSecond >= 30)
 			{
-				updatesPerSecondText->color = OKColor::yellow;
+				updatesPerSecondText->color = BobColor::yellow;
 			}
 			else
 			{
-				updatesPerSecondText->color = OKColor::red;
+				updatesPerSecondText->color = BobColor::red;
 			}
 
 
@@ -846,7 +833,7 @@ void System::updateStats()
 			ticksText[i]->text = string("Ticks Passed " + to_string(i) + ": ") + to_string(debugTicksPassed);
 			if (debugTicksPassed > 17)
 			{
-				ticksText[i]->color = OKColor::red;
+				ticksText[i]->color = BobColor::red;
 			}
 			else
 			{
@@ -953,12 +940,39 @@ void System::updateStats()
 
 
 
+//==========================================================================================================================
+uint64_t System::GetPerformanceFrequency()
+{//==========================================================================================================================
+
+#ifndef ORBIS
+	return SDL_GetPerformanceFrequency();
+#else
+
+	return 1000*1000*1000;
+#endif
+}
 
 
 //=========================================================================================================================
 long long System::getPerformanceCounter()
 {//=========================================================================================================================
+
+
+#ifndef ORBIS
 	return SDL_GetPerformanceCounter() - timerOffset;
+#else
+
+	SceFiosTime time = sceFiosTimeGetCurrent();
+
+	//		sceFiosTimeIntervalToNanoseconds(
+	//			SceFiosTimeInterval interval
+	//		);
+
+	return time - timerOffset;
+
+#endif
+
+	
 }
 
 

@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "Piece.h"
 #include "Block.h"
 #include "../Utility/FileUtils.h"
@@ -54,16 +54,16 @@ public:
 	int randomlyFillGridAmount = 30;												Info randomlyFillGridAmount_Info = Info("Drop: Randomly Fill Grid Amount", "How many blocks to fill the playing field with.");
 	//int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
 
-	sp<vector<sp<PieceType>>>pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
-	sp<vector<sp<BlockType>>>blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
-	//sp<vector<sp<OKColor>>>colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
+	ArrayList<shared_ptr<PieceType>> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
+	ArrayList<shared_ptr<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
+	//ArrayList<BobColor*> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
 
-	sp<vector<string>>pieceTypesToDisallow_UUID;
-	sp<vector<string>>blockTypesToDisallow_UUID;
+	ArrayList<string> pieceTypesToDisallow_UUID;
+	ArrayList<string> blockTypesToDisallow_UUID;
 
 private:
-	//sp<vector<PieceType>>importExport_pieceTypesToDisallow;
-	//sp<vector<BlockType>>importExport_blockTypesToDisallow;
+	//ArrayList<PieceType> importExport_pieceTypesToDisallow;
+	//ArrayList<BlockType> importExport_blockTypesToDisallow;
 public:
 
 	template <typename Archive>
@@ -156,7 +156,7 @@ enum class VSGarbageDropRule
 };
 
 //=========================================================================================================================
-class GameType : public std::enable_shared_from_this<GameType>
+class GameType
 {//=========================================================================================================================
 public:
 
@@ -176,94 +176,94 @@ public:
 	long long downVotes = 0;
 	string yourVote = "none";
 
-	static sp<DifficultyType> difficulty_BEGINNER;
-	static sp<DifficultyType> difficulty_EASY;
-	static sp<DifficultyType> difficulty_NORMAL;
-	static sp<DifficultyType> difficulty_HARD;
-	static sp<DifficultyType> difficulty_INSANE;
-	static sp<DifficultyType> difficulty_IMPOSSIBLE;
+	static DifficultyType* difficulty_BEGINNER;
+	static DifficultyType* difficulty_EASY;
+	static DifficultyType* difficulty_NORMAL;
+	static DifficultyType* difficulty_HARD;
+	static DifficultyType* difficulty_INSANE;
+	static DifficultyType* difficulty_IMPOSSIBLE;
 
 	static Logger log;
 
 	string toBase64GZippedXML();
-	sp<BlockType> getBlockTypeByName(string s);
-	sp<PieceType> getPieceTypeByName(string s);
-	sp<BlockType> getBlockTypeByUUID(string s);
-	sp<PieceType> getPieceTypeByUUID(string s);
-	static sp<GameType> fromBase64GZippedXML(string b64GZipJSON);
+	shared_ptr<BlockType> getBlockTypeByName(string s);
+	shared_ptr<PieceType> getPieceTypeByName(string s);
+	shared_ptr<BlockType> getBlockTypeByUUID(string s);
+	shared_ptr<PieceType> getPieceTypeByUUID(string s);
+	static GameType* fromBase64GZippedXML(string b64GZipJSON);
 
 	//Color noColor;
 	//PieceType noPieceType;
 	//BlockType noBlockType;
-	//sp<vector<Color>>emptyColors;
+	//ArrayList<Color> emptyColors;
 
-//	const OKColor clear = *OKColor::clear;
-//	const OKColor transparent = *OKColor::transparent;
-//	const OKColor black = *OKColor::black;
-//	const OKColor darkerGray = *OKColor::darkerGray;
-//	const OKColor darkGray = *OKColor::darkGray;
-//	const OKColor gray = *OKColor::gray;
-//	const OKColor lightGray = *OKColor::lightGray;
-//	const OKColor lighterGray = *OKColor::lighterGray;
-//	const OKColor white = *OKColor::white;
-//	const OKColor cyan = *OKColor::cyan; 
-//	const OKColor lightCyan = *OKColor::lightCyan; 
-//	const OKColor lighterCyan = *OKColor::lighterCyan; 
-//	const OKColor darkCyan = *OKColor::darkCyan; 
-//	const OKColor darkerCyan = *OKColor::darkerCyan; 
-//	const OKColor magenta = *OKColor::magenta; 
-//	const OKColor lightMagenta = *OKColor::lightMagenta; 
-//	const OKColor lighterMagenta = *OKColor::lighterMagenta; 
-//	const OKColor darkMagenta = *OKColor::darkMagenta; 
-//	const OKColor darkerMagenta = *OKColor::darkerMagenta; 
-//	const OKColor yellow = *OKColor::yellow; 
-//	const OKColor lightYellow = *OKColor::lightYellow; 
-//	const OKColor lighterYellow = *OKColor::lighterYellow; 
-//	const OKColor darkYellow = *OKColor::darkYellow; 
-//	const OKColor darkerYellow = *OKColor::darkerYellow; 
-//	const OKColor orange = *OKColor::orange; 
-//	const OKColor lightOrange = *OKColor::lightOrange; 
-//	const OKColor lighterOrange = *OKColor::lighterOrange; 
-//	const OKColor darkOrange = *OKColor::darkOrange; 
-//	const OKColor darkerOrange = *OKColor::darkerOrange; 
-//	const OKColor red = *OKColor::red; 
-//	const OKColor lightRed = *OKColor::lightRed; 
-//	const OKColor lighterRed = *OKColor::lighterRed; 
-//	const OKColor darkRed = *OKColor::darkRed; 
-//	const OKColor darkerRed = *OKColor::darkerRed; 
-//	const OKColor pink = *OKColor::pink; 
-//	const OKColor lightPink = *OKColor::lightPink; 
-//	const OKColor lighterPink = *OKColor::lighterPink; 
-//	const OKColor darkPink = *OKColor::darkPink; 
-//	const OKColor darkerPink = *OKColor::darkerPink; 
-//	const OKColor purple = *OKColor::purple; 
-//	const OKColor darkPurple = *OKColor::darkPurple; 
-//	const OKColor darkerPurple = *OKColor::darkerPurple; 
-//	const OKColor lightPurple = *OKColor::lightPurple; 
-//	const OKColor lighterPurple = *OKColor::lighterPurple; 
-//	const OKColor blue = *OKColor::blue; 
-//	const OKColor lightBlue = *OKColor::lightBlue; 
-//	const OKColor lighterBlue = *OKColor::lighterBlue; 
-//	const OKColor darkBlue = *OKColor::darkBlue; 
-//	const OKColor darkerBlue = *OKColor::darkerBlue; 
-//	const OKColor green = *OKColor::green;
-//	const OKColor lighterGreen = *OKColor::lighterGreen;
-//	const OKColor lightGreen = *OKColor::lightGreen;
-//	const OKColor darkGreen = *OKColor::darkGreen;
-//	const OKColor darkerGreen = *OKColor::darkerGreen;
-//	const OKColor aqua = *OKColor::aqua;
-//	const OKColor lighterAqua = *OKColor::lighterAqua;
-//	const OKColor lightAqua = *OKColor::lightAqua;
-//	const OKColor darkAqua = *OKColor::darkAqua;
-//	const OKColor darkerAqua = *OKColor::darkerAqua;
-//	const OKColor turquoise = *OKColor::turquoise;
-//	const OKColor lighterTurquoise = *OKColor::lighterTurquoise;
-//	const OKColor lightTurquoise = *OKColor::lightTurquoise;
-//	const OKColor darkTurquoise = *OKColor::darkTurquoise;
-//	const OKColor darkerTurquoise = *OKColor::darkerTurquoise;
-//	const OKColor olive = *OKColor::olive;
-//	const OKColor burgandy = *OKColor::burgandy;
-//	const OKColor wine = *OKColor::wine;
+//	const BobColor clear = *BobColor::clear;
+//	const BobColor transparent = *BobColor::transparent;
+//	const BobColor black = *BobColor::black;
+//	const BobColor darkerGray = *BobColor::darkerGray;
+//	const BobColor darkGray = *BobColor::darkGray;
+//	const BobColor gray = *BobColor::gray;
+//	const BobColor lightGray = *BobColor::lightGray;
+//	const BobColor lighterGray = *BobColor::lighterGray;
+//	const BobColor white = *BobColor::white;
+//	const BobColor cyan = *BobColor::cyan; 
+//	const BobColor lightCyan = *BobColor::lightCyan; 
+//	const BobColor lighterCyan = *BobColor::lighterCyan; 
+//	const BobColor darkCyan = *BobColor::darkCyan; 
+//	const BobColor darkerCyan = *BobColor::darkerCyan; 
+//	const BobColor magenta = *BobColor::magenta; 
+//	const BobColor lightMagenta = *BobColor::lightMagenta; 
+//	const BobColor lighterMagenta = *BobColor::lighterMagenta; 
+//	const BobColor darkMagenta = *BobColor::darkMagenta; 
+//	const BobColor darkerMagenta = *BobColor::darkerMagenta; 
+//	const BobColor yellow = *BobColor::yellow; 
+//	const BobColor lightYellow = *BobColor::lightYellow; 
+//	const BobColor lighterYellow = *BobColor::lighterYellow; 
+//	const BobColor darkYellow = *BobColor::darkYellow; 
+//	const BobColor darkerYellow = *BobColor::darkerYellow; 
+//	const BobColor orange = *BobColor::orange; 
+//	const BobColor lightOrange = *BobColor::lightOrange; 
+//	const BobColor lighterOrange = *BobColor::lighterOrange; 
+//	const BobColor darkOrange = *BobColor::darkOrange; 
+//	const BobColor darkerOrange = *BobColor::darkerOrange; 
+//	const BobColor red = *BobColor::red; 
+//	const BobColor lightRed = *BobColor::lightRed; 
+//	const BobColor lighterRed = *BobColor::lighterRed; 
+//	const BobColor darkRed = *BobColor::darkRed; 
+//	const BobColor darkerRed = *BobColor::darkerRed; 
+//	const BobColor pink = *BobColor::pink; 
+//	const BobColor lightPink = *BobColor::lightPink; 
+//	const BobColor lighterPink = *BobColor::lighterPink; 
+//	const BobColor darkPink = *BobColor::darkPink; 
+//	const BobColor darkerPink = *BobColor::darkerPink; 
+//	const BobColor purple = *BobColor::purple; 
+//	const BobColor darkPurple = *BobColor::darkPurple; 
+//	const BobColor darkerPurple = *BobColor::darkerPurple; 
+//	const BobColor lightPurple = *BobColor::lightPurple; 
+//	const BobColor lighterPurple = *BobColor::lighterPurple; 
+//	const BobColor blue = *BobColor::blue; 
+//	const BobColor lightBlue = *BobColor::lightBlue; 
+//	const BobColor lighterBlue = *BobColor::lighterBlue; 
+//	const BobColor darkBlue = *BobColor::darkBlue; 
+//	const BobColor darkerBlue = *BobColor::darkerBlue; 
+//	const BobColor green = *BobColor::green;
+//	const BobColor lighterGreen = *BobColor::lighterGreen;
+//	const BobColor lightGreen = *BobColor::lightGreen;
+//	const BobColor darkGreen = *BobColor::darkGreen;
+//	const BobColor darkerGreen = *BobColor::darkerGreen;
+//	const BobColor aqua = *BobColor::aqua;
+//	const BobColor lighterAqua = *BobColor::lighterAqua;
+//	const BobColor lightAqua = *BobColor::lightAqua;
+//	const BobColor darkAqua = *BobColor::darkAqua;
+//	const BobColor darkerAqua = *BobColor::darkerAqua;
+//	const BobColor turquoise = *BobColor::turquoise;
+//	const BobColor lighterTurquoise = *BobColor::lighterTurquoise;
+//	const BobColor lightTurquoise = *BobColor::lightTurquoise;
+//	const BobColor darkTurquoise = *BobColor::darkTurquoise;
+//	const BobColor darkerTurquoise = *BobColor::darkerTurquoise;
+//	const BobColor olive = *BobColor::olive;
+//	const BobColor burgandy = *BobColor::burgandy;
+//	const BobColor wine = *BobColor::wine;
 
 	//---------------------------------------------------
 	// music and sound
@@ -453,9 +453,9 @@ public:
 	long long blockMovementInterpolationTicks = 100;						Info blockMovementInterpolationTicks_Info = Info("Visual: Block Movement Interpolation Ticks", "How many milliseconds to animate transitions between one movement to the next.");
 	int blockAnimationTicksRandomUpToBetweenLoop = 0;						Info blockAnimationTicksRandomUpToBetweenLoop_Info = Info("Visual: Block Animation Ticks Random Up To Between Loop", "If a block sprite has animation, maximum amount of milliseconds to wait before triggering animation cycle.");//drbob
 
-	sp<vector<sp<BlockType>>>blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
+	ArrayList<shared_ptr<BlockType>> blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
 	private:
-	sp<vector<BlockType>>importExport_blockTypes;
+	ArrayList<BlockType> importExport_blockTypes;
 	public:
 
 
@@ -478,14 +478,14 @@ public:
 	bool currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty = false;		Info currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info = Info("Get New Pieces Randomly Out Of Bag With One Of Each Piece Until Empty", "Get one of each piece type randomly until all of them have been used instead of generating a completely random piece each time.  Prevents many duplicates in a row and guarantees you will get each piece, but reduces randomness.");
 
 	//TODO: can change these to pieceType.garbage, etc
-	sp<vector<sp<PieceType>>>pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
+	ArrayList<shared_ptr<PieceType>> pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
 private:
-	sp<vector<PieceType>>importExport_pieceTypes;
+	ArrayList<PieceType> importExport_pieceTypes;
 public:
 
-	sp<vector<sp<DifficultyType>>>difficultyTypes;
+	ArrayList<DifficultyType*> difficultyTypes;
 private:
-	sp<vector<DifficultyType>>importExport_difficulties;
+	ArrayList<DifficultyType> importExport_difficulties;
 public:
 
 	//---------------------------------------------------
@@ -493,7 +493,7 @@ public:
 	//---------------------------------------------------
 
 	//not user settable!---------------------
-	//sp<DifficultyType> currentDifficulty = nullptr;// = ms<DifficultyType>();
+	//DifficultyType* currentDifficulty = nullptr;// = new DifficultyType();
 	//long long initialLineDropSpeedTicks = 0;
 	//int minStackRise = 0;
 	//int maxStackRise = 0;
@@ -505,8 +505,8 @@ public:
 	//int extraStage4Level = 0;
 	//int creditsLevel = 0;
 	GameType();
-	sp<DifficultyType> getDifficultyByName(string s);
-	//GameType(sp<DifficultyType>d);
+	DifficultyType* getDifficultyByName(string s);
+	//GameType(DifficultyType *d);
 
 	//void setTimingBasedOnDifficulty(DifficultyType d);
 
@@ -604,18 +604,23 @@ public:
 
 
 
+	
+
+	ArrayList<shared_ptr<BlockType>> getNormalBlockTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getGarbageBlockTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getPlayingFieldBlockTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenCheckingChain(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenMovingDown(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesChainMustContain(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType>> getNormalPieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType>> getGarbagePieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType>> getPlayingFieldPieceTypes(DifficultyType *d);
+
+
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version);
 
-	sp<vector<sp<BlockType>>> getNormalBlockTypes(sp<DifficultyType>d);
-	sp<vector<sp<BlockType>>> getGarbageBlockTypes(sp<DifficultyType>d);
-	sp<vector<sp<BlockType>>> getPlayingFieldBlockTypes(sp<DifficultyType>d);
-	sp<vector<sp<BlockType>>> getBlockTypesToIgnoreWhenCheckingChain(sp<DifficultyType>d);
-	sp<vector<sp<BlockType>>> getBlockTypesToIgnoreWhenMovingDown(sp<DifficultyType>d);
-	sp<vector<sp<BlockType>>> getBlockTypesChainMustContain(sp<DifficultyType>d);
-	sp<vector<sp<PieceType>>> getNormalPieceTypes(sp<DifficultyType>d);
-	sp<vector<sp<PieceType>>> getGarbagePieceTypes(sp<DifficultyType>d);
-	sp<vector<sp<PieceType>>> getPlayingFieldPieceTypes(sp<DifficultyType>d);
+
 
 };
 

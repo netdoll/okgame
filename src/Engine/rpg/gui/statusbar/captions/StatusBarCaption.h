@@ -4,32 +4,32 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 #include "../../../../map/Light.h"
 
-class StatusBarCaption : public EnginePart
+class BobStatusBarCaption : public EnginePart
 {
 public:
 
 	static Logger log;
 
-	sp<Caption> caption = nullptr;
-	sp<Light> light = nullptr;
+	Caption* caption = nullptr;
+	Light* light = nullptr;
 
-	sp<OKColor> defaultFGColor = OKColor::white;
-	sp<OKColor> defaultAAColor = OKColor::darkerGray;
-	sp<OKColor> defaultBGColor = OKColor::clear;
+	BobColor* defaultFGColor = BobColor::white;
+	BobColor* defaultAAColor = BobColor::darkerGray;
+	BobColor* defaultBGColor = BobColor::clear;
 
-	sp<OKColor> currentFGColor = OKColor::white;
-	sp<OKColor> currentAAColor = OKColor::darkerGray;
-	sp<OKColor> currentBGColor = OKColor::clear;
+	BobColor* currentFGColor = BobColor::white;
+	BobColor* currentAAColor = BobColor::darkerGray;
+	BobColor* currentBGColor = BobColor::clear;
 
 	bool enabled = true;
 
-	StatusBarCaption();
-	StatusBarCaption(sp<BGClientEngine> g);
+	BobStatusBarCaption();
+	BobStatusBarCaption(BGClientEngine* g);
 
 	void setEnabled(bool b);
 
@@ -41,7 +41,7 @@ public:
 
 	void updateCaption(const string& s);
 
-	virtual void setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg);
+	virtual void setColors(BobColor* fg, BobColor* aa, BobColor* bg);
 
 	void setDefaultColor();
 };

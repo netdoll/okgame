@@ -8,31 +8,31 @@
 //#pragma once
 
 
-Logger StatusBarCaption::log = Logger("StatusBarCaption");
+Logger BobStatusBarCaption::log = Logger("BobStatusBarCaption");
 
-StatusBarCaption::StatusBarCaption()
+BobStatusBarCaption::BobStatusBarCaption()
 { //=========================================================================================================================
 }
 
-StatusBarCaption::StatusBarCaption(sp<BGClientEngine> g)
+BobStatusBarCaption::BobStatusBarCaption(BGClientEngine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
 
-void StatusBarCaption::setEnabled(bool b)
+void BobStatusBarCaption::setEnabled(bool b)
 { //=========================================================================================================================
 	enabled = b;
 }
 
-void StatusBarCaption::init()
+void BobStatusBarCaption::init()
 { //=========================================================================================================================
 }
 
-void StatusBarCaption::update()
+void BobStatusBarCaption::update()
 { //=========================================================================================================================
 }
 
-void StatusBarCaption::render(int layer)
+void BobStatusBarCaption::render(int layer)
 { //=========================================================================================================================
 
 	if (enabled == false)
@@ -53,12 +53,12 @@ void StatusBarCaption::render(int layer)
 	}
 }
 
-void StatusBarCaption::updateCaption(const string& s)
+void BobStatusBarCaption::updateCaption(const string& s)
 { //=========================================================================================================================
 
 	if (caption == nullptr)
 	{
-		caption = ms<Caption>(getEngine(), Caption::Position::NONE, 0, 2, -1, s, OKFont::font_small_16_outlined_smooth, currentFGColor, currentAAColor, currentBGColor, RenderOrder::OVER_TEXT, 1.0f, 0);
+		caption = new Caption(getEngine(), Caption::Position::NONE, 0, 2, -1, s, BobFont::font_small_16_outlined_smooth, currentFGColor, currentAAColor, currentBGColor, RenderOrder::OVER_TEXT, 1.0f, 0);
 	}
 	else
 	{
@@ -69,7 +69,7 @@ void StatusBarCaption::updateCaption(const string& s)
 	}
 }
 
-void StatusBarCaption::setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg)
+void BobStatusBarCaption::setColors(BobColor* fg, BobColor* aa, BobColor* bg)
 { //=========================================================================================================================
 
 	currentFGColor = fg;
@@ -82,7 +82,7 @@ void StatusBarCaption::setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg)
 	}
 }
 
-void StatusBarCaption::setDefaultColor()
+void BobStatusBarCaption::setDefaultColor()
 { //=========================================================================================================================
 	setColors(defaultFGColor, defaultAAColor, defaultBGColor);
 }

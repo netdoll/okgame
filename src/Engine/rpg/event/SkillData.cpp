@@ -25,24 +25,24 @@ SkillData::SkillData(int id, const string& name)
 	this->name = name;
 }
 //
-//sp<SkillData> SkillData::fromBase64ZippedJSON(const string& b64)
+//SkillData* SkillData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//SkillData data = gson.fromJson(json,SkillData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//sp<SkillData> SkillData::fromJSON(const string& json)
+//SkillData* SkillData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<SkillData> data = nullptr;// gson->fromJson(json, SkillData::typeid);
+//	//Gson* gson = new Gson();
+//	SkillData* data = nullptr;// gson->fromJson(json, SkillData::typeid);
 //
 //
 //	return data;

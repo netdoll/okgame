@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,14 +18,14 @@ class Engine;
 class Area;
 
 
-class Cameraman : public Entity, public std::enable_shared_from_this<Cameraman>
+class Cameraman : public Entity
 {
 public:
 
 	static Logger log;
 
 
-	sp<Entity> targetEntity = nullptr;
+	Entity* targetEntity = nullptr;
 
 	int lastXTarget = -1;
 	int lastYTarget = -1;
@@ -36,12 +36,12 @@ public:
 	int tileSize = 16;
 
 
-	static sp<ConsoleText> currentSpeedXText;
-	static sp<ConsoleText> currentSpeedYText;
+	static ConsoleText* currentSpeedXText;
+	static ConsoleText* currentSpeedYText;
 
 
-	static sp<ConsoleText> targetSpeedXText;
-	static sp<ConsoleText> targetSpeedYText;
+	static ConsoleText* targetSpeedXText;
+	static ConsoleText* targetSpeedYText;
 
 
 	int ticksSinceSnapToPlayer = 0;
@@ -102,16 +102,16 @@ public:
 	int screenShakeMaxX = 0;
 	int screenShakeMaxY = 0;
 
-	Cameraman(sp<Engine> g);
+	Cameraman(Engine* g);
 
 
 	void initCurrentAnimationFromSprite();
 
 
-	//sp<Map> getMap();
+	//Map* getMap();
 
 
-	sp<Map> getCurrentMap();
+	Map* getCurrentMap();
 
 
 	void render(float alpha);
@@ -160,7 +160,7 @@ public:
 	void setZoomTO(float ZOOMto);
 
 
-	void setZoomToFitArea(sp<Area> a);
+	void setZoomToFitArea(Area* a);
 
 
 	void updateZoom();
@@ -199,13 +199,13 @@ public:
 	void setXYToTarget();
 
 
-	void setTarget(sp<Entity> t);
+	void setTarget(Entity* t);
 
 
 	void setTarget(float mapXPixelsHQ, float mapYPixelsHQ);
 
 
-	void setTarget(sp<Area> area);
+	void setTarget(Area* area);
 
 
 	void setDummyTarget();

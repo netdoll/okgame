@@ -255,7 +255,7 @@ void Text::SplitWords(const Gwen::UnicodeString &s, std::vector<Gwen::UnicodeStr
 		Gwen::Point p = GetSkin()->GetRender()->MeasureText( GetFont(), str );
 		if ( p.x > w ) 
 		{
-			int addSum = GetPadding().left+GetPadding().right;
+			//int addSum = GetPadding().left+GetPadding().right;
 			//split words
 			str.resize( str.size() - 1 );
 			elems.push_back( str );

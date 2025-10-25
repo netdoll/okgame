@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//sp<vector<sp<Label>>>buttonValueLabel;
+	//ArrayList<Label*> buttonValueLabel;
 
 
 	ControlsPanel();
@@ -27,10 +27,10 @@ private:
 	class WidgetAnonymousInnerClassHelper// : public Widget
 	{
 	private:
-		sp<ControlsPanel> outerInstance = nullptr;
+		ControlsPanel* outerInstance = nullptr;
 
 	public:
-		WidgetAnonymousInnerClassHelper(sp<ControlsPanel> outerInstance);
+		WidgetAnonymousInnerClassHelper(ControlsPanel* outerInstance);
 
 		void layout();
 	};

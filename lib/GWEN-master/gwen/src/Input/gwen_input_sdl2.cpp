@@ -27,6 +27,9 @@
 // THE SOFTWARE.
 //
 
+
+#ifndef ORBIS
+
 #include "Gwen/Gwen.h"
 #include "Gwen/Input/gwen_input_sdl2.h"
 
@@ -219,3 +222,6 @@ bool GwenSDL2::_ProcessAccelerator(char character, const SDL_KeyboardEvent& keyb
 }; // namespace Input
 
 }; // namespace Gwen
+
+
+#endif

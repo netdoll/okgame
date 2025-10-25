@@ -29,6 +29,8 @@
 
 #pragma once
 
+
+#ifndef ORBIS
 #include "Gwen/Controls/Canvas.h"
 #include "Gwen/Input/gwen_input_base.h"
 
@@ -63,3 +65,4 @@ protected:
 }; // namespace Input
 
 }; // namespace Gwen
+#endif

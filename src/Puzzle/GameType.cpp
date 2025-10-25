@@ -1,4 +1,6 @@
 ﻿#include "stdafx.h"
+
+
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
@@ -6,12 +8,12 @@
 
 Logger GameType::log = Logger("GameType");
 
-sp<DifficultyType> GameType::difficulty_BEGINNER = nullptr;
-sp<DifficultyType> GameType::difficulty_EASY = nullptr;
-sp<DifficultyType> GameType::difficulty_NORMAL = nullptr;
-sp<DifficultyType> GameType::difficulty_HARD = nullptr;
-sp<DifficultyType> GameType::difficulty_INSANE = nullptr;
-sp<DifficultyType> GameType::difficulty_IMPOSSIBLE = nullptr;
+DifficultyType* GameType::difficulty_BEGINNER = nullptr;
+DifficultyType* GameType::difficulty_EASY = nullptr;
+DifficultyType* GameType::difficulty_NORMAL = nullptr;
+DifficultyType* GameType::difficulty_HARD = nullptr;
+DifficultyType* GameType::difficulty_INSANE = nullptr;
+DifficultyType* GameType::difficulty_IMPOSSIBLE = nullptr;
 
 //=========================================================================================================================
 template <typename Archive>
@@ -55,30 +57,30 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 
 	if (version == 0)
 	{
-		sp<vector<PieceType>>importExport_pieceTypesToDisallow;
+		ArrayList<PieceType> importExport_pieceTypesToDisallow;
 		ar & BOOST_SERIALIZATION_NVP(importExport_pieceTypesToDisallow);
-		pieceTypesToDisallow_DEPRECATED->clear();
-		for (int i = 0; i < importExport_pieceTypesToDisallow->size(); i++)
+		pieceTypesToDisallow_DEPRECATED.clear();
+		for (int i = 0; i < importExport_pieceTypesToDisallow.size(); i++)
 		{
-			PieceType b = importExport_pieceTypesToDisallow->at(i);
-			sp<PieceType> bp(ms<PieceType>());
+			PieceType b = importExport_pieceTypesToDisallow.get(i);
+			shared_ptr<PieceType> bp(new PieceType());
 			*bp = b;
-			pieceTypesToDisallow_DEPRECATED->push_back(bp);
+			pieceTypesToDisallow_DEPRECATED.add(bp);
 		}
-		importExport_pieceTypesToDisallow->clear();
+		importExport_pieceTypesToDisallow.clear();
 		//---------------------------------------------------
 
-		sp<vector<BlockType>>importExport_blockTypesToDisallow;
+		ArrayList<BlockType> importExport_blockTypesToDisallow;
 		ar & BOOST_SERIALIZATION_NVP(importExport_blockTypesToDisallow);
-		blockTypesToDisallow_DEPRECATED->clear();
-		for (int i = 0; i < importExport_blockTypesToDisallow->size(); i++)
+		blockTypesToDisallow_DEPRECATED.clear();
+		for (int i = 0; i < importExport_blockTypesToDisallow.size(); i++)
 		{
-			BlockType b = importExport_blockTypesToDisallow->at(i);
-			sp<BlockType> bp(ms<BlockType>());
+			BlockType b = importExport_blockTypesToDisallow.get(i);
+			shared_ptr<BlockType> bp(new BlockType());
 			*bp = b;
-			blockTypesToDisallow_DEPRECATED->push_back(bp);
+			blockTypesToDisallow_DEPRECATED.add(bp);
 		}
-		importExport_blockTypesToDisallow->clear();
+		importExport_blockTypesToDisallow.clear();
 		//---------------------------------------------------
 	}
 	else
@@ -91,13 +93,370 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 
 
 
+
+//=========================================================================================================================
+
+string GameType::toBase64GZippedXML()
+{//=========================================================================================================================
+	GameType *s = this;
+	GameType gs = GameType();
+	gs = *s;
+	std::stringstream ss;
+	boost::archive::xml_oarchive oarchive(ss);
+	oarchive << BOOST_SERIALIZATION_NVP(gs);
+	log.debug(ss.str());
+	string zip = FileUtils::zipStringToBase64String(ss.str());
+	return zip;
+}
+
+//=========================================================================================================================
+GameType *GameType::fromBase64GZippedXML(string b64GZipXML)
+{//=========================================================================================================================
+	string xml = FileUtils::unzipBase64StringToString(b64GZipXML);
+
+	if (xml == "" || xml.length() == 0)
+	{
+		return nullptr;
+	}
+
+	stringstream ss;
+	ss << xml;
+	boost::archive::xml_iarchive ia(ss);
+
+	GameType gt;
+	try
+	{
+		ia >> BOOST_SERIALIZATION_NVP(gt);
+		GameType *s = new GameType();
+		*s = gt;
+		return s;
+	}
+	catch(exception)
+	{
+		log.error("Could not unserialize GameType");
+	}
+
+	return nullptr;
+}
+
+
+//	public void addRandomSpecialPieceType(shared_ptr<PieceType> pieceType)
+//	{
+//
+//		randomSpecialPieceTypes.Add(pieceType);
+//	}
+//
+//
+//
+//	
+//	public void addRegularFrequencySpecialPieceType(shared_ptr<PieceType> pieceType)
+//	{
+//
+//		regularFrequencySpecialPieceTypes.Add(pieceType);
+//	}
+
+ArrayList<shared_ptr<BlockType>> GameType::getNormalBlockTypes(DifficultyType *d)
+{//=========================================================================================================================
+	ArrayList<shared_ptr<BlockType>> arr;
+	for (int i = 0; i<blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> b = blockTypes.get(i);
+		if (b->useInNormalPieces)
+		{
+			bool found = false;
+			for(int n=0;n<d->blockTypesToDisallow_UUID.size();n++)
+			{	
+				if(d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if(found==false)arr.add(b);
+		}
+	}
+	return arr;
+}
+
+ArrayList<shared_ptr<BlockType>> GameType::getGarbageBlockTypes(DifficultyType *d)
+{//=========================================================================================================================
+	ArrayList<shared_ptr<BlockType>> arr;
+	for(int i=0;i<blockTypes.size();i++)
+	{
+		shared_ptr<BlockType> b = blockTypes.get(i);
+		if (b->useAsGarbage)
+		{
+			bool found = false;
+			for (int n = 0; n<d->blockTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+}
+
+ArrayList<shared_ptr<BlockType>> GameType::getPlayingFieldBlockTypes(DifficultyType *d)
+{//=========================================================================================================================
+
+	ArrayList<shared_ptr<BlockType>> arr;
+	for (int i = 0; i<blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> b = blockTypes.get(i);
+		if (b->useAsPlayingFieldFiller)
+		{
+			bool found = false;
+			for (int n = 0; n<d->blockTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+}
+
+ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenCheckingChain(DifficultyType *d)
+{//=========================================================================================================================
+	ArrayList<shared_ptr<BlockType>> arr;
+	for (int i = 0; i<blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> b = blockTypes.get(i);
+		if (b->ignoreWhenCheckingChainConnections)
+		{
+			bool found = false;
+			for (int n = 0; n<d->blockTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+
+}
+
+ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenMovingDown(DifficultyType *d)
+{//=========================================================================================================================
+	ArrayList<shared_ptr<BlockType>> arr;
+	for (int i = 0; i<blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> b = blockTypes.get(i);
+		if (b->ignoreWhenMovingDownBlocks)
+		{
+			bool found = false;
+			for (int n = 0; n<d->blockTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+
+}
+
+ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesChainMustContain(DifficultyType *d)
+{//=========================================================================================================================
+	ArrayList<shared_ptr<BlockType>> arr;
+	for (int i = 0; i<blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> b = blockTypes.get(i);
+		if (b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue)
+		{
+			bool found = false;
+			for (int n = 0; n<d->blockTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+
+}
+
+
+ArrayList<shared_ptr<PieceType>> GameType::getNormalPieceTypes(DifficultyType *d)
+{//=========================================================================================================================
+	ArrayList<shared_ptr<PieceType>> arr;
+	for (int i = 0; i<pieceTypes.size(); i++)
+	{
+		shared_ptr<PieceType> b = pieceTypes.get(i);
+		if (b->useAsNormalPiece)
+		{
+			bool found = false;
+			for (int n = 0; n<d->pieceTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->pieceTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+}
+
+ArrayList<shared_ptr<PieceType>> GameType::getGarbagePieceTypes(DifficultyType *d)
+{//=========================================================================================================================
+	ArrayList<shared_ptr<PieceType>> arr;
+	for (int i = 0; i<pieceTypes.size(); i++)
+	{
+		shared_ptr<PieceType> b = pieceTypes.get(i);
+		if (b->useAsGarbagePiece)
+		{
+			bool found = false;
+			for (int n = 0; n<d->pieceTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->pieceTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+}
+
+ArrayList<shared_ptr<PieceType>> GameType::getPlayingFieldPieceTypes(DifficultyType *d)
+{//=========================================================================================================================
+
+	ArrayList<shared_ptr<PieceType>> arr;
+	for (int i = 0; i<pieceTypes.size(); i++)
+	{
+		shared_ptr<PieceType> b = pieceTypes.get(i);
+		if (b->useAsPlayingFieldFillerPiece)
+		{
+			bool found = false;
+			for (int n = 0; n<d->pieceTypesToDisallow_UUID.size(); n++)
+			{
+				if (d->pieceTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+			}
+
+			if (found == false)arr.add(b);
+		}
+	}
+	return arr;
+}
+
+GameType::GameType()
+{//=========================================================================================================================
+
+	boost::uuids::random_generator generator;
+
+	uuid = to_string(generator());
+
+	//setTimingBasedOnDifficulty(currentDifficulty);
+
+	if(difficulty_BEGINNER==nullptr)
+	{
+		difficulty_BEGINNER = new DifficultyType();
+		difficulty_BEGINNER->name = "Beginner";
+		difficulty_BEGINNER->initialLineDropSpeedTicks = 2000;
+		difficulty_BEGINNER->minimumLineDropSpeedTicks = 1000;
+		difficulty_BEGINNER->minStackRise = 600;
+		difficulty_BEGINNER->maxStackRise = 1500;
+		difficulty_BEGINNER->extraStage1Level = 5;
+		difficulty_BEGINNER->extraStage2Level = 6;
+		difficulty_BEGINNER->extraStage3Level = 7;
+		difficulty_BEGINNER->extraStage4Level = 8;
+		difficulty_BEGINNER->creditsLevel = 9;
+		difficulty_BEGINNER->playingFieldGarbageSpawnRuleAmount = 10;
+
+		difficulty_EASY = new DifficultyType();
+		difficulty_EASY->name = "Easy";
+		difficulty_EASY->initialLineDropSpeedTicks = 1500;
+		difficulty_EASY->minimumLineDropSpeedTicks = 500;
+		difficulty_EASY->minStackRise = 300;
+		difficulty_EASY->maxStackRise = 800;
+		difficulty_EASY->extraStage1Level = 10;
+		difficulty_EASY->extraStage2Level = 11;
+		difficulty_EASY->extraStage3Level = 12;
+		difficulty_EASY->extraStage4Level = 13;
+		difficulty_EASY->creditsLevel = 15;
+		difficulty_EASY->playingFieldGarbageSpawnRuleAmount = 8;
+
+		difficulty_NORMAL = new DifficultyType();
+		difficulty_NORMAL->name = "Normal";
+		difficulty_NORMAL->initialLineDropSpeedTicks = 1000;
+		difficulty_NORMAL->minimumLineDropSpeedTicks = 30;
+		difficulty_NORMAL->minStackRise = 400;
+		difficulty_NORMAL->maxStackRise = 64;
+		difficulty_NORMAL->extraStage1Level = 10;
+		difficulty_NORMAL->extraStage2Level = 15;
+		difficulty_NORMAL->extraStage3Level = 20;
+		difficulty_NORMAL->extraStage4Level = 25;
+		difficulty_NORMAL->creditsLevel = 30;
+		difficulty_NORMAL->playingFieldGarbageSpawnRuleAmount = 5;
+
+		difficulty_HARD = new DifficultyType();
+		difficulty_HARD->name = "Hard";
+		difficulty_HARD->initialLineDropSpeedTicks = 500;
+		difficulty_HARD->minimumLineDropSpeedTicks = 20;
+		difficulty_HARD->minStackRise = 15;
+		difficulty_HARD->maxStackRise = 300;
+		difficulty_HARD->extraStage1Level = 20;
+		difficulty_HARD->extraStage2Level = 30;
+		difficulty_HARD->extraStage3Level = 40;
+		difficulty_HARD->extraStage4Level = 50;
+		difficulty_HARD->creditsLevel = 60;
+		difficulty_HARD->playingFieldGarbageSpawnRuleAmount = 4;
+
+		difficulty_INSANE = new DifficultyType();
+		difficulty_INSANE->name = "Insane";
+		difficulty_INSANE->initialLineDropSpeedTicks = 128;
+		difficulty_INSANE->minimumLineDropSpeedTicks = 8;
+		difficulty_INSANE->minStackRise = 15;
+		difficulty_INSANE->maxStackRise = 200;
+		difficulty_INSANE->extraStage1Level = 50;
+		difficulty_INSANE->extraStage2Level = 60;
+		difficulty_INSANE->extraStage3Level = 70;
+		difficulty_INSANE->extraStage4Level = 80;
+		difficulty_INSANE->creditsLevel = 99;
+		difficulty_INSANE->playingFieldGarbageSpawnRuleAmount = 3;
+
+		difficulty_IMPOSSIBLE = new DifficultyType();
+		difficulty_IMPOSSIBLE->name = "Impossible";
+		difficulty_IMPOSSIBLE->initialLineDropSpeedTicks = 32;
+		difficulty_IMPOSSIBLE->minimumLineDropSpeedTicks = 2;
+		difficulty_IMPOSSIBLE->minStackRise = 2;
+		difficulty_IMPOSSIBLE->maxStackRise = 128;
+		difficulty_IMPOSSIBLE->extraStage1Level = 50;
+		difficulty_IMPOSSIBLE->extraStage2Level = 60;
+		difficulty_IMPOSSIBLE->extraStage3Level = 70;
+		difficulty_IMPOSSIBLE->extraStage4Level = 80;
+		difficulty_IMPOSSIBLE->creditsLevel = 99;
+		difficulty_IMPOSSIBLE->playingFieldGarbageSpawnRuleAmount = 2;
+
+	}
+
+	DifficultyType* beginner = new DifficultyType(*difficulty_BEGINNER);
+	DifficultyType* easy = new DifficultyType(*difficulty_EASY);
+	DifficultyType* normal = new DifficultyType(*difficulty_NORMAL);
+	DifficultyType* hard = new DifficultyType(*difficulty_HARD);
+	DifficultyType* insane = new DifficultyType(*difficulty_INSANE);
+
+	difficultyTypes.clear();
+	difficultyTypes.add(beginner);
+	difficultyTypes.add(easy);
+	difficultyTypes.add(normal);
+	difficultyTypes.add(hard);
+	difficultyTypes.add(insane);
+
+	//currentDifficulty = normal;
+}
+
+
+
 //=========================================================================================================================
 template <typename Archive>
 void GameType::serialize(Archive & ar, const unsigned int version)
 {//=========================================================================================================================
-    
-    
-    ar & BOOST_SERIALIZATION_NVP(uuid);
+
+
+	ar & BOOST_SERIALIZATION_NVP(uuid);
 
 	if (version < 7)
 	{
@@ -109,13 +468,13 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		string loadedFilename = "";
 		ar & BOOST_SERIALIZATION_NVP(loadedFilename);
 	}
-    //---------------------------------------------------
-    //game rules
-    //---------------------------------------------------
-    
-    ar & BOOST_SERIALIZATION_NVP(name);
+	//---------------------------------------------------
+	//game rules
+	//---------------------------------------------------
 
-	if(version > 7)
+	ar & BOOST_SERIALIZATION_NVP(name);
+
+	if (version > 7)
 	{
 		ar & BOOST_SERIALIZATION_NVP(rules1);
 		ar & BOOST_SERIALIZATION_NVP(rules2);
@@ -130,17 +489,17 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		rules3 = "";
 	}
 
-    ar & BOOST_SERIALIZATION_NVP(scoreType);
-    ar & BOOST_SERIALIZATION_NVP(scoreTypeAmountPerLevelGained);
-    
-    ar & BOOST_SERIALIZATION_NVP(nextPieceEnabled);
-    ar & BOOST_SERIALIZATION_NVP(numberOfNextPiecesToShow);
-    
-    ar & BOOST_SERIALIZATION_NVP(holdPieceEnabled);
-    ar & BOOST_SERIALIZATION_NVP(resetHoldPieceRotation);
-    
-    ar & BOOST_SERIALIZATION_NVP(chainRule_AmountPerChain);
-    ar & BOOST_SERIALIZATION_NVP(chainRule_CheckEntireLine);
+	ar & BOOST_SERIALIZATION_NVP(scoreType);
+	ar & BOOST_SERIALIZATION_NVP(scoreTypeAmountPerLevelGained);
+
+	ar & BOOST_SERIALIZATION_NVP(nextPieceEnabled);
+	ar & BOOST_SERIALIZATION_NVP(numberOfNextPiecesToShow);
+
+	ar & BOOST_SERIALIZATION_NVP(holdPieceEnabled);
+	ar & BOOST_SERIALIZATION_NVP(resetHoldPieceRotation);
+
+	ar & BOOST_SERIALIZATION_NVP(chainRule_AmountPerChain);
+	ar & BOOST_SERIALIZATION_NVP(chainRule_CheckEntireLine);
 
 	if (version > 0)
 	{
@@ -148,51 +507,51 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		ar & BOOST_SERIALIZATION_NVP(chainRule_CheckColumn);
 	}
 
-    ar & BOOST_SERIALIZATION_NVP(chainRule_CheckRowOrColumn);
-	if(chainRule_CheckRowOrColumn)
+	ar & BOOST_SERIALIZATION_NVP(chainRule_CheckRowOrColumn);
+	if (chainRule_CheckRowOrColumn)
 	{
 		chainRule_CheckRow = true;
 		chainRule_CheckColumn = true;
 	}
 
-    ar & BOOST_SERIALIZATION_NVP(chainRule_CheckDiagonal);
-    ar & BOOST_SERIALIZATION_NVP(chainRule_CheckRecursiveConnections);
-    ar & BOOST_SERIALIZATION_NVP(chainRule_CheckTouchingBreakerBlocksChain);
-    
-    ar & BOOST_SERIALIZATION_NVP(gravityRule_onlyMoveDownDisconnectedBlocks);
-    
-    ar & BOOST_SERIALIZATION_NVP(playingFieldGarbageType);
-    ar & BOOST_SERIALIZATION_NVP(playingFieldGarbageSpawnRule);
-    //ar & BOOST_SERIALIZATION_NVP(playingFieldGarbageSpawnRuleAmount);
-    
-    ar & BOOST_SERIALIZATION_NVP(hardDropPunchThroughToLowestValidGridPosition);
-    
-    ar & BOOST_SERIALIZATION_NVP(twoSpaceWallKickAllowed);
-    ar & BOOST_SERIALIZATION_NVP(diagonalWallKickAllowed);
-    ar & BOOST_SERIALIZATION_NVP(pieceClimbingAllowed);
-    ar & BOOST_SERIALIZATION_NVP(flip180Allowed);
-    ar & BOOST_SERIALIZATION_NVP(floorKickAllowed);
-    
-    ar & BOOST_SERIALIZATION_NVP(readyTicksAmount);
-    
-    //----------------------------------------------------
-    //VS rules
-    //----------------------------------------------------
-    
-    ar & BOOST_SERIALIZATION_NVP(vsGarbageRule);
-    
-    
-    //---------------------------------------------------
-    //grid
-    //---------------------------------------------------
-    ar & BOOST_SERIALIZATION_NVP(gridWidth);
-    ar & BOOST_SERIALIZATION_NVP(gridHeight);
-	
-    ar & BOOST_SERIALIZATION_NVP(gridPixelsBetweenRows);
-    ar & BOOST_SERIALIZATION_NVP(gridPixelsBetweenColumns);
-    
-    ar & BOOST_SERIALIZATION_NVP(gameMode);
-    
+	ar & BOOST_SERIALIZATION_NVP(chainRule_CheckDiagonal);
+	ar & BOOST_SERIALIZATION_NVP(chainRule_CheckRecursiveConnections);
+	ar & BOOST_SERIALIZATION_NVP(chainRule_CheckTouchingBreakerBlocksChain);
+
+	ar & BOOST_SERIALIZATION_NVP(gravityRule_onlyMoveDownDisconnectedBlocks);
+
+	ar & BOOST_SERIALIZATION_NVP(playingFieldGarbageType);
+	ar & BOOST_SERIALIZATION_NVP(playingFieldGarbageSpawnRule);
+	//ar & BOOST_SERIALIZATION_NVP(playingFieldGarbageSpawnRuleAmount);
+
+	ar & BOOST_SERIALIZATION_NVP(hardDropPunchThroughToLowestValidGridPosition);
+
+	ar & BOOST_SERIALIZATION_NVP(twoSpaceWallKickAllowed);
+	ar & BOOST_SERIALIZATION_NVP(diagonalWallKickAllowed);
+	ar & BOOST_SERIALIZATION_NVP(pieceClimbingAllowed);
+	ar & BOOST_SERIALIZATION_NVP(flip180Allowed);
+	ar & BOOST_SERIALIZATION_NVP(floorKickAllowed);
+
+	ar & BOOST_SERIALIZATION_NVP(readyTicksAmount);
+
+	//----------------------------------------------------
+	//VS rules
+	//----------------------------------------------------
+
+	ar & BOOST_SERIALIZATION_NVP(vsGarbageRule);
+
+
+	//---------------------------------------------------
+	//grid
+	//---------------------------------------------------
+	ar & BOOST_SERIALIZATION_NVP(gridWidth);
+	ar & BOOST_SERIALIZATION_NVP(gridHeight);
+
+	ar & BOOST_SERIALIZATION_NVP(gridPixelsBetweenRows);
+	ar & BOOST_SERIALIZATION_NVP(gridPixelsBetweenColumns);
+
+	ar & BOOST_SERIALIZATION_NVP(gameMode);
+
 	bool import_randomlyFillGrid = false;
 	int import_randomlyFillGridStartY = 0;
 
@@ -208,13 +567,13 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		if (randomlyFillGridStartY>0)import_randomlyFillGridStartY = randomlyFillGridStartY;
 	}
 
-	
-    //ar & BOOST_SERIALIZATION_NVP(stackRiseGame);
-    ar & BOOST_SERIALIZATION_NVP(stackDontPutSameColorNextToEachOther);
-    ar & BOOST_SERIALIZATION_NVP(stackDontPutSameBlockTypeNextToEachOther);
-    ar & BOOST_SERIALIZATION_NVP(stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull);
-    ar & BOOST_SERIALIZATION_NVP(stackLeaveAtLeastOneGapPerRow);
-    
+
+	//ar & BOOST_SERIALIZATION_NVP(stackRiseGame);
+	ar & BOOST_SERIALIZATION_NVP(stackDontPutSameColorNextToEachOther);
+	ar & BOOST_SERIALIZATION_NVP(stackDontPutSameBlockTypeNextToEachOther);
+	ar & BOOST_SERIALIZATION_NVP(stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull);
+	ar & BOOST_SERIALIZATION_NVP(stackLeaveAtLeastOneGapPerRow);
+
 
 	if (version < 6)
 	{
@@ -229,19 +588,19 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		if (randomlyFillStack)import_randomlyFillGrid = true;
 		if (randomlyFillStackStartY>0)import_randomlyFillGridStartY = randomlyFillStackStartY;
 	}
-    
-    ar & BOOST_SERIALIZATION_NVP(stackCursorType);
-    //ar & BOOST_SERIALIZATION_NVP(useCurrentPieceAsCursor);
-    //ar & BOOST_SERIALIZATION_NVP(makeNewPiece);
-    //ar & BOOST_SERIALIZATION_NVP(makeCursorPiece);
-    //ar & BOOST_SERIALIZATION_NVP(cursorPieceSize);
-    
+
+	ar & BOOST_SERIALIZATION_NVP(stackCursorType);
+	//ar & BOOST_SERIALIZATION_NVP(useCurrentPieceAsCursor);
+	//ar & BOOST_SERIALIZATION_NVP(makeNewPiece);
+	//ar & BOOST_SERIALIZATION_NVP(makeCursorPiece);
+	//ar & BOOST_SERIALIZATION_NVP(cursorPieceSize);
+
 	if (version < 5)
 	{
-		OKColor gridBorderColor = OKColor();
-		OKColor gridCheckeredBackgroundColor1 = OKColor();
-		OKColor gridCheckeredBackgroundColor2 = OKColor();
-		OKColor screenBackgroundColor = OKColor();
+		BobColor gridBorderColor = BobColor();
+		BobColor gridCheckeredBackgroundColor1 = BobColor();
+		BobColor gridCheckeredBackgroundColor2 = BobColor();
+		BobColor screenBackgroundColor = BobColor();
 		ar & BOOST_SERIALIZATION_NVP(gridBorderColor);
 		ar & BOOST_SERIALIZATION_NVP(gridCheckeredBackgroundColor1);
 		ar & BOOST_SERIALIZATION_NVP(gridCheckeredBackgroundColor2);
@@ -250,185 +609,185 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		bool gridRule_showWarningForFieldThreeQuartersFilled = false;
 		ar & BOOST_SERIALIZATION_NVP(gridRule_showWarningForFieldThreeQuartersFilled);
 	}
-    
-   
-    
-    //---------------------------------------------------
-    //block
-    //---------------------------------------------------
-    //ar & BOOST_SERIALIZATION_NVP(whenGeneratingBlockDontGetBlockColorThatIsntOnGrid);
-    
-    ar & BOOST_SERIALIZATION_NVP(blockRule_drawDotToSquareOffBlockCorners);
-    ar & BOOST_SERIALIZATION_NVP(drawDotOnCenterOfRotation);
-    ar & BOOST_SERIALIZATION_NVP(gridRule_outlineOpenBlockEdges);
-    ar & BOOST_SERIALIZATION_NVP(fadeBlocksDarkerWhenLocking);
-    ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksDarkerWhenLocked);
-    ar & BOOST_SERIALIZATION_NVP(blockRule_fillSolidSquareWhenSetInGrid);
-	
-    ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksConnectedByPieceIgnoringColor);
-    ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksConnectedByColorIgnoringPiece);
-    ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksConnectedByColorInPiece);
-	
-    ar & BOOST_SERIALIZATION_NVP(blockMovementInterpolationTicks);
-    ar & BOOST_SERIALIZATION_NVP(blockAnimationTicksRandomUpToBetweenLoop);
+
+
+
 	//---------------------------------------------------
-    importExport_blockTypes->clear();
-    for (int i = 0; i < blockTypes->size(); i++)
-    {
-        sp<BlockType> bp = blockTypes->at(i);
-		//BlockType b;
-		//b = *bp;
-        importExport_blockTypes.add(*bp);
-    }
-    ar & BOOST_SERIALIZATION_NVP(importExport_blockTypes);
-    blockTypes->clear();
-    for (int i = 0; i < importExport_blockTypes->size(); i++)
-    {
-        BlockType b = importExport_blockTypes->at(i);
-        //sp<BlockType> bp();
-		//*bp = b;
-        blockTypes->push_back(ms<BlockType>(b));
-    }
-    importExport_blockTypes->clear();
+	//block
 	//---------------------------------------------------
-    
-    
-    //---------------------------------------------------
-    //piece
-    //---------------------------------------------------
-    ar & BOOST_SERIALIZATION_NVP(whenGeneratingPieceDontMatchAllBlockColors);
-    ar & BOOST_SERIALIZATION_NVP(whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor);
-    ar & BOOST_SERIALIZATION_NVP(whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor);
-    
-    //ar & BOOST_SERIALIZATION_NVP(currentPieceRenderAsNormalPiece);
-    //ar & BOOST_SERIALIZATION_NVP(drawCursorInsteadOfCurrentPiece);
-    ar & BOOST_SERIALIZATION_NVP(currentPieceOutlineFirstBlockRegardlessOfPosition);
-    ar & BOOST_SERIALIZATION_NVP(currentPieceRule_OutlineBlockAtZeroZero);
-    //ar & BOOST_SERIALIZATION_NVP(currentPieceRenderHoldingBlock);
-    //ar & BOOST_SERIALIZATION_NVP(currentPieceMoveUpHalfABlock);
-    
-    ar & BOOST_SERIALIZATION_NVP(currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty);
-    
+	//ar & BOOST_SERIALIZATION_NVP(whenGeneratingBlockDontGetBlockColorThatIsntOnGrid);
+
+	ar & BOOST_SERIALIZATION_NVP(blockRule_drawDotToSquareOffBlockCorners);
+	ar & BOOST_SERIALIZATION_NVP(drawDotOnCenterOfRotation);
+	ar & BOOST_SERIALIZATION_NVP(gridRule_outlineOpenBlockEdges);
+	ar & BOOST_SERIALIZATION_NVP(fadeBlocksDarkerWhenLocking);
+	ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksDarkerWhenLocked);
+	ar & BOOST_SERIALIZATION_NVP(blockRule_fillSolidSquareWhenSetInGrid);
+
+	ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksConnectedByPieceIgnoringColor);
+	ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksConnectedByColorIgnoringPiece);
+	ar & BOOST_SERIALIZATION_NVP(blockRule_drawBlocksConnectedByColorInPiece);
+
+	ar & BOOST_SERIALIZATION_NVP(blockMovementInterpolationTicks);
+	ar & BOOST_SERIALIZATION_NVP(blockAnimationTicksRandomUpToBetweenLoop);
 	//---------------------------------------------------
-    //if we are exporting a new one, importExport will be empty
-    //if we are importing a new one, both importExport and pieceTypes will be empty
-    //if we are exporting an imported one, we want importExport to be empty and pieceTypes to be full
-    //we should never import an exported one
-    importExport_pieceTypes->clear();
-    for (int i = 0; i < pieceTypes->size(); i++)
-    {
-        sp<PieceType> bp = pieceTypes->at(i);
+	importExport_blockTypes.clear();
+	for (int i = 0; i < blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> bp = blockTypes.get(i);
+		BlockType b;
+		b = *bp;
+		importExport_blockTypes.add(b);
+	}
+	ar & BOOST_SERIALIZATION_NVP(importExport_blockTypes);
+	blockTypes.clear();
+	for (int i = 0; i < importExport_blockTypes.size(); i++)
+	{
+		BlockType b = importExport_blockTypes.get(i);
+		shared_ptr<BlockType> bp(new BlockType());
+		*bp = b;
+		blockTypes.add(bp);
+	}
+	importExport_blockTypes.clear();
+	//---------------------------------------------------
+
+
+	//---------------------------------------------------
+	//piece
+	//---------------------------------------------------
+	ar & BOOST_SERIALIZATION_NVP(whenGeneratingPieceDontMatchAllBlockColors);
+	ar & BOOST_SERIALIZATION_NVP(whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor);
+	ar & BOOST_SERIALIZATION_NVP(whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor);
+
+	//ar & BOOST_SERIALIZATION_NVP(currentPieceRenderAsNormalPiece);
+	//ar & BOOST_SERIALIZATION_NVP(drawCursorInsteadOfCurrentPiece);
+	ar & BOOST_SERIALIZATION_NVP(currentPieceOutlineFirstBlockRegardlessOfPosition);
+	ar & BOOST_SERIALIZATION_NVP(currentPieceRule_OutlineBlockAtZeroZero);
+	//ar & BOOST_SERIALIZATION_NVP(currentPieceRenderHoldingBlock);
+	//ar & BOOST_SERIALIZATION_NVP(currentPieceMoveUpHalfABlock);
+
+	ar & BOOST_SERIALIZATION_NVP(currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty);
+
+	//---------------------------------------------------
+	//if we are exporting a new one, importExport will be empty
+	//if we are importing a new one, both importExport and pieceTypes will be empty
+	//if we are exporting an imported one, we want importExport to be empty and pieceTypes to be full
+	//we should never import an exported one
+	importExport_pieceTypes.clear();
+	for (int i = 0; i < pieceTypes.size(); i++)
+	{
+		shared_ptr<PieceType> bp = pieceTypes.get(i);
 		PieceType b;
 		b = *bp;
-        importExport_pieceTypes.add(b);
-    }
-    ar & BOOST_SERIALIZATION_NVP(importExport_pieceTypes);
-    pieceTypes->clear();
-    for (int i = 0; i<importExport_pieceTypes->size(); i++)
-    {
-        PieceType b = importExport_pieceTypes->at(i);
-        sp<PieceType> bp(ms<PieceType>());
+		importExport_pieceTypes.add(b);
+	}
+	ar & BOOST_SERIALIZATION_NVP(importExport_pieceTypes);
+	pieceTypes.clear();
+	for (int i = 0; i<importExport_pieceTypes.size(); i++)
+	{
+		PieceType b = importExport_pieceTypes.get(i);
+		shared_ptr<PieceType> bp(new PieceType());
 		*bp = b;
-        pieceTypes.add(bp);
-    }
-    importExport_pieceTypes->clear();
+		pieceTypes.add(bp);
+	}
+	importExport_pieceTypes.clear();
 	//---------------------------------------------------
-    
-    
+
+
 	//---------------------------------------------------
-    importExport_difficulties->clear();
-    for (int i = 0; i < difficultyTypes->size(); i++)
-    {
-        sp<DifficultyType>bp = difficultyTypes->at(i);
+	importExport_difficulties.clear();
+	for (int i = 0; i < difficultyTypes.size(); i++)
+	{
+		DifficultyType *bp = difficultyTypes.get(i);
 		DifficultyType b;
 		b = *bp;
-        importExport_difficulties.add(b);
-    }
-    ar & BOOST_SERIALIZATION_NVP(importExport_difficulties);
-    difficultyTypes->clear();
-    for (int i = 0; i<importExport_difficulties->size(); i++)
-    {
-        DifficultyType b = importExport_difficulties->at(i);
-        sp<DifficultyType>bp = ms<DifficultyType>();
+		importExport_difficulties.add(b);
+	}
+	ar & BOOST_SERIALIZATION_NVP(importExport_difficulties);
+	difficultyTypes.clear();
+	for (int i = 0; i<importExport_difficulties.size(); i++)
+	{
+		DifficultyType b = importExport_difficulties.get(i);
+		DifficultyType *bp = new DifficultyType();
 		*bp = b;
-        difficultyTypes.add(bp);
-    }
-    importExport_difficulties->clear();
+		difficultyTypes.add(bp);
+	}
+	importExport_difficulties.clear();
 	//---------------------------------------------------
 
 	if (version < 6)//move randomly fill grid options into difficulty and combine randomly fill grid and stack
 	{
 
-		for (int i = 0; i < difficultyTypes->size(); i++)
+		for (int i = 0; i < difficultyTypes.size(); i++)
 		{
-			sp<DifficultyType>bp = difficultyTypes->at(i);
+			DifficultyType *bp = difficultyTypes.get(i);
 			bp->randomlyFillGrid = import_randomlyFillGrid;
 		}
-		
 
 
-		for (int i = 0; i < difficultyTypes->size(); i++)
+
+		for (int i = 0; i < difficultyTypes.size(); i++)
 		{
-			sp<DifficultyType>bp = difficultyTypes->at(i);
+			DifficultyType *bp = difficultyTypes.get(i);
 			bp->randomlyFillGridStartY = import_randomlyFillGridStartY;
 		}
-		
-	}
-    
-    //---------------------------------------------------
-    //timing
-    //---------------------------------------------------
-	
-    //not user settable ----
-    //ar & BOOST_SERIALIZATION_NVP(initialLineDropSpeedTicks);
-    //ar & BOOST_SERIALIZATION_NVP(minStackRise);
-    //ar & BOOST_SERIALIZATION_NVP(maxStackRise);
-    //ar & BOOST_SERIALIZATION_NVP(minimumLineDropSpeedTicks);
-    //
-    //ar & BOOST_SERIALIZATION_NVP(extraStage1Level);
-    //ar & BOOST_SERIALIZATION_NVP(extraStage2Level);
-    //ar & BOOST_SERIALIZATION_NVP(extraStage3Level);
-    //ar & BOOST_SERIALIZATION_NVP(extraStage4Level);
-    //ar & BOOST_SERIALIZATION_NVP(creditsLevel);
-    
-    
-    
-    //ar & BOOST_SERIALIZATION_NVP(flashBlockSpeedTicks);
-    
-    //ar & BOOST_SERIALIZATION_NVP(flashScreenSpeedTicks);
-    //ar & BOOST_SERIALIZATION_NVP(flashScreenTimesPerLevel);
 
-	if(version<2)
+	}
+
+	//---------------------------------------------------
+	//timing
+	//---------------------------------------------------
+
+	//not user settable ----
+	//ar & BOOST_SERIALIZATION_NVP(initialLineDropSpeedTicks);
+	//ar & BOOST_SERIALIZATION_NVP(minStackRise);
+	//ar & BOOST_SERIALIZATION_NVP(maxStackRise);
+	//ar & BOOST_SERIALIZATION_NVP(minimumLineDropSpeedTicks);
+	//
+	//ar & BOOST_SERIALIZATION_NVP(extraStage1Level);
+	//ar & BOOST_SERIALIZATION_NVP(extraStage2Level);
+	//ar & BOOST_SERIALIZATION_NVP(extraStage3Level);
+	//ar & BOOST_SERIALIZATION_NVP(extraStage4Level);
+	//ar & BOOST_SERIALIZATION_NVP(creditsLevel);
+
+
+
+	//ar & BOOST_SERIALIZATION_NVP(flashBlockSpeedTicks);
+
+	//ar & BOOST_SERIALIZATION_NVP(flashScreenSpeedTicks);
+	//ar & BOOST_SERIALIZATION_NVP(flashScreenTimesPerLevel);
+
+	if (version<2)
 	{
 		int timesToFlashBlocks = 1;
 
 		ar & BOOST_SERIALIZATION_NVP(timesToFlashBlocks);
 
 	}
-    
-    ar & BOOST_SERIALIZATION_NVP(bloomIntensity);
-    ar & BOOST_SERIALIZATION_NVP(bloomTimes);
-    
-    //----------
-    
-    
-    
-    //TODO: max stack wait delay
-    ar & BOOST_SERIALIZATION_NVP(maxLockDelayTicks);
-    ar & BOOST_SERIALIZATION_NVP(spawnDelayTicksAmountPerPiece);
-    ar & BOOST_SERIALIZATION_NVP(lineClearDelayTicksAmountPerLine);
-    ar & BOOST_SERIALIZATION_NVP(lineClearDelayTicksAmountPerBlock);
-    
-    
-    ar & BOOST_SERIALIZATION_NVP(gravityRule_ticksToMoveDownBlocksOverBlankSpaces);
-    ar & BOOST_SERIALIZATION_NVP(moveDownAllLinesOverBlankSpacesAtOnce);
-    
-    ar & BOOST_SERIALIZATION_NVP(removingBlocksDelayTicksBetweenEachBlock);
-        
-    //---------------------------------------------------
-    //controls
-    //---------------------------------------------------
-    
+
+	ar & BOOST_SERIALIZATION_NVP(bloomIntensity);
+	ar & BOOST_SERIALIZATION_NVP(bloomTimes);
+
+	//----------
+
+
+
+	//TODO: max stack wait delay
+	ar & BOOST_SERIALIZATION_NVP(maxLockDelayTicks);
+	ar & BOOST_SERIALIZATION_NVP(spawnDelayTicksAmountPerPiece);
+	ar & BOOST_SERIALIZATION_NVP(lineClearDelayTicksAmountPerLine);
+	ar & BOOST_SERIALIZATION_NVP(lineClearDelayTicksAmountPerBlock);
+
+
+	ar & BOOST_SERIALIZATION_NVP(gravityRule_ticksToMoveDownBlocksOverBlankSpaces);
+	ar & BOOST_SERIALIZATION_NVP(moveDownAllLinesOverBlankSpacesAtOnce);
+
+	ar & BOOST_SERIALIZATION_NVP(removingBlocksDelayTicksBetweenEachBlock);
+
+	//---------------------------------------------------
+	//controls
+	//---------------------------------------------------
+
 	if (version < 2)
 	{
 
@@ -499,379 +858,26 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		ar & BOOST_SERIALIZATION_NVP(upVotes);
 		ar & BOOST_SERIALIZATION_NVP(downVotes);
 
-		
+
 	}
-	if(version==3)
+	if (version == 3)
 	{
 		bool haveYouVoted = false;
 		ar & BOOST_SERIALIZATION_NVP(haveYouVoted);
 	}
-	if(version>3)
+	if (version>3)
 	{
 		ar & BOOST_SERIALIZATION_NVP(yourVote);
 	}
-    
-}
-
-//=========================================================================================================================
-
-string GameType::toBase64GZippedXML()
-{//=========================================================================================================================
-	sp<GameType>s = shared_from_this();
-	GameType gs = GameType();
-	gs = *s;
-	std::stringstream ss;
-	boost::archive::xml_oarchive oarchive(ss);
-	oarchive << BOOST_SERIALIZATION_NVP(gs);
-	log.debug(ss.str());
-	string zip = FileUtils::zipStringToBase64String(ss.str());
-	return zip;
-}
-
-//=========================================================================================================================
-sp<GameType>GameType::fromBase64GZippedXML(string b64GZipXML)
-{//=========================================================================================================================
-	string xml = FileUtils::unzipBase64StringToString(b64GZipXML);
-
-	if (xml == "" || xml.length() == 0)
-	{
-		return nullptr;
-	}
-
-	stringstream ss;
-	ss << xml;
-	boost::archive::xml_iarchive ia(ss);
-
-	GameType gt;
-	try
-	{
-		ia >> BOOST_SERIALIZATION_NVP(gt);
-		sp<GameType>s = ms<GameType>();
-		*s = gt;
-		return s;
-	}
-	catch(exception)
-	{
-		log.error("Could not unserialize GameType");
-	}
-
-	return nullptr;
-}
-
-
-//	public void addRandomSpecialPieceType(sp<PieceType> pieceType)
-//	{
-//
-//		randomSpecialPieceTypes.Add(pieceType);
-//	}
-//
-//
-//
-//	
-//	public void addRegularFrequencySpecialPieceType(sp<PieceType> pieceType)
-//	{
-//
-//		regularFrequencySpecialPieceTypes.Add(pieceType);
-//	}
-
-sp<vector<sp<BlockType>>> GameType::getNormalBlockTypes(sp<DifficultyType>d)
-{//=========================================================================================================================
-	sp<vector<sp<BlockType>>>arr;
-	for (int i = 0; i<blockTypes->size(); i++)
-	{
-		sp<BlockType> b = blockTypes->at(i);
-		if (b->useInNormalPieces)
-		{
-			bool found = false;
-			for(int n=0;n<d->blockTypesToDisallow_UUID->size();n++)
-			{	
-				if(d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if(found==false)arr->push_back(b);
-		}
-	}
-	return arr;
-}
-
-sp<vector<sp<BlockType>>> GameType::getGarbageBlockTypes(sp<DifficultyType>d)
-{//=========================================================================================================================
-	sp<vector<sp<BlockType>>>arr;
-	for(int i=0;i<blockTypes->size();i++)
-	{
-		sp<BlockType> b = blockTypes->at(i);
-		if (b->useAsGarbage)
-		{
-			bool found = false;
-			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
-}
-
-sp<vector<sp<BlockType>>> GameType::getPlayingFieldBlockTypes(sp<DifficultyType>d)
-{//=========================================================================================================================
-
-	sp<vector<sp<BlockType>>>arr;
-	for (int i = 0; i<blockTypes->size(); i++)
-	{
-		sp<BlockType> b = blockTypes->at(i);
-		if (b->useAsPlayingFieldFiller)
-		{
-			bool found = false;
-			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
-}
-
-sp<vector<sp<BlockType>>> GameType::getBlockTypesToIgnoreWhenCheckingChain(sp<DifficultyType>d)
-{//=========================================================================================================================
-	sp<vector<sp<BlockType>>>arr;
-	for (int i = 0; i<blockTypes->size(); i++)
-	{
-		sp<BlockType> b = blockTypes->at(i);
-		if (b->ignoreWhenCheckingChainConnections)
-		{
-			bool found = false;
-			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
-
-}
-
-sp<vector<sp<BlockType>>> GameType::getBlockTypesToIgnoreWhenMovingDown(sp<DifficultyType>d)
-{//=========================================================================================================================
-	sp<vector<sp<BlockType>>>arr;
-	for (int i = 0; i<blockTypes->size(); i++)
-	{
-		sp<BlockType> b = blockTypes->at(i);
-		if (b->ignoreWhenMovingDownBlocks)
-		{
-			bool found = false;
-			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
-
-}
-
-sp<vector<sp<BlockType>>> GameType::getBlockTypesChainMustContain(sp<DifficultyType>d)
-{//=========================================================================================================================
-	sp<vector<sp<BlockType>>>arr;
-	for (int i = 0; i<blockTypes->size(); i++)
-	{
-		sp<BlockType> b = blockTypes->at(i);
-		if (b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue)
-		{
-			bool found = false;
-			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
 
 }
 
 
-sp<vector<sp<PieceType>>> GameType::getNormalPieceTypes(sp<DifficultyType>d)
+shared_ptr<BlockType> GameType::getBlockTypeByName(string s)
 {//=========================================================================================================================
-	sp<vector<sp<PieceType>>>arr;
-	for (int i = 0; i<pieceTypes->size(); i++)
+	for (int i = 0; i<blockTypes.size(); i++)
 	{
-		sp<PieceType> b = pieceTypes->at(i);
-		if (b->useAsNormalPiece)
-		{
-			bool found = false;
-			for (int n = 0; n<d->pieceTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->pieceTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
-}
-
-sp<vector<sp<PieceType>>> GameType::getGarbagePieceTypes(sp<DifficultyType>d)
-{//=========================================================================================================================
-	sp<vector<sp<PieceType>>>arr;
-	for (int i = 0; i<pieceTypes->size(); i++)
-	{
-		sp<PieceType> b = pieceTypes->at(i);
-		if (b->useAsGarbagePiece)
-		{
-			bool found = false;
-			for (int n = 0; n<d->pieceTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->pieceTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
-}
-
-sp<vector<sp<PieceType>>> GameType::getPlayingFieldPieceTypes(sp<DifficultyType>d)
-{//=========================================================================================================================
-
-	sp<vector<sp<PieceType>>>arr;
-	for (int i = 0; i<pieceTypes->size(); i++)
-	{
-		sp<PieceType> b = pieceTypes->at(i);
-		if (b->useAsPlayingFieldFillerPiece)
-		{
-			bool found = false;
-			for (int n = 0; n<d->pieceTypesToDisallow_UUID->size(); n++)
-			{
-				if (d->pieceTypesToDisallow_UUID->at(n) == b->uuid)found = true;
-			}
-
-			if (found == false)arr->push_back(b);
-		}
-	}
-	return arr;
-}
-
-GameType::GameType()
-{//=========================================================================================================================
-
-	boost::uuids::random_generator generator;
-
-	uuid = to_string(generator());
-
-	//setTimingBasedOnDifficulty(currentDifficulty);
-
-	if(difficulty_BEGINNER==nullptr)
-	{
-		difficulty_BEGINNER = ms<DifficultyType>();
-		difficulty_BEGINNER->name = "Beginner";
-		difficulty_BEGINNER->initialLineDropSpeedTicks = 2000;
-		difficulty_BEGINNER->minimumLineDropSpeedTicks = 1000;
-		difficulty_BEGINNER->minStackRise = 600;
-		difficulty_BEGINNER->maxStackRise = 1500;
-		difficulty_BEGINNER->extraStage1Level = 5;
-		difficulty_BEGINNER->extraStage2Level = 6;
-		difficulty_BEGINNER->extraStage3Level = 7;
-		difficulty_BEGINNER->extraStage4Level = 8;
-		difficulty_BEGINNER->creditsLevel = 9;
-		difficulty_BEGINNER->playingFieldGarbageSpawnRuleAmount = 10;
-
-		difficulty_EASY = ms<DifficultyType>();
-		difficulty_EASY->name = "Easy";
-		difficulty_EASY->initialLineDropSpeedTicks = 1500;
-		difficulty_EASY->minimumLineDropSpeedTicks = 500;
-		difficulty_EASY->minStackRise = 300;
-		difficulty_EASY->maxStackRise = 800;
-		difficulty_EASY->extraStage1Level = 10;
-		difficulty_EASY->extraStage2Level = 11;
-		difficulty_EASY->extraStage3Level = 12;
-		difficulty_EASY->extraStage4Level = 13;
-		difficulty_EASY->creditsLevel = 15;
-		difficulty_EASY->playingFieldGarbageSpawnRuleAmount = 8;
-
-		difficulty_NORMAL = ms<DifficultyType>();
-		difficulty_NORMAL->name = "Normal";
-		difficulty_NORMAL->initialLineDropSpeedTicks = 1000;
-		difficulty_NORMAL->minimumLineDropSpeedTicks = 30;
-		difficulty_NORMAL->minStackRise = 400;
-		difficulty_NORMAL->maxStackRise = 64;
-		difficulty_NORMAL->extraStage1Level = 10;
-		difficulty_NORMAL->extraStage2Level = 15;
-		difficulty_NORMAL->extraStage3Level = 20;
-		difficulty_NORMAL->extraStage4Level = 25;
-		difficulty_NORMAL->creditsLevel = 30;
-		difficulty_NORMAL->playingFieldGarbageSpawnRuleAmount = 5;
-
-		difficulty_HARD = ms<DifficultyType>();
-		difficulty_HARD->name = "Hard";
-		difficulty_HARD->initialLineDropSpeedTicks = 500;
-		difficulty_HARD->minimumLineDropSpeedTicks = 20;
-		difficulty_HARD->minStackRise = 15;
-		difficulty_HARD->maxStackRise = 300;
-		difficulty_HARD->extraStage1Level = 20;
-		difficulty_HARD->extraStage2Level = 30;
-		difficulty_HARD->extraStage3Level = 40;
-		difficulty_HARD->extraStage4Level = 50;
-		difficulty_HARD->creditsLevel = 60;
-		difficulty_HARD->playingFieldGarbageSpawnRuleAmount = 4;
-
-		difficulty_INSANE = ms<DifficultyType>();
-		difficulty_INSANE->name = "Insane";
-		difficulty_INSANE->initialLineDropSpeedTicks = 128;
-		difficulty_INSANE->minimumLineDropSpeedTicks = 8;
-		difficulty_INSANE->minStackRise = 15;
-		difficulty_INSANE->maxStackRise = 200;
-		difficulty_INSANE->extraStage1Level = 50;
-		difficulty_INSANE->extraStage2Level = 60;
-		difficulty_INSANE->extraStage3Level = 70;
-		difficulty_INSANE->extraStage4Level = 80;
-		difficulty_INSANE->creditsLevel = 99;
-		difficulty_INSANE->playingFieldGarbageSpawnRuleAmount = 3;
-
-		difficulty_IMPOSSIBLE = ms<DifficultyType>();
-		difficulty_IMPOSSIBLE->name = "Impossible";
-		difficulty_IMPOSSIBLE->initialLineDropSpeedTicks = 32;
-		difficulty_IMPOSSIBLE->minimumLineDropSpeedTicks = 2;
-		difficulty_IMPOSSIBLE->minStackRise = 2;
-		difficulty_IMPOSSIBLE->maxStackRise = 128;
-		difficulty_IMPOSSIBLE->extraStage1Level = 50;
-		difficulty_IMPOSSIBLE->extraStage2Level = 60;
-		difficulty_IMPOSSIBLE->extraStage3Level = 70;
-		difficulty_IMPOSSIBLE->extraStage4Level = 80;
-		difficulty_IMPOSSIBLE->creditsLevel = 99;
-		difficulty_IMPOSSIBLE->playingFieldGarbageSpawnRuleAmount = 2;
-
-	}
-
-	sp<DifficultyType> beginner = ms<DifficultyType>(*difficulty_BEGINNER);
-	sp<DifficultyType> easy = ms<DifficultyType>(*difficulty_EASY);
-	sp<DifficultyType> normal = ms<DifficultyType>(*difficulty_NORMAL);
-	sp<DifficultyType> hard = ms<DifficultyType>(*difficulty_HARD);
-	sp<DifficultyType> insane = ms<DifficultyType>(*difficulty_INSANE);
-
-	difficultyTypes->clear();
-	difficultyTypes->push_back(beginner);
-	difficultyTypes->push_back(easy);
-	difficultyTypes->push_back(normal);
-	difficultyTypes->push_back(hard);
-	difficultyTypes->push_back(insane);
-
-	//currentDifficulty = normal;
-}
-
-sp<BlockType> GameType::getBlockTypeByName(string s)
-{//=========================================================================================================================
-	for (int i = 0; i<blockTypes->size(); i++)
-	{
-		sp<BlockType> d = blockTypes->at(i);
+		shared_ptr<BlockType> d = blockTypes.get(i);
 		if (d->name == s)
 		{
 			return d;
@@ -883,11 +889,11 @@ sp<BlockType> GameType::getBlockTypeByName(string s)
 	return nullptr;
 }
 
-sp<PieceType> GameType::getPieceTypeByName(string s)
+shared_ptr<PieceType> GameType::getPieceTypeByName(string s)
 {//=========================================================================================================================
-	for (int i = 0; i<pieceTypes->size(); i++)
+	for (int i = 0; i<pieceTypes.size(); i++)
 	{
-		sp<PieceType> d = pieceTypes->at(i);
+		shared_ptr<PieceType> d = pieceTypes.get(i);
 		if (d->name == s)
 		{
 			return d;
@@ -899,11 +905,11 @@ sp<PieceType> GameType::getPieceTypeByName(string s)
 	return nullptr;
 }
 
-sp<BlockType> GameType::getBlockTypeByUUID(string s)
+shared_ptr<BlockType> GameType::getBlockTypeByUUID(string s)
 {//=========================================================================================================================
-	for (int i = 0; i<blockTypes->size(); i++)
+	for (int i = 0; i<blockTypes.size(); i++)
 	{
-		sp<BlockType> d = blockTypes->at(i);
+		shared_ptr<BlockType> d = blockTypes.get(i);
 		if (d->uuid == s)
 		{
 			return d;
@@ -915,11 +921,11 @@ sp<BlockType> GameType::getBlockTypeByUUID(string s)
 	return nullptr;
 }
 
-sp<PieceType> GameType::getPieceTypeByUUID(string s)
+shared_ptr<PieceType> GameType::getPieceTypeByUUID(string s)
 {//=========================================================================================================================
-	for (int i = 0; i<pieceTypes->size(); i++)
+	for (int i = 0; i<pieceTypes.size(); i++)
 	{
-		sp<PieceType> d = pieceTypes->at(i);
+		shared_ptr<PieceType> d = pieceTypes.get(i);
 		if (d->uuid == s)
 		{
 			return d;
@@ -931,13 +937,13 @@ sp<PieceType> GameType::getPieceTypeByUUID(string s)
 	return nullptr;
 }
 
-sp<DifficultyType> GameType::getDifficultyByName(string s)
+DifficultyType* GameType::getDifficultyByName(string s)
 {//=========================================================================================================================
 
 	//bool found = false;
-	for (int i = 0; i<difficultyTypes->size(); i++)
+	for (int i = 0; i<difficultyTypes.size(); i++)
 	{
-		sp<DifficultyType>d = difficultyTypes->at(i);
+		DifficultyType *d = difficultyTypes.get(i);
 		if (d->name == s)
 		{
 			return d;
@@ -950,13 +956,13 @@ sp<DifficultyType> GameType::getDifficultyByName(string s)
 }
 
 
-//GameType::GameType(sp<DifficultyType> d)
+//GameType::GameType(DifficultyType* d)
 //{
 //	currentDifficulty = d;
 //	//setTimingBasedOnDifficulty(d);
 //}
 
-//void GameType::setTimingBasedOnDifficulty(sp<DifficultyType> d)
+//void GameType::setTimingBasedOnDifficulty(DifficultyType* d)
 //{
 //	currentDifficulty = d;
 //
@@ -975,32 +981,32 @@ sp<DifficultyType> GameType::getDifficultyByName(string s)
 //}
 
 ////=========================================================================================================================
-//void GameType::addNormalPieceType(sp<PieceType> pieceType)
+//void GameType::addNormalPieceType(shared_ptr<PieceType> pieceType)
 //{//=========================================================================================================================
 //	pieceType.useAsNormalPiece = true;
 //	pieceTypes.add(pieceType);
 //}
 //
 ////=========================================================================================================================
-//void GameType::addPlayingFieldPieceType(sp<PieceType> pieceType)
+//void GameType::addPlayingFieldPieceType(shared_ptr<PieceType> pieceType)
 //{//=========================================================================================================================
 //	pieceType.useAsPlayingFieldFillerPiece = true;
 //	pieceTypes.add(pieceType);
 //}
 //
 ////=========================================================================================================================
-//void GameType::addDisallowedFirstPieceType(sp<PieceType> pieceType)
+//void GameType::addDisallowedFirstPieceType(shared_ptr<PieceType> pieceType)
 //{//=========================================================================================================================
 //	pieceType.disallowAsFirstPiece = true;
 //	pieceTypes.add(pieceType);
 //}
 
 ////=========================================================================================================================
-//bool GameType::isFirstPieceTypeAllowed(sp<PieceType> pieceType)
+//bool GameType::isFirstPieceTypeAllowed(shared_ptr<PieceType> pieceType)
 //{//=========================================================================================================================
-//	for (int i = 0; i < disallowedFirstPieceTypes->size(); i++)
+//	for (int i = 0; i < disallowedFirstPieceTypes.size(); i++)
 //	{
-//		if (pieceType == disallowedFirstPieceTypes->at(i))
+//		if (pieceType == disallowedFirstPieceTypes.get(i))
 //		{
 //			return false;
 //		}
@@ -1009,35 +1015,35 @@ sp<DifficultyType> GameType::getDifficultyByName(string s)
 //}
 
 ////=========================================================================================================================
-//void GameType::addBlockType(sp<BlockType> blockClass)
+//void GameType::addBlockType(shared_ptr<BlockType> blockClass)
 //{//=========================================================================================================================
 //
 //	blockTypes.add(blockClass);
 //}
 
 ////=========================================================================================================================
-//void GameType::addPlayingFieldBlockType(sp<BlockType> blockClass)
+//void GameType::addPlayingFieldBlockType(shared_ptr<BlockType> blockClass)
 //{//=========================================================================================================================
 //
 //	playingFieldBlockTypes.add(blockClass);
 //}
 //
 ////=========================================================================================================================
-//void GameType::addGarbageBlockType(sp<BlockType> blockClass)
+//void GameType::addGarbageBlockType(shared_ptr<BlockType> blockClass)
 //{//=========================================================================================================================
 //
 //	garbageBlockTypes.add(blockClass);
 //}
 
 //	//=========================================================================================================================
-//	public void addRandomSpecialBlockType(sp<BlockType> blockClass)
+//	public void addRandomSpecialBlockType(shared_ptr<BlockType> blockClass)
 //	{//=========================================================================================================================
 //
 //		randomSpecialBlockTypes.Add(blockClass);
 //	}
 //
 //	//=========================================================================================================================
-//	public void addRegularFrequencySpecialBlockType(sp<BlockType> blockClass)
+//	public void addRegularFrequencySpecialBlockType(shared_ptr<BlockType> blockClass)
 //	{//=========================================================================================================================
 //
 //		regularFrequencySpecialBlockTypes.Add(blockClass);

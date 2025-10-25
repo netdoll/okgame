@@ -34,6 +34,8 @@ Logger FileUtils::log = Logger("FileUtils");
 
 #include <iostream>
 
+#ifndef ORBIS
+
 #include "Poco/File.h"
 #include "Poco/Path.h"
 #include "Poco/Delegate.h"
@@ -46,6 +48,67 @@ using Poco::Process;
 using Poco::Path;
 using Poco::Delegate;
 using Poco::Zip::Decompress;
+
+#include "Poco/Base64Decoder.h"
+
+#include "Poco/MD5Engine.h"
+#include "Poco/DigestStream.h"
+using Poco::MD5Engine;
+
+
+#undef INADDR_ANY       
+#undef INADDR_LOOPBACK  
+#undef INADDR_BROADCAST 
+#undef INADDR_NONE      
+#include "Poco/Net/HTTPClientSession.h"
+#include "Poco/Net/HTTPRequest.h"
+#include "Poco/Net/HTTPResponse.h"
+#include "Poco/Net/HTTPCredentials.h"
+#include "Poco/StreamCopier.h"
+#include "Poco/NullStream.h"
+#include "Poco/Path.h"
+#include "Poco/URI.h"
+#include "Poco/Exception.h"
+using Poco::Net::HTTPClientSession;
+using Poco::Net::HTTPRequest;
+using Poco::Net::HTTPResponse;
+using Poco::Net::HTTPMessage;
+using Poco::StreamCopier;
+using Poco::Path;
+using Poco::URI;
+using Poco::Exception;
+
+#include "Poco/FileStream.h"
+#include "Poco/URIStreamOpener.h"
+#include "Poco/Net/HTTPStreamFactory.h"
+#include "Poco/Net/FTPStreamFactory.h"
+#include <memory>
+#include <iostream>
+using Poco::FileStream;
+using Poco::URIStreamOpener;
+using Poco::Net::HTTPStreamFactory;
+using Poco::Net::FTPStreamFactory;
+
+//#include "Poco/DateTime.h"
+//using Poco::DateTime;
+//#include "Poco/LocalDateTime.h"
+//using Poco::LocalDateTime;
+//#include "Poco/Timezone.h"
+//#include "Poco/Timestamp.h"
+//using Poco::Timezone;
+//using Poco::Timestamp;
+#undef INADDR_ANY       
+#undef INADDR_LOOPBACK  
+#undef INADDR_BROADCAST 
+#undef INADDR_NONE  
+#include <Poco/Net/NTPClient.h>
+using namespace Poco::Net;
+
+#include "Poco/Environment.h"
+using Poco::Environment;
+
+
+
 
 void test()
 {
@@ -78,7 +141,7 @@ void test()
 
 	//show all files in dir
 	{
-		vector<string>files;
+		vector<string> files;
 		tmpDir.list(files);
 		vector<string>::iterator it = files.begin();
 		for (; it != files.end(); ++it)
@@ -105,7 +168,9 @@ void test()
 	}
 }
 
-sp<vector<string>> FileUtils::swearWords = nullptr;
+#endif
+
+ArrayList<string>* FileUtils::swearWords = nullptr;
 
 //==========================================================================================================================
 string FileUtils::removeSwearWords(string text)
@@ -120,13 +185,13 @@ string FileUtils::removeSwearWords(string text)
 
 	for(int i=0;i<swearWords->size();i++)
 	{
-		string word = swearWords->at(i);
-		int pos = (int)text.find(word);
+		string word = swearWords->get(i);
+		int pos = text.find(word);
 		while(pos!=(int)string::npos)
 		{
 			text = text.substr(0, pos) + "*" +text.substr(pos + word.length() + 1);
 
-			pos = (int)text.find(word);
+			pos = text.find(word);
 		}
 	}
 	return text;
@@ -184,6 +249,7 @@ string FileUtils::removeIllegalFilenameChars(string filename)
 //	return content;
 //}
 
+#ifndef ORBIS
 //==========================================================================================================================
 void* HARDWARE_load_file(string filename)
 {//==========================================================================================================================
@@ -272,7 +338,22 @@ long HARDWARE_get_file_size(string filename)//HARDWARE_FSFile[HARDWARE_FSGetFile
 	return size;
 }
 
-//sp<FileUtils> FileUtils::fileUtils = nullptr;
+#else
+
+#endif
+
+string FileUtils::getPrefPath()
+{
+
+#ifndef ORBIS
+	return string(SDL_GetPrefPath("Bob Corporation", "bob's game"));
+#else
+	return "";
+#endif
+	
+}
+
+//FileUtils* FileUtils::fileUtils = nullptr;
 
 string FileUtils::appDataPath = "";
 string FileUtils::cacheDir = "";
@@ -287,13 +368,13 @@ FileUtils::FileUtils()
 
 //	   if (Main::debugMode == true) //DEBUG
 //	   {
-//	      bigDataURL = OKNet::debugBigDataURL;
-//	      smallDataURL = OKNet::debugSmallDataURL;
+//	      bigDataURL = BobNet::debugBigDataURL;
+//	      smallDataURL = BobNet::debugSmallDataURL;
 //	   }
 //	   else
 //	   {
-	      bigDataURL = OKNet::releaseBigDataURL;
-	      smallDataURL = OKNet::releaseSmallDataURL;
+	      bigDataURL = BobNet::releaseBigDataURL;
+	      smallDataURL = BobNet::releaseSmallDataURL;
 	  // }
 	//
 	//   //cacheDir = "C:\\bobsGameCache\\";
@@ -302,37 +383,26 @@ FileUtils::FileUtils()
 	//slash = "/";// prop->getProperty("file.separator"); //also File.separatorChar, File.separator
 	//cacheDir = "";// prop->getProperty("user.home") + slash + ".bobsGame" + slash;
 	//fileUtils = this;
-	appDataPath = string(SDL_GetPrefPath("OK Corporation", "bob's game"));
+	appDataPath = getPrefPath();
 	cacheDir = appDataPath+"cache/";
 }
 
-sp<BufferedImage> FileUtils::readBufferedImageFromFile(sp<OKFile> file)
+BufferedImage* FileUtils::readBufferedImageFromFile(BobFile* file)
 {
-	return ms<BufferedImage>();
+	return new BufferedImage();
 }
 
-//sp<vector<string>>* FileUtils::readLines(u8* get_resource_as_stream)
+//ArrayList<string>* FileUtils::readLines(u8* get_resource_as_stream)
 //{
-//	return ms<vector><string>;
+//	return new ArrayList<string>;
 //}
 
-#include "Poco/File.h"
-#include "Poco/Path.h"
-#include "Poco/Delegate.h"
-#include "Poco/Zip/Decompress.h"
-#include "Poco/Process.h"
-#include "Poco/DirectoryIterator.h"
-using Poco::DirectoryIterator;
-using Poco::File;
-using Poco::Process;
-using Poco::Path;
-using Poco::Delegate;
-using Poco::Zip::Decompress;
+
 
 void FileUtils::makeDir(const string& cs)
 {
 
-	File f = File(cs);
+	BobFile f = BobFile(cs);
 	if (f.exists() == false)
 	{
 		f.createDirectory();
@@ -348,7 +418,7 @@ void FileUtils::makeDir(const string& cs)
 //
 //	//
 //	//   //don't use absolute paths starting from the folder we are in. /whatever.jpg
-//	//   if (OKString::startsWith(filename, "/") == true && OKString::startsWith(filename, System::getProperty("user.home")) == false)
+//	//   if (String::startsWith(filename, "/") == true && String::startsWith(filename, System::getProperty("user.home")) == false)
 //	//   {
 //	//      filename = filename.substr(1); //cut off the /
 //	//      log.debug("Don't use absolute paths, fix this.");
@@ -356,10 +426,10 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//
 //	//   //if we are using stuff from /res/ we should get them from the ClassLoader which gets them from inside the JAR (but removed from /res/ for some reason)
-//	//   if (OKString::startsWith(filename, "res/") == true)
+//	//   if (String::startsWith(filename, "res/") == true)
 //	//   {
 //	//      filename = filename.substr(4);
-//	//      sp<InputStream> is = utils->getClass().getClassLoader().getResourceAsStream(filename);
+//	//      InputStream* is = utils->getClass().getClassLoader().getResourceAsStream(filename);
 //	//
 //	//      if (is == nullptr)
 //	//      {
@@ -370,14 +440,14 @@ void FileUtils::makeDir(const string& cs)
 //	//   }
 //	//   else //we are accessing from the hard disk. try the resource loader which will get it as a file.
 //	//   {
-//	//      sp<FileInputStream> stream = nullptr;
+//	//      FileInputStream* stream = nullptr;
 //	//      try
 //	//      {
-//	//         sp<File> file = ms<File>(filename);
+//	//         File* file = new File(filename);
 //	//
 //	//         if (!file->exists())
 //	//         {
-//	//            file = ms<File>(ms<File>("."), filename);
+//	//            file = new File(new File("."), filename);
 //	//         }
 //	//
 //	//         if (!file->exists())
@@ -387,7 +457,7 @@ void FileUtils::makeDir(const string& cs)
 //	//         }
 //	//         else
 //	//         {
-//	//            stream = ms<FileInputStream>(file);
+//	//            stream = new FileInputStream(file);
 //	//         }
 //	//      }
 //	//      catch (IOException e)
@@ -413,7 +483,7 @@ void FileUtils::makeDir(const string& cs)
 //
 //
 //	//   //don't use absolute paths starting from the folder we are in. /whatever.jpg
-//	//   if (OKString::startsWith(filename, "/") == true && OKString::startsWith(filename, System::getProperty("user.home")) == false)
+//	//   if (String::startsWith(filename, "/") == true && String::startsWith(filename, System::getProperty("user.home")) == false)
 //	//   {
 //	//      filename = filename.substr(1); //cut off the /
 //	//      log.debug("Don't use absolute paths, fix this.");
@@ -421,7 +491,7 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//
 //	//   //if we are using stuff from /res/ we should get them from the ClassLoader which gets them from inside the JAR (but removed from /res/ for some reason)
-//	//   if (OKString::startsWith(filename, "res/") == true)
+//	//   if (String::startsWith(filename, "res/") == true)
 //	//   {
 //	//      filename = filename.substr(4);
 //	//      URL* is = utils->getClass().getClassLoader().getResource(filename);
@@ -437,10 +507,10 @@ void FileUtils::makeDir(const string& cs)
 //	//   {
 //	//      try
 //	//      {
-//	//         sp<File> file = ms<File>(filename);
+//	//         File* file = new File(filename);
 //	//         if (file->exists() == false)
 //	//         {
-//	//            file = ms<File>(ms<File>("."), filename);
+//	//            file = new File(new File("."), filename);
 //	//         }
 //	//
 //	//
@@ -448,7 +518,7 @@ void FileUtils::makeDir(const string& cs)
 //	//         {
 //	//            log.error("Could not find file: " + filename);
 //	//
-//	//            //if(OKNet.debugMode)ms<Exception>().printStackTrace();
+//	//            //if(BobNet.debugMode)new Exception().printStackTrace();
 //	//
 //	//            return nullptr;
 //	//         }
@@ -469,12 +539,12 @@ void FileUtils::makeDir(const string& cs)
 //
 //short* FileUtils::oldLoadShortIntFile(const string& filename)
 //{ //=========================================================================================================================
-//	//   sp<File> file = ms<File>(filename);
+//	//   File* file = new File(filename);
 //	//
 //	//
 //	//   int* intArray(((int)(file->length())) / 2);
 //	//
-//	//   sp<BufferedInputStream> bin = ms<BufferedInputStream>(FileUtils::getResourceAsStream(filename));
+//	//   BufferedInputStream* bin = new BufferedInputStream(FileUtils::getResourceAsStream(filename));
 //	//
 //	//   try
 //	//   {
@@ -507,12 +577,12 @@ void FileUtils::makeDir(const string& cs)
 //}
 
 ////=========================================================================================================================
-//sp<vector<uint16_t>>* FileUtils::loadShortFile(string filename)
+//vector<uint16_t>* FileUtils::loadShortFile(string filename)
 //{//=========================================================================================================================
 //
-//	sp<ByteArray>byteArray = loadByteFileFromExePath(filename);
+//	ByteArray *byteArray = loadByteFileFromExePath(filename);
 //	
-//	sp<vector<uint16_t>>*shortArray = new sp<vector<uint16_t>>(byteArray->size() / 2);
+//	vector<uint16_t> *shortArray = new vector<uint16_t>(byteArray->size() / 2);
 //	
 //			for(int x=0;x<shortArray->size();x++)
 //			{
@@ -539,14 +609,14 @@ void FileUtils::makeDir(const string& cs)
 //}
 
 //=========================================================================================================================
-sp<IntArray> FileUtils::loadIntFile(string filename)
+IntArray* FileUtils::loadIntFile(string filename)
 {//=========================================================================================================================
 
-	sp<ByteArray> byteArray = loadByteFile(filename);
+	ByteArray* byteArray = loadByteFile(filename);
 	//delete byteArray;
 	//byteArray = loadByteFile(filename);
 
-	sp<IntArray> intArray = ms<IntArray>(byteArray->size() / 4);
+	IntArray* intArray = new IntArray(byteArray->size() / 4);
 
 	for (int x = 0; x<intArray->size(); x++)
 	{
@@ -570,14 +640,14 @@ sp<IntArray> FileUtils::loadIntFile(string filename)
 		intArray->data()[x] = result;
 	}
 
-	//delete byteArray;
+	delete byteArray;
 					 
 
 	return intArray;
 
 }
 
-sp<IntArray> FileUtils::loadIntFileFromExePath(string filename)
+IntArray* FileUtils::loadIntFileFromExePath(string filename)
 {//=========================================================================================================================
 	filename = Main::getPath() + filename;
 
@@ -585,10 +655,10 @@ sp<IntArray> FileUtils::loadIntFileFromExePath(string filename)
 }
 
 // ===============================================================================================
-sp<ByteArray> FileUtils::getByteArrayFromIntArray(sp<IntArray> intArray)
+ByteArray* FileUtils::getByteArrayFromIntArray(IntArray*intArray)
 {// ===============================================================================================
 
-	sp<ByteArray> byteArray = ms<ByteArray>(intArray->size() * 4);
+	ByteArray* byteArray = new ByteArray(intArray->size() * 4);
 
 	for (int i = 0; i < intArray->size(); i++)
 	{
@@ -623,24 +693,17 @@ sp<ByteArray> FileUtils::getByteArrayFromIntArray(sp<IntArray> intArray)
 #include <locale>
 //=========================================================================================================================
 // trim from start (in place)
-void FileUtils::ltrim(std::string &s) 
+void FileUtils::ltrim(std::string s) 
 {//=========================================================================================================================
-	//s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-		//std::not1(std::ptr_fun<int, int>(std::isspace))));
-		// 
-	//static inline std::string& ltrim(std::string & s) {
-		s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c); }));
-		//return s;
-	//}
+	s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+		std::not1(std::ptr_fun<int, int>(std::isspace))));
 }
 //=========================================================================================================================
 // trim from end (in place)
-void FileUtils::rtrim(std::string &s) 
+void FileUtils::rtrim(std::string s) 
 {//=========================================================================================================================
-	//s.erase(std::find_if(s.rbegin(), s.rend(),
-		//std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-
-	s.erase(std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c); }), s.end());
+	s.erase(std::find_if(s.rbegin(), s.rend(),
+		std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
 }//=========================================================================================================================
 
 // trim from both ends (in place)
@@ -675,7 +738,19 @@ string FileUtils::trimmed(std::string s)
 }
 
 //=========================================================================================================================
+size_t FileUtils::getFileSize(string filename)
+{//=========================================================================================================================
+	
+	ifstream t(filename);
 
+	t.seekg(0, ios::end);
+	size_t len = t.tellg();
+	t.seekg(0, ios::beg);
+
+	return len;
+}
+
+//=========================================================================================================================
 string FileUtils::loadTextFileAndTrim(string filename)
 {//=========================================================================================================================
 
@@ -706,10 +781,10 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 }
 
 //=========================================================================================================================
-sp<vector<string>> FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
+ArrayList<string>* FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
-	sp<vector<string>>lines;// = ms<vector><string>();// = ms<vector><string>();
+	ArrayList<string>* lines = new ArrayList<string>();
 
 	string line;
 	stringstream dosString;
@@ -719,13 +794,13 @@ sp<vector<string>> FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string file
 	{
 		rtrim(line);
 		//line.erase(line.find_last_not_of(" \n\r\t") + 1);
-		lines->push_back(line);
+		lines->add(line);
 	}
 	return lines;
 }
 
 //=========================================================================================================================
-sp<vector<string>> FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename)
+ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -802,18 +877,18 @@ sp<vector<string>> FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 
 
 //=========================================================================================================================
-sp<ByteArray>FileUtils::loadByteFile(string filename)
+ByteArray* FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
-//	Uint64 start=0, now=0;
-//	start = SDL_GetPerformanceCounter();
+//	uint64_t start=0, now=0;
+//	start = System::getPerformanceCounter();
 
 
 
 	u8* cfilepointer = NULL;
 	FILE* cfile;
-	int csize;
+	int csize = 0;
 	
 	cfile = fopen(filename.c_str(), "rb");
 	if (cfile != NULL)
@@ -842,14 +917,14 @@ sp<ByteArray>FileUtils::loadByteFile(string filename)
 	}
 	fclose(cfile);
 
-	sp<ByteArray> byteArray = ms<ByteArray>((u8*)cfilepointer, csize);
+	ByteArray* byteArray = new ByteArray((u8*)cfilepointer, csize);
 
 	return byteArray;
 
 //
-//	now = SDL_GetPerformanceCounter();
-//	log.info("fread took " + to_string((double)((now - start) * 1000*1000) / SDL_GetPerformanceFrequency()) + "ms");
-//	start = SDL_GetPerformanceCounter();
+//	now = System::getPerformanceCounter();
+//	log.info("fread took " + to_string((double)((now - start) * 1000*1000) / System::GetPerformanceFrequency()) + "ms");
+//	start = System::getPerformanceCounter();
 //
 //
 //
@@ -875,9 +950,9 @@ sp<ByteArray>FileUtils::loadByteFile(string filename)
 //
 //
 //
-//	now = SDL_GetPerformanceCounter();
-//	log.info("ifstream read took " + to_string((double)((now - start) * 1000 * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-//	start = SDL_GetPerformanceCounter();
+//	now = System::getPerformanceCounter();
+//	log.info("ifstream read took " + to_string((double)((now - start) * 1000 * 1000) / System::GetPerformanceFrequency()) + "ms");
+//	start = System::getPerformanceCounter();
 
 
 //	// open the file:
@@ -894,7 +969,7 @@ sp<ByteArray>FileUtils::loadByteFile(string filename)
 //	file.seekg(0, std::ios::beg);
 //
 //	// reserve capacity
-//	std::sp<vector<u8>>*vec = new sp<vector<u8>>();
+//	std::vector<u8> *vec = new vector<u8>();
 //	vec->reserve(fileSize);
 //
 //	// read the data:
@@ -902,16 +977,16 @@ sp<ByteArray>FileUtils::loadByteFile(string filename)
 //		std::istream_iterator<u8>(file),
 //		std::istream_iterator<u8>());
 //
-//	now = SDL_GetPerformanceCounter();
-//	log.info("sp<vector iterator took " + to_string((double)((now - start) * 1000 * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-//	start = SDL_GetPerformanceCounter();
+//	now = System::getPerformanceCounter();
+//	log.info("vector iterator took " + to_string((double)((now - start) * 1000 * 1000) / System::GetPerformanceFrequency()) + "ms");
+//	start = System::getPerformanceCounter();
 
 //	return vec;
 
 }
 
 //=========================================================================================================================
-sp<ByteArray>FileUtils::loadByteFileFromExePath(string filename)
+ByteArray* FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -922,7 +997,13 @@ sp<ByteArray>FileUtils::loadByteFileFromExePath(string filename)
 std::string FileUtils::byteArrayToHexString(u8 *data, unsigned long len)
 {//=========================================================================================================================
 	constexpr char hexmap[] = { '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-	std::string s(len * 2, ' ');
+	std::string s;
+	
+	for (int i = 0; i < len * 2; i++)
+	{
+		s += " ";
+	}//(len * 2, ' ');
+
 	for (unsigned long i = 0; i < len; ++i) {
 		s[2 * i] = hexmap[(data[i] & 0xF0) >> 4];
 		s[2 * i + 1] = hexmap[data[i] & 0x0F];
@@ -997,10 +1078,10 @@ std::string FileUtils::encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encod
 	return outs;
 }
 
-#include "Poco/Base64Decoder.h"
+
 
 //=========================================================================================================================
-sp<ByteArray> FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
+ByteArray* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 	{
@@ -1009,7 +1090,7 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArrayAlt(std::string const& enc
 		Base64::Decode(in, &outs);
 
 
-		sp<ByteArray> outv = ms<ByteArray>(outs.length());
+		ByteArray* outv = new ByteArray(outs.length());
 		for (int i = 0; i < outs.length(); i++)
 		{
 			outv->data()[i]=(outs[i]);
@@ -1082,7 +1163,7 @@ std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, 
 
 }
 //=========================================================================================================================
-sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
+ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 
@@ -1094,9 +1175,9 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 	int j = 0;
 	int in_ = 0;
 	u8 char_array_4[4], char_array_3[3];
-	sp<vector<u8>> vec;// = new sp<vector<u8>>();
+	vector<u8>* vec = new vector<u8>();
 
-	int n = 0;
+	//int n = 0;
 	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) 
 	{
 		char_array_4[i++] = encoded_string[in_]; in_++;
@@ -1132,22 +1213,21 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 		for (j = 0; (j < i - 1); j++) vec->push_back(char_array_3[j]);
 	}
 
-	sp<ByteArray> ret = ms<ByteArray>(vec->size());
+	ByteArray* ret = new ByteArray(vec->size());
 	for(int x=0;x<vec->size();x++)
 	{
 		ret->data()[x] = (*vec)[x];
 	}
-	//delete vec;
-	vec = nullptr;
+	delete vec;
 	return ret;
 
-//	u8* data = new u8[ret->size()];
-//	for(int x=0;x<ret->size();x++)
+//	u8* data = new u8[ret.size()];
+//	for(int x=0;x<ret.size();x++)
 //	{
-//		data[x] = ret->at(x);
+//		data[x] = ret.at(x);
 //	}
 //	
-//	returnLength = ret->size();
+//	returnLength = ret.size();
 //	return data;
 }
 
@@ -1218,7 +1298,7 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 //{// ===============================================================================================
 //
 //	//unsigned long zippedLength;
-//	sp<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+//	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 //	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 //
 //
@@ -1280,7 +1360,7 @@ string FileUtils::lz4ByteArrayToBase64String(const u8* byteArray, unsigned long 
 
 
 	int return_value = 0;
-	return_value = LZ4_compress_default((char*)byteArray, compressed_data, sourceLength, (int)max_dst_size);
+	return_value = LZ4_compress_default((char*)byteArray, compressed_data, sourceLength, max_dst_size);
 	// Check return_value to determine what happened.
 	if (return_value < 0)
 		log.error("A negative result from LZ4_compress_default indicates a failure trying to compress the data.  See exit code (echo $?) for value returned.");
@@ -1294,7 +1374,7 @@ string FileUtils::lz4ByteArrayToBase64String(const u8* byteArray, unsigned long 
 
 
 	string zipDataHexString = "";
-	zipDataHexString = encodeByteArrayToBase64String((u8*)compressed_data, (int)compressed_data_size);
+	zipDataHexString = encodeByteArrayToBase64String((u8*)compressed_data, compressed_data_size);
 
 	free(compressed_data);
 
@@ -1310,7 +1390,7 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 {// ===============================================================================================
 
  //unsigned long zippedLength;
-	sp<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1341,8 +1421,7 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 //	if (return_value > 0)
 //		printf("We successfully decompressed some data!\n");
 
-	//delete zippedBytes;
-	zippedBytes = nullptr;
+	delete zippedBytes;
 
 	if(statusOrUncompressedSize < 0)
 	{
@@ -1371,7 +1450,7 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 
 
 
-#include "miniz.c"
+#include "miniz-master/miniz.c"
 typedef u8 uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint;
@@ -1382,9 +1461,9 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 	//   string outStr = "";
 	//   try
 	//   {
-	//      sp<ByteArrayOutputStream> out = ms<ByteArrayOutputStream>();
+	//      ByteArrayOutputStream* out = new ByteArrayOutputStream();
 	//
-	//      sp<GZIPOutputStream> gzip = ms<GZIPOutputStream>(out);
+	//      GZIPOutputStream* gzip = new GZIPOutputStream(out);
 	//      gzip->write(byteArray);
 	//      gzip->close();
 	//
@@ -1524,11 +1603,11 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	//
 	//   try
 	//   {
-	//      ByteArrayInputStream is = ms<ByteArrayInputStream>(zippedBytesAsString.getBytes("ISO-8859-1"));
+	//      ByteArrayInputStream is = new ByteArrayInputStream(zippedBytesAsString.getBytes("ISO-8859-1"));
 	//
-	//      gis = ms<GZIPInputStream>(is);
+	//      gis = new GZIPInputStream(is);
 	//
-	//      return IOUtils.toByteArray(ms<InputStreamReader>(gis, "ISO-8859-1"), "ISO-8859-1");
+	//      return IOUtils.toByteArray(new InputStreamReader(gis, "ISO-8859-1"), "ISO-8859-1");
 	//   }
 	//   catch (Exception e)
 	//   {
@@ -1614,7 +1693,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	
 
 	//unsigned long zippedLength;
-	sp<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1651,16 +1730,14 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	if (compressStatus != Z_OK)
 	{
 		log.error("Uncompress failed.");
-		//delete zippedBytes;
-		zippedBytes = nullptr;
+		delete zippedBytes;
 		delete[] uncompressedBytes;
 		//free(uncompressedBytes);
 		returnLength = 0;
 		return nullptr;
 	}
 
-	//delete zippedBytes;
-	zippedBytes = nullptr;
+	delete zippedBytes;
 
 	//log.debug("Decompressed " + to_string(zippedLength) + " bytes into " + to_string(uncompressedLength) + " bytes");
 	//printf("Decompressed from %u to %u bytes\n", (mz_uint32)size, (mz_uint32)uncomp_len);
@@ -1723,7 +1800,7 @@ string FileUtils::lz4StringToBase64String(const string& s)
 	u8 *val = new u8[s.length() + 1];
 	strcpy((char *)val, s.c_str());
 
-	return lz4ByteArrayToBase64String(val, (int)s.length());
+	return lz4ByteArrayToBase64String(val, s.length());
 }
 
 string FileUtils::unlz4Base64StringToString(const string& s)
@@ -1754,7 +1831,7 @@ string FileUtils::zipStringToBase64String(const string& s)
 	u8 *val = new u8[s.length() + 1];
 	strcpy((char *)val, s.c_str());
 
-	return zipByteArrayToBase64String(val, (int)s.length());
+	return zipByteArrayToBase64String(val, s.length());
 }
 
 string FileUtils::unzipBase64StringToString(const string& s)
@@ -1774,26 +1851,20 @@ string FileUtils::unzipBase64StringToString(const string& s)
 	return out;
 }
 
-#include "Poco/MD5Engine.h"
-#include "Poco/DigestStream.h"
-using Poco::MD5Engine;
-
-
 
 string FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
 
-	sp<ByteArray> bytes = loadByteFileFromExePath(filename);
+	ByteArray* bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
-	//delete bytes;
-	bytes = nullptr;
+	delete bytes;
 	return md5;
 
 }
 
 #include "md5.h"
 
-string FileUtils::getByteArrayMD5Checksum(sp<ByteArray> bytes)
+string FileUtils::getByteArrayMD5Checksum(ByteArray* bytes)
 { //===============================================================================================
 
 	return md5(bytes->data(), bytes->size());
@@ -1821,7 +1892,7 @@ string FileUtils::getStringMD5(const string& stringToMD5)
 #include <lib/stb_image.h>
 #include <lib/stb_image_write.h>
 //TODO: 
-void FileUtils::saveImage(const string& s, sp<BufferedImage> i)
+void FileUtils::saveImage(const string& s, BufferedImage* i)
 { //===============================================================================================
 
 	//		Iterator<ImageWriter> imageWritersIterator = ImageIO.getImageWritersByFormatName("png");
@@ -1833,9 +1904,9 @@ void FileUtils::saveImage(const string& s, sp<BufferedImage> i)
 	//
 	//		try
 	//		{
-	//			file = ms<File>(s);
-	//			fileOutputStream = ms<FileOutputStream>(file);
-	//			memoryCacheImageOutputStream = ms<MemoryCacheImageOutputStream>(fileOutputStream);
+	//			file = new File(s);
+	//			fileOutputStream = new FileOutputStream(file);
+	//			memoryCacheImageOutputStream = new MemoryCacheImageOutputStream(fileOutputStream);
 	//		}
 	//		catch(FileNotFoundException e){log.error("Could not create PNG file. Error: "+e.getMessage());e.printStackTrace();return;}
 	//
@@ -1843,7 +1914,7 @@ void FileUtils::saveImage(const string& s, sp<BufferedImage> i)
 	//		ImageWriteParam iwp = imageWriter.getDefaultWriteParam();
 	//		try
 	//		{
-	//			imageWriter.write(null, ms<IIOImage>(bufferedImage, null, null), iwp);//param);
+	//			imageWriter.write(null, new IIOImage(bufferedImage, null, null), iwp);//param);
 	//		}
 	//		catch(IOException e){log.error("An error occured during writing PNG file. Error: "+e.getMessage());e.printStackTrace();return;}
 	//
@@ -1862,7 +1933,7 @@ void FileUtils::saveImage(const string& s, sp<BufferedImage> i)
 
 	//   try
 	//   {
-	//      ImageIO::write(bufferedImage, "PNG", ms<File>(s));
+	//      ImageIO::write(bufferedImage, "PNG", new File(s));
 	//   }
 	//   catch (IOException e)
 	//   {
@@ -1887,7 +1958,7 @@ void FileUtils::saveImage(const string& s, sp<BufferedImage> i)
 void FileUtils::writeSessionTokenToCache(long long userID, const string& sessionToken, bool statsAllowed)
 { //===============================================================================================
 
-//	sp<File> sessionFile = ms<File>(cacheDir + "session.txt");
+//	File* sessionFile = new File(cacheDir + "session.txt");
 //	
 //	if (sessionFile->exists() == false)
 //	{
@@ -1913,7 +1984,7 @@ void FileUtils::writeSessionTokenToCache(long long userID, const string& session
 string FileUtils::readSessionTokenFromCache()
 { //===============================================================================================
 
-//	sp<File> sessionFile = ms<File>(cacheDir + "session.txt");
+//	File* sessionFile = new File(cacheDir + "session.txt");
 //	
 //	if (sessionFile->exists() == false)
 //	{
@@ -1924,7 +1995,7 @@ string FileUtils::readSessionTokenFromCache()
 //	
 //	try
 //	{
-//	    sp<BufferedReader> input = ms<BufferedReader>(ms<FileReader>(sessionFile));
+//	    BufferedReader* input = new BufferedReader(new FileReader(sessionFile));
 //	    line = input->readLine();
 //	    input->close();
 //	}
@@ -1943,7 +2014,7 @@ string FileUtils::readSessionTokenFromCache()
 //	    }
 //	}
 
-	File f(appDataPath + "session.txt");
+	BobFile f(appDataPath + "session.txt");
 	if (f.exists())
 	{
 		ifstream t(appDataPath + "session.txt");
@@ -1966,8 +2037,8 @@ string FileUtils::readSessionTokenFromCache()
 void FileUtils::deleteSessionTokenFromCache()
 { //===============================================================================================
 
-	sp<File> sessionFile = ms<File>(appDataPath + "session.txt");
-	if(sessionFile->exists())sessionFile->remove();
+	BobFile* sessionFile = new BobFile(appDataPath + "session.txt");
+	if(sessionFile->exists())sessionFile->deleteFile();
 
 }
 
@@ -1984,8 +2055,11 @@ void FileUtils::setStatusText(const string& text)
 	
 	   statusConsoleText->text = text;
 	
+#ifndef ORBIS
 	   glClear(GL_COLOR_BUFFER_BIT);
-	
+#else
+
+#endif
 	   Main::getMain()->console->render();
 	   Main::getMain()->whilefix();
 }
@@ -2002,10 +2076,14 @@ void FileUtils::deleteStatusText()
 	      statusConsoleText->ticks = 1; //will be deleted from the console after 1 tick
 	
 	      //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	      //delete statusConsoleText;
-		  statusConsoleText = nullptr;
+	      delete statusConsoleText;
 	
+#ifndef ORBIS
 	      glClear(GL_COLOR_BUFFER_BIT);
+#else
+
+#endif
+
 		  Main::getMain()->console->render();
 		  Main::getMain()->whilefix();
 	   }
@@ -2016,12 +2094,12 @@ void FileUtils::deleteStatusText()
 //   class ProgressListener : public ActionListener
 //   {
 //   private:
-//      sp<FileUtils> outerInstance;
+//      FileUtils* outerInstance;
 //
 //   public:
-//      ProgressListener(sp<FileUtils> outerInstance);
+//      ProgressListener(FileUtils* outerInstance);
 //
-//      void actionPerformed(sp<ActionEvent> e) override;
+//      void actionPerformed(ActionEvent* e) override;
 //   };
 //
 //
@@ -2029,33 +2107,33 @@ void FileUtils::deleteStatusText()
 //   class DownloadCountingOutputStream : public CountingOutputStream
 //   {
 //   private:
-//      sp<FileUtils> outerInstance;
+//      FileUtils* outerInstance;
 //
-//      sp<ActionListener> listener = nullptr;
+//      ActionListener* listener = nullptr;
 //   public:
-//      DownloadCountingOutputStream(sp<FileUtils> outerInstance, sp<OutputStream> out);
-//      void setListener(sp<ActionListener> listener);
+//      DownloadCountingOutputStream(FileUtils* outerInstance, OutputStream* out);
+//      void setListener(ActionListener* listener);
 //
 //   protected:
 //      void afterWrite(int n) throw(IOException) override;
 //   };
 
 //
-//FileUtils::ProgressListener::ProgressListener(sp<FileUtils> outerInstance) : outerInstance(outerInstance)
+//FileUtils::ProgressListener::ProgressListener(FileUtils* outerInstance) : outerInstance(outerInstance)
 //{
 //}
 //
-//void FileUtils::ProgressListener::actionPerformed(sp<ActionEvent> e)
+//void FileUtils::ProgressListener::actionPerformed(ActionEvent* e)
 //{
 //   // e.getSource() gives you the object of DownloadCountingOutputStream because you set it in the overriden method, afterWrite().
-//   outerInstance->setStatusText("Downloading " + outerInstance->downloadingDataNiceName + ": " + (static_cast<sp<DownloadCountingOutputStream>>(e->getSource()))->getByteCount() / 1024 + " kB / " + outerInstance->downloadingFileSize / 1024 + " kB");
+//   outerInstance->setStatusText("Downloading " + outerInstance->downloadingDataNiceName + ": " + (static_cast<DownloadCountingOutputStream*>(e->getSource()))->getByteCount() / 1024 + " kB / " + outerInstance->downloadingFileSize / 1024 + " kB");
 //}
 //
-//FileUtils::DownloadCountingOutputStream::DownloadCountingOutputStream(sp<FileUtils> outerInstance, sp<OutputStream> out) : org::apache::commons::io::output::CountingOutputStream(out), outerInstance(outerInstance)
+//FileUtils::DownloadCountingOutputStream::DownloadCountingOutputStream(FileUtils* outerInstance, OutputStream* out) : org::apache::commons::io::output::CountingOutputStream(out), outerInstance(outerInstance)
 //{
 //}
 //
-//void FileUtils::DownloadCountingOutputStream::setListener(sp<ActionListener> listener)
+//void FileUtils::DownloadCountingOutputStream::setListener(ActionListener* listener)
 //{
 //   this->listener = listener;
 //}
@@ -2065,7 +2143,7 @@ void FileUtils::deleteStatusText()
 ////   CountingOutputStream::afterWrite(n);
 ////   if (listener != nullptr)
 ////   {
-////      listener->actionPerformed(ms<ActionEvent>(this, 0, nullptr));
+////      listener->actionPerformed(new ActionEvent(this, 0, nullptr));
 ////   }
 //}
 
@@ -2074,7 +2152,7 @@ void FileUtils::downloadFileToCacheWithProgressListener(const string& fileName, 
 	//
 	//   downloadingDataNiceName = niceName;
 	//
-	//   sp<File> outputFile = ms<File>(cacheDir + getFileName);
+	//   File* outputFile = new File(cacheDir + getFileName);
 	//   //download sprites.zip and maps.zip from http://localhost/z/ and save to directory
 	//
 	//   URL* fileURL = nullptr;
@@ -2098,17 +2176,17 @@ void FileUtils::downloadFileToCacheWithProgressListener(const string& fileName, 
 	//   //		}
 	//
 	//
-	//   sp<OutputStream> os = nullptr;
-	//   sp<InputStream> is = nullptr;
-	//   sp<ProgressListener> progressListener = ms<ProgressListener>(this);
+	//   OutputStream* os = nullptr;
+	//   InputStream* is = nullptr;
+	//   ProgressListener* progressListener = new ProgressListener(this);
 	//
 	//
 	//   try
 	//   {
-	//      os = ms<FileOutputStream>(outputFile);
+	//      os = new FileOutputStream(outputFile);
 	//      is = fileURL->openStream();
 	//
-	//      sp<DownloadCountingOutputStream> dcount = ms<DownloadCountingOutputStream>(this, os);
+	//      DownloadCountingOutputStream* dcount = new DownloadCountingOutputStream(this, os);
 	//
 	//      dcount->setListener(progressListener);
 	//
@@ -2175,16 +2253,16 @@ void FileUtils::decompressZipInCache(const string& fileName, const string& niceN
 	//
 	//   try
 	//   {
-	//      sp<File> inputFile = ms<File>(cacheDir + getFileName);
+	//      File* inputFile = new File(cacheDir + getFileName);
 	//
-	//      sp<ZipInputStream> zipInputStream = ms<ZipInputStream>(ms<FileInputStream>(inputFile));
-	//      sp<BufferedInputStream> bufferedInputStream = ms<BufferedInputStream>(zipInputStream);
+	//      ZipInputStream* zipInputStream = new ZipInputStream(new FileInputStream(inputFile));
+	//      BufferedInputStream* bufferedInputStream = new BufferedInputStream(zipInputStream);
 	//
-	//      sp<ZipEntry> zipEntry = zipInputStream->getNextEntry();
+	//      ZipEntry* zipEntry = zipInputStream->getNextEntry();
 	//
 	//      while (zipEntry != nullptr)
 	//      {
-	//         sp<BufferedOutputStream> bufferedOutputStream = ms<BufferedOutputStream>(ms<FileOutputStream>(ms<File>(cacheDir + zipEntry->getName())));
+	//         BufferedOutputStream* bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File(cacheDir + zipEntry->getName())));
 	//
 	//         //int zipSize = (int)zipEntry.getCompressedSize();
 	//
@@ -2217,7 +2295,7 @@ void FileUtils::decompressZipInCache(const string& fileName, const string& niceN
 void FileUtils::deleteFileFromCache(const string& fileName)
 { //===============================================================================================
 
-	//   sp<File> file = ms<File>(cacheDir + getFileName);
+	//   File* file = new File(cacheDir + getFileName);
 	//
 	//   if (file->exists() == true)
 	//   {
@@ -2231,7 +2309,7 @@ void FileUtils::deleteFileFromCache(const string& fileName)
 bool FileUtils::checkIfFileExistsInCache(const string& fileName)
 { //===============================================================================================
 
-	//   sp<File> file = ms<File>(cacheDir + getFileName);
+	//   File* file = new File(cacheDir + getFileName);
 	//
 	//   return file->exists();
 
@@ -2243,7 +2321,7 @@ long long FileUtils::getFileSizeInCache(const string& fileName)
 
 	//   if (checkIfFileExistsInCache(getFileName) == true)
 	//   {
-	//      return FileUtils::sizeOf(ms<File>(cacheDir + getFileName));
+	//      return FileUtils::sizeOf(new File(cacheDir + getFileName));
 	//   }
 	//   else
 	//   {
@@ -2347,7 +2425,7 @@ void FileUtils::initCache()
 
 	   FileUtils::makeDir(cacheDir + "l/");
 	
-	   //File initFile = ms<File>(cacheDir+"init");
+	   //File initFile = new File(cacheDir+"init");
 	   //if(initFile.exists()==false)
 	   //{
 			// check filesize of sprites.zip locally
@@ -2363,7 +2441,7 @@ void FileUtils::initCache()
 	
 	   deleteStatusText();
 
-	   //FileUtils::listFiles(ms<File>(cacheDir),null,true);
+	   //FileUtils::listFiles(new File(cacheDir),null,true);
 	
 	
 	   //delete("sprites.zip");
@@ -2388,7 +2466,7 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//
 	//   if (FileUtils::getResource("" + FileUtils::cacheDir + getFileName) == nullptr)
 	//   {
-	//      sp<File> outputFile = ms<File>(cacheDir + getFileName);
+	//      File* outputFile = new File(cacheDir + getFileName);
 	//
 	//      URL* fileURL = nullptr;
 	//
@@ -2402,12 +2480,12 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//      }
 	//
 	//
-	//      sp<OutputStream> os = nullptr;
-	//      sp<InputStream> is = nullptr;
+	//      OutputStream* os = nullptr;
+	//      InputStream* is = nullptr;
 	//
 	//      try
 	//      {
-	//         os = ms<FileOutputStream>(outputFile);
+	//         os = new FileOutputStream(outputFile);
 	//         is = fileURL->openStream();
 	//
 	//         // this line give you the total length of source stream as a String.
@@ -2448,38 +2526,7 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//   }
 }
 
-#undef INADDR_ANY       
-#undef INADDR_LOOPBACK  
-#undef INADDR_BROADCAST 
-#undef INADDR_NONE      
-#include "Poco/Net/HTTPClientSession.h"
-#include "Poco/Net/HTTPRequest.h"
-#include "Poco/Net/HTTPResponse.h"
-#include "Poco/Net/HTTPCredentials.h"
-#include "Poco/StreamCopier.h"
-#include "Poco/NullStream.h"
-#include "Poco/Path.h"
-#include "Poco/URI.h"
-#include "Poco/Exception.h"
-using Poco::Net::HTTPClientSession;
-using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPMessage;
-using Poco::StreamCopier;
-using Poco::Path;
-using Poco::URI;
-using Poco::Exception;
 
-#include "Poco/FileStream.h"
-#include "Poco/URIStreamOpener.h"
-#include "Poco/Net/HTTPStreamFactory.h"
-#include "Poco/Net/FTPStreamFactory.h"
-#include <memory>
-#include <iostream>
-using Poco::FileStream;
-using Poco::URIStreamOpener;
-using Poco::Net::HTTPStreamFactory;
-using Poco::Net::FTPStreamFactory;
 
 void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 { //===============================================================================================
@@ -2499,7 +2546,7 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 	//
 	//      try
 	//      {
-	//         FileUtils::copyURLToFile(fileURL, ms<File>("" + FileUtils::cacheDir + getFileName), 60000, 60000);
+	//         FileUtils::copyURLToFile(fileURL, new File("" + FileUtils::cacheDir + getFileName), 60000, 60000);
 	//      }
 	//      catch (IOException e1)
 	//      {
@@ -2507,10 +2554,11 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 	//      }
 	//   }
 
-	File f = File(cacheDir + fileName);
+	BobFile f = BobFile(cacheDir + fileName);
 	if (f.exists() == false)
 	{
 
+#ifndef ORBIS
 		try
 		{
 
@@ -2529,7 +2577,7 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 			//int contentlen = (int)response.getContentLength();
 
 			FileStream fs(cacheDir + fileName, ios::out | ios::trunc | ios::binary);
-			std::unique_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
+			std::auto_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
 			StreamCopier::copyStream(*pStr.get(), fs);
 			fs.close();
 		}
@@ -2540,25 +2588,29 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 
 			return;
 		}
+
+#else
+
+#endif
 	}
 
 }
 
-sp<ByteArray> FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
+ByteArray* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadByteFile(cacheDir + fileName);
 }
 
-sp<IntArray> FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
+IntArray* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadIntFile(cacheDir + fileName);
 }
 
-void FileUtils::saveByteArrayToCache(sp<ByteArray> byteArray, const string& md5FileName)
+void FileUtils::saveByteArrayToCache(ByteArray* byteArray, const string& md5FileName)
 { //===============================================================================================
 	
 	
@@ -2566,7 +2618,7 @@ void FileUtils::saveByteArrayToCache(sp<ByteArray> byteArray, const string& md5F
 
 }
 
-void FileUtils::writeByteArrayToFile(sp<ByteArray> byteArray, const string& fileName)
+void FileUtils::writeByteArrayToFile(ByteArray* byteArray, const string& fileName)
 { //===============================================================================================
 
 	std::ofstream file(fileName, std::ios::binary);
@@ -2608,7 +2660,7 @@ void FileUtils::writeByteArrayToFile(sp<ByteArray> byteArray, const string& file
 
 bool FileUtils::doesDidIntroFileExist()
 { //===============================================================================================
-	//   sp<File> introCheckFile = ms<File>(FileUtils::cacheDir + ".didIntro");
+	//   File* introCheckFile = new File(FileUtils::cacheDir + ".didIntro");
 	//   if (introCheckFile->exists())
 	//   {
 	//      return true;
@@ -2618,7 +2670,7 @@ bool FileUtils::doesDidIntroFileExist()
 
 void FileUtils::writeDidIntroFile()
 { //===============================================================================================
-	//   sp<File> introCheckFile = ms<File>(FileUtils::cacheDir + ".didIntro");
+	//   File* introCheckFile = new File(FileUtils::cacheDir + ".didIntro");
 	//   try
 	//   {
 	//      introCheckFile->createNewFile();
@@ -2631,42 +2683,114 @@ void FileUtils::writeDidIntroFile()
 
 
 
-OKFile::OKFile()
+#include <fios2/fios2_api.h>
+#include "sys/dirent.h"
+
+//this is the current working dir i.e. bobsgame/
+string FileUtils::getWorkingDir()
 {
+#ifndef ORBIS
+	return Path::current();
+#else
+	return "/app0/";
+#endif
 }
 
-OKFile::OKFile(const string& s)
+//this is where the .exe is run from.i.e. bobsgame/DebugVS/
+string FileUtils::getBasePath()
+{
+#ifndef ORBIS
+	return SDL_GetBasePath();
+#else
+	return "/app0/";
+#endif
+}
+
+BobFile::BobFile()
+{
+
+}
+
+BobFile::BobFile(const string& s)
 {
 	path = s;
 }
 
-bool OKFile::exists()
+bool BobFile::exists()
 {
+#ifndef ORBIS
 	File f(path);
 	return f.exists();
-
+#else
+	
+	return exists(path);
+#endif
 }
 
-bool OKFile::exists(const string& s)
+bool BobFile::exists(const string& s)
 {
+#ifndef ORBIS
 	File f(s);
 	return f.exists();
+#else
+	//bool out = sceFiosExistsSync(NULL, s.c_str());
+	//return out;
 
+
+	
+
+	SceFiosDH dh = SCE_FIOS_DH_INVALID;
+	SceFiosBuffer buffer = SCE_FIOS_BUFFER_INITIALIZER;
+	SceFiosSize bufferSize = 0;
+
+	bool exists = false;
+	SceFiosOp op = sceFiosExists(NULL, s.c_str(), &exists);
+	int err = sceFiosOpWait(op);
+	if (err != SCE_FIOS_OK)
+	{
+		FileUtils::log.error("error");
+		return false;
+	}
+
+	sceFiosOpDelete(op);
+
+	return exists;
+
+#endif
 }
 
-int OKFile::length()
+int BobFile::length()
 {
+#ifndef ORBIS
 	File f(path);
 	if (f.exists())
 	{
 		return f.getSize();
 	}
 	return 0;
+#else
+	return size();
+#endif
+}
+
+int BobFile::size()
+{
+#ifndef ORBIS
+	File f(path);
+	if (f.exists())
+	{
+		return f.getSize();
+	}
+	return 0;
+#else
+	if (!exists())return 0;
+	return FileUtils::getFileSize(path);
+#endif
 }
 
 //includes filename, so just path???
 
-string& OKFile::getAbsolutePath()
+string& BobFile::getAbsolutePath()
 {
 //	string fullPath = string(path);
 //	string absPath;
@@ -2682,16 +2806,20 @@ string& OKFile::getAbsolutePath()
 	return path;
 }
 
-void OKFile::createNewFile()
+void BobFile::createNewFile()
 {
+#ifndef ORBIS
 	File f(path);
 	if (f.exists()==false)
 	{
 		f.createFile();
 	}
+#else
+
+#endif
 }
 
-string OKFile::getName()
+string BobFile::getName()
 {
 	string name = string(path);
 	int found = (int)name.find('/');
@@ -2704,45 +2832,174 @@ string OKFile::getName()
 
 }
 
-void OKFile::deleteFile()
+void BobFile::deleteFile()
 {
+#ifndef ORBIS
 	File f(path);
 	if (f.exists())
 	{
 		f.remove();
 	}
+#else
 
+#endif
 }
 
+void BobFile::createDirectories()
+{
+#ifndef ORBIS
+	File f(path);
 
+	f.createDirectories();
+#else
+
+	createDirectory();
+
+//	string s = string(path);
+//	while(s.find("/")!=-1)
+//	{
+//		
+//	}
+
+
+#endif
+}
+
+void BobFile::createDirectory()
+{
+#ifndef ORBIS
+	File f(path);
+
+	f.createDirectory();
+#else
+	sceFiosDirectoryCreateSync(
+		NULL,
+		path.c_str()
+	);
+#endif
+}
+
+void BobFile::renameTo(const string& s)
+{
+#ifndef ORBIS
+	File f(path);
+	f.renameTo(s);
+#else
+	sceFiosRenameSync(
+		NULL,
+		path.c_str(),
+		s.c_str()
+	);
+#endif
+}
+
+vector<string> BobFile::list()
+{
+#ifndef ORBIS
+	File f(path);
+	return f.list();
+#else
+
+	vector<string> files;
+
+	SceFiosDH dh = SCE_FIOS_DH_INVALID;
+	SceFiosBuffer buffer = SCE_FIOS_BUFFER_INITIALIZER;
+	SceFiosSize bufferSize = 0;
+
+	SceFiosOp op = sceFiosDHOpen(NULL, &dh, path.c_str(), buffer);
+	int err = sceFiosOpWait(op);
+	if (err == SCE_FIOS_ERROR_BAD_SIZE)
+		bufferSize = sceFiosOpGetActualCount(op);
+	else if (err != SCE_FIOS_OK)
+	{
+		//printf("Unable to open directory %s\n", directory);
+		//return -1;
+		return files;
+	}
+	
+	sceFiosOpDelete(op);
+
+	/*E Now allocate the buffer (if needed) and traverse the directory. */
+	if (bufferSize != 0)
+	{
+		buffer.set(malloc(bufferSize), bufferSize);
+		
+		err = sceFiosDHOpenSync(NULL, &dh, path.c_str(), buffer);
+		
+		if(err!=SCE_FIOS_OK)
+		{
+			return files;
+		}
+		//assert(err == SCE_FIOS_OK);
+	}
+	
+	for (;;)
+	{
+		SceFiosDirEntry entry = SCE_FIOS_DIRENTRY_INITIALIZER;
+		err = sceFiosDHReadSync(NULL, dh, &entry);
+
+		if (err == SCE_FIOS_ERROR_EOF)
+			break;
+
+		if (err != SCE_FIOS_OK)
+		{
+			//printf("Error reading directory %s\n", directory);
+			//break;
+		}
+
+
+		string fullPath = entry.fullPath;
+		while(fullPath.find("/")!=-1)
+		{
+			fullPath = fullPath.substr(fullPath.find("/") + 1);
+		}
+		files.push_back(fullPath);
+		//printf("Read directory entry %s\n", entry.fullPath);
+	}
+
+	sceFiosDHCloseSync(NULL, dh);
+
+	if (buffer.pPtr)
+	{
+		free(buffer.pPtr);
+	}
+	
+
+
+	return files;
+#endif
+
+}
 
 
 /*
 
 Constructor
 
-std::sp<vector<MyType>>myVec(numberOfElementsToStart);
-int size = myVec->size();
+std::vector<MyType> myVec(numberOfElementsToStart);
+int size = myVec.size();
 int capacity = myVec.capacity();
 
 In this first case, using the constructor, size and numberOfElementsToStart will be equal and capacity will be greater than or equal to them.
 
-Think of myVec as a sp<vector containing a number of items of MyType which can be accessed and modified, push_back(anotherInstanceOfMyType) will append it the the end of the sp<vector.
+Think of myVec as a vector containing a number of items of MyType which can be accessed and modified, push_back(anotherInstanceOfMyType) will append it the the end of the vector.
 
 
 
 Reserve
 
-std::vector<MyType>>>myVec;
+std::vector<MyType> myVec;
 myVec.reserve(numberOfElementsToStart);
-int size = myVec->size();
+int size = myVec.size();
 int capacity = myVec.capacity();
 
 When using the reserve function, size will be 0 until you add an element to the array and capacity and numberOfElementsToStart will be equal.
 
-Think of myVec as an empty sp<vector which can have new items appended to it using push_back with no overhead for the first numberOfElementsToStart elements.
+Think of myVec as an empty vector which can have new items appended to it using push_back with no overhead for the first numberOfElementsToStart elements.
 
 */
+
+
 
 
 

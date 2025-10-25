@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -22,19 +22,19 @@ public:
 	static Logger log;
 
 
-	sp<StuffMenu> stuffMenu = nullptr;
+	StuffMenu* stuffMenu = nullptr;
 	//GUI* stuffMenuGUI = nullptr;
 
-	sp<GameStore> gameStore = nullptr;
+	GameStore* gameStore = nullptr;
 	//GUI* gameStoreGUI = nullptr;
 
-	sp<PlayerEditMenu> playerEditMenu = nullptr;
+	PlayerEditMenu* playerEditMenu = nullptr;
 	//GUI* playerEditGUI = nullptr;
 
-	sp<vector<sp<GameChallengeNotificationPanel>>>gameChallenges;// = ms<vector><sp<GameChallengeNotificationPanel>>();
-	//sp<vector<GUI>>gameChallengesGUIs;
+	ArrayList<GameChallengeNotificationPanel*>* gameChallenges = new ArrayList<GameChallengeNotificationPanel*>();
+	//ArrayList<GUI*> gameChallengesGUIs;
 
-	sp<KeyboardMenuPanel> keyboardScreen = nullptr;
+	KeyboardMenuPanel* keyboardScreen = nullptr;
 	//GUI* keyboardScreenGUI = nullptr;
 
 
@@ -58,7 +58,7 @@ public:
 	bool lightTheme = false;
 
 
-	GUIManager(sp<BGClientEngine> g);
+	GUIManager(BGClientEngine* g);
 
 
 	void init();
@@ -71,10 +71,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	sp<GameChallengeNotificationPanel> makeGameChallengeNotification(sp<FriendCharacter> friend_in, const string& gameName);
+	GameChallengeNotificationPanel* makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName);
 
 
-	void removeGameNotification(sp<GameChallengeNotificationPanel> g);
+	void removeGameNotification(GameChallengeNotificationPanel* g);
 
 
 	void cleanup();

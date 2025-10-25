@@ -10,39 +10,39 @@
 
 Logger Sound::log = Logger("Sound");
 
-//Sound::Sound(sp<Engine> g, int id)
+//Sound::Sound(Engine* g, int id)
 //{ //=========================================================================================================================
 //
 //	this->e = g;
-//	this->data = ms<SoundData>(id, "", "");
+//	this->data = new SoundData(id, "", "");
 //
 //	for (int i = 0; i < (int)Main::audioManager->soundList->size(); i++)
 //	{
 //		if (Main::audioManager->soundList->get(i)->getName() == data->getName())
 //		{
-//			log->warn("Sound already exists:" + data->getName());
+//			log.warn("Sound already exists:" + data->getName());
 //			return;
 //		}
 //	}
 //	Main::audioManager->soundList->add(this);
 //}
 
-Sound::Sound(sp<Engine> g, sp<AudioFile>f)
+Sound::Sound(Engine* g, AudioFile *f)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->audioFile = f;
 
-	for (int i = 0; i < (int)getAudioManager()->playingAudioList->size(); i++)
+	for (int i = 0; i < (int)getAudioManager()->playingAudioList.size(); i++)
 	{
-		if (getAudioManager()->playingAudioList->at(i)->getName() == f->getName())
+		if (getAudioManager()->playingAudioList.get(i)->getName() == f->getName())
 		{
-			if (getAudioManager()->playingAudioList->at(i)->getID() == -1)getAudioManager()->playingAudioList->at(i)->setID(f->getID());
-			//log->warn("Sound already exists:" + data->getName());
+			if (getAudioManager()->playingAudioList.get(i)->getID() == -1)getAudioManager()->playingAudioList.get(i)->setID(f->getID());
+			//log.warn("Sound already exists:" + data->getName());
 			return;
 		}
 	}
-	getAudioManager()->playingAudioList->push_back(shared_from_this());
+	getAudioManager()->playingAudioList.add(this);
 
 
 	if (f->getByteData() != nullptr)initFromByteData();
@@ -55,14 +55,14 @@ void Sound::initFromByteData()
 	
 #ifdef USE_SOLOUD
 	filename = Main::getPath() + filename;
-	soLoudWave = ms<SoLoud>::Wav();
-	//log->debug(filename);
+	soLoudWave = new SoLoud::Wav();
+	//log.debug(filename);
 	soLoudWave->load(filename.c_str());
 #endif
 #ifdef USE_SDL_MIXER
 
 	SDL_RWops* file = SDL_RWFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
-	mixChunk = ms<Mix_Chunk>(Mix_LoadWAV_RW(file, 0));
+	mixChunk = Mix_LoadWAV_RW(file, 0);
 	file->close(file);
 
 #endif
@@ -98,9 +98,11 @@ void Sound::update()
 
 	if (audioFile->getFileExists() == true || audioFile->getByteData() != nullptr)
 	{
-
+#ifndef ORBIS
 		if (mixChunk == nullptr)initFromByteData();
+#else
 
+#endif
 		if (paused)
 		{
 
@@ -113,7 +115,15 @@ void Sound::update()
 
 			if (playingStarted)
 			{
-				if (Mix_Playing(channel) == false)
+
+				bool playing = false;
+
+#ifndef ORBIS
+				playing = Mix_Playing(channel);
+#else
+
+#endif
+				if (playing == false)
 				{
 
 
@@ -123,7 +133,12 @@ void Sound::update()
 						if (timesToPlay > 1)
 						{
 							timesToPlay--;
-							channel = Mix_PlayChannel(-1, mixChunk.get(), 0);
+
+#ifndef ORBIS
+							channel = Mix_PlayChannel(-1, mixChunk, 0);
+#else
+
+#endif
 						}
 						else
 						{
@@ -132,7 +147,12 @@ void Sound::update()
 					}
 					else
 					{
-						channel = Mix_PlayChannel(-1, mixChunk.get(), 0);
+
+#ifndef ORBIS
+						channel = Mix_PlayChannel(-1, mixChunk, 0);
+#else
+
+#endif
 					}
 
 				}
@@ -184,7 +204,7 @@ void Sound::play(float pitch, float volume, int timesToPlay)
 	if (timesToPlay < 0)
 	{
 		timesToPlay = 1;
-		// log->error("Trying to play sound -1 times. Sounds cannot be infinitely looped, only music can.");
+		// log.error("Trying to play sound -1 times. Sounds cannot be infinitely looped, only music can.");
 	}
 
 	if (timesToPlay == 1)
@@ -226,7 +246,7 @@ void Sound::playImmediately()
 	AudioManager::soLoud->play(*soLoudWave);
 #endif
 #ifdef USE_SDL_MIXER
-	channel = Mix_PlayChannel(-1, mixChunk.get(), 0);
+	channel = Mix_PlayChannel(-1, mixChunk, 0);
 	//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
 #endif
 	playingStarted = true;
@@ -258,7 +278,11 @@ bool Sound::isFadingOut()
 void Sound::pause()
 { //=========================================================================================================================
 
+#ifndef ORBIS
 	Mix_Pause(channel);
+#else
+
+#endif
 	paused = true;
 
 }
@@ -266,7 +290,11 @@ void Sound::pause()
 void Sound::unpause()
 { //=========================================================================================================================
 
+#ifndef ORBIS
 	Mix_Resume(channel);
+#else
+
+#endif
 	paused = false;
 
 }
@@ -291,7 +319,12 @@ void Sound::stop()
 	{
 		if (channel != -1)
 		{
+
+#ifndef ORBIS
 			Mix_HaltChannel(channel);
+#else
+
+#endif
 		}
 
 		playingStarted = false;

@@ -17,7 +17,7 @@ Logger PingBall::log = Logger("PingBall");
 int PingBall::h = 4;
 int PingBall::w = 4;
 
-PingBall::PingBall(sp<Engine> g)
+PingBall::PingBall(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 }

@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -16,10 +16,10 @@ public:
 
 	Ping(ND* nD);
 
-	sp<PingPaddle> lp = ms<PingPaddle>(this);
-	sp<PingPaddle> rp = ms<PingPaddle>(this);
+	PingPaddle* lp = new PingPaddle(this);
+	PingPaddle* rp = new PingPaddle(this);
 
-	sp<PingBall> ball = ms<PingBall>(this);
+	PingBall* ball = new PingBall(this);
 
 	int LEFT = 0;
 	int RIGHT = 1;
@@ -76,7 +76,7 @@ public:
 	bool canPressUp = false;
 	bool canPressR = false;
 
-	sp<PingBackground> background = ms<PingBackground>(this);
+	PingBackground* background = new PingBackground(this);
 
 	void reset();
 	void initGame();

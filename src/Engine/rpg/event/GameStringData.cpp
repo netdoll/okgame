@@ -28,24 +28,24 @@ GameStringData::GameStringData(int id, const string& name, const string& text)
 	this->text = text;
 }
 
-//sp<GameStringData> GameStringData::fromBase64ZippedJSON(const string& b64)
+//GameStringData* GameStringData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//GameStringData data = gson.fromJson(json,GameStringData.class);
 //
 //	return fromJSON(json);
 //}
 //
-//sp<GameStringData> GameStringData::fromJSON(const string& json)
+//GameStringData* GameStringData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<GameStringData> data = nullptr;// gson->fromJson(json, GameStringData::typeid);
+//	//Gson* gson = new Gson();
+//	GameStringData* data = nullptr;// gson->fromJson(json, GameStringData::typeid);
 //
 //
 //	return data;

@@ -9,7 +9,7 @@
 
 Logger Block::log = Logger("Block");
 
-class OKGame;
+class BobsGame;
 class GLUtils;
 
 //string Block::Circle = "Circle";
@@ -43,40 +43,40 @@ class GLUtils;
 //string Block::Bomb = "Bomb";
 //string Block::Weight = "Weight";
 //
-//sp<Sprite> Block::circle = nullptr;
-//sp<Sprite> Block::square = nullptr;
-//sp<Sprite> Block::roundedSquareOutline = nullptr;
-//sp<Sprite> Block::squareGem = nullptr;
-//sp<Sprite> Block::diamondGem = nullptr;
-//sp<Sprite> Block::blob = nullptr;
-//sp<Sprite> Block::virus = nullptr;
-//sp<Sprite> Block::circleOutline = nullptr;
-//sp<Sprite> Block::squareOutline = nullptr;
-//sp<Sprite> Block::counter = nullptr;
-//sp<Sprite> Block::sparkBall = nullptr;
-//sp<Sprite> Block::happyBall = nullptr;
-//sp<Sprite> Block::angryBall = nullptr;
-//sp<Sprite> Block::pacJar = nullptr;
-//sp<Sprite> Block::pacBall = nullptr;
-//sp<Sprite> Block::ballJar = nullptr;
-//sp<Sprite> Block::exclamationIconBlock = nullptr;
-//sp<Sprite> Block::heartIconBlock = nullptr;
-//sp<Sprite> Block::circleIconBlock = nullptr;
-//sp<Sprite> Block::triangleIconBlock = nullptr;
-//sp<Sprite> Block::upsideDownTriangleIconBlock = nullptr;
-//sp<Sprite> Block::diamondIconBlock = nullptr;
-//sp<Sprite> Block::starIconBlock = nullptr;
-//sp<Sprite> Block::plusShooterBlock = nullptr;
-//sp<Sprite> Block::minusShooterBlock = nullptr;
-//sp<Sprite> Block::bombBlock = nullptr;
-//sp<Sprite> Block::weightBlock = nullptr;
-//sp<Sprite> Block::linesBlock = nullptr;
-//sp<Sprite> Block::bomb = nullptr;
-//sp<Sprite> Block::weight = nullptr;
+//Sprite* Block::circle = nullptr;
+//Sprite* Block::square = nullptr;
+//Sprite* Block::roundedSquareOutline = nullptr;
+//Sprite* Block::squareGem = nullptr;
+//Sprite* Block::diamondGem = nullptr;
+//Sprite* Block::blob = nullptr;
+//Sprite* Block::virus = nullptr;
+//Sprite* Block::circleOutline = nullptr;
+//Sprite* Block::squareOutline = nullptr;
+//Sprite* Block::counter = nullptr;
+//Sprite* Block::sparkBall = nullptr;
+//Sprite* Block::happyBall = nullptr;
+//Sprite* Block::angryBall = nullptr;
+//Sprite* Block::pacJar = nullptr;
+//Sprite* Block::pacBall = nullptr;
+//Sprite* Block::ballJar = nullptr;
+//Sprite* Block::exclamationIconBlock = nullptr;
+//Sprite* Block::heartIconBlock = nullptr;
+//Sprite* Block::circleIconBlock = nullptr;
+//Sprite* Block::triangleIconBlock = nullptr;
+//Sprite* Block::upsideDownTriangleIconBlock = nullptr;
+//Sprite* Block::diamondIconBlock = nullptr;
+//Sprite* Block::starIconBlock = nullptr;
+//Sprite* Block::plusShooterBlock = nullptr;
+//Sprite* Block::minusShooterBlock = nullptr;
+//Sprite* Block::bombBlock = nullptr;
+//Sprite* Block::weightBlock = nullptr;
+//Sprite* Block::linesBlock = nullptr;
+//Sprite* Block::bomb = nullptr;
+//Sprite* Block::weight = nullptr;
 
-sp<BlockType> BlockType::emptyBlockType(ms<BlockType>());
-sp<BlockType> BlockType::squareBlockType(ms<BlockType>("square", "Square", "", nullptr, OKColor::gray, 0, 0));
-sp<BlockType> BlockType::shotPieceBlockType(ms<BlockType>("shotPiece", "Square", "", nullptr, OKColor::gray, 0, 0));
+shared_ptr<BlockType> BlockType::emptyBlockType(new BlockType());
+shared_ptr<BlockType> BlockType::squareBlockType(new BlockType("square", "Square", "", nullptr, BobColor::gray, 0, 0));
+shared_ptr<BlockType> BlockType::shotPieceBlockType(new BlockType("shotPiece", "Square", "", nullptr, BobColor::gray, 0, 0));
 //=========================================================================================================================
 bool BlockType::operator==(const BlockType& rhs) const
 {//=========================================================================================================================
@@ -141,13 +141,13 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	ar & BOOST_SERIALIZATION_NVP(ignoreWhenCheckingChainConnections);
 
 	//ar & BOOST_SERIALIZATION_NVP(colors);
-	importExport_colors->clear();
-	for (int i = 0; i < (int)colors->size(); i++)
+	importExport_colors.clear();
+	for (int i = 0; i < colors.size(); i++)
 	{
-		sp<OKColor>bp = colors->at(i);
+		BobColor *bp = colors.get(i);
 		if (bp->name != "" && bp->name != "empty")
 		{
-			OKColor b;//keep this, custom copy constructor which doesnt copy uuid
+			BobColor b;//keep this, custom copy constructor which doesnt copy uuid
 			b = *bp;
 
 //			boost::uuids::random_generator generator;
@@ -158,29 +158,29 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 //			b.b = bp->b;
 //			b.a = bp->a;
 
-			importExport_colors.push_back(b);
+			importExport_colors.add(b);
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_colors);
-	colors->clear();
-	for (int i = 0; i < (int)importExport_colors.size(); i++)
+	colors.clear();
+	for (int i = 0; i < importExport_colors.size(); i++)
 	{
-		OKColor b = importExport_colors.at(i);
-		sp<OKColor>bp = OKColor::getColorByName(b.name);
+		BobColor b = importExport_colors.get(i);
+		BobColor *bp = BobColor::getColorByName(b.name);
 		if (bp != nullptr && bp->name != "" && bp->name != "empty")
 		{
-			colors->push_back(bp);
+			colors.add(bp);
 		}
 		else
 		{
-			//OKGame::log->error("Could not find color on import with name:" + b.name);
+			//BobsGame::log.error("Could not find color on import with name:" + b.name);
 		}
 	}
 	importExport_colors.clear();
 
 
 	//ar & BOOST_SERIALIZATION_NVP(specialColor);
-	importExport_specialColor = OKColor();
+	importExport_specialColor = BobColor();
 	if (specialColor != nullptr && specialColor->name != "" && specialColor->name != "empty")
 	{
 		importExport_specialColor = *specialColor;
@@ -198,9 +198,9 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	specialColor = nullptr;
 	if (importExport_specialColor.name != "" && importExport_specialColor.name != "empty")
 	{
-		specialColor = OKColor::getColorByName(importExport_specialColor.name);
+		specialColor = BobColor::getColorByName(importExport_specialColor.name);
 	}
-    importExport_specialColor = OKColor();
+    importExport_specialColor = BobColor();
     
     
     
@@ -215,15 +215,15 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		vector<PieceType>importExport_makePieceTypeWhenCleared;
+		ArrayList<PieceType> importExport_makePieceTypeWhenCleared;
 		ar & BOOST_SERIALIZATION_NVP(importExport_makePieceTypeWhenCleared);
-		makePieceTypeWhenCleared_DEPRECATED->clear();
+		makePieceTypeWhenCleared_DEPRECATED.clear();
 		for (int i = 0; i < importExport_makePieceTypeWhenCleared.size(); i++)
 		{
-			PieceType b = importExport_makePieceTypeWhenCleared.at(i);
-			sp<PieceType> bp(ms<PieceType>(b));
-			//*bp = b;
-			makePieceTypeWhenCleared_DEPRECATED->push_back(bp);
+			PieceType b = importExport_makePieceTypeWhenCleared.get(i);
+			shared_ptr<PieceType> bp(new PieceType());
+			*bp = b;
+			makePieceTypeWhenCleared_DEPRECATED.add(bp);
 		}
 		importExport_makePieceTypeWhenCleared.clear();
 
@@ -243,16 +243,16 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		vector<BlockType>importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
+		ArrayList<BlockType> importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 		ar & BOOST_SERIALIZATION_NVP(importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType);
-		ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->clear();
+		ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.clear();
 		{
 			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.size(); i++)
 			{
-				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.at(i);
-				sp<BlockType> bp(ms<BlockType>(b));
-				//*bp = b;
-				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->push_back(bp);
+				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.get(i);
+				shared_ptr<BlockType> bp(new BlockType());
+				*bp = b;
+				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.add(bp);
 			}
 		}
 		importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.clear();
@@ -268,23 +268,23 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
 	{
-		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)
+		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
-			sp<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i);
+			TurnFromBlockTypeToType *bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
 			TurnFromBlockTypeToType b;
 			b = *bp;
-			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.push_back(b);
+			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(b);
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut);
-	whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();
+	whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
 	{
 		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
-			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i);
-			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>(b);
-			//*bp = b;
-			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(bp);
+			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+			TurnFromBlockTypeToType *bp = new TurnFromBlockTypeToType();
+			*bp = b;
+			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(bp);
 		}
 	}
 	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
@@ -309,10 +309,10 @@ Block::Block()
 }
 
 //=========================================================================================================================
-Block::Block(GameLogic *game, sp<Grid> grid, sp<Piece> piece, sp<BlockType> blockType)
+Block::Block(GameLogic* game, Grid* grid, shared_ptr<Piece> piece, shared_ptr<BlockType> blockType)
 {//=========================================================================================================================
 
-	this->game = ms<GameLogic>(*game);
+	this->game = game;
 	this->grid = grid;
 	this->piece = piece;
 	this->blockType = blockType;
@@ -325,12 +325,12 @@ void Block::update()
 
 	if(blockType->sprite==nullptr && blockType->spriteName.length() > 0)
 	{
-		blockType->sprite = getOKGame()->getSpriteFromName(blockType->spriteName);
+		blockType->sprite = getBobsGame()->getSpriteFromName(blockType->spriteName);
 	}
 
 	if (blockType->specialSprite == nullptr && blockType->specialSpriteName.length() > 0)
 	{
-		blockType->specialSprite = getOKGame()->getSpriteFromName(blockType->specialSpriteName);
+		blockType->specialSprite = getBobsGame()->getSpriteFromName(blockType->specialSpriteName);
 	}
 
 	effectFadeTicks += getGameLogic()->ticks();
@@ -381,10 +381,7 @@ void Block::update()
 		{
 			fadingOut = false;
 
-			getGameLogic()->fadingOutBlocks->remove(this);
-
-
-
+			getGameLogic()->fadingOutBlocks.remove(this->shared_from_this());
 			return;
 		}
 	}
@@ -394,8 +391,8 @@ void Block::update()
 		if (animationFrame == -1)
 		{
 			popping = false;
-			int randomIndex = getGameLogic()->getRandomIntLessThan((int)blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->size(),"Block::update");
-			blockType = getGameLogic()->currentGameType->getBlockTypeByUUID(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->at(randomIndex));
+			int randomIndex = getGameLogic()->getRandomIntLessThan(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.size(),"Block::update");
+			blockType = getGameLogic()->currentGameType->getBlockTypeByUUID(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.get(randomIndex));
 		}
 	}
 
@@ -525,14 +522,14 @@ void Block::update()
 		{
 			if (yGrid < grid->getHeight() - 1)
 			{
-				sp<Block> a = grid->get(xGrid, yGrid + 1);
+				shared_ptr<Block> a = grid->get(xGrid, yGrid + 1);
 				if (a != nullptr && a->getColor() != nullptr && a->blockType->removeAllBlocksOfColorOnFieldBlockIsSetOn==false && a->blockType->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor == false)//dont remove other diamonds
 				{
 					for (int y = 0; y < grid->getHeight(); y++)
 					{
 						for (int x = 0; x < grid->getWidth(); x++)
 						{
-							sp<Block> b = grid->get(x, y);
+							shared_ptr<Block> b = grid->get(x, y);
 							if (b != nullptr && b != this->shared_from_this())
 							{
 								if (b->getColor() == a->getColor())
@@ -563,16 +560,16 @@ void Block::update()
 		{
 			if (yGrid < grid->getHeight() - 1)
 			{
-				sp<Block> a = grid->get(xGrid, yGrid + 1);
+				shared_ptr<Block> a = grid->get(xGrid, yGrid + 1);
 				if (a != nullptr && a->getColor() != nullptr && a->getColor() != this->getColor() && a->blockType->removeAllBlocksOfColorOnFieldBlockIsSetOn == false && a->blockType->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor == false)//dont remove other diamonds
 				{
-					sp<OKColor>colorToReplace = a->getColor();
+					BobColor *colorToReplace = a->getColor();
 
 					for (int y = 0; y < grid->getHeight(); y++)
 					{
 						for (int x = 0; x < grid->getWidth(); x++)
 						{
-							sp<Block> b = grid->get(x, y);
+							shared_ptr<Block> b = grid->get(x, y);
 							if (b != nullptr && b != this->shared_from_this())
 							{
 								if (b->getColor() == colorToReplace)
@@ -638,11 +635,11 @@ void Block::update()
 
 	if (getSettings()->blockRule_drawBlocksConnectedByColorIgnoringPiece)
 	{
-		if (connectedBlocksByColor->size() > 0)
+		if (connectedBlocksByColor.size() > 0)
 		{
-			for (int i = 0; i < connectedBlocksByColor->size(); i++)
+			for (int i = 0; i < connectedBlocksByColor.size(); i++)
 			{
-				sp<Block> c = connectedBlocksByColor->at(i);
+				shared_ptr<Block> c = connectedBlocksByColor.get(i);
 				if (c->xGrid == xGrid && c->yGrid == yGrid - 1)
 				{
 					connectedUp = true;
@@ -682,11 +679,11 @@ void Block::update()
 
 	if (getSettings()->blockRule_drawBlocksConnectedByPieceIgnoringColor)
 	{
-		if (connectedBlocksByPiece->size() > 0)
+		if (connectedBlocksByPiece.size() > 0)
 		{
-			for (int i = 0; i < connectedBlocksByPiece->size(); i++)
+			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 			{
-				sp<Block> c = connectedBlocksByPiece->at(i);
+				shared_ptr<Block> c = connectedBlocksByPiece.get(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1)
 				{
@@ -759,15 +756,15 @@ void Block::update()
 		}
 	}
 
-	//OKColor noColor;
+	//BobColor noColor;
 
 	if (getSettings()->blockRule_drawBlocksConnectedByColorInPiece)
 	{
-		if (connectedBlocksByPiece->size() > 0)
+		if (connectedBlocksByPiece.size() > 0)
 		{
-			for (int i = 0; i < connectedBlocksByPiece->size(); i++)
+			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 			{
-				sp<Block> c = connectedBlocksByPiece->at(i);
+				shared_ptr<Block> c = connectedBlocksByPiece.get(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1 && c->color == color && color != nullptr)
 				{
@@ -952,7 +949,7 @@ void Block::update()
 		//if (anim == nullptr)anim = blockType->sprite->getFirstAnimation();
 		if (animationName.length() > 0)
 		{
-			sp<SpriteAnimationSequence> namedAnimation = blockType->sprite->getAnimationByName(animationName);
+			SpriteAnimationSequence* namedAnimation = blockType->sprite->getAnimationByName(animationName);
 			if (namedAnimation != nullptr)anim = namedAnimation;
 		}
 		else anim = blockType->sprite->getFirstAnimation();
@@ -976,54 +973,54 @@ void Block::setXYOffsetInPiece(int x, int y)
 void Block::breakConnectionsInPiece()
 {//=========================================================================================================================
 
-	for (int i = 0; i < connectedBlocksByColor->size(); i++)
+	for (int i = 0; i < connectedBlocksByColor.size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		sp<Block> connectedBlock = connectedBlocksByColor->at(i);
-		connectedBlock->connectedBlocksByColor->remove(this);
+		shared_ptr<Block> connectedBlock = connectedBlocksByColor.get(i);
+		connectedBlock->connectedBlocksByColor.remove(this->shared_from_this());
 	}
-	connectedBlocksByColor->clear();
+	connectedBlocksByColor.clear();
 
-	for (int i = 0; i < connectedBlocksByPiece->size(); i++)
+	for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		sp<Block> connectedBlock = connectedBlocksByPiece->at(i);
-		connectedBlock->connectedBlocksByPiece->remove(this);
+		shared_ptr<Block> connectedBlock = connectedBlocksByPiece.get(i);
+		connectedBlock->connectedBlocksByPiece.remove(this->shared_from_this());
 	}
-	connectedBlocksByPiece->clear();
+	connectedBlocksByPiece.clear();
 
 	if (piece != nullptr)
 	{
 		//these should never happen due to above
-		for (int i = 0; i < (int)piece->blocks->size(); i++)
+		for (int i = 0; i < (int)piece->blocks.size(); i++)
 		{
-			sp<Block> c = piece->blocks->at(i);
-			while (c->connectedBlocksByColor->contains(this))
+			shared_ptr<Block> c = piece->blocks.get(i);
+			while (c->connectedBlocksByColor.contains(this->shared_from_this()))
 			{
 				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
-				c->connectedBlocksByColor->remove(this);
+				c->connectedBlocksByColor.remove(this->shared_from_this());
 				
 			}
-			while (c->connectedBlocksByPiece->contains(this))
+			while (c->connectedBlocksByPiece.contains(this->shared_from_this()))
 			{
-				c->connectedBlocksByPiece->remove(this);
+				c->connectedBlocksByPiece.remove(this->shared_from_this());
 				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
 			}
 		}
 
-		for (int i = 0; i < (int)piece->blocks->size(); i++)
+		for (int i = 0; i < (int)piece->blocks.size(); i++)
 		{
-			if (piece->blocks->at(i) == this->shared_from_this())
+			if (piece->blocks.get(i) == this->shared_from_this())
 			{
-				piece->blocks->erase(piece->blocks->begin()+i);
+				piece->blocks.removeAt(i);
 				i = 0;
 			}
 		}
 
 		//this should never happen due to above
-		while (piece->blocks->contains(this->shared_from_this()))
+		while (piece->blocks.contains(this->shared_from_this()))
 		{
-			piece->blocks->remove(this->shared_from_this());
+			piece->blocks.remove(this->shared_from_this());
 
 			log.error("Shouldn't happen!");
 		}
@@ -1165,11 +1162,11 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 {//=========================================================================================================================
 
 
-	OKColor noColor;
+	BobColor noColor;
 
-	OKColor renderColor;
+	BobColor renderColor;
 
-	//OKColor noColor;
+	//BobColor noColor;
 	//PieceType noPieceType;
 
 	if(
@@ -1177,7 +1174,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		blockType->specialColor != nullptr
 	)
 	{
-		renderColor = OKColor(*blockType->specialColor);
+		renderColor = BobColor(*blockType->specialColor);
 	}
 
 	if(
@@ -1196,7 +1193,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		)
 	)
 	{
-		sp<OKColor>c = nullptr;
+		BobColor *c = nullptr;
 		
 		if (color != nullptr)c = color;
 				
@@ -1219,7 +1216,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		if (c == nullptr)
 		{
 			log.error("Should never happen!");
-			c = OKColor::gray;//TODO: should never happen?
+			c = BobColor::gray;//TODO: should never happen?
 		}
 
 		int ri = (c->rf() + colorFlash) * 255;
@@ -1231,7 +1228,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		if (bi > 255)bi = 255;
 		if (ai > 255)ai = 255;
 		
-		renderColor = OKColor(ri, gi, bi, ai);
+		renderColor = BobColor(ri, gi, bi, ai);
 	}
 
 	
@@ -1243,12 +1240,12 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	{
 		if (color != nullptr)
 		{
-			renderColor = OKColor(*color);
+			renderColor = BobColor(*color);
 		}
 		else
 		{
 			log.warn("Should never happen!");
-			renderColor = OKColor(*OKColor::darkerBurgandy);
+			renderColor = BobColor(*BobColor::darkerBurgandy);
 		}
 	}
 
@@ -1323,7 +1320,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	//-------------------------------------------------
 	//do locking animation, draw darker if locked into Grid()
 	//-------------------------------------------------
-	OKColor textureColor = OKColor(renderColor);
+	BobColor textureColor = BobColor(renderColor);
 	if (getSettings()->fadeBlocksDarkerWhenLocking && locking)
 	{
 		for (int i = 0; i < lockingAnimationFrame; i++)
@@ -1334,7 +1331,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		if (lockingAnimationFrame > 5)
 		{
 			//delete textureColor;
-			textureColor = OKColor(*OKColor::white);
+			textureColor = BobColor(*BobColor::white);
 		}
 	}
 	else
@@ -1416,8 +1413,8 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float lowestY = (float)piece->getLowestOffsetY();
 		float thisY = (float)yInPiece - lowestY;
 
-		sp<Sprite> sprite = getOKGame()->getSpriteFromName(piece->pieceType->spriteName);
-		sp<OKTexture> texture = sprite->texture;
+		Sprite* sprite = getBobsGame()->getSpriteFromName(piece->pieceType->spriteName);
+		BobTexture* texture = sprite->texture;
 
 		float x0InImage = (thisX / blocksWidth) + 1.0f/ sprite->getImageWidth();
 		float x1InImage = ((thisX + 1) / blocksWidth) + 1.0f / sprite->getImageWidth();
@@ -1428,13 +1425,13 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float spriteImageHeight = (float)sprite->getImageHeight();
 
 		float imageToTextureRatioX = (spriteImageWidth / (float)texture->getTextureWidth());
-		float tx0 = x0InImage* imageToTextureRatioX;
-		float tx1 = x1InImage* imageToTextureRatioX;
+		float tx0 = x0InImage * imageToTextureRatioX;
+		float tx1 = x1InImage * imageToTextureRatioX;
 		float imageToTextureRatioY = (spriteImageHeight / (float)texture->getTextureHeight());
-		float ty0 = y0InImage* imageToTextureRatioY;
-		float ty1 = y1InImage* imageToTextureRatioY;
+		float ty0 = y0InImage * imageToTextureRatioY;
+		float ty1 = y1InImage * imageToTextureRatioY;
 
-		//log->info(""+tx0+" "+tx1+" "+ty0+" "+ty1);
+		//log.info(""+tx0+" "+tx1+" "+ty0+" "+ty1);
 
 		float x0 = screenX;
 		float x1 = screenX + w;
@@ -1472,7 +1469,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	{
 
 		GLUtils::drawFilledRectXYWH(screenX, screenY, w, h, r, g, b, a);
-		//sp<Sprite> s = getOKGame()->getSpriteFromName("Square");
+		//Sprite* s = getBobsGame()->getSpriteFromName("Square");
 		//s->drawFrame(0, screenX, screenX + w, screenY, screenY + h, r, g, b, a, GLUtils::FILTER_LINEAR);
 		
 	}
@@ -1490,14 +1487,14 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 	if (getSettings()->blockRule_fillSolidSquareWhenSetInGrid && setInGrid && flashingToBeRemoved == false)
 	{
-		OKColor c = OKColor(renderColor, 0.1f);
+		BobColor c = BobColor(renderColor, (int)(0.1f * 255.0f));
 		GLUtils::drawFilledRectXYWH(screenX, screenY, w, h, c.rf(), c.gf(), c.bf(), c.af());
 		//delete c;
 	}
 
 	if (getSettings()->drawDotOnCenterOfRotation)
 	{
-		OKColor dotColor = OKColor(renderColor, 1.0f);
+		BobColor dotColor = BobColor(renderColor, 1.0f);
 		dotColor.lighter();
 		dotColor.lighter();
 		if (xInPiece == 0 && yInPiece == 0)GLUtils::drawFilledRectXYWH(screenX + 3 * scale, screenY + 3 * scale, w - 6 * scale, h - 6 * scale, dotColor.rf(), dotColor.gf(), dotColor.bf(), a);
@@ -1566,7 +1563,7 @@ void Block::renderOutlines(float screenX, float screenY, float s)
 	//			int blockNum = 0;
 	//			for(int i=0;i<Piece().pieceType.numblocks;i++)
 	//			{
-	//				if(Piece().blocks->at(i)==this){blockNum=i;break;}
+	//				if(Piece().blocks.get(i)==this){blockNum=i;break;}
 	//			}
 	//
 	//			GLUtils::drawOutlinedString(""+blockNum,(int)x,(int)y,Color.white);
@@ -1575,7 +1572,7 @@ void Block::renderOutlines(float screenX, float screenY, float s)
 }
 
 //=========================================================================================================================
-void Block::setColor(sp<OKColor>color)
+void Block::setColor(BobColor *color)
 {//=========================================================================================================================
 	this->color = color;
 }
@@ -1584,12 +1581,12 @@ void Block::setColor(sp<OKColor>color)
 void Block::setRandomBlockTypeColor()
 {//=========================================================================================================================
 
-	int amtColors = (int)this->blockType->colors->size();
+	int amtColors = this->blockType->colors.size();
 	amtColors = min(amtColors, getGameLogic()->getCurrentDifficulty()->maximumBlockTypeColors);
 
 	if (amtColors > 0) 
 	{
-		this->color = this->blockType->colors->at(getGameLogic()->getRandomIntLessThan(amtColors,"setRandomBlockTypeColor"));
+		this->color = this->blockType->colors.get(getGameLogic()->getRandomIntLessThan(amtColors,"setRandomBlockTypeColor"));
 	}
 }
 
@@ -1792,31 +1789,31 @@ int Block::blockH()
 }
 
 //=========================================================================================================================
-sp<GameType> Block::getSettings()
+GameType* Block::getSettings()
 {//=========================================================================================================================
 	return getGameLogic()->currentGameType;
 }
 
 //=========================================================================================================================
-sp<GameLogic> Block::getGameLogic()
+GameLogic* Block::getGameLogic()
 {//=========================================================================================================================
 	return game;
 }
 
 //=========================================================================================================================
-sp<OKGame> Block::getOKGame()
+BobsGame* Block::getBobsGame()
 {//=========================================================================================================================
-	return getGameLogic()->getOKGame();
+	return getGameLogic()->getBobsGame();
 }
 
 //=========================================================================================================================
-sp<OKColor> Block::getColor()
+BobColor* Block::getColor()
 {//=========================================================================================================================
 	return color;
 }
 
 //=========================================================================================================================
-sp<OKColor> Block::specialColor()
+BobColor* Block::specialColor()
 {//=========================================================================================================================
 
 

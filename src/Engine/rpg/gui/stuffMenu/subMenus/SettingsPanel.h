@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -15,67 +15,67 @@ public:
 
 	static Logger log;
 
-	//   sp<Label> autoZoomLabel;
-	//   sp<ToggleButton>const autoZoomToggleButton = ms<ToggleButton>("");
+	//   Label* autoZoomLabel;
+	//   ToggleButton*const autoZoomToggleButton = new ToggleButton("");
 	//
-	//   sp<Label> playerPhysicsLabel;
-	//   sp<ToggleButton>const playerPhysicsToggleButton = ms<ToggleButton>("");
+	//   Label* playerPhysicsLabel;
+	//   ToggleButton*const playerPhysicsToggleButton = new ToggleButton("");
 	//
-	//   sp<Label> cameraPhysicsLabel;
-	//   sp<ToggleButton>const cameraPhysicsToggleButton = ms<ToggleButton>("");
+	//   Label* cameraPhysicsLabel;
+	//   ToggleButton*const cameraPhysicsToggleButton = new ToggleButton("");
 	//
-	//   sp<Label> playerWalkSpeedLabel;
-	//   sp<Scrollbar>const playerWalkSpeedScrollbar = ms<Scrollbar>(Scrollbar::Orientation::HORIZONTAL);
-	//   sp<Label>const playerWalkSpeedValueLabel = ms<Label>("Default");
-	//
-	//
-	//   sp<DialogLayout> gameSettingsDialogLayout;
+	//   Label* playerWalkSpeedLabel;
+	//   Scrollbar*const playerWalkSpeedScrollbar = new Scrollbar(Scrollbar::Orientation::HORIZONTAL);
+	//   Label*const playerWalkSpeedValueLabel = new Label("Default");
 	//
 	//
-	//   sp<Label> whiteStatusBarToggleButtonLabel;
-	//   sp<ToggleButton>const whiteThemeToggleButton = ms<ToggleButton>("");
+	//   DialogLayout* gameSettingsDialogLayout;
+	//
+	//
+	//   Label* whiteBobStatusBarToggleButtonLabel;
+	//   ToggleButton*const whiteThemeToggleButton = new ToggleButton("");
 	//
 	//   //	Label grayscaleToggleButtonLabel;
-	//   //	final ToggleButton grayscaleToggleButton = ms<ToggleButton>("");
+	//   //	final ToggleButton grayscaleToggleButton = new ToggleButton("");
 	//
-	//   sp<Label> statusBarGlossLabel;
-	//   sp<Scrollbar>const statusBarGlossScrollbar = ms<Scrollbar>(Scrollbar::Orientation::HORIZONTAL);
-	//   sp<Label>const statusBarGlossValueLabel = ms<Label>("Default");
+	//   Label* statusBarGlossLabel;
+	//   Scrollbar*const statusBarGlossScrollbar = new Scrollbar(Scrollbar::Orientation::HORIZONTAL);
+	//   Label*const statusBarGlossValueLabel = new Label("Default");
 	//
-	//   sp<DialogLayout> guiSettingsDialogLayout;
+	//   DialogLayout* guiSettingsDialogLayout;
 	//
 	//
-	//   sp<Label> hq2xToggleButtonLabel;
-	//   sp<ToggleButton>const hq2xToggleButton = ms<ToggleButton>("");
+	//   Label* hq2xToggleButtonLabel;
+	//   ToggleButton*const hq2xToggleButton = new ToggleButton("");
 	//
-	//   sp<Label> fboToggleButtonLabel;
-	//   sp<ToggleButton>const fboToggleButton = ms<ToggleButton>("");
+	//   Label* fboToggleButtonLabel;
+	//   ToggleButton*const fboToggleButton = new ToggleButton("");
 	//
-	//   sp<Label> shadersToggleButtonLabel;
-	//   sp<ToggleButton>const shadersToggleButton = ms<ToggleButton>("");
+	//   Label* shadersToggleButtonLabel;
+	//   ToggleButton*const shadersToggleButton = new ToggleButton("");
 	//
 	//
 	//   //	Label gammaScrollbarLabel;
-	//   //	final public Scrollbar gammaScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label gammaScrollbarValueLabel = ms<Label>("Default");
+	//   //	final public Scrollbar gammaScrollbar = new Scrollbar(Orientation.HORIZONTAL);
+	//   //	final Label gammaScrollbarValueLabel = new Label("Default");
 	//   //
 	//   //
 	//   //	Label contrastScrollbarLabel;
-	//   //	final public Scrollbar contrastScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label contrastScrollbarValueLabel = ms<Label>("Default");
+	//   //	final public Scrollbar contrastScrollbar = new Scrollbar(Orientation.HORIZONTAL);
+	//   //	final Label contrastScrollbarValueLabel = new Label("Default");
 	//   //
 	//   //
 	//   //	Label brightnessScrollbarLabel;
-	//   //	final public Scrollbar brightnessScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label brightnessScrollbarValueLabel = ms<Label>("Default");
+	//   //	final public Scrollbar brightnessScrollbar = new Scrollbar(Orientation.HORIZONTAL);
+	//   //	final Label brightnessScrollbarValueLabel = new Label("Default");
 	//   //
 	//   //
 	//   //	Label saturationScrollbarLabel;
-	//   //	final public Scrollbar saturationScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label saturationScrollbarValueLabel = ms<Label>("Default");
+	//   //	final public Scrollbar saturationScrollbar = new Scrollbar(Orientation.HORIZONTAL);
+	//   //	final Label saturationScrollbarValueLabel = new Label("Default");
 	//
 	//
-	//   sp<DialogLayout> graphicsSettingsDialogLayout;
+	//   DialogLayout* graphicsSettingsDialogLayout;
 
 	SettingsPanel();
 

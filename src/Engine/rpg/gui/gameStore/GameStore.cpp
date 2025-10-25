@@ -19,11 +19,11 @@ GameStore::GameStore()
 
 	//MenuPanel();
 
-	// games = ms<vector><sp<GameItem>>();
+	// games = new ArrayList<GameItem*>();
 
 	for (int i = 0; i < 3; i++)
 	{
-		games->push_back(ms<GameItem>());
+		games->add(new GameItem());
 	}
 	//
 	//   games[0]->gameTitleLabel.setText("Tetrid LIVE");
@@ -44,7 +44,7 @@ GameStore::GameStore()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = new ScrollPane(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -70,7 +70,7 @@ GameStore::GameStore()
 void GameStore::setActivated(bool b)
 { //=========================================================================================================================
 
-	//   if (b == true && (getStatusBar()->gameStoreButton->getEnabled == false || getEnabled() == false))
+	//   if (b == true && (getBobStatusBar()->gameStoreButton->getEnabled == false || getEnabled() == false))
 	//   {
 	//      return;
 	//   }

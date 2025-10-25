@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -17,7 +17,7 @@ public:
 
 	static Logger log;
 
-	WarpArea(sp<Engine> g, sp<AreaData> a, sp<Map> m);
+	WarpArea(Engine* g, AreaData* a, Map* m);
 
 	long long lastRequestedMapDataTime = 0;
 

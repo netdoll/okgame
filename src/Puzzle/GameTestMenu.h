@@ -1,5 +1,5 @@
 
-#include "oktypes.h"
+#include "bobtypes.h"
 
 #include "Gwen/Platform.h"
 #include <Gwen/Controls/Base.h>
@@ -58,7 +58,7 @@ public:
 	const char* GetTypeName() { return "PreviewRectangle"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
 	//GWEN_CONTROL_CONSTRUCTOR(PreviewRectangle)
-	GameTestPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+	GameTestPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame* b) : Gwen::Controls::Rectangle(pParent, pName)
 	{
 		bobsGame = b;
 		m_Color = Gwen::Color(255, 255, 0, 255);
@@ -66,7 +66,7 @@ public:
 
 	void Render(Gwen::Skin::Base* skin);
 
-	sp<OKGame>bobsGame = nullptr;
+	BobsGame *bobsGame = nullptr;
 };
 
 
@@ -91,7 +91,7 @@ public:
 	}
 	const char* GetTypeName() { return "GameTestMenuControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "", sp<OKGame>b = nullptr);
+	GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "", BobsGame *b = nullptr);
 
 
 
@@ -121,7 +121,7 @@ public:
 private:
 	Gwen::Controls::Base* previewBase;
 public:
-	sp<GameTestPreviewRectangle> darkRectangle = nullptr;
+	GameTestPreviewRectangle* darkRectangle = nullptr;
 	Gwen::Controls::Button* previewButton = nullptr;
 	Gwen::Controls::ComboBox* difficultyCombo = nullptr;
 
@@ -162,12 +162,12 @@ public:
 	bool exit = false;
 private:
 
-	sp<GameSequence>currentGameSequence = nullptr;
+	GameSequence *currentGameSequence = nullptr;
 
 
 public:
 	bool windowOpen = false;
-	sp<OKGame> bobsGame = nullptr;
+	BobsGame* bobsGame = nullptr;
 
 
 	int fontHeight = 20;

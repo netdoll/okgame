@@ -14,7 +14,7 @@
 Logger ClockCaption::log = Logger("ClockCaption");
 
 
-ClockCaption::ClockCaption(sp<BGClientEngine> g)
+ClockCaption::ClockCaption(BGClientEngine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -24,12 +24,12 @@ void ClockCaption::init()
 
 	//TODO: replace these lights with just pre-made pngs, less hackiness.
 
-	light = ms<Light>(getEngine(), "timeLight", -100, 4, 24, 2, 255, 0, 0, 90, 16, 2.0f, 1.0f, 0, true, true);
+	light = new Light(getEngine(), "timeLight", -100, 4, 24, 2, 255, 0, 0, 90, 16, 2.0f, 1.0f, 0, true, true);
 
 
-	defaultFGColor = OKColor::red;
-	defaultAAColor = OKColor::darkRed;
-	defaultBGColor = OKColor::clear;
+	defaultFGColor = BobColor::red;
+	defaultAAColor = BobColor::darkRed;
+	defaultBGColor = BobColor::clear;
 
 	currentFGColor = defaultFGColor;
 	currentAAColor = defaultAAColor;
@@ -84,17 +84,17 @@ void ClockCaption::setFastColor()
 	setColors(fastFGColor, fastAAColor, fastBGColor);
 }
 
-void ClockCaption::setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg)
+void ClockCaption::setColors(BobColor* fg, BobColor* aa, BobColor* bg)
 { //=========================================================================================================================
 
-	StatusBarCaption::setColors(fg, aa, bg);
+	BobStatusBarCaption::setColors(fg, aa, bg);
 
 	if (light != nullptr && (light->r() != fg->ri() || light->g() != fg->gi() || light->b() != fg->bi()))
 	{
 		//light->deleteFromMapEntityListAndReleaseTexture();
-		//delete light;
+		delete light;
 		light = nullptr;
-		light = ms<Light>(getEngine(), "timeLight", -100, 4, 24, 2, fg->ri(), fg->gi(), fg->bi(), 90, 16, 2.0f, 1.0f, 0, true, true);
+		light = new Light(getEngine(), "timeLight", -100, 4, 24, 2, fg->ri(), fg->gi(), fg->bi(), 90, 16, 2.0f, 1.0f, 0, true, true);
 	}
 }
 

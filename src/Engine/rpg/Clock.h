@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -30,7 +30,7 @@ public:
 	int day = 0;
 
 
-	Clock(sp<Engine> g);
+	Clock(Engine* g);
 
 
 	void update();

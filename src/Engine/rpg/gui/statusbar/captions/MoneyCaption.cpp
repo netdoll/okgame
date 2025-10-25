@@ -14,7 +14,7 @@
 Logger MoneyCaption::log = Logger("MoneyCaption");
 
 
-MoneyCaption::MoneyCaption(sp<BGClientEngine> g)
+MoneyCaption::MoneyCaption(BGClientEngine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -22,11 +22,11 @@ MoneyCaption::MoneyCaption(sp<BGClientEngine> g)
 void MoneyCaption::init()
 { //=========================================================================================================================
 
-	light = ms<Light>(getEngine(), "moneyLight", -100, 4, 18, 6, 0, 255, 0, 70, 10, 2.0f, 1.0f, 0, true, true); // divided by 2 because lights take 1x pixels from tools
+	light = new Light(getEngine(), "moneyLight", -100, 4, 18, 6, 0, 255, 0, 70, 10, 2.0f, 1.0f, 0, true, true); // divided by 2 because lights take 1x pixels from tools
 
-	defaultFGColor = OKColor::green;
-	defaultAAColor = OKColor::darkerGreen;
-	defaultBGColor = OKColor::clear;
+	defaultFGColor = BobColor::green;
+	defaultAAColor = BobColor::darkerGreen;
+	defaultBGColor = BobColor::clear;
 
 	currentFGColor = defaultFGColor;
 	currentAAColor = defaultAAColor;
@@ -40,11 +40,11 @@ void MoneyCaption::render(int layer)
 		return;
 	}
 
-	StatusBarCaption::render(layer);
+	BobStatusBarCaption::render(layer);
 
 	if (layer == 1)
 	{
-		GLUtils::drawTexture(StatusBar::dividerTexture, (float)dividerX, (float)dividerX + 3, 0, (float)StatusBar::sizeY - 1, 1.0f, GLUtils::FILTER_LINEAR);
+		GLUtils::drawTexture(BobStatusBar::dividerTexture, (float)dividerX, (float)dividerX + 3, 0, (float)BobStatusBar::sizeY - 1, 1.0f, GLUtils::FILTER_LINEAR);
 	}
 }
 

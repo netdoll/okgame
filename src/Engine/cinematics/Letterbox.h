@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -39,7 +39,7 @@ private:
 	bool on = false;
 
 
-	sp<OKColor> color = OKColor::black;
+	BobColor* color = BobColor::black;
 
 	int ticksSlideDuration = 0;
 
@@ -52,7 +52,7 @@ private:
 	/// speed must be low. 0.1f * ticks(16) * 60fps = 96 pixels per second.
 	/// </summary>
 public:
-	Letterbox(sp<Engine> g);
+	Letterbox(Engine* g);
 
 
 	void init();

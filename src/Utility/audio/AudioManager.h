@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "AudioFile.h"
 class Logger;
 
@@ -31,10 +31,10 @@ class AudioManager : EnginePart
 public:
 	static Logger log;
 
-	static sp<vector<sp<AudioFile>>>globalAudioFileList;
+	static ArrayList<AudioFile*> globalAudioFileList;
 
 	static bool loadedBuiltIn;
-	sp<vector<sp<Sound>>>playingAudioList;
+	ArrayList<Sound*> playingAudioList;
 
 	
 
@@ -44,49 +44,49 @@ public:
 
 
 	AudioManager();
-	AudioManager(sp<Engine> g);
+	AudioManager(Engine* g);
 	
 	static void initAudioLibrary();
 	static void cleanup();
 
 	static void globalUpdate();
 
-	//sp<Sound> loadSoundFileByName(const string& name);
+	//Sound* loadSoundFileByName(const string& name);
 	
 	
 	void update();
 
-	sp<Sound> getSoundByName(const string& musicName);
+	Sound* getSoundByName(const string& musicName);
 
-	void playMusic(sp<Sound> s, float vol, float pitch, bool loop);
-	sp<Sound> playMusic(const string& musicName, float volume, float pitch, bool loop);
+	void playMusic(Sound* s, float vol, float pitch, bool loop);
+	Sound* playMusic(const string& musicName, float volume, float pitch, bool loop);
 
-	sp<Sound> playSound(const string& soundName);
-	sp<Sound> playSound(const string& soundName, float volume, float pitch, int times);
-	sp<Sound> playSound(const string& soundName, float volume, float pitch);
-	void playSound(sp<Sound> s, float vol, float pitch, int times);
+	Sound* playSound(const string& soundName);
+	Sound* playSound(const string& soundName, float volume, float pitch, int times);
+	Sound* playSound(const string& soundName, float volume, float pitch);
+	void playSound(Sound* s, float vol, float pitch, int times);
 
-	void playMusic(sp<Sound> m);
-	void playSoundLoop(sp<Sound> m);
+	void playMusic(Sound* m);
+	void playSoundLoop(Sound* m);
 
-	sp<Sound> playMusic(const string& musicName);
-	sp<Sound> playSoundLoop(const string& musicName);
+	Sound* playMusic(const string& musicName);
+	Sound* playSoundLoop(const string& musicName);
 
 
 
-	bool isSoundPlaying(sp<Sound> m);
+	bool isSoundPlaying(Sound* m);
 
 	bool isSoundPlaying(const string& musicName);
 
-	void stopMusic(sp<Sound> m);
-	void stopSound(sp<Sound> m);
+	void stopMusic(Sound* m);
+	void stopSound(Sound* m);
 
 	void stopMusic(const string& musicName);
 	void stopSound(const string& musicName);
 
 	void fadeOutSound(const string& musicName, int ticks);
 
-	void fadeOutSound(sp<Sound> m, int ticks);
+	void fadeOutSound(Sound* m, int ticks);
 
 
 
@@ -117,9 +117,9 @@ public:
 
 	void unpauseAllSounds();
 
-	static sp<AudioFile> getAudioFileByName(string name);
-	static sp<AudioFile> getAudioFileByIDCreateIfNotExist(int id);
-	sp<Sound> getSoundByIDCreateIfNotExist(int id);
+	static AudioFile* getAudioFileByName(string name);
+	static AudioFile* getAudioFileByIDCreateIfNotExist(int id);
+	Sound* getSoundByIDCreateIfNotExist(int id);
 
 
 };

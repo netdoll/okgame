@@ -17,32 +17,31 @@ int EventCommand::TYPE_COMMAND = 0;
 int EventCommand::TYPE_QUALIFIER_TRUE = 1;
 int EventCommand::TYPE_QUALIFIER_FALSE = 2;
 
-EventCommand::EventCommand(sp<Engine> g, const string& command, sp<vector<sp<EventParameter>>>&parameterList, int type)
+EventCommand::EventCommand(Engine* g, const string& command, ArrayList<EventParameter*>* parameterList, int type)
 { //===============================================================================================
 
 	this->e = g;
 
 	this->type = type;
 
-	//if(parameterList!=nullptr)
-		this->parameterList = parameterList;
+	if(parameterList!=nullptr)this->parameterList = parameterList;
 
 	this->commandString = command;
 }
 
 int EventCommand::getNumParams()
 { //===============================================================================================
-	if (parameterList->empty())
+	if (parameterList->isEmpty())
 	{
 		return 0;
 	}
 	else
 	{
-		return (int)parameterList->size();
+		return parameterList->size();
 	}
 }
 
-sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, sp<Event> event, string commandString)
+EventCommand* EventCommand::parseEventCommandFromCommandString(Engine* g, BobEvent* event, string commandString)
 { //===============================================================================================
 
 
@@ -59,7 +58,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 
 	int type = -1;
 
-	sp<EventCommand> e = nullptr;
+	EventCommand* e = nullptr;
 
 
 	if (commandString.find(" == TRUE") != string::npos)
@@ -89,7 +88,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 
 	if (commandString.find("(") != string::npos)
 	{
-		sp<vector<sp<EventParameter>>>newParameterList;// = ms<vector><sp<EventParameter>>();
+		ArrayList<EventParameter*>* newParameterList = new ArrayList<EventParameter*>();
 
 		string command = commandString.substr(0, commandString.find("("));
 
@@ -97,7 +96,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 
 		//commandString now looks like "thing)" or "thing|thing)" or ")"
 
-		while (OKString::startsWith(commandString, ")") == false)
+		while (String::startsWith(commandString, ")") == false)
 		{
 			if (commandString.find("|") != -1) //commandString looks like thing|thing)
 			{
@@ -106,7 +105,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 				//commandString now looks like "thing)" or "thing|thing)"
 
 				//all parameters looks like THING.ID
-				newParameterList->push_back(ms<EventParameter>(g, parameterString));
+				newParameterList->add(new EventParameter(g, parameterString));
 			}
 			else //commandString looks like thing)
 			{
@@ -115,37 +114,37 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 				//commandString now looks like ")"
 
 				//all parameters looks like THING.ID
-				newParameterList->push_back(ms<EventParameter>(g, parameterString));
+				newParameterList->add(new EventParameter(g, parameterString));
 			}
 		}
 
 
-		e = ms<EventCommand>(g, command, newParameterList, type);
+		e = new EventCommand(g, command, newParameterList, type);
 	}
 	else
 	{
 		//it's just doThing
 
-		e = ms<EventCommand>(g, commandString, nullptr, type);
+		e = new EventCommand(g, commandString, nullptr, type);
 	}
 
 
 	return e;
 }
 
-sp<EventCommand> EventCommand::getParent()
+EventCommand* EventCommand::getParent()
 { //=========================================================================================================================
 	return parent;
 }
 
-void EventCommand::addChild(sp<EventCommand> e)
+void EventCommand::addChild(EventCommand* e)
 { //=========================================================================================================================
 
-	children->push_back(e);
-	e->parent = shared_from_this();
+	children->add(e);
+	e->parent = this;
 }
 
-sp<EventCommand> EventCommand::getNextChild()
+EventCommand* EventCommand::getNextChild()
 { //=========================================================================================================================
 
 	//ROOT
@@ -161,7 +160,7 @@ sp<EventCommand> EventCommand::getNextChild()
 
 	if (currentChildIndex < children->size())
 	{
-		sp<EventCommand> e = children->at(currentChildIndex);
+		EventCommand* e = children->get(currentChildIndex);
 		currentChildIndex++;
 
 		return e;

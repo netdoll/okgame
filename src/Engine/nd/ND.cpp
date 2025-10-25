@@ -29,7 +29,7 @@ ND::ND()
 	widthToHeightRatio = ((float)(texture->getTextureWidth()) / (float)(texture->getTextureHeight()));
 
 
-	nDGameStateManager = ms<StateManager>();
+	nDGameStateManager = new BobStateManager();
 }
 
 void ND::init()
@@ -49,7 +49,7 @@ void ND::update()
 	MenuPanel::update();
 
 
-	sp<Engine> s = nDGameStateManager->getCurrentState();
+	Engine* s = nDGameStateManager->getCurrentState();
 
 	if (isActivated == true)
 	{
@@ -116,18 +116,18 @@ void ND::update()
 	ndZoomText->text = "nD zoom: " + to_string(nDZoom);
 }
 
-void ND::setGame(sp<NDGameEngine> game)
+void ND::setGame(NDGameEngine* game)
 { //=========================================================================================================================
 
-	light = ms<Light>(game, "nDScreenLight", 0, 0, GLUtils::getViewportWidth(), GLUtils::getViewportHeight(), 240, 240, 255, 60, 32, 2.0f, 1.0f, 0, true, true);
+	light = new Light(game, "nDScreenLight", 0, 0, GLUtils::getViewportWidth(), GLUtils::getViewportHeight(), 240, 240, 255, 60, 32, 2.0f, 1.0f, 0, true, true);
 
 
 	nDGameStateManager->pushState(game);
 }
 
-sp<NDGameEngine> ND::getGame()
+NDGameEngine* ND::getGame()
 { //=========================================================================================================================
-	return ms<NDGameEngine>(dynamic_cast<NDGameEngine*>(nDGameStateManager->getCurrentState().get()));
+	return static_cast<NDGameEngine*>(nDGameStateManager->getCurrentState());
 }
 
 void ND::toggleActivated()
@@ -175,11 +175,11 @@ void ND::setActivated(bool b)
 	{
 		if (b == true)
 		{
-			OKNet::myStatus = OKNet::status_PLAYING_GAME;
+			BobNet::myStatus = BobNet::status_PLAYING_GAME;
 		}
 		else
 		{
-			OKNet::myStatus = OKNet::status_AVAILABLE;
+			BobNet::myStatus = BobNet::status_AVAILABLE;
 		}
 	}
 
@@ -299,6 +299,7 @@ void ND::render()
 	y1 = screenY + (zHeight);
 
 
+#ifndef ORBIS
 	//--------------------------
 	//set the framebuffer to the nD FBO
 	//--------------------------
@@ -308,7 +309,8 @@ void ND::render()
 	GLUtils::setPreColorFilterViewport();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-
+#else
+#endif
 	//--------------------------
 	//render the game, which should render the map and entities, etc first.
 	//--------------------------
@@ -320,8 +322,11 @@ void ND::render()
 	//--------------------------
 	//set main FBO
 	//--------------------------
-
+#ifndef ORBIS
 	GLUtils::bindFBO(GLUtils::postColorFilterFBO); //set the framebuffer object to the MAIN FBO
+#else
+
+#endif
 	GLUtils::drawIntoFBOAttachment(0); //set which framebuffer object to draw into (whatever buffer is set with glBindFramebuffer)
 
 	//--------------------------
@@ -332,9 +337,12 @@ void ND::render()
 	//--------------------------
 	//clear the main FBO
 	//--------------------------
+#ifndef ORBIS
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+#else
 
+#endif
 	//--------------------------
 	//draw nD console background to main FBO
 	//--------------------------
@@ -364,8 +372,10 @@ void ND::render()
 	GLUtils::drawFilledRect(8, 8, 8, nDScreenOnScreenX0, nDScreenOnScreenX1, nDScreenOnScreenY0, nDScreenOnScreenY1, 1.0f);
 
 	//draw nD screen  (upside down because FBO is flipped)
+#ifndef ORBIS
 	GLUtils::drawTexture(GLUtils::preColorFilterFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, nDScreenOnScreenX0, nDScreenOnScreenX1, nDScreenOnScreenY0, nDScreenOnScreenY1, 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
-
+#else
+#endif
 
 	//--------------------------
 	// draw pixel mesh to main FBO
@@ -402,13 +412,17 @@ void ND::render()
 			//--------------------------
 			//switch to LIGHTS buffer attachment
 			GLUtils::drawIntoFBOAttachment(1); //draws into lightFBOTextureID
+#ifndef ORBIS
 			glClear(GL_COLOR_BUFFER_BIT);
-
+#else
+#endif
 			//--------------------------
 			//draw the main FBO texture into the LIGHTS buffer attachment (upside down because FBO is flipped)
 			//--------------------------
+#ifndef ORBIS
 			GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, (float)GLUtils::getViewportWidth(), 0.0f, (float)GLUtils::getViewportHeight(), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
-
+#else
+#endif
 			//--------------------------
 			//switch to MAIN buffer attachment in MAIN FBO
 			//--------------------------
@@ -420,6 +434,7 @@ void ND::render()
 			//--------------------------
 			GLUtils::useShader(GLUtils::lightShader);
 
+#ifndef ORBIS
 			//set the LIGHTS FBO texture to texture 0, we drew the main FBO (maps and sprites) into it and we are going to use it to blend
 			glActiveTexture(GL_TEXTURE0);
 			glEnable(GL_TEXTURE_2D);
@@ -428,7 +443,8 @@ void ND::render()
 
 			glActiveTexture(GL_TEXTURE1); //switch to texture 1, we are going to bind the light textures to this when we draw them.
 			glEnable(GL_TEXTURE_2D);
-
+#else
+#endif
 
 			GLUtils::setShaderVar1i(GLUtils::lightShader, (char*)"Tex0", 0);
 			GLUtils::setShaderVar1i(GLUtils::lightShader, (char*)"Tex1", 1);
@@ -443,7 +459,7 @@ void ND::render()
 				light->renderLight(nDScreenOnScreenX0 - lightOffset, nDScreenOnScreenX1 + lightOffset, nDScreenOnScreenY0 - lightOffset, nDScreenOnScreenY1 + lightOffset, lightAlpha);
 			}
 
-
+#ifndef ORBIS
 			//disable texture2D on texture unit 1
 			glActiveTexture(GL_TEXTURE1);
 			glDisable(GL_TEXTURE_2D);
@@ -451,6 +467,8 @@ void ND::render()
 			//switch back to texture unit 0
 			glActiveTexture(GL_TEXTURE0);
 			glDisable(GL_TEXTURE_2D);
+#else
+#endif
 
 			GLUtils::useShader(0);
 		}
@@ -462,8 +480,10 @@ void ND::render()
 	//--------------------------
 
 	GLUtils::bindFBO(0); //set the framebuffer back to the screen buffer
+#ifndef ORBIS
 	glEnable(GL_TEXTURE_2D);
-
+#else
+#endif
 	//--------------------------
 	// draw MAIN FBO texture into SCREEN BUFFER
 	//--------------------------
@@ -480,11 +500,13 @@ void ND::render()
 		GLUtils::setShaderVar1i(GLUtils::colorShader, (char*)"Tex0", 0);
 	}
 
+#ifndef ORBIS
 	//draw the framebuffer with the lights drawn into it into the screen buffer  (upside down because FBO is flipped)
 	GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); //this fixes the small shadow problems, and also makes the doorknob glow brighter.
 	GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, (float)GLUtils::getViewportWidth(), 0.0f, (float)GLUtils::getViewportHeight(), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
 	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+#else
+#endif
 
 	if (GLUtils::useShaders)
 	{

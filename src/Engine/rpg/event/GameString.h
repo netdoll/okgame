@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -15,26 +15,26 @@ class Logger;
 
 class GameStringData;
 
-class GameString : public ServerObject, public std::enable_shared_from_this<GameString>
+class GameString : public ServerObject
 {
 private:
-	sp<GameStringData> data = nullptr;
+	GameStringData* data = nullptr;
 
 
 public:
 
 	static Logger log;
-	GameString(sp<Engine> g, int id);
+	GameString(Engine* g, int id);
 
 
-	GameString(sp<Engine> g, sp<GameStringData> data);
+	GameString(Engine* g, GameStringData* data);
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(sp<GameStringData> data);
+	void setData_S(GameStringData* data);
 
 
-	sp<GameStringData> getData();
+	GameStringData* getData();
 
 	int getID();
 	string& getName();

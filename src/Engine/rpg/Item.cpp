@@ -14,25 +14,25 @@
 Logger Item::log = Logger("Item");
 
 
-Item::Item(sp<Engine> g, const string& spriteAssetName)
+Item::Item(Engine* g, const string& spriteAssetName)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->spriteAssetName = spriteAssetName;
 
-	getEventManager()->itemList->push_back(shared_from_this());
+	getEventManager()->itemList.add(this);
 }
 
-Item::Item(sp<Engine> g, int spriteAssetID)
+Item::Item(Engine* g, int spriteAssetID)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->spriteAssetID = spriteAssetID;
 
-	getEventManager()->itemList->push_back(shared_from_this());
+	getEventManager()->itemList.add(this);
 }
 
-Item::Item(sp<Engine> g, sp<Sprite> sprite)
+Item::Item(Engine* g, Sprite* sprite)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -42,14 +42,14 @@ Item::Item(sp<Engine> g, sp<Sprite> sprite)
 
 	setInitialized_S(true);
 
-	getEventManager()->itemList->push_back(shared_from_this());
+	getEventManager()->itemList.add(this);
 }
 
 void Item::sendServerRequest()
 { //=========================================================================================================================
 	if (getInitialized_S() == false)
 	{
-		sp<Sprite> sprite = nullptr;
+		Sprite* sprite = nullptr;
 
 		if (spriteAssetName != "")
 		{
@@ -102,11 +102,11 @@ void Item::getWithCaption_S()
 
 	if (getPlayer() != nullptr)
 	{
-		getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, 5000, name, OKFont::font_normal_11_outlined, OKColor::green);
+		getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, 5000, name, BobFont::font_normal_11_outlined, BobColor::green);
 	}
 	else
 	{
-		getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, 5000, name, OKFont::font_normal_11_outlined, OKColor::green);
+		getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, 5000, name, BobFont::font_normal_11_outlined, BobColor::green);
 	}
 	getAudioManager()->playSound("gotitem", 0.25f, 1.0f, 1);
 }

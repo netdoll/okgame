@@ -19,13 +19,13 @@ Character::Character()
 }
 
 
-//Character::Character(sp<Engine> g)
+//Character::Character(Engine* g)
 //{ //=========================================================================================================================
 //   this->e = g;
 //
 //}
 
-Character::Character(sp<Engine> g, sp<EntityData> data, sp<Map>m)
+Character::Character(Engine* g, EntityData* data, Map *m)
 { //=========================================================================================================================
 
 
@@ -36,7 +36,7 @@ Character::Character(sp<Engine> g, sp<EntityData> data, sp<Map>m)
 
 	initCharacter();
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
 void Character::initCharacter()
@@ -63,21 +63,21 @@ void Character::initCharacter()
 /**
 This is specifically for something, not sure what
 */
-Character::Character(sp<Engine> g, string name, sp<Sprite> sprite, sp<Area> a, sp<Map> m)
+Character::Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m)
 { //=========================================================================================================================
 	this->e = g;
 
-	sp<EntityData> data = ms<EntityData>(-1, name, sprite->getName(), (int)a->middleX() / 2, (int)a->middleY() / 2, 0, false, true, 255, 1.25f, 8);
+	EntityData* data = new EntityData(-1, name, sprite->getName(), (int)a->middleX() / 2, (int)a->middleY() / 2, 0, false, true, 255, 1.25f, 8);
 
 	initEntity(data);
 
 	this->map = m;
 
 
-	getCurrentMap()->currentState->characterList->push_back(shared_from_this());
-	getCurrentMap()->currentState->characterByNameHashtable->put(name, shared_from_this());
+	getCurrentMap()->currentState->characterList.add(this);
+	getCurrentMap()->currentState->characterByNameHashtable.put(name, this);
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
 void Character::initCurrentAnimationFromSprite()
@@ -146,16 +146,16 @@ void Character::update()
 	//for(int i=0;i<getBehaviorList->size();i++)
 	{
 		{
-			//if(getBehaviorList->at(i).equals("walkToPointsRandomly"))
+			//if(getBehaviorList.get(i).equals("walkToPointsRandomly"))
 			//if we have a current area
 
 			if (currentAreaTYPEIDTarget.length() > 0)
 			{
 				//find current area
-				if (OKString::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
+				if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
 				{
 					//get current area x and y
-					sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+					Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 
 					if (a == nullptr)
 					{
@@ -212,7 +212,7 @@ void Character::update()
 
 							if (getConnectionTYPEIDList()->size() > 0)
 							{
-								currentAreaTYPEIDTarget = getConnectionTYPEIDList()->at(Math::randLessThan((int)getConnectionTYPEIDList()->size()));
+								currentAreaTYPEIDTarget = getConnectionTYPEIDList()->get(Math::randLessThan(getConnectionTYPEIDList()->size()));
 							}
 						}
 					}
@@ -236,7 +236,7 @@ void Character::update()
 				//else pick a new point
 				if (getConnectionTYPEIDList()->size() > 0)
 				{
-					currentAreaTYPEIDTarget = getConnectionTYPEIDList()->at(Math::randLessThan((int)getConnectionTYPEIDList()->size()));
+					currentAreaTYPEIDTarget = getConnectionTYPEIDList()->get(Math::randLessThan(getConnectionTYPEIDList()->size()));
 				}
 			}
 		}
@@ -250,7 +250,7 @@ void Character::update()
 	//if (this->getClass().equals(Character::typeid)) //this will ONLY do Character
 	if (dynamic_cast<Character*>(this) != NULL)
 	{
-		//log->debug(""+getName());
+		//log.debug(""+getName());
 		checkIfMoved();
 
 		doCharacterAnimation();
@@ -906,11 +906,11 @@ void Character::checkIfMoved()
 }
 
 //=========================================================================================================================
-void Character::dontLookAtEntity(sp<Entity> e)
+void Character::dontLookAtEntity(Entity* e)
 { //=========================================================================================================================
 
 
-	if (this != getPlayer().get())
+	if (this != getPlayer())
 	{
 		float amt1 = (getMiddleX()) - (e->getMiddleX());
 		float amt2 = (getMiddleY()) - (e->getMiddleY());
@@ -984,11 +984,11 @@ void Character::dontLookAtEntity(sp<Entity> e)
 }
 
 //=========================================================================================================================
-void Character::lookAtEntity(sp<Entity> e)
+void Character::lookAtEntity(Entity* e)
 { //=========================================================================================================================
 
 
-	if (this != getPlayer().get())
+	if (this != getPlayer())
 	{
 		float amt1 = (getMiddleX()) - (e->getMiddleX());
 		float amt2 = (getMiddleY()) - (e->getMiddleY());
@@ -1062,7 +1062,7 @@ void Character::lookAtEntity(sp<Entity> e)
 }
 
 //=========================================================================================================================
-void Character::lookAtEntityButNotOppositeWalkingDirection(sp<Entity> stared_at_entity)
+void Character::lookAtEntityButNotOppositeWalkingDirection(Entity* stared_at_entity)
 { //=========================================================================================================================
 
 	float amt1 = (getMiddleX()) - (stared_at_entity->getMiddleX());
@@ -1218,7 +1218,7 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 	getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("RANDOMshoeColors")->loadTextures();
 
 
-	sp<Sprite> sprite = nullptr;
+	Sprite* sprite = nullptr;
 
 
 	if (genderIndex == 0) //male
@@ -1466,7 +1466,7 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 	if (uniqueTexture != nullptr)
 	{
 		uniqueTexture->release();
-		//delete uniqueTexture;
+		delete uniqueTexture;
 		uniqueTexture = nullptr;
 	}
 
@@ -1477,11 +1477,11 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 	int pantsSet = pantsColorIndex + 1;
 	int shoeSet = shoeColorIndex + 1;
 
-	sp<ByteArray> bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, -1);
+	ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, -1);
 
 	uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
 
-	//delete bb;
+	delete bb;
 
 	if (this->sprite != nullptr)
 	{
@@ -1529,7 +1529,7 @@ void Character::setShowAccountType(bool b)
 }
 
 //=========================================================================================================================
-void Character::setCharacterNameAndCaption(sp<OKColor> nameColor, const string& name, sp<OKColor> accountTypeNameColor, const string& accountTypeName)
+void Character::setCharacterNameAndCaption(BobColor* nameColor, const string& name, BobColor* accountTypeNameColor, const string& accountTypeName)
 { //=========================================================================================================================
 
 	this->nameColor = nameColor;
@@ -1543,9 +1543,9 @@ void Character::setCharacterNameAndCaption(sp<OKColor> nameColor, const string& 
 		{
 			if (name != "" && name.length() > 0)
 			{
-				nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, name, OKFont::font_normal_16_outlined_smooth, nameColor);
+				nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, name, BobFont::font_normal_16_outlined_smooth, nameColor);
 			}
-			nameCaption->setEntity(shared_from_this());
+			nameCaption->setEntity(this);
 		}
 		else
 		{
@@ -1568,9 +1568,9 @@ void Character::setCharacterNameAndCaption(sp<OKColor> nameColor, const string& 
 		{
 			if (accountTypeName != "" && accountTypeName.length() > 0)
 			{
-				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, accountTypeName, OKFont::font_normal_8_outlined, accountTypeNameColor);
+				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, accountTypeName, BobFont::font_normal_8_outlined, accountTypeNameColor);
 			}
-			nameCaption->setEntity(shared_from_this());
+			nameCaption->setEntity(this);
 		}
 		else
 		{
@@ -1588,35 +1588,30 @@ void Character::setCharacterNameAndCaption(sp<OKColor> nameColor, const string& 
 }
 
 //=========================================================================================================================
-sp<vector<sp<Entity>>> Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
+ArrayList<Entity*>* Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
 { //=========================================================================================================================
 
 
-	sp<vector<sp<Entity>>> list;// = new sp<vector<sp<Entity>>>();
+	ArrayList<Entity*>* list = new ArrayList<Entity*>();
 
-	for (int s = 0; s < (int)getMap()->zList->size(); s++) //NOTICE THIS IS USING ZLIST
+	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		sp<Entity> e = getMap()->zList->at(s);
+		Entity* e = getMap()->zList.get(s);
 
-		if (dynamic_cast<Character*>(e.get()) != NULL || 
-			dynamic_cast<RandomCharacter*>(e.get()) != NULL || 
-			e->getNonWalkable() == false)
+		if (dynamic_cast<Character*>(e) != NULL || dynamic_cast<RandomCharacter*>(e) != NULL || e->getNonWalkable() == false)
 		{
 			continue;
 		}
 
-		if (e.get() == this)
+		if (e == this)
 		{
 			continue;
 		}
 
 
-		if (getRight() + amt >= e->getLeft() && 
-			getLeft() - amt <= e->getRight() && 
-			getBottom() + amt >= e->getTop() && 
-			getTop() - amt <= e->getBottom())
+		if (getRight() + amt >= e->getLeft() && getLeft() - amt <= e->getRight() && getBottom() + amt >= e->getTop() && getTop() - amt <= e->getBottom())
 		{
-			list->push_back(e);
+			list->add(e);
 		}
 	}
 
@@ -1624,7 +1619,7 @@ sp<vector<sp<Entity>>> Character::getOnScreenNonCharacterEntitiesWithinRangeAmou
 }
 
 //=========================================================================================================================
-bool Character::checkTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y)
+bool Character::checkTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y)
 { //=========================================================================================================================
 
 	if (getEngine()->hitLayerEnabled == false)
@@ -1634,16 +1629,14 @@ bool Character::checkTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, 
 
 	for (int s = 0; s < list->size(); s++)
 	{
-		sp<Entity> e = list->at(s);
+		Entity* e = list->get(s);
 
-		if (dynamic_cast<Character*>(e.get()) != NULL || 
-			dynamic_cast<RandomCharacter*>(e.get()) != NULL || 
-			e->getNonWalkable() == false)
+		if (dynamic_cast<Character*>(e) != NULL || dynamic_cast<RandomCharacter*>(e) != NULL || e->getNonWalkable() == false)
 		{
 			continue;
 		}
 
-		if (e.get() == this)
+		if (e == this)
 		{
 			continue;
 		}
@@ -1659,10 +1652,9 @@ bool Character::checkTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, 
 }
 
 //=========================================================================================================================
-bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y)
+bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y)
 { //=========================================================================================================================
-	if (getMap()->getHitLayerValueAtXYPixels(x, y) == false && 
-		checkTouchingAnyEntityInEntityList(list, x, y) == false)
+	if (getMap()->getHitLayerValueAtXYPixels(x, y) == false && checkTouchingAnyEntityInEntityList(list, x, y) == false)
 	{
 		return false;
 	}
@@ -1679,19 +1671,17 @@ bool Character::checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x,
 		return false;
 	}
 
-	for (int s = 0; s < (int)getMap()->zList->size(); s++) //NOTICE THIS IS USING ZLIST
+	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		sp<Entity> e = getMap()->zList->at(s);
+		Entity* e = getMap()->zList.get(s);
 
 
-		if (dynamic_cast<Character*>(e.get()) != NULL || 
-			dynamic_cast<RandomCharacter*>(e.get()) != NULL || 
-			e->getNonWalkable() == false)
+		if (dynamic_cast<Character*>(e) != NULL || dynamic_cast<RandomCharacter*>(e) != NULL || e->getNonWalkable() == false)
 		{
 			continue;
 		}
 
-		if (e.get() == this)
+		if (e == this)
 		{
 			continue;
 		}
@@ -1741,7 +1731,7 @@ void Character::setShadowClip()
 	//REALIZATION: i should never have to clip against other entities, ever. your shadow will always be on the ground, and any entities in front of you will always be rendered AFTER your shadow.
 
 
-	//sp<vector<Entity>>list = get_ONSCREEN_entities_besides_characters_within_amt(32);
+	//ArrayList<Entity> list = get_ONSCREEN_entities_besides_characters_within_amt(32);
 
 	for (int x = 0; x < sprite->getImageWidth(); x++)
 	{
@@ -1845,7 +1835,7 @@ int Character::walkToXYWithPathFinding(float x, float y)
 
 		if (pathfinder == nullptr)
 		{
-			pathfinder = ms<PathFinder>(this, getMiddleX(), getMiddleY(), (float)x, (float)y, getMap()->getWidthTiles1X(), getMap()->getHeightTiles1X());
+			pathfinder = new PathFinder(this, getMiddleX(), getMiddleY(), (float)x, (float)y, getMap()->getWidthTiles1X(), getMap()->getHeightTiles1X());
 		}
 
 		if (pathfinder != nullptr)
@@ -1895,7 +1885,7 @@ int Character::walkToXYWithPathFinding(float x, float y)
 				{
 					there_yet = 1;
 					pathPosition = 0;
-					//delete pathfinder;
+					delete pathfinder;
 					pathfinder = nullptr;
 
 					finalPathX = x; //we are as close as we can be.
@@ -1916,7 +1906,7 @@ int Character::walkToXYWithPathFinding(float x, float y)
 
 					pathPosition = 0;
 
-					//delete pathfinder;
+					delete pathfinder;
 					pathfinder = nullptr;
 
 					if (pathTried > 3)
@@ -2112,24 +2102,24 @@ void Character::twitchAroundRoom()
 	setIgnoreHitPlayer(false);
 }
 
-sp<Character> Character::findNearestCharacter()
+Character* Character::findNearestCharacter()
 { //=========================================================================================================================
 
-	sp<Character> nearest = nullptr;
+	Character* nearest = nullptr;
 
 	int shortestdist = 65535;
 
 
-	for (int n = 0; n < (int)getMap()->activeEntityList->size(); n++)
+	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		sp<Entity> currentEntity = getMap()->activeEntityList->at(n);
+		Entity* currentEntity = getMap()->activeEntityList.get(n);
 
 
-		if (this != currentEntity.get() &&
+		if (this != currentEntity &&
 			(
-				(dynamic_cast<Character*>(currentEntity.get()) != NULL) ||
-				(dynamic_cast<Player*>(currentEntity.get()) != NULL) ||
-				(dynamic_cast<RandomCharacter*>(currentEntity.get()) != NULL)
+				(dynamic_cast<Character*>(currentEntity) != NULL) ||
+				(dynamic_cast<Player*>(currentEntity) != NULL) ||
+				(dynamic_cast<RandomCharacter*>(currentEntity) != NULL)
 			)
 		)
 		{
@@ -2144,7 +2134,7 @@ sp<Character> Character::findNearestCharacter()
 			if (dist < shortestdist)
 			{
 				shortestdist = dist;
-				nearest = ms<Character>(static_cast<Character*>(currentEntity.get()));
+				nearest = static_cast<Character*>(currentEntity);
 			}
 		}
 	}
@@ -2893,7 +2883,7 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 	{
 		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 		{
-			sp<Character> nearestentity = findNearestCharacter();
+			Character* nearestentity = findNearestCharacter();
 
 
 			int collide = 0;
@@ -3157,7 +3147,7 @@ int Character::walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt)
 	{
 		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 		{
-			sp<Entity> n = findNearestEntity();
+			Entity* n = findNearestEntity();
 
 			/*
 			 * if(nearest_entity!=null)
@@ -3284,7 +3274,7 @@ void Character::walkDirectionAvoidOtherEntities(int direction)
 
 	if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 	{
-		sp<Entity> n = findNearestEntity();
+		Entity* n = findNearestEntity();
 
 		if (direction == DOWN)
 		{
@@ -3424,7 +3414,7 @@ bool Character::walkToXYIntelligentHitPushOthers(float x, float y)
 			int direction = 0;
 
 
-			sp<Entity> n = findNearestEntity();
+			Entity* n = findNearestEntity();
 
 
 			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
@@ -3797,7 +3787,7 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 			}
 
 			int direction = 0;
-			sp<Entity> nearestentity = findNearestEntity();
+			Entity* nearestentity = findNearestEntity();
 
 			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
 			{
@@ -4110,7 +4100,7 @@ int Character::walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y
 
 			int direction = 0;
 
-			sp<Entity> n = findNearestEntity();
+			Entity* n = findNearestEntity();
 
 			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
 			{
@@ -4479,7 +4469,7 @@ int Character::walkDistance(int direction)
 	return there_yet;
 }
 
-int Character::avoidEntity(sp<Entity> e, int amt)
+int Character::avoidEntity(Entity* e, int amt)
 { //=========================================================================================================================
 
 	int outside_area = 0;
@@ -4553,7 +4543,7 @@ int Character::avoidEntity(sp<Entity> e, int amt)
 int Character::avoidNearestEntity(int avoid_amt)
 { //=========================================================================================================================
 
-	sp<Entity> nearestentity = findNearestEntity();
+	Entity* nearestentity = findNearestEntity();
 
 	return avoidEntity(nearestentity, avoid_amt);
 }
@@ -4561,7 +4551,7 @@ int Character::avoidNearestEntity(int avoid_amt)
 int Character::avoidNearestCharacter(int avoid_amt)
 { //=========================================================================================================================
 
-	sp<Character> nearestentity = findNearestCharacter();
+	Character* nearestentity = findNearestCharacter();
 
 	return avoidEntity(nearestentity, avoid_amt);
 }
@@ -4570,7 +4560,7 @@ void Character::pushableCrowdBehavior()
 { //=========================================================================================================================
 
 
-	sp<Entity> nearestentity = findNearestEntity();
+	Entity* nearestentity = findNearestEntity();
 
 	if (avoidEntity(nearestentity, 4) == 1) //based on entity avoid nearest entity,send in all the entitys you want to be in the crowd
 	{
@@ -4637,7 +4627,7 @@ int Character::walk_to_xy_intelligenthit_avoidothers_pushmain(float x, float y)
 
 
 			//find nearest entity
-			sp<Entity> e = findNearestEntity();
+			Entity* e = findNearestEntity();
 
 
 			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()

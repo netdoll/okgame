@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -29,7 +29,7 @@ public:
 	//float speed;
 
 
-	PingBall(sp<Engine> g);
+	PingBall(Engine* g);
 
 
 	void update();

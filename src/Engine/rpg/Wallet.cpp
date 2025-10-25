@@ -14,7 +14,7 @@
 Logger Wallet::log = Logger("Wallet");
 
 
-Wallet::Wallet(sp<BGClientEngine> g)
+Wallet::Wallet(BGClientEngine* g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -67,7 +67,7 @@ void Wallet::update()
 		moneyString = " $" + moneyString + " ";
 
 
-		// getStatusBar()->moneyCaption::updateCaption(moneyString);
+		// getBobStatusBar()->moneyCaption::updateCaption(moneyString);
 	}
 }
 

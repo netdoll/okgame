@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -19,7 +19,7 @@ public:
 
 
 	RamioBlock();
-	RamioBlock(sp<Engine> g);
+	RamioBlock(Engine* g);
 
 
 	

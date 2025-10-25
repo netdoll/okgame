@@ -4,12 +4,12 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 #include "src/Engine/Engine.h"
 
-#include "src/Utility/Console.h"
+#include "src/Utility/BobConsole.h"
 #include "src/Utility/ConsoleText.h"
 
 class Wallet;
@@ -17,7 +17,7 @@ class Clock;
 class Player;
 class GameSave;
 class GUIManager;
-class StatusBar;
+class BobStatusBar;
 class FriendManager;
 class ND;
 class Sprite;
@@ -35,22 +35,22 @@ public:
 
 	static bool debugMode;
 
-	sp<ConsoleText> playerMapText = nullptr;// = Console::debug("playerMapText");
-	sp<ConsoleText> playerScreenText = nullptr;// = Console::debug("playerScreenText");
+	ConsoleText* playerMapText = nullptr;// = Console::debug("playerMapText");
+	ConsoleText* playerScreenText = nullptr;// = Console::debug("playerScreenText");
 
-	sp<GUIManager> guiManager = nullptr;
-	sp<StatusBar> statusBar = nullptr;
-	sp<Wallet> wallet = nullptr;
+	GUIManager* guiManager = nullptr;
+	BobStatusBar* statusBar = nullptr;
+	Wallet* wallet = nullptr;
 
-	sp<Clock> clock = nullptr;
+	Clock* clock = nullptr;
 
-	sp<Player> normalPlayer = nullptr;
-	sp<Player> player = nullptr;
+	Player* normalPlayer = nullptr;
+	Player* player = nullptr;
 
-	sp<FriendManager> friendManager = nullptr;
+	FriendManager* friendManager = nullptr;
 
 	ND* nD = nullptr;
-	sp<StadiumScreen> stadiumScreen = nullptr;
+	StadiumScreen* stadiumScreen = nullptr;
 
 	bool controlsEnabled = true;
 	bool playerExistsInMap = true;
@@ -76,25 +76,25 @@ public:
 	void initializeGameFromSave_S();
 	void setPlayerAppearanceFromGameSave_S();
 
-	sp<OKColor> getNameColor(int accountType);
+	BobColor* getNameColor(int accountType);
 
 	string getAccountRankString(int accountRank);
-	sp<OKColor> getAccountRankColor(int accountRank);
+	BobColor* getAccountRankColor(int accountRank);
 
-	void setPlayerToTempPlayerWithSprite(sp<Sprite> s);
+	void setPlayerToTempPlayerWithSprite(Sprite* s);
 	void setPlayerToNormalPlayer();
 
-	sp<Clock> getClock();
-	sp<GUIManager> getGUIManager();
-	sp<StuffMenu> getStuffMenu();
-	sp<GameStore> getGameStore();
-	sp<PlayerEditMenu> getPlayerEditMenu();
-	sp<Player> getPlayer();
+	Clock* getClock();
+	GUIManager* getGUIManager();
+	StuffMenu* getStuffMenu();
+	GameStore* getGameStore();
+	PlayerEditMenu* getPlayerEditMenu();
+	Player* getPlayer();
 	ND* getND();
-	sp<Wallet> getWallet();
-	sp<FriendManager> getFriendManager();
-	sp<StatusBar> getStatusBar();
-	sp<NotificationManager> getNotificationManager();
+	Wallet* getWallet();
+	FriendManager* getFriendManager();
+	BobStatusBar* getBobStatusBar();
+	NotificationManager* getNotificationManager();
 	//The following method was originally marked 'synchronized':
 
 	//====================================================
@@ -103,7 +103,7 @@ public:
 
 	bool gameSaveCompleted_nonThreaded = false;
 
-	//sp<GameSave> getGameSave_S();
+	//GameSave* getGameSave_S();
 
 	private:
 		bool isGameInitializedFromSave_nonThreaded = false;
@@ -117,8 +117,8 @@ public:
 	virtual bool serverMessageReceived(string e) override;
 
 private:
-	long long lastSentProjectLoadEventRequestTime = 0;
-	bool isProjectLoadEventInitialized_nonThreaded = false;
+	//long long lastSentProjectLoadEventRequestTime = 0;
+	//bool isProjectLoadEventInitialized_nonThreaded = false;
 	int _projectLoadEventID = -1;
 
 public:
@@ -129,7 +129,7 @@ public:
 	int getProjectLoadEventID_S();
 
 	bool getFinishedLoadEvent();
-	sp<Event> projectLoadEvent = nullptr;
+	BobEvent* projectLoadEvent = nullptr;
 
 	bool finishedProjectLoadEvent = false;
 

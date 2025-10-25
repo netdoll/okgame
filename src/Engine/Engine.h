@@ -4,12 +4,12 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 
 class Logger;
 
 //#include "./state/State.h"
-#include "src/Utility/Console.h"
+#include "src/Utility/BobConsole.h"
 #include "src/Utility/ConsoleText.h"
 //#include "src/Utility/ControlsManager.h"
 //#include "src/Utility/audio/AudioManager.h"
@@ -35,45 +35,34 @@ class PlayerEditMenu;
 class Player;
 class ND;
 class FriendManager;
-class StatusBar;
+class BobStatusBar;
 class NotificationManager;
 class ServerObject;
-class Event;
+class BobEvent;
 class UDPPeerConnection;
 class TCPServerConnection;
 
-class Engine : public std::enable_shared_from_this<Engine>// : public State
+class Engine// : public State
 {
 //private:
 	//typedef State super;
 public:
 	
 
-	//static Logger log;
-	static sp<Logger> log;
+	static Logger log;
 
-	//sp<AudioManager> audioManager = nullptr;
-	//sp<Cameraman> cameraman = nullptr;
-	//sp<SpriteManager> spriteManager = nullptr;
-	//sp<ActionManager> actionManager = nullptr;
-	//sp<MapManager> mapManager = nullptr;
-	//sp<CinematicsManager> cinematicsManager = nullptr;
-	//sp<CaptionManager> captionManager = nullptr;
-	//sp<TextManager> textManager = nullptr;
-	//sp<EventManager> eventManager = nullptr;
-
-	sp<AudioManager> audioManager = nullptr;
-	sp<Cameraman> cameraman = nullptr;
-	sp<SpriteManager> spriteManager = nullptr;
-	sp<ActionManager> actionManager = nullptr;
-	sp<MapManager> mapManager = nullptr;
-	sp<CinematicsManager> cinematicsManager = nullptr;
-	sp<CaptionManager> captionManager = nullptr;
-	sp<TextManager> textManager = nullptr;
-	sp<EventManager> eventManager = nullptr;
+	AudioManager* audioManager = nullptr;
+	Cameraman* cameraman = nullptr;
+	SpriteManager* spriteManager = nullptr;
+	ActionManager* actionManager = nullptr;
+	MapManager* mapManager = nullptr;
+	CinematicsManager* cinematicsManager = nullptr;
+	CaptionManager* captionManager = nullptr;
+	TextManager* textManager = nullptr;
+	EventManager* eventManager = nullptr;
 
 
-	static sp<vector<sp<UDPPeerConnection>>>onlineFriends;
+	static ArrayList<UDPPeerConnection*> onlineFriends;
 
 	double engineSpeed = 1.0;
 
@@ -103,35 +92,27 @@ public:
 	void updateChatConsole();
 
 protected:
-
-	static sp<ControlsManager> controlsManager;
-	static sp<ControlsManager> chatControlsManager;
-	static sp<ControlsManager> activeControlsManager;
-
-	
+	ControlsManager* controlsManager = nullptr;
+	ControlsManager* chatControlsManager = nullptr;
+	ControlsManager* activeControlsManager = nullptr;
 	bool chatEnabled = true;
 	bool chatFocused = false;
 	bool textStarted = false;
 
-	sp<ConsoleText> chatConsoleText = nullptr;
+	ConsoleText* chatConsoleText = nullptr;
 public:
-	virtual sp <ControlsManager> getControlsManager();
-	virtual sp <ControlsManager> getActiveControlsManager();
+	ControlsManager* getControlsManager();
+	ControlsManager* getActiveControlsManager();
 
-	//static void setClientGameEngine(std::sp<BGClientEngine> clientGameEngine);
-
-	static void setControlsManager(sp<ControlsManager> controlsManager);
-
-
-	virtual sp <BGClientEngine> getClientGameEngine();
-	//static sp<BGClientEngine> clientGameEngine;
+	//static void setClientGameEngine(BGClientEngine* gameEngine);
+	static BGClientEngine* getClientGameEngine();
 
 	virtual void updateControls();
 	virtual void resetPressedButtons();
 	virtual void setButtonStates();
 
 
-	static sp <TCPServerConnection> getServerConnection();
+	static TCPServerConnection* getServerConnection();
 
 	static long long getUserID_S();
 	static string getUserName_S();
@@ -142,14 +123,13 @@ public:
 
 	int getHeight();
 
-	virtual bool udpPeerMessageReceived(sp<UDPPeerConnection> c, string s);
+	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s);
 	virtual bool serverMessageReceived(string cs);
 
 
 
-	//static sp<BGClientEngine> clientGameEngine;
-	//ArrayDeque<sp<Cameraman>> *cameramanStack = ms<ArrayDeque><sp<Cameraman>>();
-	//std::sp<ArrayDeque<std::sp<Cameraman>>> cameramanStack = std::ms<ArrayDeque<std::sp<Cameraman>>>();
+	//static BGClientEngine* clientGameEngine;
+	//ArrayDeque<Cameraman*> *cameramanStack = new ArrayDeque<Cameraman*>();
 
 public:
 
@@ -161,16 +141,16 @@ public:
 	bool debugLayerEnabled = false;
 
 	//DebugText cameraSpeedText = DebugConsole.add("cameraSpeedText");
-	sp<ConsoleText>  zoomText = nullptr;// Console::debug("zoomText");
-	sp<ConsoleText>  mapCamText = nullptr;// = Console::debug("mapCamText");
-	sp<ConsoleText>  mapScreenText = nullptr;// = Console::debug("mapScreenText");
-	sp<ConsoleText>  mapSizeText = nullptr;// = Console::debug("mapSizeText");
-	sp<ConsoleText>  resolutionText = nullptr;// = Console::debug("resolutionText");
-	sp<ConsoleText>  textText = nullptr;// = Console::debug("textText");
-	sp<ConsoleText>  textOptionText = nullptr;// = Console::debug("textOptionText");
+	ConsoleText* zoomText = nullptr;// Console::debug("zoomText");
 
+	ConsoleText* mapCamText = nullptr;// = Console::debug("mapCamText");
+	ConsoleText* mapScreenText = nullptr;// = Console::debug("mapScreenText");
 
+	ConsoleText* mapSizeText = nullptr;// = Console::debug("mapSizeText");
+	ConsoleText* resolutionText = nullptr;// = Console::debug("resolutionText");
 
+	ConsoleText* textText = nullptr;// = Console::debug("textText");
+	ConsoleText* textOptionText = nullptr;// = Console::debug("textOptionText");
 
 	Engine();
 	virtual ~Engine();
@@ -180,23 +160,22 @@ public:
 	virtual void updateDebugText();
 	void* getGameObjectByTYPEIDName(const string& typeIDName);
 
+	Cameraman* getCameraman();
+	MapManager* getMapManager();
+	SpriteManager* getSpriteManager();
+	ActionManager* getActionManager();
+	TextManager* getTextManager();
+	AudioManager* getAudioManager();
+	CaptionManager* getCaptionManager();
+	EventManager* getEventManager();
 
-	virtual sp<Cameraman> getCameraman();
-	virtual sp<MapManager> getMapManager();
-	virtual sp<SpriteManager> getSpriteManager();
-	virtual sp<ActionManager> getActionManager();
-	virtual sp<TextManager> getTextManager();
-	virtual sp<AudioManager> getAudioManager();
-	virtual sp<CaptionManager> getCaptionManager();
-	virtual sp<EventManager> getEventManager();
-
-	virtual sp<CinematicsManager> getCinematicsManager();
-	virtual sp<Map> getCurrentMap();
-
-
+	CinematicsManager* getCinematicsManager();
+	Map* getCurrentMap();
 
 public:
-
+	//static void setClientGameEngine(BGClientEngine* clientGameEngine);
+	//void setControlsManager(ControlsManager* controlsManager);
+	//static BGClientEngine* getClientGameEngine();
 
 	float getWidthRelativeToZoom();
 	float getHeightRelativeToZoom();
@@ -228,7 +207,7 @@ private:
 
 	//====================================================
 public:
-	void sendServerObjectRequest(std::sp<ServerObject> serverObject);
+	void sendServerObjectRequest(ServerObject* serverObject);
 
 	//====================================================
 	//DIALOGUE

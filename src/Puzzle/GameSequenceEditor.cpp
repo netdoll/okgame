@@ -40,7 +40,7 @@ using namespace Gwen::Controls;
 
 
 //GWEN_CONTROL_CONSTRUCTOR(GameSequenceEditorControl)
-GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame>b) : Base(pParent, pName)
+GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame *b) : Base(pParent, pName)
 {//=========================================================================================================================
 
 	this->bobsGame = b;
@@ -83,7 +83,7 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 
 		saveButton = new Button(applyButtonsBase);
 		saveButton->SetText(L"Save");
-		//saveButton->SetToolTip("Saves to XML in " + string(SDL_GetPrefPath("OK Corporation", "bob's game")) + ".  Renames existing file with versioning.");
+		//saveButton->SetToolTip("Saves to XML in " + string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + ".  Renames existing file with versioning.");
 		saveButton->Dock(Pos::Left | Pos::Center);
 		saveButton->SetWidth(50);
 		saveButton->onPress.Add(this, &GameSequenceEditorControl::onSaveButton);
@@ -375,27 +375,16 @@ void GameSequenceEditorControl::doResize()
 
 }
 
-#include <fstream>
-#include <iostream>
-#include "Poco/File.h"
-#include "Poco/Path.h"
-#include "Poco/Delegate.h"
-#include "Poco/Zip/Decompress.h"
-#include "Poco/Process.h"
-#include "Poco/DirectoryIterator.h"
-using Poco::DirectoryIterator;
-using Poco::File;
-using Poco::Process;
-using Poco::Path;
 
 
-//sp<GameSequence> GameSequenceEditorControl::getGameSequenceByName(string name)
+
+//GameSequence* GameSequenceEditorControl::getGameSequenceByName(string name)
 //{//=========================================================================================================================
 //
-//	sp<GameSequence>bt = nullptr;
-//	for (int i = 0; i<bobsGame->loadedGameSequences->size(); i++)
+//	GameSequence *bt = nullptr;
+//	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
 //	{
-//		sp<GameSequence>b = bobsGame->loadedGameSequences->at(i);
+//		GameSequence *b = bobsGame->loadedGameSequences.get(i);
 //		if (b->name == name)
 //		{
 //			bt = b;
@@ -408,14 +397,14 @@ using Poco::Path;
 void GameSequenceEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	sp<vector<sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
-	for (int i = 0; i < gamesStringColor->size(); i++)
+	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
-		sp<GameType>g = gameTypeStringColorPairPair->first;
-		sp<pair<string, sp<OKColor>>> stringColorPair = gameTypeStringColorPairPair->second;
+		pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		GameType *g = gameTypeStringColorPairPair.first;
+		pair<string, BobColor*> *stringColorPair = &(gameTypeStringColorPairPair.second);
 		string name = stringColorPair->first;
-		sp<OKColor>color = stringColorPair->second;
+		BobColor *color = stringColorPair->second;
 
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		//row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameTypesListSelect);
@@ -428,14 +417,14 @@ void GameSequenceEditorControl::populateGameTypesListBox()
 void GameSequenceEditorControl::populateGameSequencesListBox()
 {//=========================================================================================================================
 
-	sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameSequences();
-	for (int i = 0; i < gamesStringColor->size(); i++)
+	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
-		sp<GameSequence>g = gameSequenceStringColorPairPair->first;
-		sp<pair<string, sp<OKColor>>> stringColorPair = gameSequenceStringColorPairPair->second;
+		pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		GameSequence *g = gameSequenceStringColorPairPair.first;
+		pair<string, BobColor*> *stringColorPair = &(gameSequenceStringColorPairPair.second);
 		string name = stringColorPair->first;
-		sp<OKColor>color = stringColorPair->second;
+		BobColor *color = stringColorPair->second;
 
 		Layout::TableRow *row = gameSequencesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameSequencesListSelect);
@@ -453,19 +442,19 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	//add all the names
 	//set the name and description from the textboxes
 
-	currentGameSequence->importExport_gameUUIDs->clear();
+	currentGameSequence->importExport_gameUUIDs.clear();
 	for(int i=0; i<currentGameSequenceListBox->GetNumRows(); i++)
 	{
 		Layout::TableRow* row = currentGameSequenceListBox->GetRow(i);
 
 		string uuid = row->GetName().c_str();
 
-		sp<GameType>gt = bobsGame->getGameTypeByUUID(uuid);
-		currentGameSequence->importExport_gameUUIDs->push_back(gt->uuid);
+		GameType *gt = bobsGame->getGameTypeByUUID(uuid);
+		currentGameSequence->importExport_gameUUIDs.add(gt->uuid);
 	}
 
 	string name = currentGameSequenceNameTextBox->GetText().c_str();
-	OKGame::log.debug(name);
+	BobsGame::log.debug(name);
 
 	while (name.find("`") != string::npos)
 	{
@@ -476,17 +465,17 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 
 	if (name == "")name = "New Game Sequence";
 	bool taken = false;
-	for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
+	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 	{
-		sp<GameSequence>s = bobsGame->loadedGameSequences->at(i);
+		GameSequence *s = bobsGame->loadedGameSequences.get(i);
 		if (s != currentGameSequence && s->name == name)taken = true;
 	}
 	if (taken)
 	{
 		int n = 0;
-		for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
+		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 		{
-			sp<GameSequence>s = bobsGame->loadedGameSequences->at(i);
+			GameSequence *s = bobsGame->loadedGameSequences.get(i);
 			if (s != currentGameSequence && s->name == name + " " + to_string(n))
 			{
 				n++;
@@ -499,7 +488,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	currentGameSequence->name = name;
 
 	string desc = currentGameSequenceDescriptionTextBox->GetText().c_str();
-	OKGame::log.debug(desc);
+	BobsGame::log.debug(desc);
 	if (desc == "")desc = "This is my new game sequence description.";
 	currentGameSequence->description = desc;
 
@@ -512,10 +501,10 @@ void GameSequenceEditorControl::initFromCurrentGameSequence()
 	GetCanvas()->DoThink();
 	currentGameSequenceListBox->UnselectAll();
 
-	for(int i=0;i<currentGameSequence->importExport_gameUUIDs->size();i++)
+	for(int i=0;i<currentGameSequence->importExport_gameUUIDs.size();i++)
 	{
-		string otheruuid = currentGameSequence->importExport_gameUUIDs->at(i);
-		sp<GameType>gt = bobsGame->getGameTypeByUUID(otheruuid);
+		string otheruuid = currentGameSequence->importExport_gameUUIDs.get(i);
+		GameType *gt = bobsGame->getGameTypeByUUID(otheruuid);
 		currentGameSequenceListBox->AddItem(gt->name, gt->uuid);
 	}
 	currentGameSequenceNameTextBox->SetText(currentGameSequence->name);
@@ -530,11 +519,11 @@ void GameSequenceEditorControl::onGameSequencesListSelect(Base* control)
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	sp<GameSequence>s = bobsGame->getGameSequenceByUUID(uuid);
+	GameSequence *s = bobsGame->getGameSequenceByUUID(uuid);
 
 	if (s == nullptr)
 	{
-		OKGame::log.error("Could not find game sequence with uuid:" + uuid);
+		BobsGame::log.error("Could not find game sequence with uuid:" + uuid);
 		return;
 	}
 
@@ -735,8 +724,8 @@ void GameSequenceEditorControl::editSelectedGameSequence(Base* control)
 void GameSequenceEditorControl::createNewGameSequence(Base* control)
 {//=========================================================================================================================
  //create new currentGameType with defaults and close the list
-	sp<GameSequence>s = ms<GameSequence>();
-	s->name += to_string(bobsGame->loadedGameSequences->size());
+	GameSequence *s = new GameSequence();
+	s->name += to_string(bobsGame->loadedGameSequences.size());
 	//bobsGame->loadedGameSequences.add(s);
 
 	currentGameSequence = s;
@@ -761,30 +750,30 @@ void GameSequenceEditorControl::duplicateGameSequence(Base* control)
  //the only thing we would do is load the selected game type and then append the name with "copy"
 	if (gameSequencesListBox->IsAnyRowSelected() == false)return;
 
-	//OKGame::log.debug(to_string(currentGameType->pieceTypes->size()));
+	//BobsGame::log.debug(to_string(currentGameType->pieceTypes.size()));
 
-	sp<GameSequence>s = ms<GameSequence>();
+	GameSequence *s = new GameSequence();
 	string uuid = s->uuid;
 	*s = *currentGameSequence;
 	s->uuid = uuid;
 	//s->builtInType = false;
 	s->downloaded = false;
-	//OKGame::log.debug(to_string(s->pieceTypes->size()));
+	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
 
 
 	s->name += " Copy";
 	bool taken = false;
-	for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
+	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 	{
-		sp<GameSequence>g = bobsGame->loadedGameSequences->at(i);
+		GameSequence *g = bobsGame->loadedGameSequences.get(i);
 		if (g != s && g->name == s->name)taken = true;
 	}
 	if (taken)
 	{
 		int n = 0;
-		for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
+		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 		{
-			sp<GameSequence>g = bobsGame->loadedGameSequences->at(i);
+			GameSequence *g = bobsGame->loadedGameSequences.get(i);
 			if (g != s && g->name == s->name + " " + to_string(n))
 			{
 				n++;
@@ -817,11 +806,11 @@ void GameSequenceEditorControl::deleteGameSequence(Base* control)
 	Layout::TableRow* row = gameSequencesListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
 
-	sp<GameSequence>bt = bobsGame->getGameSequenceByUUID(uuid);
+	GameSequence *bt = bobsGame->getGameSequenceByUUID(uuid);
 
 	if (bt == nullptr)
 	{
-		OKGame::log.error("Could not find GameSequence with uuid:" + uuid);
+		BobsGame::log.error("Could not find GameSequence with uuid:" + uuid);
 		return;
 	}
 
@@ -831,15 +820,7 @@ void GameSequenceEditorControl::deleteGameSequence(Base* control)
 //		return;
 //	}
 
-	//if (bobsGame->loadedGameSequences->contains(bt))bobsGame->loadedGameSequences->remove(bt);
-	for (int i = 0; i < (int)bobsGame->loadedGameSequences->size(); i++)
-	{
-		if (bobsGame->loadedGameSequences->at(i).get() == bt.get())
-		{
-			bobsGame->loadedGameSequences->erase(bobsGame->loadedGameSequences->begin() + i);
-			i--;
-		}
-	}
+	if (bobsGame->loadedGameSequences.contains(bt))bobsGame->loadedGameSequences.remove(bt);
 
 	gameSequenceSelectLabel->SetText("");
 
@@ -854,14 +835,14 @@ void GameSequenceEditorControl::deleteGameSequence(Base* control)
 		//delete the filename (let's just rename it to deleted)
 		//store the filename when load it
 		string userDataPathString = FileUtils::appDataPath + "gameSequences/";
-		File xmlFile(userDataPathString + bt->uuid+".xml");
+		BobFile xmlFile(userDataPathString + bt->uuid+".xml");
 		int num = 0;
 		while (xmlFile.exists())
 		{
 			num++;
-			xmlFile = File(userDataPathString + bt->uuid + ".deleted" + to_string(num));
+			xmlFile = BobFile(userDataPathString + bt->uuid + ".deleted" + to_string(num));
 		}
-		xmlFile = File(userDataPathString + bt->uuid + ".xml");
+		xmlFile = BobFile(userDataPathString + bt->uuid + ".xml");
 		if (xmlFile.exists())
 		{
 			xmlFile.renameTo(userDataPathString + bt->uuid + ".deleted" + to_string(num));
@@ -892,20 +873,9 @@ void GameSequenceEditorControl::onSaveButton(Base* control)
 	saveCurrentGameSequenceToXML();
 
 	//save new or duplicated gametype to loadedGameSequence list since we don't do this now until save
-	//if (bobsGame->loadedGameSequences->contains(currentGameSequence) == false)
-	//	bobsGame->loadedGameSequences->push_back(currentGameSequence);
-	bool contains = false;
-	for (int i = 0; i < (int)bobsGame->loadedGameSequences->size(); i++)
-	{
-		if (bobsGame->loadedGameSequences->at(i).get() == currentGameSequence.get())
-		{
-			contains = true;
-		}
-	}
-	if (contains == false)
-	{
-		bobsGame->loadedGameSequences->push_back(currentGameSequence);
-	}
+	if (bobsGame->loadedGameSequences.contains(currentGameSequence) == false)
+		bobsGame->loadedGameSequences.add(currentGameSequence);
+
 
 }
 
@@ -914,10 +884,10 @@ void GameSequenceEditorControl::onUploadButton(Base* control)
 
 	onSaveButton(control);
 
-	if (currentGameSequence->importExport_gameUUIDs->size() == 0)return;
-	if (currentGameSequence->importExport_gameUUIDs->size() == 1)
+	if (currentGameSequence->importExport_gameUUIDs.size() == 0)return;
+	if (currentGameSequence->importExport_gameUUIDs.size() == 1)
 	{
-		WindowControl* result = new WindowControl(GetCanvas());
+		WindowControl *result = new WindowControl(GetCanvas());
 		result->SetTitle("Result");
 		result->SetSize(300, 60);
 		result->MakeModal(true);
@@ -941,7 +911,7 @@ void GameSequenceEditorControl::onUploadButton(Base* control)
 
 
 	//GameType:XML:name:uuid
-	bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Upload_Request+"GameSequence:" + zip + ":`" + g.name + "`:" + g.uuid + ":" + OKNet::endline);
+	bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Upload_Request+"GameSequence:" + zip + ":`" + g.name + "`:" + g.uuid + ":" + BobNet::endline);
 
 	string response = "";
 	int tries = 0;
@@ -949,7 +919,7 @@ void GameSequenceEditorControl::onUploadButton(Base* control)
 	{
 		tries++;
 		Main::delay(500);
-		response = bobsGame->getServerConnection()->getAndResetOKGameGameTypesAndSequencesUploadResponse_S();
+		response = bobsGame->getServerConnection()->getAndResetBobsGameGameTypesAndSequencesUploadResponse_S();
 		if (response != "")
 		{
 			break;
@@ -958,7 +928,7 @@ void GameSequenceEditorControl::onUploadButton(Base* control)
 
 	if (response == "")response = "Did not get a response from the server. Try again later.";
 
-	WindowControl* result = new WindowControl(GetCanvas());
+	WindowControl *result = new WindowControl(GetCanvas());
 	result->SetTitle("Result");
 	result->SetSize(300, 60);
 	result->MakeModal(true);
@@ -1048,11 +1018,11 @@ void GameSequenceEditorControl::onAddButton(Base* control)
 	Layout::TableRow* row = gameTypesListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
 
-	sp<GameType>gt = bobsGame->getGameTypeByUUID(uuid);
+	GameType *gt = bobsGame->getGameTypeByUUID(uuid);
 
 	Layout::TableRow* newRow = currentGameSequenceListBox->AddItem(gt->name,gt->uuid);
 
-	currentGameSequence->importExport_gameUUIDs->push_back(gt->uuid);
+	currentGameSequence->importExport_gameUUIDs.add(gt->uuid);
 
 	currentGameSequenceListBox->SetSelectedRow(newRow);
 
@@ -1070,7 +1040,7 @@ void GameSequenceEditorControl::onRemoveButton(Base* control)
 	{
 		if(row==currentGameSequenceListBox->GetRow(i))
 		{
-			currentGameSequence->importExport_gameUUIDs->erase(currentGameSequence->importExport_gameUUIDs->begin()+i);
+			currentGameSequence->importExport_gameUUIDs.removeAt(i);
 			currentGameSequenceListBox->RemoveItem(row);
 			break;
 		}
@@ -1086,7 +1056,7 @@ void GameSequenceEditorControl::onUpButton(Base* control)
 
 	Layout::TableRow* row = currentGameSequenceListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
-	sp<GameType>selectedGame = bobsGame->getGameTypeByUUID(uuid);
+	GameType *selectedGame = bobsGame->getGameTypeByUUID(uuid);
 
 	int index = 0;
 	for (int i = 0; i < currentGameSequenceListBox->GetNumRows(); i++)
@@ -1100,15 +1070,15 @@ void GameSequenceEditorControl::onUpButton(Base* control)
 
 	if(index>0)
 	{
-		currentGameSequence->importExport_gameUUIDs->erase(currentGameSequence->importExport_gameUUIDs->begin()+index);
+		currentGameSequence->importExport_gameUUIDs.removeAt(index);
 		currentGameSequenceListBox->Clear();
 		GetCanvas()->DoThink();
 
-		currentGameSequence->importExport_gameUUIDs->insert(currentGameSequence->importExport_gameUUIDs->begin()+(index - 1), selectedGame->uuid);
-		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs->size(); i++)
+		currentGameSequence->importExport_gameUUIDs.insert(index - 1, selectedGame->uuid);
+		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs.size(); i++)
 		{
-			string newUUID = currentGameSequence->importExport_gameUUIDs->at(i);
-			sp<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
+			string newUUID = currentGameSequence->importExport_gameUUIDs.get(i);
+			GameType *game = bobsGame->getGameTypeByUUID(newUUID);
 			currentGameSequenceListBox->AddItem(game->name, game->uuid);
 		}
 		currentGameSequenceListBox->SetSelectedRow(currentGameSequenceListBox->GetRow(index - 1));
@@ -1125,7 +1095,7 @@ void GameSequenceEditorControl::onDownButton(Base* control)
 	Layout::TableRow* row = currentGameSequenceListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
 
-	sp<GameType>selectedGame = bobsGame->getGameTypeByUUID(uuid);
+	GameType *selectedGame = bobsGame->getGameTypeByUUID(uuid);
 
 	int index = currentGameSequenceListBox->GetNumRows() - 1;
 	for (int i = 0; i < currentGameSequenceListBox->GetNumRows(); i++)
@@ -1139,15 +1109,15 @@ void GameSequenceEditorControl::onDownButton(Base* control)
 
 	if (index < currentGameSequenceListBox->GetNumRows() - 1)
 	{
-		currentGameSequence->importExport_gameUUIDs->erase(currentGameSequence->importExport_gameUUIDs->begin()+index);
+		currentGameSequence->importExport_gameUUIDs.removeAt(index);
 		currentGameSequenceListBox->Clear();
 		GetCanvas()->DoThink();
 
-		currentGameSequence->importExport_gameUUIDs->insert(currentGameSequence->importExport_gameUUIDs->begin()+(index+1), selectedGame->uuid);
-		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs->size(); i++)
+		currentGameSequence->importExport_gameUUIDs.insert(index+1, selectedGame->uuid);
+		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs.size(); i++)
 		{
-			string newUUID = currentGameSequence->importExport_gameUUIDs->at(i);
-			sp<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
+			string newUUID = currentGameSequence->importExport_gameUUIDs.get(i);
+			GameType *game = bobsGame->getGameTypeByUUID(newUUID);
 			currentGameSequenceListBox->AddItem(game->name, game->uuid);
 		}
 		currentGameSequenceListBox->SetSelectedRow(currentGameSequenceListBox->GetRow(index + 1));
@@ -1161,23 +1131,23 @@ void GameSequenceEditorControl::onDownButton(Base* control)
 
 
 //=========================================================================================================================
-void OKGame::gameSequenceEditorMenuUpdate()
+void BobsGame::gameSequenceEditorMenuUpdate()
 {//=========================================================================================================================
 
  //	if (gameSequenceEditorMenu == nullptr)
  //	{
- //		gameSequenceEditorMenu = ms<Menu>(this);
+ //		gameSequenceEditorMenu = new Menu(this);
  //
- //		gameSequenceEditorMenu->add("Back To Game", "Back To Game", OKColor::white);
- //		gameSequenceEditorMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", OKColor::white);
- //		gameSequenceEditorMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", OKColor::white);
+ //		gameSequenceEditorMenu->add("Back To Game", "Back To Game", BobColor::white);
+ //		gameSequenceEditorMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", BobColor::white);
+ //		gameSequenceEditorMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", BobColor::white);
  //
  //		gameSequenceEditorMenu->cursorPosition = gameSequenceEditorMenuCursorPosition;
  //	}
 
 	if (gameSequenceEditor == nullptr)
 	{
-		gameSequenceEditor = ms<GameSequenceEditorControl>(Main::gwenCanvas,"GameSequenceEditorControl",this);
+		gameSequenceEditor = new GameSequenceEditorControl(Main::gwenCanvas,"GameSequenceEditorControl",this);
 
 
 		gameSequenceEditor->openLoadOrCreateDialog(false);
@@ -1198,17 +1168,17 @@ void OKGame::gameSequenceEditorMenuUpdate()
 		{
 
 			//remove unsaved game sequences
-//			for (int i = 0; i<loadedGameSequences->size(); i++)
+//			for (int i = 0; i<loadedGameSequences.size(); i++)
 //			{
-//				if (loadedGameSequences->at(i)->loadedFilename == "")
+//				if (loadedGameSequences.get(i)->loadedFilename == "")
 //				{
-//					loadedGameSequences->erase(->begin()+i);
+//					loadedGameSequences.removeAt(i);
 //					i--;
 //				}
 //			}
 
 			leaveMenu = true;
-			//delete gameSequenceEditor;
+			delete gameSequenceEditor;
 			gameSequenceEditor = nullptr;
 		}
 	}
@@ -1259,19 +1229,19 @@ void OKGame::gameSequenceEditorMenuUpdate()
 		if (gameSequenceEditorMenu != nullptr)
 		{
 			gameSequenceEditorMenuCursorPosition = gameSequenceEditorMenu->cursorPosition;
-			//delete gameSequenceEditorMenu;
+			delete gameSequenceEditorMenu;
 			gameSequenceEditorMenu = nullptr;
 		}
 	}
 }
 
 //=========================================================================================================================
-void OKGame::gameSequenceEditorMenuRender()
+void BobsGame::gameSequenceEditorMenuRender()
 {//=========================================================================================================================
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 	//
-	//	sp<OKTexture> t = keyboardTexture;
+	//	BobTexture* t = keyboardTexture;
 	//
 	//	if (gameSequenceEditorMenu == nullptr)return;
 	//

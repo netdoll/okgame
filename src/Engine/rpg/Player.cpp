@@ -14,17 +14,17 @@
 Logger Player::log = Logger("Player");
 
 
-Player::Player(sp<Engine> g, const string& spriteName)
+Player::Player(Engine* g, const string& spriteName)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	sp<EntityData> data = ms<EntityData>(-1, "Player", spriteName, 0, 0);
+	EntityData* data = new EntityData(-1, "Player", spriteName, 0, 0);
 	initEntity(data);
 	initCharacter();
 	initPlayer();
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
 void Player::initPlayer()
@@ -34,16 +34,16 @@ void Player::initPlayer()
 	rotationAnimationSpeedTicks = 100; //80;
 }
 
-Player::Player(sp<Engine> g)
+Player::Player(Engine* g)
 { //=========================================================================================================================
 
 	this->e = g;
-	sp<EntityData> data = ms<EntityData>(-1, "Player", "", 0, 0);
+	EntityData* data = new EntityData(-1, "Player", "", 0, 0);
 	initEntity(data);
 	initCharacter();
 	initPlayer();
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
 void Player::update()
@@ -101,16 +101,16 @@ void Player::handleAreas()
 		return;
 	}
 
-	//   java::util::Iterator<sp<Area>> aEnum = getMap()->currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<Area*> aEnum = getMap()->currentState->areaByNameHashtable.elements();
 	//   //areas
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      sp<Area> a = aEnum->nextElement();
+	//      Area* a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = getMap()->currentState->areaByNameHashtable->getAllValues();
+	ArrayList<Area*> *areas = getMap()->currentState->areaByNameHashtable.getAllValues();
 	for (int i=0;i<areas->size();i++)
 	{
-		sp<Area> a = areas->at(i);
+		Area* a = areas->get(i);
 
 		if (a->isXYXYTouchingMyBoundary(getLeft(), getTop(), getRight(), getBottom()))
 		{
@@ -150,7 +150,7 @@ void Player::handleAreas()
 	{
 		if (autopilotCaption == nullptr)
 		{
-			autopilotCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, "Autopilot", OKFont::font_normal_11_outlined, OKColor::red);
+			autopilotCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, "Autopilot", BobFont::font_normal_11_outlined, BobColor::red);
 		}
 	}
 	else

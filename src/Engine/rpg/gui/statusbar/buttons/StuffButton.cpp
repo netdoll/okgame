@@ -14,7 +14,7 @@
 Logger StuffButton::log = Logger("StuffButton");
 
 
-StuffButton::StuffButton(sp<BGClientEngine> g)
+StuffButton::StuffButton(BGClientEngine* g)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -50,7 +50,7 @@ void StuffButton::init()
 void StuffButton::setOffsets()
 { //=========================================================================================================================
 
-	offsetX0 = getStatusBar()->gameStoreButton->dividerX + 20; // 280
+	offsetX0 = getBobStatusBar()->gameStoreButton->dividerX + 20; // 280
 	offsetX1 = offsetX0 + 54; // 334
 	dividerX = offsetX1 + 20; // 254
 

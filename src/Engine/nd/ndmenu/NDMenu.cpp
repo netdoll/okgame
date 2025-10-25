@@ -69,7 +69,7 @@ void NDMenu::init()
 	getAudioManager()->playMusic("nDMenuBackgroundMusic", 1.0f, 1.0f, true);
 }
 
-void NDMenu::addGame(sp<NDGameEngine> game, const string& name, sp<OKColor> color)
+void NDMenu::addGame(NDGameEngine* game, const string& name, BobColor* color)
 { //=========================================================================================================================
 
 	wheel->addGame(game, name, color);
@@ -532,7 +532,7 @@ void NDMenu::drawScreenOverlayFade()
 	{
 		//fill black opaque
 		fillScreenBlack(1.0f);
-		nD->setGame(NDMenuWheel::wheelItems->at(wheel->selectedWheelItem)->game);
+		nD->setGame(NDMenuWheel::wheelItems->get(wheel->selectedWheelItem)->game);
 	}
 }
 

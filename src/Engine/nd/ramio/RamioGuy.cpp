@@ -14,9 +14,9 @@
 Logger RamioGuy::log = Logger("RamioGuy");
 
 
-RamioGuy::RamioGuy(sp<Engine> g, sp<Map> m)
+RamioGuy::RamioGuy(Engine* g, Map* m)
 { //=========================================================================================================================
-	Entity(g, ms<EntityData>(-1, "ramio", "ramio", 0, 0), m);
+	Entity(g, new EntityData(-1, "ramio", "ramio", 0, 0), m);
 }
 
 bool RamioGuy::jumping = false;
@@ -508,7 +508,7 @@ void RamioGuy::move(int direction, float floatPixels)
 	}
 }
 
-void RamioGuy::render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture)
+void RamioGuy::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();

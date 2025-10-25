@@ -20,7 +20,7 @@ MessagesPanel::MessagesPanel()
 	SubPanel();
 
 	//
-	//   sp<Label> label = ms<Label>("Messages");
+	//   Label* label = new Label("Messages");
 	//   label->setCanAcceptKeyboardFocus(false);
 	//
 	//   insideLayout->setHorizontalGroup(insideLayout->createParallelGroup(label));

@@ -14,7 +14,7 @@
 Logger GameDataLoader::log = Logger("GameDataLoader");
 
 
-GameDataLoader::GameDataLoader(sp<Engine> g)
+GameDataLoader::GameDataLoader(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -27,7 +27,7 @@ void GameDataLoader::loadGameData()
 	//
 	//   Cache::downloadBigFileToCacheIfNotExist("gameData");
 	//
-	//   sp<vector<string>>stringList;
+	//   ArrayList<string> stringList;
 	//
 	//   try
 	//   {
@@ -55,9 +55,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     sp<SpriteData> data = SpriteData::fromBase64ZippedJSON(s);
+	//                     SpriteData* data = SpriteData::fromBase64ZippedJSON(s);
 	//
-	//                     sp<Sprite> sprite = ms<Sprite>(Engine());
+	//                     Sprite* sprite = new Sprite(Engine());
 	//                     sprite->initializeWithSpriteData(data);
 	//
 	//                     SpriteManager()->spriteByIDHashMap.put(sprite->id(), sprite);
@@ -94,14 +94,14 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log->debug("Loaded Sprite: " + data->name());
+	//                        log.debug("Loaded Sprite: " + data->name());
 	//                     }
 	//                     for (int n = 0; n < data->getAnimationList()->size(); n++)
 	//                     {
-	//                        sp<SpriteAnimationSequence> a = data->getAnimationList()->get(n);
+	//                        SpriteAnimationSequence* a = data->getAnimationList()->get(n);
 	//                        if (debug)
 	//                        {
-	//                           log->debug("Loaded Animation: " + a->frameSequenceName);
+	//                           log.debug("Loaded Animation: " + a->frameSequenceName);
 	//                        }
 	//                     }
 	//
@@ -119,12 +119,12 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     sp<MapData> data = MapData::fromBase64ZippedJSON(s);
+	//                     MapData* data = MapData::fromBase64ZippedJSON(s);
 	//
-	//                     sp<Map> map = ms<Map>(Engine(), data);
+	//                     Map* map = new Map(Engine(), data);
 	//
 	//
-	//                     getMapManager()->mapList->push_back(map);
+	//                     getMapManager()->mapList.push_back(map);
 	//                     getMapManager()->mapByIDHashMap.put(map->id(), map);
 	//                     getMapManager()->mapByNameHashMap.put(map->name(), map);
 	//
@@ -140,7 +140,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log->debug("Loaded Map: " + data->name());
+	//                        log.debug("Loaded Map: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another mapData
@@ -156,9 +156,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     sp<SoundData> data = SoundData::fromBase64ZippedJSON(s);
+	//                     SoundData* data = SoundData::fromBase64ZippedJSON(s);
 	//
-	//                     sp<Sound> sound = ms<Sound>(Engine(), data);
+	//                     Sound* sound = new Sound(Engine(), data);
 	//
 	//
 	//                     s = stringList[++i]; //tileData base64 GZipped intArray
@@ -167,7 +167,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log->debug("Loaded Sound: " + data->name());
+	//                        log.debug("Loaded Sound: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another soundData
@@ -184,9 +184,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     sp<MusicData> data = MusicData::fromBase64ZippedJSON(s);
+	//                     MusicData* data = MusicData::fromBase64ZippedJSON(s);
 	//
-	//                     sp<Music> music = ms<Music>(Engine(), data);
+	//                     Music* music = new Music(Engine(), data);
 	//
 	//
 	//                     s = stringList[++i]; //tileData base64 GZipped intArray
@@ -195,7 +195,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log->debug("Loaded Music: " + data->name());
+	//                        log.debug("Loaded Music: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another soundData

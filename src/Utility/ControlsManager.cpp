@@ -8,14 +8,21 @@
 
 #include "ControlsManager.h"
 
+
+
 #include <complex>
 
 Logger ControlsManager::log = Logger("ControlsManager");
 
 int ControlsManager::DEADZONE = 8000;
 
-//HashMap<int,sp<SDL_GameController>> *ControlsManager::controllersByJoystickNum = ms<HashMap><int,sp<SDL_GameController>>();
-sp<HashMap<SDL_JoystickID,sp<SDL_GameController>>> ControlsManager::controllersByJoystickID;
+//HashMap<int,SDL_GameController*> *ControlsManager::controllersByJoystickNum = new HashMap<int,SDL_GameController*>();
+
+#ifndef ORBIS
+HashMap<SDL_JoystickID,SDL_GameController*> ControlsManager::controllersByJoystickID;
+#else
+
+#endif
 
 float ControlsManager::MAXZOOM = 3.0f;
 float ControlsManager::MINZOOM = 1.0f;
@@ -24,7 +31,7 @@ float ControlsManager::ZOOMINCREMENT = 0.25f;
 int ControlsManager::numControllers = 0;
 string ControlsManager::controllerNames = "";
 
-sp<vector<sp<GameController>>> ControlsManager::gameControllers;
+ArrayList<GameController*> ControlsManager::gameControllers;
 
 ControlsManager::ControlsManager()
 {
@@ -136,8 +143,8 @@ void ControlsManager::initControllers()
 	log.debug("Init controllers");
 
 
-	Uint64 start=0, now=0;
-	start = SDL_GetPerformanceCounter();
+	uint64_t start=0, now=0;
+	start = System::getPerformanceCounter();
 
 
 
@@ -156,7 +163,7 @@ void ControlsManager::initControllers()
 	//
 	//   for (int n = 0; n < numControllers; n++)
 	//   {
-	//      sp<Controller> controller = Controllers::getController(n);
+	//      Controller* controller = Controllers::getController(n);
 	//      log.info(controller->getName());
 	//
 	//      if (controllerNames.length() > 0)
@@ -179,7 +186,7 @@ void ControlsManager::initControllers()
 	//   }
 
 
-
+#ifndef ORBIS
 	string s = Main::getPath();
 	SDL_GameControllerAddMappingsFromFile(string(s+"data/gamecontrollerdb.txt").c_str());
 	//-----------------------------
@@ -189,31 +196,31 @@ void ControlsManager::initControllers()
 	{
 		if (SDL_IsGameController(i))
 		{
-			sp<SDL_GameController >controller = ms<SDL_GameController>(SDL_GameControllerOpen(i));
+			SDL_GameController *controller = SDL_GameControllerOpen(i);
 			//controllersByJoystickNum->put(i, controller);
 
-			log.info("Found Controller " + to_string(i) + ": " + string(SDL_GameControllerName(controller.get())));
-			sp<SDL_Joystick>joy = ms<SDL_Joystick>(SDL_GameControllerGetJoystick(controller.get()));
+			log.info("Found Controller " + to_string(i) + ": " + string(SDL_GameControllerName(controller)));
+			SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
 
-			log.info("Found Joystick on Controller: " + string(SDL_JoystickName(joy.get())));
+			log.info("Found Joystick on Controller: " + string(SDL_JoystickName(joy)));
 
-			SDL_JoystickID id = SDL_JoystickInstanceID(joy.get());
-			controllersByJoystickID->put(id, controller);
+			SDL_JoystickID id = SDL_JoystickInstanceID(joy);
+			controllersByJoystickID.put(id, controller);
 
 
-			sp<GameController> g = ms<GameController>();
+			GameController* g = new GameController();
 			g->id = id;
 
-			gameControllers->push_back(g);
+			gameControllers.add(g);
 
-			sp<SDL_Haptic >haptic = nullptr;
-			haptic = ms<SDL_Haptic>(SDL_HapticOpenFromJoystick(joy.get()));
+			SDL_Haptic *haptic = nullptr;
+			haptic = SDL_HapticOpenFromJoystick(joy);
 			if (haptic != NULL)
 			{
-				log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy.get())));
+				log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
 				g->haptic = haptic;
 
-				SDL_HapticRumbleInit(haptic.get());
+				SDL_HapticRumbleInit(haptic);
 
 
 //				// See if it can do sine waves
@@ -228,7 +235,7 @@ void ControlsManager::initControllers()
 			
 			
 
-			char* mapping = SDL_GameControllerMapping(controller.get());
+			char* mapping = SDL_GameControllerMapping(controller);
 			log.info("Controller " + to_string(i) + " is mapped as " + string(mapping));
 
 		}
@@ -240,13 +247,16 @@ void ControlsManager::initControllers()
 	}
 	SDL_JoystickEventState(SDL_ENABLE);
 
+#else
+
+#endif
 	//log.debug("Controllers Loaded.");
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Init controllers took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	now = System::getPerformanceCounter();
+	log.debug("Init controllers took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
 
 
-	//string path = string(SDL_GetPrefPath("OK Corporation", "bob's game")) + "controls.cfg";
+	//string path = string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + "controls.cfg";
 
 }
 
@@ -257,29 +267,31 @@ void ControlsManager::cleanup()
 
 	log.info("Cleaning up controllers");
 
-	for(int i=0;i<gameControllers->size();i++)
+#ifndef ORBIS
+	for(int i=0;i<gameControllers.size();i++)
 	{
-		if(gameControllers->at(i)->haptic!=nullptr)
+		if(gameControllers.get(i)->haptic!=nullptr)
 		{
-			SDL_HapticClose(gameControllers->at(i)->haptic.get());
+			SDL_HapticClose(gameControllers.get(i)->haptic);
 		}
 	}
 
-	if (controllersByJoystickID->size()>0)
+	if (controllersByJoystickID.size()>0)
 	{
-		sp<vector<sp<SDL_GameController>>>controllers = controllersByJoystickID->getAllValues();
+		ArrayList<SDL_GameController*> *controllers = controllersByJoystickID.getAllValues();
 
 		for (int i = 0; i < controllers->size(); i++)
 		{
-			sp<SDL_GameController >controller = controllers->at(i);
-			SDL_GameControllerClose(controller.get());
+			SDL_GameController *controller = controllers->get(i);
+			SDL_GameControllerClose(controller);
 		}
-		//delete controllers;
-		controllers = nullptr;
+		delete controllers;
 	}
 	//controllersByJoystickNum->clear();
-	controllersByJoystickID->clear();
+	controllersByJoystickID.clear();
+#else
 
+#endif
 }
 
 //=========================================================================================================================
@@ -384,9 +396,9 @@ void ControlsManager::resetPressedButtons()
 	//reset controller pressed
 	//------------------------------------
 
-	for (int i = 0; i < gameControllers->size(); i++)
+	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		sp<GameController>g = gameControllers->at(i);
+		GameController *g = gameControllers.get(i);
 		g->resetPressedButtons();
 	}
 
@@ -705,9 +717,9 @@ void ControlsManager::setButtonStates()
 	bool LAST_KEY_NUM9_HELD = KEY_NUM9_HELD;
 
 
-	for (int i = 0; i < gameControllers->size(); i++)
+	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		sp<GameController>g = gameControllers->at(i);
+		GameController *g = gameControllers.get(i);
 		g->setButtonStates();
 	}
 
@@ -939,7 +951,7 @@ SDL_JoyHatEvent
 //int16 StickX = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTX);
 //int16 StickY = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTY);
 
-//sp<SDL_Joystick >JoystickHandle = SDL_GameControllerGetJoystick(ControllerHandles[ControllerIndex]);
+//SDL_Joystick *JoystickHandle = SDL_GameControllerGetJoystick(ControllerHandles[ControllerIndex]);
 //RumbleHandles[ControllerIndex] = SDL_HapticOpenFromJoystick(JoystickHandle);
 //
 //if (SDL_HapticRumbleInit(RumbleHandles[ControllerIndex]) != 0)
@@ -969,11 +981,11 @@ SDL_JoyHatEvent
 
 
 //
-//sp<vector<sp<SDL_GameController>>>*c = controllersByJoystickID.getAllValues();
+//ArrayList<SDL_GameController*> *c = controllersByJoystickID.getAllValues();
 //
 //for (int i = 0; i < c->size(); i++)
 //{
-//	sp<SDL_GameController> controller = c->get(i);
+//	SDL_GameController* controller = c->get(i);
 //
 //
 //	//doesn't work
@@ -996,7 +1008,7 @@ SDL_JoyHatEvent
 //	string mapping = string(mappingChar);
 //	SDL_free(mappingChar);
 //
-//	sp<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
+//	SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
 //
 //	int axes = SDL_JoystickNumAxes(joy);
 //
@@ -1035,12 +1047,12 @@ SDL_JoyHatEvent
 //}
 
 
-
+#ifndef ORBIS
 	//While there are events to handle
-	while (events->size()>0)
+	while (events.size()>0)
 	{
-		SDL_Event event = events->at(0);
-		events->erase(events->begin()+0);
+		SDL_Event event = events.get(0);
+		events.removeAt(0);
 
 		if (event.type == SDL_CONTROLLERDEVICEADDED) 
 		{
@@ -1048,48 +1060,48 @@ SDL_JoyHatEvent
 			if (SDL_IsGameController(joystickDeviceIndex))
 			{
 
-				sp<SDL_GameController>controller = ms<SDL_GameController>(SDL_GameControllerOpen(joystickDeviceIndex));
-				sp<SDL_Joystick>joy = ms<SDL_Joystick>(SDL_GameControllerGetJoystick(controller.get()));
-				SDL_JoystickID joystickID = SDL_JoystickInstanceID(joy.get());
+				SDL_GameController *controller = SDL_GameControllerOpen(joystickDeviceIndex);
+				SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
+				SDL_JoystickID joystickID = SDL_JoystickInstanceID(joy);
 
-				if (controllersByJoystickID->containsValue(controller) == false)
+				if (controllersByJoystickID.containsValue(controller) == false)
 				{
 					//controllersByJoystickNum->put(i,controller);
-					log.debug("New Controller Connected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller.get())));
+					log.debug("New Controller Connected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
 				}
 				else
 				{
-					log.debug("Existing Controller Reconnected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller.get())));
+					log.debug("Existing Controller Reconnected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
 				}
 
-				controllersByJoystickID->removeAllValues(controller);
-				controllersByJoystickID->put(joystickID, controller);
-				log.debug("Found Joystick on Controller: " + string(SDL_JoystickName(joy.get())));
+				controllersByJoystickID.removeAllValues(controller);
+				controllersByJoystickID.put(joystickID, controller);
+				log.debug("Found Joystick on Controller: " + string(SDL_JoystickName(joy)));
 
-				for (int n = 0; n < gameControllers->size(); n++)
+				for (int n = 0; n < gameControllers.size(); n++)
 				{
-					sp<GameController>g = gameControllers->at(n);
+					GameController *g = gameControllers.get(n);
 					if (g->id == joystickID)
 					{
-						gameControllers->erase(gameControllers->begin()+n);
+						gameControllers.removeAt(n);
 						n = 0;
 					}
 				}
 
 
 
-				sp<GameController> g = ms<GameController>();
+				GameController* g = new GameController();
 				g->id = joystickID;
-				gameControllers->push_back(g);
+				gameControllers.add(g);
 
-				sp<SDL_Haptic>haptic = nullptr;
-				haptic = ms< SDL_Haptic>(SDL_HapticOpenFromJoystick(joy.get()));
+				SDL_Haptic *haptic = nullptr;
+				haptic = SDL_HapticOpenFromJoystick(joy);
 				if (haptic != NULL)
 				{
-					log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy.get())));
+					log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
 					g->haptic = haptic;
 
-					SDL_HapticRumbleInit(haptic.get());
+					SDL_HapticRumbleInit(haptic);
 
 
 					//				// See if it can do sine waves
@@ -1100,7 +1112,7 @@ SDL_JoyHatEvent
 					//				}
 				}
 
-				char* mapping = SDL_GameControllerMapping(controller.get());
+				char* mapping = SDL_GameControllerMapping(controller);
 				log.debug("Controller " + to_string(joystickDeviceIndex) + " is mapped as " + string(mapping));
 
 			}
@@ -1110,26 +1122,26 @@ SDL_JoyHatEvent
 			 if (event.type == SDL_CONTROLLERDEVICEREMOVED)
 			 {
 				 SDL_JoystickID joystickID = event.cdevice.which;
-				 sp<SDL_GameController>controller = controllersByJoystickID->get(joystickID);
+				 SDL_GameController *controller = controllersByJoystickID.get(joystickID);
 
 				//controllersByJoystickNum->removeAllValues(controller);
-				controllersByJoystickID->removeAllValues(controller);
+				controllersByJoystickID.removeAllValues(controller);
 
 
-				for (int i = 0; i < gameControllers->size(); i++)
+				for (int i = 0; i < gameControllers.size(); i++)
 				{
-					sp<GameController>g = gameControllers->at(i);
+					GameController *g = gameControllers.get(i);
 					if (g->id == joystickID)
 					{
-						if(g->haptic!=nullptr)SDL_HapticClose(g->haptic.get());
-						gameControllers->erase(gameControllers->begin()+i);
+						if(g->haptic!=nullptr)SDL_HapticClose(g->haptic);
+						gameControllers.removeAt(i);
 						i = 0;
 					}
 				}			
 
-				SDL_GameControllerClose(controller.get());
+				SDL_GameControllerClose(controller);
 
-				log.debug("Controller Removed: " + string(SDL_GameControllerName(controller.get())));
+				log.debug("Controller Removed: " + string(SDL_GameControllerName(controller)));
 
 
 			 }
@@ -1138,14 +1150,14 @@ SDL_JoyHatEvent
 			{
 				int joystickID = event.cbutton.which;
 
-				if (controllersByJoystickID->containsKey(joystickID))
+				if (controllersByJoystickID.containsKey(joystickID))
 				{
-					sp<SDL_GameController >controller = controllersByJoystickID->get(joystickID);
+					SDL_GameController *controller = controllersByJoystickID.get(joystickID);
 					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
 					int value = event.cbutton.state;
 
 
-					string s = string("Controller Button Down Event: " + string(SDL_GameControllerName(controller.get())));
+					string s = string("Controller Button Down BobEvent: " + string(SDL_GameControllerName(controller)));
 					if (b == SDL_CONTROLLER_BUTTON_A)s += (" Button: SDL_CONTROLLER_BUTTON_A");
 					if (b == SDL_CONTROLLER_BUTTON_B)s += (" Button: SDL_CONTROLLER_BUTTON_B");
 					if (b == SDL_CONTROLLER_BUTTON_X)s += (" Button: SDL_CONTROLLER_BUTTON_X");
@@ -1166,9 +1178,9 @@ SDL_JoyHatEvent
 					log.debug(s);
 #endif
 		
-					for (int i = 0; i < gameControllers->size(); i++)
+					for (int i = 0; i < gameControllers.size(); i++)
 					{
-						sp<GameController>g = gameControllers->at(i);
+						GameController *g = gameControllers.get(i);
 						if(g->id == joystickID)
 						{
 							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = true;
@@ -1198,13 +1210,13 @@ SDL_JoyHatEvent
 
 				int id = event.cbutton.which;
 
-				if (controllersByJoystickID->containsKey(id))
+				if (controllersByJoystickID.containsKey(id))
 				{
-					sp<SDL_GameController >controller = controllersByJoystickID->get(id);
+					SDL_GameController *controller = controllersByJoystickID.get(id);
 					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
 					int value = event.cbutton.state;
 
-					string s = string("Controller Button Up Event: " + string(SDL_GameControllerName(controller.get())));
+					string s = string("Controller Button Up BobEvent: " + string(SDL_GameControllerName(controller)));
 					if (b == SDL_CONTROLLER_BUTTON_A)s += (" Button: SDL_CONTROLLER_BUTTON_A");
 					if (b == SDL_CONTROLLER_BUTTON_B)s += (" Button: SDL_CONTROLLER_BUTTON_B");
 					if (b == SDL_CONTROLLER_BUTTON_X)s += (" Button: SDL_CONTROLLER_BUTTON_X");
@@ -1224,9 +1236,9 @@ SDL_JoyHatEvent
 #ifdef _DEBUG
 					log.debug(s);
 #endif
-					for (int i = 0; i < gameControllers->size(); i++)
+					for (int i = 0; i < gameControllers.size(); i++)
 					{
-						sp<GameController>g = gameControllers->at(i);
+						GameController *g = gameControllers.get(i);
 						if (g->id == id)
 						{
 							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = false;
@@ -1257,9 +1269,9 @@ SDL_JoyHatEvent
 
 				//Unfortunately, this is easier to idenfity because it says "lefttrigger" and is correct, but it ONLY fires an axis down event and not an axis-up event.
 				//Oh, it does register an axis up event, it's just value 0 and not -
-				if (controllersByJoystickID->containsKey(id))
+				if (controllersByJoystickID.containsKey(id))
 				{
-					sp<SDL_GameController >controller = controllersByJoystickID->get(id);
+					SDL_GameController *controller = controllersByJoystickID.get(id);
 					SDL_GameControllerAxis axis = (SDL_GameControllerAxis)event.caxis.axis;
 					int value = event.caxis.value;
 
@@ -1268,7 +1280,7 @@ SDL_JoyHatEvent
 
 #ifdef _DEBUG
 						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
-						string s = string("Controller Axis Event: " + string(SDL_GameControllerName(controller.get())));
+						string s = string("Controller Axis BobEvent: " + string(SDL_GameControllerName(controller)));
 						if (axis == SDL_CONTROLLER_AXIS_LEFTX)s += (" Axis: SDL_CONTROLLER_AXIS_LEFTX");
 						if (axis == SDL_CONTROLLER_AXIS_LEFTY)s += (" Axis: SDL_CONTROLLER_AXIS_LEFTY");
 						if (axis == SDL_CONTROLLER_AXIS_RIGHTX)s += (" Axis: SDL_CONTROLLER_AXIS_RIGHTX");
@@ -1285,9 +1297,9 @@ SDL_JoyHatEvent
 
 						int dz = 32000;
 
-						for (int i = 0; i < gameControllers->size(); i++)
+						for (int i = 0; i < gameControllers.size(); i++)
 						{
-							sp<GameController>g = gameControllers->at(i);
+							GameController *g = gameControllers.get(i);
 							if (g->id == id)
 							{
 								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= dz)g->L_HELD = true;
@@ -1295,10 +1307,10 @@ SDL_JoyHatEvent
 								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= dz)g->R_HELD = true;
 								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)g->R_HELD = false;
 #ifdef _DEBUG
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value>= dz)log.debug("Controller Axis Event: Left trigger held " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)log.debug("Controller Axis Event: Left trigger released " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value>= dz)log.debug("Controller Axis Event: Right trigger held " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)log.debug("Controller Axis Event: Right trigger released " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value>= dz)log.debug("Controller Axis BobEvent: Left trigger held " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)log.debug("Controller Axis BobEvent: Left trigger released " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value>= dz)log.debug("Controller Axis BobEvent: Right trigger held " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)log.debug("Controller Axis BobEvent: Right trigger released " + to_string(value));
 #endif
 							}
 						}
@@ -1308,9 +1320,9 @@ SDL_JoyHatEvent
 						if (Main::globalSettings->useAnalogSticks)
 						{
 							//none of this works, have to check axis manually:
-							for (int i = 0; i < gameControllers->size(); i++)
+							for (int i = 0; i < gameControllers.size(); i++)
 							{
-								sp<GameController>g = gameControllers->at(i);
+								GameController *g = gameControllers.get(i);
 								if (g->id == id)
 								{
 									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)g->ANALOGLEFT_HELD = true;
@@ -1318,15 +1330,15 @@ SDL_JoyHatEvent
 									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)g->ANALOGUP_HELD = true;
 									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)g->ANALOGDOWN_HELD = true;
 	#ifdef _DEBUG
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)log.debug("Controller Axis Event: Left held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)log.debug("Controller Axis Event: Right held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)log.debug("Controller Axis Event: Up held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)log.debug("Controller Axis Event: Down held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)log.debug("Controller Axis BobEvent: Left held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)log.debug("Controller Axis BobEvent: Right held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)log.debug("Controller Axis BobEvent: Up held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)log.debug("Controller Axis BobEvent: Down held " + to_string(value));
 
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Controller Axis Event: Left unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Controller Axis Event: Right unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz && g->ANALOGUP_HELD)log.debug("Controller Axis Event: Up unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Controller Axis Event: Down unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Controller Axis BobEvent: Left unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Controller Axis BobEvent: Right unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz && g->ANALOGUP_HELD)log.debug("Controller Axis BobEvent: Up unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Controller Axis BobEvent: Down unpressed " + to_string(value));
 	#endif
 									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz)g->ANALOGLEFT_HELD = false;
 									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz)g->ANALOGRIGHT_HELD = false;
@@ -1345,12 +1357,12 @@ SDL_JoyHatEvent
 			 if (event.type == SDL_JOYAXISMOTION)
 			 {
 				 SDL_JoystickID id = event.jaxis.which;
-				// sp<SDL_Joystick >joy = SDL_JoystickFromInstanceID(id);
+				// SDL_Joystick *joy = SDL_JoystickFromInstanceID(id);
 				 
 
-				if (controllersByJoystickID->containsKey(id))
+				if (controllersByJoystickID.containsKey(id))
 				{
-					sp<SDL_GameController >controller = controllersByJoystickID->get(id);
+					SDL_GameController *controller = controllersByJoystickID.get(id);
 					int axis = event.jaxis.axis;
 					int value = event.jaxis.value;
 					
@@ -1360,7 +1372,7 @@ SDL_JoyHatEvent
 					{
 #ifdef _DEBUG
 						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
-						string s = string("Joystick Axis Event: " + string(SDL_GameControllerName(controller.get())));
+						string s = string("Joystick Axis BobEvent: " + string(SDL_GameControllerName(controller)));
 						s += string(" Axis: "+to_string(axis));
 						s += " Value:" + to_string(value);
 						log.debug(s);
@@ -1373,14 +1385,14 @@ SDL_JoyHatEvent
 						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= 32768)CONTROLLER1_R_HELD = true;
 						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value<=-30000)CONTROLLER1_R_HELD = false;
 
-						//sp<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
+						//SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
 						//get GUID mapping for axis number
 						//buffer in which to write the ASCII string
 						//int cbGUID = 4096; //the size of pszGUID
 						//SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), pszGUID, cbGUID);
 						//log.debug("GUIDString: " + string(pszGUID));
 
-						char* mappingChar = SDL_GameControllerMapping(controller.get());
+						char* mappingChar = SDL_GameControllerMapping(controller);
 						string mapping = string(mappingChar);
 						//log.debug("Mapping String: "+mapping);
 						SDL_free(mappingChar);
@@ -1404,9 +1416,9 @@ SDL_JoyHatEvent
 
 						int dz = 32000;
 
-						for (int i = 0; i < gameControllers->size(); i++)
+						for (int i = 0; i < gameControllers.size(); i++)
 						{
-							sp<GameController>g = gameControllers->at(i);
+							GameController *g = gameControllers.get(i);
 							if (g->id == id)
 							{
 								//						if (leftTrigger&&value >= 32768)g->L_HELD = true;
@@ -1415,10 +1427,10 @@ SDL_JoyHatEvent
 								//						if (rightTrigger&&value <= -32767)g->R_HELD = false;
 
 #ifdef _DEBUG
-								if (leftTrigger&&value >= dz)log.debug("Joystick Axis Event: Left trigger held " + to_string(value));
-								if (leftTrigger&&value <= -dz)log.debug("Joystick Axis Event: Left trigger released " + to_string(value));
-								if (rightTrigger&&value >= dz)log.debug("Joystick Axis Event: Right trigger held " + to_string(value));
-								if (rightTrigger&&value <= -dz)log.debug("Joystick Axis Event: Right trigger released " + to_string(value));
+								if (leftTrigger&&value >= dz)log.debug("Joystick Axis BobEvent: Left trigger held " + to_string(value));
+								if (leftTrigger&&value <= -dz)log.debug("Joystick Axis BobEvent: Left trigger released " + to_string(value));
+								if (rightTrigger&&value >= dz)log.debug("Joystick Axis BobEvent: Right trigger held " + to_string(value));
+								if (rightTrigger&&value <= -dz)log.debug("Joystick Axis BobEvent: Right trigger released " + to_string(value));
 #endif
 							}
 						}
@@ -1427,9 +1439,9 @@ SDL_JoyHatEvent
 
 						if (Main::globalSettings->useAnalogSticks)
 						{
-							for (int i = 0; i < gameControllers->size(); i++)
+							for (int i = 0; i < gameControllers.size(); i++)
 							{
-								sp<GameController>g = gameControllers->at(i);
+								GameController *g = gameControllers.get(i);
 								if (g->id == id)
 								{
 									//none of this works, have to check axis manually:
@@ -1440,15 +1452,15 @@ SDL_JoyHatEvent
 //									if (leftY&&value > dz)g->ANALOGDOWN_HELD = true;
 //
 //#ifdef _DEBUG
-//									if (leftX&&value < -dz)log.debug("Joystick Axis Event: Left held " + to_string(value));
-//									if (leftX&&value > dz)log.debug("Joystick Axis Event: Right held " + to_string(value));
-//									if (leftY&&value < -dz)log.debug("Joystick Axis Event: Up held " + to_string(value));
-//									if (leftY&&value > dz)log.debug("Joystick Axis Event: Down held " + to_string(value));
+//									if (leftX&&value < -dz)log.debug("Joystick Axis BobEvent: Left held " + to_string(value));
+//									if (leftX&&value > dz)log.debug("Joystick Axis BobEvent: Right held " + to_string(value));
+//									if (leftY&&value < -dz)log.debug("Joystick Axis BobEvent: Up held " + to_string(value));
+//									if (leftY&&value > dz)log.debug("Joystick Axis BobEvent: Down held " + to_string(value));
 //
-//									if (leftX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Joystick Axis Event: Left unpressed " + to_string(value));
-//									if (leftX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Joystick Axis Event: Right unpressed " + to_string(value));
-//									if (leftY&&value > -dz && g->ANALOGUP_HELD)log.debug("Joystick Axis Event: Up unpressed " + to_string(value));
-//									if (leftY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Joystick Axis Event: Down unpressed " + to_string(value));
+//									if (leftX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Joystick Axis BobEvent: Left unpressed " + to_string(value));
+//									if (leftX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Joystick Axis BobEvent: Right unpressed " + to_string(value));
+//									if (leftY&&value > -dz && g->ANALOGUP_HELD)log.debug("Joystick Axis BobEvent: Up unpressed " + to_string(value));
+//									if (leftY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Joystick Axis BobEvent: Down unpressed " + to_string(value));
 //#endif
 //									if (leftX&&value > -dz)g->ANALOGLEFT_HELD = false;
 //									if (leftX&&value < dz)g->ANALOGRIGHT_HELD = false;
@@ -1739,7 +1751,38 @@ SDL_JoyHatEvent
 		}
 
 	}
+#else
 
+
+	for (int q = 0; q < ControlsManager::gameControllers.size(); q++)
+	{
+		GameController *g = ControlsManager::gameControllers.get(q);
+
+		sce::SampleUtil::System::UserId userId = g->userId;
+		PS4InputToSDLEventConverter::UserInfo userInfo = g->userInfo;
+
+		g->unsetHeld();
+
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonCircle, ssin::kButtonEventPatternAny))g->A_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonCross, ssin::kButtonEventPatternAny))g->B_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonSquare, ssin::kButtonEventPatternAny))g->X_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonTriangle, ssin::kButtonEventPatternAny))g->Y_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonOptions, ssin::kButtonEventPatternAny))g->SELECT_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonStart, ssin::kButtonEventPatternAny))g->START_HELD = true;
+//		//if (userInfo.padContext->isButtonDown(ssin::kButtonUp, ssin::kButtonEventPatternAny))g->START_HELD = true;
+//		//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log.debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
+//		//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log.debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonL2, ssin::kButtonEventPatternAny))g->L_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonR2, ssin::kButtonEventPatternAny))g->R_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonUp, ssin::kButtonEventPatternAny))g->UP_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonDown, ssin::kButtonEventPatternAny))g->DOWN_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonLeft, ssin::kButtonEventPatternAny))g->LEFT_HELD = true;
+//		if (userInfo.padContext->isButtonDown(ssin::kButtonRight, ssin::kButtonEventPatternAny))g->RIGHT_HELD = true;
+//
+//	
+	}
+
+#endif
 
 
 
@@ -1843,9 +1886,9 @@ SDL_JoyHatEvent
 	//set controller pressed
 	//------------------------------------
 
-	for (int i = 0; i < gameControllers->size(); i++)
+	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		sp<GameController>g = gameControllers->at(i);
+		GameController *g = gameControllers.get(i);
 		g->setPressedButtons();
 	}
 
@@ -1871,9 +1914,9 @@ SDL_JoyHatEvent
 	if (KEY_RCTRL_HELD == true)BGCLIENT_QUICKZOOMOUT_HELD = true;
 	if (KEY_RSHIFT_HELD == true)BGCLIENT_QUICKZOOMIN_HELD = true;
 
-	for (int i = 0; i < gameControllers->size(); i++)
+	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		sp<GameController>g = gameControllers->at(i);
+		GameController *g = gameControllers.get(i);
 		if (g->UP_HELD == true)BGCLIENT_UP_HELD = true;
 		if (g->DOWN_HELD == true)BGCLIENT_DOWN_HELD = true;
 		if (g->LEFT_HELD == true)BGCLIENT_LEFT_HELD = true;
@@ -1909,9 +1952,9 @@ SDL_JoyHatEvent
 	if (KEY_LCTRL_HELD == true)MINIGAME_L_HELD = true;
 	if (KEY_LALT_HELD == true)MINIGAME_R_HELD = true;
 
-	for (int i = 0; i < gameControllers->size(); i++)
+	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		sp<GameController>g = gameControllers->at(i);
+		GameController *g = gameControllers.get(i);
 		if (g->UP_HELD == true)MINIGAME_UP_HELD = true;
 		if (g->DOWN_HELD == true)MINIGAME_DOWN_HELD = true;
 		if (g->LEFT_HELD == true)MINIGAME_LEFT_HELD = true;
@@ -1981,15 +2024,20 @@ SDL_JoyHatEvent
 
 
 //=========================================================================================================================
-void ControlsManager::doHaptic(sp<GameController>g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
+void ControlsManager::doHaptic(GameController *g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
 {//=========================================================================================================================
 
-	log.debug("doHaptic");
+	//log.debug("doHaptic");
+
+#ifndef ORBIS
 	if (g->haptic == nullptr)return;
 
-	SDL_HapticRumblePlay(g->haptic.get(), (float)magnitude / 32767.0f, length);
+	SDL_HapticRumblePlay(g->haptic, (float)magnitude/32767.0f, length);
 
-	log.debug("Played haptic");
+#else
+
+#endif
+	//log.debug("Played haptic");
 
 //	if(g->hapticID!=-1)
 //	{
@@ -2040,3 +2088,693 @@ int ControlsManager::getMouseY()
 	return MOUSE_Y;
 }
 
+
+
+#ifdef ORBIS
+
+
+//=========================================================================================================================
+int PS4InputToSDLEventConverter::_setUserColorToLightBar(sce::SampleUtil::System::UserColor m_userColor, ScePadLightBarParam &padLightBarParam)
+{//=========================================================================================================================
+	int ret = SCE_OK;
+
+	switch (m_userColor)
+	{
+	case sce::SampleUtil::System::kUserColorBlue:
+		padLightBarParam.r = 0x00;
+		padLightBarParam.g = 0x00;
+		padLightBarParam.b = 0x80;
+		break;
+	case sce::SampleUtil::System::kUserColorRed:
+		padLightBarParam.r = 0x80;
+		padLightBarParam.g = 0x00;
+		padLightBarParam.b = 0x00;
+		break;
+	case sce::SampleUtil::System::kUserColorGreen:
+		padLightBarParam.r = 0x00;
+		padLightBarParam.g = 0x80;
+		padLightBarParam.b = 0x00;
+		break;
+	case sce::SampleUtil::System::kUserColorPink:
+		padLightBarParam.r = 0x80;
+		padLightBarParam.g = 0x00;
+		padLightBarParam.b = 0x80;
+		break;
+	default:
+		ret = -1;
+		break;
+	}
+
+	return ret;
+};
+
+
+//=========================================================================================================================
+int PS4InputToSDLEventConverter::getDisplaySize(ssg::GraphicsContext *graphicsContext, float *width, float *height)
+{//=========================================================================================================================
+	int ret;
+	if (graphicsContext && width && height)
+	{
+		*width = graphicsContext->getNextRenderTarget()->getWidth();
+		*height = graphicsContext->getNextRenderTarget()->getHeight();
+		ret = SCE_OK;
+	}
+	else
+	{
+		ret = -1;
+	}
+	return ret;
+};
+
+
+
+
+	//=========================================================================================================================
+	int PS4InputToSDLEventConverter::initialize(void)
+	{//=========================================================================================================================
+		int ret;
+		m_updateNum = 1;
+
+		//m_state = DebugMenu::TOP_STATE;
+
+		m_pressedOptionButton = false;
+
+		m_padData = (ssin::PadData*)malloc(sizeof(ssin::PadData) * 15);
+		if (m_padData == NULL)
+		{
+			//return SCE_SAMPLE_UTIL_ERROR_NOT_INITIALIZED;
+		}
+		memset(m_padData, 0, sizeof(ssin::PadData) * 15);
+
+		for (int i = 0; i<SCE_PAD_MAX_TOUCH_NUM; i++)
+		{
+			m_touchColorTable[i] = 0;
+
+			m_currentTouchData[i].id = INVALID_TOUCH_ID;
+			m_currentTouchData[i].x = 0;
+			m_currentTouchData[i].y = 0;
+		}
+
+		m_upButtonColor = vecmath::Vector4::zero();
+		m_downButtonColor = vecmath::Vector4::zero();
+		m_leftButtonColor = vecmath::Vector4::zero();
+		m_rightButtonColor = vecmath::Vector4::zero();
+
+		m_triangleButtonColor = vecmath::Vector4::zero();
+		m_crossButtonColor = vecmath::Vector4::zero();
+		m_squareButtonColor = vecmath::Vector4::zero();
+		m_circleButtonColor = vecmath::Vector4::zero();
+
+		m_touchPadColor = vecmath::Vector4::zero();
+
+		m_L1ButtonColor = vecmath::Vector4::zero();
+		m_R1ButtonColor = vecmath::Vector4::zero();
+		m_L2ButtonColor = vecmath::Vector4::zero();
+		m_R2ButtonColor = vecmath::Vector4::zero();
+		m_L3ButtonColor = vecmath::Vector4::zero();
+		m_R3ButtonColor = vecmath::Vector4::zero();
+
+		m_optionButtonColor = vecmath::Vector4::zero();
+
+		m_eulerAngles = vecmath::Vector3::zero();
+		m_angularVelocity = vecmath::Vector3::zero();
+		m_acceleration = vecmath::Vector3::zero();
+
+
+		//ret = Main::getMain()->initializeUtil(sce::SampleUtil::SampleSkeleton::kFunctionFlagUserIdManager | sce::SampleUtil::SampleSkeleton::kFunctionFlagUserIdManager);
+
+		//ret = -1;
+
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+
+		//ret = sce::SampleUtil::Graphics::Collada::createColladaLoader(&m_loader, getGraphicsContext());
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+		//ret = getDisplaySize(getGraphicsContext(), &m_displayWidth, &m_displayHeight);
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+		//const float fov = (float)(M_PI / 6.0f);
+		//const float aspect = m_displayWidth / m_displayHeight;
+		//const float _near = 0.1f;
+		//const float _far = 10000.0f;
+		//vecmath::Matrix4 projectionMatrix = vecmath::Matrix4::perspective(fov, aspect, _near, _far);
+
+		//vecmath::Vector3 lightPos(0, 1200, 1000);
+		//vecmath::Vector3 lightColor(1.0, 1.0, 1.0);
+		//m_loader->getDefaultParams()->setLight(lightPos, lightColor);
+		//m_loader->getDefaultParams()->setViewMatrix(m_camera.getViewMatrix());
+		//m_loader->getDefaultParams()->setProjectionMatrix(projectionMatrix);
+		//ret = m_loader->load(&m_collada, APP_DUCK_PATH);
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+
+		//ret = sce::SampleUtil::Graphics::Collada::createInstanceVisualScene(&m_instanceVisualScene, m_collada->getVisualScene());
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+
+		//ret = m_debug.initialise();
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+
+		m_userIdManager = Main::getMain()->getUserIdManager();
+		//SCE_SAMPLE_UTIL_ASSERT(m_userIdManager != NULL);
+
+		sce::SampleUtil::System::UserIdList	list;
+		memset(&list, 0x00, sizeof(list));
+
+		ret = m_userIdManager->getLoginUserIdList(&list);
+		//SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		m_currentMaxUser = 0;
+		char userName[SCE_SAMPLE_UTIL_MAX_LOGIN_USERS][sce::SampleUtil::System::kMaxUserNameLength + 1];
+		const char *userNameForDebugMenu[SCE_SAMPLE_UTIL_MAX_LOGIN_USERS];
+
+		for (uint32_t i = 0; i<SCE_SAMPLE_UTIL_MAX_LOGIN_USERS; i++)
+		{
+			if (list.userId[i] != sce::SampleUtil::System::kInvalidUserId)
+			{
+
+				
+			
+
+				sce::SampleUtil::System::UserId userId = list.userId[i];
+				sce::SampleUtil::System::UserColor userColor;
+
+				ret = m_userIdManager->getUserName(userId, userName[i], sizeof(userName[i]));
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				ret = m_userIdManager->getUserColor(userId, &userColor);
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+
+				m_currentUserId = userId;
+
+				UserInfo userInfo;
+				userInfo.userId = userId;
+				userInfo.userNum = i;
+				userInfo.userName = userName[i];
+				userInfo.enabledMotionSensor = true;
+				userInfo.enabledTiltCorrection = false;
+				userInfo.enabledAngularVelocityDeadBand = false;
+				userInfo.padVibrationParam.largeMotor = 0;
+				userInfo.padVibrationParam.smallMotor = 0;
+				_setUserColorToLightBar(userColor, userInfo.padLightBarParam);
+
+				ret = ssin::createPadContext((ssin::PadContext**)(&userInfo.padContext), userId, 0, 0, NULL);
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				ret = userInfo.apiMouse.initialize(userId, m_displayWidth, m_displayHeight);
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				m_userMap[userId] = userInfo;
+
+				userNameForDebugMenu[i] = userName[i];
+
+				ControlsManager::log.debug("Found Player: i:" + to_string(i) + " userId:" + to_string(list.userId[i]) + " userName:" + string(userName[i]));
+
+
+				GameController* g = new GameController();
+				g->userId = userId;
+				g->userInfo = userInfo;
+
+				ControlsManager::gameControllers.add(g);
+
+
+				m_currentMaxUser++;
+			}
+		}
+		if (m_currentMaxUser>0)
+		{
+			//m_debug.addMenuItemUserName(userNameForDebugMenu, m_currentMaxUser, 0);
+		}
+
+		//m_debug.setDebugMenuState(DebugMenu::PAD_STATE);
+		//m_enabledConsoleOutput = m_debug.getBoolDebugMenuItem("Enable Console output");
+		//m_currentUserName = m_debug.getEnumDebugMenuItem("UserName");
+
+		//m_debug.setDebugMenuState(DebugMenu::TOP_STATE);
+
+		return ret;
+	}
+	//=========================================================================================================================
+	int PS4InputToSDLEventConverter::update(void)
+	{//=========================================================================================================================
+
+		int ret = -1;
+
+		sce::SampleUtil::System::UserLoginStatusChangedEvents events;
+		memset(&events, 0x00, sizeof(events));
+
+		ret = m_userIdManager->getUserLoginStatusChangedEventsOfLastUpdate(&events);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		
+
+		LoginLogoutStatus loginLogoutStatus = INVALID;
+		char userName[SCE_SAMPLE_UTIL_MAX_LOGIN_USERS][sce::SampleUtil::System::kMaxUserNameLength + 1];
+		const char *userNameForDebugMenu[SCE_SAMPLE_UTIL_MAX_LOGIN_USERS];
+
+
+		
+
+		for (int i = 0; i<SCE_USER_SERVICE_MAX_LOGIN_USERS; i++)
+		{
+			if (events.leftUserIdList.userId[i] != SCE_SAMPLE_UTIL_USER_ID_INVALID)
+			{
+				sce::SampleUtil::System::UserId userId = events.leftUserIdList.userId[i];
+
+				if (m_currentUserId == userId)
+				{
+					m_currentUserId = -1;
+				}
+
+				ret = sce::SampleUtil::destroy((ssin::PadContext*)m_userMap[userId].padContext);
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				ret = m_userMap[userId].apiMouse.finalize();
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				m_userMap.erase(m_userMap.find(userId));
+
+				m_currentMaxUser--;
+
+				loginLogoutStatus = LOGOUT;
+			}
+		}
+
+
+
+		for (int i = 0; i<SCE_USER_SERVICE_MAX_LOGIN_USERS; i++)
+		{
+			if (events.joinedUserIdList.userId[i] != SCE_SAMPLE_UTIL_USER_ID_INVALID)
+			{
+				UserInfo userInfo;
+				sce::SampleUtil::System::UserId userId = events.joinedUserIdList.userId[i];
+				sce::SampleUtil::System::UserColor userColor;
+
+				ret = m_userIdManager->getUserName(userId, userName[i], sizeof(userName[i]));
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				ret = m_userIdManager->getUserColor(userId, &userColor);
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				userInfo.userId = userId;
+				userInfo.userNum = i;
+				userInfo.userName = userName[i];
+				userInfo.enabledMotionSensor = true;
+				userInfo.enabledTiltCorrection = false;
+				userInfo.enabledAngularVelocityDeadBand = false;
+				userInfo.padVibrationParam.largeMotor = 0;
+				userInfo.padVibrationParam.smallMotor = 0;
+				_setUserColorToLightBar(userColor, userInfo.padLightBarParam);
+
+				ret = ssin::createPadContext((ssin::PadContext**)(&userInfo.padContext), userId, 0, 0, NULL);
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				ret = userInfo.apiMouse.initialize(userId, m_displayWidth, m_displayHeight);
+				SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+				m_userMap[userId] = userInfo;
+
+				userNameForDebugMenu[i] = userName[i];
+
+				m_currentMaxUser++;
+
+				loginLogoutStatus = LOGIN;
+			}
+		}
+
+
+		
+
+		if (loginLogoutStatus != INVALID)
+		{
+
+			UserMap::iterator userMapIt = m_userMap.begin();
+			if (loginLogoutStatus == LOGOUT && m_currentUserId == -1)
+			{
+				m_currentUserId = userMapIt->second.userId;
+			}
+
+			int i = 0;
+			while (userMapIt != m_userMap.end())
+			{
+				userNameForDebugMenu[i] = userMapIt->second.userName.c_str();
+				sce::SampleUtil::System::UserId userId = userMapIt->second.userId;
+				m_userMap[userId].userNum = i;
+				userMapIt++;
+				i++;
+			}
+
+			//m_debug.deleteMenuItemUserName();
+			//m_debug.addMenuItemUserName(userNameForDebugMenu, m_currentMaxUser, m_userMap[m_currentUserId].userNum);
+			m_currentUserName = m_userMap[m_currentUserId].userNum;
+		}
+
+		
+
+		//		if (m_state == DebugMenu::TOP_STATE)
+		//		{
+		//			m_debug.setDebugMenuState(DebugMenu::TOP_STATE);
+		//			UserMap::iterator userMapIt = m_userMap.begin();
+		//			while (userMapIt != m_userMap.end())
+		//			{
+		//				sce::SampleUtil::System::UserId userId = userMapIt->second.userId;
+		//				m_userMap[userId].padContext->update();
+		//				m_debug.update(m_userMap[userId].padContext, m_pressedOptionButton);
+		//				if (m_userMap[userId].padContext->isButtonPressed(ssin::kButtonCross, ssin::kButtonEventPatternAny))
+		//				{
+		//					m_touchPadAspectRatio = m_userMap[userId].padContext->getTouchPadAspectRatio();
+		//					m_debug.setEnumDebugMenuItem("UserName", m_userMap[userId].userNum);
+		//					m_currentUserId = userId;
+		//					m_currentUserName = m_userMap[userId].userNum;
+		//
+		//					/*
+		//					* Initialize phase *** TOP MENU ***
+		//					*/
+		//					DebugMenu::State selectedState = m_debug.getDebugMenuState();	// Start of Init PAD option value.
+		//					m_debug.setDebugMenuState(DebugMenu::PAD_STATE);
+		//
+		//					// Reset orientation
+		//					m_userMap[userId].padContext->resetOrientation();
+		//
+		//					// Inital setup for Motion Sensor options
+		//					m_debug.setBoolDebugMenuItem("Enable Motion Sensor", m_userMap[userId].enabledMotionSensor);
+		//					m_debug.setBoolDebugMenuItem("Enable Tilt Correction", m_userMap[userId].enabledTiltCorrection);
+		//					m_debug.setBoolDebugMenuItem("Enable Angular velocity Deadband", m_userMap[userId].enabledAngularVelocityDeadBand);
+		//
+		//					// Inital setup for Vibration
+		//					m_debug.setIntDebugMenuItem("LargeMotor", m_userMap[userId].padVibrationParam.largeMotor);
+		//					m_debug.setIntDebugMenuItem("SmallMotor", m_userMap[userId].padVibrationParam.smallMotor);
+		//
+		//					// Inital setup for Light Bar
+		//					m_debug.setIntDebugMenuItem("LightBar R", m_userMap[userId].padLightBarParam.r);
+		//					m_debug.setIntDebugMenuItem("LightBar G", m_userMap[userId].padLightBarParam.g);
+		//					m_debug.setIntDebugMenuItem("LightBar B", m_userMap[userId].padLightBarParam.b);
+		//
+		//					m_debug.setDebugMenuState(selectedState);		// End of Init PAD option value.
+		//				}
+		//				userMapIt++;
+		//			}
+		//		}
+		//		else if (m_state == DebugMenu::MOUSE_STATE)
+		//		{
+		//			m_debug.setDebugMenuState(DebugMenu::MOUSE_STATE);
+		//			m_userMap[m_currentUserId].padContext->update();
+		//			m_userMap[m_currentUserId].apiMouse.update();
+		//
+		//			if (m_currentUserName != m_debug.getEnumDebugMenuItem("UserName")
+		//				&& m_userMap[m_currentUserId].padContext->isButtonPressed(ssin::kButtonCross, ssin::kButtonEventPatternAny))
+		//			{
+		//				sce::SampleUtil::System::UserId userId;
+		//				UserMap::iterator userMapIt = m_userMap.begin();
+		//				while (userMapIt != m_userMap.end())
+		//				{
+		//					userId = userMapIt->second.userId;
+		//					if (m_userMap[userId].userNum == m_debug.getEnumDebugMenuItem("UserName"))
+		//					{
+		//						m_currentUserId = userId;
+		//					}
+		//					userMapIt++;
+		//				}
+		//				m_currentUserName = m_debug.getEnumDebugMenuItem("UserName");
+		//			}
+		//			if (m_debug.getEnumDebugMenuItem("Return Top Menu?") == 1
+		//				&& m_userMap[m_currentUserId].padContext->isButtonPressed(ssin::kButtonCross, ssin::kButtonEventPatternAny))
+		//			{
+		//				m_state = DebugMenu::TOP_STATE;
+		//				m_debug.setDebugMenuState(m_state);
+		//				m_debug.resetSettingValue();
+		//				return SCE_OK;
+		//			}
+		//
+		//			m_debug.update(m_userMap[m_currentUserId].padContext, true);
+		//		}
+		//		else
+
+
+
+
+
+
+		for(int q=0; q < ControlsManager::gameControllers.size();q++)
+		{
+			GameController *g = ControlsManager::gameControllers.get(q);
+			
+			sce::SampleUtil::System::UserId userId = g->userId;
+			PS4InputToSDLEventConverter::UserInfo userInfo = g->userInfo;
+
+
+
+//
+//			m_userMap[userId].padContext->update();
+//			
+//			//m_debug.setDebugMenuState(DebugMenu::PAD_STATE);
+//			m_userMap[userId].padContext->getData(m_padData, 1);
+//			
+			
+			
+			if (m_updateNum == m_frequencyCountOfUpdate)
+			{
+				m_acceleration = m_padData->motionData.acceleration;
+				m_angularVelocity = m_padData->motionData.angularVelocity;
+				m_orientation = m_padData->motionData.orientation;
+				m_eulerAngles = vecmath::Quat::euler(m_padData->motionData.orientation, sce::Vectormath::Simd::kXYZ);
+				m_updateNum = 0;
+			}
+
+			// Touch Pad
+			ssin::TouchPadData previousTouchData[SCE_PAD_MAX_TOUCH_NUM];
+			previousTouchData[0] = m_currentTouchData[0];
+			previousTouchData[1] = m_currentTouchData[1];
+
+			m_currentTouchData[0].id = INVALID_TOUCH_ID;
+			m_currentTouchData[1].id = INVALID_TOUCH_ID;
+
+			if (m_padData->touchNumber > 0)
+			{
+				bool isHold[SCE_PAD_MAX_TOUCH_NUM];
+				isHold[0] = false;
+				isHold[1] = false;
+
+				for (int i = 0; i < m_padData->touchNumber; i++)
+				{
+					m_currentTouchData[i] = m_padData->touchPadData[i];
+				}
+
+				for (int i = 0; i < SCE_PAD_MAX_TOUCH_NUM; i++)
+				{
+					for (int j = 0; j < SCE_PAD_MAX_TOUCH_NUM; j++)
+					{
+						if (previousTouchData[i].id == m_currentTouchData[j].id && m_currentTouchData[j].id != INVALID_TOUCH_ID)
+						{
+							isHold[i] = true;
+						}
+					}
+				}
+
+				if (m_currentTouchData[1].id == INVALID_TOUCH_ID && isHold[1] == true)
+				{
+					m_currentTouchData[0].id = INVALID_TOUCH_ID;
+					m_currentTouchData[1] = m_padData->touchPadData[0];
+				}
+
+				if (previousTouchData[1].id == m_currentTouchData[0].id && isHold[1] == true)
+				{
+					ssin::TouchPadData saveTouchData = m_currentTouchData[0];
+					m_currentTouchData[0] = m_currentTouchData[1];
+					m_currentTouchData[1] = saveTouchData;
+				}
+
+				for (int i = 0; i < SCE_PAD_MAX_TOUCH_NUM; i++)
+				{
+					/* Select color for latest touch ID */
+					if (m_currentTouchData[i].id != INVALID_TOUCH_ID && isHold[i] != true)
+					{
+						m_touchColorTable[i]++;
+						if (m_touchColorTable[i] == MAX_TOUCH_COLOR)
+						{
+							m_touchColorTable[i] = TOUCH_COLOR1;
+						}
+					}
+				}
+			}
+			
+			
+
+			// Controller
+			//   Up
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonUp, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonLeft, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonRight, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonDown, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonTriangle, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonPressed(ssin::kButtonTriangle, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonSquare, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonPressed(ssin::kButtonSquare, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonCircle, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonCross, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonTouchPad, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonStart, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonPressed(ssin::kButtonStart, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonL1, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonR1, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonL2, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonR2, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonL3, ssin::kButtonEventPatternAny));
+//			if (m_userMap[userId].padContext->isButtonDown(ssin::kButtonR3, ssin::kButtonEventPatternAny));
+			
+
+
+			// Debug Menu
+
+			// Save previous menu value.
+			bool previousEnabledMotionSensor = m_userMap[userId].enabledMotionSensor;
+			bool previousEnabledTiltCorrection = m_userMap[userId].enabledTiltCorrection;
+			bool previousEnabledAngularVelocityDeadBand = m_userMap[userId].enabledAngularVelocityDeadBand;
+			ScePadVibrationParam previousPadVibrationParam;
+			previousPadVibrationParam.largeMotor = m_userMap[userId].padVibrationParam.largeMotor;
+			previousPadVibrationParam.smallMotor = m_userMap[userId].padVibrationParam.smallMotor;
+			ScePadLightBarParam previousPadLightBarParam;
+			previousPadLightBarParam.r = m_userMap[userId].padLightBarParam.r;
+			previousPadLightBarParam.g = m_userMap[userId].padLightBarParam.g;
+			previousPadLightBarParam.b = m_userMap[userId].padLightBarParam.b;
+
+			// Get current menu value
+			//m_userMap[userId].enabledMotionSensor = m_debug.getBoolDebugMenuItem("Enable Motion Sensor");
+			//m_userMap[userId].enabledTiltCorrection = m_debug.getBoolDebugMenuItem("Enable Tilt Correction");
+			//m_userMap[userId].enabledAngularVelocityDeadBand = m_debug.getBoolDebugMenuItem("Enable Angular velocity Deadband");
+			//m_userMap[userId].padVibrationParam.largeMotor = m_debug.getIntDebugMenuItem("LargeMotor");
+			//m_userMap[userId].padVibrationParam.smallMotor = m_debug.getIntDebugMenuItem("SmallMotor");
+			//m_userMap[userId].padLightBarParam.r = m_debug.getIntDebugMenuItem("LightBar R");
+			//m_userMap[userId].padLightBarParam.g = m_debug.getIntDebugMenuItem("LightBar G");
+			//m_userMap[userId].padLightBarParam.b = m_debug.getIntDebugMenuItem("LightBar B");
+			//m_enabledConsoleOutput = m_debug.getBoolDebugMenuItem("Enable Console output");
+
+//			// If differ the value with previous, apply the value.
+//			if (previousEnabledMotionSensor != m_userMap[userId].enabledMotionSensor)
+//			{
+//				m_userMap[userId].padContext->enableMotionSensor(m_userMap[userId].enabledMotionSensor);
+//			}
+//
+//			if (previousEnabledTiltCorrection != m_userMap[userId].enabledTiltCorrection)
+//			{
+//				m_userMap[userId].padContext->enableTiltCorrection(m_userMap[userId].enabledTiltCorrection);
+//			}
+//
+//			if (previousEnabledAngularVelocityDeadBand != m_userMap[userId].enabledAngularVelocityDeadBand)
+//			{
+//				m_userMap[userId].padContext->enableAngularVelocityDeadband(m_userMap[userId].enabledAngularVelocityDeadBand);
+//			}
+//
+//			if (previousPadVibrationParam.largeMotor != m_userMap[userId].padVibrationParam.largeMotor ||
+//				previousPadVibrationParam.smallMotor != m_userMap[userId].padVibrationParam.smallMotor)
+//			{
+//				m_userMap[userId].padContext->setVibration((float)m_userMap[userId].padVibrationParam.largeMotor / 255.0,
+//					(float)m_userMap[userId].padVibrationParam.smallMotor / 255.0);
+//			}
+//
+//			if (
+//				previousPadLightBarParam.r != m_userMap[userId].padLightBarParam.r
+//				|| previousPadLightBarParam.g != m_userMap[userId].padLightBarParam.g
+//				|| previousPadLightBarParam.b != m_userMap[userId].padLightBarParam.b
+//				)
+//			{
+//				int result = m_userMap[userId].padContext->setLightBar(&m_userMap[userId].padLightBarParam);
+//				if (result < 0)
+//				{
+//					// Re-update for error case of Light Bar
+//					//m_debug.setIntDebugMenuItem("LightBar R", previousPadLightBarParam.r);
+//					//m_debug.setIntDebugMenuItem("LightBar G", previousPadLightBarParam.g);
+//					//m_debug.setIntDebugMenuItem("LightBar B", previousPadLightBarParam.b);
+//				}
+//			}
+
+			//			m_updateNum++;
+			//			if (m_frequencyCountOfUpdate != m_debug.getIntDebugMenuItem("Sensor Update Frequency"))
+			//			{
+			//				m_updateNum = m_debug.getIntDebugMenuItem("Sensor Update Frequency");
+			//			}
+			//			m_frequencyCountOfUpdate = m_debug.getIntDebugMenuItem("Sensor Update Frequency");
+
+			//			if (m_currentUserName != m_debug.getEnumDebugMenuItem("UserName")
+			//				&& m_userMap[userId].padContext->isButtonPressed(ssin::kButtonCross, ssin::kButtonEventPatternAny))
+			//			{
+			//				UserMap::iterator userMapIt = m_userMap.begin();
+			//				while (userMapIt != m_userMap.end())
+			//				{
+			//					sce::SampleUtil::System::UserId userId = userMapIt->second.userId;
+			//					if (m_userMap[userId].userNum == m_debug.getEnumDebugMenuItem("UserName"))
+			//					{
+			//						userId = userId;
+			//					}
+			//					userMapIt++;
+			//				}
+			//				m_currentUserName = m_debug.getEnumDebugMenuItem("UserName");
+			//
+			//				/*
+			//				* Update phase *** Change User ***
+			//				*/
+			//				// Reset orientation
+			//				m_userMap[userId].padContext->resetOrientation();
+			//
+			//				// Inital setup for Motion Sensor options
+			//				//m_debug.setBoolDebugMenuItem("Enable Motion Sensor", m_userMap[userId].enabledMotionSensor);
+			//				//m_debug.setBoolDebugMenuItem("Enable Tilt Correction", m_userMap[userId].enabledTiltCorrection);
+			//				//m_debug.setBoolDebugMenuItem("Enable Angular velocity Deadband", m_userMap[userId].enabledAngularVelocityDeadBand);
+			//
+			//				// Inital setup for Vibration
+			//				//m_debug.setIntDebugMenuItem("LargeMotor", m_userMap[userId].padVibrationParam.largeMotor);
+			//				//m_debug.setIntDebugMenuItem("SmallMotor", m_userMap[userId].padVibrationParam.smallMotor);
+			//
+			//				// Update setup for Light Bar
+			//				//m_debug.setIntDebugMenuItem("LightBar R", m_userMap[userId].padLightBarParam.r);
+			//				//m_debug.setIntDebugMenuItem("LightBar G", m_userMap[userId].padLightBarParam.g);
+			//				//m_debug.setIntDebugMenuItem("LightBar B", m_userMap[userId].padLightBarParam.b);
+			//			}
+
+			//			if (m_debug.getEnumDebugMenuItem("Return Top Menu?") == 1
+			//				&& m_userMap[userId].padContext->isButtonPressed(ssin::kButtonCross, ssin::kButtonEventPatternAny))
+			//			{
+			//				//m_state = DebugMenu::TOP_STATE;
+			//				//m_debug.setDebugMenuState(m_state);
+			//				//m_debug.resetSettingValue();
+			//				return SCE_OK;
+			//			}
+
+			//m_debug.update(m_userMap[userId].padContext, m_pressedOptionButton);
+
+		}
+
+		//m_state = m_debug.getDebugMenuState();
+		return ret;
+	}
+
+
+	int PS4InputToSDLEventConverter::finalize(void)
+	{
+		int ret;
+		free(m_padData);
+
+		sce::SampleUtil::System::UserId userId;
+		UserMap::iterator userMapIt = m_userMap.begin();
+		while (userMapIt != m_userMap.end())
+		{
+			userId = userMapIt->second.userId;
+			ret = m_userMap[userId].apiMouse.finalize();
+			SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+			ret = sce::SampleUtil::destroy((ssin::PadContext*)m_userMap[userId].padContext);
+			SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+			userMapIt++;
+		}
+
+		//ret = sce::SampleUtil::destroy(m_instanceVisualScene);
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+		//ret = sce::SampleUtil::destroy(m_collada);
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+		//ret = sce::SampleUtil::destroy(m_loader);
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+		//ret = m_debug.finalize();
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+		//ret = finalizeUtil();
+		//SCE_SAMPLE_UTIL_ASSERT(ret == SCE_OK);
+
+		return ret;
+	}
+
+#endif

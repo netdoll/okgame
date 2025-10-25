@@ -14,21 +14,21 @@
 //Logger MapState::log = Logger("MapState");
 
 
-MapState::MapState(sp<MapStateData> mapStateData, sp<Map> m)
+MapState::MapState(MapStateData* mapStateData, Map* m)
 { //=========================================================================================================================
 	
 	this->data = mapStateData;
 
 	this->map = m;
 
-	//lightByNameHashtable = ms<HashMap><string, sp<Light>>();
-	//entityByNameHashtable = ms<HashMap><string, sp<Entity>>();
-	//characterByNameHashtable = ms<HashMap><string, sp<Character>>();
-	//areaByNameHashtable = ms<HashMap><string, sp<Area>>();
-	//areaByTYPEIDHashtable = ms<HashMap><string, sp<Area>>();
+	//lightByNameHashtable = new HashMap<string, Light*>();
+	//entityByNameHashtable = new HashMap<string, Entity*>();
+	//characterByNameHashtable = new HashMap<string, Character*>();
+	//areaByNameHashtable = new HashMap<string, Area*>();
+	//areaByTYPEIDHashtable = new HashMap<string, Area*>();
 }
 
-sp<MapStateData> MapState::getData()
+MapStateData* MapState::getData()
 {
 	return data;
 }

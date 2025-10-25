@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include <src/Engine/entity/Character.h>
 #include <src/Engine/nd/NDGameEngine.h>
 class Logger;
@@ -21,23 +21,23 @@ class BGClientEngine;
 class GameChallengeNotificationPanel;
 
 
-class FriendCharacter : public Character, public std::enable_shared_from_this<FriendCharacter>
+class FriendCharacter : public Character
 {
 public:
 	static Logger log;
 
 
 
-	sp<FriendManager> friendManager = nullptr;
+	FriendManager* friendManager = nullptr;
 
 
 	string mapName = "";
 
-	sp<UDPPeerConnection> connection = nullptr;
+	UDPPeerConnection * connection = nullptr;
 
 
 public:
-	sp<MiniGameEngine> game = nullptr;
+	MiniGameEngine* game = nullptr;
 
 
 
@@ -46,21 +46,21 @@ public:
 	float targetY = 0;
 
 
-	FriendCharacter(sp<BGClientEngine> g);
+	FriendCharacter(BGClientEngine* g);
 
 
-	FriendCharacter(sp<BGClientEngine> g, int friendUserID, int friendType);
+	FriendCharacter(BGClientEngine* g, int friendUserID, int friendType);
 
 
 	/// <summary>
 	/// FOR DEBUG </summary>
-	FriendCharacter(sp<BGClientEngine> g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort);
+	FriendCharacter(BGClientEngine* g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort);
 
 
-	void setGameToForwardPacketsTo(sp<MiniGameEngine> game);
+	void setGameToForwardPacketsTo(MiniGameEngine* game);
 
 
-	bool udpPeerMessageReceived(sp<UDPPeerConnection>c, string e) override;
+	bool udpPeerMessageReceived(UDPPeerConnection *c, string e) override;
 
 
 
@@ -92,7 +92,7 @@ private:
 	int outgoingGameChallengeResponse = NDGameEngine::gameChallengeResponse_NONE;
 	long long timeOutgoingGameChallengeResponseSet = 0;
 public:
-	sp<GameChallengeNotificationPanel> gameChallengeNotification = nullptr;
+	GameChallengeNotificationPanel* gameChallengeNotification = nullptr;
 
 	void setOutgoingGameChallengeResponse(int i);
 	int getOutgoingGameChallengeResponse();

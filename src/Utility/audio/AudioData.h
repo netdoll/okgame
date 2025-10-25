@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -55,10 +55,10 @@ public:
 	AudioData(int id, const string& name, const string& filename);
 
 
-	//static sp<AudioData> fromBase64ZippedJSON(const string& b64);
+	//static AudioData* fromBase64ZippedJSON(const string& b64);
 
 
-	//static sp<AudioData> fromJSON(const string& json);
+	//static AudioData* fromJSON(const string& json);
 
 	string& initFromString(string& t);
 

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -13,34 +13,34 @@ class Logger;
 class EasingTest : public EnginePart
 {
 public:
-	static sp<Caption> linearTweenCaption;
+	static Caption* linearTweenCaption;
 
-	static sp<Caption> easeInQuadCaption;
-	static sp<Caption> easeInCubicCaption;
-	static sp<Caption> easeInQuartCaption;
-	static sp<Caption> easeInQuintCaption;
-	static sp<Caption> easeInExpoCaption;
-	static sp<Caption> easeInCircCaption;
-	static sp<Caption> easeInSineCaption;
+	static Caption* easeInQuadCaption;
+	static Caption* easeInCubicCaption;
+	static Caption* easeInQuartCaption;
+	static Caption* easeInQuintCaption;
+	static Caption* easeInExpoCaption;
+	static Caption* easeInCircCaption;
+	static Caption* easeInSineCaption;
 
-	static sp<Caption> easeOutQuadCaption;
-	static sp<Caption> easeOutCubicCaption;
-	static sp<Caption> easeOutQuartCaption;
-	static sp<Caption> easeOutQuintCaption;
-	static sp<Caption> easeOutExpoCaption;
-	static sp<Caption> easeOutCircCaption;
-	static sp<Caption> easeOutSineCaption;
+	static Caption* easeOutQuadCaption;
+	static Caption* easeOutCubicCaption;
+	static Caption* easeOutQuartCaption;
+	static Caption* easeOutQuintCaption;
+	static Caption* easeOutExpoCaption;
+	static Caption* easeOutCircCaption;
+	static Caption* easeOutSineCaption;
 
-	static sp<Caption> easeInOutQuadCaption;
-	static sp<Caption> easeInOutCubicCaption;
-	static sp<Caption> easeInOutQuartCaption;
-	static sp<Caption> easeInOutQuintCaption;
-	static sp<Caption> easeInOutExpoCaption;
-	static sp<Caption> easeInOutCircCaption;
-	static sp<Caption> easeInOutSineCaption;
+	static Caption* easeInOutQuadCaption;
+	static Caption* easeInOutCubicCaption;
+	static Caption* easeInOutQuartCaption;
+	static Caption* easeInOutQuintCaption;
+	static Caption* easeInOutExpoCaption;
+	static Caption* easeInOutCircCaption;
+	static Caption* easeInOutSineCaption;
 
 
-	EasingTest(sp<Engine> g);
+	EasingTest(Engine* g);
 
 
 	static float ticksCount;

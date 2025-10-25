@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -24,8 +24,8 @@ public:
 	FlagData(int id, const string& name);
 
 
-	//static sp<FlagData> fromBase64ZippedJSON(const string& b64);
-	//static sp<FlagData> fromJSON(const string& json);
+	//static FlagData* fromBase64ZippedJSON(const string& b64);
+	//static FlagData* fromJSON(const string& json);
 
 	string& initFromString(string& t);
 

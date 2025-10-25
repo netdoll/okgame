@@ -17,7 +17,7 @@ Logger LoginState::log = Logger("LoginState");
 LoginState::LoginState()
 { //=========================================================================================================================
 
-	loginMenuPanel = ms<LoginMenuPanel>((sp<Engine>)this);
+	loginMenuPanel = new LoginMenuPanel((Engine*)this);
 	//
 	//   loginScreenGUI = new GUI(loginScreen, GLUtils::TWLrenderer);
 	//   loginScreenGUI->applyTheme(GLUtils::TWLthemeManager);
@@ -53,7 +53,7 @@ void LoginState::cleanup()
 Logger LoginMenuPanel::log = Logger("LoginScreen");
 
 
-LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
+LoginMenuPanel::LoginMenuPanel(Engine *e)
 { //=========================================================================================================================
 
 
@@ -68,20 +68,20 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//MenuPanel();
 
 	
-	//   loginPanel = ms<DialogLayout>();
+	//   loginPanel = new DialogLayout();
 	//   loginPanel->setTheme("loginpanel");
 	//
 	//
-	//   sp<Label> loginPanelLabel = ms<Label>("Login");
+	//   Label* loginPanelLabel = new Label("Login");
 	//   loginPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   loginPanelLabel->setTheme("bigLabel");
 	//
 	//
-	//   errorLabel = ms<Label>(" ");
+	//   errorLabel = new Label(" ");
 	//   errorLabel->setTheme("errorLabel");
 	//   errorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   statusLabel = ms<Label>(" ");
+	//   statusLabel = new Label(" ");
 	//   statusLabel->setTheme("statusLabel");
 	//   statusLabel->setCanAcceptKeyboardFocus(false);
 	//
@@ -89,7 +89,7 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //---------------------------------------------------------
 	//   //login with facebook button
 	//   //---------------------------------------------------------
-	//   loginWithFacebookButton = ms<Button>("Login using your Facebook account!");
+	//   loginWithFacebookButton = new Button("Login using your Facebook account!");
 	//   loginWithFacebookButton->setTheme("smallButton");
 	//   loginWithFacebookButton->setCanAcceptKeyboardFocus(false);
 	//
@@ -109,10 +109,10 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //---------------------------------------------------------
 	//   //name
 	//   //---------------------------------------------------------
-	//   emailEditField = ms<EditField>();
+	//   emailEditField = new EditField();
 	//
 	//
-	//   emailLabel = ms<Label>("Email");
+	//   emailLabel = new Label("Email");
 	//   //emailLabel.setLabelFor(emailEditField);
 	//   emailLabel->setCanAcceptKeyboardFocus(false);
 	//
@@ -121,19 +121,19 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //password
 	//   //---------------------------------------------------------
 	//
-	//   passwordLabel = ms<Label>("Password");
+	//   passwordLabel = new Label("Password");
 	//   //passwordLabel.setLabelFor(passwordEditField);
 	//   passwordLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   passwordEditField = ms<EditField>();
+	//   passwordEditField = new EditField();
 	//   passwordEditField->setPasswordMasking(true);
 	//
-	//   passwordEditField->addCallback(ms<CallbackAnonymousInnerClassHelper>(this));
+	//   passwordEditField->addCallback(new CallbackAnonymousInnerClassHelper(this));
 	//
 	//   //---------------------------------------------------------
 	//   //login
 	//   //---------------------------------------------------------
-	//   loginButton = ms<Button>("Login");
+	//   loginButton = new Button("Login");
 	//   loginButton->setCanAcceptKeyboardFocus(false);
 	//   loginButton->addCallback([&] ()
 	//      {
@@ -144,7 +144,7 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //---------------------------------------------------------
 	//   //forgot pass
 	//   //---------------------------------------------------------
-	//   forgotPasswordButton = ms<Button>("Forgot Password?");
+	//   forgotPasswordButton = new Button("Forgot Password?");
 	//   forgotPasswordButton->setCanAcceptKeyboardFocus(false);
 	//   forgotPasswordButton->setTheme("textButton");
 	//   forgotPasswordButton->addCallback([&] ()
@@ -156,7 +156,7 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //---------------------------------------------------------
 	//   //create new account
 	//   //---------------------------------------------------------
-	//   createNewAccountButton = ms<Button>("Create Account");
+	//   createNewAccountButton = new Button("Create Account");
 	//   createNewAccountButton->setCanAcceptKeyboardFocus(false);
 	//   createNewAccountButton->addCallback([&] ()
 	//      {
@@ -172,7 +172,7 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   stayLoggedInToggleButton->setCanAcceptKeyboardFocus(false);
 	//   stayLoggedInToggleButton->setActive(true);
 	//
-	//   //		stayLoggedInToggleButton.addCallback(ms<Runnable>()
+	//   //		stayLoggedInToggleButton.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -180,7 +180,7 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //			}
 	//   //		});
 	//
-	//   stayLoggedInToggleButtonLabel = ms<Label>("Stay Logged In");
+	//   stayLoggedInToggleButtonLabel = new Label("Stay Logged In");
 	//   stayLoggedInToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   stayLoggedInToggleButtonLabel->setLabelFor(stayLoggedInToggleButton);
 	//
@@ -191,7 +191,7 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   sendStatsToggleButton->setCanAcceptKeyboardFocus(false);
 	//   sendStatsToggleButton->setActive(true);
 	//
-	//   //		sendStatsToggleButton.addCallback(ms<Runnable>()
+	//   //		sendStatsToggleButton.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -199,11 +199,11 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //			}
 	//   //		});
 	//
-	//   sendStatsToggleButtonLabel = ms<Label>("Send PC Stats");
+	//   sendStatsToggleButtonLabel = new Label("Send PC Stats");
 	//   sendStatsToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   sendStatsToggleButtonLabel->setLabelFor(sendStatsToggleButton);
 	//
-	//   sendStatsQuestionMark = ms<Label>(" ? ");
+	//   sendStatsQuestionMark = new Label(" ? ");
 	//   sendStatsQuestionMark->setCanAcceptKeyboardFocus(false);
 	//   sendStatsQuestionMark->setTheme("descriptionLabel");
 	//   sendStatsQuestionMark->setTooltipContent("");
@@ -233,7 +233,7 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = new ScrollPane(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -263,14 +263,14 @@ LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 }
 
 //
-//LoginScreen::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(sp<LoginScreen> outerInstance)
+//LoginScreen::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(LoginScreen* outerInstance)
 //{
 //   this->outerInstance = outerInstance;
 //}
 //
 //void LoginScreen::CallbackAnonymousInnerClassHelper::callback(int key)
 //{
-//   if (key == Event::KEY_RETURN)
+//   if (key == BobEvent::KEY_RETURN)
 //   {
 //      outerInstance->doLogin();
 //   }
@@ -309,9 +309,9 @@ void LoginMenuPanel::update()
 				{
 					if (loginMenu == nullptr)
 					{
-						loginMenu = ms<OKMenu>(getEngine(), "Login");
+						loginMenu = new BobMenu(getEngine(), "Login");
 						//loginMenu->center = false;
-						loginMenu->addInfo("Logging in...", "Logging in", OKMenu::statusColor);
+						loginMenu->addInfo("Logging in...", "Logging in", BobMenu::statusColor);
 
 					}
 				}
@@ -321,10 +321,10 @@ void LoginMenuPanel::update()
 				if (loginMenu == nullptr)
 				{
 
-					loginMenu = ms<OKMenu>(getEngine(), "Login");
+					loginMenu = new BobMenu(getEngine(), "Login");
 					//loginMenu->center = false;
-					loginMenu->add("Username or Email: " + userNameOrEmailText, "Username or Email", OKMenu::statusColor);
-					loginMenu->add("Password: " + passwordStarsText, "Password", OKMenu::statusColor);
+					loginMenu->add("Username or Email: " + userNameOrEmailText, "Username or Email", BobMenu::statusColor);
+					loginMenu->add("Password: " + passwordStarsText, "Password", BobMenu::statusColor);
 					loginMenu->add("Stay logged in: Yes", "Stay logged in");
 					loginMenu->add("Log in");
 					loginMenu->addInfo(" ");
@@ -337,8 +337,8 @@ void LoginMenuPanel::update()
 				}
 			}
 
-			if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, OKMenu::statusColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
-			if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, OKMenu::errorColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
+			if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+			if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 			if (getIsScrolledUp())
 			{
@@ -348,7 +348,7 @@ void LoginMenuPanel::update()
 
 				if (mx != lastMX || my != lastMY)
 				{
-					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+					if (textStarted) { Main::StopTextInput(); textStarted = false; }
 					lastMX = mx;
 					lastMY = my;
 				}
@@ -357,14 +357,14 @@ void LoginMenuPanel::update()
 				{
 					loginMenu->up();
 
-					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+					if (textStarted) { Main::StopTextInput(); textStarted = false; }
 				}
 
 				if (getControlsManager()->miniGame_DOWN_Pressed() || getControlsManager()->key_TAB_Pressed())
 				{
 					loginMenu->down();
 
-					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+					if (textStarted) { Main::StopTextInput(); textStarted = false; }
 				}
 
 				bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
@@ -384,14 +384,14 @@ void LoginMenuPanel::update()
 
 				if (loginMenu->isSelectedID("Username or Email"))
 				{
-					if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = userNameOrEmailText; textStarted = true; }
+					if (!textStarted) { Main::StartTextInput(); getControlsManager()->text = userNameOrEmailText; textStarted = true; }
 					userNameOrEmailText = getControlsManager()->text;
 					loginMenu->getMenuItemByID("Username or Email")->setText("Username or Email: " + userNameOrEmailText);
 				}
 				else
 				if (loginMenu->isSelectedID("Password"))
 				{
-					if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = passwordText; textStarted = true; }
+					if (!textStarted) { Main::StartTextInput(); getControlsManager()->text = passwordText; textStarted = true; }
 					passwordText = getControlsManager()->text;
 					passwordStarsText = "";
 					for (int i = 0; i < (int)passwordText.length(); i++)passwordStarsText += "*";
@@ -399,7 +399,7 @@ void LoginMenuPanel::update()
 				}
 				else
 				{
-					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+					if (textStarted) { Main::StopTextInput(); textStarted = false; }
 				}
 
 
@@ -471,7 +471,7 @@ void LoginMenuPanel::update()
 
 			//if (leaveMenu)
 			{
-				if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+				if (textStarted) { Main::StopTextInput(); textStarted = false; }
 				getControlsManager()->text = "";
 
 				//loginMenuShowing = false;
@@ -479,7 +479,7 @@ void LoginMenuPanel::update()
 				if (loginMenu != nullptr)
 				{
 					loginMenuCursorPosition = loginMenu->cursorPosition;
-					//delete loginMenu;
+					delete loginMenu;
 					loginMenu = nullptr;
 				}
 
@@ -535,7 +535,7 @@ void LoginMenuPanel::renderBefore()
 
 	GLUtils::drawFilledRect(255,255,255, w / 4 * 1, w / 4 * 3, screenY + h / 4 * 1, screenY + h / 4 * 3, 0.95f);
 
-	//sp<OKTexture> t = onlineTexture;
+	//BobTexture* t = onlineTexture;
 
 	if (loginMenu == nullptr)return;
 
@@ -623,7 +623,7 @@ void LoginMenuPanel::doLoginWithFacebook()
 { //=========================================================================================================================
 
 	//
-	//   ms<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
+	//   new Thread([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
 	//      {
 	//         try
 	//         {
@@ -857,7 +857,7 @@ void LoginMenuPanel::doForgotPassword()
 	//      setButtonsVisible(false);
 	//
 	//      //create thread, this needs to be a thread because Button.doCallback(Runnable) only calls Runnable.run() which does NOT create a thread.
-	//      ms<Thread>([&] ()
+	//      new Thread([&] ()
 	//         {
 	//            try
 	//            {
@@ -1028,7 +1028,7 @@ void LoginMenuPanel::doLogin()
 	//      setButtonsVisible(false);
 	//
 	//      //create thread, needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
-	//      ms<Thread>([&] ()
+	//      new Thread([&] ()
 	//         {
 	//            try
 	//            {
@@ -1303,7 +1303,7 @@ void LoginMenuPanel::checkForSessionTokenAndLogInIfExists()
 		//         setButtonsVisible(false);
 		//
 		//         //create thread
-		//         ms<Thread>([&] ()
+		//         new Thread([&] ()
 		//            {
 		//               try
 		//               {

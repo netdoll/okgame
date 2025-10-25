@@ -1,6 +1,6 @@
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include <src/Engine/EnginePart.h>
 #include <src/Utility/ArrayList.h>
 class Logger;
@@ -63,12 +63,13 @@ public:
 
 	void update();
 	void cleanup();
-
+	void TCP_Close();
+	void TCP_Delete_Socket();
 	
 
 	bool _requestedClientLocation = false;
 	string clientLocation = "";
-	sp<ServerStats> serverStats = nullptr;
+	ServerStats* serverStats = nullptr;
 
 
 	bool threadStarted = false;
@@ -78,7 +79,7 @@ public:
 
 	//------------------------------------
 public:
-	static void updateThreadLoop(sp<TCPServerConnection>u);
+	static void updateThreadLoop(TCPServerConnection *u);
 
 private:
 	void _sendKeepAlivePing();
@@ -93,8 +94,14 @@ private:
 	long long _lastLoadBalancerConnectTime = 0;
 	bool _couldNotResolveLoadBalancer = false;
 	int _couldNotOpenConnectionToLoadBalancerCount = 0;
-	sp<IPaddress> _loadBalancerAddress = nullptr;
-	
+
+#ifndef ORBIS
+	IPaddress * _loadBalancerAddress = nullptr;
+#else
+
+#endif
+
+
 	long long _lastServerConnectTime = 0;
 	long long _lastSentServerIPRequestTime = 0;
 	int _couldNotOpenConnectionToServerCount = 0;
@@ -138,7 +145,7 @@ public:
 
 	//------------------------------------
 private:
-	static sp<Logger> _threadLog;
+	static Logger* _threadLog;
 	mutex threadLog_Mutex;
 public:
 	void threadLogDebug_S(string s)
@@ -162,6 +169,7 @@ public:
 		_threadLog->error(s);
 	}
 
+#ifndef ORBIS
 	//------------------------------------
 private:
 	TCPsocket _socket = TCPsocket();
@@ -193,6 +201,9 @@ public:
 		lock_guard<mutex> lock(_socketSet_Mutex);
 		_socketSet = s;
 	}
+#else
+
+#endif
 
 	//------------------------------------
 private:
@@ -294,15 +305,15 @@ public:
 	}
 	//------------------------------------
 
-
-	sp<IPaddress> _serverAddress = nullptr;
+#ifndef ORBIS
+	IPaddress * _serverAddress = nullptr;
 	mutex _serverAddress_Mutex;
-	sp<IPaddress> getServerAddress_S()
+	IPaddress* getServerAddress_S()
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		return _serverAddress;
 	}
-	void setServerAddress_S(sp<IPaddress>b)
+	void setServerAddress_S(IPaddress *b)
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		_serverAddress = b;
@@ -312,11 +323,32 @@ public:
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		if (_serverAddress != nullptr)
 		{
-			//delete _serverAddress;
+			delete _serverAddress;
 			_serverAddress = nullptr;
 		}
 	}
-
+#else
+	string _serverAddress = "";
+	mutex _serverAddress_Mutex;
+	string getServerAddress_S()
+	{
+		lock_guard<mutex> lock(_serverAddress_Mutex);
+		return _serverAddress;
+	}
+	void setServerAddress_S(string b)
+	{
+		lock_guard<mutex> lock(_serverAddress_Mutex);
+		_serverAddress = b;
+	}
+	void deleteServerAddress_S()
+	{
+		lock_guard<mutex> lock(_serverAddress_Mutex);
+		if (_serverAddress != "")
+		{
+			_serverAddress = "";
+		}
+	}
+#endif
 	//------------------------------------
 
 	string _serverIPAddressString = "";
@@ -348,9 +380,8 @@ public:
 
 			_serverIPAddressString = s;
 		}
-
 	}
-	
+
 	//------------------------------------
 
 	bool messageReceived(string &s);
@@ -655,34 +686,34 @@ public:
 	};
 
 private:
-	sp<vector<sp<GameSaveUpdateRequest>>>_gameSaveUpdateRequestQueue;
+	ArrayList<GameSaveUpdateRequest> _gameSaveUpdateRequestQueue;
 	int _requestCounter = 0;
 	mutex _gameSaveUpdateRequestQueue_Mutex;
 public:
-	sp<GameSaveUpdateRequest> getQueuedGameSaveUpdateRequest_S(int i)
+	GameSaveUpdateRequest getQueuedGameSaveUpdateRequest_S(int i)
 	{ //=========================================================================================================================
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
-		int size = (int)_gameSaveUpdateRequestQueue->size();
-		if (i >= size)return ms<GameSaveUpdateRequest>();
-		return _gameSaveUpdateRequestQueue->at(i);
+		int size = _gameSaveUpdateRequestQueue.size();
+		if (i >= size)return GameSaveUpdateRequest();
+		return _gameSaveUpdateRequestQueue.get(i);
 	}
 	void addQueuedGameSaveUpdateRequest_S(string value)
 	{
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
 	  //all game save updates should be instantly queued
 	  //any changes to the game save should happen instantly on the client
-		sp<GameSaveUpdateRequest> g = ms<GameSaveUpdateRequest>(value, _requestCounter);
-		_gameSaveUpdateRequestQueue->push_back(g);
+		GameSaveUpdateRequest g = GameSaveUpdateRequest(value, _requestCounter);
+		_gameSaveUpdateRequestQueue.add(g);
 		_requestCounter++;
 	}
 	void removeQueuedGameSaveUpdateRequestByID_S(int requestID)
 	{
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
-		int size = (int)_gameSaveUpdateRequestQueue->size();
+		int size = _gameSaveUpdateRequestQueue.size();
 		for (int i = 0; i < size; i++)
-			if (_gameSaveUpdateRequestQueue->at(i)->requestID == requestID)
+			if (_gameSaveUpdateRequestQueue.get(i).requestID == requestID)
 			{
-				_gameSaveUpdateRequestQueue->erase(_gameSaveUpdateRequestQueue->begin()+i);
+				_gameSaveUpdateRequestQueue.removeAt(i);
 				i = size;
 				break;
 			}
@@ -795,87 +826,87 @@ private:
 public:
 	void sendOnlineFriendListRequest_S();
 
-	void sendOKGameGameTypesAndSequencesDownloadRequest_S();
-	void sendOKGameGetHighScoresAndLeaderboardsRequest_S();
-	void incomingOKGameGameTypesAndSequencesDownloadResponse(string &s);
-	void incomingOKGameGameTypesAndSequencesUploadResponse(string &s);
-	void incomingOKGameGameTypesAndSequencesVoteResponse(string &s);
+	void sendBobsGameGameTypesAndSequencesDownloadRequest_S();
+	void sendBobsGameGetHighScoresAndLeaderboardsRequest_S();
+	void incomingBobsGameGameTypesAndSequencesDownloadResponse(string &s);
+	void incomingBobsGameGameTypesAndSequencesUploadResponse(string &s);
+	void incomingBobsGameGameTypesAndSequencesVoteResponse(string &s);
 	//------------------------------------
 	private:
-		bool _gotOKGameGameTypesAndSequencesDownloadResponse = false;
-		mutex _gotOKGameGameTypesAndSequencesDownloadResponse_Mutex;
+		bool _gotBobsGameGameTypesAndSequencesDownloadResponse = false;
+		mutex _gotBobsGameGameTypesAndSequencesDownloadResponse_Mutex;
 public:
-	void setGotOKGameGameTypesAndSequencesDownloadResponse_S(bool b)
+	void setGotBobsGameGameTypesAndSequencesDownloadResponse_S(bool b)
 	{
-		lock_guard<mutex> lock(_gotOKGameGameTypesAndSequencesDownloadResponse_Mutex);
-		_gotOKGameGameTypesAndSequencesDownloadResponse = b;
+		lock_guard<mutex> lock(_gotBobsGameGameTypesAndSequencesDownloadResponse_Mutex);
+		_gotBobsGameGameTypesAndSequencesDownloadResponse = b;
 	}
-	bool getAndResetOKGameGameTypesAndSequencesDownloadResponseReceived_S()
+	bool getAndResetBobsGameGameTypesAndSequencesDownloadResponseReceived_S()
 	{
-		lock_guard<mutex> lock(_gotOKGameGameTypesAndSequencesDownloadResponse_Mutex);
-		bool temp = _gotOKGameGameTypesAndSequencesDownloadResponse;
-		_gotOKGameGameTypesAndSequencesDownloadResponse = false;
+		lock_guard<mutex> lock(_gotBobsGameGameTypesAndSequencesDownloadResponse_Mutex);
+		bool temp = _gotBobsGameGameTypesAndSequencesDownloadResponse;
+		_gotBobsGameGameTypesAndSequencesDownloadResponse = false;
 		return temp;
 	}
 	//------------------------------------
 	//------------------------------------
 	private:
-		string _gotOKGameGameTypesAndSequencesUploadResponse = "";
-		mutex _gotOKGameGameTypesAndSequencesUploadResponse_Mutex;
+		string _gotBobsGameGameTypesAndSequencesUploadResponse = "";
+		mutex _gotBobsGameGameTypesAndSequencesUploadResponse_Mutex;
 public:
-	void setGotOKGameGameTypesAndSequencesUploadResponse_S(string s)
+	void setGotBobsGameGameTypesAndSequencesUploadResponse_S(string s)
 	{
-		lock_guard<mutex> lock(_gotOKGameGameTypesAndSequencesUploadResponse_Mutex);
-		_gotOKGameGameTypesAndSequencesUploadResponse = s;
+		lock_guard<mutex> lock(_gotBobsGameGameTypesAndSequencesUploadResponse_Mutex);
+		_gotBobsGameGameTypesAndSequencesUploadResponse = s;
 	}
-	string getAndResetOKGameGameTypesAndSequencesUploadResponse_S()
+	string getAndResetBobsGameGameTypesAndSequencesUploadResponse_S()
 	{
-		lock_guard<mutex> lock(_gotOKGameGameTypesAndSequencesUploadResponse_Mutex);
-		string s = _gotOKGameGameTypesAndSequencesUploadResponse;
-		_gotOKGameGameTypesAndSequencesUploadResponse = "";
+		lock_guard<mutex> lock(_gotBobsGameGameTypesAndSequencesUploadResponse_Mutex);
+		string s = _gotBobsGameGameTypesAndSequencesUploadResponse;
+		_gotBobsGameGameTypesAndSequencesUploadResponse = "";
 		return s;
 	}
 	//------------------------------------
 	private:
-		string _gotOKGameGameTypesAndSequencesVoteResponse = "";
-		mutex _gotOKGameGameTypesAndSequencesVoteResponse_Mutex;
+		string _gotBobsGameGameTypesAndSequencesVoteResponse = "";
+		mutex _gotBobsGameGameTypesAndSequencesVoteResponse_Mutex;
 public:
-	void setGotOKGameGameTypesAndSequencesVoteResponse_S(string s)
+	void setGotBobsGameGameTypesAndSequencesVoteResponse_S(string s)
 	{
-		lock_guard<mutex> lock(_gotOKGameGameTypesAndSequencesVoteResponse_Mutex);
-		_gotOKGameGameTypesAndSequencesVoteResponse = s;
+		lock_guard<mutex> lock(_gotBobsGameGameTypesAndSequencesVoteResponse_Mutex);
+		_gotBobsGameGameTypesAndSequencesVoteResponse = s;
 	}
-	string getAndResetOKGameGameTypesAndSequencesVoteResponse_S()
+	string getAndResetBobsGameGameTypesAndSequencesVoteResponse_S()
 	{
-		lock_guard<mutex> lock(_gotOKGameGameTypesAndSequencesVoteResponse_Mutex);
-		string s = _gotOKGameGameTypesAndSequencesVoteResponse;
-		_gotOKGameGameTypesAndSequencesVoteResponse = "";
+		lock_guard<mutex> lock(_gotBobsGameGameTypesAndSequencesVoteResponse_Mutex);
+		string s = _gotBobsGameGameTypesAndSequencesVoteResponse;
+		_gotBobsGameGameTypesAndSequencesVoteResponse = "";
 		return s;
 	}
 	//------------------------------------
 
 
-	void sendOKGameRoomListRequest_S();
-	void incomingOKGameRoomListResponse(string &s);
-	void incomingOKGameNewRoomCreatedUpdate(string &s);
-	void tellOKGameRoomHostMyUserID_S(const string& roomUUID);
-	void tellServerOKGameHostingPublicGameUpdate_S(const string& roomDescription);
-	void tellServerOKGameIHaveCanceledTheGame_S(const string& roomUUID);
-	void tellServerOKGameIHaveStartedTheGame_S(const string& roomUUID);
-	void tellServerOKGameTheGameHasEnded_S(const string& roomUUID, const string& results);
-	void sendOKGameGameStats_S(const string& statsString);
-	void incomingOKGameGameStatsResponse_S(string s);
-	void sendOKGameActivityStreamRequest_S();
-	void incomingOKGameActivityStreamResponse_S(string s);
-	void incomingOKGameActivityStreamUpdate_S(string s);
-	void incomingOKGameUserStatsForSpecificGameAndDifficulty(string &s);
-	void addToLeaderboard(sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> boardArray, sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard);
-	void incomingOKGameLeaderBoardByTotalTimePlayed(string &s);
-	void incomingOKGameLeaderBoardByTotalBlocksCleared(string &s);
-	void incomingOKGameLeaderBoardByPlaneswalkerPoints(string &s);
-	void incomingOKGameLeaderBoardByEloScore(string &s);
-	void incomingOKGameHighScoreBoardsByTimeLasted(string &s);
-	void incomingOKGameHighScoreBoardsByBlocksCleared(string &s);
+	void sendBobsGameRoomListRequest_S();
+	void incomingBobsGameRoomListResponse(string &s);
+	void incomingBobsGameNewRoomCreatedUpdate(string &s);
+	void tellBobsGameRoomHostMyUserID_S(const string& roomUUID);
+	void tellServerBobsGameHostingPublicGameUpdate_S(const string& roomDescription);
+	void tellServerBobsGameIHaveCanceledTheGame_S(const string& roomUUID);
+	void tellServerBobsGameIHaveStartedTheGame_S(const string& roomUUID);
+	void tellServerBobsGameTheGameHasEnded_S(const string& roomUUID, const string& results);
+	void sendBobsGameGameStats_S(const string& statsString);
+	void incomingBobsGameGameStatsResponse_S(string s);
+	void sendBobsGameActivityStreamRequest_S();
+	void incomingBobsGameActivityStreamResponse_S(string s);
+	void incomingBobsGameActivityStreamUpdate_S(string s);
+	void incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s);
+	void addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard);
+	void incomingBobsGameLeaderBoardByTotalTimePlayed(string &s);
+	void incomingBobsGameLeaderBoardByTotalBlocksCleared(string &s);
+	void incomingBobsGameLeaderBoardByPlaneswalkerPoints(string &s);
+	void incomingBobsGameLeaderBoardByEloScore(string &s);
+	void incomingBobsGameHighScoreBoardsByTimeLasted(string &s);
+	void incomingBobsGameHighScoreBoardsByBlocksCleared(string &s);
 	void sendChatMessage(string s);
 	void incomingChatMessage(string s);
 	//------------------------------------
@@ -883,12 +914,12 @@ public:
 		string _bobsGameRoomListResponse = "";
 		mutex _bobsGameRoomListResponse_Mutex;
 public:
-	void setOKGameRoomListResponse_S(string s)
+	void setBobsGameRoomListResponse_S(string s)
 	{
 		lock_guard<mutex> lock(_bobsGameRoomListResponse_Mutex);
 		_bobsGameRoomListResponse = s;
 	}
-	string getAndResetOKGameRoomListResponse_S()
+	string getAndResetBobsGameRoomListResponse_S()
 	{
 		lock_guard<mutex> lock(_bobsGameRoomListResponse_Mutex);
 		string s = _bobsGameRoomListResponse;
@@ -900,19 +931,19 @@ public:
 
 	//------------------------------------
 	private:
-		bool _gotOKGameGameStatsResponse = false;
-		mutex _gotOKGameGameStatsResponse_Mutex;
+		bool _gotBobsGameGameStatsResponse = false;
+		mutex _gotBobsGameGameStatsResponse_Mutex;
 	public:
-		void setGotOKGameGameStatsResponse_S(bool s)
+		void setGotBobsGameGameStatsResponse_S(bool s)
 		{
-			lock_guard<mutex> lock(_gotOKGameGameStatsResponse_Mutex);
-			_gotOKGameGameStatsResponse = s;
+			lock_guard<mutex> lock(_gotBobsGameGameStatsResponse_Mutex);
+			_gotBobsGameGameStatsResponse = s;
 		}
-		bool getAndResetGotOKGameGameStatsResponse_S()
+		bool getAndResetGotBobsGameGameStatsResponse_S()
 		{
-			lock_guard<mutex> lock(_gotOKGameGameStatsResponse_Mutex);
-			bool s = _gotOKGameGameStatsResponse;
-			_gotOKGameGameStatsResponse = false;
+			lock_guard<mutex> lock(_gotBobsGameGameStatsResponse_Mutex);
+			bool s = _gotBobsGameGameStatsResponse;
+			_gotBobsGameGameStatsResponse = false;
 			return s;
 		}
 	//------------------------------------
@@ -920,19 +951,19 @@ public:
 
 	//------------------------------------
 	private:
-		sp<vector<string>>_bobsGameGameStatsResponse;
+		ArrayList<string> _bobsGameGameStatsResponse;
 		mutex _bobsGameGameStatsResponse_Mutex;
 	public:
-		void setOKGameGameStatsResponse_S(sp<vector<string>>s)
+		void setBobsGameGameStatsResponse_S(ArrayList<string> s)
 		{
 			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
 			_bobsGameGameStatsResponse = s;
 		}
-		sp<vector<string>>getAndResetOKGameGameStatsResponse_S()
+		ArrayList<string> getAndResetBobsGameGameStatsResponse_S()
 		{
 			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
-			sp<vector<string>>s = _bobsGameGameStatsResponse;
-			_bobsGameGameStatsResponse->clear();
+			ArrayList<string> s = _bobsGameGameStatsResponse;
+			_bobsGameGameStatsResponse.clear();
 			return s;
 		}
 	//------------------------------------	
@@ -955,10 +986,10 @@ public:
 	string addFriendByUserNameResponse = "";
 
 	bool _doLoginNoCaptions(string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doLogin(sp<Caption>statusLabel, sp<Caption>errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doCreateAccount(sp<Caption>statusLabel, sp<Caption>errorLabel, string &userName, string &email, string &password, string &confirmPassword);
+	bool doLogin(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
+	bool doCreateAccount(Caption *statusLabel, Caption *errorLabel, string &userName, string &email, string &password, string &confirmPassword);
 	bool checkForSessionTokenAndLogInIfExists();
-	bool doForgotPassword(sp<Caption>statusLabel, sp<Caption>errorLabel, string &userNameOrEmail);
-	bool linkFacebookAccount(sp<Caption>statusLabel, sp<Caption>errorLabel);
-	bool doAddFriendByUsername(sp<Caption>statusLabel, sp<Caption>errorLabel, const string& friendUserName);
+	bool doForgotPassword(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail);
+	bool linkFacebookAccount(Caption *statusLabel, Caption *errorLabel);
+	bool doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, const string& friendUserName);
 };

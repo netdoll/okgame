@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "CTPL-master/ctpl_stl.h"
 
 class Logger;
@@ -25,13 +25,13 @@ public:
 	static Logger log;
 
 
-	sp<MapState> currentState = nullptr;
+	MapState* currentState = nullptr;
 	bool randomSpawnEnabled = true;
 
 
-	sp<vector<sp<MapState>>>stateList;
-	sp<vector<sp<Event>>>mapEventList;
-	//sp<vector<int>>mapEventIDList;
+	ArrayList<MapState*> stateList;
+	ArrayList<BobEvent*> mapEventList;
+	//ArrayList<int> mapEventIDList;
 
 
 	float lastKnownScreenX = 0;
@@ -41,36 +41,36 @@ public:
 	float alpha = 1.0f;
 
 
-	//this is a vector of sp<vectors of sorted lights per layer. this is filled in on map first load.
-	sp<vector<sp<vector<sp<Light>>>>>sortedLightsLayers;
+	//this is a ArrayList of ArrayLists of sorted lights per layer. this is filled in on map first load.
+	ArrayList<ArrayList<Light*>*> sortedLightsLayers;
 
 
 	//these are entities that exist in this map
-	sp<vector<sp<Entity>>>activeEntityList;
+	ArrayList<Entity*> activeEntityList;
 	//this gets filled in once per frame with entities from entityList that are on the screen
-	sp<vector<sp<Entity>>>drawList;
+	ArrayList<Entity*> drawList;
 	//that gets sorted into zList which is drawn in sequence.
-	sp<vector<sp<Entity>>>zList;
+	ArrayList<Entity*> zList;
 
 	//door/warp list
-	sp<vector<sp<Door>>>doorList;
-	sp<vector<sp<WarpArea>>>warpAreaList;
+	ArrayList<Door*> doorList;
+	ArrayList<WarpArea*> warpAreaList;
 
 
-	sp<IntArray> hitLayer = nullptr;
-	sp<IntArray> cameraLayer = nullptr;
-	sp<IntArray> groundShaderLayer = nullptr;
-	sp<IntArray> lightMaskLayer = nullptr;
+	IntArray* hitLayer = nullptr;
+	IntArray* cameraLayer = nullptr;
+	IntArray* groundShaderLayer = nullptr;
+	IntArray* lightMaskLayer = nullptr;
 
 
-	sp<HashMap<int,sp<OKTexture>>> chunkTexture;//= ms<HashMap><int, sp<Texture>>();
+	HashMap<int,BobTexture*> chunkTexture;//= new HashMap<int, Texture*>();
 
-	sp<vector<bool>> usingHQ2XTexture = nullptr;
+	vector<bool>* usingHQ2XTexture = nullptr;
 
 
 	//these are accessed by threads but not modified by threads so it's probably OK
-	sp<IntArray> tilesetIntArray = nullptr;
-	sp<ByteArray> paletteRGBByteArray = nullptr;
+	IntArray* tilesetIntArray = nullptr;
+	ByteArray* paletteRGBByteArray = nullptr;
 
 	//when this happens i can delete the indexed data and palette data but until then they are being accessed by threads
 	bool allChunkPNGsLoadedAsTextures = false;
@@ -83,8 +83,8 @@ public:
 	const static int chunkSizeTiles1X = chunkSizePixels1X / 8;
 
 
-	//static sp<ExecutorService> generatePNGExecutorService;
-	//static sp<ExecutorService> generateLightPNGExecutorService;
+	//static ExecutorService* generatePNGExecutorService;
+	//static ExecutorService* generateLightPNGExecutorService;
 	//public ExecutorService generateHQ2XPNGExecutorService = null;
 
 
@@ -105,10 +105,10 @@ public:
 	int maxLightPNGThreadsCreated = 0;
 	int lightPNGThreadsCreated = 0;
 
-	sp<ConsoleText> texturesLoadedDebugText = nullptr;
-	sp<ConsoleText> hq2xChunkPNGThreadsDebugText = nullptr;
-	sp<ConsoleText> chunkPNGThreadsDebugText = nullptr;
-	sp<ConsoleText> lightPNGThreadsDebugText = nullptr;
+	ConsoleText* texturesLoadedDebugText = nullptr;
+	ConsoleText* hq2xChunkPNGThreadsDebugText = nullptr;
+	ConsoleText* chunkPNGThreadsDebugText = nullptr;
+	ConsoleText* lightPNGThreadsDebugText = nullptr;
 
 
 	int chunksWidth = 0;
@@ -128,7 +128,7 @@ public:
 	long long lastTimeMD5sRequested = 0;
 
 
-	sp<Notification> generatingAreaNotification = nullptr;
+	Notification* generatingAreaNotification = nullptr;
 
 
 	bool addedEntitiesAndCharactersFromCurrentStateToActiveEntityList = false;
@@ -137,46 +137,46 @@ public:
 
 
 private:
-	sp<MapData> data = nullptr;
+	MapData* data = nullptr;
 
 
 public:
 	Map();
-	Map(sp<Engine> g, sp<MapData> mapData);
-	void initMap(sp<Engine> g, sp<MapData> mapData);
+	Map(Engine* g, MapData* mapData);
+	void initMap(Engine* g, MapData* mapData);
 
 
-	sp<Entity> getEntityByName(const string& name);
+	Entity* getEntityByName(const string& name);
 
-	sp<Character> getCharacterByName(const string& name);
-
-
-	sp<Light> getLightByName(const string& name);
+	Character* getCharacterByName(const string& name);
 
 
-	sp<Area> getAreaOrWarpAreaByName(string name);
+	Light* getLightByName(const string& name);
 
 
-	sp<Area> getAreaOrWarpAreaByTYPEID(string typeID);
+	Area* getAreaOrWarpAreaByName(string name);
 
-	sp<Door> getDoorByTYPEID(const string& typeID);
 
-	sp<Door> getDoorByName(const string& name);
+	Area* getAreaOrWarpAreaByTYPEID(string typeID);
+
+	Door* getDoorByTYPEID(const string& typeID);
+
+	Door* getDoorByName(const string& name);
 
 	//public MapState getStateByName(String name){return getMapStateByName(name);}
 
-	sp<MapState> getMapStateByName(const string& name);
+	MapState* getMapStateByName(const string& name);
 
 
-	sp<MapState> getMapStateByID(int id);
+	MapState* getMapStateByID(int id);
 
 
-	sp<vector<string>> getListOfRandomPointsOfInterestTYPEIDs();
+	ArrayList<string>* getListOfRandomPointsOfInterestTYPEIDs();
 
 
 	//public Tile getTileByName(String name)
 	//{
-	//return tileHashtable->at(name);
+	//return tileHashtable.get(name);
 	//}
 
 
@@ -186,7 +186,7 @@ public:
 	void fadeOut();
 
 
-	void loadMapState(sp<MapState> s);
+	void loadMapState(MapState* s);
 
 
 private:
@@ -286,7 +286,7 @@ public:
 	void loadUtilityLayers();
 
 
-	void saveDataToCache(sp<IntArray> intArrayAllLayers, sp<IntArray> tiles, sp<ByteArray> pal);
+	void saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArray* pal);
 
 
 	void unloadArea(const string& s);
@@ -349,10 +349,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	sp<OKTexture> getChunkTexture(int index);
+	BobTexture* getChunkTexture(int index);
 
 	//The following method was originally marked 'synchronized':
-	void setChunkTexture(int index, sp<OKTexture> t);
+	void setChunkTexture(int index, BobTexture* t);
 
 
 	//The following method was originally marked 'synchronized':
@@ -366,7 +366,7 @@ public:
 
 
 	//------------------------------------
-	sp<vector<bool>> _chunkPNGFileExists = nullptr;
+	vector<bool>* _chunkPNGFileExists = nullptr;
 	mutex _chunkPNGFileExists_Mutex;
 	bool getChunkPNGFileExists_S(int index)
 	{ //=========================================================================================================================
@@ -383,7 +383,7 @@ public:
 
 
 	//------------------------------------
-	sp<vector<bool>> _hq2xChunkPNGFileExists = nullptr;
+	vector<bool>* _hq2xChunkPNGFileExists = nullptr;
 	mutex _hq2xChunkPNGFileExists_Mutex;
 	bool getHQ2XChunkPNGFileExists_S(int index)
 	{ //=========================================================================================================================
@@ -487,15 +487,15 @@ public:
 	/// <summary>
 	/// returns false if no image is needed
 	/// </summary>
-	bool drawTileLayerIntoBufferedImage(const string& layerFileName, sp<BufferedImage> chunkImage, sp<BufferedImage> chunkImageBorder, int chunkX, int chunkY, sp<IntArray> layerChunkBuffer, bool shadowLayer);
+	bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, IntArray* layerChunkBuffer, bool shadowLayer);
 
 
 	void createHQ2XTexturePNG_THREAD(int chunkX, int chunkY);
 
 
-	void antialiasBufferedImage(sp<BufferedImage> bufferedImage);
+	void antialiasBufferedImage(BufferedImage* bufferedImage);
 
-	void setHQ2XAlphaFromOriginal(sp<BufferedImage> hq2xBufferedImage, sp<BufferedImage> bufferedImage);
+	void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
 
 
 	void addEntitiesAndCharactersFromCurrentStateToActiveEntityList();
@@ -512,43 +512,43 @@ public:
 	bool isAnyRandomCharacterTryingToGoToXY(float x, float y);
 
 
-	int* findOpenSpaceInArea(sp<Area> a, int w, int h);
+	int* findOpenSpaceInArea(Area* a, int w, int h);
 
 
-	bool isAnyCharacterTouchingArea(sp<Area> a);
+	bool isAnyCharacterTouchingArea(Area* a);
 
 
-	bool isAnyEntityTouchingArea(sp<Area> a);
+	bool isAnyEntityTouchingArea(Area* a);
 
 
-	sp<vector<sp<Entity>>> getAllEntitiesTouchingArea(sp<Area> a);
+	ArrayList<Entity*>* getAllEntitiesTouchingArea(Area* a);
 
 
-	sp<vector<sp<Entity>>> getAllEntitiesPlayerIsTouching();
+	ArrayList<Entity*>* getAllEntitiesPlayerIsTouching();
 
 
-	bool isAnyoneTryingToGoToArea(sp<Area> a);
+	bool isAnyoneTryingToGoToArea(Area* a);
 
 
-	bool isAnyEntityUsingSpriteAsset(sp<Sprite> s);
+	bool isAnyEntityUsingSpriteAsset(Sprite* s);
 
 
-	sp<vector<sp<Entity>>> getAllEntitiesUsingSpriteAsset(sp<Sprite> s);
+	ArrayList<Entity*>* getAllEntitiesUsingSpriteAsset(Sprite* s);
 
 
-	sp<Entity> createEntity(const string& spriteName, sp<Sprite> spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
+	Entity* createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
 
 
-	sp<Entity> createEntityFeetAtXY(const string& spriteName, sp<Sprite> sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
+	Entity* createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
 
 
-	sp<Entity> createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(sp<Entity> e, const string& spriteName, sp<Sprite> sprite, float mapX, float mapY, int amt);
+	Entity* createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt);
 
 
-	sp<Entity> createEntityAtArea(const string& spriteName, sp<Sprite> spriteAsset, sp<Area> a);
+	Entity* createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a);
 
 
-	sp<MapData> getData();
+	MapData* getData();
 
 
 	int getID();
@@ -584,9 +584,9 @@ public:
 	string& getPaletteMD5();
 	string& getTilesMD5();
 
-	//	public sp<Vector<MapStateData>>getStateDataList(){return getData().getStateDataList();}
-	//	public sp<Vector<EventData>>getEventDataList(){return getData().getEventDataList();}
-	//	public sp<Vector<DoorData>>getDoorDataList(){return getData().getDoorDataList();}
+	//	public Vector<MapStateData> getStateDataList(){return getData().getStateDataList();}
+	//	public Vector<EventData> getEventDataList(){return getData().getEventDataList();}
+	//	public Vector<DoorData> getDoorDataList(){return getData().getDoorDataList();}
 
 
 	//set

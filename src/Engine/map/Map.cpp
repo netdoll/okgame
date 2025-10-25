@@ -27,15 +27,15 @@ ctpl::thread_pool* Map::generateLightPNGThreadPool = nullptr;
 Map::Map()
 {//=========================================================================================================================
 
-	//chunkTexture = ms<HashMap><int, sp<OKTexture>>();
+	//chunkTexture = new HashMap<int, BobTexture*>();
 }
 
 
 //=========================================================================================================================
-Map::Map(sp<Engine> g, sp<MapData> mapData)
+Map::Map(Engine* g, MapData* mapData)
 { //=========================================================================================================================
 
-	//chunkTexture = ms<HashMap><int, sp<OKTexture>>();
+	//chunkTexture = new HashMap<int, BobTexture*>();
 
 	initMap(g, mapData);
 
@@ -43,7 +43,7 @@ Map::Map(sp<Engine> g, sp<MapData> mapData)
 
 
 //=========================================================================================================================
-void Map::initMap(sp<Engine> g, sp<MapData> mapData)
+void Map::initMap(Engine* g, MapData* mapData)
 {
 	e = g;
 
@@ -56,12 +56,12 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	chunksWidth = (mapData->getWidthTiles1X() / chunkSizeTiles1X) + 1;
 	chunksHeight = (mapData->getHeightTiles1X() / chunkSizeTiles1X) + 1;
 
-//	if (chunkTexture->empty())
+//	if (chunkTexture.isEmpty())
 //	{
-//	    //chunkTexture = ms<vector><sp<Texture>>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
+//	    //chunkTexture = new ArrayList<Texture*>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
 //	    for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 //	    {
-//	        delete chunkTexture->at(i);
+//	        delete chunkTexture.get(i);
 //	    }
 //	}
 
@@ -69,7 +69,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	//these are thread safe variables but it's OK here because it's only on init
 	if (_chunkPNGFileExists == nullptr)
 	{
-		_chunkPNGFileExists = ms<vector<bool>>(chunksWidth * chunksHeight * 2);
+		_chunkPNGFileExists = (new vector<bool>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_chunkPNGFileExists)[i] = false;
@@ -78,7 +78,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (_hq2xChunkPNGFileExists == nullptr)
 	{
-		_hq2xChunkPNGFileExists = ms<vector<bool>>((chunksWidth * chunksHeight * 2));
+		_hq2xChunkPNGFileExists = (new vector<bool>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_hq2xChunkPNGFileExists)[i] = false;
@@ -87,7 +87,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (usingHQ2XTexture == nullptr)
 	{
-		usingHQ2XTexture = ms<vector<bool>>((chunksWidth * chunksHeight * 2));
+		usingHQ2XTexture = new vector<bool>(chunksWidth * chunksHeight * 2);
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*usingHQ2XTexture)[i] = false;
@@ -101,26 +101,26 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	for (int i = 0; i < (int)mapData->getEventDataList()->size(); i++)
 	{
 		//create event, add to eventList
-		sp<EventData> eventData = mapData->getEventDataList()->at(i);
+		EventData* eventData = mapData->getEventDataList()->get(i);
 
 
-		sp<Event> event = nullptr;
+		BobEvent* event = nullptr;
 
-		for (int k = 0; k < (int)getEventManager()->eventList->size(); k++)
+		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
 		{
-			if (getEventManager()->eventList->at(k)->getID() == eventData->getID())
+			if (getEventManager()->eventList.get(k)->getID() == eventData->getID())
 			{
-				event = getEventManager()->eventList->at(k);
+				event = getEventManager()->eventList.get(k);
 			}
 		}
 
 		if (event == nullptr)
 		{
-			event = ms<Event>(getEngine(), eventData, this);
+			event = new BobEvent(getEngine(), eventData, this);
 		}
 
 
-		mapEventList->push_back(event);
+		mapEventList.add(event);
 
 	}
 
@@ -129,82 +129,82 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	{
 		//create door, add to doorList,
 
-		sp<DoorData> doorData = mapData->getDoorDataList()->at(i);
-		sp<Door> door = ms<Door>(getEngine(), doorData, this);
+		DoorData* doorData = mapData->getDoorDataList()->get(i);
+		Door* door = new Door(getEngine(), doorData, this);
 
 
 		//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 		//also check and make sure it is sending event update
 
-		doorList->push_back(door);
+		doorList.add(door);
 	}
 
 
 	for (int i = 0; i < (int)mapData->getStateDataList()->size(); i++)
 	{
-		sp<MapStateData> mapStateData = mapData->getStateDataList()->at(i);
+		MapStateData* mapStateData = mapData->getStateDataList()->get(i);
 
 
 		//create state, add to state list.
-		sp<MapState> mapState = ms<MapState>(mapStateData, this);
+		MapState* mapState = new MapState(mapStateData, this);
 
-		stateList->push_back(mapState);
+		stateList.add(mapState);
 
 
 		for (int n = 0; n < (int)mapStateData->getAreaDataList()->size(); n++)
 		{
-			sp<AreaData> areaData = mapStateData->getAreaDataList()->at(n);
+			AreaData* areaData = mapStateData->getAreaDataList()->get(n);
 
 			if (areaData->getIsWarpArea())
 			{
 				//create warparea, add to warpAreaList
-				sp<WarpArea> warpArea = ms<WarpArea>(getEngine(), areaData, this);
+				WarpArea* warpArea = new WarpArea(getEngine(), areaData, this);
 
 				//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 				//also check and make sure it is sending event update
 
-				warpAreaList->push_back(warpArea);
+				warpAreaList.add(warpArea);
 				//note that warp areas DON'T get added to the currentMap.areaHashmap.
 				//i go through each map and search for the appropriate warparea in that list
 			}
 			else
 			{
-				sp<Area> area = ms<Area>(getEngine(), areaData, this);
-				mapState->areaByNameHashtable->put(area->getName(), area);
-				mapState->areaByTYPEIDHashtable->put(area->getTYPEIDString(), area);
-				mapState->areaList->push_back(area);
+				Area* area = new Area(getEngine(), areaData, this);
+				mapState->areaByNameHashtable.put(area->getName(), area);
+				mapState->areaByTYPEIDHashtable.put(area->getTYPEIDString(), area);
+				mapState->areaList.add(area);
 			}
 		}
 
 
 		for (int n = 0; n < (int)mapStateData->getLightDataList()->size(); n++)
 		{
-			sp<LightData> lightData = mapStateData->getLightDataList()->at(n);
-			sp<Light> light = ms<Light>(getEngine(), lightData, this);
+			LightData* lightData = mapStateData->getLightDataList()->get(n);
+			Light* light = new Light(getEngine(), lightData, this);
 
 
-			mapState->lightList->push_back(light);
-			mapState->lightByNameHashtable->put(light->getName(), light);
+			mapState->lightList.add(light);
+			mapState->lightByNameHashtable.put(light->getName(), light);
 		}
 
 
 		for (int n = 0; n < (int)mapStateData->getEntityDataList()->size(); n++)
 		{
-			sp<EntityData> entityData = mapStateData->getEntityDataList()->at(n);
+			EntityData* entityData = mapStateData->getEntityDataList()->get(n);
 
 			if (entityData->getIsNPC())
 			{
-				sp<Character> character = ms<Character>(getEngine(), entityData, this);
+				Character* character = new Character(getEngine(), entityData, this);
 
-				mapState->characterList->push_back(character);
-				mapState->characterByNameHashtable->put(character->getName(), character);
+				mapState->characterList.add(character);
+				mapState->characterByNameHashtable.put(character->getName(), character);
 			}
 			else
 			{
-				sp<Entity> entity = ms<Entity>(getEngine(), entityData, this);
+				Entity* entity = new Entity(getEngine(), entityData, this);
 
-				mapState->entityList->push_back(entity);
-				mapState->entityByNameHashtable->put(entity->getName(), entity);
+				mapState->entityList.add(entity);
+				mapState->entityByNameHashtable.put(entity->getName(), entity);
 			}
 		}
 	}
@@ -215,12 +215,12 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 
 //=========================================================================================================================
-sp<Entity> Map::getEntityByName(const string& name)
+Entity* Map::getEntityByName(const string& name)
 { //=========================================================================================================================
-	sp<Entity> e = nullptr;
+	Entity* e = nullptr;
 
-	if(currentState->entityByNameHashtable->containsKey(name))
-	e = currentState->entityByNameHashtable->get(name);
+	if(currentState->entityByNameHashtable.containsKey(name))
+	e = currentState->entityByNameHashtable.get(name);
 
 	if (e == nullptr)
 	{
@@ -229,22 +229,22 @@ sp<Entity> Map::getEntityByName(const string& name)
 
 	if (e == nullptr)
 	{
-		for (int i = 0; i < activeEntityList->size(); i++)
+		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			if (activeEntityList->at(i)->getName() == name)
+			if (activeEntityList.get(i)->getName() == name)
 			{
-				e = activeEntityList->at(i);
+				e = activeEntityList.get(i);
 			}
 		}
 	}
 
 	if (e == nullptr)
 	{
-		for (int i = 0; i < (int)getSpriteManager()->screenSpriteList->size(); i++)
+		for (int i = 0; i < (int)getSpriteManager()->screenSpriteList.size(); i++)
 		{
-			if (getSpriteManager()->screenSpriteList->at(i)->getName().compare(name) == 0)
+			if (getSpriteManager()->screenSpriteList.get(i)->getName().compare(name) == 0)
 			{
-				e = getSpriteManager()->screenSpriteList->at(i);
+				e = getSpriteManager()->screenSpriteList.get(i);
 			}
 		}
 	}
@@ -259,49 +259,49 @@ sp<Entity> Map::getEntityByName(const string& name)
 
 
 //=========================================================================================================================
-sp<Character> Map::getCharacterByName(const string& name)
+Character* Map::getCharacterByName(const string& name)
 { //=========================================================================================================================
-	return currentState->characterByNameHashtable->get(name);
+	return currentState->characterByNameHashtable.get(name);
 }
 
 
 //=========================================================================================================================
-sp<Light> Map::getLightByName(const string& name)
+Light* Map::getLightByName(const string& name)
 { //=========================================================================================================================
 
 	//log.debug("getLightByName: "+name);
 
-	return currentState->lightByNameHashtable->get(name);
+	return currentState->lightByNameHashtable.get(name);
 }
 
 
 //=========================================================================================================================
-sp<Area> Map::getAreaOrWarpAreaByName(string name)
+Area* Map::getAreaOrWarpAreaByName(string name)
 { //=========================================================================================================================
 
 
 	//log.debug("getAreaOrWarpAreaByName: "+name);
 
-	if (OKString::startsWith(name, "AREA."))
+	if (String::startsWith(name, "AREA."))
 	{
 		name = name.substr(name.find(".") + 1);
 	}
 
 
-	sp<Area> a = nullptr;
+	Area* a = nullptr;
 	if (currentState != nullptr)
 	{
-		if (currentState->areaByNameHashtable->containsKey(name))
-		a = currentState->areaByNameHashtable->get(name);
+		if (currentState->areaByNameHashtable.containsKey(name))
+		a = currentState->areaByNameHashtable.get(name);
 	}
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < stateList->size(); i++)
+		for (int i = 0; i < stateList.size(); i++)
 		{
-			sp<MapState> s = stateList->at(i);
-			if (s->areaByNameHashtable->containsKey(name))
-			a = s->areaByNameHashtable->get(name);
+			MapState* s = stateList.get(i);
+			if (s->areaByNameHashtable.containsKey(name))
+			a = s->areaByNameHashtable.get(name);
 			if (a != nullptr)
 			{
 				break;
@@ -311,11 +311,11 @@ sp<Area> Map::getAreaOrWarpAreaByName(string name)
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < warpAreaList->size(); i++)
+		for (int i = 0; i < warpAreaList.size(); i++)
 		{
-			if (warpAreaList->at(i)->getName() == name)
+			if (warpAreaList.get(i)->getName() == name)
 			{
-				a = warpAreaList->at(i);
+				a = warpAreaList.get(i);
 			}
 		}
 	}
@@ -329,44 +329,44 @@ sp<Area> Map::getAreaOrWarpAreaByName(string name)
 	return a;
 }
 
-sp<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
+Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 { //=========================================================================================================================
 
 
 	//log.debug("getAreaOrWarpAreaByName: "+name);
 
-	if (OKString::startsWith(typeID, "AREA.") == false)
+	if (String::startsWith(typeID, "AREA.") == false)
 	{
 		typeID = "AREA." + typeID;
 	}
 
 
-	sp<Area> a = nullptr;
+	Area* a = nullptr;
 	if (currentState != nullptr)
 	{
-		if (currentState->areaByTYPEIDHashtable->containsKey(typeID))
-		a = currentState->areaByTYPEIDHashtable->get(typeID);
+		if (currentState->areaByTYPEIDHashtable.containsKey(typeID))
+		a = currentState->areaByTYPEIDHashtable.get(typeID);
 	}
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < warpAreaList->size(); i++)
+		for (int i = 0; i < warpAreaList.size(); i++)
 		{
-			if (warpAreaList->at(i)->getTYPEIDString() == typeID)
+			if (warpAreaList.get(i)->getTYPEIDString() == typeID)
 			{
-				a = warpAreaList->at(i);
+				a = warpAreaList.get(i);
 			}
 		}
 	}
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < stateList->size(); i++)
+		for (int i = 0; i < stateList.size(); i++)
 		{
-			sp<MapState> s = stateList->at(i);
+			MapState* s = stateList.get(i);
 
-			if (s->areaByTYPEIDHashtable->containsKey(typeID))
-			a = s->areaByTYPEIDHashtable->get(typeID);
+			if (s->areaByTYPEIDHashtable.containsKey(typeID))
+			a = s->areaByTYPEIDHashtable.get(typeID);
 
 			if (a != nullptr)
 			{
@@ -385,25 +385,25 @@ sp<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	return a;
 }
 
-sp<Door> Map::getDoorByTYPEID(const string& typeID_in)
+Door* Map::getDoorByTYPEID(const string& typeID_in)
 { //=========================================================================================================================
 
 	string typeID = typeID_in;
 	//log.debug("getDoorByName: "+name);
 
-	if (OKString::startsWith(typeID, "DOOR.") == false)
+	if (String::startsWith(typeID, "DOOR.") == false)
 	{
 		typeID = "DOOR." + typeID;
 	}
 
 	//doors
-	//for(int n=0;n<MapAssetIndex.mapList->size();n++)
+	//for(int n=0;n<MapAssetIndex.mapList.size();n++)
 	{
-		//MapAsset m = MapAssetIndex.mapList->at(n);
+		//MapAsset m = MapAssetIndex.mapList.get(n);
 
-		for (int i = 0; i < doorList->size(); i++)
+		for (int i = 0; i < doorList.size(); i++)
 		{
-			sp<Door> d = doorList->at(i);
+			Door* d = doorList.get(i);
 
 			if (typeID == d->getTYPEIDString())
 			{
@@ -417,26 +417,26 @@ sp<Door> Map::getDoorByTYPEID(const string& typeID_in)
 	return nullptr;
 }
 
-sp<Door> Map::getDoorByName(const string& name_in)
+Door* Map::getDoorByName(const string& name_in)
 { //=========================================================================================================================
 
 	string name = name_in;
 
 	//log.debug("getDoorByName: "+name);
 
-	if (OKString::startsWith(name, "DOOR."))
+	if (String::startsWith(name, "DOOR."))
 	{
 		name = name.substr(name.find(".") + 1);
 	}
 
 	//doors
-	//for(int n=0;n<MapAssetIndex.mapList->size();n++)
+	//for(int n=0;n<MapAssetIndex.mapList.size();n++)
 	{
-		//MapAsset m = MapAssetIndex.mapList->at(n);
+		//MapAsset m = MapAssetIndex.mapList.get(n);
 
-		for (int i = 0; i < doorList->size(); i++)
+		for (int i = 0; i < doorList.size(); i++)
 		{
-			sp<Door> d = doorList->at(i);
+			Door* d = doorList.get(i);
 
 			if (name == d->getName())
 			{
@@ -450,11 +450,11 @@ sp<Door> Map::getDoorByName(const string& name_in)
 	return nullptr;
 }
 
-sp<MapState> Map::getMapStateByName(const string& name)
+MapState* Map::getMapStateByName(const string& name)
 { //=========================================================================================================================
-	for (int i = 0; i < stateList->size(); i++)
+	for (int i = 0; i < stateList.size(); i++)
 	{
-		sp<MapState> mapState = stateList->at(i);
+		MapState* mapState = stateList.get(i);
 
 		if (name == mapState->getName())
 		{
@@ -466,19 +466,19 @@ sp<MapState> Map::getMapStateByName(const string& name)
 	//we didn't find it. make a new one. throw an error.
 	log.error("Could not find Map State:" + name + ". This should never happen.");
 
-	//MapState s = ms<MapState>(-1,name);
-	//stateList->push_back(s);
+	//MapState s = new MapState(-1,name);
+	//stateList.add(s);
 
 
 	return nullptr;
 }
 
-sp<MapState> Map::getMapStateByID(int id)
+MapState* Map::getMapStateByID(int id)
 { //=========================================================================================================================
 	//this should look through the current map mapStateList first
-	for (int i = 0; i < stateList->size(); i++)
+	for (int i = 0; i < stateList.size(); i++)
 	{
-		sp<MapState> s = stateList->at(i);
+		MapState* s = stateList.get(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -489,55 +489,56 @@ sp<MapState> Map::getMapStateByID(int id)
 	log.error("Could not find State ID:" + to_string(id) + " in currentMap stateList. This should never happen.");
 	//then it should look through every map mapStateList, since state ID is guaranteed to be unique.
 
-	//MapState s = ms<MapState>(id,"????");
-	//stateList->push_back(s);
+	//MapState s = new MapState(id,"????");
+	//stateList.add(s);
 
 
 	return nullptr;
 }
 
-sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
+ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 { //=========================================================================================================================
 
-	sp<vector<string>> areaTYPEIDList;// = ms<vector><string>();
+	ArrayList<string>* areaTYPEIDList = new ArrayList<string>();
 
 
 	//areas
-	//   java::util::Iterator<sp<Area>> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      sp<Area> a = aEnum->nextElement();
+	//      Area* a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
-	for (int i = 0; i < areas->size(); i++)
+	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
+	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->at(i);
+		Area* a = areas->get(i);
+
 
 		if (a->randomPointOfInterestOrExit())
 		{
-			areaTYPEIDList->push_back(a->getTYPEIDString());
+			areaTYPEIDList->add(a->getTYPEIDString());
 		}
 	}
 
 
 	//warpareas
-	for (int i = 0; i < warpAreaList->size(); i++)
+	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		sp<Area> a = warpAreaList->at(i);
+		Area* a = warpAreaList.get(i);
 		if (a->randomPointOfInterestOrExit())
 		{
-			areaTYPEIDList->push_back(a->getTYPEIDString());
+			areaTYPEIDList->add(a->getTYPEIDString());
 		}
 	}
 
 
 	//doors
-	for (int i = 0; i < doorList->size(); i++)
+	for (int i = 0; i < doorList.size(); i++)
 	{
-		sp<Door> d = doorList->at(i);
+		Door* d = doorList.get(i);
 		if (d->randomPointOfInterestOrExit())
 		{
-			areaTYPEIDList->push_back(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
+			areaTYPEIDList->add(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
 		}
 	}
 
@@ -569,7 +570,7 @@ void Map::fadeOut()
 	}
 }
 
-void Map::loadMapState(sp<MapState> s)
+void Map::loadMapState(MapState* s)
 { //===============================================================================================
 	currentState = s;
 }
@@ -614,14 +615,14 @@ void Map::update()
 
 			bool eventsAllLoadedThisTime = false;
 
-			if (mapEventList->size() > 0)
+			if (mapEventList.size() > 0)
 			{
 				eventsAllLoadedThisTime = true;
-				for (int i = 0; i < mapEventList->size(); i++)
+				for (int i = 0; i < mapEventList.size(); i++)
 				{
-					//int eventID = mapEventList->at(i);
-					sp<Event> event = mapEventList->at(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
-					event->map = shared_from_this();
+					//int eventID = mapEventList.get(i);
+					BobEvent* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
+					event->map = this;
 					if (event->getInitialized_S() == false)
 					{
 						eventsAllLoadedThisTime = false;
@@ -644,9 +645,9 @@ void Map::update()
 
 	//run load event to determine which map state to load.
 	//DONE: need to choose a MapState here.
-	//this is decided by the DEFAULT map Event, which should be loaded and run exactly once before the map loads.
+	//this is decided by the DEFAULT map BobEvent, which should be loaded and run exactly once before the map loads.
 	//so we need to go through currentMap's event list, find event type -1, and run that- before the map actually starts running. how to do that?
-	//m.currentState = m.stateList->at(0);
+	//m.currentState = m.stateList.get(0);
 
 
 	if (currentState == nullptr)
@@ -657,10 +658,10 @@ void Map::update()
 		if (ticksPassed > 200)
 		{
 			lastLoadEventRequestTime = currentTime;
-			for (int i = 0; i < mapEventList->size(); i++)
+			for (int i = 0; i < mapEventList.size(); i++)
 			{
-				sp<Event> event = mapEventList->at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList->at(i));
-				event->map = shared_from_this();
+				BobEvent* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+				event->map = this;
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
 					getEventManager()->addToEventQueueIfNotThere(event);
@@ -695,7 +696,7 @@ void Map::update()
 	}
 
 
-	if (sortedLightsLayers->empty())
+	if (sortedLightsLayers.isEmpty())
 	{
 		sortLightLayers();
 	}
@@ -716,10 +717,10 @@ void Map::update()
 	{
 		lastLoadEventRequestTime = currentTime;
 		//run all events, **this will also run post-load events for this map, which stop executing after one loop.
-		for (int i = 0; i < mapEventList->size(); i++)
+		for (int i = 0; i < mapEventList.size(); i++)
 		{
-			sp<Event> event = mapEventList->at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList->at(i));
-			event->map = shared_from_this();
+			BobEvent* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+			event->map = this;
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
 				getEventManager()->addToEventQueueIfNotThere(event);
@@ -811,13 +812,13 @@ void Map::update()
 
 					if (tilesetIntArray != nullptr)
 					{
-						//delete tilesetIntArray;
+						delete tilesetIntArray;
 						tilesetIntArray = nullptr;
 					}
 
 					if (paletteRGBByteArray != nullptr)
 					{
-						//delete paletteRGBByteArray;
+						delete paletteRGBByteArray;
 						paletteRGBByteArray = nullptr;
 					}
 
@@ -846,13 +847,13 @@ void Map::update()
 		{
 			if (tilesetIntArray != nullptr)
 			{
-				//delete tilesetIntArray;
+				delete tilesetIntArray;
 				tilesetIntArray = nullptr;
 			}
 
 			if (paletteRGBByteArray != nullptr)
 			{
-				//delete paletteRGBByteArray;
+				delete paletteRGBByteArray;
 				paletteRGBByteArray = nullptr;
 			}
 
@@ -959,7 +960,7 @@ void Map::updateLoadingStatus()
 
 		if (generatingAreaNotification == nullptr)
 		{
-			generatingAreaNotification = ms<Notification>(getEngine(), "Loading Area...");
+			generatingAreaNotification = new Notification((static_cast<BGClientEngine*>(getEngine())), "Loading Area...");
 		}
 
 
@@ -995,9 +996,9 @@ void Map::updateEntities()
 { //=========================================================================================================================
 
 	//for all entities update
-	for (int n = 0; n < activeEntityList->size(); n++)
+	for (int n = 0; n < activeEntityList.size(); n++)
 	{
-		sp<Entity> e = activeEntityList->at(n);
+		Entity* e = activeEntityList.get(n);
 
 		e->update();
 	}
@@ -1006,9 +1007,9 @@ void Map::updateEntities()
 void Map::updateDoors()
 { //=========================================================================================================================
 
-	for (int n = 0; n < doorList->size(); n++)
+	for (int n = 0; n < doorList.size(); n++)
 	{
-		sp<Door> e = doorList->at(n);
+		Door* e = doorList.get(n);
 
 		e->update();
 	}
@@ -1029,20 +1030,20 @@ void Map::updateAreas()
 	//			a.update();
 	//		}
 
-	for (int i = 0; i < (int)currentState->areaList->size(); i++)
+	for (int i = 0; i < (int)currentState->areaList.size(); i++)
 	{
-		sp<Area> a = currentState->areaList->at(i);
+		Area* a = currentState->areaList.get(i);
 		a->update();
 	}
 }
 
 void Map::updateWarpAreas()
 { //=========================================================================================================================
-	for (int i = 0; i < warpAreaList->size(); i++)
+	for (int i = 0; i < warpAreaList.size(); i++)
 	{
 		{
-			//if(warpAreaList->at(i).mapAsset==currentMap)
-			warpAreaList->at(i)->update();
+			//if(warpAreaList.get(i).mapAsset==currentMap)
+			warpAreaList.get(i)->update();
 		}
 	}
 }
@@ -1050,9 +1051,9 @@ void Map::updateWarpAreas()
 void Map::updateLights()
 { //=========================================================================================================================
 
-	for (int i = 0; i < (int)currentState->lightList->size(); i++)
+	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		currentState->lightList->at(i)->update();
+		currentState->lightList.get(i)->update();
 	}
 }
 
@@ -1060,68 +1061,68 @@ void Map::zOrderEntities()
 { //=========================================================================================================================
 
 
-	drawList->clear();
+	drawList.clear();
 
 
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		sp<Entity> e = activeEntityList->at(i);
+		Entity* e = activeEntityList.get(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
 		if (e->shouldDraw())
 		{
-			if (drawList->contains(e) == false)
+			if (drawList.contains(e) == false)
 			{
-				drawList->push_back(e);
+				drawList.add(e);
 			}
 		}
 	}
 
-	for (int i = 0; i < doorList->size(); i++)
+	for (int i = 0; i < doorList.size(); i++)
 	{
-		sp<Door> e = doorList->at(i);
+		Door* e = doorList.get(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
 		if (e->shouldDraw())
 		{
-			if (drawList->contains(e) == false)
+			if (drawList.contains(e) == false)
 			{
-				drawList->push_back(e);
+				drawList.add(e);
 			}
 		}
 	}
 
-	if (getCurrentMap() != nullptr && getCurrentMap().get() == this)
+	if (getCurrentMap() != nullptr && getCurrentMap() == this)
 	{
 		if (getClientGameEngine() != nullptr && getClientGameEngine()->playerExistsInMap == false)
 		{
 			if (getPlayer() != nullptr && getPlayer()->shouldDraw())
 			{
-				if ((drawList->contains(getPlayer())) == false)
+				if ((drawList.contains(getPlayer())) == false)
 				{
-					drawList->push_back(getPlayer());
+					drawList.add(getPlayer());
 				}
 			}
 		}
 	}
 
 
-	if (dynamic_cast<sp<BGClientEngine>>(getEngine()) != nullptr)
+	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)
 	{
 		//add friends, they are not added to any entityList
 		for (int i = 0; i < (int)getClientGameEngine()->friendManager->friendCharacters->size(); i++)
 		{
-			sp<FriendCharacter> f = getFriendManager()->friendCharacters->at(i);
+			FriendCharacter* f = getFriendManager()->friendCharacters->get(i);
 
 			if (f->mapName == getName())
 			{
 				if (f->shouldDraw())
 				{
-					if (drawList->contains(f) == false)
+					if (drawList.contains(f) == false)
 					{
-						drawList->push_back(f);
+						drawList.add(f);
 					}
 				}
 			}
@@ -1135,15 +1136,15 @@ void Map::zOrderEntities()
 	//for each entity in the drawList, find the topmost one and add it to the new list, then remove it from the drawList
 
 
-	zList->clear();
+	zList.clear();
 
-	while (drawList->size() != 0)
+	while (drawList.size() != 0)
 	{
-		sp<Entity> highestOnScreenEntity = nullptr;
+		Entity* highestOnScreenEntity = nullptr;
 
-		for (int n = 0; n < drawList->size(); n++)
+		for (int n = 0; n < drawList.size(); n++)
 		{
-			sp<Entity> e = drawList->at(n);
+			Entity* e = drawList.get(n);
 
 			//store topmost entity on screen
 			//check for non-zordering entities, entities always on top, entities always on bottom here.
@@ -1161,16 +1162,16 @@ void Map::zOrderEntities()
 			}
 		}
 
-		drawList->remove(highestOnScreenEntity);
-		zList->push_back(highestOnScreenEntity);
+		drawList.remove(highestOnScreenEntity);
+		zList.add(highestOnScreenEntity);
 	}
 
 
 	//		log.debug("---------------------");
 	//
-	//		for(int i=0;i<zList->size();i++)
+	//		for(int i=0;i<zList.size();i++)
 	//		{
-	//			Entity e = zList->at(i);
+	//			Entity e = zList.get(i);
 	//			log.debug(e.getSpriteName());
 	//		}
 
@@ -1188,29 +1189,29 @@ void Map::sortLightLayers()
 	//for all lights
 	//if light is not drawn
 
-	for (int i = 0; i < (int)currentState->lightList->size(); i++)
+	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		sp<Light> l = currentState->lightList->at(i);
+		Light* l = currentState->lightList.get(i);
 		//if light is not drawn
 		if (l->sortingState != Light::DRAWN)
 		{
-			sp<vector<sp<Light>>> thisLayerList;// = ms<vector><sp<Light>>();
+			ArrayList<Light*>* thisLayerList = new ArrayList<Light*>();
 
 			//light is drawing
 			l->sortingState = Light::DRAWING;
 
 			//for all lights from this light to the end
-			for (int a = i + 1; a < (int)currentState->lightList->size(); a++)
+			for (int a = i + 1; a < (int)currentState->lightList.size(); a++)
 			{
-				sp<Light> compareLight = currentState->lightList->at(a);
+				Light* compareLight = currentState->lightList.get(a);
 
 				//if that light isn't already drawn
 				if (compareLight->sortingState != Light::DRAWN)
 				{
 					//for all lights
-					for (int b = 0; b < (int)currentState->lightList->size(); b++)
+					for (int b = 0; b < (int)currentState->lightList.size(); b++)
 					{
-						sp<Light> overlapLight = currentState->lightList->at(b);
+						Light* overlapLight = currentState->lightList.get(b);
 
 						//if this light isn't
 						if (a != b && overlapLight->sortingState == Light::DRAWING)
@@ -1243,12 +1244,12 @@ void Map::sortLightLayers()
 			}
 
 
-			for (int d = 0; d < (int)currentState->lightList->size(); d++)
+			for (int d = 0; d < (int)currentState->lightList.size(); d++)
 			{
-				sp<Light> drawLight = currentState->lightList->at(d);
+				Light* drawLight = currentState->lightList.get(d);
 				if (drawLight->sortingState == Light::DRAWING)
 				{
-					thisLayerList->push_back(drawLight);
+					thisLayerList->add(drawLight);
 
 					//draw light
 					drawLight->sortingState = Light::DRAWN;
@@ -1257,7 +1258,7 @@ void Map::sortLightLayers()
 
 			//log.debug("Light layer "+layer);
 			//layer++;
-			sortedLightsLayers->push_back(thisLayerList);
+			sortedLightsLayers.add(thisLayerList);
 		}
 	}
 }
@@ -1302,7 +1303,7 @@ void Map::render(RenderOrder renderOrder, bool disableClip, bool disableFloorOff
 	}
 
 
-	sp<OKTexture> texture = nullptr;
+	BobTexture* texture = nullptr;
 
 	float sw = (float)getEngine()->getWidth();
 	float sh = (float)getEngine()->getHeight();
@@ -1559,9 +1560,9 @@ void Map::renderEntities(RenderOrder layer)
 	{
 		//for all entities, render as needed, in proper order
 
-		for (int n = 0; n < zList->size(); n++)
+		for (int n = 0; n < zList.size(); n++)
 		{
-			sp<Entity> e = zList->at(n);
+			Entity* e = zList.get(n);
 
 
 			if (layer == RenderOrder::SPRITE_DEBUG_OUTLINES)
@@ -1590,9 +1591,9 @@ void Map::renderAllLightsUnsorted()
 
 	if (currentState != nullptr)
 	{
-		for (int i = 0; i < (int)currentState->lightList->size(); i++)
+		for (int i = 0; i < (int)currentState->lightList.size(); i++)
 		{
-			sp<Light> l = currentState->lightList->at(i);
+			Light* l = currentState->lightList.get(i);
 			l->renderLight();
 		}
 	}
@@ -1610,15 +1611,15 @@ void Map::renderAreaActionIcons()
 	}
 
 	//areas
-	//   java::util::Iterator<sp<Area>> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      sp<Area> a = aEnum->nextElement();
+	//      Area* a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
+	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->at(i);
+		Area* a = areas->get(i);
 
 		//if(a.isAnAction)
 		a->renderActionIcon();
@@ -1626,9 +1627,9 @@ void Map::renderAreaActionIcons()
 
 
 	//warpareas
-	for (int i = 0; i < warpAreaList->size(); i++)
+	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		sp<Area> a = warpAreaList->at(i);
+		Area* a = warpAreaList.get(i);
 		//if(a.isAnAction)
 		a->renderActionIcon();
 	}
@@ -1648,8 +1649,9 @@ void Map::renderChunkBoxes()
 	//gl add quads
 
 	//gl end
-	glColor4f(1.0f, 0.5f, 0.0f, 0.4f);
-	glBegin(GL_LINES);
+
+
+#ifndef ORBIS
 
 	float sw = (float)getEngine()->getWidth();
 	float sh = (float)getEngine()->getHeight();
@@ -1672,16 +1674,19 @@ void Map::renderChunkBoxes()
 	int screenChunkHeight = ((int)(floor(sh / (chunkSizePixelsHQ2X * zoom)))) + 1;
 
 
+	glColor4f(1.0f, 0.5f, 0.0f, 0.4f);
+	glBegin(GL_LINES);
+
 	for (int chunkY = startChunkY; chunkY <= startChunkY + screenChunkHeight && chunkY < chunksHeight; chunkY++)
 	{
 		for (int chunkX = startChunkX; chunkX <= startChunkX + screenChunkWidth && chunkX < chunksWidth; chunkX++)
 		{
+
+
 			float chunkMapScreenX = (float)(floor(screenX() * zoom + (chunkX * chunkSizePixelsHQ2X * zoom)));
 			float chunkMapScreenY = (float)(floor(screenY() * zoom + (chunkY * chunkSizePixelsHQ2X * zoom)));
 			float chunkMapScreenX2 = (float)(ceil(chunkMapScreenX + chunkSizePixelsHQ2X * zoom));
 			float chunkMapScreenY2 = (float)(ceil(chunkMapScreenY + chunkSizePixelsHQ2X * zoom));
-
-
 			//left
 			glVertex2f(chunkMapScreenX, chunkMapScreenY);
 			glVertex2f(chunkMapScreenX, chunkMapScreenY2);
@@ -1697,18 +1702,23 @@ void Map::renderChunkBoxes()
 			//bottom
 			glVertex2f(chunkMapScreenX, chunkMapScreenY2);
 			glVertex2f(chunkMapScreenX2, chunkMapScreenY2);
+
+
 		}
 	}
 
 
 	glEnd();
+#else
+
+#endif
 }
 
 void Map::renderHitLayer()
 { //=========================================================================================================================
-	glColor4f(1.0f, 0.0f, 0.0f, 0.4f);
-	glBegin(GL_QUADS);
 
+
+#ifndef ORBIS
 	float sw = (float)getEngine()->getWidth();
 	float sh = (float)getEngine()->getHeight();
 
@@ -1725,6 +1735,12 @@ void Map::renderHitLayer()
 	{
 		startTileY = 0;
 	}
+
+
+
+
+	glColor4f(1.0f, 0.0f, 0.0f, 0.4f);
+	glBegin(GL_QUADS);
 
 	int screenTileWidth = ((int)(floor(sw / (16 * zoom)))) + 1;
 	int screenTileHeight = ((int)(floor(sh / (16 * zoom)))) + 1;
@@ -1749,22 +1765,27 @@ void Map::renderHitLayer()
 			glVertex2f(tileMapScreenX, tileMapScreenY2);
 			glVertex2f(tileMapScreenX2, tileMapScreenY2);
 			glVertex2f(tileMapScreenX2, tileMapScreenY);
+
+
 		}
 	}
 
 
 	glEnd();
+#else
+
+#endif
 }
 
 void Map::renderLightBoxes()
 { //===============================================================================================
 	//light boxes
-	for (int i = 0; i < sortedLightsLayers->size(); i++)
+	for (int i = 0; i < sortedLightsLayers.size(); i++)
 	{
-		sp<vector<sp<Light>>> thisLayer = ms<vector<sp<Light>>>(sortedLightsLayers->at(i));
+		ArrayList<Light*>* thisLayer = sortedLightsLayers.get(i);
 		for (int n = 0; n < thisLayer->size(); n++)
 		{
-			thisLayer->at(n)->renderDebugBoxes();
+			thisLayer->get(n)->renderDebugBoxes();
 		}
 	}
 }
@@ -1777,16 +1798,16 @@ void Map::renderAreaDebugBoxes()
 		return;
 	}
 
-	//   java::util::Iterator<sp<Area>> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
 	//   //areas
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      sp<Area> a = aEnum->nextElement();
+	//      Area* a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
+	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->at(i);
+		Area* a = areas->get(i);
 
 
 
@@ -1804,16 +1825,16 @@ void Map::renderAreaDebugInfo()
 	}
 
 	//TODO: make these a manager in mapmanager
-	//   java::util::Iterator<sp<Area>> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
 	//   //areas
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      sp<Area> a = aEnum->nextElement();
+	//      Area* a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
+	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->at(i);
+		Area* a = areas->get(i);
 
 
 		//a.renderDebugBoxes();
@@ -1824,11 +1845,11 @@ void Map::renderAreaDebugInfo()
 void Map::renderWarpAreaDebugBoxes()
 { //=========================================================================================================================
 
-	for (int i = 0; i < warpAreaList->size(); i++)
+	for (int i = 0; i < warpAreaList.size(); i++)
 	{
 		{
-			//if(warpAreaList->at(i).mapAsset==currentMap)
-			warpAreaList->at(i)->renderDebugBoxes();
+			//if(warpAreaList.get(i).mapAsset==currentMap)
+			warpAreaList.get(i)->renderDebugBoxes();
 		}
 	}
 }
@@ -1836,11 +1857,11 @@ void Map::renderWarpAreaDebugBoxes()
 void Map::renderWarpAreaDebugInfo()
 { //=========================================================================================================================
 
-	for (int i = 0; i < warpAreaList->size(); i++)
+	for (int i = 0; i < warpAreaList.size(); i++)
 	{
 		{
-			//if(warpAreaList->at(i).mapAsset==currentMap)
-			warpAreaList->at(i)->renderDebugInfo();
+			//if(warpAreaList.get(i).mapAsset==currentMap)
+			warpAreaList.get(i)->renderDebugInfo();
 		}
 	}
 }
@@ -1864,7 +1885,7 @@ void Map::loadUtilityLayers()
 		hitLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getHitBoundsMD5());
 		/*hitLayer = new byte[getWidthTiles1X * getHeightTiles1X];
 		         
-		BufferedInputStream hitBin = ms<BufferedInputStream>(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getHitBoundsMD5));
+		BufferedInputStream hitBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getHitBoundsMD5));
 		         
 		try
 		{
@@ -1889,7 +1910,7 @@ void Map::loadUtilityLayers()
 		//
 		//
 		//			cameraLayer = new byte[getWidthTiles1X() * getHeightTiles1X()];
-		//			BufferedInputStream fxBin = ms<BufferedInputStream>(FileUtils::getResourceAsStream(""+FileUtils.cacheDir+getCameraBoundsMD5()));
+		//			BufferedInputStream fxBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+FileUtils.cacheDir+getCameraBoundsMD5()));
 		//
 		//			//TODO: in map editor, output this as byte array instead of int array, then i don't have to skip every other byte here
 		//			try
@@ -1924,7 +1945,7 @@ void Map::loadUtilityLayers()
 		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getGroundShaderMD5());
 
 		/*groundShaderLayer = new int[getWidthTiles1X * getHeightTiles1X];
-		BufferedInputStream shaderBin = ms<BufferedInputStream>(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getGroundShaderMD5));
+		BufferedInputStream shaderBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getGroundShaderMD5));
 		         
 		try
 		{
@@ -1963,7 +1984,7 @@ void Map::loadUtilityLayers()
 		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getLightMaskMD5());
 
 		/*lightMaskLayer = new int[getWidthTiles1X * getHeightTiles1X];
-		BufferedInputStream lightMaskBin = ms<BufferedInputStream>(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getLightMaskMD5));
+		BufferedInputStream lightMaskBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getLightMaskMD5));
 		         
 		try
 		{
@@ -1994,7 +2015,7 @@ void Map::loadUtilityLayers()
 	}
 }
 
-void Map::saveDataToCache(sp<IntArray> intArrayAllLayers, sp<IntArray> tiles, sp<ByteArray> pal)
+void Map::saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArray* pal)
 { //=========================================================================================================================
 
 	//I should just save each layer as the MD5 in the cache folder
@@ -2005,14 +2026,14 @@ void Map::saveDataToCache(sp<IntArray> intArrayAllLayers, sp<IntArray> tiles, sp
 		if (MapData::isTileLayer(l))
 		{
 			int index = (getWidthTiles1X() * getHeightTiles1X() * l);
-			sp<IntArray> layer = ms<IntArray>(getWidthTiles1X() * getHeightTiles1X());
+			IntArray* layer = new IntArray(getWidthTiles1X() * getHeightTiles1X());
 			for (int i = 0; i < getWidthTiles1X() * getHeightTiles1X(); i++)
 			{
 				layer->data()[i] = intArrayAllLayers->data()[index + i];
 			}
 
 			//save to cache folder as md5 name
-			sp<ByteArray> byteArray = FileUtils::getByteArrayFromIntArray(layer);
+			ByteArray* byteArray = FileUtils::getByteArrayFromIntArray(layer);
 			string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 			FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 
@@ -2072,7 +2093,7 @@ void Map::saveDataToCache(sp<IntArray> intArrayAllLayers, sp<IntArray> tiles, sp
 		}
 	}
 	//save tiles
-	sp<ByteArray> byteArray = FileUtils::getByteArrayFromIntArray(tiles);
+	ByteArray* byteArray = FileUtils::getByteArrayFromIntArray(tiles);
 	string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 	FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 	setTilesMD5(md5FileName);
@@ -2087,32 +2108,32 @@ void Map::saveDataToCache(sp<IntArray> intArrayAllLayers, sp<IntArray> tiles, sp
 void Map::unloadArea(const string& s)
 { //=========================================================================================================================
 
-	//public Hashtable<String, Area> areaHashtable = ms<Hashtable><String, Area>();
+	//public Hashtable<String, Area> areaHashtable = new Hashtable<String, Area>();
 
-	sp<Area> a = nullptr;
-	if(currentState->areaByNameHashtable->containsKey(s))
-	a = currentState->areaByNameHashtable->get(s);
+	Area* a = nullptr;
+	if(currentState->areaByNameHashtable.containsKey(s))
+	a = currentState->areaByNameHashtable.get(s);
 
-	currentState->areaByNameHashtable->removeAt(s);
+	currentState->areaByNameHashtable.removeAt(s);
 
-	if(currentState->areaByTYPEIDHashtable->containsKey(a->getTYPEIDString()))
-	currentState->areaByTYPEIDHashtable->removeAt(a->getTYPEIDString());
+	if(currentState->areaByTYPEIDHashtable.containsKey(a->getTYPEIDString()))
+	currentState->areaByTYPEIDHashtable.removeAt(a->getTYPEIDString());
 
 
-	currentState->areaList->remove(a);
+	currentState->areaList.remove(a);
 }
 
 void Map::unloadLight(const string& s)
 { //=========================================================================================================================
-	//public sp<vector<Light>>lightList = ms<vector><Light>();
-	//public Hashtable<String,Light> lightHashtable = ms<Hashtable><String,Light>();
+	//public ArrayList<Light> lightList = new ArrayList<Light>();
+	//public Hashtable<String,Light> lightHashtable = new Hashtable<String,Light>();
 
 
-	for (int i = 0; i < (int)currentState->lightList->size(); i++)
+	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		if (currentState->lightList->at(i)->getName() == s)
+		if (currentState->lightList.get(i)->getName() == s)
 		{
-			currentState->lightList->erase(currentState->lightList->begin()+i);
+			currentState->lightList.removeAt(i);
 			i--;
 			if (i < 0)
 			{
@@ -2121,15 +2142,15 @@ void Map::unloadLight(const string& s)
 		}
 	}
 
-	currentState->lightByNameHashtable->removeAt(s);
+	currentState->lightByNameHashtable.removeAt(s);
 
-	for (int i = 0; i < sortedLightsLayers->size(); i++)
+	for (int i = 0; i < sortedLightsLayers.size(); i++)
 	{
-		for (int j = 0; j < (int)sortedLightsLayers->at(i)->size(); j++)
+		for (int j = 0; j < (int)sortedLightsLayers.get(i)->size(); j++)
 		{
-			if (sortedLightsLayers->at(i)->at(j)->getName() == s)
+			if (sortedLightsLayers.get(i)->get(j)->getName() == s)
 			{
-				sortedLightsLayers->at(i)->erase(sortedLightsLayers->at(i)->begin()+j);
+				sortedLightsLayers.get(i)->removeAt(j);
 				j--;
 				if (j < 0)
 				{
@@ -2144,14 +2165,14 @@ void Map::unloadMapEntity(const string& s)
 { //=========================================================================================================================
 
 
-	//public sp<vector<MapSprite>>entityList = ms<vector><MapSprite>();
-	//public Hashtable<String, MapSprite> entityHashtable = ms<Hashtable><String, MapSprite>();
+	//public ArrayList<MapSprite> entityList = new ArrayList<MapSprite>();
+	//public Hashtable<String, MapSprite> entityHashtable = new Hashtable<String, MapSprite>();
 
-	for (int i = 0; i < (int)currentState->entityList->size(); i++)
+	for (int i = 0; i < (int)currentState->entityList.size(); i++)
 	{
-		if (currentState->entityList->at(i)->getName() == s)
+		if (currentState->entityList.get(i)->getName() == s)
 		{
-			currentState->entityList->erase(currentState->entityList->begin()+i);
+			currentState->entityList.removeAt(i);
 			i--;
 			if (i < 0)
 			{
@@ -2160,7 +2181,7 @@ void Map::unloadMapEntity(const string& s)
 		}
 	}
 
-	currentState->entityByNameHashtable->removeAt(s);
+	currentState->entityByNameHashtable.removeAt(s);
 }
 
 void Map::releaseAllTextures()
@@ -2186,10 +2207,10 @@ void Map::releaseAllTextures()
 
 
 	//unload the utility layers
-	//delete hitLayer;
-	//delete cameraLayer;
-	//delete groundShaderLayer;
-	//delete lightMaskLayer;
+	delete hitLayer;
+	delete cameraLayer;
+	delete groundShaderLayer;
+	delete lightMaskLayer;
 	
 	hitLayer = nullptr;
 	cameraLayer = nullptr;
@@ -2204,11 +2225,11 @@ void Map::releaseAllTextures()
 
 
 	
-	sp<vector<sp<OKTexture>>> chunks = chunkTexture->getAllValues();
+	ArrayList<BobTexture*>* chunks = chunkTexture.getAllValues();
 	{
 		for (int i = 0; i < chunks->size(); i++)
 		{
-			sp<OKTexture>t = chunks->at(i);
+			BobTexture *t = chunks->get(i);
 
 			if (t != nullptr)
 			{
@@ -2216,20 +2237,18 @@ void Map::releaseAllTextures()
 				if (t != GLUtils::blankTexture)
 				{
 					t->release();
-					//delete t;
-					t = nullptr;
+					delete t;
 				}
 				
 			}
 		}
 	}
-	//delete chunks;
-	chunks = nullptr;
+	delete chunks;
 
-	chunkTexture->clear();
+	chunkTexture.clear();
 
 
-	sortedLightsLayers->clear();
+	sortedLightsLayers.clear();
 
 
 	/*if(chunkFileExists!=null)
@@ -2249,7 +2268,7 @@ void Map::releaseAllTextures()
 			(*usingHQ2XTexture)[i] = false;
 		}
 
-		//delete usingHQ2XTexture;
+		delete usingHQ2XTexture;
 		usingHQ2XTexture = nullptr;
 	}
 
@@ -2272,7 +2291,7 @@ void Map::releaseAllTextures()
 float Map::mapCamX()
 { //=========================================================================================================================
 	//centers the camera x and y on the screen and sets map cam to the upper left corner
-	if (this == getCurrentMap().get())
+	if (this == getCurrentMap())
 	{
 		return getCameraman()->getX() - (getEngine()->getWidthRelativeToZoom() / 2.0f); // divided by 2.0f because it is getting from the center to the upper left
 	}
@@ -2284,7 +2303,7 @@ float Map::mapCamX()
 
 float Map::mapCamY()
 { //=========================================================================================================================
-	if (this == getCurrentMap().get())
+	if (this == getCurrentMap())
 	{
 		return getCameraman()->getY() - (getEngine()->getHeightRelativeToZoom() / 2.0f);
 	}
@@ -2358,7 +2377,7 @@ float Map::getScreenY(float mapY, float height)
 
 float Map::screenX()
 {
-	if (this == getCurrentMap().get())
+	if (this == getCurrentMap())
 	{
 		return 0 - mapCamX();
 	}
@@ -2370,7 +2389,7 @@ float Map::screenX()
 
 float Map::screenY()
 {
-	if (this == getCurrentMap().get())
+	if (this == getCurrentMap())
 	{
 		return 0 - mapCamY();
 	}
@@ -2410,9 +2429,9 @@ void Map::updateLastKnownScreenXYBasedOnCamera()
 //		if(getHit==false)
 //		{
 //			//go through all mapsprites, check if map characters
-//			for(int i=0;i<activeEntityList->size();i++)
+//			for(int i=0;i<activeEntityList.size();i++)
 //			{
-//				Entity m = activeEntityList->at(i);
+//				Entity m = activeEntityList.get(i);
 //				if(m.getNonWalkable()==true
 //						&&x<m.getRight()
 //						&&x>m.getLeft()
@@ -2584,26 +2603,25 @@ bool Map::isXYWithinScreen(float x, float y)
 
 
 //The following method was originally marked 'synchronized':
-sp<OKTexture> Map::getChunkTexture(int index)
+BobTexture* Map::getChunkTexture(int index)
 { //=========================================================================================================================
 
-	if (chunkTexture->containsKey(index) == false)return nullptr;
-	return chunkTexture->get(index);
+	if (chunkTexture.containsKey(index) == false)return nullptr;
+	return chunkTexture.get(index);
 }
 
 //The following method was originally marked 'synchronized':
-void Map::setChunkTexture(int index, sp<OKTexture> t)
+void Map::setChunkTexture(int index, BobTexture* t)
 { //=========================================================================================================================
-	chunkTexture->put(index, t);
+	chunkTexture.put(index, t);
 }
 
 //The following method was originally marked 'synchronized':
 void Map::releaseChunkTexture(int index)
 { //=========================================================================================================================
-	chunkTexture->get(index)->release();
-	//delete chunkTexture->at(index);
-	chunkTexture->get(index) = nullptr;
-	chunkTexture->put(index, nullptr);
+	chunkTexture.get(index)->release();
+	delete chunkTexture.get(index);
+	chunkTexture.put(index, nullptr);
 }
 
 
@@ -2695,16 +2713,16 @@ bool Map::loadChunkTexturesFromCachePNGs()
 
 						if (getChunkPNGFileExists_S(chunkIndex) == true || (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true))
 						{
-							sp<OKFile> textureFile = nullptr;
+							BobFile* textureFile = nullptr;
 
 							if (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 							{
-								textureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+								textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 								(*usingHQ2XTexture)[chunkIndex] = true;
 							}
 							else
 							{
-								textureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+								textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
 							}
 
 							if (textureFile->exists() == false)
@@ -2845,19 +2863,19 @@ bool Map::loadLightTexturesFromCachePNGs()
 	bool tempAllLightTexturesLoaded = true;
 
 
-	for (int i = 0; i < (int)currentState->lightList->size(); i++)
+	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
 		{
-			//if(lightList->at(i).mapAsset==this)
-			sp<Light> l = currentState->lightList->at(i);
+			//if(lightList.get(i).mapAsset==this)
+			Light* l = currentState->lightList.get(i);
 
 			//check if tile has texture already in gpu
 			if (l->texture == nullptr)
 			{
 				//see if it's in the hashmap loaded already from a different map
 
-				if(getMapManager()->lightTextureHashMap->containsKey(l->getFileName()))
-				l->texture = getMapManager()->lightTextureHashMap->get(l->getFileName());
+				if(getMapManager()->lightTextureHashMap.containsKey(l->getFileName()))
+				l->texture = getMapManager()->lightTextureHashMap.get(l->getFileName());
 
 
 				if (l->texture == nullptr)
@@ -2871,7 +2889,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 					if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == true)
 					{
 						//floatcheck it exists, this should never be false.
-						sp<OKFile> textureFile = ms<OKFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+						BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						if (textureFile->exists() == false)
 						{
 							//(exception())->printStackTrace();
@@ -2879,8 +2897,8 @@ bool Map::loadLightTexturesFromCachePNGs()
 						}
 
 
-						sp<OKTexture> t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
-						getMapManager()->lightTextureHashMap->put(l->getFileName(), t);
+						BobTexture* t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+						getMapManager()->lightTextureHashMap.put(l->getFileName(), t);
 
 						l->texture = t;
 					}
@@ -2920,11 +2938,11 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 
 					if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 					{
-						sp<OKFile> textureFile = nullptr;
+						BobFile* textureFile = nullptr;
 
 						if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 						{
-							textureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+							textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 						}
 
 						if (textureFile->exists() == false)
@@ -2933,7 +2951,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							continue;
 						}
 
-						sp<OKTexture> t = getChunkTexture(chunkIndex);
+						BobTexture* t = getChunkTexture(chunkIndex);
 
 						if (t != nullptr)
 						{
@@ -2941,7 +2959,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							if (t != GLUtils::blankTexture)
 							{
 								t->release();
-								//delete t;
+								delete t;
 								t = nullptr;
 							}
 							setChunkTexture(chunkIndex, nullptr);
@@ -3044,8 +3062,8 @@ void Map::startThreadsForMissingChunkPNGs()
 
 
 				//check for existence of texture in groundMD5
-				sp<OKFile> textureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-				sp<OKFile> hq2xTextureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+				BobFile* textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+				BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 
 				if (hq2xTextureFile->exists())
@@ -3078,8 +3096,8 @@ void Map::startThreadsForMissingChunkPNGs()
 //					int threadChunkX = chunkX;
 //					int threadChunkY = chunkY;
 //					int threadChunkIndex = chunkIndex;
-					//sp<sp<IntArray>> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
-					//sp<sp<ByteArray>> threadPaletteRGBByteArray = paletteRGBByteArray;
+					//shared_ptr<IntArray*> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
+					//shared_ptr<ByteArray*> threadPaletteRGBByteArray = paletteRGBByteArray;
 
 
 					if (MapManager::useThreads == true)
@@ -3087,7 +3105,7 @@ void Map::startThreadsForMissingChunkPNGs()
 						incrementChunkPNGThreadsCreated();
 						
 
-//						std::sp<vector<std::future<void>>>results;
+//						std::vector<std::future<void>> results;
 //						results.push_back
 //						(
 							generatePNGThreadPool->push(
@@ -3190,7 +3208,7 @@ void Map::startThreadsForMissingChunkPNGs()
 
 	//unload tileset and palette if they were loaded
 
-	//delete tilesetIntArray;//sp just set to null
+	//delete tilesetIntArray;//shared_ptr just set to null
 	//delete paletteRGBByteArray;
 
 	//tilesetIntArray = nullptr;
@@ -3236,11 +3254,11 @@ void Map::startThreadsForMissingLightPNGs()
 	//for all the lights see if there is a texture generated for it, stored in the light object itself
 	//if there isn't, generate the light as a bufferedImage, create a texture for it, and set it in the light object
 
-	for (int i = 0; i < (int)currentState->lightList->size(); i++)
+	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
 		{
-			//if(lightList->at(i).mapAsset==this)
-			sp<Light> l = currentState->lightList->at(i);
+			//if(lightList.get(i).mapAsset==this)
+			Light* l = currentState->lightList.get(i);
 
 
 			//don't create a thread to generate a texture that is already being made.
@@ -3248,7 +3266,7 @@ void Map::startThreadsForMissingLightPNGs()
 			bool c = false;
 			for (int j = 0; j < i; j++)
 			{
-				if (currentState->lightList->at(j)->getFileName() == l->getFileName())
+				if (currentState->lightList.get(j)->getFileName() == l->getFileName())
 				{
 					c = true;
 					break;
@@ -3263,7 +3281,7 @@ void Map::startThreadsForMissingLightPNGs()
 			if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == false)
 			{
 				//check for existence of texture in cache folder
-				sp<OKFile> textureFile = ms<OKFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+				BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 				if (textureFile->exists())
 				{
 					MapManager::setLightTexturePNGFileExists_S(l->getFileName(),true);
@@ -3287,7 +3305,7 @@ void Map::startThreadsForMissingLightPNGs()
 						incrementLightPNGThreadsCreated();
 
 
-//						std::sp<vector<std::future<void>>>results;
+//						std::vector<std::future<void>> results;
 //						results.push_back
 //						(
 							generateLightPNGThreadPool->push
@@ -3395,7 +3413,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 			int chunkIndexOverLayer = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
 			//check for existence of texture in groundMD5
-			sp<OKFile> hq2xTextureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+			BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 			if (hq2xTextureFile->exists())
 			{
@@ -3414,7 +3432,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 				{
 					incrementHQ2XChunkPNGThreadsCreated();
 					
-//					std::sp<vector<std::future<void>>>results;
+//					std::vector<std::future<void>> results;
 //					results.push_back
 //					(
 						generatePNGThreadPool->push
@@ -3527,8 +3545,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	//Thread.yield();
 
 	//create chunkImage
-	sp<BufferedImage> chunkImage = ms<BufferedImage>(chunkSizeTiles1X * 8, chunkSizeTiles1X * 8);
-	sp<BufferedImage> chunkImageBorder = ms<BufferedImage>(chunkSizeTiles1X * 8 + 2, chunkSizeTiles1X * 8 + 2);
+	BufferedImage* chunkImage = new BufferedImage(chunkSizeTiles1X * 8, chunkSizeTiles1X * 8);
+	BufferedImage* chunkImageBorder = new BufferedImage(chunkSizeTiles1X * 8 + 2, chunkSizeTiles1X * 8 + 2);
 
 
 	//***************************************
@@ -3538,15 +3556,15 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	//***************************************
 
 	/*Graphics G = chunkImage.getGraphics();
-	G.setColor(ms<Color>(0,0,0,0));
+	G.setColor(new Color(0,0,0,0));
 	G.fillRect(0, 0, chunkImage.getWidth(), chunkImage.getHeight());
 	G.dispose();
 	G = chunkImageBorder.getGraphics();
-	G.setColor(ms<Color>(0,0,0,0));
+	G.setColor(new Color(0,0,0,0));
 	G.fillRect(0, 0, chunkImageBorder.getWidth(), chunkImageBorder.getHeight());
 	G.dispose();*/
 
-	sp<IntArray> layerChunkBuffer = ms<IntArray>((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2));
+	IntArray* layerChunkBuffer = new IntArray((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2));
 
 	string layerFileName = "";
 
@@ -3627,8 +3645,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 		//log.debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
 
 		//save 0 byte placeholder, this will always load blank texture
-		sp<OKFile> f = ms<OKFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-		sp<OKFile> f2 = ms<OKFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex));
+		BobFile* f = new BobFile("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+		BobFile* f2 = new BobFile("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex));
 
 		try
 		{
@@ -3647,19 +3665,16 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex), chunkImageBorder);
 	}
 
-	//delete chunkImage;
-	//delete chunkImageBorder;
-	//delete layerChunkBuffer;
+	delete chunkImage;
+	delete chunkImageBorder;
+	delete layerChunkBuffer;
 
-	chunkImage = nullptr;
-	chunkImageBorder = nullptr;
-	layerChunkBuffer = nullptr;
 
 }
 
 #include <fstream>
 
-bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, sp<BufferedImage> chunkImage, sp<BufferedImage> chunkImageBorder, int chunkX, int chunkY, sp<IntArray> layerChunkBuffer, bool shadowLayer)
+bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, IntArray* layerChunkBuffer, bool shadowLayer)
 { //=========================================================================================================================
 
 
@@ -3803,7 +3818,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, sp<Buffere
 						else
 						{
 							//uint32_t result;
-							//raf.read(reinterpret_cast<char >(&result), sizeof(result));
+							//raf.read(reinterpret_cast<char *>(&result), sizeof(result));
 
 
 							u8 byte1;
@@ -3917,12 +3932,12 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, sp<Buffere
 						u8 paletteG = paletteRGBByteArray->data()[(paletteIndex * 3) + (1)];
 						u8 paletteB = paletteRGBByteArray->data()[(paletteIndex * 3) + (2)];
 
-						sp<OKColor> c = ms<OKColor>(paletteR, paletteG, paletteB);
+						BobColor* c = new BobColor(paletteR, paletteG, paletteB);
 
 						if (shadowLayer) //shadow layer
 						{
 							int oldPixel = chunkImageBorder->getRGBA(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1);
-							sp<OKColor> oldColor = ms<OKColor>(oldPixel);// , true);
+							BobColor* oldColor = new BobColor(oldPixel);// , true);
 
 							u8 alpha = 255;
 							if (oldColor->getRGBA() == 0)
@@ -3935,10 +3950,9 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, sp<Buffere
 							u8 blendedGreen = (u8)((shadowAlpha / 255.0f) * paletteG + (1.0f - (shadowAlpha / 255.0f)) * oldColor->gi());
 							u8 blendedBlue = (u8)((shadowAlpha / 255.0f) * paletteB + (1.0f - (shadowAlpha / 255.0f)) * oldColor->bi());
 
-							//delete oldColor;
-							oldColor = nullptr;
+							delete oldColor;
 
-							c = ms<OKColor>(blendedRed, blendedGreen, blendedBlue, alpha);
+							c = new BobColor(blendedRed, blendedGreen, blendedBlue, alpha);
 						}
 
 
@@ -3968,14 +3982,14 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 
 	int clear = 0;
-	//int black = (ms<Color>(0, 0, 0, 255))->getRGB();
+	//int black = (new Color(0, 0, 0, 255))->getRGB();
 
 
 	int underChunkIndex = (chunksWidth * chunksHeight * 0) + ((chunkY * chunksWidth) + chunkX);
 	int overChunkIndex = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
-	sp<OKFile> underLayerTextureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(underChunkIndex));
-	sp<OKFile> overLayerTextureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(overChunkIndex));
+	BobFile* underLayerTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(underChunkIndex));
+	BobFile* overLayerTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(overChunkIndex));
 
 
 	//TODO: handle if 1x file doesn't exist, make it again from md5!
@@ -3984,20 +3998,20 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//nice fix for broken cache files
 
 
-	sp<BufferedImage> bottom = nullptr;
-	sp<BufferedImage> top = nullptr;
+	BufferedImage* bottom = nullptr;
+	BufferedImage* top = nullptr;
 
 
 	//handle 0 byte files!
 	if (underLayerTextureFile->length() < 1) //it is actually a completely isEmpty image, it was all 0 tiles
 	{
-		bottom = ms<BufferedImage>(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
+		bottom = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 
 
 		//thought this would fix the hq2x grain glitch, but it was from hq2x being static.
 		//dont need to initialize isEmpty graphics
 		/*Graphics G = bottom.getGraphics();
-		G.setColor(ms<Color>(0,0,0,0));
+		G.setColor(new Color(0,0,0,0));
 		G.fillRect(0,0,bottom.getWidth(), bottom.getHeight());
 		G.dispose();
 		G = null;*/
@@ -4017,9 +4031,9 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	if (overLayerTextureFile->length() < 1)
 	{
-		top = ms<BufferedImage>(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
+		top = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 		/*Graphics G = top.getGraphics();
-		G.setColor(ms<Color>(0,0,0,0));
+		G.setColor(new Color(0,0,0,0));
 		G.fillRect(0,0,top.getWidth(), top.getHeight());
 		G.dispose();
 		G = null;*/
@@ -4039,7 +4053,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//create bottom + top image
 
-	sp<BufferedImage> bottomAndTop = ms<BufferedImage>(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
+	BufferedImage* bottomAndTop = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 
 	//draw bottom, then top into bottomAndTop
 
@@ -4069,15 +4083,15 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//----------------------
 
 	//hq2x bottom+top
-	sp<BufferedImage> hq2xBottomAndTop = ms<BufferedImage>((new HQ2X())->hq2x(bottomAndTop.get()));
+	BufferedImage* hq2xBottomAndTop = (new HQ2X())->hq2x(bottomAndTop);
 	//setHQ2XAlphaFromOriginal(hq2xBottomAndTop,bottomAndTop); //(shouldnt be transparent here)
 
 	//dont need bottomandtop
 
-	//delete bottomAndTop;
+	delete bottomAndTop;
 	bottomAndTop = nullptr;
 
-	sp<BufferedImage> hq2xBottomAndTopCopy = ms<BufferedImage>(hq2xBottomAndTop->getWidth(), hq2xBottomAndTop->getHeight());
+	BufferedImage* hq2xBottomAndTopCopy = new BufferedImage(hq2xBottomAndTop->getWidth(), hq2xBottomAndTop->getHeight());
 	for (int y = 0; y < hq2xBottomAndTop->getHeight(); y++)
 	{
 		for (int x = 0; x < hq2xBottomAndTop->getWidth(); x++)
@@ -4122,30 +4136,30 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 			   {
 			      if(top.getRGB(x+1, y)!=clear&&top.getRGB(x, y-1)!=clear)//right up
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), ms<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), new Color(0,255,0,127).getRGB());
 			      }
 			   
 			      if(top.getRGB(x+1, y)!=clear&&top.getRGB(x, y+1)!=clear)//right down
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), ms<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), new Color(0,255,0,127).getRGB());
 			      }
 			   
 			      if(top.getRGB(x-1, y)!=clear&&top.getRGB(x, y-1)!=clear)//left up
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), ms<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), new Color(0,255,0,127).getRGB());
 			      }
 			   
 			      if(top.getRGB(x-1, y)!=clear&&top.getRGB(x, y+1)!=clear)//left down
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), ms<Color>(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), ms<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), new Color(0,255,0,127).getRGB());
 			      }
 			   }
 			   
@@ -4165,7 +4179,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//make temp image size-4
 
-	sp<BufferedImage> temp = ms<BufferedImage>(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
+	BufferedImage* temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
 	for (int y = 2; y < hq2xBottomAndTop->getHeight() - 2; y++)
 	{
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
@@ -4179,11 +4193,11 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	FileUtils::saveImage(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(overChunkIndex), temp);
 
 	//don't need temp
-	//delete temp;
+	delete temp;
 	temp = nullptr;
 
 	//dont need hq2xBottomAndTop
-	//delete hq2xBottomAndTop;
+	delete hq2xBottomAndTop;
 	hq2xBottomAndTop = nullptr;
 
 
@@ -4200,11 +4214,11 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	setHQ2XAlphaFromOriginal(hq2xBottomAndTop, bottom);
 
 	//hq2x bottom
-	sp<BufferedImage> hq2xBottom = ms<BufferedImage>((new HQ2X())->hq2x(bottom.get()));
+	BufferedImage* hq2xBottom = (new HQ2X())->hq2x(bottom);
 
 
 	//dont need bottom
-	//delete bottom;
+	delete bottom;
 	bottom = nullptr;
 
 
@@ -4230,11 +4244,11 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 
 	//dont need top
-	//delete top;
+	delete top;
 	top = nullptr;
 
 	//dont need hq2xBottom
-	//delete hq2xBottom;
+	delete hq2xBottom;
 	hq2xBottom = nullptr;
 
 
@@ -4242,7 +4256,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//output hq2x bottom layer full
 	//----------------------
 
-	temp = ms<BufferedImage>(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
+	temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
 	for (int y = 2; y < hq2xBottomAndTop->getHeight() - 2; y++)
 	{
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
@@ -4257,14 +4271,14 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	FileUtils::saveImage(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(underChunkIndex), temp);
 
 	//don't need temp
-	//delete temp;
+	delete temp;
 	temp = nullptr;
 
 	//dont need hq2xBottomAndTop
-	//delete hq2xBottomAndTop;
+	delete hq2xBottomAndTop;
 	hq2xBottomAndTop = nullptr;
 
-	//delete hq2xBottomAndTopCopy;
+	delete hq2xBottomAndTopCopy;
 	hq2xBottomAndTopCopy = nullptr;
 
 
@@ -4289,20 +4303,20 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	underLayerTextureFile->deleteFile();
 	overLayerTextureFile->deleteFile();
 
-	//delete underLayerTextureFile;
+	delete underLayerTextureFile;
 	underLayerTextureFile = nullptr;
-	//delete overLayerTextureFile;
+	delete overLayerTextureFile;
 	overLayerTextureFile = nullptr;
 }
 
-void Map::antialiasBufferedImage(sp<BufferedImage> bufferedImage)
+void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 { //===============================================================================================
 
 	//go through hq2x image
 	//if pixel is transparent, and the pixel right and down, down and left, left and up, or up and right are black, this one is black
 
 	//have to make a copy otherwise the algorithm becomes recursive
-	sp<BufferedImage> copy = ms<BufferedImage>(bufferedImage->getWidth(), bufferedImage->getHeight());
+	BufferedImage* copy = new BufferedImage(bufferedImage->getWidth(), bufferedImage->getHeight());
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
@@ -4360,14 +4374,14 @@ void Map::antialiasBufferedImage(sp<BufferedImage> bufferedImage)
 
 				if (black == 1)
 				{
-					bufferedImage->setRGB(x, y, OKColor::getRGBA(0, 0, 0, 127));
+					bufferedImage->setRGB(x, y, BobColor::getRGBA(0, 0, 0, 127));
 				}
 			}
 		}
 	}
 }
 
-void Map::setHQ2XAlphaFromOriginal(sp<BufferedImage> hq2xBufferedImage, sp<BufferedImage> bufferedImage)
+void Map::setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage)
 { //===============================================================================================
 	//now go through original image again. take each transparent pixel and set the hq2x one with it at 2x
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
@@ -4392,21 +4406,21 @@ void Map::addEntitiesAndCharactersFromCurrentStateToActiveEntityList()
 { //=========================================================================================================================
 
 
-	for (int n = 0; n < (int)currentState->entityList->size(); n++)
+	for (int n = 0; n < (int)currentState->entityList.size(); n++)
 	{
-		sp<Entity> ms = currentState->entityList->at(n);
-		activeEntityList->push_back(ms);
+		Entity* ms = currentState->entityList.get(n);
+		activeEntityList.add(ms);
 	}
 
-	for (int n = 0; n < (int)currentState->characterList->size(); n++)
+	for (int n = 0; n < (int)currentState->characterList.size(); n++)
 	{
-		sp<Character> ms = currentState->characterList->at(n);
-		activeEntityList->push_back(ms);
+		Character* ms = currentState->characterList.get(n);
+		activeEntityList.add(ms);
 	}
 
 	if (getPlayer() != nullptr && getClientGameEngine()->playerExistsInMap)
 	{
-		activeEntityList->push_back(getPlayer());
+		activeEntityList.add(getPlayer());
 	}
 }
 
@@ -4414,32 +4428,32 @@ void Map::clearActiveEntityList()
 { //=========================================================================================================================
 
 	//have to release unique textures on random entities
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		sp<Entity> e = activeEntityList->at(i);
-		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
+		Entity* e = activeEntityList.get(i);
+		if ((dynamic_cast<RandomCharacter*>(e) != NULL))
 		{
-			sp<RandomCharacter> r = ms<RandomCharacter>(e);
+			RandomCharacter* r = static_cast<RandomCharacter*>(e);
 			if (r->uniqueTexture != nullptr)
 			{
 				r->uniqueTexture->release();
-				//delete r->uniqueTexture;
+				delete r->uniqueTexture;
 				r->uniqueTexture = nullptr;
 			}
 		}
 	}
 
-	activeEntityList->clear();
-	//if(getPlayer()!=null)entityList->push_back(getPlayer());
-	//entityList->push_back(getCameraman());
+	activeEntityList.clear();
+	//if(getPlayer()!=null)entityList.add(getPlayer());
+	//entityList.add(getCameraman());
 }
 
 bool Map::isAnyoneOverlappingXY(float x, float y)
 { //=========================================================================================================================
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		sp<Entity> e = activeEntityList->at(i);
+		Entity* e = activeEntityList.get(i);
 
 		if (x > e->getLeft() && x < e->getRight() && y > e->getTop() && y < e->getBottom())
 		{
@@ -4452,10 +4466,10 @@ bool Map::isAnyoneOverlappingXY(float x, float y)
 
 bool Map::isAnyoneOverlappingXYXY(float x, float y, float x2, float y2)
 { //=========================================================================================================================
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		sp<Entity> e = activeEntityList->at(i);
+		Entity* e = activeEntityList.get(i);
 
 		if (x < e->getRight() && x2 > e->getLeft() && y < e->getBottom() && y2 > e->getTop())
 		{
@@ -4468,14 +4482,14 @@ bool Map::isAnyoneOverlappingXYXY(float x, float y, float x2, float y2)
 
 bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 { //=========================================================================================================================
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		sp<Entity> e = activeEntityList->at(i);
+		Entity* e = activeEntityList.get(i);
 
-		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
+		if ((dynamic_cast<RandomCharacter*>(e) != NULL))
 		{
-			sp<RandomCharacter> c = ms<RandomCharacter>(e.get());
+			RandomCharacter* c = static_cast<RandomCharacter*>(e);
 
 			if (x == c->targetX && y == c->targetY)
 			{
@@ -4487,10 +4501,10 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 	return false;
 }
 
-int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
+int* Map::findOpenSpaceInArea(Area* a, int w, int h)
 { //=========================================================================================================================
 
-	sp<vector<int*>>coords;// = new sp<vector<int>>();
+	ArrayList<int*>* coords = new ArrayList<int*>();
 
 	for (int x = 1; x < a->getWidth() / 8; x++)
 	{
@@ -4499,14 +4513,14 @@ int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 			int* xy = new int[2];
 			xy[0] = x;
 			xy[1] = y;
-			coords->push_back(xy);
+			coords->add(xy);
 		}
 	}
 
 	while (coords->size() > 0)
 	{
 		int i = Math::randLessThan(coords->size());
-		int* xy = coords->at(i);
+		int* xy = coords->get(i);
 		int x = xy[0];
 		int y = xy[1];
 
@@ -4523,34 +4537,34 @@ int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 		}
 		else
 		{
-			coords->erase(coords->begin()+i);
+			coords->removeAt(i);
 		}
 	}
 	return nullptr;
 }
 
-bool Map::isAnyCharacterTouchingArea(sp<Area> a)
+bool Map::isAnyCharacterTouchingArea(Area* a)
 { //=========================================================================================================================
 
 	//go through all entities, if somebody is standing here, don't go there.
 
 	if (a != nullptr) //DEBUG HERE
 	{
-		for (int i = 0; i < activeEntityList->size(); i++)
+		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			sp<Entity> e = activeEntityList->at(i);
+			Entity* e = activeEntityList.get(i);
 
 			if (
 				(
 					(
 						(
-							(dynamic_cast<Character*>(e.get()) != NULL)
+							(dynamic_cast<Character*>(e) != NULL)
 							||
-							(dynamic_cast<RandomCharacter*>(e.get()) != NULL)
+							(dynamic_cast<RandomCharacter*>(e) != NULL)
 						)
 					)
 					||
-					(dynamic_cast<Player*>(e.get()) != NULL)
+					(dynamic_cast<Player*>(e) != NULL)
 				)
 				&&
 				a->isEntityHitBoxTouchingMyBoundary(e)
@@ -4566,16 +4580,16 @@ bool Map::isAnyCharacterTouchingArea(sp<Area> a)
 	return false;
 }
 
-bool Map::isAnyEntityTouchingArea(sp<Area> a)
+bool Map::isAnyEntityTouchingArea(Area* a)
 { //=========================================================================================================================
 
 	//go through all entities, if somebody is standing here, don't go there.
 
 	if (a != nullptr) //DEBUG HERE
 	{
-		for (int i = 0; i < activeEntityList->size(); i++)
+		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			sp<Entity> e = activeEntityList->at(i);
+			Entity* e = activeEntityList.get(i);
 
 			if (a->isEntityHitBoxTouchingMyBoundary(e))
 			{
@@ -4587,51 +4601,53 @@ bool Map::isAnyEntityTouchingArea(sp<Area> a)
 	return false;
 }
 
-sp<vector<sp<Entity>>> Map::getAllEntitiesTouchingArea(sp<Area> a)
+ArrayList<Entity*>* Map::getAllEntitiesTouchingArea(Area* a)
 { //=========================================================================================================================
 
-	sp<vector<sp<Entity>>> entitiesInArea;// = ms<vector><sp<Entity>>();
+	ArrayList<Entity*>* entitiesInArea = new ArrayList<Entity*>();
 
 
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		sp<Entity> e = activeEntityList->at(i);
+		Entity* e = activeEntityList.get(i);
 
 		if (a->isEntityHitBoxTouchingMyBoundary(e))
 		{
-			entitiesInArea->push_back(e);
+			entitiesInArea->add(e);
 		}
 	}
+
 
 	return entitiesInArea;
 }
 
-sp<vector<sp<Entity>>> Map::getAllEntitiesPlayerIsTouching()
+ArrayList<Entity*>* Map::getAllEntitiesPlayerIsTouching()
 { //=========================================================================================================================
 
-	sp<vector<sp<Entity>>> entitiesTouching;// = ms<vector><sp<Entity>>();
+	ArrayList<Entity*>* entitiesTouching = new ArrayList<Entity*>();
 
 
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		sp<Entity> e = activeEntityList->at(i);
+		Entity* e = activeEntityList.get(i);
 
 		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e))
 		{
-			entitiesTouching->push_back(e);
+			entitiesTouching->add(e);
 		}
 	}
+
 
 	return entitiesTouching;
 }
 
-bool Map::isAnyoneTryingToGoToArea(sp<Area> a)
+bool Map::isAnyoneTryingToGoToArea(Area* a)
 { //=========================================================================================================================
 	if (a != nullptr) //DEBUG HERE
 	{
-		for (int i = 0; i < activeEntityList->size(); i++)
+		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			if (activeEntityList->at(i)->currentAreaTYPEIDTarget == a->getName())
+			if (activeEntityList.get(i)->currentAreaTYPEIDTarget == a->getName())
 			{
 				return true;
 			}
@@ -4640,12 +4656,12 @@ bool Map::isAnyoneTryingToGoToArea(sp<Area> a)
 	return false;
 }
 
-bool Map::isAnyEntityUsingSpriteAsset(sp<Sprite> s)
+bool Map::isAnyEntityUsingSpriteAsset(Sprite* s)
 { //=========================================================================================================================
 
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		if (activeEntityList->at(i)->sprite == s)
+		if (activeEntityList.get(i)->sprite == s)
 		{
 			return true;
 		}
@@ -4655,18 +4671,18 @@ bool Map::isAnyEntityUsingSpriteAsset(sp<Sprite> s)
 	return false;
 }
 
-sp<vector<sp<Entity>>> Map::getAllEntitiesUsingSpriteAsset(sp<Sprite> s)
+ArrayList<Entity*>* Map::getAllEntitiesUsingSpriteAsset(Sprite* s)
 { //=========================================================================================================================
 
-	sp<vector<sp<Entity>>> entitiesUsingSprite;// = ms<vector><sp<Entity>>();
+	ArrayList<Entity*>* entitiesUsingSprite = new ArrayList<Entity*>();
 
-	for (int i = 0; i < activeEntityList->size(); i++)
+	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		sp<Entity> e = activeEntityList->at(i);
+		Entity* e = activeEntityList.get(i);
 
 		if (e->sprite == s)
 		{
-			entitiesUsingSprite->push_back(e);
+			entitiesUsingSprite->add(e);
 		}
 	}
 
@@ -4674,31 +4690,31 @@ sp<vector<sp<Entity>>> Map::getAllEntitiesUsingSpriteAsset(sp<Sprite> s)
 	return entitiesUsingSprite;
 }
 
-sp<Entity> Map::createEntity(const string& spriteName, sp<Sprite> spriteAsset, float mapX, float mapY)
+Entity* Map::createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY)
 { //=========================================================================================================================
 
 
-	sp<EntityData> entityData = ms<EntityData>(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
+	EntityData* entityData = new EntityData(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
 
-	sp<Entity> e = ms<Entity>(getEngine(), entityData, shared_from_this());
+	Entity* e = new Entity(getEngine(), entityData, this);
 
-	getCurrentMap()->currentState->entityList->push_back(e);
-	getCurrentMap()->currentState->entityByNameHashtable->put(e->getName(),e);
+	getCurrentMap()->currentState->entityList.add(e);
+	getCurrentMap()->currentState->entityByNameHashtable.put(e->getName(),e);
 
 	return e;
 }
 
-sp<Entity> Map::createEntityFeetAtXY(const string& spriteName, sp<Sprite> sprite, float mapX, float mapY)
+Entity* Map::createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY)
 { //=========================================================================================================================
 
 	// use hitbox center instead of arbitrary offset
-	sp<SpriteAnimationSequence> a = sprite->getFirstAnimation();
+	SpriteAnimationSequence* a = sprite->getFirstAnimation();
 	int hitBoxYCenter = (a->hitBoxFromTopPixels1X) + (((sprite->getImageHeight() - (a->hitBoxFromTopPixels1X)) - (a->hitBoxFromBottomPixels1X)) / 2);
 
 	return createEntity(spriteName, sprite, mapX - (sprite->getImageWidth() / 2), mapY - (hitBoxYCenter));
 }
 
-sp<Entity> Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(sp<Entity> e, const string& spriteName, sp<Sprite> sprite, float mapX, float mapY, int amt)
+Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt)
 { //=========================================================================================================================
 
 	if (isXYWithinScreenByAmt(mapX + sprite->getImageWidth() / 2, mapY + sprite->getImageHeight() / 2, amt) == true)
@@ -4717,14 +4733,14 @@ sp<Entity> Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(sp<Entity
 		if (e != nullptr)
 		{
 			e->deleteFromMapEntityListAndReleaseTexture();
-			//delete e;
+			delete e;
 			e = nullptr;
 		}
 		return nullptr;
 	}
 }
 
-sp<Entity> Map::createEntityAtArea(const string& spriteName, sp<Sprite> spriteAsset, sp<Area> a)
+Entity* Map::createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a)
 { //=========================================================================================================================
 	float x = a->middleX();
 	float y = a->middleY();
@@ -4732,7 +4748,7 @@ sp<Entity> Map::createEntityAtArea(const string& spriteName, sp<Sprite> spriteAs
 	return createEntityFeetAtXY(spriteName, spriteAsset, x, y);
 }
 
-sp<MapData> Map::getData()
+MapData* Map::getData()
 {
 	return data;
 }

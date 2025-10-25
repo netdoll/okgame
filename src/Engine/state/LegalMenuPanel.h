@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -17,10 +17,10 @@ public:
 	static Logger log;
 
 
-	//   sp<DialogLayout> legalPanel;
+	//   DialogLayout* legalPanel;
 	//
-	//   sp<Button> noButton;
-	//   sp<Button> okButton;
+	//   Button* noButton;
+	//   Button* okButton;
 
 
 	LegalMenuPanel();

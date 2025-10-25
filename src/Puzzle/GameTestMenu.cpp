@@ -12,7 +12,7 @@ using namespace Gwen::Controls;
 
 
 //GWEN_CONTROL_CONSTRUCTOR(GameTestMenuControl)
-GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame>b) : Gwen::Controls::Base(pParent, pName)
+GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame *b) : Gwen::Controls::Base(pParent, pName)
 {//=========================================================================================================================
 
 	this->bobsGame = b;
@@ -148,7 +148,7 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 
 			difficultyCombo = new ComboBox(bottomBase,"difficultyCombo");
 			GameType g;
-			for(int i=0;i<g.difficultyTypes->size();i++)difficultyCombo->AddItem(Gwen::Utility::StringToUnicode(g.difficultyTypes->at(i)->name));
+			for(int i=0;i<g.difficultyTypes.size();i++)difficultyCombo->AddItem(Gwen::Utility::StringToUnicode(g.difficultyTypes.get(i)->name));
 			difficultyCombo->Dock(Pos::Left);
 			difficultyCombo->SetHeight(25);
 			difficultyCombo->onSelection.Add(this, &GameTestMenuControl::onChangeDifficulty);
@@ -188,7 +188,7 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 		}
 
 
-		darkRectangle = ms<GameTestPreviewRectangle>(previewBase, "", bobsGame);
+		darkRectangle = new GameTestPreviewRectangle(previewBase, "", bobsGame);
 		darkRectangle->SetColor(Color(0, 0, 0, 255));
 		darkRectangle->Dock(Pos::Top);
 		darkRectangle->SetSize(previewBase->Width(), previewBase->Height() - 20);
@@ -259,27 +259,16 @@ void GameTestMenuControl::doResize()
 
 }
 
-#include <fstream>
-#include <iostream>
-#include "Poco/File.h"
-#include "Poco/Path.h"
-#include "Poco/Delegate.h"
-#include "Poco/Zip/Decompress.h"
-#include "Poco/Process.h"
-#include "Poco/DirectoryIterator.h"
-using Poco::DirectoryIterator;
-using Poco::File;
-using Poco::Process;
-using Poco::Path;
 
 
-//sp<GameSequence> GameTestMenuControl::getGameSequenceByName(string name)
+
+//GameSequence* GameTestMenuControl::getGameSequenceByName(string name)
 //{//=========================================================================================================================
 //
-//	sp<GameSequence>bt = nullptr;
-//	for (int i = 0; i<bobsGame->loadedGameSequences->size(); i++)
+//	GameSequence *bt = nullptr;
+//	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
 //	{
-//		sp<GameSequence>b = bobsGame->loadedGameSequences->at(i);
+//		GameSequence *b = bobsGame->loadedGameSequences.get(i);
 //		if (b->name == name)
 //		{
 //			bt = b;
@@ -295,14 +284,14 @@ void GameTestMenuControl::populateGameTypesListBox()
 	gameTypesListBox->Clear();
 	GetCanvas()->DoThink();
 
-	sp<vector<sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
-	for (int i = 0; i < gamesStringColor->size(); i++)
+	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
-		sp<GameType>g = gameTypeStringColorPairPair->first;
-		sp<pair<string, sp<OKColor>>> stringColorPair = gameTypeStringColorPairPair->second;
+		pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		GameType *g = gameTypeStringColorPairPair.first;
+		pair<string, BobColor*> *stringColorPair = &(gameTypeStringColorPairPair.second);
 		string name = stringColorPair->first;
-		sp<OKColor>color = stringColorPair->second;
+		BobColor *color = stringColorPair->second;
 
 		//if (g->builtInType)
 //		{
@@ -332,14 +321,14 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	gameSequencesListBox->Clear();
 	GetCanvas()->DoThink();
 
-	sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameSequences();
-	for (int i = 0; i < gamesStringColor->size(); i++)
+	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
-		sp<GameSequence>g = gameSequenceStringColorPairPair->first;
-		sp<pair<string, sp<OKColor>>> stringColorPair = gameSequenceStringColorPairPair->second;
+		pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		GameSequence *g = gameSequenceStringColorPairPair.first;
+		pair<string, BobColor*> *stringColorPair = &(gameSequenceStringColorPairPair.second);
 		string name = stringColorPair->first;
-		sp<OKColor>color = stringColorPair->second;
+		BobColor *color = stringColorPair->second;
 
 //		if (g->builtInType)
 //		{
@@ -368,16 +357,16 @@ void GameTestMenuControl::onGameTypesListSelect(Base* control)
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	sp<GameType>s = bobsGame->getGameTypeByUUID(uuid);
+	GameType *s = bobsGame->getGameTypeByUUID(uuid);
 
 	if (s == nullptr)
 	{
-		OKGame::log.error("Could not find game type with uuid:" + uuid);
+		BobsGame::log.error("Could not find game type with uuid:" + uuid);
 		return;
 	}
 
-	currentGameSequence = ms<GameSequence>();
-	currentGameSequence->gameTypes->push_back(s);
+	currentGameSequence = new GameSequence();
+	currentGameSequence->gameTypes.add(s);
 
 	selectedGameLabel->SetText(Utility::StringToUnicode("Current Game Type:"+s->name));
 	initPreviewGame();
@@ -389,11 +378,11 @@ void GameTestMenuControl::onGameSequencesListSelect(Base* control)
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	sp<GameSequence>s = bobsGame->getGameSequenceByUUID(uuid);
+	GameSequence *s = bobsGame->getGameSequenceByUUID(uuid);
 
 	if (s == nullptr)
 	{
-		OKGame::log.error("Could not find game sequence with uuid:" + uuid);
+		BobsGame::log.error("Could not find game sequence with uuid:" + uuid);
 		return;
 	}
 
@@ -419,15 +408,15 @@ void GameTestMenuControl::vote(bool upDown)
 	string vote = "up";
 	if (upDown == false)vote = "down";
 
-	if (currentGameSequence->gameTypes->size() == 1)
+	if (currentGameSequence->gameTypes.size() == 1)
 	{
-		uuid = currentGameSequence->gameTypes->at(0)->uuid;
-		bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" +vote+":"+ OKNet::endline);
+		uuid = currentGameSequence->gameTypes.get(0)->uuid;
+		bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" +vote+":"+ BobNet::endline);
 	}
 	else
 	{
 		uuid = currentGameSequence->uuid;
-		bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Vote_Request + "GameSequence:" + uuid + ":" + vote + ":" + OKNet::endline);
+		bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Vote_Request + "GameSequence:" + uuid + ":" + vote + ":" + BobNet::endline);
 	}
 
 
@@ -437,7 +426,7 @@ void GameTestMenuControl::vote(bool upDown)
 	{
 		tries++;
 		Main::delay(500);
-		response = bobsGame->getServerConnection()->getAndResetOKGameGameTypesAndSequencesVoteResponse_S();
+		response = bobsGame->getServerConnection()->getAndResetBobsGameGameTypesAndSequencesVoteResponse_S();
 		if (response != "")
 		{
 			break;
@@ -447,10 +436,10 @@ void GameTestMenuControl::vote(bool upDown)
 	if (response == "")response = "Did not get a response from the server. Try again later.";
 	else
 	{
-		if (currentGameSequence->gameTypes->size() == 1)
+		if (currentGameSequence->gameTypes.size() == 1)
 		{
-			if(upDown)currentGameSequence->gameTypes->at(0)->yourVote = "up";
-			else currentGameSequence->gameTypes->at(0)->yourVote = "down";
+			if(upDown)currentGameSequence->gameTypes.get(0)->yourVote = "up";
+			else currentGameSequence->gameTypes.get(0)->yourVote = "down";
 		}
 		else
 		{
@@ -459,14 +448,14 @@ void GameTestMenuControl::vote(bool upDown)
 		}
 	}
 	
-	sp<WindowControl>result = ms<WindowControl>(GetCanvas());
+	WindowControl *result = new WindowControl(GetCanvas());
 	result->SetTitle("Result");
 	result->SetSize(300, 60);
 	result->MakeModal(true);
 	result->SetPos(GLUtils::getViewportWidth() / 2 - 150, GLUtils::getViewportHeight() / 2 - 30);
 	result->SetDeleteOnClose(true);
 
-	sp<Label> label = ms<Label>(result);
+	Label* label = new Label(result);
 	label->SetText(response);
 	label->Dock(Pos::Fill);
 
@@ -523,32 +512,32 @@ void GameTestMenuControl::initPreviewGame()
 
 	if (currentGameSequence == nullptr)
 	{
-		currentGameSequence = ms<GameSequence>();
+		currentGameSequence = new GameSequence();
 	}
-	if(currentGameSequence->gameTypes->size()==0)
+	if(currentGameSequence->gameTypes.size()==0)
 	{
 		
 
-		sp<GameType>g = ms<GameType>();
-		sp<BlockType> bt(ms<BlockType>());
+		GameType *g = new GameType();
+		shared_ptr<BlockType> bt(new BlockType());
 		bt->name = "Gray Square";
-		bt->colors->push_back(OKColor::gray);
+		bt->colors.add(BobColor::gray);
 		bt->useInNormalPieces = true;
 		bt->useAsPlayingFieldFiller = true;
 		bt->useAsGarbage = true;
-		sp<PieceType> pt(ms<PieceType>());
+		shared_ptr<PieceType> pt(new PieceType());
 		pt->name = "Single Block Piece";
 		pt->useAsNormalPiece = true;
 		pt->useAsPlayingFieldFillerPiece = true;
 		pt->useAsGarbagePiece = true;
-		g->blockTypes->push_back(bt);
-		g->pieceTypes->push_back(pt);
+		g->blockTypes.add(bt);
+		g->pieceTypes.add(pt);
 
-		currentGameSequence->gameTypes->push_back(g);
+		currentGameSequence->gameTypes.add(g);
 	}
 
 	
-	bobsGame->getPlayer1Game()->currentGameType = (currentGameSequence->gameTypes->at(0));
+	bobsGame->getPlayer1Game()->currentGameType = (currentGameSequence->gameTypes.get(0));
 	bobsGame->getPlayer1Game()->currentGameSequence = currentGameSequence;
 	bobsGame->getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyCombo->GetSelectedItem()->GetText().c_str();
 	bobsGame->currentRoom->endlessMode = true;
@@ -572,7 +561,7 @@ void GameTestPreviewRectangle::Render(Skin::Base* skin)
 	skin->GetRender()->SetDrawColor(m_Color);
 	//glPushMatrix();
 	//glLoadIdentity();
-	//bobsGame->setOKGameFBOSize();
+	//bobsGame->setBobsGameFBOSize();
 	//bobsGame->renderGameIntoFBO(bobsGame->getPlayer1Game());
 	//float x0 = customGameEditor->darkRectangle->LocalPosToCanvas(customGameEditor->darkRectangle->X()).x;
 	//float x1 = x0 + customGameEditor->darkRectangle->Width();
@@ -582,8 +571,8 @@ void GameTestPreviewRectangle::Render(Skin::Base* skin)
 	//GLUtils::bindFBO(0);
 	//GLUtils::drawIntoFBOAttachment(GLUtils::preColorFilterFBO); //draw to nD FBO screen texture
 	//GLUtils::setPreColorFilterViewport();
-	//bobsGame->drawOKGameFBO(x0, x1, y0, y1);
-	//bobsGame->drawOKGameFBO(0,Width(),0,Height());
+	//bobsGame->drawBobsGameFBO(x0, x1, y0, y1);
+	//bobsGame->drawBobsGameFBO(0,Width(),0,Height());
 	//glPopMatrix();
 	//customGameEditor->renderRotationPreview(skin);
 
@@ -591,7 +580,10 @@ void GameTestPreviewRectangle::Render(Skin::Base* skin)
 	//glLoadIdentity();
 	//GLUtils::setPreColorFilterViewport();
 	Gwen::Texture *t = new Gwen::Texture();
-	t->data = (GLuint*) &GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
+#ifndef ORBIS
+	t->data = (GLuint*)&GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
+#else
+#endif
 	skin->GetRender()->DrawTexturedRect(t, Gwen::Rect(0, Height(), Width(), 0 - Height()));
 	delete t;
 	//glPopMatrix();
@@ -599,23 +591,23 @@ void GameTestPreviewRectangle::Render(Skin::Base* skin)
 
 
 //=========================================================================================================================
-void OKGame::gameTestMenuUpdate()
+void BobsGame::gameTestMenuUpdate()
 {//=========================================================================================================================
 
  //	if (gameTestMenuMenu == nullptr)
  //	{
- //		gameTestMenuMenu = ms<Menu>(this);
+ //		gameTestMenuMenu = new Menu(this);
  //
- //		gameTestMenuMenu->add("Back To Game", "Back To Game", OKColor::white);
- //		gameTestMenuMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", OKColor::white);
- //		gameTestMenuMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", OKColor::white);
+ //		gameTestMenuMenu->add("Back To Game", "Back To Game", BobColor::white);
+ //		gameTestMenuMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", BobColor::white);
+ //		gameTestMenuMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", BobColor::white);
  //
  //		gameTestMenuMenu->cursorPosition = gameTestMenuMenuCursorPosition;
  //	}
 
 	if (gameTestMenu == nullptr)
 	{
-		gameTestMenu = ms<GameTestMenuControl>(Main::gwenCanvas, "GameTestMenuControl", this);
+		gameTestMenu = new GameTestMenuControl(Main::gwenCanvas, "GameTestMenuControl", this);
 
 		gameTestMenu->initPreviewGame();
 
@@ -640,17 +632,17 @@ void OKGame::gameTestMenuUpdate()
 		{
 
 			//remove unsaved game sequences
-			//			for (int i = 0; i<loadedGameSequences->size(); i++)
+			//			for (int i = 0; i<loadedGameSequences.size(); i++)
 			//			{
-			//				if (loadedGameSequences->at(i)->loadedFilename == "")
+			//				if (loadedGameSequences.get(i)->loadedFilename == "")
 			//				{
-			//					loadedGameSequences->erase(->begin()+i);
+			//					loadedGameSequences.removeAt(i);
 			//					i--;
 			//				}
 			//			}
 
 			leaveMenu = true;
-			//delete gameTestMenu;
+			delete gameTestMenu;
 			gameTestMenu = nullptr;
 		}
 	}
@@ -699,12 +691,12 @@ void OKGame::gameTestMenuUpdate()
 }
 
 //=========================================================================================================================
-void OKGame::gameTestMenuRender()
+void BobsGame::gameTestMenuRender()
 {//=========================================================================================================================
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 	//
-	//	sp<OKTexture> t = keyboardTexture;
+	//	BobTexture* t = keyboardTexture;
 	//
 	//	if (gameTestMenuMenu == nullptr)return;
 	//
@@ -727,17 +719,20 @@ void OKGame::gameTestMenuRender()
 
 		if (gameTestMenu->windowOpen == false)
 		{
-			setOKGameFBOSize();
+			setBobsGameFBOSize();
 			renderGameIntoFBO(getPlayer1Game(), true);
 			//		float x0 = customGameEditor->darkRectangle->LocalPosToCanvas(customGameEditor->darkRectangle->X()).x;
 			//		float x1 = x0 + customGameEditor->darkRectangle->Width();
 			//		float y0 = customGameEditor->darkRectangle->LocalPosToCanvas(customGameEditor->darkRectangle->Y()).y;
 			//		float y1 = y0 + customGameEditor->darkRectangle->Height();
-			//
+			
+#ifndef ORBIS
 			GLUtils::bindFBO(GLUtils::preColorFilterFBO);
+#else
+#endif
 			GLUtils::drawIntoFBOAttachment(0); //draw to nD FBO screen texture
 			GLUtils::setPreColorFilterViewport();
-			//		drawOKGameFBO(x0, x1, y0, y1);
+			//		drawBobsGameFBO(x0, x1, y0, y1);
 
 
 

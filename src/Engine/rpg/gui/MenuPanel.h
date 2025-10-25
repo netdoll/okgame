@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -15,9 +15,9 @@ public:
 
 	static Logger log;
 
-	//sp<DialogLayout> mainPanelLayout = nullptr;
-	//sp<ScrollPane> scrollPane = nullptr;
-	//sp<DialogLayout> insideScrollPaneLayout = nullptr;
+	//DialogLayout* mainPanelLayout = nullptr;
+	//ScrollPane* scrollPane = nullptr;
+	//DialogLayout* insideScrollPaneLayout = nullptr;
 
 protected:
 	
@@ -44,7 +44,7 @@ public:
 
 	MenuPanel();
 
-	MenuPanel(sp<Engine>e);
+	MenuPanel(Engine *e);
 
 	virtual void update();
 
@@ -77,23 +77,23 @@ public:
 	virtual void render();
 
 //
-//	static sp<BGClientEngine> getClientGameEngine();
+//	static BGClientEngine* getClientGameEngine();
 //
 //
 //
-//	static sp<Clock> getClock();
-//	static sp<GUIManager> getGUIManager();
-//	static sp<StuffMenu> getStuffMenu();
-//	static sp<GameStore> getGameStore();
-//	static sp<PlayerEditMenu> getPlayerEditMenu();
-//	static sp<Player> getPlayer();
+//	static Clock* getClock();
+//	static GUIManager* getGUIManager();
+//	static StuffMenu* getStuffMenu();
+//	static GameStore* getGameStore();
+//	static PlayerEditMenu* getPlayerEditMenu();
+//	static Player* getPlayer();
 //	static ND* getND();
-//	static sp<Wallet> getWallet();
-//	static sp<FriendManager> getFriendManager();
-//	static sp<StatusBar> getStatusBar();
-//	static sp<NotificationManager> getNotificationManager();
+//	static Wallet* getWallet();
+//	static FriendManager* getFriendManager();
+//	static BobStatusBar* getBobStatusBar();
+//	static NotificationManager* getNotificationManager();
 //
-//	static sp<TCPServerConnection> getServerConnection();
-//	static sp<GameSave> getGameSave();
+//	static TCPServerConnection* getServerConnection();
+//	static GameSave* getGameSave();
 };
 

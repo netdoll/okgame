@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -28,17 +28,17 @@ public:
 	static Logger log;
 
 
-	sp<FriendsPanel> friendsPanel = nullptr;
-	sp<DebugInfoPanel> debugInfoPanel = nullptr;
-	sp<StatusPanel> statusPanel = nullptr;
-	sp<MessagesPanel> messagesPanel = nullptr;
-	sp<ItemsPanel> itemsPanel = nullptr;
-	sp<LogsPanel> logsPanel = nullptr;
-	sp<ControlsPanel> controlsPanel = nullptr;
-	sp<SettingsPanel> settingsPanel = nullptr;
+	FriendsPanel* friendsPanel = nullptr;
+	DebugInfoPanel* debugInfoPanel = nullptr;
+	StatusPanel* statusPanel = nullptr;
+	MessagesPanel* messagesPanel = nullptr;
+	ItemsPanel* itemsPanel = nullptr;
+	LogsPanel* logsPanel = nullptr;
+	ControlsPanel* controlsPanel = nullptr;
+	SettingsPanel* settingsPanel = nullptr;
 
 
-	//sp<vector<sp<ToggleButton>>>stuffMenuTabs;
+	//ArrayList<ToggleButton*> stuffMenuTabs;
 
 
 	float subPanelScreenWidthPercent = 0.80f;
@@ -54,7 +54,7 @@ public:
 	void setAllInvisible();
 
 
-	void openSubMenu();// sp<SubPanel> subPanel);
+	void openSubMenu();// SubPanel* subPanel);
 
 
 	void init();

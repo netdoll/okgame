@@ -16,14 +16,14 @@ EntityData::EntityData()
 { //=========================================================================================================================
 }
 //=========================================================================================================================
-EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, sp<EventData> eventData, const string& comment)
+EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
 { //=========================================================================================================================
 
 	initEntityData(id, name, spriteAssetName, spawnXPixels1X, spawnYPixels1X, initialFrame, pushable, nonWalkable, alphaByte, scale, ticksPerPixelMoved, aboveTopLayer, aboveWhenEqual, alwaysOnBottom, animateThroughFrames, randomTimeBetweenAnimation, ticksBetweenFrames, ticksBetweenAnimation, onlyHereDuringEvent, randomFrames, disableShadow, eventData, comment);
 }
 
 //=========================================================================================================================
-void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, sp<EventData> eventData, const string& comment)
+void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
 {//=========================================================================================================================
 	this->id = id;
 	this->name = name;
@@ -68,7 +68,7 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 }
 
 ////=========================================================================================================================
-//sp<EntityData> EntityData::fromBase64ZippedJSON(const string& b64)
+//EntityData* EntityData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //	// string decode64 = FileUtils::decodeBase64String(b64);
@@ -78,12 +78,12 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 //	return fromJSON(json);
 //}
 //
-//sp<EntityData> EntityData::fromJSON(const string& json)
+//EntityData* EntityData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<EntityData> data = nullptr;// = gson->fromJson(json, EntityData::typeid);
+//	//Gson* gson = new Gson();
+//	EntityData* data = nullptr;// = gson->fromJson(json, EntityData::typeid);
 //
 //	return data;
 //}
@@ -117,12 +117,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("pushable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pushable = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	pushable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("nonWalkable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	nonWalkable = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	nonWalkable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toAlpha:`") + 1);
@@ -137,12 +137,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("disableShadow:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	disableShadow = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	disableShadow = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("aboveTopLayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	aboveTopLayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	aboveTopLayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("layer:`") + 1);
@@ -157,22 +157,22 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("aboveWhenEqual:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	aboveWhenEqual = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	aboveWhenEqual = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("alwaysOnBottom:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	alwaysOnBottom = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	alwaysOnBottom = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("alwaysOnTop:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	alwaysOnTop = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	alwaysOnTop = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("animateThroughFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animateThroughFrames = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	animateThroughFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ticksBetweenFrames:`") + 1);
@@ -182,12 +182,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("randomUpToTicksBetweenFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomUpToTicksBetweenFrames = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomUpToTicksBetweenFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomFrames = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ticksBetweenAnimation:`") + 1);
@@ -197,7 +197,7 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("randomTimeBetweenAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomTimeBetweenAnimation = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomTimeBetweenAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("walkSpeed:`") + 1);
@@ -217,7 +217,7 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("onlyHereDuringEvent:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	onlyHereDuringEvent = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	onlyHereDuringEvent = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 //
 //	t = t.substr(t.find("mapID:`") + 1);
@@ -232,12 +232,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("animateThroughCurrentAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animateThroughCurrentAnimation = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	animateThroughCurrentAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("loopAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	loopAnimation = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	loopAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("voicePitch:`") + 1);
@@ -247,52 +247,52 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("animationDisabled:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animationDisabled = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	animationDisabled = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("hitLayerDisabled:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	hitLayerDisabled = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	hitLayerDisabled = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ignoreHitPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	ignoreHitPlayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	ignoreHitPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ignoreHitEntities:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	ignoreHitEntities = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	ignoreHitEntities = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("dontUsePathfinding:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	dontUsePathfinding = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	dontUsePathfinding = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("pullPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pullPlayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	pullPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("pushPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pushPlayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	pushPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
-	while (OKString::startsWith(t,"behaviorList:`"))
+	while (String::startsWith(t,"behaviorList:`"))
 	{
 		t = t.substr(t.find("behaviorList:`") + 1);
 		t = t.substr(t.find("`") + 1);
-		behaviorList->push_back(t.substr(0, t.find("`")));
+		behaviorList->add(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 	}
 
-	while (OKString::startsWith(t,"connectionTYPEIDList:`"))
+	while (String::startsWith(t,"connectionTYPEIDList:`"))
 	{
 		t = t.substr(t.find("connectionTYPEIDList:`") + 1);
 		t = t.substr(t.find("`") + 1);
-		connectionTYPEIDList->push_back(t.substr(0, t.find("`")));
+		connectionTYPEIDList->add(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 	}
 
@@ -303,15 +303,15 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("isNPC:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNPC = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isNPC = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 
 	t = t.substr(t.find("eventData:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (OKString::startsWith(t, "}") == false)
+	while (String::startsWith(t, "}") == false)
 	{
-		sp<EventData> data = ms<EventData>();
+		EventData* data = new EventData();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -513,7 +513,7 @@ bool EntityData::getPushPlayer()
 	return pushPlayer;
 }
 
-sp<EventData> EntityData::getEventData()
+EventData* EntityData::getEventData()
 {
 	return eventData;
 }
@@ -528,12 +528,12 @@ sp<EventData> EntityData::getEventData()
 //	return stateID;
 //}
 
-sp<vector<string>> EntityData::getConnectionTYPEIDList()
+ArrayList<string>* EntityData::getConnectionTYPEIDList()
 {
 	return connectionTYPEIDList;
 }
 
-sp<vector<string>> EntityData::getBehaviorList()
+ArrayList<string>* EntityData::getBehaviorList()
 {
 	return behaviorList;
 }

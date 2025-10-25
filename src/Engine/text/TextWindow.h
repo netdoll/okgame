@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -19,17 +19,17 @@ public:
 	static Logger log;
 
 
-	sp<OKTexture> textBoxTexture = nullptr;
-	sp<OKTexture> spriteBoxTexture = nullptr;
-	static sp<OKTexture> borderTexture;
+	BobTexture* textBoxTexture = nullptr;
+	BobTexture* spriteBoxTexture = nullptr;
+	static BobTexture* borderTexture;
 
 
 	float scrollPercent = 0;
 
-	sp<ByteArray> textBoxTextureByteArray = nullptr;
+	ByteArray* textBoxTextureByteArray = nullptr;
 	//u8* textBoxTexturePixelsByteBuffer;
 
-	sp<ByteArray> spriteWindowTextureByteArray = nullptr;
+	ByteArray* spriteWindowTextureByteArray = nullptr;
 	//u8* spriteWindowTexturePixelsByteBuffer;
 
 
@@ -39,9 +39,9 @@ public:
 	int xInLine = 0;
 	int line = 0;
 
-	sp<Entity> spriteWindowEntity = nullptr;
+	Entity* spriteWindowEntity = nullptr;
 
-	sp<OKTexture> spriteWindowTexture = nullptr;
+	BobTexture* spriteWindowTexture = nullptr;
 
 	bool redraw = false;
 
@@ -63,7 +63,7 @@ public:
 	int shakeMaxY = 2;
 	bool shakeUpDownToggle = false;
 
-	TextWindow(sp<Engine> g);
+	TextWindow(Engine* g);
 
 
 	void init();
@@ -75,7 +75,7 @@ public:
 	void updateSpriteWindowTexture();
 
 
-	void setSpriteWindow(sp<Entity> entity, sp<OKTexture> texture, const string& newLabel);
+	void setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel);
 
 
 	void updateTextureFromByteArray();
@@ -87,7 +87,7 @@ public:
 	int getPixelValue(int letter_index, int y, int x_in_letter, bool blank);
 
 
-	void setPixel(int index, sp<OKColor> c);
+	void setPixel(int index, BobColor* c);
 
 
 	void drawColumn(int letter_index, int x_in_letter, bool blank);

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -25,18 +25,20 @@ class Logger;
 //prototypes
 //================
 
+#ifndef ORBIS
 
-void HARDWARE_set_sprite_y(sp<SPRITE> sprite, int screen_y);
+void HARDWARE_set_sprite_y(SPRITE* sprite, int screen_y);
 
-sp<SPRITE> HARDWARE_create_sprite(sp<GFX> gfx, int gfx_index, int layer, float scale, int screen_x, int screen_y, int alpha);
-void HARDWARE_update_sprite_texture(sp < SPRITE> sprite, int gfx_index);
-void HARDWARE_set_sprite_xy(sp < SPRITE> sprite, int screen_x, int screen_y);
-void HARDWARE_delete_sprite(sp<SPRITE> sprite);
+SPRITE* HARDWARE_create_sprite(GFX* gfx, int gfx_index, int layer, float scale, int screen_x, int screen_y, int alpha);
+void HARDWARE_update_sprite_texture(SPRITE* sprite, int gfx_index);
+void HARDWARE_set_sprite_xy(SPRITE* sprite, int screen_x, int screen_y);
+void HARDWARE_delete_sprite(SPRITE* sprite);
 void HARDWARE_load_sprite_palette(int* palette);
 
 void HARDWARE_init_arrays();
 void HARDWARE_init_gfx_data();
 
+#endif
 
 class SpriteManager : public EnginePart
 {
@@ -45,20 +47,20 @@ public:
 	static Logger log;
 
 
-	sp<HashMap<int, sp<Sprite>>> spriteByIDHashMap;//ms<HashMap><int, sp<Sprite>>();
-	sp<HashMap<string, sp<Sprite>>> spriteByNameHashMap;//ms<HashMap><string, sp<Sprite>>();
+	HashMap<int, Sprite*> spriteByIDHashMap;//new HashMap<int, Sprite*>();
+	HashMap<string, Sprite*> spriteByNameHashMap;//new HashMap<string, Sprite*>();
 
 
-	sp<vector<sp<ScreenSprite>>>screenSpriteList;
+	ArrayList<ScreenSprite*> screenSpriteList;
 
 
-	static sp<OKTexture> actionTexture;// = nullptr;
+	static BobTexture* actionTexture;// = nullptr;
 
 	int actionTextureFrame = 0;
 	int actionTextureAnimTicks = 0;
 
 
-	SpriteManager(sp<Engine> g);
+	SpriteManager(Engine* g);
 
 
 
@@ -207,11 +209,11 @@ public:
 	//	}
 
 
-	sp<Sprite> getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
+	Sprite* getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
 
 
-	sp<Sprite> getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
-	sp<Sprite> preloadSpriteFromDataFile(const string & spriteAssetName);
-	sp<Sprite> getSpriteByName(const string & spriteAssetName);
+	Sprite* getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
+	Sprite * preloadSpriteFromDataFile(const string & spriteAssetName);
+	Sprite * getSpriteByName(const string & spriteAssetName);
 };
 

@@ -48,7 +48,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   autoZoomLabel = ms<Label>("Auto Zoom Camera To Fit Room");
+	//   autoZoomLabel = new Label("Auto Zoom Camera To Fit Room");
 	//   autoZoomLabel->setCanAcceptKeyboardFocus(false);
 	//   autoZoomLabel->setLabelFor(autoZoomToggleButton);
 	//
@@ -66,7 +66,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   playerPhysicsLabel = ms<Label>("Player Physics");
+	//   playerPhysicsLabel = new Label("Player Physics");
 	//   playerPhysicsLabel->setCanAcceptKeyboardFocus(false);
 	//   playerPhysicsLabel->setLabelFor(playerPhysicsToggleButton);
 	//
@@ -84,7 +84,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   cameraPhysicsLabel = ms<Label>("Camera Physics");
+	//   cameraPhysicsLabel = new Label("Camera Physics");
 	//   cameraPhysicsLabel->setCanAcceptKeyboardFocus(false);
 	//   cameraPhysicsLabel->setLabelFor(cameraPhysicsToggleButton);
 	//
@@ -102,7 +102,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//
 	//   playerWalkSpeedScrollbar->addCallback([&] ()
 	//      {
-	//         //StatusBar.glossAlpha=((float)statusBarGlossScrollbar.getValue())/100.0f;
+	//         //BobStatusBar.glossAlpha=((float)statusBarGlossScrollbar.getValue())/100.0f;
 	//
 	//         //if(statusBarGlossScrollbar.getValue()==100)statusBarGlossValueLabel.setText("Default");
 	//         //else statusBarGlossValueLabel.setText(""+(statusBarGlossScrollbar.getValue())+"%");
@@ -113,7 +113,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//
 	//   playerWalkSpeedScrollbar->setValue((int)(100), true);
 	//
-	//   playerWalkSpeedLabel = ms<Label>("Player Walk Speed: ");
+	//   playerWalkSpeedLabel = new Label("Player Walk Speed: ");
 	//   playerWalkSpeedLabel->setCanAcceptKeyboardFocus(false);
 	//   playerWalkSpeedLabel->setLabelFor(playerWalkSpeedScrollbar);
 	//
@@ -122,7 +122,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//   //group layout
 	//   //-----------------------------
 	//
-	//   gameSettingsDialogLayout = ms<DialogLayout>();
+	//   gameSettingsDialogLayout = new DialogLayout();
 	//   gameSettingsDialogLayout->setCanAcceptKeyboardFocus(false);
 	//
 	//   gameSettingsDialogLayout->setHorizontalGroup(gameSettingsDialogLayout->createParallelGroup(gameSettingsDialogLayout->createSequentialGroup(gameSettingsDialogLayout->createParallelGroup(autoZoomLabel, playerPhysicsLabel, cameraPhysicsLabel), gameSettingsDialogLayout->createParallelGroup(autoZoomToggleButton, playerPhysicsToggleButton, cameraPhysicsToggleButton)), gameSettingsDialogLayout->createSequentialGroup(gameSettingsDialogLayout->createParallelGroup(playerWalkSpeedLabel), gameSettingsDialogLayout->createParallelGroup(playerWalkSpeedScrollbar), gameSettingsDialogLayout->createParallelGroup(playerWalkSpeedValueLabel))));
@@ -141,7 +141,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//   whiteThemeToggleButton->setTheme(GUIManager::checkboxTheme);
 	//   whiteThemeToggleButton->setCanAcceptKeyboardFocus(false);
 	//   whiteThemeToggleButton->setActive(false); //guiMan().lightTheme
-	//   //whiteStatusBarToggleButton.setTooltipContent("Toggle Light Status Bar");
+	//   //whiteBobStatusBarToggleButton.setTooltipContent("Toggle Light Status Bar");
 	//   whiteThemeToggleButton->addCallback([&] ()
 	//      {
 	//         if (getGUIManager()->lightTheme == true)
@@ -155,9 +155,9 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   whiteStatusBarToggleButtonLabel = ms<Label>("Toggle Light Theme");
-	//   whiteStatusBarToggleButtonLabel->setCanAcceptKeyboardFocus(false);
-	//   whiteStatusBarToggleButtonLabel->setLabelFor(whiteThemeToggleButton);
+	//   whiteBobStatusBarToggleButtonLabel = new Label("Toggle Light Theme");
+	//   whiteBobStatusBarToggleButtonLabel->setCanAcceptKeyboardFocus(false);
+	//   whiteBobStatusBarToggleButtonLabel->setLabelFor(whiteThemeToggleButton);
 	//
 	//   //-----------------------------
 	//   //status bar gloss scrollbar
@@ -176,7 +176,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//
 	//   statusBarGlossScrollbar->addCallback([&] ()
 	//      {
-	//         getStatusBar()->glossAlpha = ((float)(statusBarGlossScrollbar->getValue())) / 100.0f;
+	//         getBobStatusBar()->glossAlpha = ((float)(statusBarGlossScrollbar->getValue())) / 100.0f;
 	//
 	//         if (statusBarGlossScrollbar->getValue() == 100)
 	//         {
@@ -190,7 +190,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//   );
 	//
 	//
-	//   statusBarGlossLabel = ms<Label>("Status Bar Gloss: ");
+	//   statusBarGlossLabel = new Label("Status Bar Gloss: ");
 	//   statusBarGlossLabel->setCanAcceptKeyboardFocus(false);
 	//   statusBarGlossLabel->setLabelFor(statusBarGlossScrollbar);
 	//
@@ -202,7 +202,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//   //		grayscaleToggleButton.setCanAcceptKeyboardFocus(false);
 	//   //		grayscaleToggleButton.setActive(false);//Main.getGame().grayscale);
 	//   //		//grayscaleToggleButton.setTooltipContent("Toggle grayscale");
-	//   //		grayscaleToggleButton.addCallback(ms<Runnable>()
+	//   //		grayscaleToggleButton.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -210,18 +210,18 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//   //			}
 	//   //		});
 	//   //
-	//   //		grayscaleToggleButtonLabel = ms<Label>("Grayscale");
+	//   //		grayscaleToggleButtonLabel = new Label("Grayscale");
 	//   //		grayscaleToggleButtonLabel.setCanAcceptKeyboardFocus(false);
 	//   //		grayscaleToggleButtonLabel.setLabelFor(grayscaleToggleButton);
 	//
 	//
-	//   guiSettingsDialogLayout = ms<DialogLayout>();
+	//   guiSettingsDialogLayout = new DialogLayout();
 	//   guiSettingsDialogLayout->setCanAcceptKeyboardFocus(false);
 	//
 	//
-	//   guiSettingsDialogLayout->setHorizontalGroup(guiSettingsDialogLayout->createParallelGroup(guiSettingsDialogLayout->createSequentialGroup(guiSettingsDialogLayout->createParallelGroup(whiteStatusBarToggleButtonLabel), guiSettingsDialogLayout->createParallelGroup(whiteThemeToggleButton)), guiSettingsDialogLayout->createSequentialGroup(guiSettingsDialogLayout->createParallelGroup(statusBarGlossLabel), guiSettingsDialogLayout->createParallelGroup(statusBarGlossScrollbar), guiSettingsDialogLayout->createParallelGroup(statusBarGlossValueLabel))));
+	//   guiSettingsDialogLayout->setHorizontalGroup(guiSettingsDialogLayout->createParallelGroup(guiSettingsDialogLayout->createSequentialGroup(guiSettingsDialogLayout->createParallelGroup(whiteBobStatusBarToggleButtonLabel), guiSettingsDialogLayout->createParallelGroup(whiteThemeToggleButton)), guiSettingsDialogLayout->createSequentialGroup(guiSettingsDialogLayout->createParallelGroup(statusBarGlossLabel), guiSettingsDialogLayout->createParallelGroup(statusBarGlossScrollbar), guiSettingsDialogLayout->createParallelGroup(statusBarGlossValueLabel))));
 	//
-	//   guiSettingsDialogLayout->setVerticalGroup(guiSettingsDialogLayout->createSequentialGroup().addGroup(guiSettingsDialogLayout->createParallelGroup(whiteThemeToggleButton, whiteStatusBarToggleButtonLabel)).addGroup(guiSettingsDialogLayout->createParallelGroup(statusBarGlossLabel, statusBarGlossScrollbar, statusBarGlossValueLabel)));
+	//   guiSettingsDialogLayout->setVerticalGroup(guiSettingsDialogLayout->createSequentialGroup().addGroup(guiSettingsDialogLayout->createParallelGroup(whiteThemeToggleButton, whiteBobStatusBarToggleButtonLabel)).addGroup(guiSettingsDialogLayout->createParallelGroup(statusBarGlossLabel, statusBarGlossScrollbar, statusBarGlossValueLabel)));
 	//   //.addGroup(guiSettingsDialogLayout.createParallelGroup(grayscaleToggleButtonLabel, grayscaleToggleButton))
 	//
 }
@@ -244,7 +244,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   hq2xToggleButtonLabel = ms<Label>("Generate HQ2X Background");
+	//   hq2xToggleButtonLabel = new Label("Generate HQ2X Background");
 	//   hq2xToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   hq2xToggleButtonLabel->setLabelFor(hq2xToggleButton);
 	//
@@ -262,7 +262,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   fboToggleButtonLabel = ms<Label>("Use Framebuffer Objects");
+	//   fboToggleButtonLabel = new Label("Use Framebuffer Objects");
 	//   fboToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   fboToggleButtonLabel->setLabelFor(fboToggleButton);
 	//
@@ -280,7 +280,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   shadersToggleButtonLabel = ms<Label>("Use Shaders");
+	//   shadersToggleButtonLabel = new Label("Use Shaders");
 	//   shadersToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   shadersToggleButtonLabel->setLabelFor(shadersToggleButton);
 	//
@@ -299,7 +299,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //		gammaScrollbar.setValue(100);//(int)(Main.getGame().gamma*100), true);
 	//   //
-	//   //		gammaScrollbar.addCallback(ms<Runnable>()
+	//   //		gammaScrollbar.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -313,7 +313,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		gammaScrollbarLabel = ms<Label>("Gamma: ");
+	//   //		gammaScrollbarLabel = new Label("Gamma: ");
 	//   //		gammaScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		gammaScrollbarLabel.setLabelFor(gammaScrollbar);
 	//   //
@@ -331,7 +331,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //		contrastScrollbar.setValue(100);//(int)(Main.getGame().contrast*100), true);
 	//   //
 	//   //
-	//   //		contrastScrollbar.addCallback(ms<Runnable>()
+	//   //		contrastScrollbar.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -345,7 +345,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		contrastScrollbarLabel = ms<Label>("Contrast: ");
+	//   //		contrastScrollbarLabel = new Label("Contrast: ");
 	//   //		contrastScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		contrastScrollbarLabel.setLabelFor(contrastScrollbar);
 	//   //
@@ -364,7 +364,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //		brightnessScrollbar.setValue(100);//(int)(Main.getGame().brightness*100), true);
 	//   //
 	//   //
-	//   //		brightnessScrollbar.addCallback(ms<Runnable>()
+	//   //		brightnessScrollbar.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -378,7 +378,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		brightnessScrollbarLabel = ms<Label>("Brightness: ");
+	//   //		brightnessScrollbarLabel = new Label("Brightness: ");
 	//   //		brightnessScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		brightnessScrollbarLabel.setLabelFor(brightnessScrollbar);
 	//   //
@@ -397,7 +397,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //		saturationScrollbar.setValue(100);//(int)(Main.getGame().saturation*100), true);
 	//   //
-	//   //		saturationScrollbar.addCallback(ms<Runnable>()
+	//   //		saturationScrollbar.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -411,13 +411,13 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		saturationScrollbarLabel = ms<Label>("Saturation: ");
+	//   //		saturationScrollbarLabel = new Label("Saturation: ");
 	//   //		saturationScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		saturationScrollbarLabel.setLabelFor(saturationScrollbar);
 	//   //
 	//
 	//
-	//   graphicsSettingsDialogLayout = ms<DialogLayout>();
+	//   graphicsSettingsDialogLayout = new DialogLayout();
 	//   //graphicsSettingsDialogLayout.setTheme("dark-paneldialoglayout");
 	//   graphicsSettingsDialogLayout->setCanAcceptKeyboardFocus(false);
 	//

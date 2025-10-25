@@ -14,7 +14,7 @@
 Logger FriendManager::log = Logger("FriendManager");
 
 
-FriendManager::FriendManager(sp<BGClientEngine> g)
+FriendManager::FriendManager(BGClientEngine* g)
 { //===============================================================================================
 	this->e = g;
 }
@@ -22,7 +22,7 @@ FriendManager::FriendManager(sp<BGClientEngine> g)
 void FriendManager::init()
 { //===============================================================================================
 
-	//if (OKNet::debugMode)
+	//if (BobNet::debugMode)
 	{
 		//int timesRun = 0;
 
@@ -33,7 +33,7 @@ void FriendManager::init()
 
 		//write back with timesrun+1
 		//
-		//      sp<File> sessionFile = ms<File>("C:\\simulator.txt");
+		//      File* sessionFile = new File("C:\\simulator.txt");
 		//
 		//      if (sessionFile->exists() == false)
 		//      {
@@ -52,7 +52,7 @@ void FriendManager::init()
 		//
 		//      try
 		//      {
-		//         sp<BufferedReader> input = ms<BufferedReader>(ms<FileReader>(sessionFile));
+		//         BufferedReader* input = new BufferedReader(new FileReader(sessionFile));
 		//         line = input->readLine();
 		//         input->close();
 		//      }
@@ -66,15 +66,15 @@ void FriendManager::init()
 		//         if (line.length() > 0)
 		//         {
 		//            timesRun = stoi(line);
-		//            log->debug("" + to_string(timesRun));
+		//            log.debug("" + to_string(timesRun));
 		//         }
 		//      }
 		//
 		//
-		//      sp<Writer> output;
+		//      Writer* output;
 		//      try
 		//      {
-		//         output = ms<BufferedWriter>(ms<FileWriter>(sessionFile));
+		//         output = new BufferedWriter(new FileWriter(sessionFile));
 		//         output->write("" + to_string(timesRun + 1));
 		//         output->close();
 		//      }
@@ -94,10 +94,10 @@ void FriendManager::init()
 		//      }
 		//
 		//
-		//      sp<FriendCharacter> f = ms<FriendCharacter>(getGameEngine(), 1, FriendCharacter::FACEBOOK_TYPE, myPort, theirPort);
+		//      FriendCharacter* f = new FriendCharacter(getGameEngine(), 1, FriendCharacter::FACEBOOK_TYPE, myPort, theirPort);
 		//
 		//
-		//      friendCharacters->push_back(f);
+		//      friendCharacters.push_back(f);
 	}
 }
 
@@ -106,7 +106,7 @@ void FriendManager::cleanup()
 
 	for (int i = 0; i < friendCharacters->size(); i++)
 	{
-		friendCharacters->at(i)->cleanup();
+		friendCharacters->get(i)->cleanup();
 	}
 }
 
@@ -115,7 +115,7 @@ void FriendManager::update()
 
 	for (int i = 0; i < friendCharacters->size(); i++)
 	{
-		friendCharacters->at(i)->update();
+		friendCharacters->get(i)->update();
 	}
 
 }
@@ -133,6 +133,6 @@ void FriendManager::update()
 //	}
 //
 //
-//	friendCharacters->add(ms<FriendCharacter>(getClientGameEngine(), userID, peerType));
+//	friendCharacters->add(new FriendCharacter(getClientGameEngine(), userID, peerType));
 //}
 

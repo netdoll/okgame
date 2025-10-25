@@ -4,18 +4,18 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 
 #include <src/Utility/Logger.h>
 #include "src/Puzzle/Room.h"
 
 //===============================================================================================
 //game stats logs stats for every single game that every user plays
-class OKGameGameStats
+class BobsGameGameStats
 {//===============================================================================================
 
 public:
-	Logger log = Logger("OKGameGameStats");
+	Logger log = Logger("BobsGameGameStats");
 
 	string userName = "";
 	long long userID = 0;
@@ -56,7 +56,7 @@ public:
 
 	string statsUUID = "";
 
-	sp<Room> room = nullptr;
+	Room* room = nullptr;
 
 	//game type or sequence,
 	//sequence options
@@ -70,7 +70,7 @@ public:
 	//send replay packet as well
 
 	//===============================================================================================
-	OKGameGameStats()
+	BobsGameGameStats()
 	{//===============================================================================================
 		boost::uuids::random_generator generator;
 		statsUUID = to_string(generator());

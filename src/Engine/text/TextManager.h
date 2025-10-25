@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -16,7 +16,7 @@ class TextManager : public EnginePart
 public:
 	static Logger log;
 
-	//static sp<TrueTypeFont> ttfFont;
+	//static TrueTypeFont* ttfFont;
 
 	static string debugtext1;
 	static string debugtext2;
@@ -24,10 +24,10 @@ public:
 	static string debugtext4;
 
 private:
-	bool antiAlias = true;
+	//bool antiAlias = true;
 
 public:
-	sp<vector<sp<TextWindow>>>textBox;// = ms<vector><sp<TextWindow>>();
+	ArrayList<TextWindow*>* textBox = new ArrayList<TextWindow*>();
 
 
 	int width = 64 * 6 * 2; // *2 because we draw everything at 2x to allow for scaling (and higher res 1x unicode fonts)
@@ -85,32 +85,32 @@ public:
 	bool delay = false;
 	int delayTicks = 0;
 
-	sp<OKFont> font = nullptr; // this isn't per-getText window because we want to share the state across the boxes. is that right, or would per-box be better?
-	sp<OKColor> textColor = OKColor::white;
-	sp<OKColor> textBGColor = OKColor::black;
-	sp<OKColor> textAAColor = OKColor::gray;
-	sp<OKColor> textShadowColor = OKColor::darkGray;
+	BobFont* font = nullptr; // this isn't per-getText window because we want to share the state across the boxes. is that right, or would per-box be better?
+	BobColor* textColor = BobColor::white;
+	BobColor* textBGColor = BobColor::black;
+	BobColor* textAAColor = BobColor::gray;
+	BobColor* textShadowColor = BobColor::darkGray;
 
-	sp<OKColor> tC0 = OKColor::black;
-	sp<OKColor> tC1 = OKColor::white;
-	sp<OKColor> tC2 = OKColor::gray;
-	sp<OKColor> tC3 = OKColor::darkGray;
+	BobColor* tC0 = BobColor::black;
+	BobColor* tC1 = BobColor::white;
+	BobColor* tC2 = BobColor::gray;
+	BobColor* tC3 = BobColor::darkGray;
 
 	bool skipText = false;
 
 	bool buttonIconUpDownToggle = false;
 	int buttonTimer = 0;
-	sp<OKTexture> buttonTexture = nullptr;
+	BobTexture* buttonTexture = nullptr;
 	// TODO: load button texture, draw where appropriate during render
 
 	int MAX_ANSWER_LENGTH = 255;
 
-	sp<Entity> optionTargetEntity1 = nullptr;
-	sp<Entity> optionTargetEntity2 = nullptr;
-	sp<Entity> optionTargetEntity3 = nullptr;
-	sp<Entity> optionTargetEntity4 = nullptr;
-	sp<Entity> optionTargetEntity5 = nullptr;
-	sp<Entity> optionTargetEntity6 = nullptr;
+	Entity* optionTargetEntity1 = nullptr;
+	Entity* optionTargetEntity2 = nullptr;
+	Entity* optionTargetEntity3 = nullptr;
+	Entity* optionTargetEntity4 = nullptr;
+	Entity* optionTargetEntity5 = nullptr;
+	Entity* optionTargetEntity6 = nullptr;
 
 	int cursorTicks = 0;
 	bool cursorPixelUpDownToggle = true;
@@ -118,10 +118,10 @@ public:
 	int numberOfAnswers = 0;
 	int selectedAnswer = 0;
 
-	sp<ScreenSprite> cursorScreenSprite = nullptr;
+	ScreenSprite* cursorScreenSprite = nullptr;
 	float keyboardY = 0;
-	sp<ScreenSprite> keyboardScreenSprite = nullptr;
-	sp<ScreenSprite> actionIconScreenSprite = nullptr;
+	ScreenSprite* keyboardScreenSprite = nullptr;
+	ScreenSprite* actionIconScreenSprite = nullptr;
 	string optionBuffer;
 
 	//public float BOTTOM_ACTIVE_POSITION_Y=5000;
@@ -130,13 +130,13 @@ public:
 	//public float TOP_INACTIVE_POSITION_Y=5000;
 	//public float POSITION_X=5000;
 
-	static sp<OKTexture> questionMarkTexture;
+	static BobTexture* questionMarkTexture;
 
 	//public long textEngineSpeedTicksPerLetter=10;
 	//public long drawLetterTicksCounter=100;
 
 	
-	TextManager(sp<Engine> g);
+	TextManager(Engine* g);
 
 	
 	bool isTextBoxOpen();
@@ -179,7 +179,7 @@ public:
 	
 	void parseOption();
 
-	void dialogue(sp<Dialogue> d);
+	void dialogue(Dialogue* d);
 
 	void getTextFromOnscreenKeyboard();
 

@@ -57,26 +57,26 @@ LightData::LightData(int id, const string& name)
 	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
 }
 
-//sp<LightData> LightData::fromBase64ZippedJSON(const string& b64)
+//LightData* LightData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//LightData data = gson.fromJson(json,LightData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//sp<LightData> LightData::fromJSON(const string& json)
+//LightData* LightData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<LightData> data = nullptr;// gson->fromJson(json, LightData::typeid);
+//	//Gson* gson = new Gson();
+//	LightData* data = nullptr;// gson->fromJson(json, LightData::typeid);
 //
 //
 //	return data;
@@ -142,27 +142,27 @@ string& LightData::initFromString(string& t)
 
 	t = t.substr(t.find("isDayLight:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isDayLight = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isDayLight = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isNightLight:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNightLight = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isNightLight = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("flickers:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickers = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	flickers = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("changesColor:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	changesColor = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	changesColor = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toggleable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	toggleable = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	toggleable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toggleXPixels1X:`") + 1);
@@ -187,12 +187,12 @@ string& LightData::initFromString(string& t)
 
 	t = t.substr(t.find("flickerRandomUpToOnTicks:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickerRandomUpToOnTicks = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	flickerRandomUpToOnTicks = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("flickerRandomUpToOffTicks:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickerRandomUpToOffTicks = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+	flickerRandomUpToOffTicks = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 

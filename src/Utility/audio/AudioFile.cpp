@@ -12,7 +12,7 @@ Logger AudioFile::log = Logger("AudioFile");
 
 
 
-AudioFile::AudioFile(sp<AudioData> data)
+AudioFile::AudioFile(AudioData* data)
 { //=========================================================================================================================
 
 
@@ -20,16 +20,16 @@ AudioFile::AudioFile(sp<AudioData> data)
 	setInitialized_S(true);
 
 
-	for (int i = 0; i < (int)AudioManager::globalAudioFileList->size(); i++)
+	for (int i = 0; i < (int)AudioManager::globalAudioFileList.size(); i++)
 	{
-		if (AudioManager::globalAudioFileList->at(i)->getName() == data->getName())
+		if (AudioManager::globalAudioFileList.get(i)->getName() == data->getName())
 		{
-			if (AudioManager::globalAudioFileList->at(i)->getID() == -1)AudioManager::globalAudioFileList->at(i)->setID(data->getID());
-			//log->warn("Sound already exists:" + data->getName());
+			if (AudioManager::globalAudioFileList.get(i)->getID() == -1)AudioManager::globalAudioFileList.get(i)->setID(data->getID());
+			//log.warn("Sound already exists:" + data->getName());
 			return;
 		}
 	}
-	AudioManager::globalAudioFileList->push_back(shared_from_this());
+	AudioManager::globalAudioFileList.add(this);
 }
 
 
@@ -51,7 +51,7 @@ AudioFile::AudioFile(string filename)
 	if (found != string::npos)
 		name = name.substr(0, found);
 
-	this->data = ms<AudioData>(-1, name, filename);
+	this->data = new AudioData(-1, name, filename);
 
 	byteData = FileUtils::loadByteFileFromExePath(filename);
 
@@ -61,13 +61,13 @@ AudioFile::AudioFile(string filename)
 	_fileExists = true;
 	setInitialized_S(true);
 
-	AudioManager::globalAudioFileList->push_back(shared_from_this());
+	AudioManager::globalAudioFileList.add(this);
 
 	log.info("Loaded " + filename);
 
 }
 
-sp<AudioData> AudioFile::getData()
+AudioData* AudioFile::getData()
 { //=========================================================================================================================
 	return data;
 }
@@ -127,13 +127,13 @@ void AudioFile::setFileExists(bool i)
 	_fileExists = i;
 }
 
-sp<ByteArray> AudioFile::getByteData()
+ByteArray* AudioFile::getByteData()
 { //=========================================================================================================================
 	return byteData;
 }
 
 //The following method was originally marked 'synchronized':
-void AudioFile::setData_S(sp<AudioData> data)
+void AudioFile::setData_S(AudioData* data)
 { //=========================================================================================================================
 
 	this->data = data;
@@ -168,7 +168,7 @@ void AudioFile::update()
 				}
 				else
 				{
-					//               downloadThread = ms<Thread>([&] ()
+					//               downloadThread = new Thread([&] ()
 					//                  {
 					//                     try
 					//                     {
@@ -196,7 +196,7 @@ void AudioFile::update()
 				}
 				//               else
 				//               {
-				//                  log->warn("Download thread timed out for Sound: " + name());
+				//                  log.warn("Download thread timed out for Sound: " + name());
 				//                  downloadThread->start();
 				//               }
 				//            }

@@ -15,12 +15,12 @@ Logger FriendCharacter::log = Logger("FriendCharacter");
 
 
 
-FriendCharacter::FriendCharacter(sp<BGClientEngine> g)
+FriendCharacter::FriendCharacter(BGClientEngine* g)
 { //===============================================================================================
 
 
-	//Character(g, ms<EntityData>(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, -1, ""));
-	sp<EntityData> data = ms<EntityData>(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
+	//Character(g, new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, -1, ""));
+	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -29,15 +29,15 @@ FriendCharacter::FriendCharacter(sp<BGClientEngine> g)
 	rotationAnimationSpeedTicks = 100; //80;
 
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
-FriendCharacter::FriendCharacter(sp<BGClientEngine> g, int friendUserID, int friendType)
+FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friendType)
 { //===============================================================================================
 
 
 	//this(g); //does NOT add to entityList
-	sp<EntityData> data = ms<EntityData>(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
+	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -51,13 +51,13 @@ FriendCharacter::FriendCharacter(sp<BGClientEngine> g, int friendUserID, int fri
 //	this->peerType = peerType;
 //
 //
-//	connection = ms<FriendUDPConnection>(g, friendManager->getNextUDPPort(), this);
+//	connection = new FriendUDPConnection(g, friendManager->getNextUDPPort(), this);
 
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
-FriendCharacter::FriendCharacter(sp<BGClientEngine> g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort)
+FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort)
 { //===============================================================================================
 
 
@@ -66,7 +66,7 @@ FriendCharacter::FriendCharacter(sp<BGClientEngine> g, int friendUserID, int fri
 	//FOR DEBUG
 
 	//this(g); //does NOT add to entityList
-	sp<EntityData> data = ms<EntityData>(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
+	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -79,30 +79,30 @@ FriendCharacter::FriendCharacter(sp<BGClientEngine> g, int friendUserID, int fri
 //	this->userID = userID;
 //	this->peerType = peerType;
 //
-//	connection = ms<FriendUDPConnection>(g, myUDPPort, this);
+//	connection = new FriendUDPConnection(g, myUDPPort, this);
 //	connection->setPeerIPAddress_S("127.0.0.1", theirUDPPort);
 
-	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
 }
 
-void FriendCharacter::setGameToForwardPacketsTo(sp<MiniGameEngine> game)
+void FriendCharacter::setGameToForwardPacketsTo(MiniGameEngine* game)
 { //===============================================================================================
 
 	this->game = game;
 }
 
-bool FriendCharacter::udpPeerMessageReceived(sp<UDPPeerConnection>c, string e)// sp<ChannelHandlerContext> ctx, sp<MessageEvent> e)
+bool FriendCharacter::udpPeerMessageReceived(UDPPeerConnection *c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
 
 	//string s = e;// static_cast<string>(e->getMessage());
 
-	if (OKString::startsWith(e, OKNet::Friend_LocationStatus_Update))
+	if (String::startsWith(e, BobNet::Friend_LocationStatus_Update))
 	{
 		incomingFriendLocationStatusUpdate(e);
 		return true;
 	}
 
-	if (OKString::startsWith(e, OKNet::Game_Challenge_Request))
+	if (String::startsWith(e, BobNet::Game_Challenge_Request))
 	{
 		incomingGameChallengeRequest(e);
 		return true;
@@ -200,14 +200,14 @@ void FriendCharacter::sendFriendLocationStatusUpdate()
 { //===============================================================================================
 
 	connection->writeReliable_S(
-		OKNet::Friend_LocationStatus_Update +
+		BobNet::Friend_LocationStatus_Update +
 		string(getMap()->getName()) + "," +
 		to_string(getPlayer()->getRoundedMiddleX()) + "," +
 		to_string(getPlayer()->getRoundedMiddleY()) + "," +
-		to_string(OKNet::myStatus) + OKNet::endline);
+		to_string(BobNet::myStatus) + BobNet::endline);
 }
 
-void FriendCharacter::incomingFriendLocationStatusUpdate(string e)//sp<MessageEvent> e)
+void FriendCharacter::incomingFriendLocationStatusUpdate(string e)//MessageEvent* e)
 { //===============================================================================================
 
 	//FriendLocationUpdate:mapName,x,y,status
@@ -306,15 +306,15 @@ void FriendCharacter::sendGameChallengeResponse(bool b)
 
 	if (b == true)
 	{
-		connection->writeReliable_S(OKNet::Game_Challenge_Response + "Accept" + OKNet::endline);
+		connection->writeReliable_S(BobNet::Game_Challenge_Response + "Accept" + BobNet::endline);
 	}
 	else
 	{
-		connection->writeReliable_S(OKNet::Game_Challenge_Response + "Decline" + OKNet::endline);
+		connection->writeReliable_S(BobNet::Game_Challenge_Response + "Decline" + BobNet::endline);
 	}
 }
 
-void FriendCharacter::incomingGameChallengeRequest(string e)//sp<MessageEvent> e)
+void FriendCharacter::incomingGameChallengeRequest(string e)//MessageEvent* e)
 { //===============================================================================================
 
 
@@ -327,7 +327,7 @@ void FriendCharacter::incomingGameChallengeRequest(string e)//sp<MessageEvent> e
 	//if player is already in game, they should not show up in the minigame challenge list, should broadcast current status constantly.
 	//however, if they got populated before the broadcast was received, automatically deny the request
 
-	if (OKNet::myStatus != OKNet::status_AVAILABLE)
+	if (BobNet::myStatus != BobNet::status_AVAILABLE)
 	{
 		sendGameChallengeResponse(false);
 		return;
@@ -345,7 +345,7 @@ void FriendCharacter::incomingGameChallengeRequest(string e)//sp<MessageEvent> e
 
 
 		//open dialog window with friendname, game name
-		this->gameChallengeNotification = getGUIManager()->makeGameChallengeNotification(shared_from_this(), gameName);
+		this->gameChallengeNotification = getGUIManager()->makeGameChallengeNotification(this, gameName);
 	}
 	else
 	{

@@ -5,11 +5,11 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
-#include "../network/OKNet.h"
+#include "../network/BobNet.h"
 
 
 class FriendManager : public EnginePart
@@ -20,12 +20,12 @@ public:
 
 
 
-	//sp<vector because threads will access it
-	sp<vector<sp<FriendCharacter>>>friendCharacters;// = ms<vector><sp<FriendCharacter>>();
+	//ArrayList because threads will access it
+	ArrayList<FriendCharacter*>* friendCharacters = new ArrayList<FriendCharacter*>();
 
 
 
-	FriendManager(sp<BGClientEngine> g);
+	FriendManager(BGClientEngine* g);
 
 
 	void init();

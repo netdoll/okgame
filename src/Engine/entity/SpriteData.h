@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include <src/Engine/rpg/event/EventData.h>
 class Logger;
 
@@ -104,22 +104,22 @@ private:
 
 
 	
-	sp<vector<sp<SpriteAnimationSequence>>>animationList;// = ms<vector><sp<SpriteAnimationSequence>>();
+	ArrayList<SpriteAnimationSequence*>* animationList = new ArrayList<SpriteAnimationSequence*>();
 
-	sp<EventData> eventData = nullptr;
+	EventData* eventData = nullptr;
 
 public:
 
-	SpriteData(int id = -1, const string& name = "none", const string& displayName = "", int widthPixels1X = 0, int heightPixels1X = 0, int frames = 1, bool isNPC = false, bool isKid = false, bool isAdult = false, bool isMale = false, bool isFemale = false, bool isCar = false, bool isAnimal = false, bool hasShadow = false, bool isRandom = false, bool isDoor = false, bool isGame = false, bool isItem = false, bool forceHQ2X = false, bool forceClientMD5Export = false, sp<EventData> eventData = nullptr, const string& itemGameDescription = "", float gamePrice = 0, int utilityOffsetXPixels1X = 0, int utilityOffsetYPixels1X = 0, const string& dataMD5 = "", const string& paletteMD5 = "");
+	SpriteData(int id = -1, const string& name = "none", const string& displayName = "", int widthPixels1X = 0, int heightPixels1X = 0, int frames = 1, bool isNPC = false, bool isKid = false, bool isAdult = false, bool isMale = false, bool isFemale = false, bool isCar = false, bool isAnimal = false, bool hasShadow = false, bool isRandom = false, bool isDoor = false, bool isGame = false, bool isItem = false, bool forceHQ2X = false, bool forceClientMD5Export = false, EventData* eventData = nullptr, const string& itemGameDescription = "", float gamePrice = 0, int utilityOffsetXPixels1X = 0, int utilityOffsetYPixels1X = 0, const string& dataMD5 = "", const string& paletteMD5 = "");
 
 
 	void addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X);
 
 
-//	static sp<SpriteData> fromBase64ZippedJSON(const string& b64);
+//	static SpriteData* fromBase64ZippedJSON(const string& b64);
 //
 //
-//	static sp<SpriteData> fromJSON(const string& json);
+//	static SpriteData* fromJSON(const string& json);
 //
 	//string toString();
 	string& initFromString(string& t);
@@ -147,7 +147,7 @@ public:
 	bool getIsGame();
 	bool getIsItem();
 	bool getForceHQ2X();
-	sp<EventData> getEventData();
+	EventData* getEventData();
 	string& getItemGameDescription();
 	float getGamePrice();
 	int getUtilityOffsetXPixels1X();
@@ -156,7 +156,7 @@ public:
 	int getUtilityOffsetYPixelsHQ();
 	string& getDataMD5();
 	string& getPaletteMD5();
-	sp<vector<sp<SpriteAnimationSequence>>> getAnimationList();
+	ArrayList<SpriteAnimationSequence*>* getAnimationList();
 	string& getComment();
 	bool getForceMD5Export();
 

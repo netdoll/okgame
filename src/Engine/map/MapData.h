@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -111,7 +111,7 @@ public:
 	
 	   ---------------GAME ENGINE
 	   nD
-	   StatusBar
+	   BobStatusBar
 	   GUI
 	
 	
@@ -186,11 +186,11 @@ private:
 
 	//these are ASSET lists only populated with objectDatas to convert into JSON and fill the regular Map lists at runtime with.
 	
-	sp<vector<sp<MapStateData>>>stateDataList;// = ms<vector><sp<MapStateData>>();
+	ArrayList<MapStateData*>* stateDataList = new ArrayList<MapStateData*>();
 	
-	sp<vector<sp<EventData>>>eventDataList;// = ms<vector><sp<EventData>>();
+	ArrayList<EventData*>* eventDataList = new ArrayList<EventData*>();
 	
-	sp<vector<sp<DoorData>>>doorDataList;// = ms<vector><sp<DoorData>>();
+	ArrayList<DoorData*>* doorDataList = new ArrayList<DoorData*>();
 
 
 public:
@@ -200,8 +200,8 @@ public:
 	MapData(int id, const string& name, int widthTiles1X, int heightTiles1X);
 
 
-	//static sp<MapData> fromBase64ZippedJSON(const string& b64);
-	//static sp<MapData> fromJSON(const string& json);
+	//static MapData* fromBase64ZippedJSON(const string& b64);
+	//static MapData* fromJSON(const string& json);
 
 	string& initFromString(string& t);
 
@@ -240,9 +240,9 @@ public:
 	int getHeightPixelsHQ();
 
 
-	sp<vector<sp<MapStateData>>> getStateDataList();
-	sp<vector<sp<EventData>>> getEventDataList();
-	sp<vector<sp<DoorData>>> getDoorDataList();
+	ArrayList<MapStateData*>* getStateDataList();
+	ArrayList<EventData*>* getEventDataList();
+	ArrayList<DoorData*>* getDoorDataList();
 
 
 	void setGroundLayerMD5(const string& s);

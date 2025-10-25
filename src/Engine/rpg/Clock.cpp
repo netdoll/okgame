@@ -14,7 +14,7 @@
 Logger Clock::log = Logger("Clock");
 
 
-Clock::Clock(sp<Engine> g)
+Clock::Clock(Engine* g)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -302,20 +302,20 @@ void Clock::updateCaptions()
 		dayString = " ?????? ";
 	}
 
-	if (getStatusBar()->clockCaption != nullptr)
+	if (getBobStatusBar()->clockCaption != nullptr)
 	{
-		getStatusBar()->clockCaption->updateCaption(clockString);
+		getBobStatusBar()->clockCaption->updateCaption(clockString);
 	}
-	if (getStatusBar()->dayCaption != nullptr)
+	if (getBobStatusBar()->dayCaption != nullptr)
 	{
-		getStatusBar()->dayCaption->updateCaption(dayString);
+		getBobStatusBar()->dayCaption->updateCaption(dayString);
 	}
 
 	if (Main::introMode) //TODO terrible hack
 	{
-		if (getStatusBar()->clockCaption != nullptr)
+		if (getBobStatusBar()->clockCaption != nullptr)
 		{
-			getStatusBar()->clockCaption->setColors(OKColor::green, OKColor::darkGreen, OKColor::clear);
+			getBobStatusBar()->clockCaption->setColors(BobColor::green, BobColor::darkGreen, BobColor::clear);
 		}
 	}
 }
@@ -335,7 +335,7 @@ void Clock::setPaused(bool b)
 void Clock::setPausedOn()
 { //=========================================================================================================================
 	paused = true;
-	getStatusBar()->clockCaption->setPausedColor();
+	getBobStatusBar()->clockCaption->setPausedColor();
 }
 
 void Clock::setPausedOff()
@@ -343,19 +343,19 @@ void Clock::setPausedOff()
 	paused = false;
 	if (unknown)
 	{
-		getStatusBar()->clockCaption->setUnknownColor();
+		getBobStatusBar()->clockCaption->setUnknownColor();
 	}
 	else if (paused)
 	{
-		getStatusBar()->clockCaption->setPausedColor();
+		getBobStatusBar()->clockCaption->setPausedColor();
 	}
 	else if (fast)
 	{
-		getStatusBar()->clockCaption->setFastColor();
+		getBobStatusBar()->clockCaption->setFastColor();
 	}
 	else
 	{
-		getStatusBar()->clockCaption->setDefaultColor();
+		getBobStatusBar()->clockCaption->setDefaultColor();
 	}
 }
 
@@ -374,7 +374,7 @@ void Clock::setUnknown(bool b)
 void Clock::setUnknownOn()
 { //=========================================================================================================================
 	unknown = true;
-	getStatusBar()->clockCaption->setUnknownColor();
+	getBobStatusBar()->clockCaption->setUnknownColor();
 }
 
 void Clock::setUnknownOff()
@@ -382,19 +382,19 @@ void Clock::setUnknownOff()
 	unknown = false;
 	if (unknown)
 	{
-		getStatusBar()->clockCaption->setUnknownColor();
+		getBobStatusBar()->clockCaption->setUnknownColor();
 	}
 	else if (paused)
 	{
-		getStatusBar()->clockCaption->setPausedColor();
+		getBobStatusBar()->clockCaption->setPausedColor();
 	}
 	else if (fast)
 	{
-		getStatusBar()->clockCaption->setFastColor();
+		getBobStatusBar()->clockCaption->setFastColor();
 	}
 	else
 	{
-		getStatusBar()->clockCaption->setDefaultColor();
+		getBobStatusBar()->clockCaption->setDefaultColor();
 	}
 }
 
@@ -413,7 +413,7 @@ void Clock::setFast(bool b)
 void Clock::setFastOn()
 { //=========================================================================================================================
 	fast = true;
-	getStatusBar()->clockCaption->setFastColor();
+	getBobStatusBar()->clockCaption->setFastColor();
 }
 
 void Clock::setFastOff()
@@ -421,19 +421,19 @@ void Clock::setFastOff()
 	fast = false;
 	if (unknown)
 	{
-		getStatusBar()->clockCaption->setUnknownColor();
+		getBobStatusBar()->clockCaption->setUnknownColor();
 	}
 	else if (paused)
 	{
-		getStatusBar()->clockCaption->setPausedColor();
+		getBobStatusBar()->clockCaption->setPausedColor();
 	}
 	else if (fast)
 	{
-		getStatusBar()->clockCaption->setFastColor();
+		getBobStatusBar()->clockCaption->setFastColor();
 	}
 	else
 	{
-		getStatusBar()->clockCaption->setDefaultColor();
+		getBobStatusBar()->clockCaption->setDefaultColor();
 	}
 }
 

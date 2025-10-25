@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "oktypes.h"
+#include "bobtypes.h"
 
 class Logger;
 
@@ -23,21 +23,21 @@ public:
 	virtual void update();
 	virtual void render();
 
-//	static sp<BGClientEngine> getClientEngine();
-//	static sp<EventManager> getEventManager();
-//	static sp<Clock> getClock();
-//	static sp<GUIManager> getGUIManager();
-//	static sp<StuffMenu> getStuffMenu();
-//	static sp<GameStore> getGameStore();
-//	static sp<PlayerEditMenu> getPlayerEditMenu();
-//	static sp<Player> getPlayer();
+//	static BGClientEngine* getClientEngine();
+//	static EventManager* getEventManager();
+//	static Clock* getClock();
+//	static GUIManager* getGUIManager();
+//	static StuffMenu* getStuffMenu();
+//	static GameStore* getGameStore();
+//	static PlayerEditMenu* getPlayerEditMenu();
+//	static Player* getPlayer();
 //	static ND* getND();
-//	static sp<Wallet> getWallet();
-//	static sp<FriendManager> getFriendManager();
-//	static sp<StatusBar> getStatusBar();
-//	static sp<NotificationManager> getNotificationManager();
-//	static sp<GameSave> getGameSave();
-//	static sp<TCPServerConnection> getServerConnection();
+//	static Wallet* getWallet();
+//	static FriendManager* getFriendManager();
+//	static BobStatusBar* getBobStatusBar();
+//	static NotificationManager* getNotificationManager();
+//	static GameSave* getGameSave();
+//	static TCPServerConnection* getServerConnection();
 
 };
 

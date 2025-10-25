@@ -4,19 +4,19 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 #include "Entity.h"
 class Logger;
 
 class PathFinder;
 class Engine;
 class EntityData;
-class OKTexture;
+class BobTexture;
 class Caption;
 class Sprite;
 class Area;
 
-class Character : public Entity, public std::enable_shared_from_this<Character>
+class Character : public Entity
 {
 public:
 	static Logger log;
@@ -31,7 +31,7 @@ public:
 
 	int animationDirection = 0;
 
-	sp<PathFinder> pathfinder = nullptr;
+	PathFinder* pathfinder = nullptr;
 
 	int pathPosition = 0;
 
@@ -45,16 +45,16 @@ public:
 	bool standing = false;
 	bool running = false;
 
-	sp<OKTexture> uniqueTexture = nullptr; //if this is set it will render with this, otherwise it will try to render the normal spriteAsset.texture in Entity.render()
+	BobTexture* uniqueTexture = nullptr; //if this is set it will render with this, otherwise it will try to render the normal spriteAsset.texture in Entity.render()
 
 	bool showName = false;
-	sp<Caption> nameCaption = nullptr;
+	Caption* nameCaption = nullptr;
 
 	bool showAccountType = false;
-	sp<Caption> accountTypeCaption = nullptr;
+	Caption* accountTypeCaption = nullptr;
 
-	sp<OKColor> nameColor = OKColor::white;
-	sp<OKColor> accountTypeNameColor = OKColor::white;
+	BobColor* nameColor = BobColor::white;
+	BobColor* accountTypeNameColor = BobColor::white;
 	string accountTypeName = "";
 
 	bool isMale = false;
@@ -64,13 +64,13 @@ public:
 	int rotationAnimationSpeedTicks = 160;
 
 	Character();
-	//Character(sp<Engine> g);
+	//Character(Engine* g);
 
-	Character(sp<Engine> g, sp<EntityData> data, sp<Map> m);
+	Character(Engine* g, EntityData* data, Map* m);
 
 	void initCharacter();
 
-	Character(sp<Engine> g, string name, sp<Sprite> sprite, sp<Area> a, sp<Map> m);
+	Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m);
 
 	virtual void initCurrentAnimationFromSprite() override;
 
@@ -86,11 +86,11 @@ public:
 
 	void checkIfMoved();
 
-	void dontLookAtEntity(sp<Entity> e); //first id is entity to be avoiding LOOKING,second id is one to NOT BE LOOKED AT
+	void dontLookAtEntity(Entity* e); //first id is entity to be avoiding LOOKING,second id is one to NOT BE LOOKED AT
 
-	void lookAtEntity(sp<Entity> e);
+	void lookAtEntity(Entity* e);
 
-	void lookAtEntityButNotOppositeWalkingDirection(sp<Entity> stared_at_entity);
+	void lookAtEntityButNotOppositeWalkingDirection(Entity* stared_at_entity);
 
 	void setAppearanceFromCharacterAppearanceString(string s);
 
@@ -100,7 +100,7 @@ public:
 
 	void setShowAccountType(bool b);
 
-	void setCharacterNameAndCaption(sp<OKColor> nameColor, const string& name, sp<OKColor> accountTypeNameColor, const string& accountTypeName);
+	void setCharacterNameAndCaption(BobColor* nameColor, const string& name, BobColor* accountTypeNameColor, const string& accountTypeName);
 
 	//
 	//	
@@ -140,11 +140,11 @@ public:
 	//
 	//	}
 
-	sp<vector<sp<Entity>>> getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
+	ArrayList<Entity*>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 
-	bool checkTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y);
+	bool checkTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y);
 
-	bool checkHitLayerAndTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y);
+	bool checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y);
 
 	bool checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y);
 
@@ -175,7 +175,7 @@ public:
 
 	void twitchAroundRoom();
 
-	sp<Character> findNearestCharacter();
+	Character* findNearestCharacter();
 
 	int walkToXYLRToUD(float x, float y);
 
@@ -211,7 +211,7 @@ public:
 
 	int walkDistance(int direction);
 
-	int avoidEntity(sp<Entity> e, int amt); //returns 1 if not in entity area,use it to do something else outside,standing,staring,walking randomly etc
+	int avoidEntity(Entity* e, int amt); //returns 1 if not in entity area,use it to do something else outside,standing,staring,walking randomly etc
 
 	int avoidNearestEntity(int avoid_amt);
 

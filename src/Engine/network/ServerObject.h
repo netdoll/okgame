@@ -4,20 +4,20 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 #include "../EnginePart.h"
 
 class Logger;
 
-class ServerObject : public EnginePart//, public std::enable_shared_from_this<ServerObject>
+class ServerObject : public EnginePart
 {
 public:
 
 	static Logger log;
 	ServerObject();
-	ServerObject(sp<Engine> g);
+	ServerObject(Engine* g);
 
 protected:
 	bool _initialized = false;

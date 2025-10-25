@@ -3,6 +3,7 @@
 #include <time.h>
 #include <fstream>
 #include <iostream>
+
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
@@ -13,7 +14,6 @@
 //#undef INADDR_BROADCAST
 //#undef INADDR_NONE
 //#include "enet/enet.h"
-
 
 //#include <lib/authenticate-GWEN-master/include/Gwen/renderer/gwen_renderer_sdl2.h>
 //#include <lib/authenticate-GWEN-master/include/Gwen/input/gwen_input_sdl2.h>
@@ -28,12 +28,79 @@
 #include "Gwen/Skins/Simple.h"
 #include "Gwen/Skins/TexturedBase.h"
 #include "Gwen/UnitTest/UnitTest.h"
+
+
+#ifndef ORBIS
 #include "Gwen/Input/Windows.h"
 #include "Gwen/Renderers/OpenGL_TruetypeFont.h"
 #include <lib/GWEN-master/gwen/include/Gwen/Input/gwen_input_sdl2.h>
+Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
+Gwen::Renderer::OpenGL* Main::gwenRenderer = nullptr;
+#else
 
 
-sp < Main> mainObject = nullptr;
+#include "Gwen/Renderers/GwenRendererPS4.h"
+#include <lib/GWEN-master/gwen/include/Gwen/Input/GwenInputPS4.h>
+Gwen::Input::GwenInputPS4 *Main::gwenInput = nullptr;
+Gwen::Renderer::GwenRendererPS4* Main::gwenRenderer = nullptr;
+
+PS4InputToSDLEventConverter* Main::ps4ToSDLInputConverter = nullptr;
+
+
+
+
+//size_t sceLibcHeapSize = (0xffffffffffffffffUL);// SCE_LIBC_HEAP_SIZE_EXTENDED_ALLOC_NO_LIMIT;
+//unsigned int sceLibcHeapExtendedAlloc = 1;
+
+size_t sceLibcHeapSize = 256 * 1024 * 1024;
+
+
+#include <piglet\piglet.h>
+#include <EGL\egl.h>
+#include <GLES2\gl2.h>
+#include <piglet\piglet.h>
+
+
+/*E The FIOS2 default maximum path is 1024, games can normally use a much smaller value. */
+#define MAX_PATH_LENGTH 1024
+
+/*E Buffers for FIOS2 initialization.
+* These are typical values that a game might use, but adjust them as needed. They are
+* of type int64_t to avoid alignment issues. */
+
+/* 64 ops: */
+int64_t g_OpStorage[SCE_FIOS_DIVIDE_ROUNDING_UP(SCE_FIOS_OP_STORAGE_SIZE(64, MAX_PATH_LENGTH), sizeof(int64_t))];
+/* 1024 chunks, 64KiB: */
+int64_t g_ChunkStorage[SCE_FIOS_DIVIDE_ROUNDING_UP(SCE_FIOS_CHUNK_STORAGE_SIZE(1024), sizeof(int64_t))];
+/* 16 file handles: */
+int64_t g_FHStorage[SCE_FIOS_DIVIDE_ROUNDING_UP(SCE_FIOS_FH_STORAGE_SIZE(16, MAX_PATH_LENGTH), sizeof(int64_t))];
+/* 1 directory handle: */
+int64_t g_DHStorage[SCE_FIOS_DIVIDE_ROUNDING_UP(SCE_FIOS_DH_STORAGE_SIZE(1, MAX_PATH_LENGTH), sizeof(int64_t))];
+
+
+
+
+uint64_t	m_previousTime;
+
+namespace NpToolkit2 = sce::Toolkit::NP::V2;
+
+void sceNpToolkitCallback(NpToolkit2::Core::CallbackEvent* event)
+{
+	NpToolkit2::Core::StringifyResult serviceAsString;
+	NpToolkit2::Core::StringifyResult functionAsString;
+	NpToolkit2::Core::getServiceTypeAsString(event->service, serviceAsString);
+	NpToolkit2::Core::getFunctionTypeAsString(event->apiCalled, functionAsString);
+}
+
+
+using namespace sce;
+using namespace sce::Gnmx;
+
+#endif
+
+
+
+Main* mainObject = nullptr;
 
 //==========================================================================================================================
 void cleanup()
@@ -41,7 +108,7 @@ void cleanup()
 	if (mainObject != nullptr)
 	{
 		mainObject->cleanup();
-		
+		delete mainObject;
 		mainObject = nullptr;
 	}
 
@@ -57,9 +124,13 @@ void cleanup()
 }
 
 
+
+
 //==========================================================================================================================
 int main(int argc, char* argv[])//int argc, char **argv)
 {//==========================================================================================================================
+
+
 
 //#ifdef WIN32
 //	SetDllDirectory(LPCWSTR("./libs/"));
@@ -74,15 +145,29 @@ int main(int argc, char* argv[])//int argc, char **argv)
 
 	}
 
-	mainObject = ms<Main>();
+
+	
+
+	mainObject = new Main();
+
+	
+	
 	Main::setMain(mainObject);
-	atexit(cleanup);
+
+	
+
+	//atexit(cleanup);
+
+	
+
 	mainObject->mainInit();
+	
+	
 	mainObject->mainLoop();
 
 	cleanup();
 
-//	Main::setMain(ms<Main>());
+//	Main::setMain(new Main());
 //	Main::getMain()->mainInit();
 //	Main::getMain()->mainLoop();
 //	Main::getMain()->cleanup();
@@ -156,49 +241,40 @@ void Main::openURL(string url)
 }
 
 
-#include <fstream>
-#include <iostream>
-#include "Poco/File.h"
-#include "Poco/Path.h"
-#include "Poco/Delegate.h"
-#include "Poco/Zip/Decompress.h"
-#include "Poco/Process.h"
-#include "Poco/DirectoryIterator.h"
-using Poco::DirectoryIterator;
-using Poco::File;
-using Poco::Process;
-using Poco::Path;
 
 
-//sp<FileUtils>Main::cacheManager = ms<FileUtils>();
+
+
+//FileUtils *Main::cacheManager = new FileUtils();
 //bool Main::isApplet = false;
 
-string Main::serverAddressString = OKNet::releaseServerAddress;
-string Main::STUNServerAddressString = OKNet::releaseSTUNServerAddress;
-int Main::serverTCPPort = OKNet::serverTCPPort;
-int Main::STUNServerUDPPort = OKNet::STUNServerUDPPort;
-int Main::clientUDPPortStartRange = OKNet::clientUDPPortStartRange;
+string Main::serverAddressString = BobNet::releaseServerAddress;
+string Main::STUNServerAddressString = BobNet::releaseSTUNServerAddress;
+int Main::serverTCPPort = BobNet::serverTCPPort;
+int Main::STUNServerUDPPort = BobNet::STUNServerUDPPort;
+int Main::clientUDPPortStartRange = BobNet::clientUDPPortStartRange;
 
 string Main::version = "";
 
-sp<OKNet> Main::bobNet = nullptr;
-sp<Console> Main::console = nullptr;
-sp<Console> Main::rightConsole = nullptr;
-//sp<AudioManager> Main::audioManager = nullptr;
-sp<FileUtils> Main::fileUtils = nullptr;
-sp<StateManager> Main::stateManager = nullptr;
-sp<System> Main::systemUtils = nullptr;
-sp<GlobalSettings> Main::globalSettings = nullptr;
-//sp<ControlsManager> Main::controlsManager = nullptr;
-sp<BGClientEngine> Main::gameEngine = nullptr;
+BobNet* Main::bobNet = nullptr;
+Console* Main::console = nullptr;
+Console* Main::rightConsole = nullptr;
+//AudioManager* Main::audioManager = nullptr;
+FileUtils* Main::fileUtils = nullptr;
+BobStateManager* Main::stateManager = nullptr;
+System* Main::systemUtils = nullptr;
+GlobalSettings* Main::globalSettings = nullptr;
+//ControlsManager* Main::controlsManager = nullptr;
+BGClientEngine* Main::gameEngine = nullptr;
+
+GlowTileBackgroundMenuPanel* Main::glowTileBackgroundMenuPanel = nullptr;
+
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
-Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
-Gwen::Renderer::OpenGL* Main::gwenRenderer = nullptr;
-Gwen::Skin::TexturedBase* Main::gwenSkin = nullptr;
-//MSG msg;
 
-sp<GlowTileBackgroundMenuPanel> Main::glowTileBackgroundMenuPanel = nullptr;
+Gwen::Skin::TexturedBase* Main::gwenSkin = nullptr;
+
+
 
 //==========================================================================================================================
 void Main::mainInit()
@@ -230,19 +306,28 @@ void Main::mainInit()
 
 
 
+#ifdef ORBIS
+	int ret;
 
+	ret = initialize();
+#endif
 
-	sp<Logger> temp = ms<Logger>();
+	new Logger();
 	Logger::initLogger();
 
-	OKColor::initPresetColors();
+	BobColor::initPresetColors();
 
+	log.debug("Start");
+	
 
-	fileUtils = ms<FileUtils>();
+	fileUtils = new FileUtils();
 	fileUtils->initCache();
 
 	loadGlobalSettingsFromXML();
 
+	
+
+#ifndef ORBIS
 	if (globalSettings->useXInput == false)SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 
@@ -259,6 +344,33 @@ void Main::mainInit()
 		log.error("SDLNet_Init error: "+string(SDLNet_GetError()));
 	}
 
+#else
+	
+	
+
+
+
+	//assert(ret == SCE_OK);
+
+	
+
+//	/*E Register libnetctl callback */
+//	ret = sceNetCtlRegisterCallback(libnetctlCallback, NULL, &libnetctlCid);
+//	if (ret < 0)
+//	{
+//		//printf("[SAMPLE] %s,%d ret=%x\n", __FUNCTION__, __LINE__, ret);
+//		
+//	}
+//
+//	/*E Create libnetctl check callback thread. */
+//	ret = scePthreadCreate(&libnetctlTid, NULL, checkCallbackThread, NULL, "CheckCallbackThread");
+//	if (ret < 0)
+//	{
+//		//printf("[SAMPLE] %s,%d ret=%x\n", __FUNCTION__, __LINE__, ret);
+//	
+//	}
+
+#endif
 
 
 	//	if (lzo_init() != LZO_E_OK)
@@ -299,49 +411,67 @@ void Main::mainInit()
 	//	return;
 
 
+	
+
+	new GLUtils();
+	
+	
 
 
-	sp<GLUtils> temp2 = ms<GLUtils>();
-	sp<AudioManager> temp3 = ms<AudioManager>();
-
+	new AudioManager();
+	
+	
 	AudioManager::initAudioLibrary();
+	
+	
 
 	GLUtils::checkSDLError("");
 
-
-
-
-
-
+	
+	
+	
+	
+	
 
 
 
 	//this is done before init game so we can put debug stuff
-	console = ms<Console>();
+	console = new Console();
 	console->fontSize = 16;
-	rightConsole = ms<Console>();
+	rightConsole = new Console();
 	rightConsole->justifyRight = true;
 	rightConsole->fontSize = 16;
 
+
+	
 
 	GLUtils::initGL((char*)"\"bob's game\"");
 	//GLUtils::initTWL();
 	GLUtils::e();
 
-	sp<ControlsManager> temp4 = ms<ControlsManager>();
+	
+
+	new ControlsManager();
 	ControlsManager::initControllers();
 	GLUtils::e();
 
-	OKFont::initFonts();
+
+
+	exit(0);
+
+
+
+
+	BobFont::initFonts();
 	GLUtils::e();
 
+#ifndef ORBIS
+	Main::StopTextInput();
+#endif
+	
+	
 
-	SDL_StopTextInput();
-
-
-
-
-	stateManager = ms<StateManager>();
+	stateManager = new BobStateManager();
 	GLUtils::e();
 
 	//-------------------
@@ -351,22 +481,27 @@ void Main::mainInit()
 	log.debug("Init GUIs");
 
 
-	glowTileBackgroundMenuPanel = ms<GlowTileBackgroundMenuPanel>();
+	
+
+	glowTileBackgroundMenuPanel = new GlowTileBackgroundMenuPanel();
 	glowTileBackgroundMenuPanel->init();
 
-	logoScreenState = ms<LogoState>();
+
+	
+
+	logoScreenState = new LogoState();
 	logoScreenState->init();
-	loginState = ms<LoginState>();
+	loginState = new LoginState();
 	loginState->init();
-	loggedOutState = ms<LoggedOutState>();
+	loggedOutState = new LoggedOutState();
 	loggedOutState->init();
-	serversHaveShutDownState = ms<ServersHaveShutDownState>();
+	serversHaveShutDownState = new ServersHaveShutDownState();
 	serversHaveShutDownState->init();
-	createNewAccountState = ms<CreateNewAccountState>();
+	createNewAccountState = new CreateNewAccountState();
 	createNewAccountState->init();
-	titleScreenState = ms<TitleScreenState>();
+	titleScreenState = new TitleScreenState();
 	titleScreenState->init();
-	youWillBeNotifiedState = ms<YouWillBeNotifiedState>();
+	youWillBeNotifiedState = new YouWillBeNotifiedState();
 	youWillBeNotifiedState->init();
 	GLUtils::e();
 
@@ -375,9 +510,12 @@ void Main::mainInit()
 	//-------------------
 	//log.debug("Init System");
 
-	systemUtils = ms<System>();
-	GLUtils::e();
+	
 
+
+	systemUtils = new System();
+	GLUtils::e();
+	
 	System::initStats();
 	GLUtils::e();
 	System::initClockAndTimeZone();
@@ -386,22 +524,23 @@ void Main::mainInit()
 	//fill in the client session info to send to the server for debug/stats
 	//this must be done after everything is initialized.
 	//-------------------
+	
 	System::initSystemInfo();
 	GLUtils::e();
 	//makeGhostThread();
 	//GLUtils::e();
-
+	
 	srand((int)(time(nullptr)));
 
-
-
+	
+	
 
 	initGWEN();
 
+	
+	
 
-
-
-
+	
 
 
 	log.debug("Check for testing environment");
@@ -409,18 +548,18 @@ void Main::mainInit()
 	//	bool debugOnLiveServer = true;
 	//	if (debugOnLiveServer == false)
 	//	{
-	//		serverAddressString = OKNet::debugServerAddress;
-	//		STUNServerAddressString = OKNet::debugSTUNServerAddress;
+	//		serverAddressString = BobNet::debugServerAddress;
+	//		STUNServerAddressString = BobNet::debugSTUNServerAddress;
 	//	}
 	//	else
 	{
-		serverAddressString = OKNet::releaseServerAddress;
-		STUNServerAddressString = OKNet::releaseSTUNServerAddress;
+		serverAddressString = BobNet::releaseServerAddress;
+		STUNServerAddressString = BobNet::releaseSTUNServerAddress;
 	}
 
 	//for testing on second PC locally
 	{
-		File f("/oldbob");
+		BobFile f("/oldbob");
 		if (f.exists())
 		{
 			clientUDPPortStartRange = 6499;
@@ -428,11 +567,11 @@ void Main::mainInit()
 	}
 
 	{
-		File f("/localServer");
+		BobFile f("/localServer");
 		if (f.exists())
 		{
-			serverAddressString = "192.168.1.3";// OKNet::debugServerAddress;
-			STUNServerAddressString = "192.168.1.3";//OKNet::debugSTUNServerAddress;
+			serverAddressString = "192.168.1.3";// BobNet::debugServerAddress;
+			STUNServerAddressString = "192.168.1.3";//BobNet::debugSTUNServerAddress;
 
 			//stun server port is incremented by 1 to prevent bind conflict when running local server
 
@@ -440,16 +579,16 @@ void Main::mainInit()
 		}
 	}
 
+	
 
+	log.debug("Init BobNet");
+	bobNet = new BobNet();
 
-	log.debug("Init OKNet");
-	bobNet = ms<OKNet>();
-
-
+	
 
 	bool rpg = false;
 
-	File f(getPath()+"rpg");
+	BobFile f(getPath()+"rpg");
 	if (f.exists() || rpg)
 	{
 		rpg = true;
@@ -459,7 +598,7 @@ void Main::mainInit()
 			gameEngine->cleanup();
 		}
 
-		gameEngine = ms<BGClientEngine>();
+		gameEngine = new BGClientEngine();
 		stateManager->pushState(gameEngine);
 		//Engine::setClientGameEngine(gameEngine);
 		gameEngine->init();
@@ -484,8 +623,8 @@ void Main::mainInit()
 
 				gameEngine->cinematicsManager->fadeFromBlack(10000);
 
-				//gameEngine->mapManager->changeMap("ALPHAOKElevator", "center");
-				gameEngine->mapManager->changeMap("ALPHAOKApartment", "atDesk");
+				//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
+				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
 				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
 
 				//gameEngine->textManager->text("yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay <PLAYER>Yep  \"Yuu\" yay. Yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay. a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
@@ -496,7 +635,7 @@ void Main::mainInit()
 				stateManager->pushState(loginState);
 			}
 
-			//gameEngine->mapManager->changeMap("ALPHAOKElevator", "center");
+			//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
 			//gameEngine->mapManager->changeMap("TOWNYUUDownstairs", 30, 18);
 
 
@@ -504,18 +643,18 @@ void Main::mainInit()
 	}
 	else
 	{
+		
 
-		log.debug("Create OKGame");
-		bobsGame = ms<OKGame>();
+		log.debug("Create BobsGame");
+		bobsGame = new BobsGame();
+		
 		stateManager->pushState(bobsGame);
 		bobsGame->init();
-
-		//bobNet->addEngineToForwardMessagesTo(bobsGame);
 
 	}
 
 
-
+	
 
 	System::initTimers();
 
@@ -526,7 +665,7 @@ void Main::mainInit()
 	System::initTimers();
 	GLUtils::e();
 
-
+	
 
 	if (rpg)
 	{
@@ -543,11 +682,11 @@ void Main::mainInit()
 	}
 	else
 	{
-		//stateManager->pushState(logoScreenState);
+		stateManager->pushState(logoScreenState);
 	}
 
 	//GLUtils::e();
-	//tcpServerConnection = ms<BGClientTCP>(gameEngine);
+	//tcpServerConnection = new BGClientTCP(gameEngine);
 	//GLUtils::e();
 
 //#ifdef _DEBUG
@@ -558,7 +697,7 @@ void Main::mainInit()
 //	log.debug(u);
 //#endif
 
-//	sp<GameType>s = ms<GameType>();
+//	GameType *s = new GameType();
 //	s->tetsosumi();
 //	string zip = s->toBase64GZippedXML();
 //	string xml = FileUtils::unzipBase64StringToString(zip);
@@ -571,9 +710,10 @@ void Main::mainInit()
 
 	//ImGui_ImplSdl_Init(GLUtils::window);
 
-
+	
 
 }
+
 
 //=========================================================================================================================
 void Main::initGWEN()
@@ -581,9 +721,10 @@ void Main::initGWEN()
 
 	log.debug("Init GWEN");
 
-	Uint64 start=0, now=0;
-	start = SDL_GetPerformanceCounter();
+	uint64_t start=0, now=0;
+	start = System::getPerformanceCounter();
 
+#ifndef ORBIS
 	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
 	gwenRenderer->Init();
 	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
@@ -594,11 +735,21 @@ void Main::initGWEN()
 	gwenCanvas = new Gwen::Controls::Canvas(gwenSkin);
 	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
 	gwenCanvas->SetDrawBackground(false);
+#else
+	gwenRenderer = new Gwen::Renderer::GwenRendererPS4();
+#endif
+
+
+#ifndef ORBIS
 	gwenInput = new Gwen::Input::GwenSDL2();
 	gwenInput->Initialize(gwenCanvas);
+#else
+	gwenInput = new Gwen::Input::GwenInputPS4();
+	//gwenInput->Initialize(gwenCanvas);
+#endif
 
-	now = SDL_GetPerformanceCounter();
-	log.debug("Init GWEN took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	now = System::getPerformanceCounter();
+	log.debug("Init GWEN took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");
 }
 
 
@@ -610,12 +761,12 @@ void Main::loadGlobalSettingsFromXML()
 	log.debug("Load global settings");
 
 	string userDataPathString = FileUtils::appDataPath + "";
-	Path userDataPath(userDataPathString);
-	File userDataPathDir(userDataPath);
+	//Path userDataPath(userDataPathString);
+	BobFile userDataPathDir(userDataPathString);
 	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
 
 	string filename = "globalSettings.xml";
-	File f = File(userDataPathString + filename);
+	BobFile f(userDataPathString + filename);
 	if (f.exists())
 	{
 		ifstream t(userDataPathString + filename);
@@ -645,14 +796,14 @@ void Main::loadGlobalSettingsFromXML()
 			log.error("Could not unserialize GlobalSettings");
 		}
 
-		sp<GlobalSettings>s = ms<GlobalSettings>();
+		GlobalSettings *s = new GlobalSettings();
 		*s = gs;
 		globalSettings = s;
 
 	}
 	else
 	{
-		globalSettings = ms<GlobalSettings>();
+		globalSettings = new GlobalSettings();
 
 		log.warn("Global settings not found.");
 	}
@@ -666,18 +817,18 @@ void Main::saveGlobalSettingsToXML()
 {//=========================================================================================================================
 
 	string userDataPathString = FileUtils::appDataPath + "";
-	Path userDataPath(userDataPathString);
-	File userDataPathDir(userDataPath);
+	//Path userDataPath(userDataPathString);
+	BobFile userDataPathDir(userDataPathString);
 	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
 
 	string filename = "globalSettings.xml";
 
-	Path filePath(userDataPathString + filename);
-	File file(filePath);
+	//Path filePath(userDataPathString + filename);
+	BobFile file(userDataPathString + filename);
 
 	if (file.exists())
 	{
-		file.remove();
+		file.deleteFile();
 	}
 
 	{
@@ -767,20 +918,20 @@ void Main::whilefix()
 
 			console->update();
 			rightConsole->update();
-			bobNet->tcpServerConnection->update();
+			bobNet->tcpServerConnection.update();
 
-			if (dynamic_cast<Engine*>(mainObject->stateManager->getCurrentState().get()) != NULL)
+			if (dynamic_cast<Engine*>(mainObject->stateManager->getCurrentState()) != NULL)
 			{
-				((sp<Engine>)mainObject->stateManager->getCurrentState())->getCaptionManager()->update();
+				((Engine*)mainObject->stateManager->getCurrentState())->getCaptionManager()->update();
 			}
 
 
 			frame = true;
 
 			mainObject->render();
-			SDL_GL_SwapWindow(GLUtils::window.get());
+			doSwap();
 		}
-		SDL_Delay(10);
+		justDelay(10);
 	}
 
 	mainObject->stateManager->getCurrentState()->setButtonStates();
@@ -801,6 +952,36 @@ void Main::delay(int ticks)
 		whilefix();
 	}
 }
+//=========================================================================================================================
+void Main::justDelay(int ticks)
+{//=========================================================================================================================
+
+#ifndef ORBIS
+	SDL_Delay(2);
+#else
+	sceKernelUsleep(ticks);
+#endif
+}
+
+
+void Main::StartTextInput()
+{
+#ifndef ORBIS
+	SDLStartTextInput();
+#else
+	
+#endif	
+}
+
+void Main::StopTextInput()
+{
+#ifndef ORBIS
+	SDLStopTextInput();
+#else
+	
+#endif
+
+}
 
 //=========================================================================================================================
 void Main::oldrender()
@@ -813,7 +994,7 @@ void Main::oldrender()
 //bool show_another_window = false;
 //ImVec4 clear_color = ImColor(0, 0, 0);
 //=========================================================================================================================
-void Main::update()
+void Main::updateMain()
 {//=========================================================================================================================
 
 //	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -821,22 +1002,42 @@ void Main::update()
 //		// .. give it to the input handler to process
 //		GwenInput.ProcessMessage(msg);
 //	}
+	
 
+	
+
+#ifdef ORBIS
+	update();
+#endif
+
+	
+	
 	processEvents();
 	//GLUtils::e();
 	stateManager->getCurrentState()->updateControls();
 	//GLUtils::e();
-
+	
 	doScreenShotCheck();
 	doResizeCheck();
 
+
+	
 	stateManager->update();
 	//GLUtils::e();
-	console->update();
-	rightConsole->update();
-	//GLUtils::e();
-	bobNet->update();
 
+	
+	
+	console->update();
+	
+
+	rightConsole->update();
+
+	
+	//GLUtils::e();
+	//bobNet->update();
+
+	
+	
 //	ImGui_ImplSdl_NewFrame(GLUtils::window);
 //
 //	// 1. Show a simple window
@@ -866,37 +1067,68 @@ void Main::update()
 //		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
 //		ImGui::ShowTestWindow(&show_test_window);
 //	}
-
-
+	
 
 }
 
 //=========================================================================================================================
-void Main::render()
+void Main::renderMain()
 {//=========================================================================================================================
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	stateManager->render();
+	//stateManager->render();
 
-	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	console->render();
-	rightConsole->render();
+	//console->render();
+	//rightConsole->render();
 
+	GLUtils::drawFilledRect(255, 255, 255, 0, 1, 0, 1, 1);
+
+
+#ifndef ORBIS
 	if (error_console_on)ERROR_draw_error_console();
 	DEBUG_draw_overlays();
 
 	//ImGui::Render();
 
+#endif
 
 
+}
+
+//=========================================================================================================================
+void Main::doSwap()
+{//=========================================================================================================================
+#ifndef ORBIS
+	SDL_GL_SwapWindow(GLUtils::window);
+#else
+
+	eglSwapBuffers(GLUtils::display, GLUtils::surface);
+
+	//log.debug("flip");
+
+	//mainObject->m_baseService.m_debugWindow.notifyPhase(common::Service::DebugWindow::kBeginFlip);
+	//getGraphicsContext()->flip(0);
+	//mainObject->m_baseService.m_debugWindow.notifyPhase(common::Service::DebugWindow::kEndFlip);
+
+	//log.debug("flip done");
+
+//	for(int i=0;i<BobTexture::texturesToDeleteAfterRender.size();i++)
+//	{
+//		delete BobTexture::texturesToDeleteAfterRender.get(i);
+//	}
+//	BobTexture::texturesToDeleteAfterRender.clear();
+
+#endif
 }
 
 //=========================================================================================================================
 void Main::mainLoop()
 { //=========================================================================================================================
 
+	
 	log.debug("Begin Main Loop");
 
 	mainLoopStarted = true;
@@ -908,7 +1140,7 @@ void Main::mainLoop()
 		//------------------------------
 		System::updateRenderTimers();
 		System::updateStats();
-
+		
 		//GLUtils::e();
 
 		//        if (serversAreShuttingDown)
@@ -942,9 +1174,9 @@ void Main::mainLoop()
 				System::updateUpdateTimers();
 				//this just lowers cpu usage
 				//Sleep(2); //TODO: vary this based on system speed
-				update();
-				render();
-				SDL_GL_SwapWindow(GLUtils::window.get());
+				updateMain();
+				renderMain();
+				doSwap();
 				//System::framesrendered++;
 			}
 			else
@@ -954,20 +1186,20 @@ void Main::mainLoop()
 				{
 					System::resetTotalRenderTicksPassed();
 					System::updateUpdateTimers();
-					update();
-					render();
-					SDL_GL_SwapWindow(GLUtils::window.get());
+					updateMain();
+					renderMain();
+					doSwap();
 					//System::framesrendered++;
 				}
 				else
 				{
-					render();
-					SDL_GL_SwapWindow(GLUtils::window.get());
+					renderMain();
+					doSwap();
 					//System::framesrendered++;
 				}
 
 				//TODO: vary this based on system speed
-				if (GLUtils::noVSync_DelayOff == false)SDL_Delay(2);
+				if (GLUtils::noVSync_DelayOff == false)justDelay(2);
 
 				/*
 				try
@@ -1076,14 +1308,14 @@ void Main::doScreenShotCheck()
 		struct tm * now = localtime( & t );
 		//cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
 
-		//string imageName = "bobsgame-" + (ms<SimpleDateFormat>("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + ".png";
+		//string imageName = "bobsgame-" + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + ".png";
 		string fileName = string(Main::getPath())+"screenshot"+to_string(now->tm_year + 1900)+to_string(now->tm_mon + 1) +to_string(now->tm_mday)+to_string(now->tm_hour) + to_string(now->tm_min) + to_string(now->tm_sec) +".png";
 
 		//if (System::getProperty("os.name")->contains("Win"))
 		{
 			log.info("Saved screenshot to " + fileName);
 
-			Main::console->add("Saved screenshot to "+ fileName, 3000, OKColor::green);
+			Main::console->add("Saved screenshot to "+ fileName, 3000, BobColor::green);
 			//getFileName = System::getProperty("user.home") + "/" + "Desktop" + "/" + imageName;
 		}
 		//  				else
@@ -1091,9 +1323,11 @@ void Main::doScreenShotCheck()
 		//  					Console::add("Saved screenshot in home folder.",Color::green,3000);
 		//  					//getFileName = System::getProperty("user.home") + "/" + imageName;
 		//  				}
-
+#ifndef ORBIS
 		int w = GLUtils::getRealWindowWidth();
 		int h = GLUtils::getRealWindowHeight();
+
+
 		glReadBuffer(GL_FRONT);
 		u8 *buffer = new u8[w * h * 4];
 		glReadPixels(0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
@@ -1108,17 +1342,22 @@ void Main::doScreenShotCheck()
 				flipdata[(((y*w) + x) * 4) + 3] = buffer[(((((h - 1) - y)*w) + x) * 4) + 3];
 
 			}
-		sp<SDL_Surface> s = ms<SDL_Surface>(SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask));// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
-		IMG_SavePNG(s.get(), fileName.c_str());
-		SDL_FreeSurface(s.get());
+		SDL_Surface *s = SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask);// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
+		IMG_SavePNG(s, fileName.c_str());
+		SDL_FreeSurface(s);
 		delete[] buffer;
 		delete[] flipdata;
+#else
+		
+#endif
+
 	}
 
 }
 
+#ifndef ORBIS
 //==========================================================================================================================
-void Main::printEvent(const sp<SDL_Event> e)
+void Main::printEvent(const SDL_Event* e)
 {//==========================================================================================================================
 	if (e->type == SDL_WINDOWEVENT)
 	{
@@ -1175,11 +1414,17 @@ void Main::printEvent(const sp<SDL_Event> e)
 	}
 }
 
+#else
+
+#endif
+
 
 //==========================================================================================================================
 void Main::processEvents()
 {//==========================================================================================================================
 
+
+#ifndef ORBIS
 	SDL_Event event;
 
 	//While there are events to handle
@@ -1245,19 +1490,23 @@ void Main::processEvents()
 			else
 			{
 
-				stateManager->getCurrentState()->getActiveControlsManager()->events->push_back(event);
+				stateManager->getCurrentState()->getActiveControlsManager()->events.add(event);
 
 				gwenInput->ProcessEvent(event);
 				//ImGui_ImplSdl_ProcessEvent(&event);
 			}
 
 	}
+#else
+
+#endif
 
 }
 
 
-sp<ControlsManager> Main::getControlsManager()
-{
+//==========================================================================================================================
+ControlsManager * Main::getControlsManager()
+{//==========================================================================================================================
 	return stateManager->getCurrentState()->getControlsManager();
 }
 
@@ -1270,7 +1519,7 @@ sp<ControlsManager> Main::getControlsManager()
 //   setGLWindow(w, h, Surf_Display);
 //
 //}
-//bool setGLWindow(int width, int height, sp<SDL_Surface > Surf_Display)
+//bool setGLWindow(int width, int height, SDL_Surface * Surf_Display)
 //{
 //   if ((Surf_Display = SDL_SetVideoMode(width, height, 32, SDL_HWSURFACE | SDL_OPENGL | SDL_RESIZABLE)) == NULL) {
 //      return false;
@@ -1300,15 +1549,15 @@ void Main::doLegalScreen()
 { //=========================================================================================================================
 
   //
-  //			if ((ms<File>(FileUtils::cacheDir + "session"))->exists() == false)
+  //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
   //			{
   //
   //				{
-  //				//if(OKNet.debugMode==false)
+  //				//if(BobNet.debugMode==false)
   //
   //					log.info("Legal Screen...");
   //
-  //					sp<LegalScreen>legalScreen = ms<LegalScreen>();
+  //					LegalScreen *legalScreen = new LegalScreen();
   //					GUI *legalScreenGUI = new GUI(legalScreen, GLUtils::TWLrenderer);
   //					legalScreenGUI->applyTheme(GLUtils::TWLthemeManager);
   //
@@ -1351,12 +1600,12 @@ void Main::showControlsImage()
 { //=========================================================================================================================
 
   //
-  //			if ((ms<File>(FileUtils::cacheDir + "session"))->exists() == false)
+  //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
   //			{
   //
   //				{
-  //				//if(OKNet.debugMode==false)
-  //					sp<KeyboardScreen>keyboardScreen = ms<KeyboardScreen>();
+  //				//if(BobNet.debugMode==false)
+  //					KeyboardScreen *keyboardScreen = new KeyboardScreen();
   //					GUI *keyboardScreenGUI = new GUI(keyboardScreen, GLUtils::TWLrenderer);
   //					keyboardScreenGUI->applyTheme(GLUtils::TWLthemeManager);
   //
@@ -1382,107 +1631,110 @@ void Main::showControlsImage()
   //			}
 }
 
-#undef INADDR_ANY
-#undef INADDR_LOOPBACK
-#undef INADDR_BROADCAST
-#undef INADDR_NONE
-#include "Poco/Net/HTTPClientSession.h"
-#include "Poco/Net/HTTPRequest.h"
-#include "Poco/Net/HTTPResponse.h"
-#include "Poco/Net/HTTPCredentials.h"
-#include "Poco/StreamCopier.h"
-#include "Poco/NullStream.h"
-#include "Poco/Path.h"
-#include "Poco/URI.h"
-#include "Poco/Exception.h"
-using Poco::Net::HTTPClientSession;
-using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPMessage;
-using Poco::StreamCopier;
-using Poco::Path;
-using Poco::URI;
-using Poco::Exception;
 
-#include "Poco/FileStream.h"
-#include "Poco/URIStreamOpener.h"
-#include "Poco/Net/HTTPStreamFactory.h"
-#include "Poco/Net/FTPStreamFactory.h"
-#include <memory>
-#include <iostream>
-using Poco::FileStream;
-using Poco::URIStreamOpener;
-using Poco::Net::HTTPStreamFactory;
-using Poco::Net::FTPStreamFactory;
-
-#include "Poco/File.h"
-#include "Poco/Path.h"
-#include "Poco/Delegate.h"
-#include "Poco/Zip/Decompress.h"
-#include "Poco/Process.h"
-#include "Poco/DirectoryIterator.h"
-using Poco::DirectoryIterator;
-using Poco::File;
-using Poco::Process;
-using Poco::Path;
-using Poco::Delegate;
-using Poco::Zip::Decompress;
 
 
 string Main::path = "";
 
-//==========================================================================================================================
 
+//==========================================================================================================================
 string Main::getPath()
 {//==========================================================================================================================
 
 	if (path != "")return path;
 
-	string exePath = string(SDL_GetBasePath());//this is where the .exe is run from.i.e. bobsgame/DebugVS/
+//#ifdef ORBIS
+//	path = "/app0/";
+//	return path;
+//#endif
 
-	string versionTextPath = exePath + "version.txt";
+
+	string versionTextPath = "version.txt";
 
 
-	if (File(versionTextPath).exists() == false)
+	if (BobFile(versionTextPath).exists() == false)
 	{
+		log.warn("Could not find " + versionTextPath);
 
-		string cwd = Path::current();//this is the current working dir i.e. bobsgame/
+		versionTextPath = "../version.txt";
 
-		versionTextPath = cwd + "version.txt";
-
-		if (File(versionTextPath).exists() == false)
+		if (BobFile(versionTextPath).exists() == false)
 		{
+			log.warn("Could not find " + versionTextPath);
 
-			versionTextPath = exePath + "../" + "version.txt";
+			string exePath = string(FileUtils::getBasePath());//this is where the .exe is run from.i.e. bobsgame/DebugVS/
 
-			if (File(versionTextPath).exists() == false)
+			versionTextPath = exePath + "version.txt";
+
+			if (BobFile(versionTextPath).exists() == false)
 			{
+				log.warn("Could not find " + versionTextPath);
 
-				versionTextPath = cwd + "../" + "version.txt";
+				string cwd = FileUtils::getWorkingDir();//this is the current working dir i.e. bobsgame/
 
-				if (File(versionTextPath).exists() == false)
+				versionTextPath = cwd + "version.txt";
+
+				if (BobFile(versionTextPath).exists() == false)
 				{
-					log.error("Could not find version.txt in path");
-					return "./";
+					log.warn("Could not find " + versionTextPath);
+
+					versionTextPath = exePath + "../" + "version.txt";
+
+					if (BobFile(versionTextPath).exists() == false)
+					{
+
+						log.warn("Could not find " + versionTextPath);
+
+						versionTextPath = cwd + "../" + "version.txt";
+
+						if (BobFile(versionTextPath).exists() == false)
+						{
+
+							log.warn("Could not find " + versionTextPath);
+							//log.error("Could not find version.txt in path");
+							return "./";
+						}
+						else
+						{
+							path = cwd + "../";
+							log.info("Found " + path + "version.txt");
+							return path;
+						}
+					}
+					else
+					{
+						path = exePath + "../";
+						log.info("Found " + path + "version.txt");
+						return path;
+					}
 				}
-				path = cwd + "../";
+				else
+				{
+					path = cwd;
+					log.info("Found " + path + "version.txt");
+					return path;
+				}
+			}
+			else
+			{
+				path = exePath;
+				log.info("Found " + path + "version.txt");
 				return path;
 			}
-			path = exePath + "../";
-			return path;
 		}
 		else
 		{
-			path = cwd;
+			path = "../";
+			log.info("Found " + path + "version.txt");
 			return path;
 		}
 	}
 	else
 	{
-		path = exePath;
+		path = "";
+		log.info("Found " + path + "version.txt");
 		return path;
 	}
-
 }
 
 #if defined(__LINUX__)
@@ -1506,7 +1758,7 @@ void Main::checkVersion()
 
 	log.debug("Version Check");
 
-
+#ifndef ORBIS
 	bool windows = false;
 	bool macos = false;
 	bool linux = false;
@@ -1537,7 +1789,7 @@ void Main::checkVersion()
 	string pocoPath = Path::current();
 	log.info("Poco::Path::current():" + pocoPath);//this is the current working dir i.e. bobsgame/
 
-	log.info("SDL_GetPrefPath():" + string(SDL_GetPrefPath("OK Corporation", "bob's game")));
+	log.info("SDL_GetPrefPath():" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
 	log.info("Poco::Path::home():" + Path::home());
 
 	if (exePath.find("itch") != std::string::npos)
@@ -1563,11 +1815,11 @@ void Main::checkVersion()
 			if (f.exists())
 			{
 				f.remove();
-				//sp<Caption> c =
-				//((sp<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", OKFont::ttf_oswald_32, OKColor::green, OKColor::clear, RenderOrder::OVER_GUI);
+				//Caption* c =
+				//((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", BobFont::ttf_oswald_32, BobColor::green, BobColor::clear, RenderOrder::OVER_GUI);
 				//doesn't go away because we're not updating captionManager??
 
-				sp<Caption> c = ms<Caption>(nullptr, Caption::Position::CENTERED_SCREEN,0 , 0, -1, "Update installed!", 16, true, OKColor::white, OKColor::clear);
+				Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN,0 , 0, -1, "Update installed!", 16, true, BobColor::white, BobColor::clear);
 
 				for (int i = 0; i < 40; i++)
 				{
@@ -1576,7 +1828,7 @@ void Main::checkVersion()
 					System::updateUpdateTimers();
 					c->update();
 					c->render();
-					SDL_GL_SwapWindow(GLUtils::window.get());
+					SDL_GL_SwapWindow(GLUtils::window);
 					SDL_Delay(100);
 				}
 
@@ -1651,9 +1903,9 @@ void Main::checkVersion()
 
 		if (serverVersion > localVersion)
 		{
-			Main::console->add("Your version is out of date!", OKColor::red);
-			Main::console->add("Your version: " + versionString, OKColor::red);
-			Main::console->add("Latest version: " + serverString, OKColor::red);
+			Main::console->add("Your version is out of date!", BobColor::red);
+			Main::console->add("Your version: " + versionString, BobColor::red);
+			Main::console->add("Latest version: " + serverString, BobColor::red);
 
 			//bobsgame.exe can update itself, download latest.zip, rename itself, unzip in directory and overwrite, reopen itself, exit
 			//in linux it doesnt even have to rename itself
@@ -1687,14 +1939,14 @@ void Main::checkVersion()
 				return;
 			}
 
-			//sp<Caption> c = ((sp<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", OKFont::ttf_oswald_16, OKColor::white, OKColor::clear);
-			sp<Caption> c = ms<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Update available! Press Space to download, Esc to skip.", 16, true, OKColor::white, OKColor::clear);
+			//Caption* c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", BobFont::ttf_oswald_16, BobColor::white, BobColor::clear);
+			Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Update available! Press Space to download, Esc to skip.", 16, true, BobColor::white, BobColor::clear);
 			System::updateRenderTimers();
 			System::updateStats();
 			System::updateUpdateTimers();
 			c->update();
 			c->render();
-			SDL_GL_SwapWindow(GLUtils::window.get());
+			SDL_GL_SwapWindow(GLUtils::window);
 
 			bool skip = false;
 			bool stop = false;
@@ -1716,15 +1968,15 @@ void Main::checkVersion()
 				}
 			}
 
-			//delete c;
+			delete c;
 
 			if (skip)return;
 
 			//put caption in middle of screen, updating, press esc to skip
 			log.info("Downloading update...");
-			//c = ((sp<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", OKFont::ttf_oswald_32, OKColor::white, OKColor::clear);
-			c = ms<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Downloading update...", 16, true, OKColor::white, OKColor::clear);
-			//sp<Caption> c = ((sp<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", OKFont::ttf_oswald_32, Color::white, Color::black,RenderOrder::OVER_GUI);
+			//c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, BobColor::white, BobColor::clear);
+			c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Downloading update...", 16, true, BobColor::white, BobColor::clear);
+			//Caption* c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, Color::white, Color::black,RenderOrder::OVER_GUI);
 
 			glClear(GL_COLOR_BUFFER_BIT);
 			//Main::delay(100); //bobsGame doesn't render captionManager
@@ -1733,7 +1985,7 @@ void Main::checkVersion()
 			System::updateUpdateTimers();
 			c->update();
 			c->render();
-			SDL_GL_SwapWindow(GLUtils::window.get());
+			SDL_GL_SwapWindow(GLUtils::window);
 
 			//download bobsgame.com/latestWindows.zip to working dir
 			try
@@ -1755,7 +2007,7 @@ void Main::checkVersion()
 				//int contentlen = (int)response.getContentLength();
 
 				FileStream fs(exePath + "update.zip", ios::out | ios::trunc | ios::binary);
-				sp<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
+				std::auto_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
 				StreamCopier::copyStream(*pStr.get(), fs);
 				fs.close();
 			}
@@ -1764,7 +2016,7 @@ void Main::checkVersion()
 				//std::cerr << exc.displayText() << std::endl;
 				log.error("Could not download latest zip");
 				c->setToBeDeletedImmediately();
-				//delete c;
+				delete c;
 
 				return;
 			}
@@ -1801,9 +2053,9 @@ void Main::checkVersion()
 
 				Decompress dec(inp, Poco::Path(exePath));
 				//log.info("Create decompress object");
-				//dec.EError += Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string>>(this, &ZipTest::onDecompressError);
+				//dec.EError += Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string> >(this, &ZipTest::onDecompressError);
 				dec.decompressAllFiles();
-				//dec.EError -= Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string>>(this, &ZipTest::onDecompressError);
+				//dec.EError -= Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string> >(this, &ZipTest::onDecompressError);
 				//log.info("decompressAllFiles();");
 				inp.close();
 				//log.info("close()");
@@ -1842,7 +2094,7 @@ void Main::checkVersion()
 					c->update();
 
 					//Args args;
-					vector<string>args;
+					std::vector<std::string> args;
 					Process::launch(exePath + exename, args);
 					//quit
 					exit(0);
@@ -1852,7 +2104,7 @@ void Main::checkVersion()
 					c->setText("Something went wrong while updating.  Please download manually.");
 					c->update();
 					c->render();
-					SDL_GL_SwapWindow(GLUtils::window.get());
+					SDL_GL_SwapWindow(GLUtils::window);
 
 					log.error("Something went wrong while updating.  Please download manually.");
 					SDL_Delay(5000);
@@ -1886,6 +2138,7 @@ void Main::checkVersion()
 	}
 #endif
 
+#endif
 }
 
 //==========================================================================================================================
@@ -1894,7 +2147,7 @@ void Main::makeGhostThread()
 
   //			//ghost thread to prevent stuttering
   //			//this is due to windows aero, for some reason creating a ghost thread prevents it for some fucking reason
-  //			ms<Thread>([&] ()
+  //			new Thread([&] ()
   //			{
   //					try
   //					{
@@ -1939,25 +2192,34 @@ void Main::cleanup()
 	if (gameEngine != nullptr)
 	{
 		gameEngine->cleanup();
-		//delete gameEngine;
+		delete gameEngine;
 	}
 
 	if (bobsGame != nullptr)
 	{
 		log.info("bobsGame cleanup");
 		bobsGame->cleanup();
-		//delete bobsGame;
+		delete bobsGame;
 	}
 
 
-	OKFont::cleanup();
+	BobFont::cleanup();
 	GLUtils::cleanup();
 
-	//delete bobNet;
+	delete bobNet;
 
+#ifndef ORBIS
 	log.info("SDLNet_Quit");
 	SDLNet_Quit();
 	//enet_deinitialize();
+#else
+
+
+
+	finalize();
+
+
+#endif
 
 	log.info("saveGlobalSettingsToXML");
 	saveGlobalSettingsToXML();
@@ -1965,24 +2227,31 @@ void Main::cleanup()
 	log.info("Exiting");
 
 
+
+#ifndef ORBIS
 	SDL_Quit();
+#else
+
+
+
+#endif
 
 }
 
 ////==========================================================================================================================
-//sp<BGClientEngine> Main::getGameEngine()
+//BGClientEngine* Main::getGameEngine()
 //{//==========================================================================================================================
 //	return gameEngine;
 //}
 
 //==========================================================================================================================
-sp<Main> Main::getMain()
+Main* Main::getMain()
 {//==========================================================================================================================
 	return mainObject;
 }
 
 //==========================================================================================================================
-void Main::setMain(sp<Main> c)
+void Main::setMain(Main* c)
 {//==========================================================================================================================
 	mainObject = c;
 }
@@ -2214,3 +2483,1434 @@ void Main::setMain(sp<Main> c)
 //	return EXIT_SUCCESS;
 //	}
 //#endif
+
+
+
+
+
+
+
+#ifdef ORBIS
+
+//=========================================================================================================================
+int Main::initialize()
+{//=========================================================================================================================
+
+
+
+
+
+
+	SceFiosParams params = SCE_FIOS_PARAMS_INITIALIZER;
+
+	/*E Provide required storage buffers. */
+	params.opStorage.pPtr = g_OpStorage;
+	params.opStorage.length = sizeof(g_OpStorage);
+	params.chunkStorage.pPtr = g_ChunkStorage;
+	params.chunkStorage.length = sizeof(g_ChunkStorage);
+	params.fhStorage.pPtr = g_FHStorage;
+	params.fhStorage.length = sizeof(g_FHStorage);
+	params.dhStorage.pPtr = g_DHStorage;
+	params.dhStorage.length = sizeof(g_DHStorage);
+
+	params.pathMax = MAX_PATH_LENGTH;
+
+	params.pVprintf = vprintf;
+	params.pMemcpy = memcpy;
+
+
+
+	 sceFiosInitialize(&params);
+
+
+
+
+	char filename[] = "/app0/fios2_simple.txt";
+	char output[] = "SAMPLE OUTPUT\n";
+	char *pInput = NULL;
+	SceFiosSize outputSize = (SceFiosSize)(strlen(output) + 1);
+	SceFiosSize inputSize = 0;
+	SceFiosSize result = 0;
+	SceFiosFH writeFH = 0;
+	SceFiosOp op[3] = { 0,0,0 };
+	SceFiosOpenParams openParams = SCE_FIOS_OPENPARAMS_INITIALIZER;
+	int err;
+
+	/*E Issue 3 async ops: open a file, write a line of text, and close it. */
+	openParams.openFlags = SCE_FIOS_O_WRONLY | SCE_FIOS_O_CREAT | SCE_FIOS_O_TRUNC;
+
+	op[0] = sceFiosFHOpen(NULL, &writeFH, filename, &openParams);
+	assert(op[0] != SCE_FIOS_OP_INVALID);
+	op[1] = sceFiosFHWrite(NULL, writeFH, output, outputSize);
+	assert(op[1] != SCE_FIOS_OP_INVALID);
+	op[2] = sceFiosFHClose(NULL, writeFH);
+	assert(op[2] != SCE_FIOS_OP_INVALID);
+
+
+
+	/*E Wait for an op to complete, get the result of it, and delete the op. */
+	result = sceFiosOpSyncWait(op[0]);
+	assert(result == SCE_FIOS_OK);
+
+	/*E Wait for an op to complete, get the result of it, and then manually delete the op. */
+	result = sceFiosOpWait(op[1]);
+	assert(result == SCE_FIOS_OK);
+	sceFiosOpDelete(op[1]);
+
+	/*E Poll for an op to complete, get its result, and then delete it. */
+	while (!sceFiosOpIsDone(op[2]))
+	{
+		/*E Sleep to avoid consuming too many CPU cycles */
+		sceKernelUsleep(1);
+	}
+	result = sceFiosOpGetError(op[2]);
+	assert(result == SCE_FIOS_OK);
+	sceFiosOpDelete(op[2]);
+
+	/*E Synchronously find the file size. */
+	inputSize = sceFiosFileGetSizeSync(NULL, filename);
+	assert(inputSize == outputSize);
+
+	/*E Synchronously read the text from the file. */
+	pInput = (char*)malloc((size_t)inputSize);
+	assert(pInput != NULL);
+	result = sceFiosFileReadSync(NULL, filename, pInput, inputSize, 0);
+	assert(result == inputSize);
+	assert(!strcmp(pInput, output));
+	free(pInput);
+
+	/*E Delete the file. */
+	err = sceFiosDeleteSync(NULL, filename);
+	assert(err == SCE_FIOS_OK);
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	int ret;
+	(void)ret;
+
+	m_previousTime = 0;
+
+	m_selectedUserId = sss::kInvalidUserId;
+
+
+//	SampleUtil::Graphics::GraphicsContextOption* graphicsOption = NULL;
+//	SampleUtil::Audio::AudioContextOption* audioOption = NULL;
+//	SceFiosParams*			   fios2Option = NULL;
+//	SampleUtil::Input::PadContextOption*   padOption = NULL;
+//
+//	SceFiosParams _params;// = SCE_FIOS_PARAMS_INITIALIZER;
+//
+//	int32_t sizeOp = SCE_FIOS_OP_STORAGE_SIZE(256, SCE_FIOS_PATH_MAX);	/* 64 ops: */
+//	int32_t sizeChunk = SCE_FIOS_CHUNK_STORAGE_SIZE(1024);					/* 1024 chunks, 64KiB: */
+//	int32_t sizeFh = SCE_FIOS_FH_STORAGE_SIZE(256, SCE_FIOS_PATH_MAX);	/* 16 file handles: */
+//	int32_t sizeDh = SCE_FIOS_DH_STORAGE_SIZE(256, SCE_FIOS_PATH_MAX);		/* 4 directory handles: */
+//
+//	int32_t sizeTotal = sizeOp + sizeChunk + sizeFh + sizeDh;
+//
+//	unsigned char* m_pStorageForFios2;
+//	m_pStorageForFios2 = (unsigned char*)malloc(sizeTotal);
+//
+//	if (m_pStorageForFios2 == NULL)
+//	{
+//		return SCE_SAMPLE_UTIL_ERROR_OUT_OF_MEMORY;
+//	}
+//
+//	_params.opStorage.pPtr = m_pStorageForFios2;
+//	_params.opStorage.length = sizeOp;
+//	_params.chunkStorage.pPtr = m_pStorageForFios2 + sizeOp;
+//	_params.chunkStorage.length = sizeChunk;
+//	_params.fhStorage.pPtr = m_pStorageForFios2 + sizeOp + sizeChunk;
+//	_params.fhStorage.length = sizeFh;
+//	_params.dhStorage.pPtr = m_pStorageForFios2 + sizeOp + sizeChunk + sizeFh;
+//	_params.dhStorage.length = sizeDh;
+//	_params.pathMax = SCE_FIOS_PATH_MAX;
+//	_params.pMemcpy = memcpy;
+//
+//	SampleSkeletonOption* option;
+
+
+	ret = initializeUtil
+	(
+		(
+			//kFunctionFlagGraphics |
+			//kFunctionFlagSpriteRenderer |
+			kFunctionFlagAudio |
+			kFunctionFlagFios2 |
+			kFunctionFlagUserIdManager
+		),
+			-1, -1);
+
+	
+	//exit(0);
+
+
+//	vector<string> files = BobFile("/app0/").list();
+//
+//	for (int i = 0; i<files.size(); i++)
+//	{
+//		log.debug(files.at(i));
+//	}
+//
+//
+//
+//	char filename[] = "/app0/version.txt";
+//	char *pInput = NULL;
+//	SceFiosSize inputSize = 0;
+//	SceFiosSize result = 0;
+//
+//
+//
+//	/*E Synchronously find the file size. */
+//	inputSize = sceFiosFileGetSizeSync(NULL, filename);
+//
+//	log.debug(to_string(inputSize));
+//
+//	/*E Synchronously read the text from the file. */
+//	pInput = (char*)malloc((size_t)inputSize);
+//	assert(pInput != NULL);
+//	result = sceFiosFileReadSync(NULL, filename, pInput, inputSize, 0);
+//	assert(result == inputSize);
+//	free(pInput);
+
+
+	
+
+
+	FileUtils::loadByteFile("/app0/version.txt");
+
+	log.debug(to_string(sceFiosExistsSync(NULL, "version.txt")));
+	log.debug(to_string(sceFiosExistsSync(NULL, "/app0/version.txt")));
+	log.debug(to_string(BobFile("/app0/version.txt").exists()));
+
+
+
+
+
+	//FileUtils::loadByteFile("/app0/data/sounds/bg.ogg");
+
+	
+	//SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	
+
+//	m_displayWidth = getGraphicsContext()->getNextRenderTarget()->getWidth();
+//	m_displayHeight = getGraphicsContext()->getNextRenderTarget()->getHeight();
+//
+//	GLUtils::windowWidth = m_displayWidth;
+//	GLUtils::windowHeight = m_displayHeight;
+//	GLUtils::monitorWidth = m_displayWidth;
+//	GLUtils::monitorHeight = m_displayHeight;
+
+	//ret = common::Service::loadSystemPrxs();
+	{
+		ret = sceSysmoduleLoadModule(SCE_SYSMODULE_ULT);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		/* libult initialize */
+		ret = sceUltInitialize();
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		ret = sceSysmoduleLoadModule(SCE_SYSMODULE_NP_COMMERCE);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		ret = sceSysmoduleLoadModule(SCE_SYSMODULE_JSON2);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+	}
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+
+
+//	ret = sceSystemServiceHideSplashScreen();
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	int32_t systemParamValue = 0;
+	ret = sceSystemServiceParamGetInt(SCE_SYSTEM_SERVICE_PARAM_ID_LANG, &systemParamValue);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+	std::string language = (systemParamValue == SCE_SYSTEM_PARAM_LANG_JAPANESE) ? "japanese" : "english_us";
+
+	
+
+//	ret = m_baseService.initialize("/app0/game_data/config.lua", language,
+//		getGraphicsContext(), getSpriteRenderer(),
+//		getUserIdManager(),
+//		getAudioContext(),
+//		m_displayWidth, m_displayHeight,
+//		SINGLE_USER_GAME_MP4_FILE_NAME);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	
+
+//	ret = m_inputDeviceManager.initialize(getGraphicsContext(),
+//		&m_baseService.m_resourceManager.m_directMemoryHeap,
+//		&m_baseService.m_eventDispatcher, &m_baseService.m_userEntryManager);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	
+	ps4ToSDLInputConverter = new PS4InputToSDLEventConverter();
+	ps4ToSDLInputConverter->initialize();
+	
+
+//	ret = m_avPlayer.initialize(getGraphicsContext(),
+//		getSpriteRenderer(), getAudioContext(),
+//		&m_baseService.m_resourceManager.m_directMemoryHeap);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	
+
+	//ret = m_gameLogManager.initialize(&m_baseService);
+	//SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	
+	
+
+//	m_titleLogoState.init(this);
+//	m_gameMenuState.init(this);
+//	m_gameVideoState.init(this);
+//	m_loadingSaveDataState.init(this);
+//	m_savingSaveDataState.init(this);
+//	m_displayResultState.init(this);
+//	m_displayNpScoreRankingState.init(this);
+//	m_gameState.init(this);
+//
+//	m_thread = NULL;
+//	m_isLoaded = false;
+//	//m_isShootingRangeLoaded = false;
+//
+//	
+//
+//	changeState(&m_titleLogoState);
+
+	
+
+//
+//
+//		//		FILE *fp = fopen("version.txt", "rb");
+//		//		if (fp == NULL)
+//		//		{
+//		//			fp = fopen("./version.txt", "rb");
+//		//			if (fp == NULL)
+//		//			{
+//		//				fp = fopen("../version.txt", "rb");
+//		//				if (fp == NULL)
+//		//				{
+//		//					fp = fopen("/app0/version.txt", "rb");
+//		//					if (fp == NULL)
+//		//					{
+//		//						m_baseService.m_topLevelHud.setSystemMessage(L"could not find file");
+//		//					}
+//		//				}
+//		//			}
+//		//		}
+//
+//		string path = "/app0/";
+//		vector<string> files;
+//
+//		SceFiosDH dh = SCE_FIOS_DH_INVALID;
+//		SceFiosBuffer buffer = SCE_FIOS_BUFFER_INITIALIZER;
+//		SceFiosSize bufferSize = 0;
+//
+//		SceFiosOp op = sceFiosDHOpen(NULL, &dh, path.c_str(), buffer);
+//		int err = sceFiosOpWait(op);
+//		if (err == SCE_FIOS_ERROR_BAD_SIZE)
+//			bufferSize = sceFiosOpGetActualCount(op);
+//		else if (err != SCE_FIOS_OK)
+//		{
+//			//m_baseService.m_topLevelHud.setSystemMessage(L"sceFiosDHOpen");
+//			//return;
+//		}
+//		sceFiosOpDelete(op);
+//
+//
+//
+//		//int err = sceFiosDHOpenSync(NULL, &dh, path.c_str(), buffer);
+//
+//		//if (err != SCE_FIOS_OK)
+//		//{
+//			//m_baseService.m_topLevelHud.setSystemMessage(L"sceFiosDHOpenSync");
+//			//return;
+//		//}
+//
+//
+//
+//		/*E Now allocate the buffer (if needed) and traverse the directory. */
+//		//if (bufferSize != 0)
+//		//{
+//			buffer.set(malloc(bufferSize), bufferSize);
+//		
+//			err = sceFiosDHOpenSync(NULL, &dh, path.c_str(), buffer);
+//		
+//			if (err != SCE_FIOS_OK)
+//			{
+//				setErr(err);
+//			}
+//			
+//		//}
+//			else
+//			{
+//				for (;;)
+//				{
+//					SceFiosDirEntry entry = SCE_FIOS_DIRENTRY_INITIALIZER;
+//					err = sceFiosDHReadSync(NULL, dh, &entry);
+//
+//					if (err == SCE_FIOS_ERROR_EOF)
+//						break;
+//
+//					if (err != SCE_FIOS_OK)
+//					{
+//						setErr(err);
+//					}
+//
+//					files.push_back(entry.fullPath);
+//					//printf("Read directory entry %s\n", entry.fullPath);
+//				}
+//
+//				sceFiosDHCloseSync(NULL, dh);
+//
+//				if (buffer.pPtr)
+//				{
+//					free(buffer.pPtr);
+//				}
+//
+//
+//				std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+//				//std::string narrow = converter.to_bytes(wide_utf16_source_string);
+//				std::wstring wide = converter.from_bytes(files.at(0));
+//				
+//				m_baseService.m_topLevelHud.setSystemMessage(wide);
+//
+//			}
+
+	return SCE_OK;
+
+
+}
+
+wstring Main::getWString(string s)
+{
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+		//std::string narrow = converter.to_bytes(wide_utf16_source_string);
+		std::wstring wide = converter.from_bytes(s);
+					
+		return wide;
+}
+void Main::setErr(int err)
+{
+	if (err == SCE_FIOS_ERROR_UNIMPLEMENTED)log.error("SCE_FIOS_ERROR_UNIMPLEMENTED");
+	if (err == SCE_FIOS_ERROR_CANT_ALLOCATE_OP)log.error("SCE_FIOS_ERROR_CANT_ALLOCATE_OP");
+	if (err == SCE_FIOS_ERROR_CANT_ALLOCATE_FH)log.error("SCE_FIOS_ERROR_CANT_ALLOCATE_FH");
+	if (err == SCE_FIOS_ERROR_CANT_ALLOCATE_DH)log.error("SCE_FIOS_ERROR_CANT_ALLOCATE_DH");
+	if (err == SCE_FIOS_ERROR_CANT_ALLOCATE_CHUNK)log.error("SCE_FIOS_ERROR_CANT_ALLOCATE_CHUNK");
+	if (err == SCE_FIOS_ERROR_BAD_PATH)log.error("SCE_FIOS_ERROR_BAD_PATH");
+	if (err == SCE_FIOS_ERROR_BAD_PTR)log.error("SCE_FIOS_ERROR_BAD_PTR");
+	if (err == SCE_FIOS_ERROR_BAD_OFFSET)log.error("SCE_FIOS_ERROR_BAD_OFFSET");
+	if (err == SCE_FIOS_ERROR_BAD_SIZE)log.error("SCE_FIOS_ERROR_BAD_SIZE");
+	if (err == SCE_FIOS_ERROR_BAD_IOVCNT)log.error("SCE_FIOS_ERROR_BAD_IOVCNT");
+	if (err == SCE_FIOS_ERROR_BAD_OP)log.error("SCE_FIOS_ERROR_BAD_OP");
+	if (err == SCE_FIOS_ERROR_BAD_FH)log.error("SCE_FIOS_ERROR_BAD_FH");
+	if (err == SCE_FIOS_ERROR_BAD_DH)log.error("SCE_FIOS_ERROR_BAD_DH");
+	if (err == SCE_FIOS_ERROR_BAD_ALIGNMENT)log.error("SCE_FIOS_ERROR_BAD_ALIGNMENT");
+	if (err == SCE_FIOS_ERROR_NOT_A_FILE)log.error("SCE_FIOS_ERROR_NOT_A_FILE");
+	if (err == SCE_FIOS_ERROR_NOT_A_DIRECTORY)log.error("SCE_FIOS_ERROR_NOT_A_DIRECTORY");
+	if (err == SCE_FIOS_ERROR_EOF)log.error("SCE_FIOS_ERROR_EOF");
+	if (err == SCE_FIOS_ERROR_TIMEOUT)log.error("SCE_FIOS_ERROR_TIMEOUT");
+	if (err == SCE_FIOS_ERROR_CANCELLED)log.error("SCE_FIOS_ERROR_CANCELLED");
+	if (err == SCE_FIOS_ERROR_ACCESS)log.error("SCE_FIOS_ERROR_ACCESS");
+	if (err == SCE_FIOS_ERROR_DECOMPRESSION)log.error("SCE_FIOS_ERROR_DECOMPRESSION");
+	if (err == SCE_FIOS_ERROR_READ_ONLY)log.error("SCE_FIOS_ERROR_READ_ONLY");
+	if (err == SCE_FIOS_ERROR_WRITE_ONLY)log.error("SCE_FIOS_ERROR_WRITE_ONLY");
+	if (err == SCE_FIOS_ERROR_MEDIA_GONE)log.error("SCE_FIOS_ERROR_MEDIA_GONE");
+	if (err == SCE_FIOS_ERROR_PATH_TOO_LONG)log.error("SCE_FIOS_ERROR_PATH_TOO_LONG");
+	if (err == SCE_FIOS_ERROR_TOO_MANY_OVERLAYS)log.error("SCE_FIOS_ERROR_TOO_MANY_OVERLAYS");
+	if (err == SCE_FIOS_ERROR_BAD_OVERLAY)log.error("SCE_FIOS_ERROR_BAD_OVERLAY");
+	if (err == SCE_FIOS_ERROR_BAD_ORDER)log.error("SCE_FIOS_ERROR_BAD_ORDER");
+	if (err == SCE_FIOS_ERROR_BAD_INDEX)log.error("SCE_FIOS_ERROR_BAD_INDEX");
+	if (err == SCE_FIOS_ERROR_EVENT_NOT_HANDLED)log.error("SCE_FIOS_ERROR_EVENT_NOT_HANDLED");
+	if (err == SCE_FIOS_ERROR_BUSY)log.error("SCE_FIOS_ERROR_BUSY");
+	if (err == SCE_FIOS_ERROR_BAD_ARCHIVE)log.error("SCE_FIOS_ERROR_BAD_ARCHIVE");
+	if (err == SCE_FIOS_ERROR_BAD_RESOLVE_TYPE)log.error("SCE_FIOS_ERROR_BAD_RESOLVE_TYPE");
+	if (err == SCE_FIOS_ERROR_BAD_FLAGS)log.error("SCE_FIOS_ERROR_BAD_FLAGS");
+	if (err == SCE_FIOS_ERROR_UNKNOWN)log.error("SCE_FIOS_ERROR_UNKNOWN");
+	if (err == SCE_FIOS_ERROR_ALREADY_EXISTS)log.error("SCE_FIOS_ERROR_ALREADY_EXISTS");
+	if (err == SCE_FIOS_ERROR_IN_CALLBACK)log.error("SCE_FIOS_ERROR_IN_CALLBACK");
+}
+//=========================================================================================================================
+int Main::update()
+{//=========================================================================================================================
+
+
+	int ret;
+	(void)ret;
+	//m_baseService.m_debugWindow.notifyPhase(common::Service::DebugWindow::kBeginUpdate);
+
+
+	int currentTime = sceKernelGetProcessTime();
+	float frameDelta = (currentTime - m_previousTime) / 1000000.0;
+	m_previousTime = currentTime;
+
+
+
+	ret = updateUtil();
+
+
+	//SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	//ret = m_baseService.update(frameDelta);
+	//SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	//ret = m_inputDeviceManager.update();
+	//SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	
+	ps4ToSDLInputConverter->update();
+
+
+
+	//	if (m_inputDeviceManager.isButtonDownByAnyPlayer(ssi::kButtonL1 | ssi::kButtonR1 | ssi::kButtonOptions))
+	//	{
+	//		printf("*-*-*-*-*  call sceSystemServiceLoadExec() \n");
+	//		ret = sceSystemServiceLoadExec("/app0/eboot.bin", NULL);	// reset Shooting Game
+	//		printf("*-*-*-*-*  sceSystemServiceLoadExec() : ret(0x%08x) \n", ret);
+	//	}
+
+	//	if (m_inputDeviceManager.isButtonPressedByAnyPlayer(ssi::kButtonSquare))
+	//	{
+	//		m_baseService.m_debugWindow.toggleDisplay();
+	//	}
+
+
+	//	if (m_currentState != NULL)
+	//	{
+	//		ret = m_currentState->onUpdate(frameDelta);
+	//
+	//		//SCE_SAMPLE_UTIL_ASSERT_MSG(ret == SCE_OK, "ret=%#x", ret);
+	//	}
+	//	else
+	//	{
+	//		return -1;
+	//	}
+	//
+	//	m_baseService.m_debugWindow.notifyPhase(common::Service::DebugWindow::kEndUpdate);
+	return SCE_OK;
+
+}
+
+sce::SampleUtil::Graphics::Texture* t = nullptr;
+
+#include "graphics/platform_gnm/buffer_internal_gnm.h"
+#include "graphics/platform_gnm/gnm_internal.h"
+#include "graphics/platform_gnm/program_internal_gnm.h"
+#include "graphics/platform_gnm/constant_internal_gnm.h"
+#include "graphics/platform_gnm/context_internal_gnm.h"
+#include "graphics/platform_gnm/font_orbis.h"
+#include "graphics/platform_gnm/loader_internal_gnm.h"
+#include "graphics/image.h"
+
+
+
+
+
+
+
+bool ok = false;
+//=========================================================================================================================
+void Main::render()
+{//=========================================================================================================================
+
+//	m_baseService.m_debugWindow.notifyPhase(common::Service::DebugWindow::kBeginRender);
+//
+//	ssg::GraphicsContext *context = getGraphicsContext();
+//	context->beginScene(context->getNextRenderTarget(),
+//		context->getDepthStencilSurface());
+//
+//
+//
+//
+//	context->setCullMode(sce::SampleUtil::Graphics::kCullNone);
+//	context->clearRenderTarget(0x00000000);
+//	
+//	context->setDepthWriteEnable(true);
+//	
+//	context->setDepthFunc(sce::SampleUtil::Graphics::kDepthFuncAlways);
+
+//	if (m_currentState == &m_titleLogoState)
+//	{
+//		m_titleLogoState.render(context);
+//
+////		float rtWidth = context->getCurrentRenderTarget()->getWidth();
+////		float rtHeight = context->getCurrentRenderTarget()->getHeight();
+////		context->setCullMode(sce::SampleUtil::Graphics::kCullNone);
+////		context->clearRenderTarget(0x00000000);
+////
+////		context->setDepthWriteEnable(true);
+////
+////		context->setDepthFunc(sce::SampleUtil::Graphics::kDepthFuncAlways);
+////
+////		m_baseService.getSpriteRenderer()->drawString(context,
+////			m_baseService.m_resourceManager.m_fontMB,
+////			(uint16_t*)m_baseService.m_resourceManager.getTextUcs2("LOADING").c_str(),
+////			sce::Vectormath::Simd::Aos::Vector2(rtWidth*0.3f, rtHeight*0.4f),
+////			sce::Vectormath::Simd::Aos::Vector4(((float)(m_frame % 180) / 180),
+////			((float)(m_frame % 120) / 120),
+////				((float)(m_frame % 60) / 60), 1.0));
+//
+//	}
+//	else if (m_currentState == &m_gameMenuState)
+//	{
+//		m_gameMenuState.render(context);
+//
+//	}
+//	else if (m_currentState == &m_gameVideoState)
+//	{
+//		m_gameVideoState.render(context);
+//
+//	}
+//	else if (m_currentState == &m_loadingSaveDataState)
+//	{
+//		m_loadingSaveDataState.render(context);
+//
+//	}
+//	else if (m_currentState == &m_savingSaveDataState)
+//	{
+//		m_savingSaveDataState.render(context);
+//
+//	}
+//	else if (m_currentState == &m_displayResultState)
+//	{
+//		m_displayResultState.render(context);
+//
+//	}
+//	else if (m_currentState == &m_displayNpScoreRankingState)
+//	{
+//		m_displayNpScoreRankingState.render(context);
+//
+//	}
+//	else if (m_currentState == &m_gameState)
+//	{
+//		m_gameState.render(context);
+//	}
+
+//GLUtils::drawFilledRect(255, 255, 0, 0, 100, 0, 100, 1);
+
+//exit(0);
+
+//	stateManager->render();
+//	console->render();
+//	rightConsole->render();
+
+//vecmath::Vector2 position = vecmath::Vector2(0, 0);
+//vecmath::Vector2 size = vecmath::Vector2(10, 10);
+//vecmath::Vector4 rgba = vecmath::Vector4(1, 1, 1, 1);
+
+
+
+//	if (ok == false)
+//	{
+//		ok = true;
+//
+//		FILE *fp = fopen("/app0/version.txt", "rb");
+//		if (fp == NULL)
+//		{
+//			m_baseService.m_topLevelHud.setSystemMessage(L"could not find file");
+//		}
+//				
+//			
+//		
+//	}
+
+	//if (t == nullptr)
+	//{
+
+//		ssgi::ImageFile imageFile;
+//		int ret = imageFile.open("/data/theme/keyboard.png");
+//		if (ret != SCE_OK)
+//		{
+//			//m_baseService.m_topLevelHud.setSystemMessage(L"hi");
+//		}
+
+		
+		
+		//Main::getBaseService()->m_resourceManager.m_graphicsLoader->createTextureFromFile(&t, "/app0/data/theme/keyboard.png");
+	//}
+
+
+	//Main::getSpriteRenderer()->drawTexture(Main::getGraphicsContext(), vecmath::Vector2(0.5, 0.5), vecmath::Vector2(1, 1), t, rgba);
+	//Main::getSpriteRenderer()->drawTexture(Main::getGraphicsContext(), vecmath::Vector2(0, 0), vecmath::Vector2(1, 1), t, rgba);
+
+	
+
+	//m_baseService.m_topLevelHud.draw(context, m_baseService.getDisplaySafeAreaRatio());
+
+	//m_baseService.m_debugWindow.draw(getGraphicsContext(), m_baseService.getDisplaySafeAreaRatio());
+
+
+
+
+	//getGraphicsContext()->endScene();
+
+	//m_baseService.m_debugWindow.notifyPhase(common::Service::DebugWindow::kEndRender);
+
+
+
+
+
+
+
+
+	//	getGraphicsContext()->beginScene(getGraphicsContext()->getNextRenderTarget(),
+	//		getGraphicsContext()->getDepthStencilSurface());
+	//
+	//	getGraphicsContext()->clearRenderTarget(0x00000000);
+	//
+	//	getGraphicsContext()->setDepthWriteEnable(true);
+	//	getGraphicsContext()->setDepthFunc(sce::SampleUtil::Graphics::kDepthFuncLessEqual);
+	//
+	//	{
+	//
+	//		getGraphicsContext()->setDepthFunc(sce::SampleUtil::Graphics::kDepthFuncAlways);	// for drawDebugStringf
+	//
+	//
+	//
+	//		getSpriteRenderer()->fillRect(getGraphicsContext()
+	//			, vecmath::Vector2(0, 0)
+	//			, vecmath::Vector2(0.5, 0.5)
+	//			, g_gray);
+	//
+	//		getSpriteRenderer()->drawDebugStringf(getGraphicsContext(), vecmath::Vector2(0, 0), 0.05f, g_white, "test");
+	//
+	//
+	//	}
+	//	//m_debug.draw(this->getGraphicsContext(), this->getSpriteRenderer());
+	//
+	//	stateManager->render();
+	//	console->render();
+	//	rightConsole->render();
+	//
+	//	getGraphicsContext()->endScene();
+
+}
+//=========================================================================================================================
+int Main::finalize()
+{//=========================================================================================================================
+
+
+	int ret;
+	(void)ret;
+	//	m_displayNpScoreRankingScene.finalize();
+	//	m_displayResultScene.finalize();
+	//	m_savingSaveDataScene.finalize();
+	//	m_loadingSaveDataScene.finalize();
+	//	m_gameMenuScene.finalize();
+	//	m_gameScene.finalize();
+	//
+	//	m_singlePlayerSaveData.finalize();
+	//	m_saveDataManager.finalize();
+	//
+	//	ret = m_gameLogManager.finalize();
+	//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+	//
+	//	ret = m_avPlayer.finalize();
+	//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+	//
+	//	ret = m_inputDeviceManager.finalize();
+	//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+	//
+	//	ret = m_baseService.finalize();
+	//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		//ret = common::Service::unloadSystemPrxs();
+	{
+		ret = sceSysmoduleUnloadModule(SCE_SYSMODULE_JSON2);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		ret = sceSysmoduleUnloadModule(SCE_SYSMODULE_NP_COMMERCE);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		/* libult finalize */
+		ret = sceUltFinalize();
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		ret = sceSysmoduleUnloadModule(SCE_SYSMODULE_ULT);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+	}
+
+
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	ret = finalizeUtil();
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+
+int Main::initializeModules(void)
+{//=========================================================================================================================
+	int ret;
+
+
+	m_baseService.load();
+
+	ret = m_saveDataManager.initialize();
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	ret = m_singlePlayerSaveData.initialize(&m_baseService,
+		&m_saveDataManager,
+		&m_gameLogManager,
+		m_baseService.m_config.m_enableDummySaveDataLoad);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+int Main::initializeScenes(void)
+{//=========================================================================================================================
+	int ret;
+	common::Service::BaseService *b = &m_baseService;
+
+
+//	ret = m_gameScene.initialize(b);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+//
+//	ret = m_gameMenuScene.initialize(b);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+//
+//	ret = m_loadingSaveDataScene.initialize(b, &m_singlePlayerSaveData);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+//
+//	ret = m_savingSaveDataScene.initialize(b, &m_singlePlayerSaveData);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+//
+//	ret = m_displayResultScene.initialize(b, &m_singlePlayerSaveData);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+//
+//	ret = m_displayNpScoreRankingScene.initialize(b, &m_singlePlayerSaveData);
+//	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+
+	(void)ret;
+	return SCE_OK;
+
+}
+
+void* Main::loadingThread(void *argc)
+{//=========================================================================================================================
+	int ret;
+	Main *app = (Main*)argc;
+
+	ret = app->initializeModules();
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	ret = app->initializeScenes();
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	app->m_isLoaded = true;
+	return NULL;
+}
+
+void* Main::loadingThreadForShootingRange(void *argc)
+{//=========================================================================================================================
+	Main *app = (Main*)argc;
+
+	app->m_baseService.m_resourceManager.loadShootingRange();
+
+	app->m_isShootingRangeLoaded = true;
+	return NULL;
+}
+
+int Main::startLoad(void)
+{//=========================================================================================================================
+	int ret;
+	(void)ret;
+
+
+	ScePthreadAttr threadAttr;
+	ret = scePthreadAttrInit(&threadAttr);
+	SCE_SAMPLE_UTIL_ASSERT(ret >= 0);
+
+
+	ret = scePthreadCreate(&m_thread, &threadAttr, loadingThread, (void*)this, "loading_thread");
+	SCE_SAMPLE_UTIL_ASSERT(ret >= 0);
+
+
+	ret = scePthreadAttrDestroy(&threadAttr);
+	SCE_SAMPLE_UTIL_ASSERT(ret >= 0);
+
+	return SCE_OK;
+}
+
+bool Main::isLoaded(void)
+{//=========================================================================================================================
+	int ret;
+	if (!m_isLoaded)
+	{
+		return false;
+	}
+	if (m_thread != NULL)
+	{
+		ret = scePthreadJoin(m_thread, NULL);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+		m_thread = NULL;
+	}
+	return true;
+}
+
+int Main::startLoadRange(void)
+{//=========================================================================================================================
+	int ret;
+	(void)ret;
+
+	//	ScePthreadAttr threadAttr;
+	//	ret = scePthreadAttrInit(&threadAttr);
+	//	SCE_SAMPLE_UTIL_ASSERT(ret >= 0);
+	//
+	//	ret = scePthreadCreate(&m_thread,
+	//		&threadAttr,
+	//		loadingThreadForShootingRange,
+	//		(void*)this,
+	//		"loading_thread_for_range");
+	//	SCE_SAMPLE_UTIL_ASSERT(ret >= 0);
+	//
+	//	ret = scePthreadAttrDestroy(&threadAttr);
+	//	SCE_SAMPLE_UTIL_ASSERT(ret >= 0);
+	return SCE_OK;
+}
+
+bool Main::isShootingRangeLoaded(void)
+{//=========================================================================================================================
+	int ret;
+//	if (!m_isShootingRangeLoaded)
+	{
+		return false;
+	}
+	if (m_thread != NULL)
+	{
+		ret = scePthreadJoin(m_thread, NULL);
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+		m_thread = NULL;
+	}
+	return true;
+}
+
+common::Service::BaseService *Main::getBaseService(void)
+{
+	return &mainObject->m_baseService;
+}
+
+sce::SampleUtil::Graphics::GraphicsContext *Main::getGraphicsContext(void)
+{
+	return mainObject->sce::SampleUtil::SampleSkeleton::getGraphicsContext();
+}
+
+sce::SampleUtil::Graphics::SpriteRenderer *Main::getSpriteRenderer(void)
+{
+	return mainObject->sce::SampleUtil::SampleSkeleton::getSpriteRenderer();
+}
+
+sce::SampleUtil::Audio::AudioContext *Main::getAudioContext(void)
+{
+	return mainObject->sce::SampleUtil::SampleSkeleton::getAudioContext();
+}
+
+sce::SampleUtil::System::UserIdManager *Main::getUserIdManager(void)
+{
+	return mainObject->sce::SampleUtil::SampleSkeleton::getUserIdManager();
+}
+
+sce::SampleUtil::Input::PadContext *Main::getPadContextOfInitialUser(void)
+{
+	return mainObject->sce::SampleUtil::SampleSkeleton::getPadContextOfInitialUser();
+}
+
+
+
+
+void Main::TitleLogoState::init(Main *app)
+{
+	m_app = app;
+	int ret = m_nowLoadingWindow.initialize(&m_app->m_baseService);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+	m_name = "TitleLogoState";
+}
+
+int Main::TitleLogoState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+
+
+
+	ret = m_app->startLoad();
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+
+
+	return SCE_OK;
+}
+
+int Main::TitleLogoState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+
+	m_nowLoadingWindow.update();
+	if (m_app->isLoaded())
+	{
+
+		ret = m_app->startLoadRange();
+		SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+		m_app->changeState(&m_app->m_gameMenuState);
+	}
+	return SCE_OK;
+}
+
+void Main::TitleLogoState::render(ssg::GraphicsContext *context)
+{
+	m_nowLoadingWindow.render(context);
+}
+
+
+
+void Main::GameMenuState::init(Main *app)
+{
+	m_app = app;
+	m_name = "GameMenuState";
+}
+
+int Main::GameMenuState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_gameMenuScene.reset();
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+int Main::GameMenuState::onLeave(void)
+{
+	m_app->m_baseService.m_topLevelHud.clearAll();
+	m_app->m_selectedUserId = m_app->m_gameMenuScene.getSelectedUserId();
+	return SCE_OK;
+}
+
+int Main::GameMenuState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_gameMenuScene.update(ellapseSec, &m_app->m_inputDeviceManager);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	if (m_app->m_gameMenuScene.isFinished())
+	{
+		if (m_app->m_gameMenuScene.getResult() == GameMenuScene::kMenuItemGameStart)
+		{
+			m_app->changeState(&m_app->m_loadingSaveDataState);
+		}
+		else if (m_app->m_gameMenuScene.getResult() == GameMenuScene::kMenuItemHighScore)
+		{
+			m_app->changeState(&m_app->m_loadingSaveDataState);
+		}
+		else if (m_app->m_gameMenuScene.getResult() == GameMenuScene::kMenuItemReplay)
+		{
+			m_app->changeState(&m_app->m_gameVideoState);
+		}
+	}
+	return SCE_OK;
+}
+
+void Main::GameMenuState::render(ssg::GraphicsContext *context)
+{
+	m_app->m_gameMenuScene.render(context);
+}
+
+
+
+void Main::GameVideoState::init(Main *app)
+{
+	m_app = app;
+	m_state = kStateInitialized;
+	m_name = "GameVideoState";
+}
+
+int Main::GameVideoState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+	m_app->m_baseService.m_topLevelHud.clearAll();
+
+	ret = m_app->m_avPlayer.start(SINGLE_USER_GAME_MP4_FILE_NAME);
+	if (ret == SCE_OK)
+	{
+//		m_app->m_baseService.m_topLevelHud.setSystemMessage(
+		m_app->m_baseService.m_config.getTextUcs2("PUSH_X_BUTTON");
+//		);
+		m_state = kStatePlayingVideo;
+
+	}
+	else
+	{
+		std::string message;
+		if (m_app->m_baseService.isVideoRecordingNoSpaceErrorOccurred())
+		{
+			message = m_app->m_baseService.m_resourceManager.getTextUtf8("MSG_DIALOG_FAILED_TO_RECORD_VIDEO_NO_SPACE").c_str();
+		}
+		else
+		{
+			message = m_app->m_baseService.m_resourceManager.getTextUtf8("MSG_DIALOG_MOVIE_FILE_NOT_EXIST").c_str();
+		}
+
+		cu::DialogRequest dialogRequest;
+		dialogRequest.initAsMsgDialogOfUser(cu::DialogRequest::MessageDialog::kOk, message);
+		m_app->m_baseService.m_dialogManager->addRequest(dialogRequest, &m_dialogMonitor);
+		m_state = kStateErrorDialog;
+	}
+	return SCE_OK;
+}
+
+int Main::GameVideoState::onLeave(void)
+{
+	m_app->m_baseService.m_topLevelHud.clearAll();
+	return SCE_OK;
+}
+
+int Main::GameVideoState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+	if (m_state == kStatePlayingVideo)
+	{
+		if (m_app->m_avPlayer.isPlaying())
+		{
+			ret = m_app->m_avPlayer.update();
+			SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+			if (m_app->m_inputDeviceManager.isButtonPressedByAnyPlayer(ssin::kButtonCross))
+			{
+				m_app->m_avPlayer.stop();
+			}
+		}
+		else
+		{
+			m_app->m_avPlayer.stop();
+			m_state = kStateFinished;
+		}
+
+	}
+	else if (m_state == kStateErrorDialog)
+	{
+		if (m_dialogMonitor.isDone())
+		{
+			m_state = kStateFinished;
+		}
+
+	}
+	else if (m_state == kStateFinished)
+	{
+		m_app->changeState(&m_app->m_gameMenuState);
+	}
+
+	return SCE_OK;
+}
+
+void Main::GameVideoState::render(ssg::GraphicsContext *context)
+{
+	if (m_state == kStatePlayingVideo)
+	{
+		m_app->m_avPlayer.render(context, m_app->getSpriteRenderer());
+	}
+}
+
+
+
+void Main::LoadingSaveDataState::init(Main *app)
+{
+	m_app = app;
+	m_name = "LoadingSaveDataState";
+}
+
+int Main::LoadingSaveDataState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+
+	sce::SampleUtil::System::UserId userId = m_app->m_selectedUserId;
+	SCE_SAMPLE_UTIL_ASSERT(userId != sss::kInvalidUserId);
+
+	ret = m_app->m_loadingSaveDataScene.reset(userId);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+int Main::LoadingSaveDataState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_loadingSaveDataScene.update(ellapseSec);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	if (m_app->m_loadingSaveDataScene.isFinished())
+	{
+		if (m_app->m_gameMenuScene.getResult() == GameMenuScene::kMenuItemGameStart)
+		{
+			m_app->changeState(&m_app->m_gameState);
+		}
+		else if (m_app->m_gameMenuScene.getResult() == GameMenuScene::kMenuItemHighScore)
+		{
+			m_app->changeState(&m_app->m_displayResultState);
+		}
+		else
+		{
+			SCE_SAMPLE_UTIL_ASSERT(0);
+		}
+	}
+
+	return SCE_OK;
+}
+
+void Main::LoadingSaveDataState::render(ssg::GraphicsContext *context)
+{
+	m_app->m_loadingSaveDataScene.render(context);
+}
+
+
+
+void Main::SavingSaveDataState::init(Main *app)
+{
+	m_app = app;
+	m_name = "SavingSaveDataState";
+}
+
+int Main::SavingSaveDataState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+
+	sce::SampleUtil::System::UserId userId = m_app->m_selectedUserId;
+	SCE_SAMPLE_UTIL_ASSERT(userId != sss::kInvalidUserId);
+
+	ret = m_app->m_savingSaveDataScene.setupSaveData(userId, m_app->m_selectedPlayerPlayStyle, m_app->m_selectedPlayerScore);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+int Main::SavingSaveDataState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_savingSaveDataScene.update(ellapseSec);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	if (m_app->m_savingSaveDataScene.isFinished())
+	{
+		m_app->changeState(&m_app->m_displayResultState);
+	}
+
+	return SCE_OK;
+}
+
+void Main::SavingSaveDataState::render(ssg::GraphicsContext *context)
+{
+	m_app->m_savingSaveDataScene.render(context);
+}
+
+
+
+void Main::DisplayResultState::init(Main *app)
+{
+	m_app = app;
+	m_name = "DisplayResultState";
+}
+
+int Main::DisplayResultState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_displayResultScene.reset(m_app->m_selectedUserId);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+int Main::DisplayResultState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_displayResultScene.update(ellapseSec, &m_app->m_inputDeviceManager);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	if (m_app->m_displayResultScene.isFinished())
+	{
+		if (m_app->m_displayResultScene.getNextScene() == DisplayResultScene::NextScene::kNpScoreRankingScene)
+		{
+			m_app->changeState(&m_app->m_displayNpScoreRankingState);
+		}
+		else
+			if (m_app->m_displayResultScene.getNextScene() == DisplayResultScene::NextScene::kGameMenuScene)
+			{
+				m_app->changeState(&m_app->m_gameMenuState);
+			}
+	}
+
+	return SCE_OK;
+}
+
+void Main::DisplayResultState::render(ssg::GraphicsContext *context)
+{
+	m_app->m_displayResultScene.render(context);
+}
+
+
+
+void Main::DisplayNpScoreRankingState::init(Main *app)
+{
+	m_app = app;
+	m_name = "DisplayNpScoreRankingState";
+}
+
+int Main::DisplayNpScoreRankingState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_displayNpScoreRankingScene.reset(m_app->m_selectedUserId);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+int Main::DisplayNpScoreRankingState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_displayNpScoreRankingScene.update(ellapseSec, &m_app->m_inputDeviceManager);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	if (m_app->m_displayNpScoreRankingScene.isFinished())
+	{
+		if (m_app->m_displayNpScoreRankingScene.getNextScene() == DisplayNpScoreRankingScene::NextScene::kDisplayResultScene)
+		{
+			m_app->changeState(&m_app->m_displayResultState);
+		}
+		else if (m_app->m_displayNpScoreRankingScene.getNextScene() == DisplayNpScoreRankingScene::NextScene::kGameMenuScene)
+		{
+			m_app->changeState(&m_app->m_gameMenuState);
+		}
+	}
+
+	return SCE_OK;
+}
+
+void Main::DisplayNpScoreRankingState::render(ssg::GraphicsContext *context)
+{
+	m_app->m_displayNpScoreRankingScene.render(context);
+}
+
+
+
+void Main::GameState::init(Main *app)
+{
+	m_app = app;
+	m_name = "GameState";
+}
+
+int Main::GameState::onEnter(void)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_gameScene.reset(m_app->m_selectedUserId);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	return SCE_OK;
+}
+
+int Main::GameState::onLeave(void)
+{
+	m_app->m_selectedPlayerPlayStyle = m_app->m_gameScene.m_selectedPlayerPlayStyle;
+	m_app->m_selectedPlayerScore = m_app->m_gameScene.m_selectedPlayerScore;
+	return SCE_OK;
+}
+
+int Main::GameState::onUpdate(float ellapseSec)
+{
+	int ret;
+	(void)ret;
+
+	ret = m_app->m_gameScene.update(ellapseSec, &m_app->m_inputDeviceManager);
+	SCE_SAMPLE_UTIL_ASSERT_EQUAL(ret, SCE_OK);
+
+	if (m_app->m_gameScene.isFinished())
+	{
+		if (m_app->m_gameScene.getNextScene() == GameScene::NextScene::kSavingSaveDataScene)
+		{
+			m_app->changeState(&m_app->m_savingSaveDataState);
+		}
+		else if (m_app->m_gameScene.getNextScene() == GameScene::NextScene::kGameMenuScene)
+		{
+			m_app->changeState(&m_app->m_gameMenuState);
+		}
+		else
+		{
+			SCE_SAMPLE_UTIL_ASSERT(0);
+		}
+	}
+
+	return SCE_OK;
+}
+
+void Main::GameState::render(ssg::GraphicsContext *context)
+{
+	m_app->m_gameScene.render(context, &m_app->m_inputDeviceManager);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endif
+

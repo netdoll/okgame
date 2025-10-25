@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -16,19 +16,19 @@ class GameChallengeNotificationPanel : public MenuPanel
 public:
 	static Logger log;
 
-	//sp<DialogLayout> notificationPanel = nullptr;
+	//DialogLayout* notificationPanel = nullptr;
 
-	//sp<Button> yesButton = nullptr;
-	//sp<Button> noButton = nullptr;
+	//Button* yesButton = nullptr;
+	//Button* noButton = nullptr;
 
-	sp<FriendCharacter> friendCharacter = nullptr;
+	FriendCharacter* friendCharacter = nullptr;
 	string gameName = "";
 
 	long long notificationCreatedTime = 0;
 
-	//sp<Label> timeLeftLabel = nullptr;
+	//Label* timeLeftLabel = nullptr;
 
-	GameChallengeNotificationPanel(sp<FriendCharacter> friend_in, const string& gameName);
+	GameChallengeNotificationPanel(FriendCharacter* friend_in, const string& gameName);
 
 	virtual void update() override;
 

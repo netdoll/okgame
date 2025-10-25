@@ -4,18 +4,18 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
 
-class StatusBarButton : public EnginePart
+class BobStatusBarButton : public EnginePart
 {
 public:
 
 	static Logger log;
 
-	sp<OKTexture> texture = nullptr;
+	BobTexture* texture = nullptr;
 
 	bool pulse = false;
 	bool pulseInOut = false;
@@ -46,8 +46,8 @@ public:
 
 	bool enabled = true;
 
-	StatusBarButton();
-	StatusBarButton(sp<BGClientEngine> g);
+	BobStatusBarButton();
+	BobStatusBarButton(BGClientEngine* g);
 
 	virtual void init();
 

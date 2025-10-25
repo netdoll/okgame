@@ -11,45 +11,44 @@
 
 
 
-Logger StateManager::log = Logger("StateManager");
+Logger BobStateManager::log = Logger("BobStateManager");
 
 
-StateManager::StateManager()
+BobStateManager::BobStateManager()
 { //=========================================================================================================================
 }
 
-sp<Engine> StateManager::getCurrentState()
+Engine* BobStateManager::getCurrentState()
 { //=========================================================================================================================
 
-	if(states->size()>0)
-	return states->at(0);
+	if(states.size()>0)
+	return states.get(0);
 	else return nullptr;
 }
 
-//void StateManager::setState(sp<Engine> s)
+//void BobStateManager::setState(Engine* s)
 //{ //=========================================================================================================================
 //	currentState = s;
 //}
 
-void StateManager::pushState(sp<Engine> s)
+void BobStateManager::pushState(Engine* s)
 { //=========================================================================================================================
-	//states->insert(0, s);
-	states->insert(states->begin(), s);
+	states.insert(0, s);
 }
 
-void StateManager::popState()
+void BobStateManager::popState()
 { //=========================================================================================================================
-	if(states->size()>0)
-	states->erase(states->begin()+0);
+	if(states.size()>0)
+	states.removeAt(0);
 }
 
-void StateManager::update()
+void BobStateManager::update()
 {
 	Engine::updateTimers();
 	getCurrentState()->update();
 }
 
-void StateManager::render()
+void BobStateManager::render()
 {
 	getCurrentState()->render();
 }

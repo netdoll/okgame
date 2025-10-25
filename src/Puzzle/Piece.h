@@ -3,8 +3,8 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 #pragma once
-#include "oktypes.h"
-#include "OKGame.h"
+#include "bobtypes.h"
+#include "BobsGame.h"
 
 class Logger;
 class Grid;
@@ -74,9 +74,9 @@ class Rotation //static
 {//=========================================================================================================================
 
 public:
-	sp<vector<sp<BlockOffset>>>blockOffsets;
+	ArrayList<BlockOffset*> blockOffsets;
 private:
-	vector<BlockOffset>importExport_blockOffsets;
+	ArrayList<BlockOffset> importExport_blockOffsets;
 public:
 	//=========================================================================================================================
 	bool operator==(const Rotation& rhs) const
@@ -98,9 +98,9 @@ public:
 
 	}
 	//=========================================================================================================================
-	void push_back(sp<BlockOffset> b)
+	void add(BlockOffset *b)
 	{//=========================================================================================================================
-		blockOffsets->push_back(b);
+		blockOffsets.add(b);
 	}
 	//=========================================================================================================================
 	template <typename Archive>
@@ -110,21 +110,21 @@ public:
 
 		importExport_blockOffsets.clear();
 		{
-			for (int i = 0; i<blockOffsets->size(); i++)
+			for (int i = 0; i<blockOffsets.size(); i++)
 			{
-				sp<BlockOffset>b = blockOffsets->at(i);
-				importExport_blockOffsets.push_back(*b);
+				BlockOffset *b = blockOffsets.get(i);
+				importExport_blockOffsets.add(*b);
 			}
 		}
 		ar & BOOST_SERIALIZATION_NVP(importExport_blockOffsets);
-		blockOffsets->clear();
+		blockOffsets.clear();
 		{
 			for (int i = 0; i<importExport_blockOffsets.size(); i++)
 			{
-				BlockOffset b = importExport_blockOffsets.at(i);
-				sp<BlockOffset>bp = ms<BlockOffset>(b);
-				//*bp = b;
-				blockOffsets->push_back(bp);
+				BlockOffset b = importExport_blockOffsets.get(i);
+				BlockOffset *bp = new BlockOffset();
+				*bp = b;
+				blockOffsets.add(bp);
 			}
 		}
 		importExport_blockOffsets.clear();
@@ -140,9 +140,9 @@ class RotationSet
 public:
 	string name = "";
 
-	sp<vector<sp<Rotation>>>rotationSet;
+	ArrayList<Rotation*> rotationSet;
 private:
-	vector<Rotation>importExport_rotationSet;
+	ArrayList<Rotation> importExport_rotationSet;
 public:
 	//=========================================================================================================================
 	RotationSet()
@@ -155,15 +155,15 @@ public:
 		this->name = name;
 	}
 	//=========================================================================================================================
-	void push_back(sp<Rotation> r)
+	void add(Rotation *r)
 	{//=========================================================================================================================
-		rotationSet->push_back(r);
+		rotationSet.add(r);
 	}
 
-	int size() { return (int)rotationSet->size(); }
-	sp<Rotation> at(int i) { return rotationSet->at(i); }
-	void clear() { rotationSet->clear(); }
-	void removeAt(int i) { rotationSet->erase(rotationSet->begin()+i); }
+	int size() { return rotationSet.size(); }
+	Rotation* get(int i) { return rotationSet.get(i); }
+	void clear() { rotationSet.clear(); }
+	void removeAt(int i) { rotationSet.removeAt(i); }
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -174,21 +174,21 @@ public:
 
 		importExport_rotationSet.clear();
 		{
-			for (int i = 0; i<rotationSet->size(); i++)
+			for (int i = 0; i<rotationSet.size(); i++)
 			{
-				Rotation b = rotationSet->at(i);
-				importExport_rotationSet.push_back(b);
+				Rotation *b = rotationSet.get(i);
+				importExport_rotationSet.add(*b);
 			}
 		}
 		ar & BOOST_SERIALIZATION_NVP(importExport_rotationSet);
-		rotationSet->clear();
+		rotationSet.clear();
 		{
 			for (int i = 0; i<importExport_rotationSet.size(); i++)
 			{
-				Rotation b = importExport_rotationSet.at(i);
-				sp<Rotation>bp = ms<Rotation>(b);
-				//*bp = b;
-				rotationSet->push_back(bp);
+				Rotation b = importExport_rotationSet.get(i);
+				Rotation *bp = new Rotation();
+				*bp = b;
+				rotationSet.add(bp);
 			}
 		}
 		importExport_rotationSet.clear();
@@ -208,12 +208,12 @@ public:
 	//int numBlocks = 1;
 	//int lastRotation = 0;
 
-	sp<OKColor>color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
+	BobColor *color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
 private:
-	OKColor importExport_color;
+	BobColor importExport_color;
 public:
 
-	sp<RotationSet> rotationSet;												Info rotationSet_Info = Info("Block Placement And Rotation", "Design the layout of the blocks and rotation of the piece.");
+	RotationSet rotationSet;												Info rotationSet_Info = Info("Block Placement And Rotation", "Design the layout of the blocks and rotation of the piece.");
 
 	int frequencySpecialPieceTypeOnceEveryNPieces = 0;						Info frequencySpecialPieceTypeOnceEveryNPieces_Info = Info("Special Piece Type Once Every N Pieces", "This piece will be created once every n pieces.");
 	int randomSpecialPieceChanceOneOutOf = 0;								Info randomSpecialPieceChanceOneOutOf_Info = Info("Special Piece Random Chance One Out Of", "This piece has a random chance of occuring 1 out of n times.");
@@ -235,10 +235,10 @@ public:
 	bool pieceShooterPiece = false;											Info pieceShooterPiece_Info = Info("Piece Shooter Piece", "This piece will create blocks below it when the rotate button is pressed.");
 
 	//don't use!!! use uuid!
-	sp<vector<sp<BlockType>>>overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
-	sp<vector<string>>overrideBlockTypes_UUID;
+	ArrayList<shared_ptr<BlockType>> overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
+	ArrayList<string> overrideBlockTypes_UUID;
 private:
-	//sp<vector<BlockType>>importExport_overrideBlockTypes;
+	//ArrayList<BlockType> importExport_overrideBlockTypes;
 public:
 
 	bool operator==(const PieceType& rhs) const;
@@ -249,18 +249,18 @@ public:
 	
 
 //	PieceType();
-//	PieceType(sp<Color> color, int numBlocks, sp<vector<sp<Rotation>>>* rotationSet);
-//	PieceType(sp<Color> color, int numBlocks, sp<vector<sp<Rotation>>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(const string& spriteName, sp<Color> color, int numBlocks, sp<vector<sp<Rotation>>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(int numBlocks, sp<vector<sp<Rotation>>>* rotationSet);
+//	PieceType(Color* color, int numBlocks, ArrayList<Rotation*>* rotationSet);
+//	PieceType(Color* color, int numBlocks, ArrayList<Rotation*>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(const string& spriteName, Color* color, int numBlocks, ArrayList<Rotation*>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(int numBlocks, ArrayList<Rotation*>* rotationSet);
 
-	static sp<PieceType> emptyPieceType;
-	static sp<PieceType> oneBlockCursorPieceType;
-	static sp<PieceType> twoBlockHorizontalCursorPieceType;
-	static sp<PieceType> twoBlockVerticalCursorPieceType;
-	static sp<PieceType> threeBlockHorizontalCursorPieceType;
-	static sp<PieceType> threeBlockVerticalCursorPieceType;
-	static sp<PieceType> fourBlockCursorPieceType;
+	static shared_ptr<PieceType> emptyPieceType;
+	static shared_ptr<PieceType> oneBlockCursorPieceType;
+	static shared_ptr<PieceType> twoBlockHorizontalCursorPieceType;
+	static shared_ptr<PieceType> twoBlockVerticalCursorPieceType;
+	static shared_ptr<PieceType> threeBlockHorizontalCursorPieceType;
+	static shared_ptr<PieceType> threeBlockVerticalCursorPieceType;
+	static shared_ptr<PieceType> fourBlockCursorPieceType;
 	//=========================================================================================================================
 	PieceType()
 	{//=========================================================================================================================
@@ -272,16 +272,16 @@ public:
 		//this->numBlocks = 1;
 		//this->lastRotation = 0;
 
-		sp<BlockOffset> b;// = ms<BlockOffset>(0, 0);
-		sp<Rotation> r;// = ms<Rotation>();
-		r->push_back(b);
-		//rotationSet = ms<vector><sp<Rotation>>();
-		rotationSet = ms<RotationSet>("");
-		rotationSet->push_back(r);
+		BlockOffset *b = new BlockOffset(0, 0);
+		Rotation *r = new Rotation();
+		r->add(b);
+		//rotationSet = new ArrayList<Rotation*>();
+		rotationSet = RotationSet("");
+		rotationSet.add(r);
 	}
 
 	//=========================================================================================================================
-	PieceType(const string &name, const string& spriteName = "", sp<OKColor>color = nullptr, int numBlocks = 1, sp<RotationSet> rotationSet = ms<RotationSet>("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
+	PieceType(const string &name, const string& spriteName = "", BobColor *color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
 	{//=========================================================================================================================
 		this->name = name;
 
@@ -292,7 +292,7 @@ public:
 		this->color = color;
 		//this->numBlocks = numBlocks;
 		this->rotationSet = rotationSet;
-		//this->lastRotation = rotationSet->size() - 1;
+		//this->lastRotation = rotationSet.size() - 1;
 		this->randomSpecialPieceChanceOneOutOf = randomSpecialPieceChanceOneOutOf;
 		this->frequencySpecialPieceTypeOnceEveryNPieces = frequencySpecialPieceTypeOnceEveryNPieces;
 	}
@@ -312,17 +312,17 @@ public:
 	//Color noColor;
 	//PieceType noPieceType;
 	//BlockType noBlockType;
-	//sp<vector<Color>>emptyColors;
+	//ArrayList<Color> emptyColors;
 
-	sp<Grid> grid = nullptr;
-	sp<GameLogic> game = nullptr;
+	Grid* grid = nullptr;
+	GameLogic* game = nullptr;
 
 	int currentRotation = 0;
 
 	int xGrid = 0;
 	int yGrid = 0;
 
-	sp<vector<sp<Block>>>blocks;
+	ArrayList<shared_ptr<Block>> blocks;
 
 	float cursorAlphaFrom = 0.3f;
 	float cursorAlphaTo = 1.0f;
@@ -342,8 +342,8 @@ private:
 	bool ghostFadeInOutToggle = false;
 
 public:
-	sp<Block> holdingBlock = nullptr;
-	sp<PieceType> pieceType = nullptr;
+	shared_ptr<Block> holdingBlock = nullptr;
+	shared_ptr<PieceType> pieceType = nullptr;
 	bool overrideAnySpecialBehavior = false;
 	int piecesSetSinceThisPieceSet = 0;
 	bool setInGrid = false;
@@ -380,8 +380,8 @@ public:
 //			;
 //	}
 
-	Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, sp<vector<sp<BlockType>>> blockTypes);
-	Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, sp<BlockType> blockType);
+	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes);
+	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType);
 	void init();
 	void initColors();
 	void setPieceBlockConnections();
@@ -407,34 +407,34 @@ public:
 	void rotateCW();
 	void setRandomPieceColors(bool grayscale);
 	void setRotation(int rotation);
-	static sp<RotationSet> get2BlockRotateAround00RotationSet();
-	static sp<RotationSet> get2BlockBottomLeftAlwaysFilledRotationSet();
-	static sp<RotationSet> get1BlockCursorRotationSet();
-	static sp<RotationSet> get2BlockHorizontalCursorRotationSet();
-	static sp<RotationSet> get2BlockVerticalCursorRotationSet();
-	static sp<RotationSet> get3BlockHorizontalCursorRotationSet();
-	static sp<RotationSet> get3BlockVerticalCursorRotationSet();
-	static sp<RotationSet> get4BlockCursorRotationSet();
-	static sp<RotationSet> get3BlockVerticalRotationSet();
-	static sp<RotationSet> get3BlockHorizontalRotationSet();
-	static sp<RotationSet> get3BlockTRotationSet();
-	static sp<RotationSet> get3BlockLRotationSet();
-	static sp<RotationSet> get3BlockJRotationSet();
-	static sp<RotationSet> get3BlockIRotationSet();
-	static sp<RotationSet> get3BlockCRotationSet();
-	static sp<RotationSet> get3BlockDRotationSet();
-	static sp<RotationSet> get4BlockORotationSet();
-	static sp<RotationSet> get4BlockSolidRotationSet();
-	static sp<RotationSet> get9BlockSolidRotationSet();
-	static sp<RotationSet> get4BlockIRotationSet(sp<RotationType> type);
-	static sp<RotationSet> get4BlockJRotationSet(sp<RotationType> type);
-	static sp<RotationSet> get4BlockLRotationSet(sp<RotationType> type);
-	static sp<RotationSet> get4BlockSRotationSet(sp<RotationType> type);
-	static sp<RotationSet> get4BlockTRotationSet(sp<RotationType> type);
-	static sp<RotationSet> get4BlockZRotationSet(sp<RotationType> type);
+	static RotationSet get2BlockRotateAround00RotationSet();
+	static RotationSet get2BlockBottomLeftAlwaysFilledRotationSet();
+	static RotationSet get1BlockCursorRotationSet();
+	static RotationSet get2BlockHorizontalCursorRotationSet();
+	static RotationSet get2BlockVerticalCursorRotationSet();
+	static RotationSet get3BlockHorizontalCursorRotationSet();
+	static RotationSet get3BlockVerticalCursorRotationSet();
+	static RotationSet get4BlockCursorRotationSet();
+	static RotationSet get3BlockVerticalRotationSet();
+	static RotationSet get3BlockHorizontalRotationSet();
+	static RotationSet get3BlockTRotationSet();
+	static RotationSet get3BlockLRotationSet();
+	static RotationSet get3BlockJRotationSet();
+	static RotationSet get3BlockIRotationSet();
+	static RotationSet get3BlockCRotationSet();
+	static RotationSet get3BlockDRotationSet();
+	static RotationSet get4BlockORotationSet();
+	static RotationSet get4BlockSolidRotationSet();
+	static RotationSet get9BlockSolidRotationSet();
+	static RotationSet get4BlockIRotationSet(RotationType type);
+	static RotationSet get4BlockJRotationSet(RotationType type);
+	static RotationSet get4BlockLRotationSet(RotationType type);
+	static RotationSet get4BlockSRotationSet(RotationType type);
+	static RotationSet get4BlockTRotationSet(RotationType type);
+	static RotationSet get4BlockZRotationSet(RotationType type);
 	int cellW();
 	int cellH();
-	sp<GameType> getGameType();
-	sp<GameLogic> getGameLogic();
+	GameType* getGameType();
+	GameLogic* getGameLogic();
 };
 

@@ -4,9 +4,9 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
-#include "../../Utility/OKBool.h"
-#include "Sprite.h"
+#include "bobtypes.h"
+#include "../../Utility/BobBool.h"
+#include "BobSprite.h"
 #include "../rpg/event/EventData.h"
 class Logger;
 
@@ -24,9 +24,9 @@ public:
 
 	static Logger log;
 
-	sp<Map> map = nullptr;
+	Map* map = nullptr;
 
-	sp<Event> event = nullptr;
+	BobEvent* event = nullptr;
 
 	const static int DOWN;
 	const static int UP;
@@ -66,10 +66,10 @@ public:
 	bool isWalkingIntoPlayerThisFrame = false;
 	bool isWalkingIntoWallThisFrame = false;
 
-	sp<Sprite> sprite = nullptr;
+	Sprite* sprite = nullptr;
 
 protected:
-	sp<EntityData> data = nullptr;
+	EntityData* data = nullptr;
 
 public:
 	float mapX = 0;
@@ -85,7 +85,7 @@ public:
 private:
 	long long animationTicksCounter = 0; // was vbl_animation_timer
 	int frameIndexInTexture = 0; //based on current sequence (getAnimDirection()) and currentAnimationFrameInSequence, this is what will be rendered
-	sp<SpriteAnimationSequence> currentAnimation = nullptr;
+	SpriteAnimationSequence* currentAnimation = nullptr;
 
 	int ticksBetweenAnimationLoopThisLoop = 0; //for storing random value between loops
 
@@ -104,8 +104,8 @@ public:
 
 	bool behaviorEnabled = true;
 
-	sp<vector<string>>eventBehaviorList;// = ms<vector><string>(); //TODO: do something with this!
-	sp<vector<string>>eventTargetTYPEIDList;// = ms<vector><string>(); //TODO: do something with this!
+	ArrayList<string>* eventBehaviorList = new ArrayList<string>(); //TODO: do something with this!
+	ArrayList<string>* eventTargetTYPEIDList = new ArrayList<string>(); //TODO: do something with this!
 
 	string currentAreaTYPEIDTarget = "";
 
@@ -114,11 +114,11 @@ private:
 
 public:
 	Entity();
-	Entity(sp<Engine> g, sp<Map> m);
+	Entity(Engine* g, Map* m);
 
-	Entity(sp<Engine> g, sp<EntityData> entityData, sp<Map> m);
+	Entity(Engine* g, EntityData* entityData, Map* m);
 
-	void initEntity(sp<EntityData> entityData);
+	void initEntity(EntityData* entityData);
 
 	virtual void initCurrentAnimationFromSprite();
 
@@ -139,7 +139,7 @@ public:
 	//
 	//			if(d!=null)dialogueList.add(d);
 	//			else
-	//			dialogueList.add(ms<Dialogue>(dialogueID));
+	//			dialogueList.add(new Dialogue(dialogueID));
 	//
 	//		}
 	//	}
@@ -159,11 +159,11 @@ public:
 
 	virtual void render(float mapAlpha);
 
-	virtual void render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture);
+	virtual void render(float alpha, BobTexture* texture, BobTexture* shadowTexture);
 
-	virtual sp<Map> getCurrentMap();
+	virtual Map* getCurrentMap();
 
-	sp<Map> getMap();
+	Map* getMap();
 
 	virtual bool shouldDraw();
 
@@ -256,9 +256,9 @@ protected:
 public:
 	bool haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks);
 
-	sp<SpriteAnimationSequence> getCurrentAnimation();
+	SpriteAnimationSequence* getCurrentAnimation();
 
-	void setCurrentAnimation(sp<SpriteAnimationSequence> a);
+	void setCurrentAnimation(SpriteAnimationSequence* a);
 
 	void setCurrentAnimationByName(const string& name);
 
@@ -266,7 +266,7 @@ public:
 
 	int getSpriteLastFrame();
 
-	sp<SpriteAnimationSequence> getAnimationBySpriteFrame(int frame);
+	SpriteAnimationSequence* getAnimationBySpriteFrame(int frame);
 
 	void setCurrentAnimationBySpriteFrame(int frame);
 
@@ -338,59 +338,59 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	sp<OKBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
 	void tellServerTalkedToToday();
 
-	float getDistanceFromEntity(sp<Entity> e);
+	float getDistanceFromEntity(Entity* e);
 
-	sp<Entity> findNearestEntity();
+	Entity* findNearestEntity();
 
-	sp<Entity> findNearestEntityInDirection(int dir);
+	Entity* findNearestEntityInDirection(int dir);
 
-	bool isWalkingIntoEntity(sp<Entity> entity);
+	bool isWalkingIntoEntity(Entity* entity);
 
-	bool isWalkingIntoArea(sp<Area> area);
+	bool isWalkingIntoArea(Area* area);
 
-	bool isEntityHitBoxTouchingMyHitBox(sp<Entity> e);
+	bool isEntityHitBoxTouchingMyHitBox(Entity* e);
 
 	bool isNearestEntityHitBoxTouchingMyHitBox();
 
-	bool isAreaCenterTouchingMyHitBox(sp<Area> a);
+	bool isAreaCenterTouchingMyHitBox(Area* a);
 
-	bool isAreaBoundaryTouchingMyHitBox(sp<Area> a);
+	bool isAreaBoundaryTouchingMyHitBox(Area* a);
 
 	bool isXYTouchingMyHitBox(float x, float y);
 
 	bool isXYXYTouchingMyHitBox(float left, float top, float right, float bottom);
 
-	bool isAreaBoundaryTouchingMyMiddleXY(sp<Area> a);
+	bool isAreaBoundaryTouchingMyMiddleXY(Area* a);
 
-	bool isEntityMiddleXYTouchingMyMiddleXY(sp<Entity> e);
+	bool isEntityMiddleXYTouchingMyMiddleXY(Entity* e);
 
-	bool isAreaCenterTouchingMyMiddleXY(sp<Area> a);
+	bool isAreaCenterTouchingMyMiddleXY(Area* a);
 
 	bool isXYTouchingMyMiddleXY(float x, float y);
 
 	bool isXYXYTouchingMyMiddleXY(float left, float top, float right, float bottom);
 
-	bool isEntityHitBoxTouchingMyHitBoxByAmount(sp<Entity> e, int amt);
+	bool isEntityHitBoxTouchingMyHitBoxByAmount(Entity* e, int amt);
 
 	bool isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt);
 
-	bool isAreaCenterTouchingMyHitBoxByAmount(sp<Area> a, int amt);
+	bool isAreaCenterTouchingMyHitBoxByAmount(Area* a, int amt);
 
-	bool isAreaBoundaryTouchingMyHitBoxByAmount(sp<Area> a, int amt);
+	bool isAreaBoundaryTouchingMyHitBoxByAmount(Area* a, int amt);
 
 	bool isXYTouchingMyHitBoxByAmount(float x, float y, int amt);
 
 	bool isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, float bottom, int amt);
 
-	bool isAreaBoundaryTouchingMyMiddleXYByAmount(sp<Area> a, int amt);
+	bool isAreaBoundaryTouchingMyMiddleXYByAmount(Area* a, int amt);
 
-	bool isEntityMiddleXYTouchingMyMiddleXYByAmount(sp<Entity> e, int amt);
+	bool isEntityMiddleXYTouchingMyMiddleXYByAmount(Entity* e, int amt);
 
-	bool isAreaCenterTouchingMyMiddleXYByAmount(sp<Area> a, int amt);
+	bool isAreaCenterTouchingMyMiddleXYByAmount(Area* a, int amt);
 
 	bool isXYTouchingMyMiddleXYByAmount(float x, float y, int amt);
 
@@ -398,7 +398,7 @@ public:
 
 	bool isTouchingPlayerInDirection(int dir);
 
-	bool isHitBoxTouchingEntityInDirectionByAmount(sp<Entity> e, int direction, int amt);
+	bool isHitBoxTouchingEntityInDirectionByAmount(Entity* e, int direction, int amt);
 
 	bool isHitBoxTouchingXYInDirectionByAmount(float x, float y, int direction, int amt);
 
@@ -470,7 +470,7 @@ public:
 
 	virtual float getHeight();
 
-	virtual sp<EntityData> getData();
+	virtual EntityData* getData();
 
 	string& getName();
 	string& getComment();
@@ -499,7 +499,7 @@ public:
 
 	float getTicksPerPixelMoved();
 
-	sp<EventData> getEventData();
+	EventData* getEventData();
 	bool getOnlyHereDuringEvent();
 	float getVoicePitch();
 	bool getMovementAnimationDisabled();
@@ -511,8 +511,8 @@ public:
 	bool getAnimatingThroughCurrentAnimation();
 	bool getLoopAnimation();
 
-	sp<vector<string>> getConnectionTYPEIDList();
-	sp<vector<string>> getBehaviorList();
+	ArrayList<string>* getConnectionTYPEIDList();
+	ArrayList<string>* getBehaviorList();
 
 	string getTYPEIDString();
 

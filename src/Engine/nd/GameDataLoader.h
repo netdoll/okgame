@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -19,12 +19,12 @@ class GameDataLoader : public EnginePart
 public:
 	static Logger log;
 
-	//static sp<GameDataLoader> gameDataLoader;
+	//static GameDataLoader* gameDataLoader;
 
 	bool debug = false;
 
 
-	GameDataLoader(sp<Engine> g);
+	GameDataLoader(Engine* g);
 
 
 	void loadGameData();

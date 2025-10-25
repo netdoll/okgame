@@ -20,63 +20,63 @@ PlayerEditMenu::PlayerEditMenu()
 	MenuPanel();
 
 	//
-	//   editPanel = ms<DialogLayout>();
+	//   editPanel = new DialogLayout();
 	//   editPanel->setTheme("darkPanel");
 	//
 	//
-	//   animPanel = ms<DialogLayout>();
+	//   animPanel = new DialogLayout();
 	//   //animPanel.setTheme("loginpanel");
 	//
 	//
-	//   playerEditPanelLabel = ms<Label>("Edit Your Character");
+	//   playerEditPanelLabel = new Label("Edit Your Character");
 	//   playerEditPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   playerEditPanelLabel->setTheme("bigLabel");
 	//
 	//
-	//   errorLabel = ms<Label>(" ");
+	//   errorLabel = new Label(" ");
 	//   errorLabel->setTheme("errorLabel");
 	//   errorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   statusLabel = ms<Label>(" ");
+	//   statusLabel = new Label(" ");
 	//   statusLabel->setTheme("statusLabel");
 	//   statusLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   //---------------------------------------------------------
 	//   //player name
 	//   //---------------------------------------------------------
-	//   nameLabel = ms<Label>("Player Name:");
+	//   nameLabel = new Label("Player Name:");
 	//   nameLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   nameEditField = ms<EditField>();
+	//   nameEditField = new EditField();
 	//   nameEditField->setTheme("editfield");
 	//   nameEditField->setText("New Player");
 	//   nameEditField->setMaxTextLength(40);
 	//
-	//   nameEditField->addCallback(ms<CallbackAnonymousInnerClassHelper>(this));
+	//   nameEditField->addCallback(new CallbackAnonymousInnerClassHelper(this));
 	//
 	//
 	//   //---------------------------------------------------------
 	//   //zip code
 	//   //---------------------------------------------------------
-	//   zipCodeEditField = ms<EditField>();
+	//   zipCodeEditField = new EditField();
 	//   zipCodeEditField->setText("");
 	//   zipCodeEditField->setMaxTextLength(40);
-	//   zipCodeEditField->addCallback(ms<CallbackAnonymousInnerClassHelper>2(this));
-	//   zipCodeLabel = ms<Label>("Zip/Postal Code:");
+	//   zipCodeEditField->addCallback(new CallbackAnonymousInnerClassHelper2(this));
+	//   zipCodeLabel = new Label("Zip/Postal Code:");
 	//   zipCodeLabel->setLabelFor(zipCodeEditField);
 	//   zipCodeLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   //---------------------------------------------------------
 	//   //country
 	//   //---------------------------------------------------------
-	//   countryLabel = ms<Label>("Country:");
+	//   countryLabel = new Label("Country:");
 	//   countryLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   countryStrings = CountryCodes::getCountryList();
 	//
-	//   countryComboBox = ms<ComboBox><string>(countryStrings);
+	//   countryComboBox = new ComboBox<string>(countryStrings);
 	//
-	//   //		countryComboBox.addCallback(ms<Runnable>()
+	//   //		countryComboBox.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -88,9 +88,9 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //add facebook account button
 	//   //---------------------------------------------------------
 	//
-	//   addSocialAccountsLabel = ms<Label>("Link your Facebook or Google+ Account to play with your friends!");
+	//   addSocialAccountsLabel = new Label("Link your Facebook or Google+ Account to play with your friends!");
 	//
-	//   addFacebookAccountButton = ms<Button>("Link Facebook Account");
+	//   addFacebookAccountButton = new Button("Link Facebook Account");
 	//   addFacebookAccountButton->setCanAcceptKeyboardFocus(false);
 	//   addFacebookAccountButton->setTheme("button");
 	//   addFacebookAccountButton->addCallback([&] ()
@@ -98,7 +98,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//         linkFacebookAccount();
 	//      }
 	//   );
-	//   facebookAccountLabel = ms<Label>("Facebook: Not Connected");
+	//   facebookAccountLabel = new Label("Facebook: Not Connected");
 	//   facebookAccountLabel->setLabelFor(addFacebookAccountButton);
 	//   facebookAccountLabel->setTheme("statusLabel");
 	//   facebookAccountLabel->setCanAcceptKeyboardFocus(false);
@@ -106,17 +106,17 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //add google plus account button
 	//   //---------------------------------------------------------
-	//   //		addGooglePlusAccountButton = ms<Button>("Link Google+ Account");
+	//   //		addGooglePlusAccountButton = new Button("Link Google+ Account");
 	//   //		addGooglePlusAccountButton.setCanAcceptKeyboardFocus(false);
 	//   //		addGooglePlusAccountButton.setTheme("button");
-	//   //		addGooglePlusAccountButton.addCallback(ms<Runnable>()
+	//   //		addGooglePlusAccountButton.addCallback(new Runnable()
 	//   //		{
 	//   //			public void run()
 	//   //			{
 	//   //
 	//   //			}
 	//   //		});
-	//   //		googlePlusAccountLabel = ms<Label>("Google+: Not Connected");
+	//   //		googlePlusAccountLabel = new Label("Google+: Not Connected");
 	//   //		googlePlusAccountLabel.setLabelFor(addGooglePlusAccountButton);
 	//   //		googlePlusAccountLabel.setTheme("statusLabel");
 	//   //		googlePlusAccountLabel.setCanAcceptKeyboardFocus(false);
@@ -125,7 +125,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //random button
 	//   //---------------------------------------------------------
-	//   randomButton = ms<Button>("Randomize Appearance");
+	//   randomButton = new Button("Randomize Appearance");
 	//   randomButton->setCanAcceptKeyboardFocus(false);
 	//   randomButton->setTheme("button");
 	//   randomButton->addCallback([&] ()
@@ -139,19 +139,19 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //gender
 	//   //---------------------------------------------------------
-	//   genderLabel = ms<Label>("Gender:");
+	//   genderLabel = new Label("Gender:");
 	//   genderLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   genderButtons = sp<vector<sp<ToggleButton>>>(2);
-	//   genderButtonLabels = sp<vector<sp<Label>>>(2);
+	//   genderButtons = ArrayList<ToggleButton*>(2);
+	//   genderButtonLabels = ArrayList<Label*>(2);
 	//
-	//   genderButtonLabels[0] = ms<Label>("Male");
-	//   genderButtonLabels[1] = ms<Label>("Female");
+	//   genderButtonLabels[0] = new Label("Male");
+	//   genderButtonLabels[1] = new Label("Female");
 	//
-	//   genderOptionModel = ms<SimpleIntegerModel>(1, genderButtons->size(), 1);
+	//   genderOptionModel = new SimpleIntegerModel(1, genderButtons->size(), 1);
 	//   for (int i = 0; i < genderButtons->size(); i++)
 	//   {
-	//      genderButtons[i] = ms<ToggleButton>(ms<OptionBooleanModel>(genderOptionModel, i + 1));
+	//      genderButtons[i] = new ToggleButton(new OptionBooleanModel(genderOptionModel, i + 1));
 	//      genderButtons[i]->setTheme("radiobutton");
 	//
 	//      genderButtons[i]->addCallback([&] ()
@@ -167,11 +167,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //archetype
 	//   //---------------------------------------------------------
-	//   archetypeLabel = ms<Label>("Archetype:");
+	//   archetypeLabel = new Label("Archetype:");
 	//   archetypeLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   archetypeStrings = ms<SimpleChangableListModel><string>("Popular", "Hipster", "Gothy", "Tough", "Jock", "Nerdy", "Chunky", "Punk", "Skater", "Thuggin'", "Pimply", "Normal 1", "Normal 2", "Normal 3", "Normal 4", "Normal 5", "Normal 6", "Normal 7", "Normal 8", "Normal 9", "Normal 10", "Normal 11", "Normal 12", "Normal 13", "Normal 14", "Normal 15");
-	//   archetypeComboBox = ms<ComboBox><string>(archetypeStrings);
+	//   archetypeStrings = new SimpleChangableListModel<string>("Popular", "Hipster", "Gothy", "Tough", "Jock", "Nerdy", "Chunky", "Punk", "Skater", "Thuggin'", "Pimply", "Normal 1", "Normal 2", "Normal 3", "Normal 4", "Normal 5", "Normal 6", "Normal 7", "Normal 8", "Normal 9", "Normal 10", "Normal 11", "Normal 12", "Normal 13", "Normal 14", "Normal 15");
+	//   archetypeComboBox = new ComboBox<string>(archetypeStrings);
 	//
 	//   archetypeComboBox->addCallback([&] ()
 	//      {
@@ -183,11 +183,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //hair color
 	//   //---------------------------------------------------------
-	//   hairColorLabel = ms<Label>("Hair Color:");
+	//   hairColorLabel = new Label("Hair Color:");
 	//   hairColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   hairColorStrings = ms<SimpleChangableListModel><string>("Black", "Dark Brown", "Light Brown", "Blonde", "Red");
-	//   hairColorComboBox = ms<ComboBox><string>(hairColorStrings);
+	//   hairColorStrings = new SimpleChangableListModel<string>("Black", "Dark Brown", "Light Brown", "Blonde", "Red");
+	//   hairColorComboBox = new ComboBox<string>(hairColorStrings);
 	//
 	//
 	//   hairColorComboBox->addCallback([&] ()
@@ -200,11 +200,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //eye color
 	//   //---------------------------------------------------------
-	//   eyeColorLabel = ms<Label>("Eye Color:");
+	//   eyeColorLabel = new Label("Eye Color:");
 	//   eyeColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   eyeColorStrings = ms<SimpleChangableListModel><string>("Black", "Brown", "Green", "Blue", "Gray");
-	//   eyeColorComboBox = ms<ComboBox><string>(eyeColorStrings);
+	//   eyeColorStrings = new SimpleChangableListModel<string>("Black", "Brown", "Green", "Blue", "Gray");
+	//   eyeColorComboBox = new ComboBox<string>(eyeColorStrings);
 	//
 	//   eyeColorComboBox->addCallback([&] ()
 	//      {
@@ -215,11 +215,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //skin shade
 	//   //---------------------------------------------------------
-	//   skinColorLabel = ms<Label>("Skin Shade:");
+	//   skinColorLabel = new Label("Skin Shade:");
 	//   skinColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   skinColorStrings = ms<SimpleChangableListModel><string>("Lightest", "Light", "Medium", "Dark", "Darkest");
-	//   skinColorComboBox = ms<ComboBox><string>(skinColorStrings);
+	//   skinColorStrings = new SimpleChangableListModel<string>("Lightest", "Light", "Medium", "Dark", "Darkest");
+	//   skinColorComboBox = new ComboBox<string>(skinColorStrings);
 	//
 	//   skinColorComboBox->addCallback([&] ()
 	//      {
@@ -230,11 +230,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //shirt color
 	//   //---------------------------------------------------------
-	//   shirtColorLabel = ms<Label>("Shirt Color:");
+	//   shirtColorLabel = new Label("Shirt Color:");
 	//   shirtColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   shirtColorStrings = ms<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
-	//   shirtColorComboBox = ms<ComboBox><string>(shirtColorStrings);
+	//   shirtColorStrings = new SimpleChangableListModel<string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
+	//   shirtColorComboBox = new ComboBox<string>(shirtColorStrings);
 	//
 	//
 	//   shirtColorComboBox->addCallback([&] ()
@@ -246,11 +246,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //pants color
 	//   //---------------------------------------------------------
-	//   pantsColorLabel = ms<Label>("Pants Color:");
+	//   pantsColorLabel = new Label("Pants Color:");
 	//   pantsColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   pantsColorStrings = ms<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
-	//   pantsColorComboBox = ms<ComboBox><string>(pantsColorStrings);
+	//   pantsColorStrings = new SimpleChangableListModel<string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
+	//   pantsColorComboBox = new ComboBox<string>(pantsColorStrings);
 	//
 	//   pantsColorComboBox->addCallback([&] ()
 	//      {
@@ -261,11 +261,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //shoe color
 	//   //---------------------------------------------------------
-	//   shoeColorLabel = ms<Label>("Shoe Color:");
+	//   shoeColorLabel = new Label("Shoe Color:");
 	//   shoeColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   shoeColorStrings = ms<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
-	//   shoeColorComboBox = ms<ComboBox><string>(shoeColorStrings);
+	//   shoeColorStrings = new SimpleChangableListModel<string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
+	//   shoeColorComboBox = new ComboBox<string>(shoeColorStrings);
 	//
 	//   shoeColorComboBox->addCallback([&] ()
 	//      {
@@ -277,7 +277,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //ok button
 	//   //---------------------------------------------------------
-	//   okButton = ms<Button>("Ok!");
+	//   okButton = new Button("Ok!");
 	//   okButton->setCanAcceptKeyboardFocus(false);
 	//   okButton->setTheme("button");
 	//   okButton->addCallback([&] ()
@@ -330,7 +330,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = new ScrollPane(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -357,25 +357,25 @@ PlayerEditMenu::PlayerEditMenu()
 	//   editPanel->adjustSize();
 }
 
-PlayerEditMenu::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(sp<PlayerEditMenu> outerInstance)
-{
-	this->outerInstance = outerInstance;
-}
-
-void PlayerEditMenu::CallbackAnonymousInnerClassHelper::callback(int key)
-{
-	outerInstance->redrawPlayer();
-}
-
-PlayerEditMenu::CallbackAnonymousInnerClassHelper2::CallbackAnonymousInnerClassHelper2(sp<PlayerEditMenu> outerInstance)
-{
-	this->outerInstance = outerInstance;
-}
-
-void PlayerEditMenu::CallbackAnonymousInnerClassHelper2::callback(int key)
-{
-	//zip cannot contain `
-}
+//PlayerEditMenu::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(PlayerEditMenu* outerInstance)
+//{
+//	this->outerInstance = outerInstance;
+//}
+//
+//void PlayerEditMenu::CallbackAnonymousInnerClassHelper::callback(int key)
+//{
+//	outerInstance->redrawPlayer();
+//}
+//
+//PlayerEditMenu::CallbackAnonymousInnerClassHelper2::CallbackAnonymousInnerClassHelper2(PlayerEditMenu* outerInstance)
+//{
+//	this->outerInstance = outerInstance;
+//}
+//
+//void PlayerEditMenu::CallbackAnonymousInnerClassHelper2::callback(int key)
+//{
+//	//zip cannot contain `
+//}
 
 void PlayerEditMenu::init()
 { //=========================================================================================================================
@@ -460,14 +460,14 @@ void PlayerEditMenu::setButtonsVisible(bool b)
 	//   okButton->setVisible(b);
 }
 
-PlayerEditMenu::AddressInfo::AddressInfo(sp<PlayerEditMenu> outerInstance) : outerInstance(outerInstance)
+PlayerEditMenu::AddressInfo::AddressInfo()
 {
 }
 
-sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const string& address)
+PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string& address)
 { //=========================================================================================================================
 
-	sp<AddressInfo> a = ms<AddressInfo>(this);
+	AddressInfo* a = new AddressInfo();
 
 
 	// URL prefix to the geocoder
@@ -491,10 +491,10 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   }
 	//
 	//   // prepare an HTTP connection to the geocoder
-	//   sp<HttpURLConnection> conn = nullptr;
+	//   HttpURLConnection* conn = nullptr;
 	//   try
 	//   {
-	//      conn = static_cast<sp<HttpURLConnection>>(url->openConnection());
+	//      conn = static_cast<HttpURLConnection*>(url->openConnection());
 	//   }
 	//   catch (IOException e1)
 	//   {
@@ -502,7 +502,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//      return nullptr;
 	//   }
 	//
-	//   sp<Document> geocoderResultDocument = nullptr;
+	//   Document* geocoderResultDocument = nullptr;
 	//
 	//   try
 	//   {
@@ -517,7 +517,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//
 	//   try
 	//   {
-	//      sp<InputSource> geocoderResultInputSource = ms<InputSource>(conn->getInputStream());
+	//      InputSource* geocoderResultInputSource = new InputSource(conn->getInputStream());
 	//      // read result and parse into XML Document
 	//      geocoderResultDocument = DocumentBuilderFactory::newInstance().newDocumentBuilder().parse(geocoderResultInputSource);
 	//   }
@@ -543,7 +543,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//      }
 	//
 	//   // prepare XPath
-	//   sp<XPath> xpath = XPathFactory::newInstance().newXPath();
+	//   XPath* xpath = XPathFactory::newInstance().newXPath();
 	//
 	//   /*
 	//      http://where.yahooapis.com/geocode?q=95817,%20United%20States
@@ -592,12 +592,12 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//
 	//
 	//   // extract the result
-	//   sp<NodeList> resultNodeList = nullptr;
+	//   NodeList* resultNodeList = nullptr;
 	//
 	//   //validate status
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/errormessage", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/resultset/errormessage", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -608,7 +608,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   if (resultNodeList == nullptr)
 	//   {
 	//      
-	//      log->debug("No errormessage in Yahoo GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
+	//      log.debug("No errormessage in Yahoo GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }
 	//
@@ -616,7 +616,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   {
 	//      if (resultNodeList->item(i).getTextContent().equals("No error") == false)
 	//      {
-	//         log->debug("Error in Yahoo GeoCoding API: " + resultNodeList->item(i).getTextContent());
+	//         log.debug("Error in Yahoo GeoCoding API: " + resultNodeList->item(i).getTextContent());
 	//         return nullptr;
 	//      }
 	//   }
@@ -627,7 +627,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/postal", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/resultset/result[1]/postal", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -637,7 +637,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No postal code in Yahoo GeoCoding API");
+	//      log.debug("No postal code in Yahoo GeoCoding API");
 	//      return nullptr;
 	//   }
 	//
@@ -652,7 +652,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/city", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/resultset/result[1]/city", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -662,7 +662,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No locality (city/placeName) in Yahoo GeoCoding API");
+	//      log.debug("No locality (city/placeName) in Yahoo GeoCoding API");
 	//      a->placeName = "?";
 	//   }
 	//
@@ -677,7 +677,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/state", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/resultset/result[1]/state", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -687,7 +687,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No state in Yahoo GeoCoding API");
+	//      log.debug("No state in Yahoo GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -701,7 +701,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/latitude", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/resultset/result[1]/latitude", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -711,7 +711,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No lat in Yahoo GeoCoding API");
+	//      log.debug("No lat in Yahoo GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -731,7 +731,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/longitude", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/resultset/result[1]/longitude", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -741,7 +741,7 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No lon in Yahoo GeoCoding API");
+	//      log.debug("No lon in Yahoo GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -761,9 +761,9 @@ sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const st
 	return a;
 }
 
-sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const string& address)
+PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const string& address)
 { //=========================================================================================================================
-	sp<AddressInfo> a = ms<AddressInfo>(this);
+	AddressInfo* a = new AddressInfo();
 
 
 	// URL prefix to the geocoder
@@ -787,10 +787,10 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//   }
 	//
 	//   // prepare an HTTP connection to the geocoder
-	//   sp<HttpURLConnection> conn = nullptr;
+	//   HttpURLConnection* conn = nullptr;
 	//   try
 	//   {
-	//      conn = static_cast<sp<HttpURLConnection>>(url->openConnection());
+	//      conn = static_cast<HttpURLConnection*>(url->openConnection());
 	//   }
 	//   catch (IOException e1)
 	//   {
@@ -798,7 +798,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//      return nullptr;
 	//   }
 	//
-	//   sp<Document> geocoderResultDocument = nullptr;
+	//   Document* geocoderResultDocument = nullptr;
 	//
 	//   try
 	//   {
@@ -813,7 +813,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//
 	//   try
 	//   {
-	//      sp<InputSource> geocoderResultInputSource = ms<InputSource>(conn->getInputStream());
+	//      InputSource* geocoderResultInputSource = new InputSource(conn->getInputStream());
 	//      // read result and parse into XML Document
 	//      geocoderResultDocument = DocumentBuilderFactory::newInstance().newDocumentBuilder().parse(geocoderResultInputSource);
 	//   }
@@ -839,7 +839,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//      }
 	//
 	//   // prepare XPath
-	//   sp<XPath> xpath = XPathFactory::newInstance().newXPath();
+	//   XPath* xpath = XPathFactory::newInstance().newXPath();
 	//
 	//
 	//   /*
@@ -879,12 +879,12 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//    */
 	//
 	//   // extract the result
-	//   sp<NodeList> resultNodeList = nullptr;
+	//   NodeList* resultNodeList = nullptr;
 	//
 	//   //validate status
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/status", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/GeocodeResponse/status", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -895,7 +895,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//   if (resultNodeList == nullptr)
 	//   {
 	//      
-	//      log->debug("No status in Google GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
+	//      log.debug("No status in Google GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }
 	//
@@ -903,7 +903,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//   {
 	//      if (resultNodeList->item(i).getTextContent().equals("OK") == false)
 	//      {
-	//         log->debug("Status Error in Google GeoCoding API: " + resultNodeList->item(i).getTextContent());
+	//         log.debug("Status Error in Google GeoCoding API: " + resultNodeList->item(i).getTextContent());
 	//         return nullptr;
 	//      }
 	//   }
@@ -914,7 +914,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'postal_code']/long_name", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'postal_code']/long_name", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -924,7 +924,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No postal code in Google GeoCoding API");
+	//      log.debug("No postal code in Google GeoCoding API");
 	//      return nullptr;
 	//   }
 	//
@@ -939,7 +939,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'locality']/long_name", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'locality']/long_name", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -949,7 +949,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No locality (city/placeName) in Google GeoCoding API");
+	//      log.debug("No locality (city/placeName) in Google GeoCoding API");
 	//      a->placeName = "?";
 	//   }
 	//
@@ -964,7 +964,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'administrative_area_level_1']/long_name", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'administrative_area_level_1']/long_name", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -974,7 +974,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No state in Google GeoCoding API");
+	//      log.debug("No state in Google GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -988,7 +988,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/geometry/location/*", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<NodeList*>(xpath->evaluate("/GeocodeResponse/result[1]/geometry/location/*", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -998,13 +998,13 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log->debug("No lat/lon in Google GeoCoding API");
+	//      log.debug("No lat/lon in Google GeoCoding API");
 	//      return nullptr;
 	//   }
 	//
 	//   for (int i = 0; i < resultNodeList->getLength(); ++i)
 	//   {
-	//      sp<Node> node = resultNodeList->item(i);
+	//      Node* node = resultNodeList->item(i);
 	//      if (("lat") == node->getNodeName())
 	//      {
 	//         try
@@ -1048,7 +1048,7 @@ sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const 
 void PlayerEditMenu::doOKButton()
 { //=========================================================================================================================
 	//
-	//   ms<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
+	//   new Thread([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
 	//      {
 	//         try
 	//         {
@@ -1098,7 +1098,7 @@ void PlayerEditMenu::doOKButton()
 	//         getGameSave()->characterAppearance = characterAppearance;
 	//
 	//
-	//         sp<Player> p = getPlayer();
+	//         Player * p = getPlayer();
 	//         if (p != nullptr)
 	//         {
 	//            p->setCharacterNameAndCaption(getGameEngine()->getNameColor(getGameSave()->accountType), nameString, getGameEngine()->getAccountTypeColor(getGameSave()->accountType), getGameEngine()->getAccountTypeString(getGameSave()->accountType));
@@ -1116,7 +1116,7 @@ void PlayerEditMenu::doOKButton()
 	//            string countryCode = GameSave::getCountryCodeFromCountryString(countryName);
 	//
 	//            //get locality info from google API
-	//            sp<AddressInfo> a = queryGoogleGeocodingAPI("" + postalCode + ", " + countryName);
+	//            AddressInfo* a = queryGoogleGeocodingAPI("" + postalCode + ", " + countryName);
 	//
 	//            if (a == nullptr)
 	//            {
@@ -1215,7 +1215,7 @@ void PlayerEditMenu::linkFacebookAccount()
 { //=========================================================================================================================
 
 	//
-	//   ms<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
+	//   new Thread([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
 	//      {
 	//         try
 	//         {
@@ -1247,18 +1247,18 @@ void PlayerEditMenu::linkFacebookAccount()
 	//
 	//            //check if our session token is valid
 	//            //restFB stuff here
-	//            sp<FacebookClient> facebookClient = nullptr;
+	//            FacebookClient* facebookClient = nullptr;
 	//
 	//            //------------------------
 	//            //log into facebook to test token
 	//            //------------------------
 	//            try
 	//            {
-	//               facebookClient = ms<DefaultFacebookClient>(facebookAccessToken);
-	//               sp<User> user = facebookClient->fetchObject("me", User::typeid);
+	//               facebookClient = new DefaultFacebookClient(facebookAccessToken);
+	//               User* user = facebookClient->fetchObject("me", User::typeid);
 	//
 	//               string facebookID = user->getId();
-	//               log->debug("Facebook ID: " + facebookID);
+	//               log.debug("Facebook ID: " + facebookID);
 	//            }
 	//            catch (exception& ex)
 	//            {
@@ -1356,7 +1356,7 @@ void PlayerEditMenu::linkFacebookAccount()
 	//               }
 	//               catch (IOException e)
 	//               {
-	//                  log->error("Could not open browser: " + e->getMessage());
+	//                  log.error("Could not open browser: " + e->getMessage());
 	//               }
 	//
 	//
@@ -1490,7 +1490,7 @@ void PlayerEditMenu::redrawPlayer()
 	//   hairColorIndex = hairColorComboBox->getSelected();
 	//
 	//
-	//   sp<Player> p = getPlayer();
+	//   Player * p = getPlayer();
 	//
 	//   if (p != nullptr)
 	//   {
@@ -1668,8 +1668,7 @@ void PlayerEditMenu::update()
 		{
 			playerNameCaption->setToFadeOutAndBeDeleted();
 			//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-			//delete playerNameCaption;
-			playerNameCaption = nullptr;
+			delete playerNameCaption;
 		}
 	}
 }
@@ -1693,9 +1692,9 @@ void PlayerEditMenu::render()
 
 	//additional rendering calls go here (after gui is drawn)
 
-	//sp<Player> p = getPlayer();
+	//Player* p = getPlayer();
 
-	//sp<Texture> texture = p->uniqueTexture;
+	//Texture* texture = p->uniqueTexture;
 
 	long long startTime = lastTime;
 	long long currentTime = System::currentHighResTimer();

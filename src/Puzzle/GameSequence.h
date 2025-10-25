@@ -4,9 +4,9 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 
-#include "OKGame.h"
+#include "BobsGame.h"
 #include "GameType.h"
 
 #include <iostream>
@@ -14,7 +14,7 @@
 #include <src/main.h>
 
 //=========================================================================================================================
-class GameSequence// : public std::enable_shared_from_this<GameSequence>
+class GameSequence
 {//=========================================================================================================================
 public:
 
@@ -29,10 +29,10 @@ public:
 	string description = "This is an empty game sequence.";
 
 	//this is saved to XML, we don't want to save the entire currentGameType object
-	sp<vector<string>>importExport_gameUUIDs;
+	ArrayList<string> importExport_gameUUIDs;
 
 	//this is populated from loadedGameTypes when sequence is loaded, if a name from gameUUIDs cannot be found it will not be in here and an error will be logged
-	sp<vector<sp<GameType>>>gameTypes;
+	ArrayList<GameType*>gameTypes;
 
 	bool randomizeSequence = true;
 
@@ -63,7 +63,7 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(description);
 		if (version < 3)
 		{
-			sp<vector<string>>gameUUIDs;
+			ArrayList<string> gameUUIDs;
 			ar & BOOST_SERIALIZATION_NVP(gameUUIDs);
 			importExport_gameUUIDs = gameUUIDs;
 		}
@@ -121,7 +121,7 @@ public:
 BOOST_CLASS_VERSION(GameSequence, 5)
 BOOST_CLASS_TRACKING(GameSequence, boost::serialization::track_never)
 //=========================================================================================================================
-class NetworkGameSequence : public GameSequence, std::enable_shared_from_this<NetworkGameSequence>
+class NetworkGameSequence : public GameSequence
 {//=========================================================================================================================
 public:
 
@@ -151,28 +151,76 @@ public:
 
 	}
 
-	sp<vector<GameType>>importExport_games; //we do want the entire currentGameType objects for the games when we are playing multiplayer and need to send this to other players
+	ArrayList<GameType>importExport_games; //we do want the entire currentGameType objects for the games when we are playing multiplayer and need to send this to other players
+
+//	template <typename Archive>
+//	void serialize(Archive & ar, const unsigned int version);
+//
+//#include <boost/archive/xml_oarchive.hpp>
+//#include <boost/archive/xml_iarchive.hpp>
+
+//	template void serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive &ar, const unsigned int);
+//	template void serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive &ar, const unsigned int);
 
 	template <typename Archive>
-	void serialize(Archive & ar, const unsigned int version);
+	void serialize(Archive & ar, const unsigned int version)
+	{//=========================================================================================================================
+		ar & BOOST_SERIALIZATION_NVP(uuid);
+		ar & BOOST_SERIALIZATION_NVP(name);
+		ar & BOOST_SERIALIZATION_NVP(description);
+		ar & BOOST_SERIALIZATION_NVP(importExport_gameUUIDs);
+
+		ar & BOOST_SERIALIZATION_NVP(randomizeSequence);
+		//ar & BOOST_SERIALIZATION_NVP(endlessMode);
+		ar & BOOST_SERIALIZATION_NVP(currentDifficultyName);
+
+		if (version < 2)
+		{
+			bool builtInType = false;
+			ar & BOOST_SERIALIZATION_NVP(builtInType);
+		}
+
+		importExport_games.clear();
+		{
+			for (int i = 0; i < gameTypes.size(); i++)
+			{
+				GameType *bp = gameTypes.get(i);
+				GameType b;
+				b = *bp;
+				importExport_games.add(b);
+			}
+		}
+		ar & BOOST_SERIALIZATION_NVP(importExport_games);
+		gameTypes.clear();
+		for (int i = 0; i<importExport_games.size(); i++)
+		{
+			GameType b = importExport_games.get(i);
+			GameType *bp = new GameType();
+			*bp = b;
+			gameTypes.add(bp);
+		}
+		importExport_games.clear();
+
+	}
+
 
 	//=========================================================================================================================
 	string toBase64GZippedXML()
 	{//=========================================================================================================================
-		sp<NetworkGameSequence> s = shared_from_this();
+		NetworkGameSequence *s = this;
 		NetworkGameSequence gs;
 		gs = *s;
 
 		std::stringstream ss;
 		boost::archive::xml_oarchive oarchive(ss);
 		oarchive << BOOST_SERIALIZATION_NVP(gs);
-		//Main::log->debug(ss.str());
+		//Main::log.debug(ss.str());
 		string zip = FileUtils::zipStringToBase64String(ss.str());
 		return zip;
 	}
 
 	//=========================================================================================================================
-	static sp<NetworkGameSequence>fromBase64GZippedXML(string b64GZipXML)
+	static NetworkGameSequence *fromBase64GZippedXML(string b64GZipXML)
 	{//=========================================================================================================================
 		string xml = FileUtils::unzipBase64StringToString(b64GZipXML);
 
@@ -189,7 +237,7 @@ public:
 		{
 			NetworkGameSequence gs;
 			ia >> BOOST_SERIALIZATION_NVP(gs);
-			sp<NetworkGameSequence>s = ms<NetworkGameSequence>();
+			NetworkGameSequence *s = new NetworkGameSequence();
 			*s = gs;
 
 			return s;

@@ -28,24 +28,24 @@ AudioData::AudioData(int id, const string& name, const string& filename)
 	this->fileName = filename;
 }
 //
-//sp<AudioData> AudioData::fromBase64ZippedJSON(const string& b64)
+//AudioData* AudioData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = ms<Gson>();
+//	//Gson gson = new Gson();
 //	//AudioData data = gson.fromJson(json,AudioData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//sp<AudioData> AudioData::fromJSON(const string& json)
+//AudioData* AudioData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//sp<Gson> gson = ms<Gson>();
-//	sp<AudioData> data = nullptr;// gson->fromJson(json, AudioData::typeid);
+//	//Gson* gson = new Gson();
+//	AudioData* data = nullptr;// gson->fromJson(json, AudioData::typeid);
 //
 //
 //	return data;
@@ -73,11 +73,11 @@ string& AudioData::initFromString(string& t)
 	md5Name = t.substr(0, t.find("`"));
 	t = t.substr(t.find("`,") + 2);
 
-	if (OKString::startsWith(t, "preload:"))
+	if (String::startsWith(t, "preload:"))
 	{
 		t = t.substr(t.find("preload:`") + 1);
 		t = t.substr(t.find("`") + 1);
-		preload = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
+		preload = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 	}
 

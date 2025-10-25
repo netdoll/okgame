@@ -20,25 +20,25 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	// MenuPanel();
 
 	//
-	//   keyboardPanel = ms<DialogLayout>();
+	//   keyboardPanel = new DialogLayout();
 	//   keyboardPanel->setTheme("keyboardPanel");
 	//
 	//
-	//   sp<Label> controlsPanelLabel = ms<Label>("Controls");
+	//   Label* controlsPanelLabel = new Label("Controls");
 	//   controlsPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   controlsPanelLabel->setTheme("bigLabel");
 	//
 	//
-	//   sp<Widget> keyboardImagePanel = ms<WidgetAnonymousInnerClassHelper>(this);
+	//   Widget* keyboardImagePanel = new WidgetAnonymousInnerClassHelper(this);
 	//   keyboardImagePanel->setTheme("keyboardImagePanel");
 	//
 	//
-	//   sp<Label> pressF1Label = ms<Label>("Press F1 to show controls at any time.");
+	//   Label* pressF1Label = new Label("Press F1 to show controls at any time.");
 	//   pressF1Label->setCanAcceptKeyboardFocus(false);
 	//   pressF1Label->setTheme("bigLabel");
 	//
 	//
-	//   okButton = ms<Button>("OK");
+	//   okButton = new Button("OK");
 	//   okButton->setCanAcceptKeyboardFocus(false);
 	//   okButton->addCallback([&] ()
 	//      {
@@ -67,7 +67,7 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = new ScrollPane(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -99,7 +99,7 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	//   //insideScrollPaneLayout.setTheme(GUIManager.emptyDialogLayoutTheme);
 }
 
-KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(sp<KeyboardMenuPanel> outerInstance)
+KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(KeyboardMenuPanel* outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
@@ -206,7 +206,7 @@ void KeyboardMenuPanel::doOK()
 	//      //setButtonsVisible(false);
 	//
 	//      //create thread, this needs to be a thread because Button.doCallback(Runnable) only calls Runnable.run() which does NOT create a thread.
-	//      ms<Thread>([&] ()
+	//      new Thread([&] ()
 	//         {
 	//            try
 	//            {

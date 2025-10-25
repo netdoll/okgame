@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	RamioBrickBlock(sp<Engine> g);
+	RamioBrickBlock(Engine* g);
 
 
 	int open = 0;

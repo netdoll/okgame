@@ -21,7 +21,7 @@ FriendsPanel::FriendsPanel()
 	SubPanel();
 
 
-	//   sp<Label> label = ms<Label>("Friends");
+	//   Label* label = new Label("Friends");
 	//   label->setCanAcceptKeyboardFocus(false);
 	//
 	//   insideLayout->setHorizontalGroup(insideLayout->createParallelGroup(label));

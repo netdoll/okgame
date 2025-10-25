@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "oktypes.h"
+#include "bobtypes.h"
 class Logger;
 
 
@@ -18,25 +18,25 @@ class GameStoreButton;
 class StuffButton;
 
 
-class StatusBar : public EnginePart
+class BobStatusBar : public EnginePart
 {
 public:
 
 	static Logger log;
 
 
-	static sp<OKTexture> blackBackgroundTexture;
-	static sp<OKTexture> blackForegroundTexture;
+	static BobTexture* blackBackgroundTexture;
+	static BobTexture* blackForegroundTexture;
 
-	static sp<OKTexture> whiteBackgroundTexture;
-	static sp<OKTexture> whiteForegroundTexture;
+	static BobTexture* whiteBackgroundTexture;
+	static BobTexture* whiteForegroundTexture;
 
-	static sp<OKTexture> backgroundTexture;
-	static sp<OKTexture> foregroundTexture;
+	static BobTexture* backgroundTexture;
+	static BobTexture* foregroundTexture;
 
 
-	static sp<OKTexture> glowTexture;
-	static sp<OKTexture> dividerTexture;
+	static BobTexture* glowTexture;
+	static BobTexture* dividerTexture;
 
 
 	static int sizeY;
@@ -45,20 +45,20 @@ public:
 
 	static bool useLightTheme;
 
-	sp<ClockCaption> clockCaption = nullptr;
-	sp<DayCaption> dayCaption = nullptr;
-	sp<MoneyCaption> moneyCaption = nullptr;
-	sp<NDButton> ndButton = nullptr;
-	sp<GameStoreButton> gameStoreButton = nullptr;
-	sp<StuffButton> stuffButton = nullptr;
+	ClockCaption* clockCaption = nullptr;
+	DayCaption* dayCaption = nullptr;
+	MoneyCaption* moneyCaption = nullptr;
+	NDButton* ndButton = nullptr;
+	GameStoreButton* gameStoreButton = nullptr;
+	StuffButton* stuffButton = nullptr;
 
-	sp<NotificationManager> notificationManager = nullptr;
+	NotificationManager* notificationManager = nullptr;
 
 
 	bool enabled = true;
 
 
-	StatusBar(sp<BGClientEngine> g);
+	BobStatusBar(BGClientEngine* g);
 
 
 	void init();
