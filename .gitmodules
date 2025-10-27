@@ -277,3 +277,12 @@
 [submodule "lib/libretro-lutro"]
 	path = lib/libretro-lutro
 	url = https://github.com/libretro/libretro-lutro
+[submodule "lib/timidity"]
+	path = lib/timidity
+	url = https://github.com/geofft/timidity
+[submodule "lib/libtimidity"]
+	path = lib/libtimidity
+	url = https://github.com/sezero/libtimidity
+[submodule "lib/libmidi"]
+	path = lib/libmidi
+	url = https://github.com/opencodewin/libmidi
