@@ -25,17 +25,13 @@ https://github.com/robertpelloni/BobsGameOnline
 
 ## COMPLETELY FREE
 
-## WRITTEN FROM SCRATCH IN C++
+## WRITTEN IN C++
 
 ## OPEN SOURCE, PUBLIC DOMAIN
 
 ## DOWNLOAD IT RIGHT NOW!
 
 ## This game is actively developed. New features are being added constantly and bugs will happen.
-
-[Development Forum](http://bobsgame.com/forum) is open for bug reports. Please report any issues you notice. I rely on your testing.
-
-[http://www.bobcorporation.com](http://www.bobcorporation.com) (Main website)
 
 [Pending Wikipedia article](https://en.wikipedia.org/w/index.php?title=Bob%27s_Game&oldid=713042467), help revise the current entry as I am not allowed to.
 
