@@ -190,9 +190,6 @@
 [submodule "lib/sumatrapdf"]
 	path = lib/sumatrapdf
 	url = https://github.com/sumatrapdfreader/sumatrapdf
-[submodule "lib/CNTK"]
-	path = lib/CNTK
-	url = https://github.com/microsoft/CNTK
 [submodule "lib/libusb"]
 	path = lib/libusb
 	url = https://github.com/libusb/libusb
