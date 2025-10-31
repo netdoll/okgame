@@ -163,9 +163,6 @@
 [submodule "lib/glfw"]
 	path = lib/glfw
 	url = https://github.com/glfw/glfw
-[submodule "lib/NanoVG"]
-	path = lib/NanoVG
-	url = https://github.com/memononen/NanoVG
 [submodule "lib/cppcodec"]
 	path = lib/cppcodec
 	url = https://github.com/tplgy/cppcodec
@@ -226,9 +223,6 @@
 [submodule "lib/mgba"]
 	path = lib/mgba
 	url = https://github.com/libretro/mgba
-[submodule "lib/CLove"]
-	path = lib/CLove
-	url = https://gitlab.com/Murii/CLove
 [submodule "lib/libretro-database"]
 	path = lib/libretro-database
 	url = https://github.com/libretro/libretro-database
