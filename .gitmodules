@@ -24,7 +24,7 @@
 	url = https://github.com/lz4/lz4-java
 [submodule "lib/MicroPather"]
 	path = lib/MicroPather
-	url = https://github.com/robertpelloni/MicroPather
+	url = https://github.com/leethomason/MicroPather
 [submodule "lib/miniz"]
 	path = lib/miniz
 	url = https://github.com/richgel999/miniz
@@ -286,3 +286,6 @@
 [submodule "lib/libmidi"]
 	path = lib/libmidi
 	url = https://github.com/opencodewin/libmidi
+[submodule "lib/defold-astar"]
+	path = lib/defold-astar
+	url = https://github.com/selimanac/defold-astar
