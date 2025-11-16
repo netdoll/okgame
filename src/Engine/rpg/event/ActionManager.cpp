@@ -38,8 +38,6 @@ ActionManager::ActionManager(Engine* g)
 
 	//send into new sprite
 
-	//DONE: new Entity(texture filename) should add itself to the entity manager automatically.. G.entityManager.add(this)
-
 	//new Caption() should do this too
 
 

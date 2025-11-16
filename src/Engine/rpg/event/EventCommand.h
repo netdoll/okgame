@@ -9,12 +9,15 @@
 class Logger;
 
 
+#include <memory>
+
+
 
 
 class EventParameter;
 
 
-class EventCommand : public EnginePart
+class EventCommand : public EnginePart, public std::enable_shared_from_this<EventCommand>
 {
 public:
 
@@ -30,31 +33,31 @@ public:
 	static int TYPE_QUALIFIER_FALSE;
 
 
-	ArrayList<EventParameter*>* parameterList = new ArrayList<EventParameter*>();
+	ArrayList<shared_ptr<EventParameter>>* parameterList = new ArrayList<shared_ptr<EventParameter>>();
 
-	EventCommand* parent = nullptr;
-
-
-	ArrayList<EventCommand*>* children = new ArrayList<EventCommand*>();
+	weak_ptr<EventCommand> parent;
 
 
-	EventCommand(Engine* g, const string& command, ArrayList<EventParameter*>* parameterList, int type);
+	ArrayList<shared_ptr<EventCommand>>* children = new ArrayList<shared_ptr<EventCommand>>();
+
+
+	EventCommand(Engine* g, const string& command, ArrayList<shared_ptr<EventParameter>>* parameterList, int type);
 
 	int getNumParams();
 
 
-	static EventCommand* parseEventCommandFromCommandString(Engine* g, BobEvent* event, string commandString);
+	static shared_ptr<EventCommand> parseEventCommandFromCommandString(Engine* g, BobEvent* event, string commandString);
 
 
-	EventCommand* getParent();
+	shared_ptr<EventCommand> getParent();
 
 
-	void addChild(EventCommand* e);
+	void addChild(shared_ptr<EventCommand> e);
 
 
 	int currentChildIndex = 0;
 
 
-	EventCommand* getNextChild();
+	shared_ptr<EventCommand> getNextChild();
 };
 

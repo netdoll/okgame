@@ -639,7 +639,7 @@ bool Area::isWithinScreenBounds()
 	}
 }
 
-bool Area::inRangeOfEntityByAmount(Entity* e, int amt)
+bool Area::inRangeOfEntityByAmount(shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 
 	float eX = e->getMiddleX();
@@ -655,7 +655,7 @@ bool Area::inRangeOfEntityByAmount(Entity* e, int amt)
 	}
 }
 
-float Area::getDistanceFromEntity(Entity* e)
+float Area::getDistanceFromEntity(shared_ptr<Entity> e)
 { //=========================================================================================================================
 
 	float eX = e->getMiddleX();
@@ -664,7 +664,7 @@ float Area::getDistanceFromEntity(Entity* e)
 	return Math::distance(middleX(), middleY(), eX, eY);
 }
 
-bool Area::isEntityHitBoxTouchingMyBoundary(Entity* e)
+bool Area::isEntityHitBoxTouchingMyBoundary(shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return isEntityHitBoxTouchingMyBoundaryByAmount(e, 0);
 }
@@ -694,7 +694,7 @@ bool Area::isAreaBoundaryTouchingMyCenter(Area* a)
 	return isAreaBoundaryTouchingMyCenterByAmount(a, 0);
 }
 
-bool Area::isEntityMiddleXYTouchingMyCenter(Entity* e)
+bool Area::isEntityMiddleXYTouchingMyCenter(shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return isEntityMiddleXYTouchingMyCenterByAmount(e, 1);
 }
@@ -714,7 +714,7 @@ bool Area::isXYXYTouchingMyCenter(float left, float top, float right, float bott
 	return isXYXYTouchingMyCenterByAmount(left, top, right, bottom, 0);
 }
 
-bool Area::isEntityHitBoxTouchingMyBoundaryByAmount(Entity* e, int amt)
+bool Area::isEntityHitBoxTouchingMyBoundaryByAmount(shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), amt);
 }
@@ -744,7 +744,7 @@ bool Area::isAreaBoundaryTouchingMyCenterByAmount(Area* a, int amt)
 	return isXYXYTouchingMyCenterByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
 
-bool Area::isEntityMiddleXYTouchingMyCenterByAmount(Entity* e, int amt)
+bool Area::isEntityMiddleXYTouchingMyCenterByAmount(shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyCenterByAmount(e->getMiddleX(), e->getMiddleY(), amt);
 }

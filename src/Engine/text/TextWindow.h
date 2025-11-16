@@ -39,7 +39,7 @@ public:
 	int xInLine = 0;
 	int line = 0;
 
-	Entity* spriteWindowEntity = nullptr;
+	shared_ptr<Entity> spriteWindowEntity = nullptr;
 
 	BobTexture* spriteWindowTexture = nullptr;
 
@@ -75,7 +75,7 @@ public:
 	void updateSpriteWindowTexture();
 
 
-	void setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel);
+	void setSpriteWindow(shared_ptr<Entity> entity, BobTexture* texture, const string& newLabel);
 
 
 	void updateTextureFromByteArray();

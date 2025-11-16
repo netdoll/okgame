@@ -25,7 +25,7 @@ private:
 	ArrayList<LightData*> lightDataList;
 
 	
-	ArrayList<EntityData*> entityDataList;
+	ArrayList<std::shared_ptr<EntityData>> entityDataList;
 
 	//public ArrayList<EntityData> characterDataList = new ArrayList<EntityData>();
 
@@ -52,7 +52,7 @@ public:
 	string getTYPEIDString();
 
 	ArrayList<LightData*>* getLightDataList();
-	ArrayList<EntityData*>* getEntityDataList();
+	ArrayList<std::shared_ptr<EntityData>>* getEntityDataList();
 	ArrayList<AreaData*>* getAreaDataList();
 
 

@@ -1,30 +1,21 @@
 #include "stdafx.h"
-
-//------------------------------------------------------------------------------
-//Copyright Robert Pelloni.
-//All Rights Reserved.
-//------------------------------------------------------------------------------
-
-//#pragma once
+#include "EntityData.h"
 
 
 
 //Logger EntityData::log = Logger("EntityData");
 
-//=========================================================================================================================
 EntityData::EntityData()
-{ //=========================================================================================================================
+{
 }
-//=========================================================================================================================
-EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
-{ //=========================================================================================================================
+EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, std::shared_ptr<EventData> eventData, const string& comment)
+{
 
 	initEntityData(id, name, spriteAssetName, spawnXPixels1X, spawnYPixels1X, initialFrame, pushable, nonWalkable, alphaByte, scale, ticksPerPixelMoved, aboveTopLayer, aboveWhenEqual, alwaysOnBottom, animateThroughFrames, randomTimeBetweenAnimation, ticksBetweenFrames, ticksBetweenAnimation, onlyHereDuringEvent, randomFrames, disableShadow, eventData, comment);
 }
 
-//=========================================================================================================================
-void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
-{//=========================================================================================================================
+void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, std::shared_ptr<EventData> eventData, const string& comment)
+{
 	this->id = id;
 	this->name = name;
 
@@ -38,7 +29,7 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 	this->pushable = pushable;
 	this->nonWalkable = nonWalkable;
 
-	this->toAlpha = ((float)(alphaByte) / 255.0f); //NOTICE, USING getToAlpha NOT alpha, alpha is wrong!
+	this->toAlpha = ((float)(alphaByte) / 255.0f);
 
 	this->scale = (float)(scale);
 
@@ -50,7 +41,7 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 	{
 		this->renderOrder = RenderOrder::ABOVE_TOP;
 	}
-	this->aboveTopLayer = aboveTopLayer; //dont use this in client, client only uses layer
+	this->aboveTopLayer = aboveTopLayer;
 
 	this->aboveWhenEqual = aboveWhenEqual;
 	this->alwaysOnBottom = alwaysOnBottom;
@@ -66,29 +57,6 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 
 	this->comment = comment;
 }
-
-////=========================================================================================================================
-//EntityData* EntityData::fromBase64ZippedJSON(const string& b64)
-//{ //===============================================================================================
-//
-//	// string decode64 = FileUtils::decodeBase64String(b64);
-//	string json = "";// FileUtils::unzipBase64StringToString(decode64);
-//
-//
-//	return fromJSON(json);
-//}
-//
-//EntityData* EntityData::fromJSON(const string& json)
-//{ //===============================================================================================
-//
-//
-//	//Gson* gson = new Gson();
-//	EntityData* data = nullptr;// = gson->fromJson(json, EntityData::typeid);
-//
-//	return data;
-//}
-
-
 
 string& EntityData::initFromString(string& t)
 {
@@ -210,25 +178,10 @@ string& EntityData::initFromString(string& t)
 	ticksPerPixelMoved = stof(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
-//	t = t.substr(t.find("eventID:`") + 1);
-//	t = t.substr(t.find("`") + 1);
-//	eventID = stoi(t.substr(0, t.find("`")));
-//	t = t.substr(t.find("`,") + 2);
-
 	t = t.substr(t.find("onlyHereDuringEvent:`") + 1);
 	t = t.substr(t.find("`") + 1);
 	onlyHereDuringEvent = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
-//
-//	t = t.substr(t.find("mapID:`") + 1);
-//	t = t.substr(t.find("`") + 1);
-//	mapID = stoi(t.substr(0, t.find("`")));
-//	t = t.substr(t.find("`,") + 2);
-//
-//	t = t.substr(t.find("stateID:`") + 1);
-//	t = t.substr(t.find("`") + 1);
-//	stateID = stoi(t.substr(0, t.find("`")));
-//	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("animateThroughCurrentAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
@@ -311,7 +264,7 @@ string& EntityData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t, "}") == false)
 	{
-		EventData* data = new EventData();
+		std::shared_ptr<EventData> data = std::make_shared<EventData>();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -324,7 +277,7 @@ string& EntityData::initFromString(string& t)
 
 
 string EntityData::getTYPEIDString()
-{ //===============================================================================================
+{
 	return "ENTITY." + to_string(getID());
 }
 
@@ -513,20 +466,10 @@ bool EntityData::getPushPlayer()
 	return pushPlayer;
 }
 
-EventData* EntityData::getEventData()
+std::shared_ptr<EventData> EntityData::getEventData()
 {
 	return eventData;
 }
-
-//int EntityData::getMapID()
-//{
-//	return mapID;
-//}
-//
-//int EntityData::getStateID()
-//{
-//	return stateID;
-//}
 
 ArrayList<string>* EntityData::getConnectionTYPEIDList()
 {
@@ -686,21 +629,6 @@ void EntityData::setSpawnYPixels1X(float s)
 	spawnYPixels1X = s;
 }
 
-//void EntityData::setMapID(int s)
-//{
-//	mapID = s;
-//}
-//
-//void EntityData::setStateID(int s)
-//{
-//	stateID = s;
-//}
-//
-//void EntityData::setEventID(int s)
-//{
-//	eventID = s;
-//}
-
 void EntityData::setComment(const string& s)
 {
 	comment = s;
@@ -728,4 +656,3 @@ void EntityData::setLoopAnimation(bool s)
 {
 	loopAnimation = s;
 }
-

@@ -19,13 +19,13 @@ ScreenSprite::ScreenSprite(Engine* g, const string& name, const string& spriteNa
 
 	this->e = g;
 
-	initEntity(new EntityData(-1, name, spriteName, 0, 0));
+	initEntity(std::make_shared<EntityData>(-1, name, spriteName, 0, 0));
 
 	setRenderOrder(RenderOrder::OVER_TEXT);
 
 	getSpriteManager()->screenSpriteList.add(this);
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 float ScreenSprite::getScreenLeft()

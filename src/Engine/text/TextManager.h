@@ -105,12 +105,12 @@ public:
 
 	int MAX_ANSWER_LENGTH = 255;
 
-	Entity* optionTargetEntity1 = nullptr;
-	Entity* optionTargetEntity2 = nullptr;
-	Entity* optionTargetEntity3 = nullptr;
-	Entity* optionTargetEntity4 = nullptr;
-	Entity* optionTargetEntity5 = nullptr;
-	Entity* optionTargetEntity6 = nullptr;
+	shared_ptr<Entity> optionTargetEntity1 = nullptr;
+	shared_ptr<Entity> optionTargetEntity2 = nullptr;
+	shared_ptr<Entity> optionTargetEntity3 = nullptr;
+	shared_ptr<Entity> optionTargetEntity4 = nullptr;
+	shared_ptr<Entity> optionTargetEntity5 = nullptr;
+	shared_ptr<Entity> optionTargetEntity6 = nullptr;
 
 	int cursorTicks = 0;
 	bool cursorPixelUpDownToggle = true;

@@ -31,11 +31,7 @@ TextWindow::TextWindow(Engine* g)
 void TextWindow::init()
 {//=========================================================================================================================
 
-	if (spriteWindowEntity != nullptr)
-	{
-		delete spriteWindowEntity;
-		spriteWindowEntity = nullptr;
-	}
+	spriteWindowEntity = nullptr;
 
 	if (textBoxTextureByteArray != nullptr)
 	{
@@ -479,7 +475,7 @@ void TextWindow::updateSpriteWindowTexture()
 	 */
 }
 
-void TextWindow::setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel)
+void TextWindow::setSpriteWindow(shared_ptr<Entity> entity, BobTexture* texture, const string& newLabel)
 { //=========================================================================================================================
 
 	if (entity != nullptr || texture != nullptr)
@@ -489,14 +485,14 @@ void TextWindow::setSpriteWindow(Entity* entity, BobTexture* texture, const stri
 		{
 			voicePitch = entity->getVoicePitch();
 
-			if ((dynamic_cast<Player*>(entity) != NULL))
+			if ((dynamic_cast<Player*>(entity.get()) != NULL))
 			{
-				texture = (static_cast<Player*>(entity))->uniqueTexture;
+				texture = (std::static_pointer_cast<Player>(entity))->uniqueTexture;
 			}
 
-			if ((dynamic_cast<RandomCharacter*>(entity) != NULL))
+			if ((dynamic_cast<RandomCharacter*>(entity.get()) != NULL))
 			{
-				texture = (static_cast<RandomCharacter*>(entity))->uniqueTexture;
+				texture = (std::static_pointer_cast<RandomCharacter>(entity))->uniqueTexture;
 			}
 
 

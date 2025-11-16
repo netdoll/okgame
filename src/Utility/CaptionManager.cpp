@@ -121,7 +121,7 @@ void CaptionManager::render(RenderOrder layer)
 
 
 //=========================================================================================================================
-Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder r, float scale, int width, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder r, float scale, int width, shared_ptr<Entity> entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 
 	if (ticks >= 0 && ticks < 100)
@@ -135,7 +135,7 @@ Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int 
 }
 
 //=========================================================================================================================
-Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, bool outline, BobColor* textColor, BobColor* textBGColor, RenderOrder r, float scale, Entity* entity, Area* area)
+Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, bool outline, BobColor* textColor, BobColor* textBGColor, RenderOrder r, float scale, shared_ptr<Entity> entity, Area* area)
 {//=========================================================================================================================
 
 	if (ticks >= 0 && ticks < 100)

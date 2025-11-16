@@ -82,7 +82,6 @@ public:
 	int size();
 	E get(int index);
 	int indexOf(E);
-	void deleteAll();
 	vector<E> v;
 
 	bool operator==(const ArrayList<E>& rhs) const;
@@ -225,16 +224,6 @@ template <typename E>
 void ArrayList<E>::add(E e)
 {
 	v.push_back(e);
-}
-
-template <typename E>
-void ArrayList<E>::deleteAll()
-{
-	for(int i=0;i<size();i++)
-	{
-		delete get(i);
-	}
-	clear();
 }
 
 template <typename E>

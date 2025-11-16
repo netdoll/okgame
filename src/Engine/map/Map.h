@@ -46,11 +46,11 @@ public:
 
 
 	//these are entities that exist in this map
-	ArrayList<Entity*> activeEntityList;
+	ArrayList<shared_ptr<Entity>> activeEntityList;
 	//this gets filled in once per frame with entities from entityList that are on the screen
-	ArrayList<Entity*> drawList;
+	ArrayList<shared_ptr<Entity>> drawList;
 	//that gets sorted into zList which is drawn in sequence.
-	ArrayList<Entity*> zList;
+	ArrayList<shared_ptr<Entity>> zList;
 
 	//door/warp list
 	ArrayList<Door*> doorList;
@@ -146,7 +146,7 @@ public:
 	void initMap(Engine* g, MapData* mapData);
 
 
-	Entity* getEntityByName(const string& name);
+	shared_ptr<Entity> getEntityByName(const string& name);
 
 	Character* getCharacterByName(const string& name);
 
@@ -157,7 +157,7 @@ public:
 	Area* getAreaOrWarpAreaByName(string name);
 
 
-	Area* getAreaOrWarpAreaByTYPEID(string typeID);
+	shared_ptr<Area> getAreaOrWarpAreaByTYPEID(string typeID);
 
 	Door* getDoorByTYPEID(const string& typeID);
 
@@ -521,10 +521,10 @@ public:
 	bool isAnyEntityTouchingArea(Area* a);
 
 
-	ArrayList<Entity*>* getAllEntitiesTouchingArea(Area* a);
+	ArrayList<shared_ptr<Entity>>* getAllEntitiesTouchingArea(Area* a);
 
 
-	ArrayList<Entity*>* getAllEntitiesPlayerIsTouching();
+	ArrayList<shared_ptr<Entity>>* getAllEntitiesPlayerIsTouching();
 
 
 	bool isAnyoneTryingToGoToArea(Area* a);
@@ -533,19 +533,19 @@ public:
 	bool isAnyEntityUsingSpriteAsset(Sprite* s);
 
 
-	ArrayList<Entity*>* getAllEntitiesUsingSpriteAsset(Sprite* s);
+	ArrayList<shared_ptr<Entity>>* getAllEntitiesUsingSpriteAsset(Sprite* s);
 
 
-	Entity* createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
+	shared_ptr<Entity> createEntity(const string& spriteName, shared_ptr<Sprite> spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
 
 
-	Entity* createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
+	shared_ptr<Entity> createEntityFeetAtXY(const string& spriteName, shared_ptr<Sprite> sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
 
 
-	Entity* createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt);
+	shared_ptr<Entity> createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(shared_ptr<Entity> e, const string& spriteName, shared_ptr<Sprite> sprite, float mapX, float mapY, int amt);
 
 
-	Entity* createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a);
+	shared_ptr<Entity> createEntityAtArea(const string& spriteName, shared_ptr<Sprite> spriteAsset, Area* a);
 
 
 	MapData* getData();
