@@ -44,12 +44,12 @@ SetWidth is the width to truncate to a newline. It won't truncate words. setWidt
 
 */
 //=========================================================================================================================
-Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 	init(g, fixedPosition, screenX, screenY, ticks, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 }
 //=========================================================================================================================
-Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area)
+Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, Area* area)
 {//=========================================================================================================================
 
 	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
@@ -210,7 +210,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 
 
 //=========================================================================================================================
-void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
+void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, Area* area, bool outline)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -749,7 +749,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 
 
 //=========================================================================================================================
-void Caption::init(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+void Caption::init(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -1984,7 +1984,7 @@ void Caption::update()
 }
 
 
-void Caption::setEntity(Entity* e)
+void Caption::setEntity(shared_ptr<Entity> e)
 {
 	this->entity = e;
 

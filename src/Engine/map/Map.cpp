@@ -190,18 +190,18 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 		for (int n = 0; n < (int)mapStateData->getEntityDataList()->size(); n++)
 		{
-			EntityData* entityData = mapStateData->getEntityDataList()->get(n);
+			std::shared_ptr<EntityData> entityData = mapStateData->getEntityDataList()->get(n);
 
 			if (entityData->getIsNPC())
 			{
-				Character* character = new Character(getEngine(), entityData, this);
+				std::shared_ptr<Character> character = std::make_shared<Character>(getEngine(), entityData, this);
 
 				mapState->characterList.add(character);
 				mapState->characterByNameHashtable.put(character->getName(), character);
 			}
 			else
 			{
-				Entity* entity = new Entity(getEngine(), entityData, this);
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>(getEngine(), entityData, this);
 
 				mapState->entityList.add(entity);
 				mapState->entityByNameHashtable.put(entity->getName(), entity);
@@ -215,9 +215,9 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 
 //=========================================================================================================================
-Entity* Map::getEntityByName(const string& name)
+shared_ptr<Entity> Map::getEntityByName(const string& name)
 { //=========================================================================================================================
-	Entity* e = nullptr;
+	shared_ptr<Entity> e = nullptr;
 
 	if(currentState->entityByNameHashtable.containsKey(name))
 	e = currentState->entityByNameHashtable.get(name);
@@ -329,7 +329,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 	return a;
 }
 
-Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
+shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 { //=========================================================================================================================
 
 
@@ -341,7 +341,7 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	}
 
 
-	Area* a = nullptr;
+	shared_ptr<Area> a = nullptr;
 	if (currentState != nullptr)
 	{
 		if (currentState->areaByTYPEIDHashtable.containsKey(typeID))
@@ -1066,7 +1066,7 @@ void Map::zOrderEntities()
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1081,7 +1081,7 @@ void Map::zOrderEntities()
 
 	for (int i = 0; i < doorList.size(); i++)
 	{
-		Door* e = doorList.get(i);
+		shared_ptr<Door> e = doorList.get(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1140,11 +1140,11 @@ void Map::zOrderEntities()
 
 	while (drawList.size() != 0)
 	{
-		Entity* highestOnScreenEntity = nullptr;
+		shared_ptr<Entity> highestOnScreenEntity = nullptr;
 
 		for (int n = 0; n < drawList.size(); n++)
 		{
-			Entity* e = drawList.get(n);
+			shared_ptr<Entity> e = drawList.get(n);
 
 			//store topmost entity on screen
 			//check for non-zordering entities, entities always on top, entities always on bottom here.
@@ -1562,7 +1562,7 @@ void Map::renderEntities(RenderOrder layer)
 
 		for (int n = 0; n < zList.size(); n++)
 		{
-			Entity* e = zList.get(n);
+			shared_ptr<Entity> e = zList.get(n);
 
 
 			if (layer == RenderOrder::SPRITE_DEBUG_OUTLINES)
@@ -4408,13 +4408,13 @@ void Map::addEntitiesAndCharactersFromCurrentStateToActiveEntityList()
 
 	for (int n = 0; n < (int)currentState->entityList.size(); n++)
 	{
-		Entity* ms = currentState->entityList.get(n);
+		shared_ptr<Entity> ms = currentState->entityList.get(n);
 		activeEntityList.add(ms);
 	}
 
 	for (int n = 0; n < (int)currentState->characterList.size(); n++)
 	{
-		Character* ms = currentState->characterList.get(n);
+		shared_ptr<Character> ms = currentState->characterList.get(n);
 		activeEntityList.add(ms);
 	}
 
@@ -4430,10 +4430,10 @@ void Map::clearActiveEntityList()
 	//have to release unique textures on random entities
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
-		if ((dynamic_cast<RandomCharacter*>(e) != NULL))
+		shared_ptr<Entity> e = activeEntityList.get(i);
+		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
 		{
-			RandomCharacter* r = static_cast<RandomCharacter*>(e);
+			shared_ptr<RandomCharacter> r = static_pointer_cast<RandomCharacter>(e);
 			if (r->uniqueTexture != nullptr)
 			{
 				r->uniqueTexture->release();
@@ -4453,7 +4453,7 @@ bool Map::isAnyoneOverlappingXY(float x, float y)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (x > e->getLeft() && x < e->getRight() && y > e->getTop() && y < e->getBottom())
 		{
@@ -4469,7 +4469,7 @@ bool Map::isAnyoneOverlappingXYXY(float x, float y, float x2, float y2)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (x < e->getRight() && x2 > e->getLeft() && y < e->getBottom() && y2 > e->getTop())
 		{
@@ -4485,11 +4485,11 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
-		if ((dynamic_cast<RandomCharacter*>(e) != NULL))
+		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
 		{
-			RandomCharacter* c = static_cast<RandomCharacter*>(e);
+			shared_ptr<RandomCharacter> c = static_pointer_cast<RandomCharacter>(e);
 
 			if (x == c->targetX && y == c->targetY)
 			{
@@ -4552,19 +4552,19 @@ bool Map::isAnyCharacterTouchingArea(Area* a)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			Entity* e = activeEntityList.get(i);
+			shared_ptr<Entity> e = activeEntityList.get(i);
 
 			if (
 				(
 					(
 						(
-							(dynamic_cast<Character*>(e) != NULL)
+							(dynamic_cast<Character*>(e.get()) != NULL)
 							||
-							(dynamic_cast<RandomCharacter*>(e) != NULL)
+							(dynamic_cast<RandomCharacter*>(e.get()) != NULL)
 						)
 					)
 					||
-					(dynamic_cast<Player*>(e) != NULL)
+					(dynamic_cast<Player*>(e.get()) != NULL)
 				)
 				&&
 				a->isEntityHitBoxTouchingMyBoundary(e)
@@ -4589,7 +4589,7 @@ bool Map::isAnyEntityTouchingArea(Area* a)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			Entity* e = activeEntityList.get(i);
+			shared_ptr<Entity> e = activeEntityList.get(i);
 
 			if (a->isEntityHitBoxTouchingMyBoundary(e))
 			{
@@ -4601,15 +4601,15 @@ bool Map::isAnyEntityTouchingArea(Area* a)
 	return false;
 }
 
-ArrayList<Entity*>* Map::getAllEntitiesTouchingArea(Area* a)
+ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesTouchingArea(Area* a)
 { //=========================================================================================================================
 
-	ArrayList<Entity*>* entitiesInArea = new ArrayList<Entity*>();
+	ArrayList<shared_ptr<Entity>>* entitiesInArea = new ArrayList<shared_ptr<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (a->isEntityHitBoxTouchingMyBoundary(e))
 		{
@@ -4621,15 +4621,15 @@ ArrayList<Entity*>* Map::getAllEntitiesTouchingArea(Area* a)
 	return entitiesInArea;
 }
 
-ArrayList<Entity*>* Map::getAllEntitiesPlayerIsTouching()
+ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesPlayerIsTouching()
 { //=========================================================================================================================
 
-	ArrayList<Entity*>* entitiesTouching = new ArrayList<Entity*>();
+	ArrayList<shared_ptr<Entity>>* entitiesTouching = new ArrayList<shared_ptr<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e))
 		{
@@ -4661,7 +4661,7 @@ bool Map::isAnyEntityUsingSpriteAsset(Sprite* s)
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		if (activeEntityList.get(i)->sprite == s)
+		if (activeEntityList.get(i)->sprite.get() == s)
 		{
 			return true;
 		}
@@ -4671,16 +4671,16 @@ bool Map::isAnyEntityUsingSpriteAsset(Sprite* s)
 	return false;
 }
 
-ArrayList<Entity*>* Map::getAllEntitiesUsingSpriteAsset(Sprite* s)
+ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesUsingSpriteAsset(Sprite* s)
 { //=========================================================================================================================
 
-	ArrayList<Entity*>* entitiesUsingSprite = new ArrayList<Entity*>();
+	ArrayList<shared_ptr<Entity>>* entitiesUsingSprite = new ArrayList<shared_ptr<Entity>>();
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
-		if (e->sprite == s)
+		if (e->sprite.get() == s)
 		{
 			entitiesUsingSprite->add(e);
 		}
@@ -4690,13 +4690,13 @@ ArrayList<Entity*>* Map::getAllEntitiesUsingSpriteAsset(Sprite* s)
 	return entitiesUsingSprite;
 }
 
-Entity* Map::createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY)
+std::shared_ptr<Entity> Map::createEntity(const string& spriteName, std::shared_ptr<Sprite> spriteAsset, float mapX, float mapY)
 { //=========================================================================================================================
 
 
-	EntityData* entityData = new EntityData(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
+	std::shared_ptr<EntityData> entityData = std::make_shared<EntityData>(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
 
-	Entity* e = new Entity(getEngine(), entityData, this);
+	std::shared_ptr<Entity> e = std::make_shared<Entity>(getEngine(), entityData, this);
 
 	getCurrentMap()->currentState->entityList.add(e);
 	getCurrentMap()->currentState->entityByNameHashtable.put(e->getName(),e);
@@ -4704,17 +4704,17 @@ Entity* Map::createEntity(const string& spriteName, Sprite* spriteAsset, float m
 	return e;
 }
 
-Entity* Map::createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY)
+std::shared_ptr<Entity> Map::createEntityFeetAtXY(const string& spriteName, std::shared_ptr<Sprite> sprite, float mapX, float mapY)
 { //=========================================================================================================================
 
 	// use hitbox center instead of arbitrary offset
-	SpriteAnimationSequence* a = sprite->getFirstAnimation();
+	std::shared_ptr<SpriteAnimationSequence> a = sprite->getFirstAnimation();
 	int hitBoxYCenter = (a->hitBoxFromTopPixels1X) + (((sprite->getImageHeight() - (a->hitBoxFromTopPixels1X)) - (a->hitBoxFromBottomPixels1X)) / 2);
 
 	return createEntity(spriteName, sprite, mapX - (sprite->getImageWidth() / 2), mapY - (hitBoxYCenter));
 }
 
-Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt)
+std::shared_ptr<Entity> Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(std::shared_ptr<Entity> e, const string& spriteName, std::shared_ptr<Sprite> sprite, float mapX, float mapY, int amt)
 { //=========================================================================================================================
 
 	if (isXYWithinScreenByAmt(mapX + sprite->getImageWidth() / 2, mapY + sprite->getImageHeight() / 2, amt) == true)
@@ -4733,14 +4733,13 @@ Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, c
 		if (e != nullptr)
 		{
 			e->deleteFromMapEntityListAndReleaseTexture();
-			delete e;
 			e = nullptr;
 		}
 		return nullptr;
 	}
 }
 
-Entity* Map::createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a)
+shared_ptr<Entity> Map::createEntityAtArea(const string& spriteName, shared_ptr<Sprite> spriteAsset, Area* a)
 { //=========================================================================================================================
 	float x = a->middleX();
 	float y = a->middleY();

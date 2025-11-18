@@ -19,13 +19,7 @@ Character::Character()
 }
 
 
-//Character::Character(Engine* g)
-//{ //=========================================================================================================================
-//   this->e = g;
-//
-//}
-
-Character::Character(Engine* g, EntityData* data, Map *m)
+Character::Character(Engine* g, std::shared_ptr<EntityData> data, std::shared_ptr<Map> m) : Entity(g, data, m)
 { //=========================================================================================================================
 
 
@@ -36,7 +30,7 @@ Character::Character(Engine* g, EntityData* data, Map *m)
 
 	initCharacter();
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 void Character::initCharacter()
@@ -60,14 +54,11 @@ void Character::initCharacter()
 	setVoicePitch(1.0f);
 }
 
-/**
-This is specifically for something, not sure what
-*/
-Character::Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m)
+Character::Character(Engine* g, string name, std::shared_ptr<Sprite> sprite, std::shared_ptr<Area> a, std::shared_ptr<Map> m) : Entity(g, m)
 { //=========================================================================================================================
 	this->e = g;
 
-	EntityData* data = new EntityData(-1, name, sprite->getName(), (int)a->middleX() / 2, (int)a->middleY() / 2, 0, false, true, 255, 1.25f, 8);
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, name, sprite->getName(), (int)a->middleX() / 2, (int)a->middleY() / 2, 0, false, true, 255, 1.25f, 8);
 
 	initEntity(data);
 
@@ -77,7 +68,7 @@ Character::Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m)
 	getCurrentMap()->currentState->characterList.add(this);
 	getCurrentMap()->currentState->characterByNameHashtable.put(name, this);
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 void Character::initCurrentAnimationFromSprite()
@@ -143,44 +134,33 @@ void Character::update()
 
 
 	//process behaviors
-	//for(int i=0;i<getBehaviorList->size();i++)
 	{
 		{
-			//if(getBehaviorList.get(i).equals("walkToPointsRandomly"))
-			//if we have a current area
 
 			if (currentAreaTYPEIDTarget.length() > 0)
 			{
-				//find current area
 				if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
 				{
-					//get current area x and y
-					Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+					shared_ptr<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 
 					if (a == nullptr)
 					{
 						currentAreaTYPEIDTarget = "";
 						return;
 					}
-					//walk towards x and y
-					//boolean there = walk_to_xy_nohit( a.getMapXPixelsHQ + a.getWidthPixelsHQ/2, a.getMapYPixelsHQ + a.getHeightPixelsHQ/2);
 
 					int there = 0;
 					if (getMap()->getIsOutside() == false && getMap()->getWidthTiles1X() < 100 && getMap()->getHeightTiles1X() < 100)
 					{
 						there = walkToXYWithPathFinding(a->middleX(), a->middleY());
 					}
-					//else there=walkToXYNoHitAvoidOthersPushMain(a.getMiddleX(),a.getMiddleY());
 					else if (walkToXYNoCheckHit(a->middleX(), a->middleY()))
 					{
 						there = 1;
 					}
 
-					//boolean there = in_range_of_area_xyxy_in_direction_by_amount(a.getMapXPixelsHQ, a.getMapYPixelsHQ, a.getMapXPixelsHQ + a.getWidthPixelsHQ, a.getMapYPixelsHQ + a.getHeightPixelsHQ, anim_dir, 0);
-					//if we are there, pick a new point
 					if (there == 1)
 					{
-						//check area for variables: stay here, wait x ms, face direction
 
 						if (a->standSpawnDirection() != -1)
 						{
@@ -218,7 +198,6 @@ void Character::update()
 					}
 					else
 					{
-						//set standing ticks to current ticks
 						if (a->waitHereTicks() > 0)
 						{
 							ticksToStand = a->waitHereTicks();
@@ -233,7 +212,6 @@ void Character::update()
 			else
 			{
 				currentAreaTYPEIDTarget = "";
-				//else pick a new point
 				if (getConnectionTYPEIDList()->size() > 0)
 				{
 					currentAreaTYPEIDTarget = getConnectionTYPEIDList()->get(Math::randLessThan(getConnectionTYPEIDList()->size()));
@@ -243,14 +221,8 @@ void Character::update()
 	}
 
 
-	//this is done here regardless of controls so that external movements still trigger animation and sound, i.e. cutscenes
-	//don't need to do this for player, randomcharacter, cameraman.
-
-	//if(this instanceof Character) //this will let through Player, RandomCharacter, etc, but NOT Entity
-	//if (this->getClass().equals(Character::typeid)) //this will ONLY do Character
 	if (dynamic_cast<Character*>(this) != NULL)
 	{
-		//log.debug(""+getName());
 		checkIfMoved();
 
 		doCharacterAnimation();
@@ -259,10 +231,6 @@ void Character::update()
 
 void Character::setAnimationByDirection(int dir)
 { //===========================================================================================================================
-
-	//need to figure out is sprite has 8 directions or just 4. allow movement and animation in all 8
-
-	//DONE: if animation doesnt exist keep it the same. (logs error)
 
 	if (canDoCharacterMovementOrStandingAnimation())
 	{
@@ -320,8 +288,6 @@ void Character::setAnimationByDirection(int dir)
 bool Character::canDoCharacterMovementOrStandingAnimation()
 { //=========================================================================================================================
 	if (disableMovementAnimationForAllEntities == true || getMovementAnimationDisabled() == true || getAnimatingThroughAllFrames() == true || getAnimatingThroughCurrentAnimation() == true)
-	//||
-	//getLoopAnimation()==true
 	{
 		return false;
 	}
@@ -693,15 +659,8 @@ void Character::doCharacterAnimation()
 
 	if (animationDirection != nextAnimDirection)
 	{
-		//TODO: maybe figure out how many directions player needs to turn in order to get to walking direction,
-		//i.e. turn faster if they have to fully turn around, in order to make a full 180 degree turn look less dumb
-
-
-		//animate 8-direction characters by rotating them in between diagonal directions with a timing delay
-		//EDIT: I will have 4-direction characters have a slight delay as well.
 		if (haveTicksPassedSinceLastAnimated_ResetIfTrue(rotationAnimationSpeedTicks) == true)
 		{
-			//notice the direction isn't set until after the delay
 			setAnimationByDirection(nextAnimDirection);
 
 			if (canDoCharacterMovementOrStandingAnimation())
@@ -714,29 +673,19 @@ void Character::doCharacterAnimation()
 	{
 		if (standing == false)
 		{
-			//TODO: handle running animation
 			if (running == true)
 			{
-				//set animation to running
-				//if(PLAYER_npc->gfx==GFX_KID_yuu)PLAYER_npc->gfx=GFX_KID_yuurunning;
-				//else if(PLAYER_npc->gfx==GFX_KID_youngyuu)PLAYER_npc->gfx=GFX_KID_youngyuurunning;
 			}
 			else
 			{
 				if (running == false)
 				{
-					//set animation to walking
-					//if(PLAYER_npc->gfx==GFX_KID_yuurunning)PLAYER_npc->gfx=GFX_KID_yuu;
-					//else if(PLAYER_npc->gfx==GFX_KID_youngyuurunning)PLAYER_npc->gfx=GFX_KID_youngyuu;
 				}
 			}
 
 			if (canDoCharacterMovementOrStandingAnimation())
 			{
-				//doMovementAnimation();
-				//=========================================================================================================================
-				//public void doMovementAnimation()
-				{ //=========================================================================================================================
+				{
 
 
 					int movementTicksBetweenFrames = 0;
@@ -761,12 +710,7 @@ void Character::doCharacterAnimation()
 		{
 			if (standing == true)
 			{
-				//TODO: set animation back to walking
-
-				//doStandingAnimation();
-				//=========================================================================================================================
-				//public void doStandingAnimation()
-				{ //=========================================================================================================================
+				{
 
 
 					if (haveTicksPassedSinceLastAnimated_ResetIfTrue(standingTicksBetweenFrames) == true)
@@ -777,13 +721,11 @@ void Character::doCharacterAnimation()
 							standRightAway = true;
 						}
 
-						//randomize ticks between standing frames
 						standingTicksBetweenFrames = 200 + Math::randUpToIncluding(600);
 
 
 						bool jittered = false;
 
-						//if standing, jitter a pixel or two. this is added in Entity.screenXY() and does not affect real position
 						if (Math::randLessThan(6) == 0)
 						{
 							jittered = true;
@@ -830,15 +772,12 @@ void Character::doCharacterAnimation()
 						{
 							if (canDoCharacterMovementOrStandingAnimation())
 							{
-								//NOTICE: this is hardcoded for characters. sequence is frames-1, (frames/2)-1
 								if (getCurrentFrameOffsetInCurrentAnimation() == 0)
 								{
-									//(frames/2)-1
 									setFrameOffsetInCurrentAnimation((getCurrentAnimationNumberOfFrames() / 2) - 1);
 								}
 								else
 								{
-									//frames-1
 									setFrameOffsetInCurrentAnimation(getCurrentAnimationNumberOfFrames() - 1);
 								}
 
@@ -855,7 +794,6 @@ void Character::doCharacterAnimation()
 void Character::checkIfMoved()
 { //=========================================================================================================================
 
-	//if player is moving
 	if (lastMapX != floor(getX()) || lastMapY != floor(getY()))
 	{
 		lastMapX = (float)(floor(getX()));
@@ -870,10 +808,6 @@ void Character::checkIfMoved()
 
 		if (draw == true)
 		{
-			//if we've moved a pixel we want to set the background priority
-			//setPriorityFromFXLayer();
-
-
 			if (getDisableShadow() == false && sprite != nullptr && sprite->getHasShadow() == true && clipShadow == true)
 			{
 				setShadowClip();
@@ -883,13 +817,12 @@ void Character::checkIfMoved()
 	else
 	{
 		ticksSinceMoved += (int)getEngine()->engineTicksPassed();
-		//TODO: put anything here that i want to happen immediately when the sprite stops moving
 
 		moved = false;
 
 		if (ticksSinceMoved > 100)
 		{
-			standing = true; //this also takes a little bit of time to animate to standing position
+			standing = true;
 		}
 		else
 		{
@@ -905,8 +838,7 @@ void Character::checkIfMoved()
 	}
 }
 
-//=========================================================================================================================
-void Character::dontLookAtEntity(Entity* e)
+void Character::dontLookAtEntity(std::shared_ptr<Entity> e)
 { //=========================================================================================================================
 
 
@@ -951,19 +883,19 @@ void Character::dontLookAtEntity(Entity* e)
 		if (getMiddleX() <= e->getMiddleX())
 		{
 			setAnimationByDirection(LEFT);
-		} //hitBoxLeft()
+		}
 		if (getMiddleX() >= e->getMiddleX())
 		{
 			setAnimationByDirection(RIGHT);
-		} //hitBoxRight()
+		}
 		if (getMiddleY() <= e->getMiddleY())
 		{
 			setAnimationByDirection(UP);
-		} //up
+		}
 		if (getMiddleY() >= e->getMiddleY())
 		{
 			setAnimationByDirection(DOWN);
-		} //down
+		}
 		if (getMiddleX() <= e->getMiddleX() && getMiddleY() <= e->getMiddleY())
 		{
 			setAnimationByDirection(UPLEFT);
@@ -983,8 +915,7 @@ void Character::dontLookAtEntity(Entity* e)
 	}
 }
 
-//=========================================================================================================================
-void Character::lookAtEntity(Entity* e)
+void Character::lookAtEntity(std::shared_ptr<Entity> e)
 { //=========================================================================================================================
 
 
@@ -1061,8 +992,7 @@ void Character::lookAtEntity(Entity* e)
 	}
 }
 
-//=========================================================================================================================
-void Character::lookAtEntityButNotOppositeWalkingDirection(Entity* stared_at_entity)
+void Character::lookAtEntityButNotOppositeWalkingDirection(std::shared_ptr<Entity> stared_at_entity)
 { //=========================================================================================================================
 
 	float amt1 = (getMiddleX()) - (stared_at_entity->getMiddleX());
@@ -1112,7 +1042,6 @@ void Character::lookAtEntityButNotOppositeWalkingDirection(Entity* stared_at_ent
 	}
 }
 
-//=========================================================================================================================
 void Character::setAppearanceFromCharacterAppearanceString(string s)
 { //=========================================================================================================================
 
@@ -1205,7 +1134,6 @@ void Character::setAppearanceFromCharacterAppearanceString(string s)
 	}
 }
 
-//=========================================================================================================================
 void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int shoeColorIndex, int shirtColorIndex, int pantsColorIndex, int skinColorIndex, int eyeColorIndex, int hairColorIndex)
 { //=========================================================================================================================
 
@@ -1466,7 +1394,6 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 	if (uniqueTexture != nullptr)
 	{
 		uniqueTexture->release();
-		delete uniqueTexture;
 		uniqueTexture = nullptr;
 	}
 
@@ -1479,22 +1406,17 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 
 	ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, -1);
 
-	uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
+	uniqueTexture = std::shared_ptr<BobTexture>(GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb));
 
 	delete bb;
 
 	if (this->sprite != nullptr)
 	{
-		shadowClipPerPixel = new float[sprite->getImageWidth()];
-		for (int i = 0; i < sprite->getImageWidth(); i++)
-		{
-			shadowClipPerPixel[i] = 1.0f;
-		}
+		shadowClipPerPixel.assign(sprite->getImageWidth(),1.0f);
 	}
 }
 
 
-//=========================================================================================================================
 void Character::setShowName(bool b)
 { //=========================================================================================================================
 
@@ -1513,7 +1435,6 @@ void Character::setShowName(bool b)
 	}
 }
 
-//=========================================================================================================================
 void Character::setShowAccountType(bool b)
 { //=========================================================================================================================
 
@@ -1528,7 +1449,6 @@ void Character::setShowAccountType(bool b)
 	}
 }
 
-//=========================================================================================================================
 void Character::setCharacterNameAndCaption(BobColor* nameColor, const string& name, BobColor* accountTypeNameColor, const string& accountTypeName)
 { //=========================================================================================================================
 
@@ -1587,23 +1507,22 @@ void Character::setCharacterNameAndCaption(BobColor* nameColor, const string& na
 	}
 }
 
-//=========================================================================================================================
-ArrayList<Entity*>* Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
+ArrayList<std::shared_ptr<Entity>>* Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
 { //=========================================================================================================================
 
 
-	ArrayList<Entity*>* list = new ArrayList<Entity*>();
+	ArrayList<std::shared_ptr<Entity>>* list = new ArrayList<std::shared_ptr<Entity>>();
 
 	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		Entity* e = getMap()->zList.get(s);
+		std::shared_ptr<Entity> e = getMap()->zList.get(s);
 
-		if (dynamic_cast<Character*>(e) != NULL || dynamic_cast<RandomCharacter*>(e) != NULL || e->getNonWalkable() == false)
+		if (dynamic_cast<Character*>(e.get()) != NULL || dynamic_cast<RandomCharacter*>(e.get()) != NULL || e->getNonWalkable() == false)
 		{
 			continue;
 		}
 
-		if (e == this)
+		if (e.get() == this)
 		{
 			continue;
 		}
@@ -1618,8 +1537,7 @@ ArrayList<Entity*>* Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(
 	return list;
 }
 
-//=========================================================================================================================
-bool Character::checkTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y)
+bool Character::checkTouchingAnyEntityInEntityList(ArrayList<std::shared_ptr<Entity>>* list, float x, float y)
 { //=========================================================================================================================
 
 	if (getEngine()->hitLayerEnabled == false)
@@ -1629,14 +1547,14 @@ bool Character::checkTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, flo
 
 	for (int s = 0; s < list->size(); s++)
 	{
-		Entity* e = list->get(s);
+		std::shared_ptr<Entity> e = list->get(s);
 
-		if (dynamic_cast<Character*>(e) != NULL || dynamic_cast<RandomCharacter*>(e) != NULL || e->getNonWalkable() == false)
+		if (dynamic_cast<Character*>(e.get()) != NULL || dynamic_cast<RandomCharacter*>(e.get()) != NULL || e->getNonWalkable() == false)
 		{
 			continue;
 		}
 
-		if (e == this)
+		if (e.get() == this)
 		{
 			continue;
 		}
@@ -1651,8 +1569,7 @@ bool Character::checkTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, flo
 	return false;
 }
 
-//=========================================================================================================================
-bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y)
+bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<std::shared_ptr<Entity>>* list, float x, float y)
 { //=========================================================================================================================
 	if (getMap()->getHitLayerValueAtXYPixels(x, y) == false && checkTouchingAnyEntityInEntityList(list, x, y) == false)
 	{
@@ -1662,7 +1579,6 @@ bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<Entity*>
 	return true;
 }
 
-//=========================================================================================================================
 bool Character::checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y)
 { //=========================================================================================================================
 
@@ -1673,15 +1589,15 @@ bool Character::checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x,
 
 	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		Entity* e = getMap()->zList.get(s);
+		std::shared_ptr<Entity> e = getMap()->zList.get(s);
 
 
-		if (dynamic_cast<Character*>(e) != NULL || dynamic_cast<RandomCharacter*>(e) != NULL || e->getNonWalkable() == false)
+		if (dynamic_cast<Character*>(e.get()) != NULL || dynamic_cast<RandomCharacter*>(e.get()) != NULL || e->getNonWalkable() == false)
 		{
 			continue;
 		}
 
-		if (e == this)
+		if (e.get() == this)
 		{
 			continue;
 		}
@@ -1696,42 +1612,17 @@ bool Character::checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x,
 	return false;
 }
 
-//=========================================================================================================================
 void Character::setShadowClip()
 { //=========================================================================================================================
-	//check from current tile downwards for any getHit detection
-	//if it runs into getHit detection before the shadow length, clip the shadow to % of shadow start to the start of that getHit block / total shadow length
-
-
-	if (shadowClipPerPixel == nullptr)
+	if (shadowClipPerPixel.empty())
 	{
-		shadowClipPerPixel = new float[sprite->getImageWidth()];
-		for (int i = 0; i < sprite->getImageWidth(); i++)
-		{
-			shadowClipPerPixel[i] = 1.0f;
-		}
+		shadowClipPerPixel.assign(sprite->getImageWidth(), 1.0f);
 	}
 
-	//float left = getLeft()+2;
-	//float right = getRight()-2;
 	float bottom = (getY() + (getHeight() * getShadowStart()));
-	//float middle = getMiddleX();
 
 
 	float shadowLength = ((float)(getHeight()) * shadowSize);
-
-
-	//TODO: add option to put back whole sprite clipping on/off, this is resource intensive.
-
-	//DONE: have function that returns a list of sprites this sprite might be touching. then run through that list, much faster than even just onscreen sprites.
-	//also, could render all shadows first, and then sprites, wouldn't have to check against other sprites at all. just run through zlist twice on render.
-
-	//DONE: only do this for onscreen sprites.
-
-	//REALIZATION: i should never have to clip against other entities, ever. your shadow will always be on the ground, and any entities in front of you will always be rendered AFTER your shadow.
-
-
-	//ArrayList<Entity> list = get_ONSCREEN_entities_besides_characters_within_amt(32);
 
 	for (int x = 0; x < sprite->getImageWidth(); x++)
 	{
@@ -1741,7 +1632,6 @@ void Character::setShadowClip()
 		{
 			if (getMap()->getHitLayerValueAtXYPixels(getX() + (x * getScale()), bottom + y) == true)
 			{
-				//check_shadow_clip_hit_layer_xy_and_non_walkable_entities_besides_characters(getX()+(x*getScale),bottom+y)==true
 				clip = y;
 				y = (int)(shadowLength);
 				break;
@@ -1759,11 +1649,8 @@ void Character::setShadowClip()
 		}
 	}
 
-
-	//DONE: i could possibly do this for each horizontal pixel of the shadow and make it totally perfect, definitely do this.
 }
 
-//=========================================================================================================================
 int Character::walkToXYWithPathFinding(float x, float y)
 { //=========================================================================================================================
 
@@ -1792,42 +1679,7 @@ int Character::walkToXYWithPathFinding(float x, float y)
 		return 1;
 	}
 
-
-	//TODO: need to pathfind based on all covered getHit tiles of this sprite.
-
-	//TODO: need to check for characters that are sitting down. otherwise walks through them.
-
-	//TODO: need to send in entire area, try to center self in target area, or just reach closest edge.
-
-
-	/*
-	 * if(myX==x&&myY==y)
-	 * {
-	 * there_yet=true;
-	 * pathPosition=0;
-	 * pathfinder=null;
-	 * }
-	 * else
-	 * if(myX>=x-8&&myX<=x+8&&myY>=y-8&&myY<=y+8) //if we're within a tile, just walk straight there.
-	 * {
-	 * if(walk_to_xy_nohit(x, y))
-	 * {
-	 * there_yet = true;
-	 * pathPosition=0;
-	 * pathfinder=null;
-	 * }
-	 * }
-	 * else
-	 */
-
-
 	{
-		//if i don't have a pathfinder, make one.
-
-
-		//walk from path point to path point until i reach my dest.
-
-
 		if (getMap()->utilityLayersLoaded == false)
 		{
 			return 0;
@@ -1847,7 +1699,6 @@ int Character::walkToXYWithPathFinding(float x, float y)
 					int pathX = pathfinder->path->getTileXForPathIndex(pathPosition) * 8 * 2 + 8; //+8 for center of tile
 					int pathY = pathfinder->path->getTileYForPathIndex(pathPosition) * 8 * 2 + 8;
 
-					//skip tiles that are in a row, starting from the NEXT position
 					for (int i = pathPosition + 1; i < (int)pathfinder->path->pathTiles->size(); i++)
 					{
 						if (pathfinder->path->getTileXForPathIndex(i) * 8 * 2 + 8 == pathX && (i + 1 < (int)pathfinder->path->pathTiles->size()) && pathfinder->path->getTileXForPathIndex(i + 1) * 8 * 2 + 8 == pathX)
@@ -1860,7 +1711,6 @@ int Character::walkToXYWithPathFinding(float x, float y)
 						}
 					}
 
-					//skip tiles that are in a column, starting from the NEXT position
 					for (int i = pathPosition + 1; i < (int)pathfinder->path->pathTiles->size(); i++)
 					{
 						if (pathfinder->path->getTileYForPathIndex(i) * 8 * 2 + 8 == pathY && (i + 1 < (int)pathfinder->path->pathTiles->size()) && pathfinder->path->getTileYForPathIndex(i + 1) * 8 * 2 + 8 == pathY)
@@ -1872,9 +1722,6 @@ int Character::walkToXYWithPathFinding(float x, float y)
 							break;
 						}
 					}
-
-
-					//avoid_nearest_entity(16);
 
 					if (walkToXYNoCheckHit((float)pathX, (float)pathY))
 					{
@@ -1888,15 +1735,13 @@ int Character::walkToXYWithPathFinding(float x, float y)
 					delete pathfinder;
 					pathfinder = nullptr;
 
-					finalPathX = x; //we are as close as we can be.
+					finalPathX = x;
 					finalPathY = y;
 				}
 			}
 			else
 			{
 				pathFindWaitTicks += (int)getEngine()->engineTicksPassed();
-
-				//doStandingAnimation();//should be handled by checkIfMoved and doCharacterAnimation now
 
 				if (pathFindWaitTicks > 500)
 				{
@@ -1921,12 +1766,6 @@ int Character::walkToXYWithPathFinding(float x, float y)
 			}
 		}
 	}
-
-
-	//figure out size of hitbox of this sprite in tiles
-
-	//go through map in chunks of this size, staggered by individual tiles
-
 
 	return there_yet;
 }
@@ -1983,11 +1822,9 @@ void Character::walkRandomlyAroundRoomAndStop()
 	{
 		movementDirection = Math::randLessThan(4);
 		pixelsToWalk = (Math::randLessThan(100)) + 10;
-		//setTicksPerPixelMoved((Math::randLessThan(ticksPerPixel_FASTEST-ticksPerPixel_SLOWEST))+ticksPerPixel_SLOWEST);
 	}
 	if (pixelsToWalk == 1)
 	{
-		//setTicksPerPixelMoved((Math::randLessThan(ticksPerPixel_FASTEST-ticksPerPixel_SLOWEST))+ticksPerPixel_SLOWEST);
 	}
 
 	if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
@@ -2013,7 +1850,6 @@ void Character::walkRandomlyAroundRoom()
 	{
 		movementDirection = Math::randLessThan(4);
 		pixelsToWalk = (Math::randLessThan(100)) + 10;
-		//setTicksPerPixelMoved((Math::randLessThan(ticksPerPixel_FASTEST-ticksPerPixel_SLOWEST))+ticksPerPixel_SLOWEST);
 	}
 	checkHitBoxAndWalkDirection(movementDirection);
 }
@@ -2034,7 +1870,6 @@ int Character::walkRandomlyWithinXYXY(float x1, float y1, float x2, float y2)
 		{
 			pixelsToWalk = Math::randLessThan((int)(y2 - y1));
 		}
-		//setTicksPerPixelMoved((Math::randLessThan(ticksPerPixel_FASTEST-ticksPerPixel_SLOWEST))+ticksPerPixel_SLOWEST);
 	}
 
 	int can_walk = 0;
@@ -2102,24 +1937,24 @@ void Character::twitchAroundRoom()
 	setIgnoreHitPlayer(false);
 }
 
-Character* Character::findNearestCharacter()
+std::shared_ptr<Character> Character::findNearestCharacter()
 { //=========================================================================================================================
 
-	Character* nearest = nullptr;
+	std::shared_ptr<Character> nearest = nullptr;
 
 	int shortestdist = 65535;
 
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		Entity* currentEntity = getMap()->activeEntityList.get(n);
+		std::shared_ptr<Entity> currentEntity = getMap()->activeEntityList.get(n);
 
 
-		if (this != currentEntity &&
+		if (this != currentEntity.get() &&
 			(
-				(dynamic_cast<Character*>(currentEntity) != NULL) ||
-				(dynamic_cast<Player*>(currentEntity) != NULL) ||
-				(dynamic_cast<RandomCharacter*>(currentEntity) != NULL)
+				(dynamic_cast<Character*>(currentEntity.get()) != NULL) ||
+				(dynamic_cast<Player*>(currentEntity.get()) != NULL) ||
+				(dynamic_cast<RandomCharacter*>(currentEntity.get()) != NULL)
 			)
 		)
 		{
@@ -2134,7 +1969,7 @@ Character* Character::findNearestCharacter()
 			if (dist < shortestdist)
 			{
 				shortestdist = dist;
-				nearest = static_cast<Character*>(currentEntity);
+				nearest = std::static_pointer_cast<Character>(currentEntity);
 			}
 		}
 	}
@@ -2145,7 +1980,6 @@ Character* Character::findNearestCharacter()
 int Character::walkToXYLRToUD(float x, float y)
 { //=========================================================================================================================
 
-	//setTicksPerPixelMoved(speed);
 	int there_yet = 0;
 
 
@@ -2203,8 +2037,6 @@ int Character::walkToXYLRToUD(float x, float y)
 
 int Character::walkToXYUDToLR(float toX, float toY)
 { //=========================================================================================================================
-
-	//setTicksPerPixelMoved(speed);
 
 	int there_yet = 0;
 
@@ -2265,8 +2097,6 @@ int Character::walkToXYUDToLR(float toX, float toY)
 bool Character::walkToXYNoCheckHit(float toX, float toY)
 { //=========================================================================================================================
 
-	//this was created for randomcharacters and overrode the old walktoXYNoCheckHit but i moved it into character
-
 	if (toX == -1)
 	{
 		toX = getRoundedMiddleX();
@@ -2299,7 +2129,6 @@ bool Character::walkToXYNoCheckHit(float toX, float toY)
 		{
 			setX(getX() - pixelsToMoveThisFrame);
 
-			//if i went past it, go exactly to targetX
 			if (getRoundedMiddleX() < toX)
 			{
 				setX(toX - getMiddleOffsetX());
@@ -2312,7 +2141,6 @@ bool Character::walkToXYNoCheckHit(float toX, float toY)
 		{
 			setX(getX() + pixelsToMoveThisFrame);
 
-			//if i went past it, go exactly to targetX
 			if (getRoundedMiddleX() > toX)
 			{
 				setX(toX - getMiddleOffsetX());
@@ -2469,15 +2297,12 @@ bool Character::walkToXYNoCheckHitOLD(float x, float y)
 		yPixelCounter = 0;
 		xPixelCounter = 0;
 
-		//stand();
 	}
 	else
 	{
 		int newAnimDir = -1;
 
 		{
-			//while(can_walk()==true&&(myX!=x||myY!=y))
-
 
 			float xdistance = abs(getRoundedMiddleX() - x);
 			float ydistance = abs(getRoundedMiddleY() - y);
@@ -2587,15 +2412,12 @@ bool Character::walkToXYUntilHitWall(float x, float y)
 		yPixelCounter = 0;
 		xPixelCounter = 0;
 
-		//stand();
 	}
 	else
 	{
 		int newAnimDir = -1;
 
 		{
-			//while(can_walk()==true&&(myX!=x||myY!=y))
-
 
 			float xdistance = abs(getRoundedMiddleX() - x);
 			float ydistance = abs(getRoundedMiddleY() - y);
@@ -2605,7 +2427,6 @@ bool Character::walkToXYUntilHitWall(float x, float y)
 
 			if (xdistance >= ydistance)
 			{
-				//setting movementDirection here is useless.
 				if (getRoundedMiddleX() > x)
 				{
 					while (pixelsToMoveThisFrame > 1.0f)
@@ -2620,7 +2441,7 @@ bool Character::walkToXYUntilHitWall(float x, float y)
 					setX(getX() - pixelsToMoveThisFrame);
 					if (getRoundedMiddleX() < x)
 					{
-						setX(x - (getMiddleX() - getX())); //if we overshot the goal, rewind.
+						setX(x - (getMiddleX() - getX()));
 					}
 
 
@@ -2748,7 +2569,6 @@ int Character::walkToXYWithBasicHitCheck(float x, float y)
 
 	if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 	{
-		//WALK PERFECT DIAGONAL
 
 		float ydistance = 0;
 		float xdistance = 0;
@@ -2883,13 +2703,12 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 	{
 		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 		{
-			Character* nearestentity = findNearestCharacter();
+			std::shared_ptr<Character> nearestentity = findNearestCharacter();
 
 
 			int collide = 0;
 			int hitPlayer = 0;
 
-			//WALK PERFECT DIAGONAL
 			float xdistance = abs(myX - x);
 			float ydistance = abs(myY - y);
 
@@ -2907,17 +2726,16 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 			}
 
 
-			if (ydistance >= xdistance || x_to_y_ratio < xPixelCounter) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
+			if (ydistance >= xdistance || x_to_y_ratio < xPixelCounter)
 			{
-				if (myY < y) //walking down
+				if (myY < y)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(nearestentity, 12) == true)
 					{
-						if (nearestentity == getPlayer())
+						if (nearestentity.get() == getPlayer())
 						{
 							hitPlayer = 1;
 						}
-						//else
 						if ((animationDirection == UP && nearestentity->getMiddleY() <= getMiddleY()) || (animationDirection == DOWN && nearestentity->getMiddleY() >= getMiddleY()))
 						{
 							if (animationDirection != nearestentity->animationDirection || getTicksPerPixelMoved() <= nearestentity->getTicksPerPixelMoved())
@@ -2936,7 +2754,6 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 						}
 					}
 					{
-						//else
 						mapY++;
 						yPixelCounter++;
 						xPixelCounter = 0;
@@ -2947,31 +2764,28 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(nearestentity, 13) == true)
 					{
-						if (nearestentity == getPlayer())
+						if (nearestentity.get() == getPlayer())
 						{
 							hitPlayer = 1;
 						}
-						//else
 						if ((animationDirection == UP && nearestentity->getMiddleY() <= getMiddleY()) || (animationDirection == DOWN && nearestentity->getMiddleY() >= getMiddleY()))
 						{
 							if (animationDirection != nearestentity->animationDirection || getTicksPerPixelMoved() <= nearestentity->getTicksPerPixelMoved())
 							{
-								//if(standing_cycles==0&&nearestentity->standing_cycles==0)
 								if (myX <= nearestentity->getMiddleX())
 								{
 									setX(getX() - 1);
 									collide = 1;
-								} //else walk hitBoxLeft() if slightly hitBoxLeft()
+								}
 								else
 								{
 									setX(getX() + 1);
 									collide = 1;
-								} //else walk hitBoxRight()
+								}
 							}
 						}
 					}
 					{
-						//else
 						mapY--;
 						yPixelCounter++;
 						xPixelCounter = 0;
@@ -2986,31 +2800,28 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(nearestentity, 12) == true)
 					{
-						if (nearestentity == getPlayer())
+						if (nearestentity.get() == getPlayer())
 						{
 							hitPlayer = 1;
 						}
-						//else
 						if ((animationDirection == LEFT && nearestentity->getMiddleX() <= getMiddleX()) || (animationDirection == RIGHT && nearestentity->getMiddleX() >= getMiddleX()))
 						{
 							if (animationDirection != nearestentity->animationDirection || getTicksPerPixelMoved() <= nearestentity->getTicksPerPixelMoved())
 							{
-								//if(standing_cycles==0&&nearestentity->standing_cycles==0)
 								if (getMiddleY() < nearestentity->getMiddleY())
 								{
 									setY(getY() - 1);
 									collide = 1;
-								} //else walk up if slightly above
+								}
 								else
 								{
 									setY(getY() + 1);
 									collide = 1;
-								} //else walk down
+								}
 							}
 						}
 					}
 					{
-						//else
 
 						mapX++;
 						xPixelCounter++;
@@ -3024,31 +2835,28 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(nearestentity, 13) == true)
 					{
-						if (nearestentity == getPlayer())
+						if (nearestentity.get() == getPlayer())
 						{
 							hitPlayer = 1;
 						}
-						//else
 						if ((animationDirection == LEFT && nearestentity->getMiddleX() <= getMiddleX()) || (animationDirection == RIGHT && nearestentity->getMiddleX() >= getMiddleX()))
 						{
 							if (animationDirection != nearestentity->animationDirection || getTicksPerPixelMoved() <= nearestentity->getTicksPerPixelMoved())
 							{
-								//if(standing_cycles==0&&nearestentity->standing_cycles==0)
 								if (getMiddleY() <= nearestentity->getMiddleY())
 								{
 									setY(getY() - 1);
 									collide = 1;
-								} //else walk up if slightly above
+								}
 								else
 								{
 									setY(getY() + 1);
 									collide = 1;
-								} //else walk down
+								}
 							}
 						}
 					}
 					{
-						//else
 						mapX--;
 						xPixelCounter++;
 						yPixelCounter = 0;
@@ -3061,7 +2869,6 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 			{
 				if (nearestentity->animationDirection == animationDirection && nearestentity->getTicksPerPixelMoved() == getTicksPerPixelMoved())
 				{
-					//walking_speed+=GLOBALSPEED*1;
 				}
 			}
 
@@ -3107,9 +2914,6 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 					wd = (DOWN);
 				}
 
-				//nearestentity->ms=nearestentity->walking_speed*2;
-				//PLAYER_check_hit_move_pixel_animate(wd);
-				//nearestentity->animateInDirection(wd);
 			}
 
 			if (pixelsToWalk > 0 && isWalkingIntoPlayerThisFrame == false)
@@ -3125,7 +2929,6 @@ int Character::walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt)
 { //=========================================================================================================================
 
 	setIgnoreHitPlayer(true);
-	//setTicksPerPixelMoved(speed);
 
 	int there_yet = 0;
 
@@ -3147,31 +2950,7 @@ int Character::walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt)
 	{
 		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 		{
-			Entity* n = findNearestEntity();
-
-			/*
-			 * if(nearest_entity!=null)
-			 * {
-			 * if(standing_cycles!=0)
-			 * {
-			 * nearestentity=(NPC*)nearest_entity;
-			 * standing_cycles--;
-			 * }
-			 * else
-			 * {
-			 * nearest_entity=(struct NPC*)nearestentity;
-			 * standing_cycles=FileUtils::r(10);
-			 * }
-			 * }
-			 * else
-			 * {
-			 * nearest_entity=(struct NPC*)nearestentity;
-			 * nearestentity=(NPC*)nearest_entity;
-			 * }
-			 */
-
-
-			//WALK PERFECT DIAGONAL
+			std::shared_ptr<Entity> n = findNearestEntity();
 
 			float ydistance = 0;
 			float xdistance = 0;
@@ -3207,9 +2986,9 @@ int Character::walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt)
 			}
 
 
-			if (ydistance >= xdistance || x_to_y_ratio < xPixelCounter) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
+			if (ydistance >= xdistance || x_to_y_ratio < xPixelCounter)
 			{
-				if (getMiddleY() < y) //walking down
+				if (getMiddleY() < y)
 				{
 					if (!(((getLeft() >= n->getLeft() && getLeft() <= n->getRight()) || (getRight() >= n->getLeft() && getRight() <= n->getRight()) || (n->getLeft() >= getLeft() && n->getLeft() <= getRight()) || (n->getRight() >= getLeft() && n->getRight() <= getRight())) && (getBottom() <= n->getTop()) && (getBottom() >= n->getTop() - amt)))
 					{
@@ -3220,7 +2999,7 @@ int Character::walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt)
 					}
 				}
 
-				if (getMiddleY() > y) //walking up
+				if (getMiddleY() > y)
 				{
 					if (!(((getLeft() >= n->getLeft() && getLeft() <= n->getRight()) || (getRight() >= n->getLeft() && getRight() <= n->getRight()) || (n->getLeft() >= getLeft() && n->getLeft() <= getRight()) || (n->getRight() >= getLeft() && n->getRight() <= getRight())) && (getTop() >= n->getBottom()) && (getTop() <= n->getBottom() + amt)))
 					{
@@ -3235,7 +3014,7 @@ int Character::walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt)
 
 			if (xdistance >= ydistance || y_to_x_ratio < yPixelCounter)
 			{
-				if (getMiddleX() < x) //moving hitBoxRight()
+				if (getMiddleX() < x)
 				{
 					if (!(((getTop() >= n->getTop() && getTop() <= n->getBottom()) || (getBottom() >= n->getTop() && getBottom() <= n->getBottom())) && (getRight() <= n->getLeft()) && (getRight() >= n->getLeft() - amt)))
 					{
@@ -3274,7 +3053,7 @@ void Character::walkDirectionAvoidOtherEntities(int direction)
 
 	if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 	{
-		Entity* n = findNearestEntity();
+		std::shared_ptr<Entity> n = findNearestEntity();
 
 		if (direction == DOWN)
 		{
@@ -3302,11 +3081,11 @@ void Character::walkDirectionAvoidOtherEntities(int direction)
 			{
 				if (getMiddleX() < n->getMiddleX())
 				{
-					setX(getX() - Math::randLessThan(2)); //else walk hitBoxLeft() if slightly hitBoxLeft()
+					setX(getX() - Math::randLessThan(2));
 				}
 				else
 				{
-					setX(getX() + Math::randLessThan(2)); //else walk hitBoxRight()
+					setX(getX() + Math::randLessThan(2));
 				}
 			}
 			else
@@ -3322,11 +3101,11 @@ void Character::walkDirectionAvoidOtherEntities(int direction)
 			{
 				if (getMiddleY() <= n->getMiddleY())
 				{
-					setY(getY() - Math::randLessThan(2)); //else walk up if slightly above
+					setY(getY() - Math::randLessThan(2));
 				}
 				else
 				{
-					setY(getY() + Math::randLessThan(2)); //else walk down
+					setY(getY() + Math::randLessThan(2));
 				}
 			}
 			else
@@ -3342,11 +3121,11 @@ void Character::walkDirectionAvoidOtherEntities(int direction)
 			{
 				if (getMiddleY() < n->getMiddleY())
 				{
-					setY(getY() - Math::randLessThan(2)); //else walk up if slightly above
+					setY(getY() - Math::randLessThan(2));
 				}
 				else
 				{
-					setY(getY() + Math::randLessThan(2)); //else walk down
+					setY(getY() + Math::randLessThan(2));
 				}
 			}
 			else
@@ -3414,16 +3193,16 @@ bool Character::walkToXYIntelligentHitPushOthers(float x, float y)
 			int direction = 0;
 
 
-			Entity* n = findNearestEntity();
+			std::shared_ptr<Entity> n = findNearestEntity();
 
 
-			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
+			if (ydistance >= xdistance)
 			{
 				if (getMiddleY() < y)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(n, 7) == true)
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
 							{
@@ -3483,17 +3262,11 @@ bool Character::walkToXYIntelligentHitPushOthers(float x, float y)
 					}
 				}
 
-				///======
-				///======
-				///======
-				///======
-
-
 				if (getMiddleY() > y)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(n, 7) == true)
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
 							{
@@ -3555,14 +3328,13 @@ bool Character::walkToXYIntelligentHitPushOthers(float x, float y)
 					}
 				}
 			}
-			///===========================================
 			if (xdistance > ydistance)
 			{
 				if (getMiddleX() < x)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(n, 7) == true)
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(RIGHT) == false)
 							{
@@ -3628,23 +3400,22 @@ bool Character::walkToXYIntelligentHitPushOthers(float x, float y)
 				{
 					if (isEntityHitBoxTouchingMyHitBoxByAmount(n, 7) == true)
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
-							//push main sprite hitBoxLeft()
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(LEFT) == false)
 							{
 								n->mapX--;
 							}
 
 							if (getMiddleY() >= n->getMiddleY())
-							{ //push main sprite up
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
 								{
 									n->mapY--;
 								}
 							}
 							else
-							{ //push main sprite down
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
 								{
 									n->mapY++;
@@ -3751,7 +3522,6 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 { //=========================================================================================================================
 
 	setIgnoreHitPlayer(true);
-	//setTicksPerPixelMoved(speed);
 
 	bool there_yet = false;
 	int avoided = 0;
@@ -3787,9 +3557,9 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 			}
 
 			int direction = 0;
-			Entity* nearestentity = findNearestEntity();
+			std::shared_ptr<Entity> nearestentity = findNearestEntity();
 
-			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
+			if (ydistance >= xdistance)
 			{
 				if (getMiddleY() < y)
 				{
@@ -3851,7 +3621,7 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 							{
 								if (avoided == 1)
 								{
-									checkHitBoxAndMovePixelInDirection(LEFT); //else walk hitBoxLeft() if slightly hitBoxLeft()
+									checkHitBoxAndMovePixelInDirection(LEFT);
 								}
 								movementDirection = 4;
 							}
@@ -3859,7 +3629,7 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 							{
 								if (avoided == 1)
 								{
-									checkHitBoxAndMovePixelInDirection(RIGHT); //else walk hitBoxRight()
+									checkHitBoxAndMovePixelInDirection(RIGHT);
 								}
 								movementDirection = 4;
 							}
@@ -3905,7 +3675,7 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 							{
 								if (avoided == 1)
 								{
-									checkHitBoxAndMovePixelInDirection(UP); //else walk up if slightly above
+									checkHitBoxAndMovePixelInDirection(UP);
 								}
 								movementDirection = 4;
 							}
@@ -3913,7 +3683,7 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 							{
 								if (avoided == 1)
 								{
-									checkHitBoxAndMovePixelInDirection(DOWN); //else walk down
+									checkHitBoxAndMovePixelInDirection(DOWN);
 								}
 								movementDirection = 4;
 							}
@@ -3955,7 +3725,7 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 							{
 								if (avoided == 1)
 								{
-									checkHitBoxAndMovePixelInDirection(UP); //else walk up if slightly above
+									checkHitBoxAndMovePixelInDirection(UP);
 								}
 								movementDirection = 4;
 							}
@@ -3963,7 +3733,7 @@ bool Character::walkToXYIntelligentHitAvoidOthers(float x, float y)
 							{
 								if (avoided == 1)
 								{
-									checkHitBoxAndMovePixelInDirection(DOWN); //else walk down
+									checkHitBoxAndMovePixelInDirection(DOWN);
 								}
 								movementDirection = 4;
 							}
@@ -4063,7 +3833,6 @@ int Character::walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y
 
 
 	setIgnoreHitPlayer(true);
-	//setTicksPerPixelMoved(speed);
 
 
 	if (x == -1)
@@ -4100,31 +3869,30 @@ int Character::walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y
 
 			int direction = 0;
 
-			Entity* n = findNearestEntity();
+			std::shared_ptr<Entity> n = findNearestEntity();
 
-			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
+			if (ydistance >= xdistance)
 			{
 				if (getMiddleY() < y)
 				{
 					if (isHitBoxTouchingEntityInDirectionByAmount(n, DOWN, 5) == true && (getX() != n->getX() || getY() != n->getY()))
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
-							//push main sprite down
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
 							{
 								n->mapY++;
 							}
 
 							if (getMiddleX() < n->getMiddleX())
-							{ //push main sprite hitBoxRight()
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(RIGHT) == false)
 								{
 									n->mapX++;
 								}
 							}
 							else
-							{ //push main sprite hitBoxLeft()
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(LEFT) == false)
 								{
 									n->mapX--;
@@ -4160,23 +3928,22 @@ int Character::walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y
 				{
 					if (isHitBoxTouchingEntityInDirectionByAmount(n, UP, 5) == true && (getX() != n->getX() || getY() != n->getY()))
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
-							//push main sprite up
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
 							{
 								n->mapY--;
 							}
 
 							if (getMiddleX() <= n->getMiddleX())
-							{ //push main sprite hitBoxRight()
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(RIGHT) == false)
 								{
 									n->mapX++;
 								}
 							}
 							else
-							{ //push main sprite hitBoxLeft()
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(LEFT) == false)
 								{
 									n->mapX--;
@@ -4215,23 +3982,22 @@ int Character::walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y
 				{
 					if (isHitBoxTouchingEntityInDirectionByAmount(n, RIGHT, 5) == true && (getX() != n->getX() || getY() != n->getY()))
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
-							//push main sprite hitBoxRight()
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(RIGHT) == false)
 							{
 								n->mapX++;
 							}
 
 							if (getMiddleY() > n->getMiddleY())
-							{ //push main sprite up
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
 								{
 									n->mapY--;
 								}
 							}
 							else
-							{ //push main sprite down
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
 								{
 									n->mapY++;
@@ -4266,23 +4032,22 @@ int Character::walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y
 				{
 					if (isHitBoxTouchingEntityInDirectionByAmount(n, LEFT, 5) == true && (getX() != n->getX() || getY() != n->getY()))
 					{
-						if (n == getPlayer())
+						if (n.get() == getPlayer())
 						{
-							//push main sprite hitBoxLeft()
 							if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(LEFT) == false)
 							{
 								n->mapX--;
 							}
 
 							if (getMiddleY() >= n->getMiddleY())
-							{ //push main sprite up
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
 								{
 									n->mapY--;
 								}
 							}
 							else
-							{ //push main sprite down
+							{
 								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
 								{
 									n->mapY++;
@@ -4370,7 +4135,7 @@ void Character::walkStraightFromPointToPoint(float x1, float y1, float x2, float
 
 	if (movementDirection > 1)
 	{
-		movementDirection = 0; //this will simply be used as a movement switch in this function //no its not appropriate but fuck it
+		movementDirection = 0;
 	}
 	int there_yet = 0;
 	if (movementDirection == 0)
@@ -4396,7 +4161,7 @@ void Character::walkStraightFromPointToPointAndStop(float x1, float y1, float x2
 
 	if (movementDirection > 1)
 	{
-		movementDirection = 0; //this will simply be used as a movement switch in this function //no its not appropriate but fuck it
+		movementDirection = 0;
 	}
 
 
@@ -4423,7 +4188,6 @@ void Character::walkAwayFromPoint(float x, float y)
 { //=========================================================================================================================
 
 	setIgnoreHitPlayer(true);
-	//setTicksPerPixelMoved(speed);
 	if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 	{
 		if (getMiddleY() > y)
@@ -4458,7 +4222,6 @@ int Character::walkDistance(int direction)
 	if (pixelsToWalk > 0)
 	{
 		movementDirection = direction;
-		//setTicksPerPixelMoved(speed);
 		checkHitBoxAndWalkDirection(movementDirection);
 	}
 	else
@@ -4469,16 +4232,11 @@ int Character::walkDistance(int direction)
 	return there_yet;
 }
 
-int Character::avoidEntity(Entity* e, int amt)
+int Character::avoidEntity(std::shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 
 	int outside_area = 0;
 
-
-	//if( getRight()>e.getLeft()-amt &&
-	//getLeft()<e.getRight()+amt &&
-	//getBottom()>e.getTop()-amt &&
-	//getTop()<e.getBottom()+amt
 
 	if (getMiddleX() > e->getMiddleX() - amt && getMiddleX() < e->getMiddleX() + amt && getMiddleY() > e->getMiddleY() - amt && getMiddleY() < e->getMiddleY() + amt)
 	{
@@ -4490,43 +4248,43 @@ int Character::avoidEntity(Entity* e, int amt)
 		if (getMiddleX() <= e->getMiddleX())
 		{
 			movementDirection = LEFT;
-		} //move hitBoxLeft()
+		}
 		if (getMiddleX() >= e->getMiddleX())
 		{
 			movementDirection = RIGHT;
-		} //move hitBoxRight()
+		}
 
 		if (getMiddleY() <= e->getMiddleY())
 		{
 			movementDirection = UP;
-		} //move up
+		}
 		if (getMiddleY() >= e->getMiddleY())
 		{
 			movementDirection = DOWN;
-		} //move down
+		}
 
 		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 		{
 			if (getMiddleX() <= e->getMiddleX())
 			{
 				checkMiddlePixelHitAndMovePixelInDirection(LEFT);
-			} //move hitBoxLeft()
+			}
 
 			if (getMiddleX() >= e->getMiddleX())
 			{
 				checkMiddlePixelHitAndMovePixelInDirection(RIGHT);
-			} //move hitBoxRight()
+			}
 
 
 			if (getMiddleY() <= e->getMiddleY())
 			{
 				checkMiddlePixelHitAndMovePixelInDirection(UP);
-			} //move up
+			}
 
 			if (getMiddleY() >= e->getMiddleY())
 			{
 				checkMiddlePixelHitAndMovePixelInDirection(DOWN);
-			} //move down
+			}
 		}
 
 		setIgnoreHitPlayer(false);
@@ -4543,7 +4301,7 @@ int Character::avoidEntity(Entity* e, int amt)
 int Character::avoidNearestEntity(int avoid_amt)
 { //=========================================================================================================================
 
-	Entity* nearestentity = findNearestEntity();
+	std::shared_ptr<Entity> nearestentity = findNearestEntity();
 
 	return avoidEntity(nearestentity, avoid_amt);
 }
@@ -4551,7 +4309,7 @@ int Character::avoidNearestEntity(int avoid_amt)
 int Character::avoidNearestCharacter(int avoid_amt)
 { //=========================================================================================================================
 
-	Character* nearestentity = findNearestCharacter();
+	std::shared_ptr<Character> nearestentity = findNearestCharacter();
 
 	return avoidEntity(nearestentity, avoid_amt);
 }
@@ -4560,463 +4318,17 @@ void Character::pushableCrowdBehavior()
 { //=========================================================================================================================
 
 
-	Entity* nearestentity = findNearestEntity();
+	std::shared_ptr<Entity> nearestentity = findNearestEntity();
 
-	if (avoidEntity(nearestentity, 4) == 1) //based on entity avoid nearest entity,send in all the entitys you want to be in the crowd
+	if (avoidEntity(nearestentity, 4) == 1)
 	{
-		//avoiding.. hehe i could just leave this out
 	}
-}
-
-int Character::walk_to_xy_intelligenthit_avoidothers_pushmain(float x, float y)
-{ //=========================================================================================================================
-
-
-	if (getPlayer() == nullptr)
-	{
-		log.error("Player null in walk_to_xy_intelligenthit_avoidothers_pushmain()");
-		return 0;
-	}
-
-
-	setIgnoreHitPlayer(true);
-	//setTicksPerPixelMoved(speed);
-
-
-	int there_yet = 0;
-	int avoided = 0;
-	int facing_direction = 0;
-	int already_walked = 0;
-
-
-	if (x == -1)
-	{
-		x = getMiddleX();
-	}
-	if (y == -1)
-	{
-		y = getMiddleY();
-	}
-
-	//if already there return 1, animate standing
-
-	if (getMiddleX() == x && getMiddleY() == y)
-	{
-		there_yet = 1;
-	}
-
-	else
-
-	{
-		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
-		{
-			//if time to walk
-
-			//calc distance x and y
-			float xdistance = getMiddleX() - x;
-			float ydistance = getMiddleY() - y;
-
-			if (xdistance < 0)
-			{
-				xdistance *= -1;
-			}
-			if (ydistance < 0)
-			{
-				ydistance *= -1;
-			}
-
-
-			//find nearest entity
-			Entity* e = findNearestEntity();
-
-
-			if (ydistance >= xdistance) //walk the greater distance first, up/down vs hitBoxLeft()/hitBoxRight()
-			{
-				///walking down
-				if (getMiddleY() < y)
-				{
-					if (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10) == true)
-					{
-						if (e == getPlayer())
-						{
-							//push main sprite down
-							if ((getMiddleY() < getPlayer()->getMiddleY()) && getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
-							{
-								e->mapY++;
-							}
-
-							if (getMiddleX() < getPlayer()->getMiddleX())
-							{ //push main sprite hitBoxRight()
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(RIGHT) == false)
-								{
-									e->mapX++;
-								}
-							}
-
-							else
-
-							{ //push main sprite hitBoxLeft()
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(LEFT) == false)
-								{
-									e->mapX--;
-								}
-							}
-						}
-
-
-						{
-							avoided = Math::randLessThan(2);
-							if (getMiddleX() <= e->getMiddleX())
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(LEFT);
-								}
-								already_walked = 1;
-							}
-							else
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(RIGHT);
-								}
-								already_walked = 1;
-							}
-						}
-
-
-						facing_direction = DOWN;
-					}
-
-
-					if (avoided == 0)
-					{
-						if (checkHitBoxAndMovePixelInDirection(DOWN) == false)
-						{
-							if (movementDirection != LEFT && movementDirection != RIGHT)
-							{
-								if (getMiddleX() >= x)
-								{
-									movementDirection = LEFT;
-								}
-								else
-								{
-									movementDirection = RIGHT;
-								}
-							}
-						}
-						else
-						{
-							already_walked = 1;
-							facing_direction = DOWN;
-						}
-					}
-				}
-
-
-				avoided = 0;
-
-				///walking up
-				if (getMiddleY() > y)
-				{
-					if (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10) == true)
-					{
-						if (e == getPlayer())
-						{
-							//push main sprite up
-							if ((getMiddleY() > getPlayer()->getMiddleY()) && getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
-							{
-								e->mapY--;
-							}
-
-							if (getMiddleX() <= getPlayer()->getMiddleX())
-							{ //push main sprite hitBoxRight()
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(RIGHT) == false)
-								{
-									e->mapX++;
-								}
-							}
-							else
-							{ //push main sprite hitBoxLeft()
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(LEFT) == false)
-								{
-									e->mapX--;
-								}
-							}
-						}
-
-						{
-							avoided = Math::randLessThan(2);
-
-							if (getMiddleX() < e->getMiddleX())
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(LEFT); //else walk hitBoxLeft() if slightly hitBoxLeft()
-								}
-								already_walked = 1;
-							}
-							else
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(RIGHT); //else walk hitBoxRight()
-								}
-								already_walked = 1;
-							}
-						}
-						facing_direction = UP;
-					}
-
-					if (avoided == 0)
-					{
-						if (checkHitBoxAndMovePixelInDirection(UP) == false)
-						{
-							if (movementDirection != LEFT && movementDirection != RIGHT)
-							{
-								if (getMiddleX() >= x)
-								{
-									movementDirection = LEFT;
-								}
-								else
-								{
-									movementDirection = RIGHT;
-								}
-							}
-						}
-						else
-						{
-							already_walked = 1;
-							facing_direction = UP;
-						}
-					}
-				}
-				avoided = 0;
-			}
-
-
-			//if walk hitBoxRight()/hitBoxLeft() first
-			if (xdistance > ydistance)
-			{
-				///walking hitBoxRight()
-				if (getMiddleX() < x)
-				{
-					if (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10) == true)
-					{
-						if (e == getPlayer())
-						{
-							//push main sprite hitBoxRight()
-							if ((getMiddleX() < getPlayer()->getMiddleX()) && getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(RIGHT) == false)
-							{
-								e->mapX++;
-							}
-
-							if (getMiddleY() > getPlayer()->getMiddleY())
-							{ //push main sprite up
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
-								{
-									e->mapY--;
-								}
-							}
-							else
-							{ //push main sprite down
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
-								{
-									e->mapY++;
-								}
-							}
-						}
-
-						{
-							avoided = Math::randLessThan(2);
-
-							if (getMiddleY() <= e->getMiddleY())
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(UP); //else walk up if slightly above
-								}
-								already_walked = 1;
-							}
-							else
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(DOWN); //else walk down
-								}
-								already_walked = 1;
-							}
-						}
-						facing_direction = RIGHT;
-					}
-
-					if (avoided == 0)
-					{
-						if (checkHitBoxAndMovePixelInDirection(RIGHT) == false)
-						{
-							if (movementDirection != UP && movementDirection != DOWN)
-							{
-								if (getMiddleY() >= y)
-								{
-									movementDirection = UP;
-								}
-								else
-								{
-									movementDirection = DOWN;
-								}
-							}
-						}
-						else
-						{
-							already_walked = 1;
-							facing_direction = RIGHT;
-						}
-					}
-				}
-
-
-				avoided = 0;
-
-
-				///walking hitBoxLeft()
-				if (getMiddleX() > x)
-				{
-					if (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10) == true)
-					{
-						if (e == getPlayer())
-						{
-							//push main sprite hitBoxLeft()
-							if ((getMiddleX() > getPlayer()->getMiddleX()) && getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(LEFT) == false)
-							{
-								e->mapX--;
-							}
-
-							if (getMiddleY() >= getPlayer()->getMiddleY())
-							{ //push main sprite up
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(UP) == false)
-								{
-									e->mapY--;
-								}
-							}
-							else
-							{ //push main sprite down
-								if (getPlayer()->checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(DOWN) == false)
-								{
-									e->mapY++;
-								}
-							}
-						}
-
-						{
-							avoided = Math::randLessThan(2);
-							if (getMiddleY() < e->getMiddleY())
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(UP); //else walk up if slightly above
-								}
-								already_walked = 1;
-							}
-							else
-							{
-								if (avoided == 1)
-								{
-									checkHitBoxAndMovePixelInDirection(DOWN); //else walk down
-								}
-								already_walked = 1;
-							}
-						}
-						facing_direction = LEFT;
-					}
-
-					if (avoided == 0)
-					{
-						if (checkHitBoxAndMovePixelInDirection(LEFT) == false)
-						{
-							if (movementDirection != UP && movementDirection != DOWN)
-							{
-								if (getMiddleY() >= y)
-								{
-									movementDirection = UP;
-								}
-								else
-								{
-									movementDirection = DOWN;
-								}
-							}
-						}
-						else
-						{
-							already_walked = 1;
-							facing_direction = LEFT;
-						}
-					}
-				}
-			}
-
-
-			if (already_walked == 0)
-			{
-				if (movementDirection == UP)
-				{
-					if (checkHitBoxAndMovePixelInDirection(UP) == false || (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10 + Math::randLessThan(6)) == true && getMiddleY() > e->getMiddleY()))
-					{
-						movementDirection = 4;
-					}
-					else
-					{
-						facing_direction = UP;
-					}
-				}
-				else if (movementDirection == DOWN)
-				{
-					if (checkHitBoxAndMovePixelInDirection(DOWN) == false || (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10 + Math::randLessThan(6)) == true && getMiddleY() < e->getMiddleY()))
-					{
-						movementDirection = 4;
-					}
-					else
-					{
-						facing_direction = DOWN;
-					}
-				}
-				else if (movementDirection == LEFT)
-				{
-					if (checkHitBoxAndMovePixelInDirection(LEFT) == false || (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10 + Math::randLessThan(6)) == true && getMiddleX() > e->getMiddleX()))
-					{
-						movementDirection = 4;
-					}
-					else
-					{
-						facing_direction = LEFT;
-					}
-				}
-				else if (movementDirection == RIGHT)
-				{
-					if (checkHitBoxAndMovePixelInDirection(RIGHT) == false || (isEntityHitBoxTouchingMyHitBoxByAmount(e, 10 + Math::randLessThan(6)) == true && getMiddleX() < e->getMiddleX()))
-					{
-						movementDirection = 4;
-					}
-					else
-					{
-						facing_direction = RIGHT;
-					}
-				}
-			}
-
-			if (pixelsToWalk > 0 && isWalkingIntoPlayerThisFrame == false)
-			{
-				pixelsToWalk--;
-			}
-		}
-	}
-	return there_yet;
 }
 
 void Character::renderDebugBoxes()
 { //=========================================================================================================================
 	Entity::renderDebugBoxes();
 
-	//float zoom = getCameraman()->getZoom();
 
 	if (pathfinder != nullptr)
 	{
@@ -5029,4 +4341,3 @@ void Character::renderDebugBoxes()
 		}
 	}
 }
-

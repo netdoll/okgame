@@ -19,8 +19,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g)
 { //===============================================================================================
 
 
-	//Character(g, new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, -1, ""));
-	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -29,7 +28,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g)
 	rotationAnimationSpeedTicks = 100; //80;
 
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friendType)
@@ -37,7 +36,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 
 
 	//this(g); //does NOT add to entityList
-	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -54,7 +53,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 //	connection = new FriendUDPConnection(g, friendManager->getNextUDPPort(), this);
 
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort)
@@ -66,7 +65,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 	//FOR DEBUG
 
 	//this(g); //does NOT add to entityList
-	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -82,7 +81,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 //	connection = new FriendUDPConnection(g, myUDPPort, this);
 //	connection->setPeerIPAddress_S("127.0.0.1", theirUDPPort);
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 void FriendCharacter::setGameToForwardPacketsTo(MiniGameEngine* game)

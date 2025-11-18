@@ -254,10 +254,7 @@ void BobEvent::reset()
 { //=========================================================================================================================
 
 	//reset to the first command
-	delete commandTree; //we're going to have to reparse it each time because the MapObjects aren't persistent and the parameters point to them.
 	commandTree = nullptr;
-
-	delete currentCommand;
 	currentCommand = nullptr;
 
 	addedToQueue = false;
@@ -267,9 +264,9 @@ void BobEvent::reset()
 void BobEvent::parseEventString(string s)
 { //===============================================================================================
 
-	commandTree = new EventCommand(getEngine(), "none", nullptr, 0);
+	commandTree = make_shared<EventCommand>(getEngine(), "none", nullptr, 0);
 
-	EventCommand* currentParent = commandTree;
+	shared_ptr<EventCommand> currentParent = commandTree;
 
 	s = s.substr(1, s.length() - 1 - 1); //split off { }, string now looks like "command,command,if(qualifier == TRUE){command,command}"
 
@@ -291,7 +288,7 @@ void BobEvent::parseEventString(string s)
 				s = s.substr(1);
 			}
 
-			currentParent = static_cast<EventCommand*>(currentParent->getParent());
+			currentParent = currentParent->getParent();
 		}
 		else
 		{
@@ -304,7 +301,7 @@ void BobEvent::parseEventString(string s)
 				string qualifier = s.substr(0, s.find("{") - 1); //get "qualifier == TRUE"
 				s = s.substr(s.find("{") + 1); //string now looks like "command,command}"
 
-				EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, qualifier);
+				shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, qualifier);
 
 				currentParent->addChild(e);
 
@@ -319,7 +316,7 @@ void BobEvent::parseEventString(string s)
 						string command = s.substr(0, s.find("}")); //get command
 						s = s.substr(s.find("}")); //split off command and comma
 
-						EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 						currentParent->addChild(e);
 					}
@@ -330,7 +327,7 @@ void BobEvent::parseEventString(string s)
 							string command = s.substr(0, s.find("),") + 1); //get command
 							s = s.substr(s.find("),") + 2); //split off command and comma
 
-							EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 							currentParent->addChild(e);
 						}
@@ -339,7 +336,7 @@ void BobEvent::parseEventString(string s)
 							string command = s.substr(0, s.find(",")); //get command
 							s = s.substr(s.find(",") + 1); //split off command and comma
 
-							EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 							currentParent->addChild(e);
 						}
@@ -352,7 +349,7 @@ void BobEvent::parseEventString(string s)
 						string command = s.substr(0, s.find("}")); //get command
 						s = s.substr(s.find("}")); //split off command and comma
 
-						EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 						currentParent->addChild(e);
 					}
@@ -362,7 +359,7 @@ void BobEvent::parseEventString(string s)
 
 						s = s.substr(command.length());
 
-						EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 						currentParent->addChild(e);
 					}
@@ -452,7 +449,6 @@ void BobEvent::getNextCommandInParent()
 	{
 		if (currentCommand->getParent() == nullptr) //this was the last command
 		{
-			delete currentCommand;
 			currentCommand = nullptr;
 		}
 		else
@@ -522,7 +518,7 @@ void BobEvent::doCommand()
 	{
 		for (int i = 0; i < (int)currentCommand->parameterList->size(); i++)
 		{
-			EventParameter* e = currentCommand->parameterList->get(i);
+			shared_ptr<EventParameter> e = currentCommand->parameterList->get(i);
 			e->updateParameterVariablesFromString(this);
 		}
 	}
@@ -2942,7 +2938,6 @@ void BobEvent::clearEvent_EVENT()
 void BobEvent::clearThisEvent()
 { //===============================================================================================
 
-	delete currentCommand;
 	currentCommand = nullptr;
 }
 
@@ -4998,7 +4993,7 @@ void BobEvent::spawnSpriteAsNPC_SPRITE_STRINGentityIdent_AREA()
 		if (map != nullptr)m = map;
 		if (m == nullptr && a != nullptr && a->map != nullptr) m = a->map;
 
-		Character* character = new Character(getEngine(), gameString->text(), sprite, a, m);
+		shared_ptr<Character> character = make_shared<Character>(getEngine(), gameString->text(), sprite, a, m);
 
 		character->setAlphaImmediately(1.0f);
 
@@ -5028,7 +5023,7 @@ void BobEvent::spawnSpriteAsNPCFadeIn_SPRITE_STRINGentityIdent_AREA()
 		Map* m = nullptr;
 		if (map != nullptr)m = map;
 		if (m == nullptr && a != nullptr && a->map != nullptr) m = a->map;
-		new Character(getEngine(), gameString->text(), sprite, a, m);
+		make_shared<Character>(getEngine(), gameString->text(), sprite, a, m);
 
 		getNextCommand();
 	}

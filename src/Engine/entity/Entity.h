@@ -8,6 +8,7 @@
 #include "../../Utility/BobBool.h"
 #include "BobSprite.h"
 #include "../rpg/event/EventData.h"
+#include <memory>
 class Logger;
 
 class SpriteAnimationSequence;
@@ -22,11 +23,13 @@ class Entity : public EnginePart
 {
 public:
 
+	virtual ~Entity() = default;
+
 	static Logger log;
 
-	Map* map = nullptr;
+	std::shared_ptr<Map> map = nullptr;
 
-	BobEvent* event = nullptr;
+	std::shared_ptr<BobEvent> event = nullptr;
 
 	const static int DOWN;
 	const static int UP;
@@ -66,10 +69,10 @@ public:
 	bool isWalkingIntoPlayerThisFrame = false;
 	bool isWalkingIntoWallThisFrame = false;
 
-	Sprite* sprite = nullptr;
+	std::shared_ptr<Sprite> sprite = nullptr;
 
 protected:
-	EntityData* data = nullptr;
+	std::shared_ptr<EntityData> data = nullptr;
 
 public:
 	float mapX = 0;
@@ -85,14 +88,14 @@ public:
 private:
 	long long animationTicksCounter = 0; // was vbl_animation_timer
 	int frameIndexInTexture = 0; //based on current sequence (getAnimDirection()) and currentAnimationFrameInSequence, this is what will be rendered
-	SpriteAnimationSequence* currentAnimation = nullptr;
+	std::shared_ptr<SpriteAnimationSequence> currentAnimation = nullptr;
 
 	int ticksBetweenAnimationLoopThisLoop = 0; //for storing random value between loops
 
 public:
 	int movementDirection = 0; //was walk_dir
 
-	float* shadowClipPerPixel = nullptr;
+	std::vector<float> shadowClipPerPixel;
 	bool clipShadow = false;
 	float shadowSize = 0.65f;
 	//public float getShadowStart = 0.75f;
@@ -114,11 +117,11 @@ private:
 
 public:
 	Entity();
-	Entity(Engine* g, Map* m);
+	Entity(Engine* g, std::shared_ptr<Map> m);
 
-	Entity(Engine* g, EntityData* entityData, Map* m);
+	Entity(Engine* g, std::shared_ptr<EntityData> entityData, std::shared_ptr<Map> m);
 
-	void initEntity(EntityData* entityData);
+	void initEntity(std::shared_ptr<EntityData> entityData);
 
 	virtual void initCurrentAnimationFromSprite();
 
@@ -159,11 +162,11 @@ public:
 
 	virtual void render(float mapAlpha);
 
-	virtual void render(float alpha, BobTexture* texture, BobTexture* shadowTexture);
+	virtual void render(float alpha, std::shared_ptr<BobTexture> texture, std::shared_ptr<BobTexture> shadowTexture);
 
-	virtual Map* getCurrentMap();
+	virtual std::shared_ptr<Map> getCurrentMap();
 
-	Map* getMap();
+	std::shared_ptr<Map> getMap();
 
 	virtual bool shouldDraw();
 
@@ -256,9 +259,9 @@ protected:
 public:
 	bool haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks);
 
-	SpriteAnimationSequence* getCurrentAnimation();
+	std::shared_ptr<SpriteAnimationSequence> getCurrentAnimation();
 
-	void setCurrentAnimation(SpriteAnimationSequence* a);
+	void setCurrentAnimation(std::shared_ptr<SpriteAnimationSequence> a);
 
 	void setCurrentAnimationByName(const string& name);
 
@@ -266,7 +269,7 @@ public:
 
 	int getSpriteLastFrame();
 
-	SpriteAnimationSequence* getAnimationBySpriteFrame(int frame);
+	std::shared_ptr<SpriteAnimationSequence> getAnimationBySpriteFrame(int frame);
 
 	void setCurrentAnimationBySpriteFrame(int frame);
 
@@ -342,55 +345,55 @@ public:
 
 	void tellServerTalkedToToday();
 
-	float getDistanceFromEntity(Entity* e);
+	float getDistanceFromEntity(std::shared_ptr<Entity> e);
 
-	Entity* findNearestEntity();
+	std::shared_ptr<Entity> findNearestEntity();
 
-	Entity* findNearestEntityInDirection(int dir);
+	std::shared_ptr<Entity> findNearestEntityInDirection(int dir);
 
-	bool isWalkingIntoEntity(Entity* entity);
+	bool isWalkingIntoEntity(std::shared_ptr<Entity> entity);
 
-	bool isWalkingIntoArea(Area* area);
+	bool isWalkingIntoArea(std::shared_ptr<Area> area);
 
-	bool isEntityHitBoxTouchingMyHitBox(Entity* e);
+	bool isEntityHitBoxTouchingMyHitBox(std::shared_ptr<Entity> e);
 
 	bool isNearestEntityHitBoxTouchingMyHitBox();
 
-	bool isAreaCenterTouchingMyHitBox(Area* a);
+	bool isAreaCenterTouchingMyHitBox(std::shared_ptr<Area> a);
 
-	bool isAreaBoundaryTouchingMyHitBox(Area* a);
+	bool isAreaBoundaryTouchingMyHitBox(std::shared_ptr<Area> a);
 
 	bool isXYTouchingMyHitBox(float x, float y);
 
 	bool isXYXYTouchingMyHitBox(float left, float top, float right, float bottom);
 
-	bool isAreaBoundaryTouchingMyMiddleXY(Area* a);
+	bool isAreaBoundaryTouchingMyMiddleXY(std::shared_ptr<Area> a);
 
-	bool isEntityMiddleXYTouchingMyMiddleXY(Entity* e);
+	bool isEntityMiddleXYTouchingMyMiddleXY(std::shared_ptr<Entity> e);
 
-	bool isAreaCenterTouchingMyMiddleXY(Area* a);
+	bool isAreaCenterTouchingMyMiddleXY(std::shared_ptr<Area> a);
 
 	bool isXYTouchingMyMiddleXY(float x, float y);
 
 	bool isXYXYTouchingMyMiddleXY(float left, float top, float right, float bottom);
 
-	bool isEntityHitBoxTouchingMyHitBoxByAmount(Entity* e, int amt);
+	bool isEntityHitBoxTouchingMyHitBoxByAmount(std::shared_ptr<Entity> e, int amt);
 
 	bool isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt);
 
-	bool isAreaCenterTouchingMyHitBoxByAmount(Area* a, int amt);
+	bool isAreaCenterTouchingMyHitBoxByAmount(std::shared_ptr<Area> a, int amt);
 
-	bool isAreaBoundaryTouchingMyHitBoxByAmount(Area* a, int amt);
+	bool isAreaBoundaryTouchingMyHitBoxByAmount(std::shared_ptr<Area> a, int amt);
 
 	bool isXYTouchingMyHitBoxByAmount(float x, float y, int amt);
 
 	bool isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, float bottom, int amt);
 
-	bool isAreaBoundaryTouchingMyMiddleXYByAmount(Area* a, int amt);
+	bool isAreaBoundaryTouchingMyMiddleXYByAmount(std::shared_ptr<Area> a, int amt);
 
-	bool isEntityMiddleXYTouchingMyMiddleXYByAmount(Entity* e, int amt);
+	bool isEntityMiddleXYTouchingMyMiddleXYByAmount(std::shared_ptr<Entity> e, int amt);
 
-	bool isAreaCenterTouchingMyMiddleXYByAmount(Area* a, int amt);
+	bool isAreaCenterTouchingMyMiddleXYByAmount(std::shared_ptr<Area> a, int amt);
 
 	bool isXYTouchingMyMiddleXYByAmount(float x, float y, int amt);
 
@@ -398,7 +401,7 @@ public:
 
 	bool isTouchingPlayerInDirection(int dir);
 
-	bool isHitBoxTouchingEntityInDirectionByAmount(Entity* e, int direction, int amt);
+	bool isHitBoxTouchingEntityInDirectionByAmount(std::shared_ptr<Entity> e, int direction, int amt);
 
 	bool isHitBoxTouchingXYInDirectionByAmount(float x, float y, int direction, int amt);
 
@@ -470,7 +473,7 @@ public:
 
 	virtual float getHeight();
 
-	virtual EntityData* getData();
+	virtual std::shared_ptr<EntityData> getData();
 
 	string& getName();
 	string& getComment();
@@ -499,7 +502,7 @@ public:
 
 	float getTicksPerPixelMoved();
 
-	EventData* getEventData();
+	std::shared_ptr<EventData> getEventData();
 	bool getOnlyHereDuringEvent();
 	float getVoicePitch();
 	bool getMovementAnimationDisabled();

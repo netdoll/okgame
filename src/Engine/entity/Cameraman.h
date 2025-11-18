@@ -9,6 +9,7 @@
 class Logger;
 
 
+#include <memory>
 
 #include "../../Engine/entity/Entity.h"
 
@@ -18,14 +19,14 @@ class Engine;
 class Area;
 
 
-class Cameraman : public Entity
+class Cameraman : public Entity, public std::enable_shared_from_this<Cameraman>
 {
 public:
 
 	static Logger log;
 
 
-	Entity* targetEntity = nullptr;
+	std::shared_ptr<Entity> targetEntity = nullptr;
 
 	int lastXTarget = -1;
 	int lastYTarget = -1;
@@ -199,7 +200,7 @@ public:
 	void setXYToTarget();
 
 
-	void setTarget(Entity* t);
+	void setTarget(std::shared_ptr<Entity> t);
 
 
 	void setTarget(float mapXPixelsHQ, float mapYPixelsHQ);
