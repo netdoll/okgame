@@ -22,12 +22,12 @@ RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int sp
 	//spawn at mapX, mapY
 
 
-	EntityData* data = new EntityData(-1, "Random", "", spawnXPixels1X, spawnYPixels1X);
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, "Random", "", spawnXPixels1X, spawnYPixels1X);
 	initEntity(data);
 	initCharacter();
 
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 
 	ArrayList<string>* spriteNameList = new ArrayList<string>;
 
@@ -187,6 +187,7 @@ RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int sp
 
 
 	getData()->setSpriteName(spriteNameList->get(Math::randLessThan(spriteNameList->size())));
+	delete spriteNameList;
 
 	this->sprite = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist(getSpriteName());
 

@@ -27,18 +27,18 @@ Cameraman::Cameraman(Engine* g)
 
 	this->e = g;
 
-	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0);
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, "Camera", "Camera", 0, 0);
 	initEntity(data);
 
 	//set target
 
 	//set map x and map y to target x y
 
-	targetEntity = this;
+	targetEntity = shared_from_this();
 
 	getData()->setDisableShadow(true);
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 void Cameraman::initCurrentAnimationFromSprite()
@@ -937,7 +937,7 @@ void Cameraman::setXYToTarget()
 	setY(targetEntity->getY() + (targetEntity->getHeight() / 2));
 }
 
-void Cameraman::setTarget(Entity* t)
+void Cameraman::setTarget(shared_ptr<Entity> t)
 { //=========================================================================================================================
 	if (t == nullptr)
 	{
@@ -956,17 +956,17 @@ void Cameraman::setTarget(Entity* t)
 
 void Cameraman::setTarget(float mapXPixelsHQ, float mapYPixelsHQ)
 { //=========================================================================================================================
-	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2), nullptr);
+	targetEntity = std::make_shared<Entity>(getEngine(), std::make_shared<EntityData>(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2), nullptr);
 }
 
 void Cameraman::setTarget(Area* area)
 { //=========================================================================================================================
-	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2), nullptr);
+	targetEntity = std::make_shared<Entity>(getEngine(), std::make_shared<EntityData>(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2), nullptr);
 }
 
 void Cameraman::setDummyTarget()
 { //=========================================================================================================================
-	targetEntity = this; //new Entity(getEngine(),new EntityData(-1,"Null Target","",getX(),getY()));
+	targetEntity = shared_from_this();
 }
 
 void Cameraman::setAutoZoomByPlayerMovement(bool b)

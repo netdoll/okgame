@@ -1761,7 +1761,7 @@ void TextManager::parseOption()
 		}
 		else if (optionBuffer == "MOM")
 		{
-			Entity* e = getCurrentMap()->getEntityByName("mom");
+			shared_ptr<Entity> e = getCurrentMap()->getEntityByName("mom");
 			if (e == nullptr)
 			{
 				return;
@@ -1771,7 +1771,7 @@ void TextManager::parseOption()
 		}
 		else if (optionBuffer == "DAD")
 		{
-			Entity* e = getCurrentMap()->getEntityByName("dad");
+			shared_ptr<Entity> e = getCurrentMap()->getEntityByName("dad");
 			if (e == nullptr)
 			{
 				return;
@@ -1781,7 +1781,7 @@ void TextManager::parseOption()
 		}
 		else if (optionBuffer == "BROTHER")
 		{
-			Entity* e = getCurrentMap()->getEntityByName("brother");
+			shared_ptr<Entity> e = getCurrentMap()->getEntityByName("brother");
 			if (e == nullptr)
 			{
 				return;
@@ -1822,7 +1822,7 @@ void TextManager::parseOption()
 		else if (String::startsWith(optionBuffer, "SETSPRITEBOX0TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			Entity* e = getCurrentMap()->getEntityByName(s);
+			shared_ptr<Entity> e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
 				textBox->get(0)->setSpriteWindow(e, nullptr, "");
@@ -1831,7 +1831,7 @@ void TextManager::parseOption()
 		else if (String::startsWith(optionBuffer, "SETSPRITEBOX1TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			Entity* e = getCurrentMap()->getEntityByName(s);
+			shared_ptr<Entity> e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
 				textBox->get(1)->setSpriteWindow(e, nullptr, "");

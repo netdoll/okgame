@@ -63,11 +63,11 @@ public:
 
 	bool isWithinScreenBounds();
 
-	bool inRangeOfEntityByAmount(Entity* e, int amt);
+	bool inRangeOfEntityByAmount(shared_ptr<Entity> e, int amt);
 
-	float getDistanceFromEntity(Entity* e);
+	float getDistanceFromEntity(shared_ptr<Entity> e);
 
-	bool isEntityHitBoxTouchingMyBoundary(Entity* e);
+	bool isEntityHitBoxTouchingMyBoundary(shared_ptr<Entity> e);
 
 	bool isAreaCenterTouchingMyBoundary(Area* a);
 
@@ -79,7 +79,7 @@ public:
 
 	bool isAreaBoundaryTouchingMyCenter(Area* a);
 
-	bool isEntityMiddleXYTouchingMyCenter(Entity* e);
+	bool isEntityMiddleXYTouchingMyCenter(shared_ptr<Entity> e);
 
 	bool isAreaCenterTouchingMyCenter(Area* a);
 
@@ -87,7 +87,7 @@ public:
 
 	bool isXYXYTouchingMyCenter(float left, float top, float right, float bottom);
 
-	bool isEntityHitBoxTouchingMyBoundaryByAmount(Entity* e, int amt);
+	bool isEntityHitBoxTouchingMyBoundaryByAmount(shared_ptr<Entity> e, int amt);
 
 	bool isAreaCenterTouchingMyBoundaryByAmount(Area* a, int amt);
 
@@ -99,7 +99,7 @@ public:
 
 	bool isAreaBoundaryTouchingMyCenterByAmount(Area* a, int amt);
 
-	bool isEntityMiddleXYTouchingMyCenterByAmount(Entity* e, int amt);
+	bool isEntityMiddleXYTouchingMyCenterByAmount(shared_ptr<Entity> e, int amt);
 
 	bool isAreaCenterTouchingMyCenterByAmount(Area* a, int amt);
 

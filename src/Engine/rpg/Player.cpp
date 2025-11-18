@@ -19,12 +19,12 @@ Player::Player(Engine* g, const string& spriteName)
 
 	this->e = g;
 
-	EntityData* data = new EntityData(-1, "Player", spriteName, 0, 0);
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, "Player", spriteName, 0, 0);
 	initEntity(data);
 	initCharacter();
 	initPlayer();
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 void Player::initPlayer()
@@ -38,12 +38,12 @@ Player::Player(Engine* g)
 { //=========================================================================================================================
 
 	this->e = g;
-	EntityData* data = new EntityData(-1, "Player", "", 0, 0);
+	std::shared_ptr<EntityData> data = std::make_shared<EntityData>(-1, "Player", "", 0, 0);
 	initEntity(data);
 	initCharacter();
 	initPlayer();
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
 void Player::update()

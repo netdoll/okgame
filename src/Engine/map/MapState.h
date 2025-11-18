@@ -20,11 +20,11 @@ public:
 	HashMap<string, Light*> lightByNameHashtable;//new HashMap<string, Light*>();
 
 
-	ArrayList<Entity*> entityList;
-	HashMap<string, Entity*> entityByNameHashtable;//new HashMap<string, Entity*>();
+	ArrayList<shared_ptr<Entity>> entityList;
+	HashMap<string, shared_ptr<Entity>> entityByNameHashtable;//new HashMap<string, Entity*>();
 
-	ArrayList<Character*> characterList;
-	HashMap<string, Character*> characterByNameHashtable;//new HashMap<string, Character*>();
+	ArrayList<shared_ptr<Character>> characterList;
+	HashMap<string, shared_ptr<Character>> characterByNameHashtable;//new HashMap<string, Character*>();
 
 
 	ArrayList<Area*> areaList;

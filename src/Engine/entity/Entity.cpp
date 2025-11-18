@@ -24,16 +24,16 @@ Entity::Entity()
 { //=========================================================================================================================
 }
 
-Entity::Entity(Engine* g, Map* m)
+Entity::Entity(Engine* g, std::shared_ptr<Map> m)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->map = m;
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
-Entity::Entity(Engine* g, EntityData* entityData, Map* m)
+Entity::Entity(Engine* g, std::shared_ptr<EntityData> entityData, std::shared_ptr<Map> m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -42,15 +42,15 @@ Entity::Entity(Engine* g, EntityData* entityData, Map* m)
 
 	this->map = m;
 
-	if (getEventData() != nullptr)this->event = new BobEvent(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
-void Entity::initEntity(EntityData* entityData)
+void Entity::initEntity(std::shared_ptr<EntityData> entityData)
 { //=========================================================================================================================
 
 	if (entityData == nullptr)
 	{
-		entityData = new EntityData(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
+		entityData = std::make_shared<EntityData>(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
 		log.warn("entityData was null in Entity.init()");
 	}
 	this->data = entityData;
@@ -77,13 +77,9 @@ void Entity::initCurrentAnimationFromSprite()
 		selectRandomFrame(getCurrentAnimationStartFrame(), getCurrentAnimationLastFrame());
 	}
 
-	if (shadowClipPerPixel == nullptr)
+	if (shadowClipPerPixel.empty())
 	{
-		shadowClipPerPixel = new float[sprite->getImageWidth()];
-		for (int i = 0; i < sprite->getImageWidth(); i++)
-		{
-			shadowClipPerPixel[i] = 1.0f;
-		}
+		shadowClipPerPixel.assign(sprite->getImageWidth(), 1.0f);
 	}
 }
 
@@ -445,7 +441,7 @@ void Entity::render(float mapAlpha)
 	//overrode this so i can send in arbitrary texture, really only used for random sprites which contain their own unique texture reference, and not the one contained in the spriteAsset object.
 }
 
-void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
+void Entity::render(float alpha, std::shared_ptr<BobTexture> texture, std::shared_ptr<BobTexture> shadowTexture)
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();
@@ -485,15 +481,15 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 			y0 = (getScreenTop() - offsetY) + ((getHeight() * getShadowStart()) * zoom);
 			y1 = y0 + ((getHeight() * shadowSize) * zoom);
 
-			GLUtils::drawTexture(shadowTexture, tx0, tx1, ty0, ty1, x0, x1, y0, y1, shadowAlpha, GLUtils::FILTER_LINEAR);
+			GLUtils::drawTexture(shadowTexture.get(), tx0, tx1, ty0, ty1, shadowAlpha, GLUtils::FILTER_LINEAR);
 		}
 		else
 		{
-			if (clipShadow == true && shadowClipPerPixel != nullptr)
+			if (clipShadow == true && !shadowClipPerPixel.empty())
 			{
 
 				//bind texture here.
-				GLUtils::bindTexture(shadowTexture);
+				GLUtils::bindTexture(shadowTexture.get());
 				
 
 				for (int x = 0; x < sprite->getImageWidth(); x++)
@@ -535,7 +531,7 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	x1 = (float)((x0 + getWidth() * zoom));
 	y1 = (float)((y0 + getHeight() * zoom));
 
-	sprite->drawFrame(texture, getFrame(), x0, x1, y0, y1, alpha, GLUtils::FILTER_NEAREST);
+	sprite->drawFrame(texture.get(), getFrame(), x0, x1, y0, y1, alpha, GLUtils::FILTER_NEAREST);
 
 	//		if(texture!=null)
 	//		{
@@ -575,7 +571,7 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	}
 }
 
-Map* Entity::getCurrentMap()
+std::shared_ptr<Map> Entity::getCurrentMap()
 { //=========================================================================================================================
 
 	log.warn("getCurrentMap() in Entity");
@@ -584,7 +580,7 @@ Map* Entity::getCurrentMap()
 	return EnginePart::getCurrentMap();
 }
 
-Map* Entity::getMap()
+std::shared_ptr<Map> Entity::getMap()
 { //=========================================================================================================================
 
 	if (this->map == nullptr)
@@ -1042,7 +1038,7 @@ bool Entity::haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks)
 	}
 }
 
-SpriteAnimationSequence* Entity::getCurrentAnimation()
+std::shared_ptr<SpriteAnimationSequence> Entity::getCurrentAnimation()
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
@@ -1055,7 +1051,7 @@ SpriteAnimationSequence* Entity::getCurrentAnimation()
 	return currentAnimation;
 }
 
-void Entity::setCurrentAnimation(SpriteAnimationSequence* a)
+void Entity::setCurrentAnimation(std::shared_ptr<SpriteAnimationSequence> a)
 { //=========================================================================================================================
 	currentAnimation = a;
 }
@@ -1117,7 +1113,7 @@ void Entity::setCurrentAnimationByDirection(int dir)
 		log.error("Sprite is null in Entity: " + getName() + " while setting AnimationByName");
 		return;
 	}
-	SpriteAnimationSequence* a = sprite->getAnimationByName(sequenceName);
+	auto a = sprite->getAnimationByName(sequenceName);
 	if (a == nullptr)
 	{
 		log.error("Animation name: " + sequenceName + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
@@ -1139,13 +1135,13 @@ int Entity::getSpriteLastFrame()
 	return sprite->getNumFrames() - 1;
 }
 
-SpriteAnimationSequence* Entity::getAnimationBySpriteFrame(int frame)
+std::shared_ptr<SpriteAnimationSequence> Entity::getAnimationBySpriteFrame(int frame)
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
 		log.error("Sprite is null in Entity: " + getName() + " while getting AnimationByFrame");
 	}
-	SpriteAnimationSequence* a = sprite->getAnimationByFrame(frame);
+	auto a = sprite->getAnimationByFrame(frame);
 
 	if (a == nullptr && sprite->getName() == "Camera" == false && sprite->getName() == "none" == false)
 	{
@@ -1470,9 +1466,7 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 	{
 		Character* r = static_cast<Character*>(this);
 		r->uniqueTexture->release();
-		delete r->uniqueTexture;
 		r->uniqueTexture = nullptr;
-
 	}
 }
 
@@ -1492,23 +1486,23 @@ void Entity::tellServerTalkedToToday()
 	// TODO
 }
 
-float Entity::getDistanceFromEntity(Entity* e)
+float Entity::getDistanceFromEntity(std::shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return Math::distance(getMiddleX(), getMiddleY(), e->getMiddleX(), e->getMiddleY());
 }
 
-Entity* Entity::findNearestEntity()
+std::shared_ptr<Entity> Entity::findNearestEntity()
 { //=========================================================================================================================
 
-	Entity* nearestEntity = nullptr;
+	std::shared_ptr<Entity> nearestEntity = nullptr;
 
 	int shortestdist = 65535;
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		Entity* currentEntity = getMap()->activeEntityList.get(n);
+		std::shared_ptr<Entity> currentEntity = getMap()->activeEntityList.get(n);
 
-		if (this != currentEntity)
+		if (this != currentEntity.get())
 		{
 			float x = getMiddleX() - (currentEntity->getMiddleX());
 			float y = getMiddleY() - (currentEntity->getMiddleY());
@@ -1529,12 +1523,12 @@ Entity* Entity::findNearestEntity()
 	return nearestEntity;
 }
 
-Entity* Entity::findNearestEntityInDirection(int dir)
+std::shared_ptr<Entity> Entity::findNearestEntityInDirection(int dir)
 { //=========================================================================================================================
 
 	//this checks a direction and finds the closest entity within the entity boundaries in that direction
 
-	Entity* nearest_entity = nullptr;
+	std::shared_ptr<Entity> nearest_entity = nullptr;
 
 	float shortestdist = 65535;
 
@@ -1543,9 +1537,9 @@ Entity* Entity::findNearestEntityInDirection(int dir)
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		Entity* e = getMap()->activeEntityList.get(n);
+		std::shared_ptr<Entity> e = getMap()->activeEntityList.get(n);
 
-		if (this != e)
+		if (this != e.get())
 		{
 			float eMiddleX = e->getMiddleX();
 			float eMiddleY = e->getMiddleY();
@@ -1615,7 +1609,7 @@ Entity* Entity::findNearestEntityInDirection(int dir)
 	return nearest_entity;
 }
 
-bool Entity::isWalkingIntoEntity(Entity* entity)
+bool Entity::isWalkingIntoEntity(std::shared_ptr<Entity> entity)
 { //=========================================================================================================================
 
 	bool walkingIntoDoor = false;
@@ -1770,7 +1764,7 @@ bool Entity::isWalkingIntoEntity(Entity* entity)
 	return walkingIntoDoor;
 }
 
-bool Entity::isWalkingIntoArea(Area* area)
+bool Entity::isWalkingIntoArea(std::shared_ptr<Area> area)
 { //=========================================================================================================================
 
 	bool walkingIntoArea = false;
@@ -1928,7 +1922,7 @@ bool Entity::isWalkingIntoArea(Area* area)
 	return walkingIntoArea;
 }
 
-bool Entity::isEntityHitBoxTouchingMyHitBox(Entity* e)
+bool Entity::isEntityHitBoxTouchingMyHitBox(std::shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return isEntityHitBoxTouchingMyHitBoxByAmount(e, 0);
 }
@@ -1938,12 +1932,12 @@ bool Entity::isNearestEntityHitBoxTouchingMyHitBox()
 	return isNearestEntityHitBoxTouchingMyHitBoxByAmount(0);
 }
 
-bool Entity::isAreaCenterTouchingMyHitBox(Area* a)
+bool Entity::isAreaCenterTouchingMyHitBox(std::shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyHitBoxByAmount(a, 0);
 }
 
-bool Entity::isAreaBoundaryTouchingMyHitBox(Area* a)
+bool Entity::isAreaBoundaryTouchingMyHitBox(std::shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyHitBoxByAmount(a, 0);
 }
@@ -1958,17 +1952,17 @@ bool Entity::isXYXYTouchingMyHitBox(float left, float top, float right, float bo
 	return isXYXYTouchingMyHitBoxByAmount(left, top, right, bottom, 0);
 }
 
-bool Entity::isAreaBoundaryTouchingMyMiddleXY(Area* a)
+bool Entity::isAreaBoundaryTouchingMyMiddleXY(std::shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyMiddleXYByAmount(a, 0);
 }
 
-bool Entity::isEntityMiddleXYTouchingMyMiddleXY(Entity* e)
+bool Entity::isEntityMiddleXYTouchingMyMiddleXY(std::shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return isEntityMiddleXYTouchingMyMiddleXYByAmount(e, 1);
 }
 
-bool Entity::isAreaCenterTouchingMyMiddleXY(Area* a)
+bool Entity::isAreaCenterTouchingMyMiddleXY(std::shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyMiddleXYByAmount(a, 1);
 }
@@ -1983,7 +1977,7 @@ bool Entity::isXYXYTouchingMyMiddleXY(float left, float top, float right, float 
 	return isXYXYTouchingMyMiddleXYByAmount(left, top, right, bottom, 0);
 }
 
-bool Entity::isEntityHitBoxTouchingMyHitBoxByAmount(Entity* e, int amt)
+bool Entity::isEntityHitBoxTouchingMyHitBoxByAmount(std::shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), amt);
 }
@@ -1993,12 +1987,12 @@ bool Entity::isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt)
 	return isEntityHitBoxTouchingMyHitBoxByAmount(findNearestEntity(), amt);
 }
 
-bool Entity::isAreaCenterTouchingMyHitBoxByAmount(Area* a, int amt)
+bool Entity::isAreaCenterTouchingMyHitBoxByAmount(std::shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyHitBoxByAmount(a->middleX(), a->middleY(), amt);
 }
 
-bool Entity::isAreaBoundaryTouchingMyHitBoxByAmount(Area* a, int amt)
+bool Entity::isAreaBoundaryTouchingMyHitBoxByAmount(std::shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyHitBoxByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
@@ -2013,17 +2007,17 @@ bool Entity::isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, 
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), left, top, right, bottom, amt);
 }
 
-bool Entity::isAreaBoundaryTouchingMyMiddleXYByAmount(Area* a, int amt)
+bool Entity::isAreaBoundaryTouchingMyMiddleXYByAmount(std::shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyMiddleXYByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
 
-bool Entity::isEntityMiddleXYTouchingMyMiddleXYByAmount(Entity* e, int amt)
+bool Entity::isEntityMiddleXYTouchingMyMiddleXYByAmount(std::shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyMiddleXYByAmount(e->getMiddleX(), e->getMiddleY(), amt);
 }
 
-bool Entity::isAreaCenterTouchingMyMiddleXYByAmount(Area* a, int amt)
+bool Entity::isAreaCenterTouchingMyMiddleXYByAmount(std::shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyMiddleXYByAmount(a->middleX(), a->middleY(), amt);
 }
@@ -2103,7 +2097,7 @@ bool Entity::isTouchingPlayerInDirection(int dir)
 	return touching_player_entity;
 }
 
-bool Entity::isHitBoxTouchingEntityInDirectionByAmount(Entity* e, int direction, int amt)
+bool Entity::isHitBoxTouchingEntityInDirectionByAmount(std::shared_ptr<Entity> e, int direction, int amt)
 { //=========================================================================================================================
 	return isHitBoxTouchingXYXYInDirectionByAmount(e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), direction, amt);
 }
@@ -2447,7 +2441,7 @@ float Entity::getHeight()
 	}
 }
 
-EntityData* Entity::getData()
+std::shared_ptr<EntityData> Entity::getData()
 {
 	return data;
 }
@@ -2574,7 +2568,7 @@ float Entity::getTicksPerPixelMoved()
 	return getData()->getTicksPerPixelMoved();
 }
 
-EventData* Entity::getEventData()
+std::shared_ptr<EventData> Entity::getEventData()
 {
 	return getData()->getEventData();
 }

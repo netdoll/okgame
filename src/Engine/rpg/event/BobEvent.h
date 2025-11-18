@@ -8,6 +8,7 @@
 class Logger;
 
 
+#include <memory>
 
 #include "src/Engine/network/ServerObject.h"
 
@@ -36,8 +37,8 @@ public:
 	Area* area = nullptr;
 	Entity* entity = nullptr;
 
-	EventCommand* commandTree = nullptr;
-	EventCommand* currentCommand = nullptr;
+	shared_ptr<EventCommand> commandTree = nullptr;
+	shared_ptr<EventCommand> currentCommand = nullptr;
 
 private:
 	EventData* data = nullptr;

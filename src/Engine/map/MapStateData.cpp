@@ -67,7 +67,7 @@ string& MapStateData::initFromString(string& t)
 	while (String::startsWith(t,"}") == false)
 	{
 
-		LightData *data = new LightData();
+		std::shared_ptr<LightData> data = std::make_shared<LightData>();
 		t = data->initFromString(t);
 		lightDataList.add(data);
 	}
@@ -79,7 +79,7 @@ string& MapStateData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t,"}") == false)
 	{
-		EntityData *data = new EntityData();
+		std::shared_ptr<EntityData> data = std::make_shared<EntityData>();
 		t = data->initFromString(t);
 		entityDataList.add(data);
 
@@ -92,7 +92,7 @@ string& MapStateData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t,"}") == false)
 	{
-		AreaData *data = new AreaData();
+		std::shared_ptr<AreaData> data = std::make_shared<AreaData>();
 		t = data->initFromString(t);
 		areaDataList.add(data);
 
@@ -118,7 +118,7 @@ ArrayList<LightData*>* MapStateData::getLightDataList()
 	return &lightDataList;
 }
 
-ArrayList<EntityData*>* MapStateData::getEntityDataList()
+ArrayList<std::shared_ptr<EntityData>>* MapStateData::getEntityDataList()
 {
 	return &entityDataList;
 }

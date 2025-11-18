@@ -14,7 +14,7 @@
 Logger Door::log = Logger("Door");
 
 
-Door::Door(Engine* g, DoorData* doorAsset, Map* m)
+Door::Door(Engine* g, shared_ptr<DoorData> doorAsset, Map* m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -539,14 +539,14 @@ void Door::renderDebugInfo()
 	               */
 }
 
-EntityData* Door::getData()
+shared_ptr<EntityData> Door::getData()
 {
 	return data;
 }
 
-DoorData* Door::getDoorData()
+shared_ptr<DoorData> Door::getDoorData()
 {
-	return ((DoorData*)getData());
+	return (static_pointer_cast<DoorData>(getData()));
 }
 
 float Door::arrivalXPixelsHQ()
