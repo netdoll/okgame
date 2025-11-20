@@ -39,7 +39,7 @@
 	url = https://gitlab.com/MrPepperoni/nanogui-sdl
 [submodule "lib/nanovg"]
 	path = lib/nanovg
-	url = https://github.com/memononen/nanovg
+	url = https://github.com/robertpelloni/nanovg
 [submodule "lib/nngui"]
 	path = lib/nngui
 	url = https://github.com/draekko/nngui
@@ -270,7 +270,7 @@
 	url = https://github.com/libretro/libretro-lutro
 [submodule "lib/timidity"]
 	path = lib/timidity
-	url = https://github.com/geofft/timidity
+	url = https://github.com/robertpelloni/timidity
 [submodule "lib/libtimidity"]
 	path = lib/libtimidity
 	url = https://github.com/sezero/libtimidity
