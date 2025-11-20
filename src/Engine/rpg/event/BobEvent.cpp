@@ -5023,7 +5023,7 @@ void BobEvent::spawnSpriteAsNPCFadeIn_SPRITE_STRINGentityIdent_AREA()
 		Map* m = nullptr;
 		if (map != nullptr)m = map;
 		if (m == nullptr && a != nullptr && a->map != nullptr) m = a->map;
-		make_shared<Character>(getEngine(), gameString->text(), sprite, a, m);
+		shared_ptr<Character> character = make_shared<Character>(getEngine(), gameString->text(), sprite, a, m);
 
 		getNextCommand();
 	}
