@@ -508,10 +508,10 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
-	for (int i = 0; i<areas->size(); i++)
+	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas->get(i);
+		Area* a = areas.get(i);
 
 
 		if (a->randomPointOfInterestOrExit())
@@ -1616,10 +1616,10 @@ void Map::renderAreaActionIcons()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
-	for (int i = 0; i<areas->size(); i++)
+	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas->get(i);
+		Area* a = areas.get(i);
 
 		//if(a.isAnAction)
 		a->renderActionIcon();
@@ -1804,10 +1804,10 @@ void Map::renderAreaDebugBoxes()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
-	for (int i = 0; i<areas->size(); i++)
+	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas->get(i);
+		Area* a = areas.get(i);
 
 
 
@@ -1831,10 +1831,10 @@ void Map::renderAreaDebugInfo()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
-	for (int i = 0; i<areas->size(); i++)
+	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas->get(i);
+		Area* a = areas.get(i);
 
 
 		//a.renderDebugBoxes();
@@ -2225,11 +2225,11 @@ void Map::releaseAllTextures()
 
 
 	
-	ArrayList<BobTexture*>* chunks = chunkTexture.getAllValues();
+	ArrayList<BobTexture*> chunks = chunkTexture.getAllValues();
 	{
-		for (int i = 0; i < chunks->size(); i++)
+		for (int i = 0; i < chunks.size(); i++)
 		{
-			BobTexture *t = chunks->get(i);
+			BobTexture *t = chunks.get(i);
 
 			if (t != nullptr)
 			{
@@ -2243,7 +2243,6 @@ void Map::releaseAllTextures()
 			}
 		}
 	}
-	delete chunks;
 
 	chunkTexture.clear();
 
