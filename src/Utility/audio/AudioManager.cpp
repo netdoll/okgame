@@ -113,7 +113,7 @@ void AudioManager::initAudioLibrary()
 				string name = *it;
 				if (name.find(".ogg") != string::npos)
 				{
-					make_shared<AudioFile>("data/sounds/" + name);
+					globalAudioFileList.add(make_shared<AudioFile>("data/sounds/" + name));
 				}
 			}
 		}
@@ -137,7 +137,7 @@ void AudioManager::initAudioLibrary()
 				string name = *it;
 				if (name.find(".ogg") != string::npos)
 				{
-					make_shared<AudioFile>("data/music/" + name);
+					globalAudioFileList.add(make_shared<AudioFile>("data/music/" + name));
 				}
 			}
 		}
