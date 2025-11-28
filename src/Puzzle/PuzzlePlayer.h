@@ -8,22 +8,27 @@
 #include "bobtypes.h"
 #include "GameLogic.h"
 #include "src/Utility/Color.h"
+#include <memory>
 
 //=========================================================================================================================
 class PuzzlePlayer
 {//=========================================================================================================================
 public:
 	//=========================================================================================================================
-	PuzzlePlayer(GameLogic *g)
+	PuzzlePlayer(shared_ptr<GameLogic> g)
 	{//=========================================================================================================================
 		this->gameLogic = g;
-		if (g != nullptr)g->player = this;
+		//if (g != nullptr)g->player = this; // Cannot set raw pointer back easily if GameLogic expects raw PuzzlePlayer*.
+		// However, we should check GameLogic definition. If GameLogic has `PuzzlePlayer* player`, we can do `g->player = this;`.
+		// But `this` is `PuzzlePlayer*`. If we change `GameLogic` to `weak_ptr<PuzzlePlayer>`, we need `shared_from_this`.
+		// For now, let's assume GameLogic holds a raw pointer back to PuzzlePlayer (observer).
+		if (g != nullptr) g->player = this;
 	}
 	//=========================================================================================================================
 	~PuzzlePlayer()
 	{//=========================================================================================================================
-		if (gameLogic != nullptr)delete gameLogic;
-		if (menu != nullptr)delete menu;
+		// if (gameLogic != nullptr)delete gameLogic; // shared_ptr handles this
+		// if (menu != nullptr)delete menu; // shared_ptr handles this
 		if (nameCaption != nullptr)
 		{
 			nameCaption->setToBeDeletedImmediately();
@@ -53,9 +58,9 @@ public:
 		return false;
 	}
 
-	GameLogic* gameLogic = nullptr;
+	shared_ptr<GameLogic> gameLogic = nullptr;
 	bool confirmed = false;
-	BobMenu *menu = nullptr;
+	shared_ptr<BobMenu> menu = nullptr;
 	bool selectGameSequenceOrSingleGameTypeMiniMenuShowing = true;
 	bool selectGameSequenceMiniMenuShowing = false;
 	bool gameSequenceOptionsMiniMenuShowing = false;
@@ -89,16 +94,16 @@ public:
 
 	//BobsGameNetwork *network = nullptr;
 	UDPPeerConnection *peerConnection = nullptr;
-	Caption* nameCaption = nullptr;
-	Caption* gameCaption = nullptr;
-	Caption* difficultyCaption = nullptr;
+	shared_ptr<Caption> nameCaption = nullptr;
+	shared_ptr<Caption> gameCaption = nullptr;
+	shared_ptr<Caption> difficultyCaption = nullptr;
 
 
 
 
-	BobColor *gridBorderColor = new BobColor(255, 255, 255);//TODO: move these to user settings!
+	shared_ptr<BobColor> gridBorderColor = make_shared<BobColor>(255, 255, 255);//TODO: move these to user settings!
 	BobColor *gridCheckeredBackgroundColor1 = BobColor::black;
-	BobColor *gridCheckeredBackgroundColor2 = new BobColor(8, 8, 8);
+	shared_ptr<BobColor> gridCheckeredBackgroundColor2 = make_shared<BobColor>(8, 8, 8);
 	BobColor *screenBackgroundColor = BobColor::black;
 	bool gridRule_showWarningForFieldThreeQuartersFilled = true;//TODO: move these to user settings!
 

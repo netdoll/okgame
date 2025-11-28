@@ -23,7 +23,7 @@ BobsGame* GameLogic::getBobsGame()
 }
 
 //===============================================================================================
-Room* GameLogic::getRoom()
+shared_ptr<Room> GameLogic::getRoom()
 {//===============================================================================================
 	return getBobsGame()->currentRoom;
 }
@@ -50,12 +50,12 @@ GameLogic::GameLogic(Engine* g, long long seed)
 
 	this->e = g;
 
-	grid = new Grid(this);
+	grid = make_shared<Grid>(this);
 
 	randomSeed = seed;
 	initializeRandomGenerator();
 
-	currentGameType = new GameType();
+	currentGameType = make_shared<GameType>();
 
 	grid->reformat(0, 0);
 
@@ -104,7 +104,7 @@ void GameLogic::fillGameTypeRandomBag()
 
 	if (currentGameSequence->randomizeSequence)
 	{
-		ArrayList<GameType*> tempBag;
+		ArrayList<shared_ptr<GameType>> tempBag;
 
 		for (int i = 0; i < currentGameSequence->gameTypes.size(); i++)
 		{
@@ -118,7 +118,7 @@ void GameLogic::fillGameTypeRandomBag()
 		{
 			int i = getRandomIntLessThan(tempBag.size(), "fillGameTypeRandomBag");
 
-			GameType* g = tempBag.get(i);
+			shared_ptr<GameType> g = tempBag.get(i);
 			gameTypeRandomBag.add(g);
 
 			tempBag.removeAt(i);
@@ -143,14 +143,14 @@ void GameLogic::fillGameTypeRandomBag()
 }
 
 //=========================================================================================================================
-GameType* GameLogic::getGameTypeFromRandomBag()
+shared_ptr<GameType> GameLogic::getGameTypeFromRandomBag()
 {//=========================================================================================================================
 	if (gameTypeRandomBag.isEmpty())
 	{
 		fillGameTypeRandomBag();
 	}
 
-	GameType* value = gameTypeRandomBag.get(0);
+	shared_ptr<GameType> value = gameTypeRandomBag.get(0);
 
 	gameTypeRandomBag.removeAt(0);
 
@@ -158,13 +158,13 @@ GameType* GameLogic::getGameTypeFromRandomBag()
 }
 
 //=========================================================================================================================
-DifficultyType* GameLogic::getCurrentDifficulty()
+shared_ptr<DifficultyType> GameLogic::getCurrentDifficulty()
 {//=========================================================================================================================
 	return currentGameType->getDifficultyByName(currentGameSequence->currentDifficultyName);
 }
 
 //=========================================================================================================================
-void GameLogic::setGameType(GameType* gameType)
+void GameLogic::setGameType(shared_ptr<GameType> gameType)
 {//=========================================================================================================================
 
 	previousGameString = currentGameType->name;
@@ -321,7 +321,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::oneBlockCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType);
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2);
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -331,7 +331,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockHorizontalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType);
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -341,7 +341,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockVerticalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType);
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -351,7 +351,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::threeBlockHorizontalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType);
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -360,7 +360,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::threeBlockVerticalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType);
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -370,7 +370,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::fourBlockCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType);
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -1480,7 +1480,7 @@ void GameLogic::removeFlashedChainBlocks()
 				if (b->blockType->makePieceTypeWhenCleared_UUID.size()>0)
 				{
 					shared_ptr<PieceType> pt = currentGameType->getPieceTypeByUUID(b->blockType->makePieceTypeWhenCleared_UUID.get(getRandomIntLessThan(b->blockType->makePieceTypeWhenCleared_UUID.size(), "removeFlashedChainBlocks")));
-					shared_ptr<Piece> p(new Piece(this, grid, pt, BlockType::emptyBlockType));
+					shared_ptr<Piece> p = make_shared<Piece>(this, grid, pt, BlockType::emptyBlockType);
 					p->init();
 					nextPieceSpecialBuffer.add(p);
 
@@ -2138,7 +2138,7 @@ bool GameLogic::movePiece(MovementType move)
 
 			//make new piece, not new block
 			//this is so the colors get initialized and the block can be updated by getting arrayOfPiecesInGrid
-			shared_ptr<Piece> p(new Piece(this, grid, PieceType::emptyPieceType, shared_ptr<BlockType>(BlockType::shotPieceBlockType)));
+			shared_ptr<Piece> p = make_shared<Piece>(this, grid, PieceType::emptyPieceType, shared_ptr<BlockType>(BlockType::shotPieceBlockType));
 			p->init();
 
 			shared_ptr<Block> b = p->blocks.get(0);
