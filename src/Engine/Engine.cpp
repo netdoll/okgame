@@ -38,16 +38,6 @@ Engine::~Engine()
 #ifdef _DEBUG
 	log.debug("~Engine()");
 #endif
-	delete audioManager;
-	delete spriteManager;
-	delete mapManager;
-	delete cinematicsManager;
-	delete captionManager;
-	delete textManager;
-	delete eventManager;
-	delete cameraman;
-	delete actionManager;
-	delete controlsManager;
 }
 
 //=========================================================================================================================
@@ -62,18 +52,18 @@ void Engine::init()
 
 
 
-	audioManager = new AudioManager(this);
-	spriteManager = new SpriteManager(this);
-	mapManager = new MapManager(this);
-	cinematicsManager = new CinematicsManager(this);
-	captionManager = new CaptionManager(this);
-	textManager = new TextManager(this);
-	eventManager = new EventManager(this);
-	cameraman = new Cameraman(this);
-	actionManager = new ActionManager(this);
+	audioManager = make_shared<AudioManager>(this);
+	spriteManager = make_shared<SpriteManager>(this);
+	mapManager = make_shared<MapManager>(this);
+	cinematicsManager = make_shared<CinematicsManager>(this);
+	captionManager = make_shared<CaptionManager>(this);
+	textManager = make_shared<TextManager>(this);
+	eventManager = make_shared<EventManager>(this);
+	cameraman = make_shared<Cameraman>(this);
+	actionManager = make_shared<ActionManager>(this);
 
-	controlsManager = new ControlsManager();
-	chatControlsManager = new ControlsManager();
+	controlsManager = make_shared<ControlsManager>();
+	chatControlsManager = make_shared<ControlsManager>();
 
 	activeControlsManager = controlsManager;
 
@@ -302,113 +292,113 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	//global objects
 	if (String::startsWith(typeIDName, "MAP."))
 	{
-		return getMapManager()->getMapByIDBlockUntilLoaded(id);
+		return getMapManager()->getMapByIDBlockUntilLoaded(id).get();
 	}
 	if (String::startsWith(typeIDName, "SPRITE."))
 	{
-		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id);
+		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "DIALOGUE."))
 	{
-		return getEventManager()->getDialogueByIDCreateIfNotExist(id);
+		return getEventManager()->getDialogueByIDCreateIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "CUTSCENEEVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id);
+		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "EVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id);
+		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "FLAG."))
 	{
-		return getEventManager()->getFlagByIDCreateIfNotExist(id);
+		return getEventManager()->getFlagByIDCreateIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "SKILL."))
 	{
-		return getEventManager()->getSkillByIDCreateIfNotExist(id);
+		return getEventManager()->getSkillByIDCreateIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "GAMESTRING."))
 	{
-		return getEventManager()->getGameStringByIDCreateIfNotExist(id);
+		return getEventManager()->getGameStringByIDCreateIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "MUSIC."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
 	}
 	if (String::startsWith(typeIDName, "SOUND."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
 	}
 
 
 	//map objects (will only exist within the current map)
 	if (String::startsWith(typeIDName, "STATE."))
 	{
-		return getMapManager()->getMapStateByID(id);
+		return getMapManager()->getMapStateByID(id).get();
 	}
 	if (String::startsWith(typeIDName, "ENTITY."))
 	{
-		return getMapManager()->getEntityByID(id);
+		return getMapManager()->getEntityByID(id).get();
 	}
 	if (String::startsWith(typeIDName, "AREA."))
 	{
-		return getMapManager()->getAreaByID(id);
+		return getMapManager()->getAreaByID(id).get();
 	}
 	if (String::startsWith(typeIDName, "LIGHT."))
 	{
-		return getMapManager()->getLightByID(id);
+		return getMapManager()->getLightByID(id).get();
 	}
 	if (String::startsWith(typeIDName, "DOOR."))
 	{
-		return getMapManager()->getDoorByID(id);
+		return getMapManager()->getDoorByID(id).get();
 	}
 
 
 	return nullptr;
 }
 
-Cameraman* Engine::getCameraman()
+shared_ptr<Cameraman> Engine::getCameraman()
 {
 	return cameraman;
 }
 
-MapManager* Engine::getMapManager()
+shared_ptr<MapManager> Engine::getMapManager()
 {
 	return mapManager;
 }
 
-SpriteManager* Engine::getSpriteManager()
+shared_ptr<SpriteManager> Engine::getSpriteManager()
 {
 	return spriteManager;
 }
 
-ActionManager* Engine::getActionManager()
+shared_ptr<ActionManager> Engine::getActionManager()
 {
 	return actionManager;
 }
 
-TextManager* Engine::getTextManager()
+shared_ptr<TextManager> Engine::getTextManager()
 {
 	return textManager;
 }
 
-AudioManager* Engine::getAudioManager()
+shared_ptr<AudioManager> Engine::getAudioManager()
 {
 	return audioManager;
 }
 
-CaptionManager* Engine::getCaptionManager()
+shared_ptr<CaptionManager> Engine::getCaptionManager()
 {
 	return captionManager;
 }
 
-EventManager* Engine::getEventManager()
+shared_ptr<EventManager> Engine::getEventManager()
 {
 	return eventManager;
 }
 
-CinematicsManager* Engine::getCinematicsManager()
+shared_ptr<CinematicsManager> Engine::getCinematicsManager()
 {
 	return cinematicsManager;
 }
@@ -529,12 +519,12 @@ void Engine::setButtonStates()
 	getActiveControlsManager()->setButtonStates();
 }
 
-ControlsManager* Engine::getControlsManager()
+shared_ptr<ControlsManager> Engine::getControlsManager()
 {
 	return controlsManager;
 }
 
-ControlsManager* Engine::getActiveControlsManager()
+shared_ptr<ControlsManager> Engine::getActiveControlsManager()
 {
 	return activeControlsManager;
 }

@@ -27,12 +27,26 @@ Logger Sound::log = Logger("Sound");
 //	Main::audioManager->soundList->add(this);
 //}
 
-Sound::Sound(Engine* g, AudioFile *f)
+Sound::Sound(Engine* g, shared_ptr<AudioFile> f)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->audioFile = f;
 
+	// This part is tricky because 'this' is a raw pointer and playingAudioList stores shared_ptr.
+	// We cannot simply add 'this' to playingAudioList if Sound is created with make_shared.
+	// The caller of the constructor (make_shared) will manage the shared_ptr.
+	// If we need to add it to a list, we should do it outside the constructor or use shared_from_this().
+	// But Sound inherits from EnginePart, not enable_shared_from_this.
+	// If we want to use shared_ptr management, we should inherit enable_shared_from_this<Sound>.
+	// However, looking at AudioManager, it adds the sound to the list when it creates it or when it plays it.
+
+	// In the previous code: getAudioManager()->playingAudioList.add(this);
+	// This implies Sound registers itself.
+	// If Sound is managed by shared_ptr, we can't just add raw 'this'.
+	// We should remove this self-registration and let AudioManager handle it.
+
+	/*
 	for (int i = 0; i < (int)getAudioManager()->playingAudioList.size(); i++)
 	{
 		if (getAudioManager()->playingAudioList.get(i)->getName() == f->getName())
@@ -42,7 +56,8 @@ Sound::Sound(Engine* g, AudioFile *f)
 			return;
 		}
 	}
-	getAudioManager()->playingAudioList.add(this);
+	//getAudioManager()->playingAudioList.add(this); // CANNOT DO THIS WITH SHARED_PTR inside constructor easily without enable_shared_from_this
+	*/
 
 
 	if (f->getByteData() != nullptr)initFromByteData();
