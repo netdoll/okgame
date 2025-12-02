@@ -78,19 +78,19 @@ public:
 	int getMinutesSinceLastHere();
 
 	Engine* getEngine();
-	Cameraman* getCameraman();
-	MapManager* getMapManager();
-	SpriteManager* getSpriteManager();
-	ActionManager* getActionManager();
-	TextManager* getTextManager();
-	AudioManager* getAudioManager();
-	virtual CaptionManager* getCaptionManager();
-	EventManager* getEventManager();
-	CinematicsManager* getCinematicsManager();
+	shared_ptr<Cameraman> getCameraman();
+	shared_ptr<MapManager> getMapManager();
+	shared_ptr<SpriteManager> getSpriteManager();
+	shared_ptr<ActionManager> getActionManager();
+	shared_ptr<TextManager> getTextManager();
+	shared_ptr<AudioManager> getAudioManager();
+	virtual shared_ptr<CaptionManager> getCaptionManager();
+	shared_ptr<EventManager> getEventManager();
+	shared_ptr<CinematicsManager> getCinematicsManager();
 
 	virtual Map* getCurrentMap();
 
-	ControlsManager* getControlsManager();
+	shared_ptr<ControlsManager> getControlsManager();
 
 	//static void setClientGameEngine(BGClientEngine* gameEngine);
 
