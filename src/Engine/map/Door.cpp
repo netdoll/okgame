@@ -421,10 +421,10 @@ void Door::renderDebugBoxes()
 			//         {
 			//            Area* a = aEnum->nextElement();
 
-			ArrayList<Area*> *areas = getMap()->currentState->areaByNameHashtable.getAllValues();
-			for (int n = 0; n<areas->size(); n++)
+			ArrayList<Area*> areas = getMap()->currentState->areaByNameHashtable.getAllValues();
+			for (int n = 0; n<areas.size(); n++)
 			{
-				Area* a = areas->get(n);
+				Area* a = areas.get(n);
 
 				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{

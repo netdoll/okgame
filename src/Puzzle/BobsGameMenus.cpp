@@ -4406,7 +4406,7 @@ void BobsGame::selectGameSequenceMenuUpdate()
 	{
 		for (int i = 0; i<loadedGameSequences.size(); i++)
 		{
-			GameSequence *g = loadedGameSequences.get(i);
+			shared_ptr<GameSequence> g = loadedGameSequences.get(i);
 			if (selectGameSequenceMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 				if(statsMenuShowing)
@@ -4416,8 +4416,8 @@ void BobsGame::selectGameSequenceMenuUpdate()
 				}
 				else
 				{
-					currentRoom->gameSequence = g;
-					getPlayer1Game()->currentGameSequence = g;
+					currentRoom->gameSequence = g.get();
+					getPlayer1Game()->currentGameSequence = g.get();
 
 					gameSequenceOptionsMenuShowing = true;
 				}
@@ -4581,64 +4581,64 @@ double BobsGame::wilsonScore(double up, double total, double confidence)
 }
 
 //=========================================================================================================================
-ArrayList<pair<GameType*,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
+ArrayList<pair<shared_ptr<GameType>,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
 {//=========================================================================================================================
 
-	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor;
+	ArrayList<pair<shared_ptr<GameType>, pair<string, BobColor*>>> gamesStringColor;
 
 //	for (int i = 0; i<loadedGameTypes.size(); i++)
 //	{
-//		GameType *g = loadedGameTypes.get(i);
+//		shared_ptr<GameType> g = loadedGameTypes.get(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
 //			BobColor *color = BobColor::darkGreen;
 //			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name,color);
-//			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
+//			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g.get(), stringColorPair);
 //			gamesStringColor.add(gameTypeStringColorPairPair);
 //		}
 //	}
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		GameType *g = loadedGameTypes.get(i);
+		shared_ptr<GameType> g = loadedGameTypes.get(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			BobColor *color = BobColor::purple;
 			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
+			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g.get(), stringColorPair);
 			gamesStringColor.add(gameTypeStringColorPairPair);
 		}
 	}
 
-	ArrayList<GameType*> downloadedGames;
+	ArrayList<shared_ptr<GameType>> downloadedGames;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		GameType *g = loadedGameTypes.get(i);
+		shared_ptr<GameType> g = loadedGameTypes.get(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
 			downloadedGames.add(g);
 		}
 	}
 
-	multimap<double, GameType*> games;
+	multimap<double, shared_ptr<GameType>> games;
 	for (int i = 0; i < downloadedGames.size(); i++)
 	{
-		GameType *g = downloadedGames.get(i);
+		shared_ptr<GameType> g = downloadedGames.get(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
 		double score = wilsonScore(up, total);
 
-		games.insert(std::pair<double, GameType*>(score, g));
+		games.insert(std::pair<double, shared_ptr<GameType>>(score, g));
 	}
 
 	long long currentSecondsSinceEpoch = (long long)time(nullptr);
 
-	multimap<double, GameType*>::iterator pos;
+	multimap<double, shared_ptr<GameType>>::iterator pos;
 	for (pos = games.begin(); pos != games.end(); ++pos)
 	{
-		GameType *g = pos->second;
+		shared_ptr<GameType> g = pos->second;
 
 		long long secondsSinceEpoch = g->dateCreated / 1000;
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
@@ -4648,7 +4648,7 @@ ArrayList<pair<GameType*,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
 
 		BobColor *color = BobColor::darkGray;
 		pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-		pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
+		pair<shared_ptr<GameType>, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<shared_ptr<GameType>, pair<string, BobColor*>>(g, stringColorPair);
 		gamesStringColor.add(gameTypeStringColorPairPair);
 	}
 
@@ -4657,64 +4657,64 @@ ArrayList<pair<GameType*,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
 }
 
 //=========================================================================================================================
-ArrayList<pair<GameSequence*, pair<string, BobColor*>>> BobsGame::getSortedGameSequences()
+ArrayList<pair<shared_ptr<GameSequence>, pair<string, BobColor*>>> BobsGame::getSortedGameSequences()
 {//=========================================================================================================================
 
-	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor;
+	ArrayList<pair<shared_ptr<GameSequence>, pair<string, BobColor*>>> gamesStringColor;
 
 //	for (int i = 0; i<loadedGameSequences.size(); i++)
 //	{
-//		GameSequence *g = loadedGameSequences.get(i);
+//		shared_ptr<GameSequence> g = loadedGameSequences.get(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
 //			BobColor *color = BobColor::darkGreen;
 //			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-//			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
+//			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g.get(), stringColorPair);
 //			gamesStringColor.add(gameSequenceStringColorPairPair);
 //		}
 //	}
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		GameSequence *g = loadedGameSequences.get(i);
+		shared_ptr<GameSequence> g = loadedGameSequences.get(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			BobColor *color = BobColor::purple;
 			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
+			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g.get(), stringColorPair);
 			gamesStringColor.add(gameSequenceStringColorPairPair);
 		}
 	}
 
-	ArrayList<GameSequence*> downloadedGames;
+	ArrayList<shared_ptr<GameSequence>> downloadedGames;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		GameSequence *g = loadedGameSequences.get(i);
+		shared_ptr<GameSequence> g = loadedGameSequences.get(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
 			downloadedGames.add(g);
 		}
 	}
 
-	multimap<double, GameSequence*> games;
+	multimap<double, shared_ptr<GameSequence>> games;
 	for (int i = 0; i < downloadedGames.size(); i++)
 	{
-		GameSequence *g = downloadedGames.get(i);
+		shared_ptr<GameSequence> g = downloadedGames.get(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
 		double score = wilsonScore(up, total);
 
-		games.insert(std::pair<double, GameSequence*>(score, g));
+		games.insert(std::pair<double, shared_ptr<GameSequence>>(score, g));
 	}
 
 	long long currentSecondsSinceEpoch = (long long)time(nullptr);
 
-	multimap<double, GameSequence*>::iterator pos;
+	multimap<double, shared_ptr<GameSequence>>::iterator pos;
 	for (pos = games.begin(); pos != games.end(); ++pos)
 	{
-		GameSequence *g = pos->second;
+		shared_ptr<GameSequence> g = pos->second;
 
 		long long secondsSinceEpoch = g->dateCreated / 1000;
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
@@ -4724,7 +4724,7 @@ ArrayList<pair<GameSequence*, pair<string, BobColor*>>> BobsGame::getSortedGameS
 
 		BobColor *color = BobColor::darkGray;
 		pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-		pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
+		pair<shared_ptr<GameSequence>, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<shared_ptr<GameSequence>, pair<string, BobColor*>>(g, stringColorPair);
 		gamesStringColor.add(gameSequenceStringColorPairPair);
 	}
 
@@ -4743,11 +4743,11 @@ void BobsGame::populateGameTypesMenu(BobMenu *menu)
 	//use smaller font
 	//username - game name - upvotes/downvotes
 
-	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor = getSortedGameTypes();
+	ArrayList<pair<shared_ptr<GameType>, pair<string, BobColor*>>> gamesStringColor = getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = gamesStringColor.get(i);
-		GameType *g = gameTypeStringColorPairPair.first;
+		pair<shared_ptr<GameType>, pair<string, BobColor*>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		shared_ptr<GameType> g = gameTypeStringColorPairPair.first;
 		pair<string, BobColor*> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
@@ -4763,11 +4763,11 @@ void BobsGame::populateGameTypesMenu(BobMenu *menu)
 void BobsGame::populateGameSequencesMenu(BobMenu *menu)
 {//=========================================================================================================================
 
-	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor = getSortedGameSequences();
+	ArrayList<pair<shared_ptr<GameSequence>, pair<string, BobColor*>>> gamesStringColor = getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
-		GameSequence *g = gameSequenceStringColorPairPair.first;
+		pair<shared_ptr<GameSequence>, pair<string, BobColor*>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		shared_ptr<GameSequence> g = gameSequenceStringColorPairPair.first;
 		pair<string, BobColor*> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
@@ -5305,7 +5305,7 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 
 		for (int i = 0; i<loadedGameTypes.size(); i++)
 		{
-			GameType *g = loadedGameTypes.get(i);
+			shared_ptr<GameType> g = loadedGameTypes.get(i);
 			if (selectSingleGameTypeMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 
@@ -6511,10 +6511,10 @@ void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 					for (int i = 0; i<loadedGameSequences.size(); i++)
 					{
 
-						GameSequence *gs = loadedGameSequences.get(i);
+						shared_ptr<GameSequence> gs = loadedGameSequences.get(i);
 						if (p->menu->isSelectedID(gs->uuid))
 						{
-							game->currentGameSequence = gs;
+							game->currentGameSequence = gs.get();
 							p->gameSequenceOptionsMiniMenuShowing = true;
 						}
 					}
@@ -6545,7 +6545,7 @@ void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 
 					for (int i = 0; i<loadedGameTypes.size(); i++)
 					{
-						GameType *g = loadedGameTypes.get(i);
+						shared_ptr<GameType> g = loadedGameTypes.get(i);
 						if (p->menu->isSelectedID(g->uuid))
 						{
 							game->currentGameSequence = new GameSequence();
