@@ -113,7 +113,7 @@ string MapStateData::getTYPEIDString()
 	return "STATE." + to_string(getID());
 }
 
-ArrayList<LightData*>* MapStateData::getLightDataList()
+ArrayList<std::shared_ptr<LightData>>* MapStateData::getLightDataList()
 {
 	return &lightDataList;
 }
@@ -123,7 +123,7 @@ ArrayList<std::shared_ptr<EntityData>>* MapStateData::getEntityDataList()
 	return &entityDataList;
 }
 
-ArrayList<AreaData*>* MapStateData::getAreaDataList()
+ArrayList<std::shared_ptr<AreaData>>* MapStateData::getAreaDataList()
 {
 	return &areaDataList;
 }

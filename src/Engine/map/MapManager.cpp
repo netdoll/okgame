@@ -19,7 +19,7 @@ bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
 
-HashMap<string, BobTexture*> MapManager::lightTextureHashMap;
+HashMap<string, shared_ptr<BobTexture>> MapManager::lightTextureHashMap;
 
 
 HashMap<string, bool> MapManager::_lightTextureFileExistsHashtable;
@@ -177,7 +177,7 @@ void MapManager::render()
 
 			for (int i = 0; i < (int)currentMap->sortedLightsLayers.size(); i++)
 			{
-				ArrayList<Light*>* thisLayer = currentMap->sortedLightsLayers.get(i);
+				shared_ptr<ArrayList<Light*>> thisLayer = currentMap->sortedLightsLayers.get(i);
 
 
 				if (flip == true)
