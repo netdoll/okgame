@@ -47,20 +47,20 @@ void BGClientEngine::init()
 #endif
 	
 
-	clock = new Clock(this);
+	clock = make_shared<Clock>(this);
 
-	player = new Player(this);
+	player = make_shared<Player>(this);
 	normalPlayer = player;
 
-	guiManager = new GUIManager(this);
+	guiManager = make_shared<GUIManager>(this);
 
-	statusBar = new BobStatusBar(this);
-	wallet = new Wallet(this);
+	statusBar = make_shared<BobStatusBar>(this);
+	wallet = make_shared<Wallet>(this);
 
-	friendManager = new FriendManager(this);
+	friendManager = make_shared<FriendManager>(this);
 
-	nD = new ND();
-	stadiumScreen = new StadiumScreen(this);
+	nD = make_shared<ND>();
+	stadiumScreen = make_shared<StadiumScreen>(this);
 
 
 	if (Main::previewClientInEditor == false)
@@ -78,19 +78,19 @@ void BGClientEngine::init()
 
 	nD->init();
 
-	NDMenu* nDMenu = new NDMenu(nD);
+	NDMenu* nDMenu = new NDMenu(nD.get());
 	nDMenu->init();
 	
 
-	BobsGame* bobsgame = new BobsGame(nD);
+	BobsGame* bobsgame = new BobsGame(nD.get());
 	bobsgame->init();
 	
 
-	Ping* ping = new Ping(nD);
+	Ping* ping = new Ping(nD.get());
 	ping->init();
 	
 
-	Ramio* ramio = new Ramio(nD);
+	Ramio* ramio = new Ramio(nD.get());
 	ramio->init();
 	
 
@@ -117,7 +117,7 @@ void BGClientEngine::init()
 	//mapManager.changeMap("TOWNPets4Less",53,110);
 	//mapManager.changeMap("TOWNMovieTheatreMensBathroom",53,110);
 
-	cameraman->setTarget(player);
+	cameraman->setTarget(player.get());
 
 
 	//can't remember why i did this, to fix gui stuff???
@@ -1195,7 +1195,7 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(Sprite* s)
 { //=========================================================================================================================
 
 
-	Player* p = new Player(this, s->getName());
+	shared_ptr<Player> p = make_shared<Player>(this, s->getName());
 
 	p->update();
 
@@ -1216,7 +1216,7 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(Sprite* s)
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)
 	{
-		getCameraman()->setTarget(p);
+		getCameraman()->setTarget(p.get());
 	}
 
 	player = p;
@@ -1236,7 +1236,7 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)
 	{
-		getCameraman()->setTarget(normalPlayer);
+		getCameraman()->setTarget(normalPlayer.get());
 	}
 
 	player = normalPlayer;
@@ -1246,12 +1246,12 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 Clock* BGClientEngine::getClock()
 {
-	return clock;
+	return clock.get();
 }
 
 GUIManager* BGClientEngine::getGUIManager()
 {
-	return guiManager;
+	return guiManager.get();
 }
 
 StuffMenu* BGClientEngine::getStuffMenu()
@@ -1271,27 +1271,27 @@ PlayerEditMenu* BGClientEngine::getPlayerEditMenu()
 
 Player* BGClientEngine::getPlayer()
 {
-	return player;
+	return player.get();
 }
 
 ND* BGClientEngine::getND()
 {
-	return nD;
+	return nD.get();
 }
 
 Wallet* BGClientEngine::getWallet()
 {
-	return wallet;
+	return wallet.get();
 }
 
 FriendManager* BGClientEngine::getFriendManager()
 {
-	return friendManager;
+	return friendManager.get();
 }
 
 BobStatusBar* BGClientEngine::getBobStatusBar()
 {
-	return statusBar;
+	return statusBar.get();
 }
 
 NotificationManager* BGClientEngine::getNotificationManager()

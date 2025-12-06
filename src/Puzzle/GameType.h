@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
 //------------------------------------------------------------------------------
@@ -8,6 +8,7 @@
 #include "Piece.h"
 #include "Block.h"
 #include "../Utility/FileUtils.h"
+#include <memory>
 
 #include <iostream>
 #include <sstream>
@@ -176,12 +177,12 @@ public:
 	long long downVotes = 0;
 	string yourVote = "none";
 
-	static DifficultyType* difficulty_BEGINNER;
-	static DifficultyType* difficulty_EASY;
-	static DifficultyType* difficulty_NORMAL;
-	static DifficultyType* difficulty_HARD;
-	static DifficultyType* difficulty_INSANE;
-	static DifficultyType* difficulty_IMPOSSIBLE;
+	static shared_ptr<DifficultyType> difficulty_BEGINNER;
+	static shared_ptr<DifficultyType> difficulty_EASY;
+	static shared_ptr<DifficultyType> difficulty_NORMAL;
+	static shared_ptr<DifficultyType> difficulty_HARD;
+	static shared_ptr<DifficultyType> difficulty_INSANE;
+	static shared_ptr<DifficultyType> difficulty_IMPOSSIBLE;
 
 	static Logger log;
 
@@ -190,7 +191,7 @@ public:
 	shared_ptr<PieceType> getPieceTypeByName(string s);
 	shared_ptr<BlockType> getBlockTypeByUUID(string s);
 	shared_ptr<PieceType> getPieceTypeByUUID(string s);
-	static GameType* fromBase64GZippedXML(string b64GZipJSON);
+	static shared_ptr<GameType> fromBase64GZippedXML(string b64GZipJSON);
 
 	//Color noColor;
 	//PieceType noPieceType;
@@ -483,7 +484,7 @@ private:
 	ArrayList<PieceType> importExport_pieceTypes;
 public:
 
-	ArrayList<DifficultyType*> difficultyTypes;
+	ArrayList<shared_ptr<DifficultyType>> difficultyTypes;
 private:
 	ArrayList<DifficultyType> importExport_difficulties;
 public:
@@ -505,7 +506,7 @@ public:
 	//int extraStage4Level = 0;
 	//int creditsLevel = 0;
 	GameType();
-	DifficultyType* getDifficultyByName(string s);
+	shared_ptr<DifficultyType> getDifficultyByName(string s);
 	//GameType(DifficultyType *d);
 
 	//void setTimingBasedOnDifficulty(DifficultyType d);
@@ -606,15 +607,15 @@ public:
 
 	
 
-	ArrayList<shared_ptr<BlockType>> getNormalBlockTypes(DifficultyType *d);
-	ArrayList<shared_ptr<BlockType>> getGarbageBlockTypes(DifficultyType *d);
-	ArrayList<shared_ptr<BlockType>> getPlayingFieldBlockTypes(DifficultyType *d);
-	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenCheckingChain(DifficultyType *d);
-	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenMovingDown(DifficultyType *d);
-	ArrayList<shared_ptr<BlockType>> getBlockTypesChainMustContain(DifficultyType *d);
-	ArrayList<shared_ptr<PieceType>> getNormalPieceTypes(DifficultyType *d);
-	ArrayList<shared_ptr<PieceType>> getGarbagePieceTypes(DifficultyType *d);
-	ArrayList<shared_ptr<PieceType>> getPlayingFieldPieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getNormalBlockTypes(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<BlockType>> getGarbageBlockTypes(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<BlockType>> getPlayingFieldBlockTypes(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenCheckingChain(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenMovingDown(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesChainMustContain(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<PieceType>> getNormalPieceTypes(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<PieceType>> getGarbagePieceTypes(shared_ptr<DifficultyType> d);
+	ArrayList<shared_ptr<PieceType>> getPlayingFieldPieceTypes(shared_ptr<DifficultyType> d);
 
 
 	template <typename Archive>

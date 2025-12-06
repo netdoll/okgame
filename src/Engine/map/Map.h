@@ -29,8 +29,8 @@ public:
 	bool randomSpawnEnabled = true;
 
 
-	ArrayList<MapState*> stateList;
-	ArrayList<BobEvent*> mapEventList;
+	ArrayList<shared_ptr<MapState>> stateList;
+	ArrayList<shared_ptr<BobEvent>> mapEventList;
 	//ArrayList<int> mapEventIDList;
 
 
@@ -42,7 +42,7 @@ public:
 
 
 	//this is a ArrayList of ArrayLists of sorted lights per layer. this is filled in on map first load.
-	ArrayList<ArrayList<Light*>*> sortedLightsLayers;
+	ArrayList<shared_ptr<ArrayList<Light*>>> sortedLightsLayers;
 
 
 	//these are entities that exist in this map
@@ -53,8 +53,8 @@ public:
 	ArrayList<shared_ptr<Entity>> zList;
 
 	//door/warp list
-	ArrayList<Door*> doorList;
-	ArrayList<WarpArea*> warpAreaList;
+	ArrayList<shared_ptr<Door>> doorList;
+	ArrayList<shared_ptr<WarpArea>> warpAreaList;
 
 
 	IntArray* hitLayer = nullptr;
@@ -63,7 +63,7 @@ public:
 	IntArray* lightMaskLayer = nullptr;
 
 
-	HashMap<int,BobTexture*> chunkTexture;//= new HashMap<int, Texture*>();
+	HashMap<int,shared_ptr<BobTexture>> chunkTexture;//= new HashMap<int, Texture*>();
 
 	vector<bool>* usingHQ2XTexture = nullptr;
 
@@ -148,27 +148,27 @@ public:
 
 	shared_ptr<Entity> getEntityByName(const string& name);
 
-	Character* getCharacterByName(const string& name);
+	shared_ptr<Character> getCharacterByName(const string& name);
 
 
-	Light* getLightByName(const string& name);
+	shared_ptr<Light> getLightByName(const string& name);
 
 
-	Area* getAreaOrWarpAreaByName(string name);
+	shared_ptr<Area> getAreaOrWarpAreaByName(string name);
 
 
 	shared_ptr<Area> getAreaOrWarpAreaByTYPEID(string typeID);
 
-	Door* getDoorByTYPEID(const string& typeID);
+	shared_ptr<Door> getDoorByTYPEID(const string& typeID);
 
-	Door* getDoorByName(const string& name);
+	shared_ptr<Door> getDoorByName(const string& name);
 
 	//public MapState getStateByName(String name){return getMapStateByName(name);}
 
-	MapState* getMapStateByName(const string& name);
+	shared_ptr<MapState> getMapStateByName(const string& name);
 
 
-	MapState* getMapStateByID(int id);
+	shared_ptr<MapState> getMapStateByID(int id);
 
 
 	ArrayList<string>* getListOfRandomPointsOfInterestTYPEIDs();
@@ -349,10 +349,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	BobTexture* getChunkTexture(int index);
+	shared_ptr<BobTexture> getChunkTexture(int index);
 
 	//The following method was originally marked 'synchronized':
-	void setChunkTexture(int index, BobTexture* t);
+	void setChunkTexture(int index, shared_ptr<BobTexture> t);
 
 
 	//The following method was originally marked 'synchronized':

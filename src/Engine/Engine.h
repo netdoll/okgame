@@ -51,15 +51,15 @@ public:
 
 	static Logger log;
 
-	AudioManager* audioManager = nullptr;
-	Cameraman* cameraman = nullptr;
-	SpriteManager* spriteManager = nullptr;
-	ActionManager* actionManager = nullptr;
-	MapManager* mapManager = nullptr;
-	CinematicsManager* cinematicsManager = nullptr;
-	CaptionManager* captionManager = nullptr;
-	TextManager* textManager = nullptr;
-	EventManager* eventManager = nullptr;
+	shared_ptr<AudioManager> audioManager = nullptr;
+	shared_ptr<Cameraman> cameraman = nullptr;
+	shared_ptr<SpriteManager> spriteManager = nullptr;
+	shared_ptr<ActionManager> actionManager = nullptr;
+	shared_ptr<MapManager> mapManager = nullptr;
+	shared_ptr<CinematicsManager> cinematicsManager = nullptr;
+	shared_ptr<CaptionManager> captionManager = nullptr;
+	shared_ptr<TextManager> textManager = nullptr;
+	shared_ptr<EventManager> eventManager = nullptr;
 
 
 	static ArrayList<UDPPeerConnection*> onlineFriends;
@@ -92,17 +92,17 @@ public:
 	void updateChatConsole();
 
 protected:
-	ControlsManager* controlsManager = nullptr;
-	ControlsManager* chatControlsManager = nullptr;
-	ControlsManager* activeControlsManager = nullptr;
+	shared_ptr<ControlsManager> controlsManager = nullptr;
+	shared_ptr<ControlsManager> chatControlsManager = nullptr;
+	shared_ptr<ControlsManager> activeControlsManager = nullptr;
 	bool chatEnabled = true;
 	bool chatFocused = false;
 	bool textStarted = false;
 
 	ConsoleText* chatConsoleText = nullptr;
 public:
-	ControlsManager* getControlsManager();
-	ControlsManager* getActiveControlsManager();
+	shared_ptr<ControlsManager> getControlsManager();
+	shared_ptr<ControlsManager> getActiveControlsManager();
 
 	//static void setClientGameEngine(BGClientEngine* gameEngine);
 	static BGClientEngine* getClientGameEngine();
@@ -160,16 +160,16 @@ public:
 	virtual void updateDebugText();
 	void* getGameObjectByTYPEIDName(const string& typeIDName);
 
-	Cameraman* getCameraman();
-	MapManager* getMapManager();
-	SpriteManager* getSpriteManager();
-	ActionManager* getActionManager();
-	TextManager* getTextManager();
-	AudioManager* getAudioManager();
-	CaptionManager* getCaptionManager();
-	EventManager* getEventManager();
+	shared_ptr<Cameraman> getCameraman();
+	shared_ptr<MapManager> getMapManager();
+	shared_ptr<SpriteManager> getSpriteManager();
+	shared_ptr<ActionManager> getActionManager();
+	shared_ptr<TextManager> getTextManager();
+	shared_ptr<AudioManager> getAudioManager();
+	shared_ptr<CaptionManager> getCaptionManager();
+	shared_ptr<EventManager> getEventManager();
 
-	CinematicsManager* getCinematicsManager();
+	shared_ptr<CinematicsManager> getCinematicsManager();
 	Map* getCurrentMap();
 
 public:

@@ -166,7 +166,7 @@ public:
 
 
 	//don't export
-	GameSequence *gameSequence = nullptr;
+	shared_ptr<GameSequence> gameSequence = nullptr;
 	UDPPeerConnection *hostPeer = nullptr;
 
 	//=========================================================================================================================
@@ -362,9 +362,9 @@ public:
 
 
 	//=========================================================================================================================
-	static Room* decodeRoomData(string s, bool decodeGameSequenceXML)
+	static shared_ptr<Room> decodeRoomData(string s, bool decodeGameSequenceXML)
 	{//=========================================================================================================================
-		Room *newRoom = new Room();
+		shared_ptr<Room> newRoom = make_shared<Room>();
 		newRoom->decode(s, decodeGameSequenceXML);
 		return newRoom;
 	}
@@ -654,7 +654,7 @@ public:
 		{
 			if (multiplayer_ZippedGameSequenceString.length() > 0)
 			{
-				NetworkGameSequence *gs = NetworkGameSequence::fromBase64GZippedXML(multiplayer_ZippedGameSequenceString);
+				shared_ptr<GameSequence> gs(NetworkGameSequence::fromBase64GZippedXML(multiplayer_ZippedGameSequenceString));
 
 				if (gs == nullptr)
 				{
