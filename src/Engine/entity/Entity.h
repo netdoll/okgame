@@ -19,7 +19,7 @@ class MapData;
 class Map;
 class Area;
 
-class Entity : public EnginePart
+class Entity : public EnginePart, public std::enable_shared_from_this<Entity>
 {
 public:
 

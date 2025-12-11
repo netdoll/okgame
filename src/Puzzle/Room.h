@@ -167,7 +167,7 @@ public:
 
 	//don't export
 	shared_ptr<GameSequence> gameSequence = nullptr;
-	UDPPeerConnection *hostPeer = nullptr;
+	shared_ptr<UDPPeerConnection> hostPeer = nullptr;
 
 	//=========================================================================================================================
 	template <typename Archive>

@@ -78,26 +78,26 @@ void BGClientEngine::init()
 
 	nD->init();
 
-	NDMenu* nDMenu = new NDMenu(nD.get());
+	shared_ptr<NDMenu> nDMenu = make_shared<NDMenu>(nD.get());
 	nDMenu->init();
 	
 
-	BobsGame* bobsgame = new BobsGame(nD.get());
+	shared_ptr<BobsGame> bobsgame = make_shared<BobsGame>(nD.get());
 	bobsgame->init();
 	
 
-	Ping* ping = new Ping(nD.get());
+	shared_ptr<Ping> ping = make_shared<Ping>(nD.get());
 	ping->init();
 	
 
-	Ramio* ramio = new Ramio(nD.get());
+	shared_ptr<Ramio> ramio = make_shared<Ramio>(nD.get());
 	ramio->init();
 	
 
 
-	nDMenu->addGame(ping, "Ping", BobColor::blue);
-	nDMenu->addGame(ramio,"Ramio",BobColor::red);
-	nDMenu->addGame(bobsgame,"\"bob's game\"",BobColor::green);
+	nDMenu->addGame(ping, "Ping", make_shared<BobColor>(*BobColor::blue));
+	nDMenu->addGame(ramio,"Ramio", make_shared<BobColor>(*BobColor::red));
+	nDMenu->addGame(bobsgame,"\"bob's game\"", make_shared<BobColor>(*BobColor::green));
 
 	nD->setGame(nDMenu);
 
