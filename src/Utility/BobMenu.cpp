@@ -8,10 +8,10 @@
 
 
 
-BobTexture* BobMenu::rectangleCursorTexture = nullptr;
-BobTexture* BobMenu::cursorTexture = nullptr;
-BobTexture* BobMenu::upCursorTexture = nullptr;
-BobTexture* BobMenu::downCursorTexture = nullptr;
+shared_ptr<BobTexture> BobMenu::rectangleCursorTexture = nullptr;
+shared_ptr<BobTexture> BobMenu::cursorTexture = nullptr;
+shared_ptr<BobTexture> BobMenu::upCursorTexture = nullptr;
+shared_ptr<BobTexture> BobMenu::downCursorTexture = nullptr;
 long long BobMenu::cursorInOutToggleTicks = 0;
 bool BobMenu::cursorInOutToggle = false;
 int BobMenu::lastMX = 0;
@@ -35,7 +35,8 @@ BobMenu::MenuItem::~MenuItem()
 	if (caption != nullptr)
 	{
 		//caption->setToBeDeletedImmediately();
-		delete caption;
+		//delete caption;
+		caption = nullptr;
 	}
 	
 
@@ -124,12 +125,12 @@ BobMenu::BobMenu(Engine *g, string title, string subtitle)
 
 	if (title != "")
 	{
-		titleCaption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, title, 32, true, menuColor, RenderOrder::OVER_GUI);
+		titleCaption = make_shared<Caption>(e, Caption::Position::CENTERED_X, 0, 0, -1, title, 32, true, menuColor, RenderOrder::OVER_GUI);
 	}
 
 	if(subtitle !="")
 	{
-		subtitleCaption = new Caption(e, Caption::Position::NONE, 0, 0, -1, subtitle, 22, false, infoColor, RenderOrder::OVER_GUI);
+		subtitleCaption = make_shared<Caption>(e, Caption::Position::NONE, 0, 0, -1, subtitle, 22, false, infoColor, RenderOrder::OVER_GUI);
 	}
 
 	activeMenus.add(this);
@@ -137,8 +138,16 @@ BobMenu::BobMenu(Engine *g, string title, string subtitle)
 //=========================================================================================================================
 BobMenu::~BobMenu()
 {//=========================================================================================================================
-	if (titleCaption != nullptr)delete titleCaption;// titleCaption->setToBeDeletedImmediately();
-	if (subtitleCaption != nullptr)delete subtitleCaption;// titleCaption->setToBeDeletedImmediately();
+	if (titleCaption != nullptr)
+	{
+		//delete titleCaption;
+		titleCaption = nullptr;
+	}
+	if (subtitleCaption != nullptr)
+	{
+		//delete subtitleCaption;
+		subtitleCaption = nullptr;
+	}
 	menuItems.deleteAll();
 	
 	activeMenus.remove(this);
@@ -147,7 +156,7 @@ BobMenu::~BobMenu()
 //int graphicWidth = 0;
 //int graphicYStartPosition = 0;
 //=========================================================================================================================
-void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight, int filter)
+void BobMenu::setGraphic(shared_ptr<BobTexture> t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight, int filter)
 {//=========================================================================================================================
 	this->graphic = t;
 	this->graphicWidth = graphicWidth;
@@ -168,7 +177,7 @@ void BobMenu::setAllCaptionsToFullAlpha()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if(m->caption!=nullptr)m->caption->setAlphaImmediately(1.0f);
 	}
 }
@@ -199,13 +208,13 @@ void BobMenu::update(Engine *g, int ticksPassed)
 
 		for(int n = 0; n < m->menuItems.size(); n++)
 		{
-			MenuItem *mi = m->menuItems.get(n);
+			shared_ptr<MenuItem> mi = m->menuItems.get(n);
 
 			if (mi->info)continue;
 			if (mi->hidden)continue;
 
 
-			Caption *c = mi->caption;
+			shared_ptr<Caption> c = mi->caption;
 			if (c->visible == false)continue;
 
 			int x0 = c->screenX + (c->getWidth() * 0.05);
@@ -231,7 +240,7 @@ bool BobMenu::areAllMenusDisabled()
 	bool allDisabled = true;
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if (m->hidden == false && m->info == false)
 		{
 			allDisabled = false;
@@ -269,19 +278,19 @@ void BobMenu::down(bool noSound)
 }
 
 //=========================================================================================================================
-BobMenu::MenuItem* BobMenu::addInfo(string caption, string id, BobColor *color)
+shared_ptr<BobMenu::MenuItem> BobMenu::addInfo(string caption, string id, BobColor *color)
 {//=========================================================================================================================
 
 	if (color == nullptr)color = infoColor;
 
 	
 
-	MenuItem *m = new MenuItem();
+	shared_ptr<MenuItem> m = make_shared<MenuItem>();
 
 	//outline = false;
 	m->outline = false;
 	
-	m->caption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
+	m->caption = make_shared<Caption>(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
 	m->captionText = caption;
 	m->color = color;
 	m->id = id;
@@ -297,14 +306,14 @@ BobMenu::MenuItem* BobMenu::addInfo(string caption, string id, BobColor *color)
 }
 
 //=========================================================================================================================
-BobMenu::MenuItem* BobMenu::add(string caption, string id, BobColor *color)
+shared_ptr<BobMenu::MenuItem> BobMenu::add(string caption, string id, BobColor *color)
 {//=========================================================================================================================
 
 	if (color == nullptr)color = defaultMenuColor;
 
-	MenuItem *m = new MenuItem();
+	shared_ptr<MenuItem> m = make_shared<MenuItem>();
 	m->outline = outline;
-	m->caption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
+	m->caption = make_shared<Caption>(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
 	m->captionText = caption;
 	m->color = color;
 	if (id == "")id = caption;
@@ -315,13 +324,13 @@ BobMenu::MenuItem* BobMenu::add(string caption, string id, BobColor *color)
 }
 
 //=========================================================================================================================
-BobMenu::MenuItem* BobMenu::addYesNo(string caption, bool yesNo)
+shared_ptr<BobMenu::MenuItem> BobMenu::addYesNo(string caption, bool yesNo)
 {//=========================================================================================================================
 	//string value = "";
 	//if (yesNo==false)value = " - (No)";
 	//else value = "   ";
 	//MenuItem *m = add(caption + value, caption);
-	MenuItem *m = add(caption, caption);
+	shared_ptr<MenuItem> m = add(caption, caption);
 	m->captionText = caption;
 	
 	m->isYesNoType = true;
@@ -337,7 +346,7 @@ void BobMenu::setHidden(string id, bool b)
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if (m->id == id)
 		{
 			m->hidden = b;
@@ -350,7 +359,7 @@ void BobMenu::setAllInvisible()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if (m->caption != nullptr)m->caption->visible = false;
 	}
 }
@@ -360,7 +369,7 @@ void BobMenu::setAllVisible()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if (m->caption != nullptr)m->caption->visible = true;
 	}
 }
@@ -375,10 +384,10 @@ bool BobMenu::isSelectedID(string id, bool clicked, int mx, int my)
 	{
 		for(int i=0;i<menuItems.size();i++)
 		{
-			MenuItem *m = menuItems.get(i);
+			shared_ptr<MenuItem> m = menuItems.get(i);
 			if (m->id != id)continue;
 
-			Caption *c = m->caption;
+			shared_ptr<Caption> c = m->caption;
 			if (c->visible == false)continue;
 
 			int x0 = c->screenX + (c->getWidth()*0.01);
@@ -414,7 +423,7 @@ void BobMenu::setSelectedID(string id)
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if (m->id == id)
 		{
 			cursorPosition = i;
@@ -422,13 +431,13 @@ void BobMenu::setSelectedID(string id)
 	}
 }
 //=========================================================================================================================
-Caption* BobMenu::getCaptionByID(string id)
+shared_ptr<Caption> BobMenu::getCaptionByID(string id)
 {//=========================================================================================================================
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if (m->id == id)
 		{
 			return m->caption;
@@ -438,13 +447,13 @@ Caption* BobMenu::getCaptionByID(string id)
 }
 
 //=========================================================================================================================
-BobMenu::MenuItem* BobMenu::getMenuItemByID(string id)
+shared_ptr<BobMenu::MenuItem> BobMenu::getMenuItemByID(string id)
 {//=========================================================================================================================
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		MenuItem *m = menuItems.get(i);
+		shared_ptr<MenuItem> m = menuItems.get(i);
 		if (m->id == id)
 		{
 			return m;
@@ -454,7 +463,7 @@ BobMenu::MenuItem* BobMenu::getMenuItemByID(string id)
 }
 
 //=========================================================================================================================
-BobMenu::MenuItem* BobMenu::getSelectedMenuItem()
+shared_ptr<BobMenu::MenuItem> BobMenu::getSelectedMenuItem()
 {//=========================================================================================================================
 	if (cursorPosition >= menuItems.size())return nullptr;
 	return menuItems.get(cursorPosition);
@@ -581,7 +590,7 @@ void BobMenu::render
 
 		y = (int)(sy1 + 40);
 
-		GLUtils::drawTexture(graphic, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, filter);
+		GLUtils::drawTexture(graphic.get(), tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, filter);
 	}
 
 	if (returnBottomOfGraphic != nullptr)*returnBottomOfGraphic = y;
@@ -620,7 +629,7 @@ void BobMenu::render
 
 	int bottomOfCaptions = 0;
 
-	ArrayList<MenuItem*> visibleMenuItems;
+	ArrayList<shared_ptr<MenuItem>> visibleMenuItems;
 
 	
 	{
@@ -628,8 +637,8 @@ void BobMenu::render
 		//populate visibleMenuItems
 		for (int i = 0; i < menuItems.size(); i++)
 		{
-			MenuItem *m = menuItems.get(i);
-			Caption *c = m->caption;
+			shared_ptr<MenuItem> m = menuItems.get(i);
+			shared_ptr<Caption> c = m->caption;
 
 			if (c != nullptr)
 			{
@@ -663,8 +672,8 @@ void BobMenu::render
 
 			for (int i = 0; i < visibleMenuItems.size(); i++)
 			{
-				MenuItem *m = visibleMenuItems.get(i);
-				Caption *c = m->caption;
+				shared_ptr<MenuItem> m = visibleMenuItems.get(i);
+				shared_ptr<Caption> c = m->caption;
 
 				if (c != nullptr)
 				{
@@ -699,8 +708,8 @@ void BobMenu::render
 				//decrease the font size for all menu items
 				for (int i = 0; i < menuItems.size(); i++)
 				{
-					MenuItem *m = menuItems.get(i);
-					Caption *c = m->caption;
+					shared_ptr<MenuItem> m = menuItems.get(i);
+					shared_ptr<Caption> c = m->caption;
 					scaledFontSize = c->reduceHeightByOne();
 
 					topMenuItemDrawn = nullptr;
@@ -720,8 +729,8 @@ void BobMenu::render
 				//increase the font size for all menu items only up to the default size
 				for (int i = 0; i < menuItems.size(); i++)
 				{
-					MenuItem *m = menuItems.get(i);
-					Caption *c = m->caption;
+					shared_ptr<MenuItem> m = menuItems.get(i);
+					shared_ptr<Caption> c = m->caption;
 					scaledFontSize = c->increaseHeightByOne();
 
 					topMenuItemDrawn = nullptr;
@@ -751,8 +760,8 @@ void BobMenu::render
 		//set them all invisible so i can only enable the ones to fit on the screen
 		for (int i = 0; i < visibleMenuItems.size(); i++)
 		{
-			MenuItem *m = visibleMenuItems.get(i);
-			Caption *c = m->caption;
+			shared_ptr<MenuItem> m = visibleMenuItems.get(i);
+			shared_ptr<Caption> c = m->caption;
 
 			if (c != nullptr)
 			{
@@ -761,7 +770,7 @@ void BobMenu::render
 		}
 
 		
-		MenuItem* selectedMenuItem = getSelectedMenuItem();
+		shared_ptr<MenuItem> selectedMenuItem = getSelectedMenuItem();
 
 		int numVisibleMenuItemsBeforeCursor = visibleMenuItems.size();
 		if (selectedMenuItem != nullptr)
@@ -855,8 +864,8 @@ void BobMenu::render
 			}
 			if (i < 0)i = 0;
 
-			MenuItem *m = visibleMenuItems.get(i);
-			Caption *c = m->caption;
+			shared_ptr<MenuItem> m = visibleMenuItems.get(i);
+			shared_ptr<Caption> c = m->caption;
 
 			if (c != nullptr)
 			{
@@ -985,7 +994,7 @@ void BobMenu::render
 
 
 
-			BobTexture *cursor = rectangleCursorTexture;
+			shared_ptr<BobTexture> cursor = rectangleCursorTexture;
 
 			if (cursor != nullptr && menuItems.size() > 0)
 			{
@@ -996,16 +1005,16 @@ void BobMenu::render
 				float sy0 = rectangleCursorCurrentY;
 				float sy1 = sy0 + menuItems.get(cursorPosition)->caption->getHeight() + 4;
 
-				GLUtils::drawTexture(cursor, sx0, sx1, sy0, sy1, rectangleCursorPulseCurrentAlpha, GLUtils::FILTER_NEAREST);
+				GLUtils::drawTexture(cursor.get(), sx0, sx1, sy0, sy1, rectangleCursorPulseCurrentAlpha, GLUtils::FILTER_NEAREST);
 			}
 		}
 
 		//getCaptionManager()->render(RenderOrder::OVER_GUI);
 		for (int i = 0; i < menuItems.size(); i++)
 		{
-			MenuItem *m = menuItems.get(i);
+			shared_ptr<MenuItem> m = menuItems.get(i);
 			if (i != cursorPosition)m->caption->setTextColor(m->color);
-			Caption *c = m->caption;
+			shared_ptr<Caption> c = m->caption;
 			c->update();
 			c->render();
 		}
@@ -1041,7 +1050,7 @@ void BobMenu::render
 
 		if (drawUpArrow)
 		{
-			BobTexture *t = upCursorTexture;
+			shared_ptr<BobTexture> t = upCursorTexture;
 			if (t != nullptr)
 			{
 				float sx0 = (float)(GLUtils::getViewportWidth() / 2 - 4);
@@ -1054,13 +1063,13 @@ void BobMenu::render
 				if (cursorInOutToggle)sy1 -= 1;
 				if (cursorInOutToggle)sy0 -= 1;
 
-				GLUtils::drawTexture(t, 0, 1, 0, 1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
+				GLUtils::drawTexture(t.get(), 0, 1, 0, 1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
 			}
 		}
 
 		if (drawDownArrow)
 		{
-			BobTexture *t = downCursorTexture;
+			shared_ptr<BobTexture> t = downCursorTexture;
 			if (t != nullptr)
 			{
 				float sx0 = (float)(GLUtils::getViewportWidth() / 2 - 4);
@@ -1073,10 +1082,9 @@ void BobMenu::render
 				if (cursorInOutToggle)sy1 += 1;
 				if (cursorInOutToggle)sy0 += 1;
 
-				GLUtils::drawTexture(t, 0, 1, 0, 1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
+				GLUtils::drawTexture(t.get(), 0, 1, 0, 1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
 			}
 		}
 	}
 
 }
-

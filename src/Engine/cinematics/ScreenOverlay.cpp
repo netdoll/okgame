@@ -17,13 +17,14 @@ Logger ScreenOverlay::log = Logger("ScreenOverlay");
 ScreenOverlay::ScreenOverlay(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
+	this->color = *BobColor::black;
 }
 
 void ScreenOverlay::init()
 { //=========================================================================================================================
 }
 
-void ScreenOverlay::doTransition(BobColor* color, float fromAlpha, float toAlpha, int ticks)
+void ScreenOverlay::doTransition(BobColor color, float fromAlpha, float toAlpha, int ticks)
 { //=========================================================================================================================
 
 	this->color = color;
@@ -48,7 +49,7 @@ void ScreenOverlay::doTransition(BobColor* color, float fromAlpha, float toAlpha
 	this->transitionType = TYPE_ONE_WAY;
 }
 
-void ScreenOverlay::doToAndFromTransition(BobColor* color, int ticks, float toAlpha)
+void ScreenOverlay::doToAndFromTransition(BobColor color, int ticks, float toAlpha)
 { //=========================================================================================================================
 
 
@@ -66,7 +67,7 @@ void ScreenOverlay::doToAndFromTransition(BobColor* color, int ticks, float toAl
 	this->transitionType = TYPE_ROUNDTRIP;
 }
 
-void ScreenOverlay::setInstantOverlay(BobColor* color, float alpha)
+void ScreenOverlay::setInstantOverlay(BobColor color, float alpha)
 { //=========================================================================================================================
 
 	this->color = color;
@@ -139,11 +140,11 @@ void ScreenOverlay::clearOverlays()
 	alpha = 0;
 	toAlpha = 0;
 	transitionType = TYPE_INSTANT;
-	color = BobColor::black;
+	color = *BobColor::black;
 }
 
 void ScreenOverlay::render()
 { //=========================================================================================================================
-	GLUtils::drawFilledRect(color->ri(), color->gi(), color->bi(), 0, (float)GLUtils::getViewportWidth(), 0, (float)GLUtils::getViewportHeight(), alpha);
+	GLUtils::drawFilledRect(color.ri(), color.gi(), color.bi(), 0, (float)GLUtils::getViewportWidth(), 0, (float)GLUtils::getViewportHeight(), alpha);
 }
 
