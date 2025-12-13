@@ -25,7 +25,7 @@ public:
 	NDMenuWheel(Engine* g);
 
 
-	static ArrayList<NDMenuWheelItem*>* wheelItems;
+	static ArrayList<shared_ptr<NDMenuWheelItem>> wheelItems;
 
 
 	int selectedWheelItem = 0;
@@ -38,7 +38,7 @@ public:
 	static int COUNTERCLOCKWISE;
 
 
-	BobTexture* selectedItemColorSpinTexture[15];
+	shared_ptr<BobTexture> selectedItemColorSpinTexture[15];
 
 
 	float cartSlideX = 0;
@@ -61,7 +61,7 @@ public:
 	void init();
 
 
-	void addGame(NDGameEngine* game, const string& name, BobColor* color);
+	void addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color);
 
 
 	void render();

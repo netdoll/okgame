@@ -93,7 +93,7 @@ public:
 	GameController *gameController = nullptr;
 
 	//BobsGameNetwork *network = nullptr;
-	UDPPeerConnection *peerConnection = nullptr;
+	shared_ptr<UDPPeerConnection> peerConnection = nullptr;
 	shared_ptr<Caption> nameCaption = nullptr;
 	shared_ptr<Caption> gameCaption = nullptr;
 	shared_ptr<Caption> difficultyCaption = nullptr;

@@ -23,7 +23,7 @@ GameStore::GameStore()
 
 	for (int i = 0; i < 3; i++)
 	{
-		games->add(new GameItem());
+		games.add(make_shared<GameItem>());
 	}
 	//
 	//   games[0]->gameTitleLabel.setText("Tetrid LIVE");

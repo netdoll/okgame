@@ -25,7 +25,7 @@ MiniGameEngine::~MiniGameEngine()
 	log.debug("~MiniGameEngine()");
 #endif
 
-	delete gameDataLoader;
+	//delete gameDataLoader;
 }
 //=========================================================================================================================
 void MiniGameEngine::init()
@@ -39,7 +39,7 @@ void MiniGameEngine::init()
 
 	setupMenus();
 
-	this->gameDataLoader = new GameDataLoader(this);
+	this->gameDataLoader = make_shared<GameDataLoader>(this);
 
 }
 
@@ -378,7 +378,7 @@ void MiniGameEngine::multiplayerScreenUpdate()
 
 		for (int i = 0; i < onlineFriends.size(); i++)
 		{
-			UDPPeerConnection* f = onlineFriends.get(i);
+			shared_ptr<UDPPeerConnection> f = onlineFriends.get(i);
 			int y = (onlineFriendCaptions->size() + 1) * 20;
 
 			shared_ptr<Caption> c = shared_ptr<Caption>(getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, f->getFriendData_S().characterName, 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI));
@@ -421,7 +421,7 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		}
 		else
 		{
-			UDPPeerConnection* f = onlineFriends.get(multiplayerScreenCursorPosition);
+			shared_ptr<UDPPeerConnection> f = onlineFriends.get(multiplayerScreenCursorPosition);
 			this->connection = f;
 			//BobNet::addEngineToForwardMessagesTo(this);
 
@@ -666,7 +666,7 @@ void MiniGameEngine::tryToCloseGame()
 //	this->connection = connection;
 //	//this.multiplayer = true;
 //}
-bool MiniGameEngine::udpPeerMessageReceived(UDPPeerConnection *c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
+bool MiniGameEngine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //=========================================================================================================================
 
 	string s = e;// static_cast<string>(e->getMessage());

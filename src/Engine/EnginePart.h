@@ -112,7 +112,7 @@ public:
 	//The following method was originally marked 'synchronized':
 	static GameSave getGameSave();
 
-	virtual bool udpPeerMessageReceived(UDPPeerConnection* c, string e);
+	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e);
 	//
 	//	public String getIDString()
 	//	{
