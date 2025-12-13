@@ -410,6 +410,12 @@ set(SOURCE_FILES
     src/Puzzle/GameLogic.h
     src/Puzzle/Grid.cpp
     src/Puzzle/Grid.h
+    src/Puzzle/OKGame.cpp
+    src/Puzzle/OKGame.h
+    src/Puzzle/OKGameMenus.cpp
+    src/Puzzle/OKGameNetwork.cpp
+    src/Engine/stadium/OKGameStadium.cpp
+    src/Engine/stadium/OKGameStadium.h
     src/Puzzle/Piece.cpp
     src/Puzzle/Piece.h
     src/Puzzle/GameType.cpp
@@ -479,7 +485,9 @@ set(SOURCE_FILES
 
 
 
+add_subdirectory(lib/projectm)
 add_executable(bobsgame ${SOURCE_FILES})
+target_link_libraries(bobsgame projectM)
 
 
 

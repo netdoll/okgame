@@ -31,7 +31,7 @@ public:
 	bool noInput = false;
 
 
-	Caption* autopilotCaption = nullptr;
+	shared_ptr<Caption> autopilotCaption = nullptr;
 
 
 	float forceX = 0.0f;

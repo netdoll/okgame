@@ -20,22 +20,22 @@ BobTexture* BobsGame::lowerRight = nullptr;
 
 bool BobsGame::_gotIncomingGamesFromServer = false;
 mutex BobsGame::_gotIncomingGamesFromServer_Mutex;
-queue<GameType*>BobsGame::_incomingGameTypes;
+queue<shared_ptr<GameType>> BobsGame::_incomingGameTypes;
 mutex BobsGame::_incomingGameTypes_Mutex;
-queue<GameSequence*>BobsGame::_incomingGameSequences;
+queue<shared_ptr<GameSequence>> BobsGame::_incomingGameSequences;
 mutex BobsGame::_incomingGameSequences_Mutex;
-ArrayList<GameType*> BobsGame::loadedGameTypes;
-ArrayList<GameSequence*> BobsGame::loadedGameSequences;
-ArrayList<Sprite*> BobsGame::loadedSprites;
+ArrayList<shared_ptr<GameType>> BobsGame::loadedGameTypes;
+ArrayList<shared_ptr<GameSequence>> BobsGame::loadedGameSequences;
+ArrayList<shared_ptr<Sprite>> BobsGame::loadedSprites;
 
 
-ArrayList<BobsGameUserStatsForSpecificGameAndDifficulty*> BobsGame::userStatsPerGameAndDifficulty;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByTotalTimePlayed;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByTotalBlocksCleared;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByPlaneswalkerPoints;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByEloScore;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByTimeLasted;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByBlocksCleared;
+ArrayList<shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty>> BobsGame::userStatsPerGameAndDifficulty;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByTotalTimePlayed;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByTotalBlocksCleared;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByPlaneswalkerPoints;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByEloScore;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topGamesByTimeLasted;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topGamesByBlocksCleared;
 
 
 ArrayList<string> BobsGame::activityStream;
@@ -76,15 +76,15 @@ BobsGame::~BobsGame()
 
 	for (int i = 0; i<players.size(); i++)
 	{
-		PuzzlePlayer *p = players.get(i);
+		shared_ptr<PuzzlePlayer> p = players.get(i);
 
 		if (p->gameLogic != nullptr)
 		{
 			p->gameLogic->deleteAllCaptions();
 		}
-		delete p->gameLogic;
+		//delete p->gameLogic;
 		p->gameLogic = nullptr;
-		delete p;
+		//delete p;
 
 	}
 
@@ -139,15 +139,15 @@ void BobsGame::initPlayer()
 {//=========================================================================================================================
 	for (int i = 0; i<players.size(); i++)
 	{
-		PuzzlePlayer *p = players.get(i);
+		shared_ptr<PuzzlePlayer> p = players.get(i);
 
 		if (p->gameLogic != nullptr)
 		{
 			p->gameLogic->deleteAllCaptions();
 		}
-		delete p->gameLogic;
+		//delete p->gameLogic;
 		p->gameLogic = nullptr;
-		delete p;
+		//delete p;
 
 		//for simulator connection
 		//if(friend==null&&connection!=null)BobsGame::setConnection(connection);
@@ -168,13 +168,13 @@ void BobsGame::initPlayer()
 	}
 	players.clear();
 
-	PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
+	shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
 	
 	p->useKeyboard = true;
 	//if (getControlsManager()->gameControllers.size() > 0)p->gameController = getControlsManager()->gameControllers.get(0);
 	players.add(p);
 
-	if (currentRoom == nullptr)currentRoom = new Room();
+	if (currentRoom == nullptr)currentRoom = make_shared<Room>();
 
 	//randomSeed = p->game->randomSeed;
 	//originalSettings = p->game->getCurrentGameType();
@@ -290,7 +290,7 @@ void BobsGame::initAssets()
 
 
 //=========================================================================================================================
-Sprite* BobsGame::getSpriteFromName(const string& name)
+shared_ptr<Sprite> BobsGame::getSpriteFromName(const string& name)
 {//=========================================================================================================================
 
 	return spriteManager->getSpriteByName(name);
@@ -298,12 +298,12 @@ Sprite* BobsGame::getSpriteFromName(const string& name)
 }
 
 //=========================================================================================================================
-GameLogic* BobsGame::getPlayer1Game()
+shared_ptr<GameLogic> BobsGame::getPlayer1Game()
 {//=========================================================================================================================
 	return players.get(0)->gameLogic;
 }
 //=========================================================================================================================
-PuzzlePlayer* BobsGame::getPlayer1()
+shared_ptr<PuzzlePlayer> BobsGame::getPlayer1()
 {//=========================================================================================================================
 	return players.get(0);
 }
@@ -332,7 +332,7 @@ void BobsGame::setBobsGameFBOSize()
 }
 
 //=========================================================================================================================
-void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
+void BobsGame::renderGameIntoFBO(shared_ptr<GameLogic> g, bool useColorFilter)
 {//=========================================================================================================================
 
 	GLUtils::setBobsGameMainFBO();
@@ -610,8 +610,8 @@ void BobsGame::render()
 		for (int i = 0; i < players.size(); i++)
 		{
 
-			PuzzlePlayer *p = players.get(i);
-			GameLogic *g = p->gameLogic;
+			shared_ptr<PuzzlePlayer> p = players.get(i);
+			shared_ptr<GameLogic> g = p->gameLogic;
 
 			//render into mainGameFBO
 			renderGameIntoFBO(g, false);
@@ -697,7 +697,7 @@ void BobsGame::render()
 
 		for (int i = 0; i < players.size(); i++)
 		{
-			PuzzlePlayer *p = players.get(i);
+			shared_ptr<PuzzlePlayer> p = players.get(i);
 
 			if (p->gameLogic->pauseMiniMenuShowing)playerPauseMiniMenuRender(p, p->gameLogic->playingFieldX0, p->gameLogic->playingFieldX1, p->gameLogic->playingFieldY0, p->gameLogic->playingFieldY1);;
 		}
@@ -903,9 +903,9 @@ void BobsGame::update()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		PuzzlePlayer *p = players.get(i);
+		shared_ptr<PuzzlePlayer> p = players.get(i);
 
-		GameLogic *g = p->gameLogic;
+		shared_ptr<GameLogic> g = p->gameLogic;
 
 		//actual game update
 		g->update(i,players.size());
@@ -939,7 +939,7 @@ void BobsGame::update()
 	bool allPlayersDead = true;
 	for (int i = 0; i < players.size(); i++)
 	{
-		PuzzlePlayer *p = players.get(i);
+		shared_ptr<PuzzlePlayer> p = players.get(i);
 		if (p->gameLogic->died == false)
 		{
 			allPlayersDead = false;
@@ -955,7 +955,7 @@ void BobsGame::update()
 		int alivePlayers = 0;
 		for (int i = 0; i < players.size(); i++)
 		{
-			PuzzlePlayer *p = players.get(i);
+			shared_ptr<PuzzlePlayer> p = players.get(i);
 			if (p->gameLogic->died == false)
 			{
 				alivePlayers++;
@@ -966,7 +966,7 @@ void BobsGame::update()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				PuzzlePlayer *p = players.get(i);
+				shared_ptr<PuzzlePlayer> p = players.get(i);
 				if (p->gameLogic->died == false)
 				{
 					p->gameLogic->won = true;
@@ -982,7 +982,7 @@ void BobsGame::update()
 		bool someoneWon = false;
 		for (int i = 0; i < players.size(); i++)
 		{
-			PuzzlePlayer *p = players.get(i);
+			shared_ptr<PuzzlePlayer> p = players.get(i);
 			if (p->gameLogic->complete == true)
 			{
 				someoneWon = true;
@@ -993,7 +993,7 @@ void BobsGame::update()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				PuzzlePlayer *p = players.get(i);
+				shared_ptr<PuzzlePlayer> p = players.get(i);
 				if (p->gameLogic->complete == false)
 				{
 					p->gameLogic->lost = true;
@@ -1049,7 +1049,7 @@ void BobsGame::update()
 
 				if (players.size() == 1)
 				{
-					GameSequence *gs = getPlayer1Game()->currentGameSequence;
+					shared_ptr<GameSequence> gs = getPlayer1Game()->currentGameSequence;
 					initPlayer();
 					getPlayer1Game()->currentGameSequence = gs;
 				}
@@ -1094,7 +1094,7 @@ void BobsGame::sendGameStatsToServer()
 		
 		if(statsUploadMenu !=nullptr)
 		{
-			delete statsUploadMenu;
+			//delete statsUploadMenu;
 			statsUploadMenu = nullptr;
 		}
 
@@ -1108,7 +1108,7 @@ void BobsGame::sendGameStatsToServer()
 
 		if (statsUploadMenu == nullptr)
 		{
-			statsUploadMenu = new BobMenu(this, "Results");
+			statsUploadMenu = make_shared<BobMenu>(this, "Results");
 			statsUploadMenu->outline = true;
 			statsUploadMenu->defaultMenuColor = BobColor::white;
 			statsUploadMenu->setFontSize(24);
@@ -1123,11 +1123,11 @@ void BobsGame::sendGameStatsToServer()
 
 		for (int i = 0; i < players.size(); i++)
 		{
-			PuzzlePlayer *p = players.get(i);
+			shared_ptr<PuzzlePlayer> p = players.get(i);
 			if (p->isNetworkPlayer() == false)
 			{
 
-				GameLogic *g = p->gameLogic;
+				shared_ptr<GameLogic> g = p->gameLogic;
 
 				BobsGameGameStats s;
 				s.userName = g->getEngine()->getUserName_S();
@@ -1177,7 +1177,7 @@ void BobsGame::sendGameStatsToServer()
 
 				for (int n = 0; n < players.size(); n++)
 				{
-					PuzzlePlayer *pp = players.get(n);
+					shared_ptr<PuzzlePlayer> pp = players.get(n);
 					long long playerUserID = -1;
 					if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
 						playerUserID = pp->peerConnection->peerUserID;
@@ -1196,7 +1196,7 @@ void BobsGame::sendGameStatsToServer()
 					s.playerIDsCSV += to_string(playerUserID) + ":" + "`" + playerUserName + "`" + ":" + statusString + ",";//id:`userName`:lost,id:`userName`:won,:
 				}
 
-				s.room = currentRoom;
+				s.room = currentRoom.get();
 
 				string statsString = s.encode();
 				getServerConnection()->sendBobsGameGameStats_S(statsString);
@@ -1259,7 +1259,7 @@ void BobsGame::sendGameStatsToServer()
 			{
 				if (statsUploadMenu != nullptr)
 				{
-					delete statsUploadMenu;
+					//delete statsUploadMenu;
 					statsUploadMenu = nullptr;
 				}
 			}
@@ -1288,7 +1288,7 @@ void BobsGame::doVoting()
 		sentVote = true;
 		if (voteMenu != nullptr)
 		{
-			delete voteMenu;
+			//delete voteMenu;
 			voteMenu = nullptr;
 		}
 		return;
@@ -1298,12 +1298,12 @@ void BobsGame::doVoting()
 	if (sentVote == false)
 	{
 		string type = "game sequence";
-		GameSequence *gs = getPlayer1Game()->currentGameSequence;
+		shared_ptr<GameSequence> gs = getPlayer1Game()->currentGameSequence;
 		string name = gs->name;
 		if (gs->gameTypes.size() == 1)
 		{
 			type = "game type";
-			GameType *g = gs->gameTypes.get(0);
+			shared_ptr<GameType> g = gs->gameTypes.get(0);
 			name = g->name;
 			if (g->downloaded == false || g->yourVote != "none")
 			{
@@ -1322,7 +1322,7 @@ void BobsGame::doVoting()
 
 		if (voteMenu == nullptr)
 		{
-			voteMenu = new BobMenu(this, "Vote");
+			voteMenu = make_shared<BobMenu>(this, "Vote");
 			voteMenu->outline = true;
 			voteMenu->setFontSize(32);
 			voteMenu->addInfo("Please vote on this "+type+" ("+name+")", "", BobColor::green)->outline = true;
@@ -1396,7 +1396,7 @@ void BobsGame::doVoting()
 			{
 				if (voteMenu != nullptr)
 				{
-					delete voteMenu;
+					//delete voteMenu;
 					voteMenu = nullptr;
 				}
 			}
@@ -1479,7 +1479,7 @@ void BobsGame::resetPressedButtons()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		PuzzlePlayer *p = players.get(i);
+		shared_ptr<PuzzlePlayer> p = players.get(i);
 		p->resetPressedButtons();
 	}
 
@@ -1490,7 +1490,7 @@ void BobsGame::setButtonStates()
 {//=========================================================================================================================
 	for (int i = 0; i < players.size(); i++)
 	{
-		PuzzlePlayer *p = players.get(i);
+		shared_ptr<PuzzlePlayer> p = players.get(i);
 		p->setButtonStates();
 	}
 
@@ -1550,7 +1550,7 @@ void BobsGame::setButtonStates()
 //	else
 //	if (players.size() > 1)
 //	{
-	PuzzlePlayer *p = nullptr;// = players.get(0);
+	shared_ptr<PuzzlePlayer> p = nullptr;// = players.get(0);
 
 		for (int i = 0; i < players.size();i++)
 		{
@@ -1735,7 +1735,7 @@ void BobsGame::loadGameTypesFromXML()
 				try
 				{
 					ia >> BOOST_SERIALIZATION_NVP(gt);
-					GameType *s = new GameType();
+					shared_ptr<GameType> s = make_shared<GameType>();
 					*s = gt;
 
 					//if(i==0)s->builtInType = true;
@@ -1820,7 +1820,7 @@ void BobsGame::loadGameSequencesFromXML()
 				{
 					ia >> BOOST_SERIALIZATION_NVP(gs);
 
-					GameSequence *s = new GameSequence();
+					shared_ptr<GameSequence> s = make_shared<GameSequence>();
 					*s = gs;
 
 					//if (i == 0)s->builtInType = true;
@@ -1846,7 +1846,7 @@ void BobsGame::loadGameSequencesFromXML()
 
 		for(int i=0;i<loadedGameSequences.size();i++)
 		{
-			GameSequence *g = loadedGameSequences.get(i);
+			shared_ptr<GameSequence> g = loadedGameSequences.get(i);
 
 			loadGameSequenceUUIDsToGamesArray(g);
 		}
@@ -1856,7 +1856,7 @@ void BobsGame::loadGameSequencesFromXML()
 }
 
 //=========================================================================================================================
-void BobsGame::loadGameSequenceUUIDsToGamesArray(GameSequence *g)
+void BobsGame::loadGameSequenceUUIDsToGamesArray(shared_ptr<GameSequence> g)
 {//=========================================================================================================================
 
 	g->gameTypes.clear();
@@ -1864,7 +1864,7 @@ void BobsGame::loadGameSequenceUUIDsToGamesArray(GameSequence *g)
 	for (int n = 0; n<g->importExport_gameUUIDs.size(); n++)
 	{
 		string uuid = g->importExport_gameUUIDs.get(n);
-		GameType *s = getGameTypeByUUID(uuid);
+		shared_ptr<GameType> s = getGameTypeByUUID(uuid);
 
 		if (s != nullptr)
 		{
@@ -1878,15 +1878,15 @@ void BobsGame::loadGameSequenceUUIDsToGamesArray(GameSequence *g)
 	}
 }
 //=========================================================================================================================
-GameType* BobsGame::getGameTypeByName(string name)
+shared_ptr<GameType> BobsGame::getGameTypeByName(string name)
 {//=========================================================================================================================
 
 	if (name == "")return nullptr;
 
-	GameType *bt = nullptr;
+	shared_ptr<GameType> bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		GameType *b = loadedGameTypes.get(i);
+		shared_ptr<GameType> b = loadedGameTypes.get(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -1895,15 +1895,15 @@ GameType* BobsGame::getGameTypeByName(string name)
 	return bt;
 }
 //=========================================================================================================================
-GameType* BobsGame::getGameTypeByUUID(string uuid)
+shared_ptr<GameType> BobsGame::getGameTypeByUUID(string uuid)
 {//=========================================================================================================================
 
 	if (uuid == "")return nullptr;
 
-	GameType *bt = nullptr;
+	shared_ptr<GameType> bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		GameType *b = loadedGameTypes.get(i);
+		shared_ptr<GameType> b = loadedGameTypes.get(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -1912,15 +1912,15 @@ GameType* BobsGame::getGameTypeByUUID(string uuid)
 	return bt;
 }
 //=========================================================================================================================
-GameSequence* BobsGame::getGameSequenceByName(string name)
+shared_ptr<GameSequence> BobsGame::getGameSequenceByName(string name)
 {//=========================================================================================================================
 
 	if (name == "")return nullptr;
 
-	GameSequence *bt = nullptr;
+	shared_ptr<GameSequence> bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		GameSequence *b = loadedGameSequences.get(i);
+		shared_ptr<GameSequence> b = loadedGameSequences.get(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -1929,14 +1929,14 @@ GameSequence* BobsGame::getGameSequenceByName(string name)
 	return bt;
 }
 //=========================================================================================================================
-GameSequence* BobsGame::getGameSequenceByUUID(string uuid)
+shared_ptr<GameSequence> BobsGame::getGameSequenceByUUID(string uuid)
 {//=========================================================================================================================
 	if (uuid == "")return nullptr;
 
-	GameSequence *bt = nullptr;
+	shared_ptr<GameSequence> bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		GameSequence *b = loadedGameSequences.get(i);
+		shared_ptr<GameSequence> b = loadedGameSequences.get(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -1946,7 +1946,7 @@ GameSequence* BobsGame::getGameSequenceByUUID(string uuid)
 }
 
 //=========================================================================================================================
-void BobsGame::saveRoomConfigToFile(Room* currentRoom,string name)
+void BobsGame::saveRoomConfigToFile(shared_ptr<Room> currentRoom,string name)
 {//=========================================================================================================================
 	
 	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
@@ -2017,7 +2017,7 @@ ArrayList<string> BobsGame::getRoomConfigsList()
 }
 
 //=========================================================================================================================
-Room* BobsGame::loadRoomConfig(string configName)
+shared_ptr<Room> BobsGame::loadRoomConfig(string configName)
 {//=========================================================================================================================
 	
 	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
@@ -2029,7 +2029,7 @@ Room* BobsGame::loadRoomConfig(string configName)
 
 
 	
-	Room *room = new Room();
+	shared_ptr<Room> room = make_shared<Room>();
 	try
 	{
 
@@ -2061,11 +2061,11 @@ Room* BobsGame::loadRoomConfig(string configName)
 	}
 
 
-	GameSequence*gs = getGameSequenceByUUID(room->room_GameSequenceUUID);
+	shared_ptr<GameSequence> gs = getGameSequenceByUUID(room->room_GameSequenceUUID);
 	if(gs == nullptr)
 	{
-		gs = new GameSequence();
-		GameType* gt = getGameTypeByUUID(room->room_GameTypeUUID);
+		gs = make_shared<GameSequence>();
+		shared_ptr<GameType> gt = getGameTypeByUUID(room->room_GameTypeUUID);
 		if (gt != nullptr)
 		{
 			gs->gameTypes.add(gt);
@@ -2084,7 +2084,7 @@ Room* BobsGame::loadRoomConfig(string configName)
 
 
 //=========================================================================================================================
-void BobsGame::saveUnknownGameSequencesAndTypesToXML(GameSequence *gs)
+void BobsGame::saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence> gs)
 {//=========================================================================================================================
 
 	//save game sequence locally and each game type locally!
@@ -2096,7 +2096,7 @@ void BobsGame::saveUnknownGameSequencesAndTypesToXML(GameSequence *gs)
 	}
 	for (int i = 0; i < gs->gameTypes.size(); i++)
 	{
-		GameType *g = gs->gameTypes.get(i);
+		shared_ptr<GameType> g = gs->gameTypes.get(i);
 		if (g->creatorUserID != -1 && g->dateCreated != -1 && getGameTypeByUUID(g->uuid) == nullptr)
 		{
 
@@ -2107,7 +2107,7 @@ void BobsGame::saveUnknownGameSequencesAndTypesToXML(GameSequence *gs)
 }
 
 //=========================================================================================================================
-void BobsGame::saveGameSequenceToXML(GameSequence *gs, bool downloaded)
+void BobsGame::saveGameSequenceToXML(shared_ptr<GameSequence> gs, bool downloaded)
 {//=========================================================================================================================
 
 	string userDataPathString = FileUtils::appDataPath + "gameSequences/";
@@ -2156,7 +2156,7 @@ void BobsGame::saveGameSequenceToXML(GameSequence *gs, bool downloaded)
 }
 
 //=========================================================================================================================
-void BobsGame::saveGameTypeToXML(GameType *gs, bool downloaded)
+void BobsGame::saveGameTypeToXML(shared_ptr<GameType> gs, bool downloaded)
 {//=========================================================================================================================
 	string userDataPathString = FileUtils::appDataPath + "gameTypes/";
 	if (downloaded)userDataPathString = FileUtils::appDataPath + "downloadedGameTypes/";
@@ -2275,9 +2275,9 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 
 						while (incomingGameTypesQueueSize_S() > 0)
 						{
-							GameType *g = incomingGameTypesQueuePop_S();
+							shared_ptr<GameType> g = incomingGameTypesQueuePop_S();
 
-							GameType *existing = getGameTypeByUUID(g->uuid);
+							shared_ptr<GameType> existing = getGameTypeByUUID(g->uuid);
 							if (existing != nullptr)
 							{
 								if (existing->downloaded == true)
@@ -2297,9 +2297,9 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 
 						while (incomingGameSequencesQueueSize_S()>0)
 						{
-							GameSequence *g = incomingGameSequencesQueuePop_S();
+							shared_ptr<GameSequence> g = incomingGameSequencesQueuePop_S();
 
-							GameSequence* existing = getGameSequenceByUUID(g->uuid);
+							shared_ptr<GameSequence> existing = getGameSequenceByUUID(g->uuid);
 							if (existing != nullptr)
 							{
 								if (existing->downloaded == true)
@@ -2315,7 +2315,7 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 
 						for (int i = 0; i<loadedGameSequences.size(); i++)
 						{
-							GameSequence *g = loadedGameSequences.get(i);
+							shared_ptr<GameSequence> g = loadedGameSequences.get(i);
 
 							loadGameSequenceUUIDsToGamesArray(g);
 						}
@@ -2336,7 +2336,7 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 
 						if (gettingGamesFromServerMenu != nullptr)
 						{
-							delete gettingGamesFromServerMenu;
+							//delete gettingGamesFromServerMenu;
 							gettingGamesFromServerMenu = nullptr;
 						}
 					}
@@ -2521,7 +2521,7 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			try
 			{
 				ia >> BOOST_SERIALIZATION_NVP(gs);
-				GameType *g = new GameType();
+				shared_ptr<GameType> g = make_shared<GameType>();
 				*g = gs;
 
 				g->creatorUserID = userID;
@@ -2558,7 +2558,7 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			{
 				ia >> BOOST_SERIALIZATION_NVP(gs);
 
-				GameSequence *g = new GameSequence();
+				shared_ptr<GameSequence> g = make_shared<GameSequence>();
 				*g = gs;
 
 				g->creatorUserID = userID;
@@ -2615,7 +2615,7 @@ void BobsGame::updateVersion0ToVersion1()
 	bool resave = false;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		GameType *g = loadedGameTypes.get(i);
+		shared_ptr<GameType> g = loadedGameTypes.get(i);
 
 		for (int n = 0; n < g->pieceTypes.size(); n++)
 		{
@@ -2690,7 +2690,7 @@ void BobsGame::updateVersion0ToVersion1()
 			}
 			for (int x = 0; x < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); x++)
 			{
-				TurnFromBlockTypeToType* t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(x);
+				shared_ptr<TurnFromBlockTypeToType> t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(x);
 				if (t->fromType_DEPRECATED != "")
 				{
 					shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(t->fromType_DEPRECATED);
@@ -2722,7 +2722,7 @@ void BobsGame::updateVersion0ToVersion1()
 
 		for(int n=0;n<g->difficultyTypes.size();n++)
 		{
-			DifficultyType *d = g->difficultyTypes.get(n);
+			shared_ptr<DifficultyType> d = g->difficultyTypes.get(n);
 
 			for (int x = 0; x < d->pieceTypesToDisallow_DEPRECATED.size(); x++)
 			{
@@ -2761,7 +2761,7 @@ void BobsGame::updateVersion0ToVersion1()
 	{
 		for (int i = 0; i < loadedGameTypes.size(); i++)
 		{
-			GameType *g = loadedGameTypes.get(i);
+			shared_ptr<GameType> g = loadedGameTypes.get(i);
 			//if (g->builtInType == false)
 				saveGameTypeToXML(g,g->downloaded);
 		}

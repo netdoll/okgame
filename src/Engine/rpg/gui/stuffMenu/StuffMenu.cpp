@@ -23,14 +23,14 @@ StuffMenu::StuffMenu()
 	//setTheme("stuffmenu");
 
 
-	statusPanel = new StatusPanel();
-	itemsPanel = new ItemsPanel();
-	messagesPanel = new MessagesPanel();
-	friendsPanel = new FriendsPanel();
-	logsPanel = new LogsPanel();
-	controlsPanel = new ControlsPanel();
-	settingsPanel = new SettingsPanel();
-	debugInfoPanel = new DebugInfoPanel();
+	statusPanel = make_shared<StatusPanel>();
+	itemsPanel = make_shared<ItemsPanel>();
+	messagesPanel = make_shared<MessagesPanel>();
+	friendsPanel = make_shared<FriendsPanel>();
+	logsPanel = make_shared<LogsPanel>();
+	controlsPanel = make_shared<ControlsPanel>();
+	settingsPanel = make_shared<SettingsPanel>();
+	debugInfoPanel = make_shared<DebugInfoPanel>();
 
 	//
 	//   stuffMenuTabs = ArrayList<ToggleButton*>(8);

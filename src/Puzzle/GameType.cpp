@@ -63,7 +63,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_pieceTypesToDisallow.size(); i++)
 		{
 			PieceType b = importExport_pieceTypesToDisallow.get(i);
-			shared_ptr<PieceType> bp(new PieceType());
+			shared_ptr<PieceType> bp = make_shared<PieceType>();
 			*bp = b;
 			pieceTypesToDisallow_DEPRECATED.add(bp);
 		}
@@ -76,7 +76,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_blockTypesToDisallow.size(); i++)
 		{
 			BlockType b = importExport_blockTypesToDisallow.get(i);
-			shared_ptr<BlockType> bp(new BlockType());
+			shared_ptr<BlockType> bp = make_shared<BlockType>();
 			*bp = b;
 			blockTypesToDisallow_DEPRECATED.add(bp);
 		}
@@ -644,7 +644,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 	for (int i = 0; i < importExport_blockTypes.size(); i++)
 	{
 		BlockType b = importExport_blockTypes.get(i);
-		shared_ptr<BlockType> bp(new BlockType());
+		shared_ptr<BlockType> bp = make_shared<BlockType>();
 		*bp = b;
 		blockTypes.add(bp);
 	}
@@ -686,7 +686,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 	for (int i = 0; i<importExport_pieceTypes.size(); i++)
 	{
 		PieceType b = importExport_pieceTypes.get(i);
-		shared_ptr<PieceType> bp(new PieceType());
+		shared_ptr<PieceType> bp = make_shared<PieceType>();
 		*bp = b;
 		pieceTypes.add(bp);
 	}

@@ -21,10 +21,18 @@ public:
 	~BobNet();
 	
 
-	static void addEngineToForwardMessagesTo(Engine* e);
+	static void addEngineToForwardMessagesTo(Engine* e); // Raw pointer because engine registers itself, Engine owns itself or is owned by something else? Engine usually owned by shared_ptr. Keep raw if weak ref. But engines is static list.
+	// static ArrayList<Engine*>engines; -> shared_ptr?
+	// If Engine calls addEngineToForwardMessagesTo(this) in init, it passes raw pointer.
+	// If we store shared_ptr, we need shared_from_this().
+	// Engine inherits State, EnginePart.
+	// Let's check if Engine inherits enable_shared_from_this.
+    // If not, we might need to keep raw pointer for now or update Engine.
+    // Assuming raw pointer for engines list for now to avoid complexity, but updating udpConnections.
+
 	static void update();
 
-	static ArrayList<UDPPeerConnection*> udpConnections;
+	static ArrayList<shared_ptr<UDPPeerConnection>> udpConnections;
 	static TCPServerConnection tcpServerConnection;// = nullptr;
 
 	static const int status_AVAILABLE = 0;
@@ -37,7 +45,7 @@ public:
 	static int myStatus;// = status_AVAILABLE;
 
 	static void sendAllPeers(string s);
-	static UDPPeerConnection* addFriendID(long long friendID, int type);
+	static shared_ptr<UDPPeerConnection> addFriendID(long long friendID, int type);
 
 	static ArrayList<Engine*>engines;// = new ArrayList<State*>();
 

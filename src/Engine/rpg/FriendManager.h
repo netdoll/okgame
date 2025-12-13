@@ -21,7 +21,7 @@ public:
 
 
 	//ArrayList because threads will access it
-	ArrayList<FriendCharacter*>* friendCharacters = new ArrayList<FriendCharacter*>();
+	ArrayList<shared_ptr<FriendCharacter>> friendCharacters;
 
 
 
