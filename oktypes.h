@@ -149,68 +149,109 @@ typedef unsigned char u8;
 
 class ByteArray
 {
+private:
+	std::vector<u8> v;
+public:
 	u8* bytes = nullptr;
 	unsigned int len = 0;
-public:
 
 	ByteArray(u8* bytes, unsigned int len)
 	{
-		this->bytes = bytes;
-		this->len = len;
+		if (bytes && len > 0)
+		{
+			v.assign(bytes, bytes + len);
+		}
+		this->bytes = v.data();
+		this->len = (unsigned int)v.size();
 	}
 
 	ByteArray(unsigned int len)
 	{
-		this->bytes = (u8*)calloc(len, 1);// new u8[len];
+		v.resize(len, 0);
+		this->bytes = v.data();
 		this->len = len;
 	}
 
-	~ByteArray()
+	ByteArray(const ByteArray& other)
 	{
-		free(bytes);
-		//delete[] bytes;
+		v = other.v;
+		bytes = v.data();
+		len = (unsigned int)v.size();
+	}
+
+	ByteArray& operator=(const ByteArray& other)
+	{
+		if (this != &other)
+		{
+			v = other.v;
+			bytes = v.data();
+			len = (unsigned int)v.size();
+		}
+		return *this;
 	}
 
 	u8* data()
 	{
-		return bytes;
+		return v.data();
 	}
 
 	long long size()
 	{
-		return len;
+		return v.size();
 	}
 };
 
 class IntArray
 {
+private:
+	std::vector<unsigned int> v;
+public:
 	unsigned int* ints = nullptr;
 	unsigned int len = 0;
-public:
 
 	IntArray(unsigned int* ints, unsigned int len)
 	{
-		this->ints = ints;
-		this->len = len;
+		if (ints && len > 0)
+		{
+			v.assign(ints, ints + len);
+		}
+		this->ints = v.data();
+		this->len = (unsigned int)v.size();
 	}
+
 	IntArray(unsigned int len)
 	{
-		this->ints = (unsigned int*)calloc((size_t)len*4, 4);// new int[len];
+		v.resize(len, 0);
+		this->ints = v.data();
 		this->len = len;
 	}
-	~IntArray()
+
+	IntArray(const IntArray& other)
 	{
-		free(ints);
-		//delete[] ints;
+		v = other.v;
+		ints = v.data();
+		len = (unsigned int)v.size();
 	}
+
+	IntArray& operator=(const IntArray& other)
+	{
+		if (this != &other)
+		{
+			v = other.v;
+			ints = v.data();
+			len = (unsigned int)v.size();
+		}
+		return *this;
+	}
+
 	unsigned int* data()
 	{
-		return ints;
+		return v.data();
 	}
 
 	long long size()
 	{
-		return len;
+		return v.size();
 	}
 };
 
