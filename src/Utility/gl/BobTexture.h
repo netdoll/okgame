@@ -119,5 +119,5 @@ class Logger;
 
 
 	public:
-		ByteArray* getTextureData();
+		sp<ByteArray> getTextureData();
 	};
