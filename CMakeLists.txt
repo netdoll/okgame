@@ -43,6 +43,7 @@ include_directories(
         ${bobsgame_SOURCE_DIR}/lib/miniz-master
         ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
+        ${bobsgame_SOURCE_DIR}/lib/projectm/src
         #${bobsgame_SOURCE_DIR}/lib/boost_1_62_0
         ${Boost_INCLUDE_DIR}
         ${bobsgame_SOURCE_DIR}
