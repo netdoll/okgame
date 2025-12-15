@@ -31,16 +31,15 @@ This session focused on modernizing the BobsGame engine memory management, repai
 *   **Core Loading**: Implemented dynamic loading (`dlopen`/`LoadLibrary`) of Libretro cores and symbol mapping for the Libretro API.
 *   **Callbacks**: Implemented basic environment and video callbacks.
 *   **ND Device**: Integrated `LibretroGame` into the `ND` handheld device class.
+*   **UI**: Added "Emulator" option to `NDMenu` in `BGClientEngine`, pointing to the `LibretroGame` instance.
 
 ## Current State
 *   **Build**: The project should compile with the updated `CMakeLists.txt`.
-*   **Visualizer**: `projectM` is initialized and rendering in the background of `BobsGame`. Audio is being fed to it.
-*   **Libretro**: The frontend infrastructure is in place. It needs a compiled core (DLL/SO) and ROM to be loaded to function.
+*   **Visualizer**: `projectM` is initialized and rendering in the background of `BobsGame`. Audio is being fed to it via `AudioManager`.
+*   **Libretro**: The frontend infrastructure is in place and added to the game menu. It requires compiled cores (DLL/SO) to function.
 
 ## Next Steps
 1.  **Build Libretro Cores**: Create a build process (CMake or script) to compile specific Libretro cores (e.g., `gambatte`, `fceumm`) located in `lib/` so they can be loaded by `LibretroGame`.
-2.  **UI Integration**: Add menu options in `NDMenu` to:
-    *   Toggle `projectM` visualizer on/off.
-    *   Select and launch Libretro cores/ROMs.
+2.  **Libretro UI**: Implement a file browser or ROM selector within `LibretroGame::update` to allow the user to load a core/ROM when the "Emulator" app is opened.
 3.  **Input/Audio Bridging (Libretro)**: Complete the `retro_input_state` and `retro_audio_sample` callbacks in `LibretroGame` to fully bridge controls and sound.
 4.  **Testing**: Verify visualizer performance and libretro core compatibility.
