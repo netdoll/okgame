@@ -918,6 +918,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 	fclose(cfile);
 
 	ByteArray* byteArray = new ByteArray((u8*)cfilepointer, csize);
+	free(cfilepointer);
 
 	return byteArray;
 

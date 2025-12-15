@@ -15,7 +15,7 @@ Logger Sprite::log = Logger("Sprite");
 
 
 //java::util::concurrent::ExecutorService *Sprite::generatePNGExecutorService = nullptr;
-ctpl::thread_pool* Sprite::generatePNGThreadPool = nullptr;
+shared_ptr<ctpl::thread_pool> Sprite::generatePNGThreadPool = nullptr;
 
 
 Sprite::Sprite()
@@ -623,7 +623,7 @@ void Sprite::loadTextures()
 
 				if (MapManager::useThreads == true && generatePNGThreadPool == nullptr)
 				{
-				   generatePNGThreadPool = new ctpl::thread_pool(3);
+				   generatePNGThreadPool = make_shared<ctpl::thread_pool>(3);
 				}
 				
 				if (MapManager::useThreads == true)

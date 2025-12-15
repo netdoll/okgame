@@ -8,6 +8,7 @@
 #include "bobtypes.h"
 #include "src/Engine/state/StateManager.h"
 class Logger;
+class LibretroGame;
 
 
 
@@ -19,7 +20,7 @@ public:
 	static Logger log;
 
 
-	BobTexture* texture = nullptr;
+	shared_ptr<BobTexture> texture = nullptr;
 
 	float nDDrawAlpha = 1.0f;
 	float nDZoom = 0.01f;
@@ -37,10 +38,12 @@ public:
 	
 
 
-	BobStateManager* nDGameStateManager = nullptr;
+	shared_ptr<BobStateManager> nDGameStateManager = nullptr;
+
+    shared_ptr<LibretroGame> libretroGame = nullptr;
 
 
-	Light* light = nullptr;
+	shared_ptr<Light> light = nullptr;
 	float lightAlpha = 1.0f;
 	bool lightFadeInOutToggle = false;
 
@@ -49,7 +52,7 @@ public:
 	float lightMinAlpha = 0.70f;
 
 
-	ConsoleText* ndZoomText = nullptr;// = Console::debug("ndZoomText");
+	shared_ptr<ConsoleText> ndZoomText = nullptr;// = Console::debug("ndZoomText");
 
 
 	long long fadeOutMeshTicks = 0;
@@ -67,9 +70,9 @@ public:
 	virtual void update() override;
 
 
-	void setGame(NDGameEngine* game);
+	void setGame(shared_ptr<NDGameEngine> game);
 
-	NDGameEngine* getGame();
+	shared_ptr<NDGameEngine> getGame();
 
 
 	virtual void toggleActivated() override;

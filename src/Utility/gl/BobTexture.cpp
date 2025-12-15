@@ -32,6 +32,10 @@ BobTexture::BobTexture(const string &cacheName, GLuint textureID)
 	lastBoundTexture = this;
 
 }
+BobTexture::~BobTexture()
+{
+	release();
+}
 
 //#else
 
@@ -175,11 +179,14 @@ void BobTexture::setWidthRatio()
 void BobTexture::release()
 {//=========================================================================================================================
 
+	if(textureID == 0) return;
+
 //#ifndef ORBIS
 	GLuint *textureIDs = new GLuint[1];
 	textureIDs[0] = textureID;
 
 	glDeleteTextures(1, textureIDs);
+	textureID = 0;
 
 	delete[] textureIDs;
 
@@ -222,7 +229,9 @@ void BobTexture::release()
 
 	if (cacheName != "")
 	{
-		GLUtils::clearCache(cacheName);
+		string tempName = cacheName;
+		cacheName = "";
+		GLUtils::clearCache(tempName);
 	}
 
 	GLUtils::texturesLoaded--;
@@ -251,9 +260,9 @@ void BobTexture::setTextureID(GLuint textureID)
 
 
 //=========================================================================================================================
-ByteArray* BobTexture::getTextureData()
+sp<ByteArray> BobTexture::getTextureData()
 {//=========================================================================================================================
-	ByteArray *buffer = new ByteArray((hasAlpha() ? 4 : 3) * texWidth * texHeight);
+	sp<ByteArray> buffer = ms<ByteArray>((hasAlpha() ? 4 : 3) * texWidth * texHeight);
 	bind();
 
 #ifndef ORBIS

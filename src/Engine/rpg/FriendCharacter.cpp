@@ -84,13 +84,13 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 	if (getEventData() != nullptr)this->event = std::make_shared<BobEvent>(g, getEventData(), this);
 }
 
-void FriendCharacter::setGameToForwardPacketsTo(MiniGameEngine* game)
+void FriendCharacter::setGameToForwardPacketsTo(shared_ptr<MiniGameEngine> game)
 { //===============================================================================================
 
 	this->game = game;
 }
 
-bool FriendCharacter::udpPeerMessageReceived(UDPPeerConnection *c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
+bool FriendCharacter::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
 
 	//string s = e;// static_cast<string>(e->getMessage());
@@ -344,7 +344,7 @@ void FriendCharacter::incomingGameChallengeRequest(string e)//MessageEvent* e)
 
 
 		//open dialog window with friendname, game name
-		this->gameChallengeNotification = getGUIManager()->makeGameChallengeNotification(this, gameName);
+		this->gameChallengeNotification = getGUIManager()->makeGameChallengeNotification(std::static_pointer_cast<FriendCharacter>(shared_from_this()), gameName);
 	}
 	else
 	{
