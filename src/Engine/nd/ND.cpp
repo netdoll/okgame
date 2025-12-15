@@ -1,6 +1,7 @@
 
 
 #include "stdafx.h"
+#include "LibretroGame.h"
 
 
 //------------------------------------------------------------------------------
@@ -37,6 +38,9 @@ void ND::init()
 
 	fadeInTime = 1500.0f; //override MenuPanel defaults, since we are zooming in, not scrolling in.
 	fadeOutTime = 500.0f;
+
+    libretroGame = make_shared<LibretroGame>(this);
+    libretroGame->init();
 }
 
 void ND::update()

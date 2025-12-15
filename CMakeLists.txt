@@ -44,6 +44,7 @@ include_directories(
         ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
         ${bobsgame_SOURCE_DIR}/lib/projectm/src
+        ${bobsgame_SOURCE_DIR}/lib/libretro-common/include
         #${bobsgame_SOURCE_DIR}/lib/boost_1_62_0
         ${Boost_INCLUDE_DIR}
         ${bobsgame_SOURCE_DIR}
@@ -239,6 +240,8 @@ set(SOURCE_FILES
     src/Engine/nd/ramio/RamioMoneyBlock.h
     src/Engine/nd/GameDataLoader.cpp
     src/Engine/nd/GameDataLoader.h
+    src/Engine/nd/LibretroGame.cpp
+    src/Engine/nd/LibretroGame.h
     src/Engine/nd/ND.cpp
     src/Engine/nd/ND.h
     src/Engine/nd/NDGameEngine.cpp

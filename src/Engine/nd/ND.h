@@ -8,6 +8,7 @@
 #include "bobtypes.h"
 #include "src/Engine/state/StateManager.h"
 class Logger;
+class LibretroGame;
 
 
 
@@ -38,6 +39,8 @@ public:
 
 
 	shared_ptr<BobStateManager> nDGameStateManager = nullptr;
+
+    shared_ptr<LibretroGame> libretroGame = nullptr;
 
 
 	shared_ptr<Light> light = nullptr;
