@@ -16,25 +16,17 @@
 Logger ConsoleText::log = Logger("ConsoleText");
 
 
-BobColor* ConsoleText::defaultColor = nullptr;
+//BobColor* ConsoleText::defaultColor = nullptr;
 ConsoleText::ConsoleText()
 {
 	
 }
 
-ConsoleText::ConsoleText(const string& s, BobColor* c, int x, int y, int ticks, bool isDebug)
+ConsoleText::ConsoleText(const string& s, BobColor c, int x, int y, int ticks, bool isDebug)
 { //=========================================================================================================================
 
-
-	if (defaultColor == nullptr)defaultColor = BobColor::white;
-
-	if (c == nullptr)c = defaultColor;
-	
 	this->text = s;
-	if (c != nullptr)
-	{
-		this->color = c;
-	}
+	this->color = c;
 	this->x = x;
 	this->y = y;
 	this->ticks = ticks;

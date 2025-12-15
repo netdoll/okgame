@@ -16,7 +16,7 @@
 Logger Console::log = Logger("Console");
 
 
-CaptionManager* Console::captionManager = nullptr;
+shared_ptr<CaptionManager> Console::captionManager = nullptr;
 
 
 
@@ -29,9 +29,9 @@ Console::Console()
 
 	log.debug("Init console");
 
-	if(captionManager==nullptr)captionManager = new CaptionManager(nullptr);
+	if(captionManager==nullptr)captionManager = make_shared<CaptionManager>(nullptr);
 
-	consoleTextList = new ArrayList<ConsoleText*>();
+	consoleTextList = make_shared<ArrayList<shared_ptr<ConsoleText>>>();
 }
 
 bool Console::showConsole = true;
@@ -53,7 +53,7 @@ void Console::update()
 
 	for (int i = 0; i < consoleTextList->size(); i++)
 	{
-		ConsoleText* d = consoleTextList->get(i);
+		shared_ptr<ConsoleText> d = consoleTextList->get(i);
 
 		int cx = d->x;
 		int cy = d->y;
@@ -61,11 +61,11 @@ void Console::update()
 		if (cy == -1)cy = 0;//-1 is a magic num for captions, dont use it  //TODO: change that so all instances
 		if (d->caption == nullptr)
 		{
-			d->caption = Console::captionManager->newManagedCaption(Caption::Position::NONE, cx, cy, -1, d->text, fontSize, true, d->color, BobColor::clear, RenderOrder::CONSOLE);
+			d->caption = Console::captionManager->newManagedCaption(Caption::Position::NONE, cx, cy, -1, d->text, fontSize, true, &d->color, BobColor::clear, RenderOrder::CONSOLE);
 		}
 
 		if (d->caption->text != d->text)d->caption->setText(d->text, false);
-		if (d->caption->getTextColor() != d->color)d->caption->setTextColor(d->color, nullptr, BobColor::clear);
+		if (*d->caption->getTextColor() != d->color)d->caption->setTextColor(&d->color, nullptr, BobColor::clear);
 
 		if (d->ticks != -1)
 		{
@@ -75,7 +75,7 @@ void Console::update()
 			{
 				d->caption->setToBeDeletedImmediately();
 				consoleTextList->removeAt(i);
-				delete d;
+				//delete d;
 				i--;
 			}
 		}
@@ -89,42 +89,44 @@ void Console::pruneChats(int max)
 
 	while(consoleTextList->size()>max)
 	{
-		ConsoleText* d = consoleTextList->get(0);
+		shared_ptr<ConsoleText> d = consoleTextList->get(0);
 		d->caption->setToBeDeletedImmediately();
 		consoleTextList->removeAt(0);
-		delete d;
+		//delete d;
 	}
 }
 
-ConsoleText* Console::error(const string& s, int ticks, int x, int y, BobColor* c)
+shared_ptr<ConsoleText> Console::error(const string& s, int ticks, int x, int y, BobColor* c)
 { //=========================================================================================================================
 
 	if (c == nullptr)c = BobColor::red;
 	return add(s, ticks, x, y, c, true);
 }
 
-ConsoleText* Console::debug(const string& s, int ticks, int x, int y, BobColor* c)
+shared_ptr<ConsoleText> Console::debug(const string& s, int ticks, int x, int y, BobColor* c)
 { //=========================================================================================================================
 
 	//if (c == nullptr)c = BobColor::yellow;
 	return add(s, ticks, x, y, c, true);
 }
 
-ConsoleText* Console::add(const string& s, BobColor* c)
+shared_ptr<ConsoleText> Console::add(const string& s, BobColor* c)
 { //=========================================================================================================================
 	return add(s, -1, -1, -1, c);
 }
 
-ConsoleText* Console::add(const string& s, int ticks, BobColor* c)
+shared_ptr<ConsoleText> Console::add(const string& s, int ticks, BobColor* c)
 { //=========================================================================================================================
 	return add(s, ticks, -1, -1, c);
 }
 
 
-ConsoleText* Console::add(const string& s, int ticks, int x, int y, BobColor* c, bool isDebug)
+shared_ptr<ConsoleText> Console::add(const string& s, int ticks, int x, int y, BobColor* c, bool isDebug)
 { //=========================================================================================================================
 
-	ConsoleText* dt = new ConsoleText(s, c, x, y, ticks, isDebug);
+	BobColor col = *BobColor::white;
+	if(c) col = *c;
+	shared_ptr<ConsoleText> dt = make_shared<ConsoleText>(s, col, x, y, ticks, isDebug);
 	lock_guard<mutex> lock(_consoleTextList_Mutex);
 	consoleTextList->add(dt);
 	return dt;
@@ -149,10 +151,10 @@ void Console::render()
 
 	int yPosition = 0;
 
-	ArrayList<ConsoleText*> bottomList;
+	ArrayList<shared_ptr<ConsoleText>> bottomList;
 	for(int i=0;i<consoleTextList->size();i++)
 	{
-		ConsoleText* dt = consoleTextList->get(i);
+		shared_ptr<ConsoleText> dt = consoleTextList->get(i);
 		if (dt->alwaysOnBottom)
 		{
 			consoleTextList->removeAt(i);
@@ -169,7 +171,7 @@ void Console::render()
 	int numStrings = consoleTextList->size();
 	for (int n = numStrings; n > 0; n--)
 	{
-		ConsoleText* dt = consoleTextList->get(n - 1);
+		shared_ptr<ConsoleText> dt = consoleTextList->get(n - 1);
 
 		if (dt->caption == nullptr)continue;
 

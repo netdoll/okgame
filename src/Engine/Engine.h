@@ -62,7 +62,7 @@ public:
 	shared_ptr<EventManager> eventManager = nullptr;
 
 
-	static ArrayList<UDPPeerConnection*> onlineFriends;
+	static ArrayList<shared_ptr<UDPPeerConnection>> onlineFriends;
 
 	double engineSpeed = 1.0;
 
@@ -99,7 +99,7 @@ protected:
 	bool chatFocused = false;
 	bool textStarted = false;
 
-	ConsoleText* chatConsoleText = nullptr;
+	shared_ptr<ConsoleText> chatConsoleText = nullptr;
 public:
 	shared_ptr<ControlsManager> getControlsManager();
 	shared_ptr<ControlsManager> getActiveControlsManager();
@@ -123,7 +123,7 @@ public:
 
 	int getHeight();
 
-	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s);
+	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s);
 	virtual bool serverMessageReceived(string cs);
 
 
@@ -141,16 +141,16 @@ public:
 	bool debugLayerEnabled = false;
 
 	//DebugText cameraSpeedText = DebugConsole.add("cameraSpeedText");
-	ConsoleText* zoomText = nullptr;// Console::debug("zoomText");
+	shared_ptr<ConsoleText> zoomText = nullptr;// Console::debug("zoomText");
 
-	ConsoleText* mapCamText = nullptr;// = Console::debug("mapCamText");
-	ConsoleText* mapScreenText = nullptr;// = Console::debug("mapScreenText");
+	shared_ptr<ConsoleText> mapCamText = nullptr;// = Console::debug("mapCamText");
+	shared_ptr<ConsoleText> mapScreenText = nullptr;// = Console::debug("mapScreenText");
 
-	ConsoleText* mapSizeText = nullptr;// = Console::debug("mapSizeText");
-	ConsoleText* resolutionText = nullptr;// = Console::debug("resolutionText");
+	shared_ptr<ConsoleText> mapSizeText = nullptr;// = Console::debug("mapSizeText");
+	shared_ptr<ConsoleText> resolutionText = nullptr;// = Console::debug("resolutionText");
 
-	ConsoleText* textText = nullptr;// = Console::debug("textText");
-	ConsoleText* textOptionText = nullptr;// = Console::debug("textOptionText");
+	shared_ptr<ConsoleText> textText = nullptr;// = Console::debug("textText");
+	shared_ptr<ConsoleText> textOptionText = nullptr;// = Console::debug("textOptionText");
 
 	Engine();
 	virtual ~Engine();

@@ -27,7 +27,7 @@ public:
 		std::lock_guard<std::recursive_mutex> lock(mtx);
 		map.removeAt(k);
 	}
-
+	
 	void removeAllValues(V v) {
 		std::lock_guard<std::recursive_mutex> lock(mtx);
 		map.removeAllValues(v);
@@ -72,7 +72,7 @@ public:
 		std::lock_guard<std::recursive_mutex> lock(mtx);
 		return map.getAllValues();
 	}
-
+	
 	ArrayList<V> values() {
 		std::lock_guard<std::recursive_mutex> lock(mtx);
 		return map.values();

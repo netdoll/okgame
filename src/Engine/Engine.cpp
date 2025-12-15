@@ -20,7 +20,7 @@ long long Engine::totalTicks = 0;
 long long Engine::ticksThisSecond = 0;
 int Engine::framesSkipped = 0;
 
-ArrayList<UDPPeerConnection*> Engine::onlineFriends;
+ArrayList<shared_ptr<UDPPeerConnection>> Engine::onlineFriends;
 
 
 //=========================================================================================================================
@@ -90,7 +90,7 @@ void Engine::update()
 	onlineFriends.clear();
 	for (int i = 0; i < (int)BobNet::udpConnections.size(); i++)
 	{
-		UDPPeerConnection* f = BobNet::udpConnections.get(i);
+		shared_ptr<UDPPeerConnection> f = BobNet::udpConnections.get(i);
 		if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true && f->peerStatus == BobNet::status_AVAILABLE)
 		{
 			if (onlineFriends.contains(f) == false)
@@ -569,7 +569,7 @@ int Engine::getHeight()
 	return GLUtils::getViewportHeight();
 }
 
-bool Engine::udpPeerMessageReceived(UDPPeerConnection* c, string s)
+bool Engine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 {
 	return false;
 }

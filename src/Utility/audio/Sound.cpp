@@ -40,7 +40,7 @@ Sound::Sound(Engine* g, shared_ptr<AudioFile> f)
 	// But Sound inherits from EnginePart, not enable_shared_from_this.
 	// If we want to use shared_ptr management, we should inherit enable_shared_from_this<Sound>.
 	// However, looking at AudioManager, it adds the sound to the list when it creates it or when it plays it.
-
+	
 	// In the previous code: getAudioManager()->playingAudioList.add(this);
 	// This implies Sound registers itself.
 	// If Sound is managed by shared_ptr, we can't just add raw 'this'.

@@ -18,7 +18,7 @@ BobStateManager::BobStateManager()
 { //=========================================================================================================================
 }
 
-Engine* BobStateManager::getCurrentState()
+shared_ptr<Engine> BobStateManager::getCurrentState()
 { //=========================================================================================================================
 
 	if(states.size()>0)
@@ -31,7 +31,7 @@ Engine* BobStateManager::getCurrentState()
 //	currentState = s;
 //}
 
-void BobStateManager::pushState(Engine* s)
+void BobStateManager::pushState(shared_ptr<Engine> s)
 { //=========================================================================================================================
 	states.insert(0, s);
 }

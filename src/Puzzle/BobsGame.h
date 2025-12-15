@@ -263,7 +263,7 @@ public:
 	int networkMultiplayerLobbyMenuCursorPosition = 0;
 	bool selectingHostedGame = false;
 	//UDPPeerConnection *hostPeer = nullptr;
-	ArrayList<UDPPeerConnection*> *joinedPeers = new ArrayList<UDPPeerConnection*>();
+	ArrayList<shared_ptr<UDPPeerConnection>> joinedPeers;
 	bool hostStartedGame = false;
 	string friendUserName = "";
 
@@ -504,18 +504,18 @@ public:
 
 
 
-	static ArrayList<BobsGameUserStatsForSpecificGameAndDifficulty*> userStatsPerGameAndDifficulty;
-	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topPlayersByTotalTimePlayed;
-	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topPlayersByTotalBlocksCleared;
-	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topPlayersByPlaneswalkerPoints;
-	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topPlayersByEloScore;
-	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByTimeLasted;
-	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByBlocksCleared;
+	static ArrayList<shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty>> userStatsPerGameAndDifficulty;
+	static ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalTimePlayed;
+	static ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalBlocksCleared;
+	static ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> topPlayersByPlaneswalkerPoints;
+	static ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> topPlayersByEloScore;
+	static ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> topGamesByTimeLasted;
+	static ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> topGamesByBlocksCleared;
 
 
 
 	void sendAllJoinedPeers(const string& s);
-	void sendPeer(UDPPeerConnection *c, const string& s);
+	void sendPeer(shared_ptr<UDPPeerConnection> c, const string& s);
 	void sendAllPeers(const string& s);
 
 	static const string lobbyCommand_STARTGAME;
@@ -542,24 +542,24 @@ public:
 	void tellHostPeerIAmJoiningTheirGame();
 	void tellAllPeersIAmHosting();
 	void tellAllPeersIAmNotHosting();
-	void tellAllJoinedPeersThatANewPeerHasJoinedMyHostedGame(UDPPeerConnection *c);
+	void tellAllJoinedPeersThatANewPeerHasJoinedMyHostedGame(shared_ptr<UDPPeerConnection> c);
 	void tellAllPeersIAmPlayingAGame();
 	void tellAllJoinedPeersIHaveCanceledMyHostedGame();
 	void tellAllJoinedPeersMyHostedGameHasStarted();
 	void tellAllJoinedPeersIHaveLeftTheGame();
 	void tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(shared_ptr<PuzzlePlayer> p);
 	void tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(shared_ptr<PuzzlePlayer> p);
-	void tellPeerThatOtherPeerHasJoined(UDPPeerConnection* peerToTell, UDPPeerConnection* joinedPeer);
-	void tellPeerThatIHaveJoined(UDPPeerConnection* peerToTell);
-	void tellPeerThatPlayerHasJoined(UDPPeerConnection* peerToTell, shared_ptr<PuzzlePlayer> p);
-	void tellPeerThatPlayerHasConfirmedAndSendGameSequence(UDPPeerConnection* peerToTell, shared_ptr<PuzzlePlayer> p);
+	void tellPeerThatOtherPeerHasJoined(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<UDPPeerConnection> joinedPeer);
+	void tellPeerThatIHaveJoined(shared_ptr<UDPPeerConnection> peerToTell);
+	void tellPeerThatPlayerHasJoined(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer> p);
+	void tellPeerThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer> p);
 	void tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<PuzzlePlayer> p);
 	void tellServerIAmHostingOrUpdateRoomStatus(const string& roomDescription);
 	void tellServerIHaveCanceledTheGame(const string& roomUUID);
 	void tellServerIHaveStartedTheGame(const string& roomUUID);
 	void tellServerTheGameHasEnded(const string& roomUUID, const string& results);
 	static void getUserIDAndRandomSeedAndUUIDFromPlayerIDString(string s, long long &userID, long long &randomSeed, string& uuid);
-	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s) override;
+	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s) override;
 
   
 	static ArrayList<shared_ptr<GameType>> loadedGameTypes;

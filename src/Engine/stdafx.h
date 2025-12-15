@@ -21,7 +21,7 @@
 
 
 #ifndef ORBIS
-#pragma warning (push)
+#pragma warning (push) 
 #pragma warning( disable : 4244 )
 #else
 
@@ -51,7 +51,7 @@
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 
 #ifndef ORBIS
-#pragma warning (pop)
+#pragma warning (pop) 
 #else
 #undef __OpenBSD__
 //#define __GNUC__ 4

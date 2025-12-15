@@ -24,7 +24,7 @@ private:
 public:
 	static Logger log;
 
-	GameDataLoader* gameDataLoader = nullptr;
+	shared_ptr<GameDataLoader> gameDataLoader = nullptr;
 
 	string name = "";
 
@@ -109,7 +109,7 @@ protected:
 	long long nonThreadedTicksCounter = 0;
 
 public:
-	UDPPeerConnection* connection = nullptr;
+	shared_ptr<UDPPeerConnection> connection = nullptr;
 
 	//public boolean multiplayer = false;
 
@@ -136,7 +136,7 @@ public:
 	void setIncomingGameChallengeResponse(int s);
 
 	//void setConnection(UDPPeerConnection* connection);
-	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string e);
+	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e);
 
 private:
 	void incoming_GameChallengeResponse(const string& s);

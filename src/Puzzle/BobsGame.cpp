@@ -29,13 +29,13 @@ ArrayList<shared_ptr<GameSequence>> BobsGame::loadedGameSequences;
 ArrayList<shared_ptr<Sprite>> BobsGame::loadedSprites;
 
 
-ArrayList<BobsGameUserStatsForSpecificGameAndDifficulty*> BobsGame::userStatsPerGameAndDifficulty;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByTotalTimePlayed;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByTotalBlocksCleared;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByPlaneswalkerPoints;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByEloScore;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByTimeLasted;
-ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByBlocksCleared;
+ArrayList<shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty>> BobsGame::userStatsPerGameAndDifficulty;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByTotalTimePlayed;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByTotalBlocksCleared;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByPlaneswalkerPoints;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topPlayersByEloScore;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topGamesByTimeLasted;
+ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topGamesByBlocksCleared;
 
 
 ArrayList<string> BobsGame::activityStream;

@@ -162,11 +162,11 @@ public:
 	void insert(int index, E e) { // Alias for add(index, e)
 		add(index, e);
 	}
-
+	
 	void deleteAll() {
 		clear();
 	}
-
+	
 	void removeAll(const ArrayList<E>& c) {
 		for (int i = 0; i < c.size(); i++) {
 			E e = c.v[i]; // Access directly to avoid const issues with get() if get wasn't const

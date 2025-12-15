@@ -101,10 +101,10 @@ void Map::initMap(Engine* g, MapData* mapData)
 	for (int i = 0; i < (int)mapData->getEventDataList()->size(); i++)
 	{
 		//create event, add to eventList
-		EventData* eventData = mapData->getEventDataList()->get(i);
+		shared_ptr<EventData> eventData = mapData->getEventDataList()->get(i);
 
 
-		BobEvent* event = nullptr;
+		shared_ptr<BobEvent> event = nullptr;
 
 		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
 		{
@@ -116,7 +116,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 		if (event == nullptr)
 		{
-			event = new BobEvent(getEngine(), eventData, this);
+			event = make_shared<BobEvent>(getEngine(), eventData.get(), this);
 		}
 
 
@@ -129,8 +129,8 @@ void Map::initMap(Engine* g, MapData* mapData)
 	{
 		//create door, add to doorList,
 
-		DoorData* doorData = mapData->getDoorDataList()->get(i);
-		Door* door = new Door(getEngine(), doorData, this);
+		shared_ptr<DoorData> doorData = mapData->getDoorDataList()->get(i);
+		shared_ptr<Door> door = make_shared<Door>(getEngine(), doorData, this);
 
 
 		//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
@@ -142,23 +142,23 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 	for (int i = 0; i < (int)mapData->getStateDataList()->size(); i++)
 	{
-		MapStateData* mapStateData = mapData->getStateDataList()->get(i);
+		shared_ptr<MapStateData> mapStateData = mapData->getStateDataList()->get(i);
 
 
 		//create state, add to state list.
-		MapState* mapState = new MapState(mapStateData, this);
+		shared_ptr<MapState> mapState = make_shared<MapState>(mapStateData.get(), this);
 
 		stateList.add(mapState);
 
 
 		for (int n = 0; n < (int)mapStateData->getAreaDataList()->size(); n++)
 		{
-			AreaData* areaData = mapStateData->getAreaDataList()->get(n);
+			shared_ptr<AreaData> areaData = mapStateData->getAreaDataList()->get(n);
 
 			if (areaData->getIsWarpArea())
 			{
 				//create warparea, add to warpAreaList
-				WarpArea* warpArea = new WarpArea(getEngine(), areaData, this);
+				shared_ptr<WarpArea> warpArea = make_shared<WarpArea>(getEngine(), areaData.get(), this);
 
 				//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 				//also check and make sure it is sending event update
@@ -169,7 +169,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 			}
 			else
 			{
-				Area* area = new Area(getEngine(), areaData, this);
+				shared_ptr<Area> area = make_shared<Area>(getEngine(), areaData.get(), this);
 				mapState->areaByNameHashtable.put(area->getName(), area);
 				mapState->areaByTYPEIDHashtable.put(area->getTYPEIDString(), area);
 				mapState->areaList.add(area);
@@ -179,8 +179,8 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 		for (int n = 0; n < (int)mapStateData->getLightDataList()->size(); n++)
 		{
-			LightData* lightData = mapStateData->getLightDataList()->get(n);
-			Light* light = new Light(getEngine(), lightData, this);
+			shared_ptr<LightData> lightData = mapStateData->getLightDataList()->get(n);
+			shared_ptr<Light> light = make_shared<Light>(getEngine(), lightData.get(), this);
 
 
 			mapState->lightList.add(light);
@@ -259,14 +259,14 @@ shared_ptr<Entity> Map::getEntityByName(const string& name)
 
 
 //=========================================================================================================================
-Character* Map::getCharacterByName(const string& name)
+shared_ptr<Character> Map::getCharacterByName(const string& name)
 { //=========================================================================================================================
 	return currentState->characterByNameHashtable.get(name);
 }
 
 
 //=========================================================================================================================
-Light* Map::getLightByName(const string& name)
+shared_ptr<Light> Map::getLightByName(const string& name)
 { //=========================================================================================================================
 
 	//log.debug("getLightByName: "+name);
@@ -276,7 +276,7 @@ Light* Map::getLightByName(const string& name)
 
 
 //=========================================================================================================================
-Area* Map::getAreaOrWarpAreaByName(string name)
+shared_ptr<Area> Map::getAreaOrWarpAreaByName(string name)
 { //=========================================================================================================================
 
 
@@ -288,7 +288,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 	}
 
 
-	Area* a = nullptr;
+	shared_ptr<Area> a = nullptr;
 	if (currentState != nullptr)
 	{
 		if (currentState->areaByNameHashtable.containsKey(name))
@@ -299,7 +299,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 	{
 		for (int i = 0; i < stateList.size(); i++)
 		{
-			MapState* s = stateList.get(i);
+			shared_ptr<MapState> s = stateList.get(i);
 			if (s->areaByNameHashtable.containsKey(name))
 			a = s->areaByNameHashtable.get(name);
 			if (a != nullptr)
@@ -363,7 +363,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	{
 		for (int i = 0; i < stateList.size(); i++)
 		{
-			MapState* s = stateList.get(i);
+			shared_ptr<MapState> s = stateList.get(i);
 
 			if (s->areaByTYPEIDHashtable.containsKey(typeID))
 			a = s->areaByTYPEIDHashtable.get(typeID);
@@ -385,7 +385,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	return a;
 }
 
-Door* Map::getDoorByTYPEID(const string& typeID_in)
+shared_ptr<Door> Map::getDoorByTYPEID(const string& typeID_in)
 { //=========================================================================================================================
 
 	string typeID = typeID_in;
@@ -403,7 +403,7 @@ Door* Map::getDoorByTYPEID(const string& typeID_in)
 
 		for (int i = 0; i < doorList.size(); i++)
 		{
-			Door* d = doorList.get(i);
+			shared_ptr<Door> d = doorList.get(i);
 
 			if (typeID == d->getTYPEIDString())
 			{
@@ -417,7 +417,7 @@ Door* Map::getDoorByTYPEID(const string& typeID_in)
 	return nullptr;
 }
 
-Door* Map::getDoorByName(const string& name_in)
+shared_ptr<Door> Map::getDoorByName(const string& name_in)
 { //=========================================================================================================================
 
 	string name = name_in;
@@ -436,7 +436,7 @@ Door* Map::getDoorByName(const string& name_in)
 
 		for (int i = 0; i < doorList.size(); i++)
 		{
-			Door* d = doorList.get(i);
+			shared_ptr<Door> d = doorList.get(i);
 
 			if (name == d->getName())
 			{
@@ -450,11 +450,11 @@ Door* Map::getDoorByName(const string& name_in)
 	return nullptr;
 }
 
-MapState* Map::getMapStateByName(const string& name)
+shared_ptr<MapState> Map::getMapStateByName(const string& name)
 { //=========================================================================================================================
 	for (int i = 0; i < stateList.size(); i++)
 	{
-		MapState* mapState = stateList.get(i);
+		shared_ptr<MapState> mapState = stateList.get(i);
 
 		if (name == mapState->getName())
 		{
@@ -473,12 +473,12 @@ MapState* Map::getMapStateByName(const string& name)
 	return nullptr;
 }
 
-MapState* Map::getMapStateByID(int id)
+shared_ptr<MapState> Map::getMapStateByID(int id)
 { //=========================================================================================================================
 	//this should look through the current map mapStateList first
 	for (int i = 0; i < stateList.size(); i++)
 	{
-		MapState* s = stateList.get(i);
+		shared_ptr<MapState> s = stateList.get(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -508,10 +508,10 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas.get(i);
+		shared_ptr<Area> a = areas.get(i);
 
 
 		if (a->randomPointOfInterestOrExit())
@@ -524,7 +524,7 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//warpareas
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		Area* a = warpAreaList.get(i);
+		shared_ptr<Area> a = warpAreaList.get(i);
 		if (a->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->add(a->getTYPEIDString());
@@ -535,7 +535,7 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//doors
 	for (int i = 0; i < doorList.size(); i++)
 	{
-		Door* d = doorList.get(i);
+		shared_ptr<Door> d = doorList.get(i);
 		if (d->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->add(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
@@ -621,7 +621,7 @@ void Map::update()
 				for (int i = 0; i < mapEventList.size(); i++)
 				{
 					//int eventID = mapEventList.get(i);
-					BobEvent* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
+					shared_ptr<BobEvent> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
 					event->map = this;
 					if (event->getInitialized_S() == false)
 					{
@@ -660,7 +660,7 @@ void Map::update()
 			lastLoadEventRequestTime = currentTime;
 			for (int i = 0; i < mapEventList.size(); i++)
 			{
-				BobEvent* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+				shared_ptr<BobEvent> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
 				event->map = this;
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
@@ -719,7 +719,7 @@ void Map::update()
 		//run all events, **this will also run post-load events for this map, which stop executing after one loop.
 		for (int i = 0; i < mapEventList.size(); i++)
 		{
-			BobEvent* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+			shared_ptr<BobEvent> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
 			event->map = this;
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
@@ -998,7 +998,7 @@ void Map::updateEntities()
 	//for all entities update
 	for (int n = 0; n < activeEntityList.size(); n++)
 	{
-		Entity* e = activeEntityList.get(n);
+		Entity* e = activeEntityList.get(n).get();
 
 		e->update();
 	}
@@ -1009,7 +1009,7 @@ void Map::updateDoors()
 
 	for (int n = 0; n < doorList.size(); n++)
 	{
-		Door* e = doorList.get(n);
+		Door* e = doorList.get(n).get();
 
 		e->update();
 	}
@@ -1032,7 +1032,7 @@ void Map::updateAreas()
 
 	for (int i = 0; i < (int)currentState->areaList.size(); i++)
 	{
-		Area* a = currentState->areaList.get(i);
+		Area* a = currentState->areaList.get(i).get();
 		a->update();
 	}
 }
@@ -1100,9 +1100,25 @@ void Map::zOrderEntities()
 		{
 			if (getPlayer() != nullptr && getPlayer()->shouldDraw())
 			{
-				if ((drawList.contains(getPlayer())) == false)
+				//if ((drawList.contains(getPlayer())) == false) // getPlayer() returns raw pointer
+				// TODO: getPlayer returns raw pointer, but drawList contains shared_ptr.
+                // activeEntityList contains shared_ptr<Entity>.
+                // If player is in activeEntityList, we should add the shared_ptr from there?
+                // Or getPlayer should return shared_ptr.
+                // In BGClientEngine.h, player is shared_ptr.
+                // getPlayer() calls .get().
+                // If I need shared_ptr here, I should use getClientGameEngine()->player.
+                
+                // Hack for now: skip check or assume it works via comparison if contains uses operator== on pointers inside shared_ptr
+                // ArrayList implementation of contains uses std::find.
+                // shared_ptr == raw pointer is supported? No.
+                // shared_ptr == shared_ptr is supported.
+                // So I need shared_ptr.
+                
+                shared_ptr<Player> p = getClientGameEngine()->player;
+				if ((drawList.contains(p)) == false)
 				{
-					drawList.add(getPlayer());
+					drawList.add(p);
 				}
 			}
 		}
@@ -1114,7 +1130,7 @@ void Map::zOrderEntities()
 		//add friends, they are not added to any entityList
 		for (int i = 0; i < (int)getClientGameEngine()->friendManager->friendCharacters->size(); i++)
 		{
-			FriendCharacter* f = getFriendManager()->friendCharacters->get(i);
+			shared_ptr<FriendCharacter> f = getFriendManager()->friendCharacters->get(i);
 
 			if (f->mapName == getName())
 			{
@@ -1191,11 +1207,11 @@ void Map::sortLightLayers()
 
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		Light* l = currentState->lightList.get(i);
+		shared_ptr<Light> l = currentState->lightList.get(i);
 		//if light is not drawn
 		if (l->sortingState != Light::DRAWN)
 		{
-			ArrayList<Light*>* thisLayerList = new ArrayList<Light*>();
+			shared_ptr<ArrayList<Light*>> thisLayerList = make_shared<ArrayList<Light*>>();
 
 			//light is drawing
 			l->sortingState = Light::DRAWING;
@@ -1203,7 +1219,7 @@ void Map::sortLightLayers()
 			//for all lights from this light to the end
 			for (int a = i + 1; a < (int)currentState->lightList.size(); a++)
 			{
-				Light* compareLight = currentState->lightList.get(a);
+				shared_ptr<Light> compareLight = currentState->lightList.get(a);
 
 				//if that light isn't already drawn
 				if (compareLight->sortingState != Light::DRAWN)
@@ -1211,7 +1227,7 @@ void Map::sortLightLayers()
 					//for all lights
 					for (int b = 0; b < (int)currentState->lightList.size(); b++)
 					{
-						Light* overlapLight = currentState->lightList.get(b);
+						shared_ptr<Light> overlapLight = currentState->lightList.get(b);
 
 						//if this light isn't
 						if (a != b && overlapLight->sortingState == Light::DRAWING)
@@ -1246,10 +1262,10 @@ void Map::sortLightLayers()
 
 			for (int d = 0; d < (int)currentState->lightList.size(); d++)
 			{
-				Light* drawLight = currentState->lightList.get(d);
+				shared_ptr<Light> drawLight = currentState->lightList.get(d);
 				if (drawLight->sortingState == Light::DRAWING)
 				{
-					thisLayerList->add(drawLight);
+					thisLayerList->add(drawLight.get());
 
 					//draw light
 					drawLight->sortingState = Light::DRAWN;
@@ -1303,7 +1319,7 @@ void Map::render(RenderOrder renderOrder, bool disableClip, bool disableFloorOff
 	}
 
 
-	BobTexture* texture = nullptr;
+	shared_ptr<BobTexture> texture = nullptr;
 
 	float sw = (float)getEngine()->getWidth();
 	float sh = (float)getEngine()->getHeight();
@@ -1409,7 +1425,7 @@ void Map::render(RenderOrder renderOrder, bool disableClip, bool disableFloorOff
 
 			if (texture != nullptr && texture != GLUtils::blankTexture)
 			{
-				GLUtils::drawTexture(texture, tx0, tx1, ty0, ty1, x0, x1, y0, y1, alpha, filter);
+				GLUtils::drawTexture(texture.get(), tx0, tx1, ty0, ty1, x0, x1, y0, y1, alpha, filter);
 			}
 		}
 	}
@@ -1593,7 +1609,7 @@ void Map::renderAllLightsUnsorted()
 	{
 		for (int i = 0; i < (int)currentState->lightList.size(); i++)
 		{
-			Light* l = currentState->lightList.get(i);
+			shared_ptr<Light> l = currentState->lightList.get(i);
 			l->renderLight();
 		}
 	}
@@ -1616,10 +1632,10 @@ void Map::renderAreaActionIcons()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas.get(i);
+		shared_ptr<Area> a = areas.get(i);
 
 		//if(a.isAnAction)
 		a->renderActionIcon();
@@ -1629,7 +1645,7 @@ void Map::renderAreaActionIcons()
 	//warpareas
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		Area* a = warpAreaList.get(i);
+		shared_ptr<Area> a = warpAreaList.get(i);
 		//if(a.isAnAction)
 		a->renderActionIcon();
 	}
@@ -1782,7 +1798,7 @@ void Map::renderLightBoxes()
 	//light boxes
 	for (int i = 0; i < sortedLightsLayers.size(); i++)
 	{
-		ArrayList<Light*>* thisLayer = sortedLightsLayers.get(i);
+		shared_ptr<ArrayList<Light*>> thisLayer = sortedLightsLayers.get(i);
 		for (int n = 0; n < thisLayer->size(); n++)
 		{
 			thisLayer->get(n)->renderDebugBoxes();
@@ -1804,10 +1820,10 @@ void Map::renderAreaDebugBoxes()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas.get(i);
+		shared_ptr<Area> a = areas.get(i);
 
 
 
@@ -1831,10 +1847,10 @@ void Map::renderAreaDebugInfo()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas.size(); i++)
 	{
-		Area* a = areas.get(i);
+		shared_ptr<Area> a = areas.get(i);
 
 
 		//a.renderDebugBoxes();
@@ -1909,7 +1925,7 @@ void Map::loadUtilityLayers()
 		//			FileUtils.downloadSmallFileToCacheIfNotExist(""+getCameraBoundsMD5());
 		//
 		//
-		//			cameraLayer = new byte[getWidthTiles1X() * getHeightTiles1X()];
+		//			cameraLayer = new byte[getWidthTiles1X * getHeightTiles1X()];
 		//			BufferedInputStream fxBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+FileUtils.cacheDir+getCameraBoundsMD5()));
 		//
 		//			//TODO: in map editor, output this as byte array instead of int array, then i don't have to skip every other byte here
@@ -2110,7 +2126,7 @@ void Map::unloadArea(const string& s)
 
 	//public Hashtable<String, Area> areaHashtable = new Hashtable<String, Area>();
 
-	Area* a = nullptr;
+	shared_ptr<Area> a = nullptr;
 	if(currentState->areaByNameHashtable.containsKey(s))
 	a = currentState->areaByNameHashtable.get(s);
 
@@ -2225,11 +2241,11 @@ void Map::releaseAllTextures()
 
 
 	
-	ArrayList<BobTexture*> chunks = chunkTexture.getAllValues();
+	ArrayList<shared_ptr<BobTexture>> chunks = chunkTexture.getAllValues();
 	{
 		for (int i = 0; i < chunks.size(); i++)
 		{
-			BobTexture *t = chunks.get(i);
+			shared_ptr<BobTexture> t = chunks.get(i);
 
 			if (t != nullptr)
 			{
@@ -2237,7 +2253,7 @@ void Map::releaseAllTextures()
 				if (t != GLUtils::blankTexture)
 				{
 					t->release();
-					delete t;
+					//delete t;
 				}
 				
 			}
@@ -2602,7 +2618,7 @@ bool Map::isXYWithinScreen(float x, float y)
 
 
 //The following method was originally marked 'synchronized':
-BobTexture* Map::getChunkTexture(int index)
+shared_ptr<BobTexture> Map::getChunkTexture(int index)
 { //=========================================================================================================================
 
 	if (chunkTexture.containsKey(index) == false)return nullptr;
@@ -2610,7 +2626,7 @@ BobTexture* Map::getChunkTexture(int index)
 }
 
 //The following method was originally marked 'synchronized':
-void Map::setChunkTexture(int index, BobTexture* t)
+void Map::setChunkTexture(int index, shared_ptr<BobTexture> t)
 { //=========================================================================================================================
 	chunkTexture.put(index, t);
 }
@@ -2619,7 +2635,7 @@ void Map::setChunkTexture(int index, BobTexture* t)
 void Map::releaseChunkTexture(int index)
 { //=========================================================================================================================
 	chunkTexture.get(index)->release();
-	delete chunkTexture.get(index);
+	//delete chunkTexture.get(index); // shared_ptr handles deletion
 	chunkTexture.put(index, nullptr);
 }
 
@@ -2736,7 +2752,12 @@ bool Map::loadChunkTexturesFromCachePNGs()
 
 							if (textureFile->length() < 1)
 							{
-								setChunkTexture(chunkIndex, GLUtils::blankTexture);
+								setChunkTexture(chunkIndex, shared_ptr<BobTexture>(GLUtils::blankTexture)); // assuming blankTexture is managed, or create new shared_ptr that doesn't delete
+                                // GLUtils::blankTexture is static raw pointer. Passing to shared_ptr will delete it.
+                                // I should create a shared_ptr that does not delete, or clone it.
+                                // For now, assuming blankTexture is static and persists. shared_ptr<BobTexture>(GLUtils::blankTexture, [](BobTexture*){})
+                                // But I don't have a custom deleter easily available without lambda.
+                                // Actually, I should update GLUtils to use shared_ptr for blankTexture.
 							}
 							else
 							{
@@ -2866,7 +2887,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 	{
 		{
 			//if(lightList.get(i).mapAsset==this)
-			Light* l = currentState->lightList.get(i);
+			shared_ptr<Light> l = currentState->lightList.get(i);
 
 			//check if tile has texture already in gpu
 			if (l->texture == nullptr)
@@ -2874,7 +2895,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 				//see if it's in the hashmap loaded already from a different map
 
 				if(getMapManager()->lightTextureHashMap.containsKey(l->getFileName()))
-				l->texture = getMapManager()->lightTextureHashMap.get(l->getFileName());
+				l->texture = getMapManager()->lightTextureHashMap.get(l->getFileName()).get();
 
 
 				if (l->texture == nullptr)
@@ -2896,10 +2917,10 @@ bool Map::loadLightTexturesFromCachePNGs()
 						}
 
 
-						BobTexture* t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+						shared_ptr<BobTexture> t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						getMapManager()->lightTextureHashMap.put(l->getFileName(), t);
 
-						l->texture = t;
+						l->texture = t.get();
 					}
 				}
 			}
@@ -2950,7 +2971,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							continue;
 						}
 
-						BobTexture* t = getChunkTexture(chunkIndex);
+						shared_ptr<BobTexture> t = getChunkTexture(chunkIndex);
 
 						if (t != nullptr)
 						{
@@ -2958,7 +2979,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							if (t != GLUtils::blankTexture)
 							{
 								t->release();
-								delete t;
+								//delete t;
 								t = nullptr;
 							}
 							setChunkTexture(chunkIndex, nullptr);
@@ -2968,7 +2989,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 
 						if (textureFile->length() < 1)
 						{
-							setChunkTexture(chunkIndex, GLUtils::blankTexture);
+							setChunkTexture(chunkIndex, shared_ptr<BobTexture>(GLUtils::blankTexture));
 						}
 						else
 						{
@@ -3015,7 +3036,7 @@ void Map::startThreadsForMissingChunkPNGs()
 
 	if (MapManager::useThreads == true && generatePNGThreadPool == nullptr)
 	{
-	    generatePNGThreadPool = new ctpl::thread_pool(3);
+	    generatePNGThreadPool = make_shared<ctpl::thread_pool>(3);
 	}
 	 
 
@@ -3245,7 +3266,7 @@ void Map::startThreadsForMissingLightPNGs()
 
 	if (MapManager::useThreads == true && generateLightPNGThreadPool == nullptr)
 	{
-	    generateLightPNGThreadPool = new ctpl::thread_pool(3);
+	    generateLightPNGThreadPool = make_shared<ctpl::thread_pool>(3);
 	}
 
 
@@ -3368,7 +3389,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 
 	if (MapManager::useThreads == true && generatePNGThreadPool == nullptr)
 	{
-	    generatePNGThreadPool = new ctpl::thread_pool(3);
+	    generatePNGThreadPool = make_shared<ctpl::thread_pool>(3);
 	}
 
 

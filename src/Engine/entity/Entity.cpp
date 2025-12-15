@@ -1472,13 +1472,13 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 
 void Entity::addEventBehavior(const string& s)
 { //=========================================================================================================================
-	eventBehaviorList->add(s); //TODO: handle this stuff right!
+	eventBehaviorList.add(s); //TODO: handle this stuff right!
 }
 
-BobBool* Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
+std::shared_ptr<BobBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
 {
 	// TODO
-	return new BobBool();
+	return std::make_shared<BobBool>();
 }
 
 void Entity::tellServerTalkedToToday()

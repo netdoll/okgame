@@ -107,8 +107,8 @@ public:
 
 	bool behaviorEnabled = true;
 
-	ArrayList<string>* eventBehaviorList = new ArrayList<string>(); //TODO: do something with this!
-	ArrayList<string>* eventTargetTYPEIDList = new ArrayList<string>(); //TODO: do something with this!
+	ArrayList<string> eventBehaviorList; //TODO: do something with this!
+	ArrayList<string> eventTargetTYPEIDList; //TODO: do something with this!
 
 	string currentAreaTYPEIDTarget = "";
 
@@ -341,7 +341,7 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	std::shared_ptr<BobBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
 	void tellServerTalkedToToday();
 
