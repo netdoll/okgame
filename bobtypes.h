@@ -61,6 +61,8 @@
 #include <memory>
 //#include <cmath>
 
+template<typename T> using sp = std::shared_ptr<T>;
+template<typename T, typename... Args> inline sp<T> ms(Args&&... args) { return std::make_shared<T>(std::forward<Args>(args)...); }
 
 typedef signed char			int8;
 typedef signed short		int16;

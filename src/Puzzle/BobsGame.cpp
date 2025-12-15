@@ -116,7 +116,7 @@ void BobsGame::init()
 	initAssets();
 	
 
-	
+	visualizer = make_shared<libprojectM::ProjectM>();
 
 	log.debug("Init Player");
 	initPlayer();
@@ -566,6 +566,12 @@ void BobsGame::render()
 
 			//clear the shader bg
 			GLUtils::fillBufferWithBlack();
+
+            if (visualizer)
+            {
+                visualizer->SetWindowSize(getWidth(), getHeight());
+                visualizer->RenderFrame();
+            }
 
 			long long startTime = timeRenderBegan;
 			long long currentTime = System::currentHighResTimer();

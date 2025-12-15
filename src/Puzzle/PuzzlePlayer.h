@@ -18,8 +18,8 @@ public:
 	PuzzlePlayer(shared_ptr<GameLogic> g)
 	{//=========================================================================================================================
 		this->gameLogic = g;
-		//if (g != nullptr)g->player = this; // Cannot set raw pointer back easily if GameLogic expects raw PuzzlePlayer*. 
-		// However, we should check GameLogic definition. If GameLogic has `PuzzlePlayer* player`, we can do `g->player = this;`. 
+		//if (g != nullptr)g->player = this; // Cannot set raw pointer back easily if GameLogic expects raw PuzzlePlayer*.
+		// However, we should check GameLogic definition. If GameLogic has `PuzzlePlayer* player`, we can do `g->player = this;`.
 		// But `this` is `PuzzlePlayer*`. If we change `GameLogic` to `weak_ptr<PuzzlePlayer>`, we need `shared_from_this`.
 		// For now, let's assume GameLogic holds a raw pointer back to PuzzlePlayer (observer).
 		if (g != nullptr) g->player = this;

@@ -32,7 +32,7 @@ public:
 		}
 		return previousValue;
 	}
-	
+
 	// Java remove(Object key) returns V
 	V remove(K k) {
 		V value = V();
@@ -106,7 +106,7 @@ public:
 		}
 		return list;
 	}
-	
+
 	// Java API alias
 	ArrayList<V> values() {
 		return getAllValues();

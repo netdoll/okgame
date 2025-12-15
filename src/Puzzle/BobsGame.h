@@ -13,6 +13,7 @@
 #include <src/Engine/network/GameSave.h>
 #include <src/Engine/network/UDPPeerConnection.h>
 #include <memory>
+#include "libprojectM/ProjectM.hpp"
 
 class Logger;
 
@@ -62,6 +63,7 @@ protected:
 public:
 
 	//static BobsGame* b;
+	shared_ptr<libprojectM::ProjectM> visualizer = nullptr;
 	shared_ptr<Sound> music = nullptr;
 	shared_ptr<BobTexture> keyboardTexture = nullptr;
 	shared_ptr<BobTexture> controllerTexture = nullptr;

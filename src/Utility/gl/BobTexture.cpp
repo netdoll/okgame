@@ -260,9 +260,9 @@ void BobTexture::setTextureID(GLuint textureID)
 
 
 //=========================================================================================================================
-ByteArray* BobTexture::getTextureData()
+sp<ByteArray> BobTexture::getTextureData()
 {//=========================================================================================================================
-	ByteArray *buffer = new ByteArray((hasAlpha() ? 4 : 3) * texWidth * texHeight);
+	sp<ByteArray> buffer = ms<ByteArray>((hasAlpha() ? 4 : 3) * texWidth * texHeight);
 	bind();
 
 #ifndef ORBIS
