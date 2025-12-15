@@ -138,7 +138,7 @@ void GUIManager::render()
 }
 
 //The following method was originally marked 'synchronized':
-shared_ptr<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName)
+shared_ptr<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(shared_ptr<FriendCharacter> friend_in, const string& gameName)
 { //=========================================================================================================================
 	shared_ptr<GameChallengeNotificationPanel> g = make_shared<GameChallengeNotificationPanel>(friend_in, gameName);
 	gameChallenges->add(g);

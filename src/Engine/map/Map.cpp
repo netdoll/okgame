@@ -1108,12 +1108,14 @@ void Map::zOrderEntities()
                 // In BGClientEngine.h, player is shared_ptr.
                 // getPlayer() calls .get().
                 // If I need shared_ptr here, I should use getClientGameEngine()->player.
+
                 
                 // Hack for now: skip check or assume it works via comparison if contains uses operator== on pointers inside shared_ptr
                 // ArrayList implementation of contains uses std::find.
                 // shared_ptr == raw pointer is supported? No.
                 // shared_ptr == shared_ptr is supported.
                 // So I need shared_ptr.
+
                 
                 shared_ptr<Player> p = getClientGameEngine()->player;
 				if ((drawList.contains(p)) == false)

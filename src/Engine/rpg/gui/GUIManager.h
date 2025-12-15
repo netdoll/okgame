@@ -71,7 +71,7 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	shared_ptr<GameChallengeNotificationPanel> makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName);
+	shared_ptr<GameChallengeNotificationPanel> makeGameChallengeNotification(shared_ptr<FriendCharacter> friend_in, const string& gameName);
 
 
 	void removeGameNotification(shared_ptr<GameChallengeNotificationPanel> g);
