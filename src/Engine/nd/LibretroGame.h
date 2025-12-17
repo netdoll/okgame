@@ -6,6 +6,7 @@
 #pragma once
 #include "NDGameEngine.h"
 #include "libretro.h"
+#include <mutex>
 
 #ifdef __WINDOWS__
 #include <windows.h>
@@ -49,6 +50,9 @@ private:
     static void retroInputPoll();
     static int16_t retroInputState(unsigned port, unsigned device, unsigned index, unsigned id);
 
+    // Audio callback for SDL mixer
+    static void audioCallback(void *udata, Uint8 *stream, int len);
+
     // Core API function pointers
     void (*retro_init)(void) = nullptr;
     void (*retro_deinit)(void) = nullptr;
@@ -78,5 +82,6 @@ private:
 
     shared_ptr<BobTexture> videoTexture = nullptr;
 
-    // Audio buffer?
+    std::vector<int16_t> audioBuffer;
+    std::mutex audioMutex;
 };

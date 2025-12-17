@@ -4541,6 +4541,17 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 	
 }
 
+//=========================================================================================================================
+void GLUtils::updateTexture(shared_ptr<BobTexture> texture, int x, int y, int w, int h, u8* data)
+{//=========================================================================================================================
+#ifndef ORBIS
+	if (texture == nullptr) return;
+	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
+	// Assumes RGBA 32-bit data
+	glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, data);
+#endif
+}
+
 
 
 

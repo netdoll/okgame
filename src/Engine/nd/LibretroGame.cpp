@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "LibretroGame.h"
+#include "src/Utility/ControlsManager.h"
+#include "src/Utility/gl/GLUtils.h"
+#include "src/Utility/audio/AudioManager.h"
 
 LibretroGame* LibretroGame::instance = nullptr;
 
@@ -10,6 +13,7 @@ LibretroGame::LibretroGame(ND* nD) : NDGameEngine(nD)
 
 LibretroGame::~LibretroGame()
 {
+    Mix_HookMusic(NULL, NULL);
     if (coreHandle)
     {
         if (retro_deinit) retro_deinit();
@@ -244,7 +248,10 @@ bool LibretroGame::loadGame(const string& gamePath)
     retro_get_system_av_info(&av_info);
 
     // Initialize videoTexture with av_info geometry
-    // videoTexture = GLUtils::getTextureFromData("Libretro", av_info.geometry.base_width, av_info.geometry.base_height, ...);
+    shared_ptr<ByteArray> emptyData = make_shared<ByteArray>(av_info.geometry.base_width * av_info.geometry.base_height * 4);
+    videoTexture = GLUtils::getTextureFromData("Libretro", av_info.geometry.base_width, av_info.geometry.base_height, emptyData.get());
+
+    Mix_HookMusic(audioCallback, this);
 
     return true;
 }
@@ -309,6 +316,7 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
         {
             const enum retro_pixel_format *fmt = (enum retro_pixel_format *)data;
             // Handle pixel format
+            // For now assuming it is compatible with RGBA/BGRA
             return true;
         }
         // Handle other environment calls
@@ -318,27 +326,35 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
 
 void LibretroGame::retroVideoRefresh(const void* data, unsigned width, unsigned height, size_t pitch)
 {
-    if (instance && data)
+    if (instance && data && instance->videoTexture)
     {
-        // Update texture
-        // Convert data to texture format if needed
-        // Assuming XRGB8888 or RGB565 based on pixel format set
-
-        // For prototype, create/update texture
-        // instance->videoTexture = ...
-
-        // This runs in the core loop, so be careful with OpenGL calls if threaded
+       GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)data);
     }
 }
 
 void LibretroGame::retroAudioSample(int16_t left, int16_t right)
 {
-    // Feed audio
+    if (instance)
+    {
+        std::lock_guard<std::mutex> lock(instance->audioMutex);
+        instance->audioBuffer.push_back(left);
+        instance->audioBuffer.push_back(right);
+        if (instance->audioBuffer.size() > 44100 * 2) {
+             instance->audioBuffer.clear();
+        }
+    }
 }
 
 size_t LibretroGame::retroAudioSampleBatch(const int16_t* data, size_t frames)
 {
-    // Feed audio batch
+    if (instance)
+    {
+        std::lock_guard<std::mutex> lock(instance->audioMutex);
+        instance->audioBuffer.insert(instance->audioBuffer.end(), data, data + frames * 2);
+        if (instance->audioBuffer.size() > 44100 * 2) {
+             instance->audioBuffer.clear();
+        }
+    }
     return frames;
 }
 
@@ -349,6 +365,48 @@ void LibretroGame::retroInputPoll()
 
 int16_t LibretroGame::retroInputState(unsigned port, unsigned device, unsigned index, unsigned id)
 {
-    // Return input state
+    if (port == 0 && device == RETRO_DEVICE_JOYPAD && instance)
+    {
+        shared_ptr<ControlsManager> cm = instance->getControlsManager();
+        if(!cm) return 0;
+
+        switch(id)
+        {
+            case RETRO_DEVICE_ID_JOYPAD_B: return cm->MINIGAME_ACTION_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_Y: return cm->MINIGAME_RUN_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_SELECT: return cm->MINIGAME_SELECT_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_START: return cm->MINIGAME_START_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_UP: return cm->MINIGAME_UP_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_DOWN: return cm->MINIGAME_DOWN_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_LEFT: return cm->MINIGAME_LEFT_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_RIGHT: return cm->MINIGAME_RIGHT_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_A: return cm->MINIGAME_A_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_X: return cm->MINIGAME_X_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_L: return cm->MINIGAME_L_HELD ? 1 : 0;
+            case RETRO_DEVICE_ID_JOYPAD_R: return cm->MINIGAME_R_HELD ? 1 : 0;
+        }
+    }
     return 0;
+}
+
+void LibretroGame::audioCallback(void *udata, Uint8 *stream, int len)
+{
+    LibretroGame* self = (LibretroGame*)udata;
+    if (!self) return;
+
+    memset(stream, 0, len);
+
+    std::lock_guard<std::mutex> lock(self->audioMutex);
+
+    size_t bytesNeeded = len;
+    size_t bytesAvailable = self->audioBuffer.size() * sizeof(int16_t);
+
+    size_t bytesToCopy = (bytesAvailable < bytesNeeded) ? bytesAvailable : bytesNeeded;
+
+    if (bytesToCopy > 0)
+    {
+        memcpy(stream, self->audioBuffer.data(), bytesToCopy);
+        size_t samplesConsumed = bytesToCopy / sizeof(int16_t);
+        self->audioBuffer.erase(self->audioBuffer.begin(), self->audioBuffer.begin() + samplesConsumed);
+    }
 }

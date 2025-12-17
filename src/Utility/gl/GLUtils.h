@@ -115,6 +115,7 @@ public:
 	static void clearCache();
 	
 	static shared_ptr<BobTexture> getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data);
+	static void updateTexture(shared_ptr<BobTexture> texture, int x, int y, int w, int h, u8* data);
 	static shared_ptr<BobTexture> getTextureFromPNGAbsolutePath(string filename);
 	static shared_ptr<BobTexture> getTextureFromPNGExePath(string filename);
 
