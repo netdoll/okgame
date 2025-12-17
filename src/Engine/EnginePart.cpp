@@ -139,47 +139,47 @@ Engine* EnginePart::getEngine()
 	return e;
 }
 
-Cameraman* EnginePart::getCameraman()
+shared_ptr<Cameraman> EnginePart::getCameraman()
 {
 	return getEngine()->cameraman;
 }
 
-MapManager* EnginePart::getMapManager()
+shared_ptr<MapManager> EnginePart::getMapManager()
 {
 	return getEngine()->mapManager;
 }
 
-SpriteManager* EnginePart::getSpriteManager()
+shared_ptr<SpriteManager> EnginePart::getSpriteManager()
 {
 	return getEngine()->spriteManager;
 }
 
-ActionManager* EnginePart::getActionManager()
+shared_ptr<ActionManager> EnginePart::getActionManager()
 {
 	return getEngine()->actionManager;
 }
 
-TextManager* EnginePart::getTextManager()
+shared_ptr<TextManager> EnginePart::getTextManager()
 {
 	return getEngine()->textManager;
 }
 
-AudioManager* EnginePart::getAudioManager()
+shared_ptr<AudioManager> EnginePart::getAudioManager()
 {
 	return getEngine()->audioManager;
 }
 
-CaptionManager* EnginePart::getCaptionManager()
+shared_ptr<CaptionManager> EnginePart::getCaptionManager()
 {
 	return getEngine()->captionManager;
 }
 
-EventManager* EnginePart::getEventManager()
+shared_ptr<EventManager> EnginePart::getEventManager()
 {
 	return getEngine()->eventManager;
 }
 
-CinematicsManager* EnginePart::getCinematicsManager()
+shared_ptr<CinematicsManager> EnginePart::getCinematicsManager()
 {
 	return getEngine()->cinematicsManager;
 }
@@ -207,7 +207,7 @@ BGClientEngine* EnginePart::getClientGameEngine()
 	return Main::gameEngine;
 }
 
-ControlsManager* EnginePart::getControlsManager()
+shared_ptr<ControlsManager> EnginePart::getControlsManager()
 {
 	return getEngine()->getControlsManager();
 }

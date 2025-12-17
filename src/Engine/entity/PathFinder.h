@@ -51,7 +51,7 @@ private:
 
 
 public:
-	deque<PathTile*>* pathTiles = new deque<PathTile*>();
+	deque<shared_ptr<PathTile>> pathTiles;
 
 
 	TilePath();// PathFinder* outerInstance);
@@ -60,7 +60,7 @@ public:
 	int getLength();
 
 
-	PathTile* getTileForPathIndex(int index);
+	shared_ptr<PathTile> getTileForPathIndex(int index);
 
 
 	int getTileXForPathIndex(int index);
@@ -92,7 +92,7 @@ public:
 	/// <summary>
 	/// The list of elements </summary>
 private:
-	ArrayList<PotentialTile*>* list = new ArrayList<PotentialTile*>();
+	ArrayList<shared_ptr<PotentialTile>> list;
 
 
 	/// <summary>
@@ -100,7 +100,7 @@ private:
 	/// </summary>
 	/// <returns> The first element from the list </returns>
 public:
-	PotentialTile* first();
+	shared_ptr<PotentialTile> first();
 
 
 	/// <summary>
@@ -109,16 +109,16 @@ public:
 	void clear();
 
 
-	void addAndSort(PotentialTile* o);
+	void addAndSort(shared_ptr<PotentialTile> o);
 
 
-	void remove(PotentialTile* o);
+	void remove(shared_ptr<PotentialTile> o);
 
 
 	int size();
 
 
-	bool contains(PotentialTile* o);
+	bool contains(shared_ptr<PotentialTile> o);
 };
 
 class PotentialTile
@@ -177,15 +177,15 @@ private:
 
 
 public:
-	TilePath* path = nullptr;
+	shared_ptr<TilePath> path = nullptr;
 
 private:
-	ArrayList<PotentialTile*>* blockedPotentialTilesList = new ArrayList<PotentialTile*>();
-	SortedList* openPotentialTilesList = new SortedList();
+	ArrayList<shared_ptr<PotentialTile>> blockedPotentialTilesList;
+	SortedList openPotentialTilesList;
 
 	//ArrayList<ArrayList<PotentialTile*>*>* potentialTiles = new ArrayList<ArrayList<PotentialTile*>*>();
-	vector<PotentialTile*> *potentialTiles = nullptr;
-	bool* checkedTileArray = nullptr;
+	vector<shared_ptr<PotentialTile>> potentialTiles;
+	vector<bool> checkedTileArray;
 
 
 	int maxSearchDistance = 0;
@@ -204,7 +204,7 @@ public:
 
 
 	//=========================================================================================================================
-	TilePath* findPath(int startTileX, int startTileY, int toTileX, int toTileY);
+	shared_ptr<TilePath> findPath(int startTileX, int startTileY, int toTileX, int toTileY);
 
 
 	//=========================================================================================================================

@@ -43,6 +43,8 @@ include_directories(
         ${bobsgame_SOURCE_DIR}/lib/miniz-master
         ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
+        ${bobsgame_SOURCE_DIR}/lib/projectm/src
+        ${bobsgame_SOURCE_DIR}/lib/libretro-common/include
         #${bobsgame_SOURCE_DIR}/lib/boost_1_62_0
         ${Boost_INCLUDE_DIR}
         ${bobsgame_SOURCE_DIR}
@@ -238,6 +240,8 @@ set(SOURCE_FILES
     src/Engine/nd/ramio/RamioMoneyBlock.h
     src/Engine/nd/GameDataLoader.cpp
     src/Engine/nd/GameDataLoader.h
+    src/Engine/nd/LibretroGame.cpp
+    src/Engine/nd/LibretroGame.h
     src/Engine/nd/ND.cpp
     src/Engine/nd/ND.h
     src/Engine/nd/NDGameEngine.cpp
@@ -410,6 +414,12 @@ set(SOURCE_FILES
     src/Puzzle/GameLogic.h
     src/Puzzle/Grid.cpp
     src/Puzzle/Grid.h
+    src/Puzzle/OKGame.cpp
+    src/Puzzle/OKGame.h
+    src/Puzzle/OKGameMenus.cpp
+    src/Puzzle/OKGameNetwork.cpp
+    src/Engine/stadium/OKGameStadium.cpp
+    src/Engine/stadium/OKGameStadium.h
     src/Puzzle/Piece.cpp
     src/Puzzle/Piece.h
     src/Puzzle/GameType.cpp
@@ -479,7 +489,10 @@ set(SOURCE_FILES
 
 
 
+add_subdirectory(lib/projectm)
+add_subdirectory(lib/gambatte-libretro)
 add_executable(bobsgame ${SOURCE_FILES})
+target_link_libraries(bobsgame projectM)
 
 
 

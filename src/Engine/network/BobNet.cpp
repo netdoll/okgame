@@ -150,7 +150,7 @@ const string BobNet::Client_Location_Response = "Client_Location_Response:";
 Logger BobNet::log = Logger("BobNet");
 Logger* BobNet::_threadLog = new Logger("BobNet");
 
-ArrayList<UDPPeerConnection*> BobNet::udpConnections;
+ArrayList<shared_ptr<UDPPeerConnection>> BobNet::udpConnections;
 TCPServerConnection BobNet::tcpServerConnection;
 int BobNet::myStatus = status_AVAILABLE;
 ArrayList<Engine*> BobNet::engines;
@@ -172,8 +172,8 @@ BobNet::~BobNet()
 
 	for(int i=0;i<udpConnections.size();i++)
 	{
-		UDPPeerConnection *c = udpConnections.get(i);
-		delete c;
+		shared_ptr<UDPPeerConnection> c = udpConnections.get(i);
+		//delete c;
 	}
 	udpConnections.clear();
 
@@ -248,7 +248,7 @@ void BobNet::update()
 
 	for (int i = 0; i < udpConnections.size(); i++)
 	{
-		UDPPeerConnection *p = udpConnections.get(i);
+		shared_ptr<UDPPeerConnection> p = udpConnections.get(i);
 		p->update();
 	}
 }
@@ -500,7 +500,7 @@ bool BobNet::udpSTUNMessageReceived(string e)
 		bool found = false;
 		for(int i=0;i<udpConnections.size();i++)
 		{
-			UDPPeerConnection *c = udpConnections.get(i);
+			shared_ptr<UDPPeerConnection> c = udpConnections.get(i);
 			if(c->peerUserID==replyFriendUserID)
 			{
 #ifndef ORBIS
@@ -560,7 +560,7 @@ void BobNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myP
 }
 
 //===============================================================================================
-UDPPeerConnection* BobNet::addFriendID(long long friendID, int type)
+shared_ptr<UDPPeerConnection> BobNet::addFriendID(long long friendID, int type)
 {//===============================================================================================
 
 	//if (type == UDPPeerConnection::FACEBOOK_TYPE)
@@ -573,7 +573,7 @@ UDPPeerConnection* BobNet::addFriendID(long long friendID, int type)
 			}
 		}
 
-		UDPPeerConnection* f = new UDPPeerConnection(friendID,type);
+		shared_ptr<UDPPeerConnection> f = make_shared<UDPPeerConnection>(friendID,type);
 		udpConnections.add(f);
 		log.debug("Added peer: " + to_string(friendID));
 		return f;
@@ -585,7 +585,7 @@ void BobNet::sendAllPeers(string s)
 {//===============================================================================================
 	for (int i = 0; i < udpConnections.size(); i++)
 	{
-		UDPPeerConnection* c = udpConnections.get(i);
+		shared_ptr<UDPPeerConnection> c = udpConnections.get(i);
 		if (c->getConnectedToPeer_S())
 		{
 			c->writeReliable_S(s);

@@ -47,11 +47,11 @@ public:
 	static Logger log;
 
 
-	HashMap<int, Sprite*> spriteByIDHashMap;//new HashMap<int, Sprite*>();
-	HashMap<string, Sprite*> spriteByNameHashMap;//new HashMap<string, Sprite*>();
+	HashMap<int, shared_ptr<Sprite>> spriteByIDHashMap;//new HashMap<int, Sprite*>();
+	HashMap<string, shared_ptr<Sprite>> spriteByNameHashMap;//new HashMap<string, Sprite*>();
 
 
-	ArrayList<ScreenSprite*> screenSpriteList;
+	ArrayList<shared_ptr<ScreenSprite>> screenSpriteList;
 
 
 	static BobTexture* actionTexture;// = nullptr;
@@ -209,11 +209,11 @@ public:
 	//	}
 
 
-	Sprite* getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
+	shared_ptr<Sprite> getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
 
 
-	Sprite* getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
-	Sprite * preloadSpriteFromDataFile(const string & spriteAssetName);
-	Sprite * getSpriteByName(const string & spriteAssetName);
+	shared_ptr<Sprite> getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
+	shared_ptr<Sprite> preloadSpriteFromDataFile(const string & spriteAssetName);
+	shared_ptr<Sprite> getSpriteByName(const string & spriteAssetName);
 };
 

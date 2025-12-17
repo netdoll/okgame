@@ -1,6 +1,7 @@
 
 
 #include "stdafx.h"
+#include "LibretroGame.h"
 
 
 //------------------------------------------------------------------------------
@@ -29,7 +30,7 @@ ND::ND()
 	widthToHeightRatio = ((float)(texture->getTextureWidth()) / (float)(texture->getTextureHeight()));
 
 
-	nDGameStateManager = new BobStateManager();
+	nDGameStateManager = make_shared<BobStateManager>();
 }
 
 void ND::init()
@@ -37,6 +38,9 @@ void ND::init()
 
 	fadeInTime = 1500.0f; //override MenuPanel defaults, since we are zooming in, not scrolling in.
 	fadeOutTime = 500.0f;
+
+    libretroGame = make_shared<LibretroGame>(this);
+    libretroGame->init();
 }
 
 void ND::update()
@@ -49,7 +53,7 @@ void ND::update()
 	MenuPanel::update();
 
 
-	Engine* s = nDGameStateManager->getCurrentState();
+	shared_ptr<Engine> s = nDGameStateManager->getCurrentState();
 
 	if (isActivated == true)
 	{
@@ -116,18 +120,18 @@ void ND::update()
 	ndZoomText->text = "nD zoom: " + to_string(nDZoom);
 }
 
-void ND::setGame(NDGameEngine* game)
+void ND::setGame(shared_ptr<NDGameEngine> game)
 { //=========================================================================================================================
 
-	light = new Light(game, "nDScreenLight", 0, 0, GLUtils::getViewportWidth(), GLUtils::getViewportHeight(), 240, 240, 255, 60, 32, 2.0f, 1.0f, 0, true, true);
+	light = make_shared<Light>(game.get(), "nDScreenLight", 0, 0, GLUtils::getViewportWidth(), GLUtils::getViewportHeight(), 240, 240, 255, 60, 32, 2.0f, 1.0f, 0, true, true);
 
 
 	nDGameStateManager->pushState(game);
 }
 
-NDGameEngine* ND::getGame()
+shared_ptr<NDGameEngine> ND::getGame()
 { //=========================================================================================================================
-	return static_cast<NDGameEngine*>(nDGameStateManager->getCurrentState());
+	return static_pointer_cast<NDGameEngine>(nDGameStateManager->getCurrentState());
 }
 
 void ND::toggleActivated()

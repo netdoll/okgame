@@ -33,11 +33,11 @@ public:
 
 	string mapName = "";
 
-	UDPPeerConnection * connection = nullptr;
+	shared_ptr<UDPPeerConnection> connection = nullptr;
 
 
 public:
-	MiniGameEngine* game = nullptr;
+	shared_ptr<MiniGameEngine> game = nullptr;
 
 
 
@@ -57,10 +57,10 @@ public:
 	FriendCharacter(BGClientEngine* g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort);
 
 
-	void setGameToForwardPacketsTo(MiniGameEngine* game);
+	void setGameToForwardPacketsTo(shared_ptr<MiniGameEngine> game);
 
 
-	bool udpPeerMessageReceived(UDPPeerConnection *c, string e) override;
+	bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e) override;
 
 
 
@@ -92,7 +92,7 @@ private:
 	int outgoingGameChallengeResponse = NDGameEngine::gameChallengeResponse_NONE;
 	long long timeOutgoingGameChallengeResponseSet = 0;
 public:
-	GameChallengeNotificationPanel* gameChallengeNotification = nullptr;
+	shared_ptr<GameChallengeNotificationPanel> gameChallengeNotification = nullptr;
 
 	void setOutgoingGameChallengeResponse(int i);
 	int getOutgoingGameChallengeResponse();

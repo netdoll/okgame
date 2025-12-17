@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	ArrayList<GameItem*>* games = new ArrayList<GameItem*>();
+	ArrayList<shared_ptr<GameItem>> games;
 	//public GameListPanel gameStorePanel;
 
 

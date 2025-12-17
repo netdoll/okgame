@@ -30,7 +30,7 @@ public:
 
 	static Logger log;
 
-	BobColor* color = BobColor::black;
+	BobColor color;
 
 
 private:
@@ -63,12 +63,12 @@ public:
 	void init();
 
 
-	void doTransition(BobColor* color, float fromAlpha, float toAlpha, int ticks);
+	void doTransition(BobColor color, float fromAlpha, float toAlpha, int ticks);
 
 
-	void doToAndFromTransition(BobColor* color, int ticks, float toAlpha);
+	void doToAndFromTransition(BobColor color, int ticks, float toAlpha);
 
-	void setInstantOverlay(BobColor* color, float alpha);
+	void setInstantOverlay(BobColor color, float alpha);
 
 
 	void update();
