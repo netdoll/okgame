@@ -11,6 +11,7 @@
 
 
 #include "BGClientEngine.h"
+#include "../nd/LibretroGame.h"
 #include "../../Utility/FileUtils.h"
 
 Logger BGClientEngine::log = Logger("BGClientEngine");
@@ -93,11 +94,13 @@ void BGClientEngine::init()
 	shared_ptr<Ramio> ramio = make_shared<Ramio>(nD.get());
 	ramio->init();
 	
-
+	shared_ptr<LibretroGame> libretro = make_shared<LibretroGame>(nD.get());
+	libretro->init();
 
 	nDMenu->addGame(ping, "Ping", make_shared<BobColor>(*BobColor::blue));
 	nDMenu->addGame(ramio,"Ramio", make_shared<BobColor>(*BobColor::red));
 	nDMenu->addGame(bobsgame,"\"bob's game\"", make_shared<BobColor>(*BobColor::green));
+	nDMenu->addGame(libretro, "Emulator", make_shared<BobColor>(*BobColor::magenta));
 
 	nD->setGame(nDMenu);
 

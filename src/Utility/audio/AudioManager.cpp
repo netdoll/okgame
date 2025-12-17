@@ -14,6 +14,8 @@
 #include "SDL_mixer.h"
 #else
 #endif
+#include "libprojectM/ProjectM.hpp"
+
 Logger AudioManager::log = Logger("AudioManager");
 
 
@@ -25,6 +27,23 @@ SoLoud::Soloud *AudioManager::soLoud = nullptr;
 //global and static, shared between all audiomanagers
 ArrayList<shared_ptr<AudioFile>> AudioManager::globalAudioFileList;
 bool AudioManager::loadedBuiltIn = false;
+
+shared_ptr<libprojectM::ProjectM> AudioManager::visualizer = nullptr;
+
+void AudioManager::setVisualizer(shared_ptr<libprojectM::ProjectM> v)
+{
+	visualizer = v;
+}
+
+void AudioManager::postMixCallback(void *udata, Uint8 *stream, int len)
+{
+	if (visualizer)
+	{
+		int16_t *samples = (int16_t*)stream;
+		int numSamples = len / sizeof(int16_t);
+		visualizer->PCM().Add(samples, 2, numSamples);
+	}
+}
 
 //=========================================================================================================================
 AudioManager::AudioManager()
@@ -60,6 +79,7 @@ void AudioManager::initAudioLibrary()
 			log.error("Couldn't set up audio: " + string(SDL_GetError()));
 		}
 		Mix_AllocateChannels(32);
+		Mix_SetPostMix(postMixCallback, NULL);
 
 
 		now = System::getPerformanceCounter();

@@ -117,6 +117,7 @@ void BobsGame::init()
 	
 
 	visualizer = make_shared<libprojectM::ProjectM>();
+    AudioManager::setVisualizer(visualizer);
 
 	log.debug("Init Player");
 	initPlayer();

@@ -8,6 +8,8 @@
 #include "AudioFile.h"
 class Logger;
 
+namespace libprojectM { class ProjectM; }
+
 #include "../../Engine/Engine.h"
 #include "../../Engine/EnginePart.h"
 #include "./Sound.h"
@@ -36,7 +38,9 @@ public:
 	static bool loadedBuiltIn;
 	ArrayList<shared_ptr<Sound>> playingAudioList;
 
-	
+    static shared_ptr<libprojectM::ProjectM> visualizer;
+    static void setVisualizer(shared_ptr<libprojectM::ProjectM> v);
+    static void postMixCallback(void *udata, Uint8 *stream, int len);
 
 #ifdef USE_SOLOUD
 	static SoLoud::Soloud *soLoud;// = nullptr;
