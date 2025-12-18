@@ -14,6 +14,8 @@
 #include "SDL_mixer.h"
 #else
 #endif
+#include "libprojectM/ProjectM.hpp"
+
 Logger AudioManager::log = Logger("AudioManager");
 
 
@@ -23,8 +25,25 @@ SoLoud::Soloud *AudioManager::soLoud = nullptr;
 #endif
 
 //global and static, shared between all audiomanagers
-ArrayList<AudioFile*> AudioManager::globalAudioFileList;
+ArrayList<shared_ptr<AudioFile>> AudioManager::globalAudioFileList;
 bool AudioManager::loadedBuiltIn = false;
+
+shared_ptr<libprojectM::ProjectM> AudioManager::visualizer = nullptr;
+
+void AudioManager::setVisualizer(shared_ptr<libprojectM::ProjectM> v)
+{
+	visualizer = v;
+}
+
+void AudioManager::postMixCallback(void *udata, Uint8 *stream, int len)
+{
+	if (visualizer)
+	{
+		int16_t *samples = (int16_t*)stream;
+		int numSamples = len / sizeof(int16_t);
+		visualizer->PCM().Add(samples, 2, numSamples);
+	}
+}
 
 //=========================================================================================================================
 AudioManager::AudioManager()
@@ -60,6 +79,7 @@ void AudioManager::initAudioLibrary()
 			log.error("Couldn't set up audio: " + string(SDL_GetError()));
 		}
 		Mix_AllocateChannels(32);
+		Mix_SetPostMix(postMixCallback, NULL);
 
 
 		now = System::getPerformanceCounter();
@@ -113,7 +133,7 @@ void AudioManager::initAudioLibrary()
 				string name = *it;
 				if (name.find(".ogg") != string::npos)
 				{
-					new AudioFile("data/sounds/" + name);
+					globalAudioFileList.add(make_shared<AudioFile>("data/sounds/" + name));
 				}
 			}
 		}
@@ -137,7 +157,7 @@ void AudioManager::initAudioLibrary()
 				string name = *it;
 				if (name.find(".ogg") != string::npos)
 				{
-					new AudioFile("data/music/" + name);
+					globalAudioFileList.add(make_shared<AudioFile>("data/music/" + name));
 				}
 			}
 		}
@@ -247,7 +267,7 @@ void AudioManager::update()
 	}
 }
 
-Sound* AudioManager::getSoundByName(const string& musicName)
+shared_ptr<Sound> AudioManager::getSoundByName(const string& musicName)
 { //=========================================================================================================================
 	if (musicName == "" || musicName.length() == 0)
 	{
@@ -285,7 +305,7 @@ Sound* AudioManager::getSoundByName(const string& musicName)
 
 		if (String::startsWith(name, clippedName))
 		{
-			Sound * s = new Sound(getEngine(), globalAudioFileList.get(i));
+			shared_ptr<Sound> s = make_shared<Sound>(getEngine(), globalAudioFileList.get(i));
 			playingAudioList.add(s);
 			return s;
 		}
@@ -301,7 +321,7 @@ Sound* AudioManager::getSoundByName(const string& musicName)
 
 
 //=========================================================================================================================
-void AudioManager::playMusic(Sound* s, float vol, float pitch, bool loop)
+void AudioManager::playMusic(shared_ptr<Sound> s, float vol, float pitch, bool loop)
 { //=========================================================================================================================
 	if (s != nullptr)
 	{
@@ -310,9 +330,9 @@ void AudioManager::playMusic(Sound* s, float vol, float pitch, bool loop)
 	}
 }
 
-Sound* AudioManager::playMusic(const string& musicName, float volume, float pitch, bool loop)
+shared_ptr<Sound> AudioManager::playMusic(const string& musicName, float volume, float pitch, bool loop)
 { //=========================================================================================================================
-	Sound* m = getSoundByName(musicName);
+	shared_ptr<Sound> m = getSoundByName(musicName);
 	if (m != nullptr)
 	{
 		m->play(pitch, volume, loop);
@@ -323,7 +343,7 @@ Sound* AudioManager::playMusic(const string& musicName, float volume, float pitc
 }
 
 //=========================================================================================================================
-Sound* AudioManager::playSound(const string& soundName, float volume, float pitch)
+shared_ptr<Sound> AudioManager::playSound(const string& soundName, float volume, float pitch)
 { //=========================================================================================================================
 
 	return playSound(soundName,volume,pitch,1);
@@ -331,16 +351,16 @@ Sound* AudioManager::playSound(const string& soundName, float volume, float pitc
 }
 
 //=========================================================================================================================
-Sound* AudioManager::playSound(const string& soundName)
+shared_ptr<Sound> AudioManager::playSound(const string& soundName)
 { //=========================================================================================================================
 	return playSound(soundName, 1, 1, 1);
 }
 
 //=========================================================================================================================
-Sound* AudioManager::playSound(const string& soundName, float volume, float pitch, int times)
+shared_ptr<Sound> AudioManager::playSound(const string& soundName, float volume, float pitch, int times)
 { //=========================================================================================================================
 
-	Sound* s = getSoundByName(soundName);
+	shared_ptr<Sound> s = getSoundByName(soundName);
 	if (s != nullptr)
 	{
 		s->play(pitch, volume, times);
@@ -353,7 +373,7 @@ Sound* AudioManager::playSound(const string& soundName, float volume, float pitc
 
 
 //=========================================================================================================================
-void AudioManager::playSound(Sound* s, float vol, float pitch, int times)
+void AudioManager::playSound(shared_ptr<Sound> s, float vol, float pitch, int times)
 { //=========================================================================================================================
 	if (s != nullptr)
 	{
@@ -362,23 +382,23 @@ void AudioManager::playSound(Sound* s, float vol, float pitch, int times)
 	}
 }
 
-void AudioManager::playMusic(Sound* m)
+void AudioManager::playMusic(shared_ptr<Sound> m)
 { //=========================================================================================================================
 	playSoundLoop(m);
 }
-void AudioManager::playSoundLoop(Sound* m)
+void AudioManager::playSoundLoop(shared_ptr<Sound> m)
 { //=========================================================================================================================
 	m->playLoop();
 	if (playingAudioList.contains(m) == false)playingAudioList.add(m);
 }
 
-Sound* AudioManager::playMusic(const string& musicName)
+shared_ptr<Sound> AudioManager::playMusic(const string& musicName)
 { //=========================================================================================================================
 	return playSoundLoop(musicName);
 }
-Sound* AudioManager::playSoundLoop(const string& musicName)
+shared_ptr<Sound> AudioManager::playSoundLoop(const string& musicName)
 { //=========================================================================================================================
-	Sound* m = getSoundByName(musicName);
+	shared_ptr<Sound> m = getSoundByName(musicName);
 	if (m != nullptr)
 	{
 		m->playLoop();
@@ -390,7 +410,7 @@ Sound* AudioManager::playSoundLoop(const string& musicName)
 
 
 
-bool AudioManager::isSoundPlaying(Sound* m)
+bool AudioManager::isSoundPlaying(shared_ptr<Sound> m)
 { //=========================================================================================================================
 
 	if (playingAudioList.contains(m) == false)return false;
@@ -399,7 +419,7 @@ bool AudioManager::isSoundPlaying(Sound* m)
 
 bool AudioManager::isSoundPlaying(const string& musicName)
 { //=========================================================================================================================
-	Sound* m = getSoundByName(musicName);
+	shared_ptr<Sound> m = getSoundByName(musicName);
 	if (m != nullptr)
 	{
 		if (playingAudioList.contains(m) == false)return false;
@@ -408,11 +428,11 @@ bool AudioManager::isSoundPlaying(const string& musicName)
 	return false;
 }
 
-void AudioManager::stopMusic(Sound* m)
+void AudioManager::stopMusic(shared_ptr<Sound> m)
 { //=========================================================================================================================
 	stopSound(m);
 }
-void AudioManager::stopSound(Sound* m)
+void AudioManager::stopSound(shared_ptr<Sound> m)
 { //=========================================================================================================================
 	m->stop();
 }
@@ -424,7 +444,7 @@ void AudioManager::stopMusic(const string& musicName)
 
 void AudioManager::stopSound(const string& musicName)
 { //=========================================================================================================================
-	Sound* m = getSoundByName(musicName);
+	shared_ptr<Sound> m = getSoundByName(musicName);
 
 	if (m != nullptr)
 	{
@@ -436,7 +456,7 @@ void AudioManager::stopSound(const string& musicName)
 
 void AudioManager::fadeOutSound(const string& musicName, int ticks)
 { //=========================================================================================================================
-	Sound* m = getSoundByName(musicName);
+	shared_ptr<Sound> m = getSoundByName(musicName);
 
 	if (m != nullptr)
 	{
@@ -445,7 +465,7 @@ void AudioManager::fadeOutSound(const string& musicName, int ticks)
 	
 }
 
-void AudioManager::fadeOutSound(Sound* m, int ticks)
+void AudioManager::fadeOutSound(shared_ptr<Sound> m, int ticks)
 { //=========================================================================================================================
 	if (m != nullptr)
 	{
@@ -464,7 +484,7 @@ bool AudioManager::isAnyLoopingSoundPlaying()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->getLoop() && m->isPlaying())
 		{
 			return true;
@@ -478,7 +498,7 @@ void AudioManager::pauseAnyPlayingLoopingSounds()
 
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->getLoop() && m->isPlaying())
 		{
 			m->pause();
@@ -490,7 +510,7 @@ void AudioManager::playAnyPausedLoopingSounds()
 {//=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->getLoop() && m->isPlaying())
 		{
 			m->unpause();
@@ -503,7 +523,7 @@ void AudioManager::setAllPlayingSoundsVolume(float v)
 {//=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->isPlaying())
 		{
 			m->setVolume(v);
@@ -515,7 +535,7 @@ void AudioManager::setAllPlayingLoopingSoundsVolume(float v)
 {//=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->isPlaying() && m->getLoop())
 		{
 			m->setVolume(v);
@@ -532,7 +552,7 @@ void AudioManager::stopAllLoopingSounds()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound *m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if(m->getLoop())m->stop();
 	}
 	
@@ -547,7 +567,7 @@ void AudioManager::fadeOutAllLoopingSounds(int ticks)
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 
 		if (m->getLoop())m->fadeOutAndStop(ticks);
 		
@@ -558,7 +578,7 @@ void AudioManager::fadeOutAllSounds(int ticks)
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 
 		m->fadeOutAndStop(ticks);
 		
@@ -570,7 +590,7 @@ void AudioManager::setAllLoopingSoundsThatAreNotFadingOutToNotLoop()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->getLoop() && m->isPlaying() == true)
 		{
 			if (m->isFadingOut() == false)
@@ -585,7 +605,7 @@ void AudioManager::setAllLoopingSoundsToNotLoop()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->getLoop() && m->isPlaying() == true)
 		{
 			
@@ -599,7 +619,7 @@ void AudioManager::pauseAllLoopingSounds()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->getLoop())m->pause();
 	}
 }
@@ -608,7 +628,7 @@ void AudioManager::unpauseAllLoopingSounds()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		if (m->getLoop())m->unpause();
 	}
 }
@@ -616,7 +636,7 @@ void AudioManager::pauseAllSounds()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		m->pause();
 	}
 }
@@ -625,20 +645,20 @@ void AudioManager::unpauseAllSounds()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* m = playingAudioList.get(i);
+		shared_ptr<Sound> m = playingAudioList.get(i);
 		m->unpause();
 	}
 }
 
 
 //=========================================================================================================================
-AudioFile* AudioManager::getAudioFileByName(string name)
+shared_ptr<AudioFile> AudioManager::getAudioFileByName(string name)
 {//=========================================================================================================================
 
 
 	for (int i = 0; i < globalAudioFileList.size(); i++)
 	{
-		AudioFile* s = globalAudioFileList.get(i);
+		shared_ptr<AudioFile> s = globalAudioFileList.get(i);
 		if (s->getName() == name)return s;
 	}
 	return nullptr;
@@ -646,20 +666,20 @@ AudioFile* AudioManager::getAudioFileByName(string name)
 
 
 //=========================================================================================================================
-AudioFile* AudioManager::getAudioFileByIDCreateIfNotExist(int id)
+shared_ptr<AudioFile> AudioManager::getAudioFileByIDCreateIfNotExist(int id)
 {//=========================================================================================================================
 
 
 	for (int i = 0; i < globalAudioFileList.size(); i++)
 	{
-		AudioFile* s = globalAudioFileList.get(i);
+		shared_ptr<AudioFile> s = globalAudioFileList.get(i);
 		if (s->getID() == id)return s;
 	}
-	return new AudioFile(new AudioData(id,"",""));
+	return make_shared<AudioFile>(new AudioData(id,"",""));
 }
 
 //=========================================================================================================================
-Sound* AudioManager::getSoundByIDCreateIfNotExist(int id)
+shared_ptr<Sound> AudioManager::getSoundByIDCreateIfNotExist(int id)
 {//=========================================================================================================================
 
 
@@ -674,10 +694,17 @@ Sound* AudioManager::getSoundByIDCreateIfNotExist(int id)
 
 	for (int i = 0; i < globalAudioFileList.size(); i++)
 	{
-		AudioFile* s = globalAudioFileList.get(i);
-		if (s->getID() == id)return new Sound(e, s);
+		shared_ptr<AudioFile> s = globalAudioFileList.get(i);
+		if (s->getID() == id)
+		{
+			shared_ptr<Sound> sound = make_shared<Sound>(e, s);
+			playingAudioList.add(sound);
+			return sound;
+		}
 	}
-	return new Sound(e, new AudioFile(new AudioData(id,"","")));
+	shared_ptr<Sound> sound = make_shared<Sound>(e, make_shared<AudioFile>(new AudioData(id, "", "")));
+	playingAudioList.add(sound);
+	return sound;
 }
 
 

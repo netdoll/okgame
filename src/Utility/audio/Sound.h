@@ -18,7 +18,7 @@ class Sound : EnginePart
 public:
 	static Logger log;
 
-	AudioFile* audioFile = nullptr;
+	shared_ptr<AudioFile> audioFile = nullptr;
 
 
 
@@ -31,7 +31,7 @@ public:
 	Mix_Chunk* mixChunk = nullptr;
 #endif
 
-	Sound(Engine* g, AudioFile *f);
+	Sound(Engine* g, shared_ptr<AudioFile> f);
 
 
 

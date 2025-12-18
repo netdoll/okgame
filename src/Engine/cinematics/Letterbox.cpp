@@ -18,6 +18,7 @@ class Easing;
 Letterbox::Letterbox(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
+	this->color = *BobColor::black;
 }
 
 void Letterbox::init()
@@ -101,8 +102,8 @@ void Letterbox::update()
 
 void Letterbox::render()
 { //=========================================================================================================================
-	GLUtils::drawFilledRect(color->ri(), color->gi(), color->bi(), 0, (float)GLUtils::getViewportWidth(), 0, (float)sizeY, alpha);
+	GLUtils::drawFilledRect(color.ri(), color.gi(), color.bi(), 0, (float)GLUtils::getViewportWidth(), 0, (float)sizeY, alpha);
 
-	GLUtils::drawFilledRect(color->ri(), color->gi(), color->bi(), 0, (float)GLUtils::getViewportWidth(), (float)(GLUtils::getViewportHeight() - sizeY), (float)GLUtils::getViewportHeight(), alpha);
+	GLUtils::drawFilledRect(color.ri(), color.gi(), color.bi(), 0, (float)GLUtils::getViewportWidth(), (float)(GLUtils::getViewportHeight() - sizeY), (float)GLUtils::getViewportHeight(), alpha);
 }
 

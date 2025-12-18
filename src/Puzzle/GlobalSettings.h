@@ -30,6 +30,7 @@ public:
 	bool censorBadWords = true;
 	bool hideChat = false;
 	bool hideNotifications = false;
+	bool bobsGame_enableVisualizer = true;
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version)
@@ -79,8 +80,12 @@ public:
 		{
 			ar & BOOST_SERIALIZATION_NVP(hideNotifications);
 		}
+		if(version>7)
+		{
+			ar & BOOST_SERIALIZATION_NVP(bobsGame_enableVisualizer);
+		}
 	}
 
 };
-BOOST_CLASS_VERSION(GlobalSettings, 7)
+BOOST_CLASS_VERSION(GlobalSettings, 8)
 BOOST_CLASS_TRACKING(GlobalSettings, boost::serialization::track_never)

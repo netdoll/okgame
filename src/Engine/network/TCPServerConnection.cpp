@@ -546,8 +546,8 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 					//Main::whilefix();
 					threadLogDebug_S("Resolving host to load balancer...");
 
-					_loadBalancerAddress = new IPaddress();
-					if (SDLNet_ResolveHost(_loadBalancerAddress, Main::serverAddressString.c_str(), Main::serverTCPPort) < 0 )
+					_loadBalancerAddress = make_shared<IPaddress>();
+					if (SDLNet_ResolveHost(_loadBalancerAddress.get(), Main::serverAddressString.c_str(), Main::serverTCPPort) < 0 )
 					{
 						threadLogWarn_S("Could not resolve load balancer IP: " + string(SDLNet_GetError()) + string(SDL_GetError()));
 						SDL_ClearError();
@@ -574,7 +574,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 						threadLogDebug_S("Connecting to load balancer...");
 
 #ifndef ORBIS
-						setSocket_S(SDLNet_TCP_Open(_loadBalancerAddress));//TODO: if it can't connect to the server the thread stalls here
+						setSocket_S(SDLNet_TCP_Open(_loadBalancerAddress.get()));//TODO: if it can't connect to the server the thread stalls here
 						if (!getSocket_S())
 						{
 							//SDLNet_FreeSocketSet(set);
@@ -666,8 +666,8 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 			//for running server locally
 			if (Main::serverAddressString == "localhost")setServerIPAddressString_S("localhost");
 
-			_serverAddress = new IPaddress();
-			if (SDLNet_ResolveHost(_serverAddress, getServerIPAddressString_S().c_str(), Main::serverTCPPort) < 0)
+			_serverAddress = make_shared<IPaddress>();
+			if (SDLNet_ResolveHost(_serverAddress.get(), getServerIPAddressString_S().c_str(), Main::serverTCPPort) < 0)
 			{
 				threadLogError_S("Could not resolve server address: " + string(SDL_GetError()));
 				setDisconnectedFromServer_S("Could not resolve server address.");
@@ -701,7 +701,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 #ifndef ORBIS
 			//connect to the server
-			setSocket_S(SDLNet_TCP_Open(_serverAddress));
+			setSocket_S(SDLNet_TCP_Open(_serverAddress.get()));
 			if (!getSocket_S())
 			{
 				threadLogWarn_S("Could not open connection to server: " + string(SDLNet_GetError()) + string(SDL_GetError()));
@@ -1084,7 +1084,7 @@ void TCPServerConnection::incomingServerStatsResponse(string s)
   //Server_Stats_Response:stats object
 	s = s.substr(s.find(":") + 1);
 
-	ServerStats *stats = new ServerStats();
+	shared_ptr<ServerStats> stats = make_shared<ServerStats>();
 	stats->initFromString(s);
 
 	serverStats = stats;
@@ -1766,10 +1766,10 @@ void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameUserStatsForSpecificGameAndDifficulty *gameStats = new BobsGameUserStatsForSpecificGameAndDifficulty(s);
+	shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty> gameStats = make_shared<BobsGameUserStatsForSpecificGameAndDifficulty>(s);
 	for(int i=0;i<BobsGame::userStatsPerGameAndDifficulty.size();i++)
 	{
-		BobsGameUserStatsForSpecificGameAndDifficulty *temp = BobsGame::userStatsPerGameAndDifficulty.get(i);
+		shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty> temp = BobsGame::userStatsPerGameAndDifficulty.get(i);
 		if(
 			temp->isGameTypeOrSequence == gameStats->isGameTypeOrSequence &&
 			temp->gameTypeUUID == gameStats->gameTypeUUID &&
@@ -1780,19 +1780,19 @@ void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(
 		{
 			BobsGame::userStatsPerGameAndDifficulty.removeAt(i);
 			BobsGame::userStatsPerGameAndDifficulty.insert(i, gameStats);
-			delete temp;
+			//delete temp;
 			return;
 		}
 	}
 	BobsGame::userStatsPerGameAndDifficulty.add(gameStats);
 }
 //===============================================================================================
-void TCPServerConnection::addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard)
+void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> leaderBoard)
 {//===============================================================================================
 
 	for (int i = 0; i<boardArray.size(); i++)
 	{
-		BobsGameLeaderBoardAndHighScoreBoard *temp = boardArray.get(i);
+		shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> temp = boardArray.get(i);
 		if (
 			temp->isGameTypeOrSequence == leaderBoard->isGameTypeOrSequence &&
 			temp->gameTypeUUID == leaderBoard->gameTypeUUID &&
@@ -1803,7 +1803,7 @@ void TCPServerConnection::addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighS
 		{
 			boardArray.removeAt(i);
 			boardArray.insert(i, leaderBoard);
-			delete temp;
+			//delete temp;
 			return;
 		}
 	}
@@ -1815,7 +1815,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByTotalTimePlayed(string &s
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByTotalTimePlayed, leaderBoard);
 
@@ -1826,7 +1826,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByTotalBlocksCleared(string
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByTotalBlocksCleared, leaderBoard);
 
@@ -1837,7 +1837,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByPlaneswalkerPoints(string
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByPlaneswalkerPoints, leaderBoard);
 }
@@ -1847,7 +1847,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByEloScore(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByEloScore, leaderBoard);
 
@@ -1858,7 +1858,7 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByTimeLasted(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topGamesByTimeLasted, leaderBoard);
 
@@ -1871,7 +1871,7 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByBlocksCleared(string 
 	s = s.substr(s.find(":") + 1);
 
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard> leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topGamesByBlocksCleared, leaderBoard);
 
