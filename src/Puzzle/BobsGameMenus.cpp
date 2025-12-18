@@ -1826,6 +1826,7 @@ void BobsGame::settingsMenuInit(BobMenu* m, bool isSettingsMenu)
 	if (isSettingsMenu)m->add("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"), "Censor");
 	if (isSettingsMenu)m->add("Hide Chat: " + string(Main::globalSettings->hideChat ? "On" : "Off"), "Hide Chat");
 	if (isSettingsMenu)m->add("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"), "Hide Notifications");
+	if (isSettingsMenu)m->add("Enable Visualizer: " + string(Main::globalSettings->bobsGame_enableVisualizer ? "On" : "Off"), "Enable Visualizer");
 
 	m->add("Defaults");
 }
@@ -1848,6 +1849,7 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m, bool isSettingsMenu)
 	if (isSettingsMenu)Main::globalSettings->censorBadWords = gs.censorBadWords;
 	if (isSettingsMenu)Main::globalSettings->hideChat = gs.hideChat;
 	if (isSettingsMenu)Main::globalSettings->hideNotifications = gs.hideNotifications;
+	if (isSettingsMenu)Main::globalSettings->bobsGame_enableVisualizer = gs.bobsGame_enableVisualizer;
 
 	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
 	m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
@@ -1861,6 +1863,7 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m, bool isSettingsMenu)
 	if (isSettingsMenu)m->getMenuItemByID("Censor")->setText("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"));
 	if (isSettingsMenu)m->getMenuItemByID("Hide Chat")->setText("Hide Chat: " + string(Main::globalSettings->hideChat ? "On" : "Off"));
 	if (isSettingsMenu)m->getMenuItemByID("Hide Notifications")->setText("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"));
+	if (isSettingsMenu)m->getMenuItemByID("Enable Visualizer")->setText("Enable Visualizer: " + string(Main::globalSettings->bobsGame_enableVisualizer ? "On" : "Off"));
 
 }
 
@@ -1945,6 +1948,21 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 			Main::globalSettings->hideNotifications = !Main::globalSettings->hideNotifications;
 
 			m->getMenuItemByID("Hide Notifications")->setText("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"));
+		}
+	}
+
+	if (m->isSelectedID("Enable Visualizer"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			Main::globalSettings->bobsGame_enableVisualizer = !Main::globalSettings->bobsGame_enableVisualizer;
+
+			m->getMenuItemByID("Enable Visualizer")->setText("Enable Visualizer: " + string(Main::globalSettings->bobsGame_enableVisualizer ? "On" : "Off"));
 		}
 	}
 

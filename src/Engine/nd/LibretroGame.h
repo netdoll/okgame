@@ -6,6 +6,7 @@
 #pragma once
 #include "NDGameEngine.h"
 #include "libretro.h"
+#include <mutex>
 
 #ifdef __WINDOWS__
 #include <windows.h>
@@ -30,6 +31,14 @@ public:
     bool loadCore(const string& corePath);
     bool loadGame(const string& gamePath);
 
+    virtual void titleMenuUpdate() override;
+
+    shared_ptr<BobMenu> fileBrowserMenu = nullptr;
+    string currentPath = "";
+    bool selectingCore = false;
+
+    void updateFileBrowser();
+
 private:
     void* coreHandle = nullptr;
 
@@ -40,6 +49,9 @@ private:
     static size_t retroAudioSampleBatch(const int16_t* data, size_t frames);
     static void retroInputPoll();
     static int16_t retroInputState(unsigned port, unsigned device, unsigned index, unsigned id);
+
+    // Audio callback for SDL mixer
+    static void audioCallback(void *udata, Uint8 *stream, int len);
 
     // Core API function pointers
     void (*retro_init)(void) = nullptr;
@@ -70,5 +82,7 @@ private:
 
     shared_ptr<BobTexture> videoTexture = nullptr;
 
+    std::vector<int16_t> audioBuffer;
+    std::mutex audioMutex;
     // Audio buffer?
 };

@@ -4390,8 +4390,9 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
 #else
 
-	ByteArray* data = new ByteArray((u8*)surface->pixels, texWidth*texHeight * 4);
+	shared_ptr<ByteArray> data = make_shared<ByteArray>((u8*)surface->pixels, texWidth*texHeight * 4);
 
+	shared_ptr<BobTexture> bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, texWidth, texHeight, data.get());
 	shared_ptr<BobTexture> bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, texWidth, texHeight, data);
 
 	bt->setImageWidth(imageWidth);
@@ -4408,7 +4409,7 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 #ifdef ORBIS
 
 	data->bytes = nullptr;
-	delete data;
+	//delete data;
 #endif
 
 	//tex->setCacheName(filename);
@@ -4476,7 +4477,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 
 
 
-	ByteArray* t = new ByteArray(texWidth*texHeight * 4);
+	shared_ptr<ByteArray> t = make_shared<ByteArray>(texWidth*texHeight * 4);
 
 	for (int y = 0; y<imageHeight; y++)
 		for (int x = 0; x<imageWidth; x++)
@@ -4489,7 +4490,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 		}
 	GLUtils::setDefaultTextureParams();
 
-	data = t;
+	//data = t.get();
 
 	/*
 	void glTexImage2D(GLenum target,
@@ -4504,9 +4505,9 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 	*/
 	GLint level = 0;
 	GLint border = 0;
-	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, data->data());
+	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, t->data());
 
-	delete t;
+	//delete t;
 
 
 	//tex->setCacheName(textureName);
@@ -4539,6 +4540,17 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 #endif
 
 	
+}
+
+//=========================================================================================================================
+void GLUtils::updateTexture(shared_ptr<BobTexture> texture, int x, int y, int w, int h, u8* data)
+{//=========================================================================================================================
+#ifndef ORBIS
+	if (texture == nullptr) return;
+	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
+	// Assumes RGBA 32-bit data
+	glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, data);
+#endif
 }
 
 

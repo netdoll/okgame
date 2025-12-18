@@ -5,7 +5,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fpermissive")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${bobsgame_SOURCE_DIR}/cmake")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/linux")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
 
 
 
@@ -490,6 +490,7 @@ set(SOURCE_FILES
 
 
 add_subdirectory(lib/projectm)
+add_subdirectory(lib/gambatte-libretro)
 add_executable(bobsgame ${SOURCE_FILES})
 target_link_libraries(bobsgame projectM)
 

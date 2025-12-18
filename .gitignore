@@ -17,6 +17,7 @@ DerivedData/
 obj/
 Release/
 Debug/
+build/
 
 version.txt
 log.html

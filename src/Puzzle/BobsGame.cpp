@@ -568,7 +568,7 @@ void BobsGame::render()
 			//clear the shader bg
 			GLUtils::fillBufferWithBlack();
 
-            if (visualizer)
+            if (visualizer && Main::globalSettings->bobsGame_enableVisualizer)
             {
                 visualizer->SetWindowSize(getWidth(), getHeight());
                 visualizer->RenderFrame();
