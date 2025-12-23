@@ -40,6 +40,8 @@ void LibretroGame::titleMenuUpdate()
         titleMenu = make_shared<BobMenu>(this, "Emulator");
         titleMenu->add("Load Core...", "Load Core");
         titleMenu->add("Load Game...", "Load Game");
+        titleMenu->add("Save State", "Save State");
+        titleMenu->add("Load State", "Load State");
         titleMenu->add("Resume");
         titleMenu->add("Exit");
     }
@@ -61,6 +63,16 @@ void LibretroGame::titleMenuUpdate()
             selectingCore = false;
             fileBrowserMenu = make_shared<BobMenu>(this, "Select Game");
             updateFileBrowser();
+            titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("Save State"))
+        {
+            saveState();
+            titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("Load State"))
+        {
+            loadState();
             titleMenuShowing = false;
         }
         else if (titleMenu->isSelectedID("Resume"))
@@ -408,5 +420,50 @@ void LibretroGame::audioCallback(void *udata, Uint8 *stream, int len)
         memcpy(stream, self->audioBuffer.data(), bytesToCopy);
         size_t samplesConsumed = bytesToCopy / sizeof(int16_t);
         self->audioBuffer.erase(self->audioBuffer.begin(), self->audioBuffer.begin() + samplesConsumed);
+    }
+}
+
+void LibretroGame::saveState()
+{
+    if (!retro_serialize_size || !retro_serialize) return;
+
+    size_t size = retro_serialize_size();
+    if(size == 0) return;
+
+    shared_ptr<ByteArray> data = make_shared<ByteArray>(size);
+    if (retro_serialize(data->data(), size))
+    {
+        // Save to file
+        string path = currentPath + ".state";
+        FileUtils::saveByteFile(path, data);
+        log.info("Saved state to " + path);
+    }
+    else
+    {
+        log.error("Failed to serialize state");
+    }
+}
+
+void LibretroGame::loadState()
+{
+    if (!retro_serialize_size || !retro_unserialize) return;
+
+    string path = currentPath + ".state";
+    shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
+
+    if (data && data->size() > 0)
+    {
+        if (retro_unserialize(data->data(), data->size()))
+        {
+            log.info("Loaded state from " + path);
+        }
+        else
+        {
+            log.error("Failed to unserialize state");
+        }
+    }
+    else
+    {
+        log.error("State file not found: " + path);
     }
 }

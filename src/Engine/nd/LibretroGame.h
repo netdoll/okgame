@@ -39,6 +39,9 @@ public:
 
     void updateFileBrowser();
 
+    void saveState();
+    void loadState();
+
 private:
     void* coreHandle = nullptr;
 
