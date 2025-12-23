@@ -87,4 +87,11 @@ private:
 
     std::vector<int16_t> audioBuffer;
     std::mutex audioMutex;
+
+    void checkSaveRAM();
+    void loadSRAM();
+    void saveSRAM();
+
+    // Helper to get save path
+    string getSavePath(const string& ext);
 };

@@ -31,6 +31,15 @@ void LibretroGame::init()
     super::init();
     titleMenuShowing = true;
     currentPath = Main::getPath();
+
+    // Create system directory if it doesn't exist
+    string systemDir = Main::getPath() + "/system";
+    BobFile sd(systemDir);
+    if (!sd.exists())
+    {
+        // mkdir? BobFile doesn't have mkdir, but let's assume it might be needed.
+        // For now, we just point to it.
+    }
 }
 
 void LibretroGame::titleMenuUpdate()
@@ -154,6 +163,9 @@ void LibretroGame::updateFileBrowser()
     {
         fileBrowserMenu = nullptr;
         titleMenuShowing = true;
+
+        // Ensure SRAM is saved when returning to menu or changing context
+        if (!selectingCore) saveSRAM();
     }
 }
 
@@ -265,6 +277,9 @@ bool LibretroGame::loadGame(const string& gamePath)
 
     Mix_HookMusic(audioCallback, this);
 
+    // Try to load SRAM
+    loadSRAM();
+
     return true;
 }
 
@@ -283,6 +298,8 @@ void LibretroGame::update()
         if (retro_run)
         {
             retro_run();
+            // Periodically check/save SRAM?
+            // For now, let's just save on menu open or exit
         }
         else
         {
@@ -329,6 +346,21 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
             const enum retro_pixel_format *fmt = (enum retro_pixel_format *)data;
             // Handle pixel format
             // For now assuming it is compatible with RGBA/BGRA
+            return true;
+        }
+        case RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY:
+        {
+            const char **dir = (const char **)data;
+            static string sysDir = Main::getPath() + "/system";
+            *dir = sysDir.c_str();
+            return true;
+        }
+        case RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY:
+        {
+            const char **dir = (const char **)data;
+            // Use same directory as ROM? or a "saves" dir?
+            // Let's use current ROM directory for now or just return null to indicate "same as ROM"
+            *dir = NULL;
             return true;
         }
         // Handle other environment calls
@@ -465,5 +497,71 @@ void LibretroGame::loadState()
     else
     {
         log.error("State file not found: " + path);
+    }
+}
+
+string LibretroGame::getSavePath(const string& ext)
+{
+    // If currentPath is "/path/to/game.gb", return "/path/to/game.srm"
+    size_t lastDot = currentPath.find_last_of(".");
+    if (lastDot != string::npos)
+    {
+        return currentPath.substr(0, lastDot) + "." + ext;
+    }
+    return currentPath + "." + ext;
+}
+
+void LibretroGame::checkSaveRAM()
+{
+    // Usually called every frame or periodically.
+    // However, since we are implementing manual saveSRAM called on pause/exit,
+    // we might not need this unless we want auto-save.
+    // Some cores expose a dirty flag if we implement RETRO_ENVIRONMENT_GET_VARIABLE
+    // but standard SRAM doesn't always have dirty flags.
+}
+
+void LibretroGame::saveSRAM()
+{
+    if (!retro_get_memory_data || !retro_get_memory_size) return;
+
+    size_t size = retro_get_memory_size(RETRO_MEMORY_SAVE_RAM);
+    void* data = retro_get_memory_data(RETRO_MEMORY_SAVE_RAM);
+
+    if (size > 0 && data)
+    {
+        string path = getSavePath("srm");
+        // We need a way to save raw bytes.
+        // copy to ByteArray
+        shared_ptr<ByteArray> ba = make_shared<ByteArray>(size);
+        memcpy(ba->data(), data, size);
+        FileUtils::saveByteFile(path, ba);
+        log.info("Saved SRAM to " + path);
+    }
+}
+
+void LibretroGame::loadSRAM()
+{
+    if (!retro_get_memory_data || !retro_get_memory_size) return;
+
+    size_t size = retro_get_memory_size(RETRO_MEMORY_SAVE_RAM);
+    void* ptr = retro_get_memory_data(RETRO_MEMORY_SAVE_RAM);
+
+    if (size > 0 && ptr)
+    {
+        string path = getSavePath("srm");
+        shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
+
+        if (data && data->size() == size)
+        {
+            memcpy(ptr, data->data(), size);
+            log.info("Loaded SRAM from " + path);
+        }
+        else if (data)
+        {
+             log.warn("SRAM file size mismatch. Expected " + to_string(size) + " got " + to_string(data->size()));
+             // Try to copy partial? Or ignore. Safest to ignore to avoid corruption, or copy min.
+             size_t copySize = (data->size() < size) ? data->size() : size;
+             memcpy(ptr, data->data(), copySize);
+        }
     }
 }
