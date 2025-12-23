@@ -54,7 +54,7 @@ public:
 	ArrayList<shared_ptr<ScreenSprite>> screenSpriteList;
 
 
-	static BobTexture* actionTexture;// = nullptr;
+	static shared_ptr<BobTexture> actionTexture;// = nullptr;
 
 	int actionTextureFrame = 0;
 	int actionTextureAnimTicks = 0;

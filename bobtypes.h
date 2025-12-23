@@ -52,7 +52,7 @@
 
 #include <vector>
 //#include <deque>
-//#include <algorithm>
+#include <algorithm>
 //#include <unordered_map>
 //#include <utility>
 //#include <limits>
@@ -60,6 +60,8 @@
 //#include <fstream>
 #include <memory>
 //#include <cmath>
+
+using namespace std;
 
 template<typename T> using sp = std::shared_ptr<T>;
 template<typename T, typename... Args> inline sp<T> ms(Args&&... args) { return std::make_shared<T>(std::forward<Args>(args)...); }

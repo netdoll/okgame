@@ -15,7 +15,7 @@
 Logger SpriteManager::log = Logger("SpriteManager");
 
 
-BobTexture* SpriteManager::actionTexture = nullptr;
+shared_ptr<BobTexture> SpriteManager::actionTexture = nullptr;
 
 
 SpriteManager::SpriteManager(Engine* g)
