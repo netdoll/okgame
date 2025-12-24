@@ -238,4 +238,7 @@
 #include "src/Engine/rpg/BGClientEngine.h"
 #include "src/Engine/MiniGameEngine.h"
 
+#include <Poco/Zip/Decompress.h>
+#include <Poco/Zip/ZipArchive.h>
+
 #endif

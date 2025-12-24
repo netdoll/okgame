@@ -141,4 +141,12 @@ private:
 
     // Check input for remapping
     int checkInput();
+
+    // Rewind support
+    std::deque<shared_ptr<ByteArray>> rewindBuffer;
+    int rewindInterval = 5; // Frames between saves
+    int rewindCounter = 0;
+    bool rewinding = false;
+    void doRewind();
+    void pushRewindState();
 };
