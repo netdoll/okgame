@@ -342,6 +342,39 @@ shared_ptr<Sound> AudioManager::playMusic(const string& musicName, float volume,
 	return nullptr;
 }
 
+shared_ptr<Music> AudioManager::playMusic(const string& musicName, bool loop, int fadeTime)
+{
+	if (currentMusic)
+	{
+		currentMusic->stop(fadeTime);
+		currentMusic = nullptr;
+	}
+
+	// Assume musicName is filename for now, or find file
+	string filename = musicName;
+	// Logic to find music in "data/music/" if not full path
+	if (musicName.find("/") == string::npos)
+	{
+		filename = "data/music/" + musicName;
+		// Add extension if missing
+		if (filename.find(".") == string::npos)
+		{
+			// Try extensions?
+			if (BobFile(Main::getPath() + filename + ".ogg").exists()) filename += ".ogg";
+			else if (BobFile(Main::getPath() + filename + ".mp3").exists()) filename += ".mp3";
+			else if (BobFile(Main::getPath() + filename + ".wav").exists()) filename += ".wav";
+			else if (BobFile(Main::getPath() + filename + ".s3m").exists()) filename += ".s3m";
+			else if (BobFile(Main::getPath() + filename + ".mod").exists()) filename += ".mod";
+			else if (BobFile(Main::getPath() + filename + ".it").exists()) filename += ".it";
+			else if (BobFile(Main::getPath() + filename + ".xm").exists()) filename += ".xm";
+		}
+	}
+
+	currentMusic = make_shared<Music>(e, filename);
+	currentMusic->play(loop ? -1 : 0, fadeTime);
+	return currentMusic;
+}
+
 //=========================================================================================================================
 shared_ptr<Sound> AudioManager::playSound(const string& soundName, float volume, float pitch)
 { //=========================================================================================================================

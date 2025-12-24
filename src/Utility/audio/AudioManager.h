@@ -13,6 +13,7 @@ namespace libprojectM { class ProjectM; }
 #include "../../Engine/Engine.h"
 #include "../../Engine/EnginePart.h"
 #include "./Sound.h"
+#include "./Music.h"
 
 
 #define MAX_SOUNDS_PLAYING 32
@@ -37,6 +38,7 @@ public:
 
 	static bool loadedBuiltIn;
 	ArrayList<shared_ptr<Sound>> playingAudioList;
+	shared_ptr<Music> currentMusic = nullptr;
 
     static shared_ptr<libprojectM::ProjectM> visualizer;
     static void setVisualizer(shared_ptr<libprojectM::ProjectM> v);
@@ -64,6 +66,9 @@ public:
 
 	void playMusic(shared_ptr<Sound> s, float vol, float pitch, bool loop);
 	shared_ptr<Sound> playMusic(const string& musicName, float volume, float pitch, bool loop);
+
+	// New Music class method
+	shared_ptr<Music> playMusic(const string& musicName, bool loop = true, int fadeTime = 0);
 
 	shared_ptr<Sound> playSound(const string& soundName);
 	shared_ptr<Sound> playSound(const string& soundName, float volume, float pitch, int times);

@@ -84,7 +84,7 @@
 #include "src/Utility/audio/AudioManager.h"
 #include "src/Utility/audio/AudioFile.h"
 #include "src/Utility/audio/AudioData.h"
-//#include "src/Utility/audio/Music.h"
+#include "src/Utility/audio/Music.h"
 //#include "src/Utility/audio/MusicData.h"
 #include "src/Utility/audio/Sound.h"
 //#include "src/Utility/audio/SoundData.h"
