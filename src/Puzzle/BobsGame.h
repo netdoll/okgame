@@ -653,6 +653,13 @@ public:
 	private:
 		static bool _gotIncomingGamesFromServer;
 		static mutex _gotIncomingGamesFromServer_Mutex;
+
+	// ProjectM
+	static shared_ptr<libprojectM::ProjectM> visualizer;
+	static vector<string> presetFiles;
+	static int currentPresetIndex;
+	void initProjectM();
+	void updateProjectMControls();
 public:
 	static void setGotIncomingGamesFromServer_S(bool b)
 	{

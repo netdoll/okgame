@@ -175,6 +175,14 @@ private:
     void updateAssociationMenu();
     string loadedCorePath = "";
 
+    // Recent Games
+    vector<string> recentGames;
+    void loadRecentGames();
+    void saveRecentGames();
+    void addRecentGame(const string& path);
+    shared_ptr<BobMenu> recentMenu = nullptr;
+    void updateRecentMenu();
+
     // CRT Shader
     bool crtShaderEnabled = false;
     GLuint crtProgram = 0;
@@ -186,4 +194,9 @@ private:
     HQ2X hq2xScaler;
     shared_ptr<ByteArray> hq2xBuffer = nullptr;
     shared_ptr<BobTexture> hq2xTexture = nullptr;
+
+    // Save State Thumbnails
+    shared_ptr<BobTexture> stateThumbnail = nullptr;
+    int lastThumbnailSlot = -1;
+    void updateStateThumbnail();
 };

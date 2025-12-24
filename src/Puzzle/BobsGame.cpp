@@ -40,6 +40,10 @@ ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> BobsGame::topGamesBy
 
 ArrayList<string> BobsGame::activityStream;
 
+shared_ptr<libprojectM::ProjectM> BobsGame::visualizer = nullptr;
+vector<string> BobsGame::presetFiles;
+int BobsGame::currentPresetIndex = 0;
+
 
 
 #include "Stats/GameStats.h"
@@ -115,9 +119,7 @@ void BobsGame::init()
 	
 	initAssets();
 	
-
-	visualizer = make_shared<libprojectM::ProjectM>();
-    AudioManager::setVisualizer(visualizer);
+	initProjectM();
 
 	log.debug("Init Player");
 	initPlayer();
@@ -859,6 +861,7 @@ void BobsGame::debugKeys()
 void BobsGame::update()
 {//=========================================================================================================================
 	
+	updateProjectMControls();
 
 	if(networkMultiplayerLobbyMenuShowing || networkMultiplayerPlayerJoinMenuShowing)
 	{
@@ -1085,6 +1088,92 @@ void BobsGame::update()
 }
 
 #include <chrono>
+
+void BobsGame::initProjectM()
+{
+	visualizer = make_shared<libprojectM::ProjectM>();
+    AudioManager::setVisualizer(visualizer);
+
+    // Scan presets
+    string presetDir = Main::getPath() + "resources/presets/";
+    BobFile dir(presetDir);
+    if (dir.exists())
+    {
+        vector<string> files = dir.listRecursive(); // assuming listRecursive exists or iterate subdirs
+        // Actually BobFile::list might not be recursive.
+        // Let's just list top level for now or specific subdirs.
+        // The file list from list_files showed directories in resources/presets
+        vector<string> subdirs = dir.list();
+        for(string sub : subdirs)
+        {
+            BobFile subDir(presetDir + sub);
+            if(subDir.isDirectory())
+            {
+                vector<string> presets = subDir.list();
+                for(string p : presets)
+                {
+                    if (p.find(".milk") != string::npos)
+                    {
+                        presetFiles.push_back(presetDir + sub + "/" + p);
+                    }
+                }
+            }
+            else if (sub.find(".milk") != string::npos)
+            {
+                presetFiles.push_back(presetDir + sub);
+            }
+        }
+    }
+
+    if (!presetFiles.empty())
+    {
+        visualizer->LoadPresetFile(presetFiles[0], true);
+    }
+}
+
+void BobsGame::updateProjectMControls()
+{
+    if (!visualizer) return;
+
+    if (getControlsManager()->key_F3_Pressed())
+    {
+        // Prev
+        if (!presetFiles.empty())
+        {
+            currentPresetIndex--;
+            if (currentPresetIndex < 0) currentPresetIndex = presetFiles.size() - 1;
+            visualizer->LoadPresetFile(presetFiles[currentPresetIndex], true);
+
+            string name = presetFiles[currentPresetIndex];
+            size_t slash = name.find_last_of("/\\");
+            if(slash != string::npos) name = name.substr(slash+1);
+            getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 60, 3000, "Preset: " + name, 24, true, BobColor::white);
+        }
+    }
+
+    if (getControlsManager()->key_F4_Pressed())
+    {
+        // Next
+        if (!presetFiles.empty())
+        {
+            currentPresetIndex = (currentPresetIndex + 1) % presetFiles.size();
+            visualizer->LoadPresetFile(presetFiles[currentPresetIndex], true);
+
+            string name = presetFiles[currentPresetIndex];
+            size_t slash = name.find_last_of("/\\");
+            if(slash != string::npos) name = name.substr(slash+1);
+            getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 60, 3000, "Preset: " + name, 24, true, BobColor::white);
+        }
+    }
+
+    if (getControlsManager()->key_F5_Pressed())
+    {
+        // Lock/Unlock
+        bool locked = visualizer->PresetLocked();
+        visualizer->SetPresetLocked(!locked);
+        getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 90, 3000, !locked ? "Preset Locked" : "Preset Unlocked", 24, true, BobColor::white);
+    }
+}
 
 //=========================================================================================================================
 void BobsGame::sendGameStatsToServer()

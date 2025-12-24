@@ -430,8 +430,8 @@ set(SOURCE_FILES
     src/Puzzle/Stats/UserStatsForSpecificGameAndDifficulty.h
     src/Utility/audio/AudioManager.cpp
     src/Utility/audio/AudioManager.h
-    #src/Utility/audio/Music.cpp
-    #src/Utility/audio/Music.h
+    src/Utility/audio/Music.cpp
+    src/Utility/audio/Music.h
     #src/Utility/audio/MusicData.cpp
     #src/Utility/audio/MusicData.h
     src/Utility/audio/Sound.cpp
@@ -493,6 +493,8 @@ add_subdirectory(lib/projectm)
 add_subdirectory(lib/gambatte-libretro)
 add_executable(bobsgame ${SOURCE_FILES})
 target_link_libraries(bobsgame projectM)
+target_include_directories(bobsgame PRIVATE lib/poco-1.7.8p3-all/Foundation/include)
+target_include_directories(bobsgame PRIVATE lib/poco-1.7.8p3-all/Zip/include)
 
 
 
