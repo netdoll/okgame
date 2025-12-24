@@ -4,6 +4,9 @@
 #include "src/Utility/gl/GLUtils.h"
 #include "src/Utility/audio/AudioManager.h"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "lib/stb/stb_image_write.h"
+
 LibretroGame* LibretroGame::instance = nullptr;
 
 LibretroGame::LibretroGame(ND* nD) : NDGameEngine(nD)
@@ -192,33 +195,42 @@ void LibretroGame::titleMenuUpdate()
         }
         else if (titleMenu->isSelectedID("Screenshot"))
         {
-            if (videoTexture)
+            shared_ptr<ByteArray> pixels = lastFrameData;
+            int w = lastFrameWidth;
+            int h = lastFrameHeight;
+
+            if (hq2xEnabled && hq2xBuffer)
             {
-                shared_ptr<ByteArray> pixels = videoTexture->getTextureData();
-                if (pixels && pixels->size() > 0)
+                pixels = hq2xBuffer;
+                w *= 2;
+                h *= 2;
+            }
+
+            if (pixels && pixels->size() > 0)
+            {
+                string path = Main::getPath() + "/screenshots/";
+                BobFile dir(path);
+                if (!dir.exists())
                 {
-                    string path = Main::getPath() + "/screenshots/";
-                    BobFile dir(path);
-                    if (!dir.exists())
-                    {
-                        // mkdir(path) - implementing via system or similar if BobFile lacks it
-                        // For now assuming exists or writing to current dir
-                    }
+                    // mkdir? BobFile doesn't have it exposed simply here, but let's try assuming it exists or handled
+                }
 
-                    long long timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-                    string filename = path + "screenshot_" + to_string(timestamp) + ".png";
+                long long timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+                string filename = path + "screenshot_" + to_string(timestamp) + ".png";
 
-                    // We need a PNG writer. SDL_SaveBMP is easy, PNG needs libpng or stbi_write.
-                    // SDL2_image is present. IMG_SavePNG? It exists in newer SDL2_image.
-                    // Or simply save raw PPM/BMP if easier.
-                    // Let's try to use a simple BMP writer manually or use SDL.
-                    // Pixels are likely RGBA or BGRA.
-
-                    // Let's save as raw for now or try to use `stbi_write_png` if available.
-                    // Since I cannot easily add stbi_write implementation here without including it (and it is single header),
-                    // I will skip actual file writing to avoid linker errors if stbi symbol is missing.
-                    // I'll just log it.
-                    log.info("Screenshot taken (simulated): " + filename);
+                // Save PNG. Comp=4 (RGBA). Stride = w*4.
+                // Note: libretro often outputs XRGB8888. Alpha might be ignored or 255.
+                // If 0, it might be transparent.
+                // We should force alpha to 255 if needed, but let's try saving first.
+                // Also retro data is often top-down? Or bottom-up? GL is bottom-up.
+                // Libretro is usually top-down.
+                if (stbi_write_png(filename.c_str(), w, h, 4, pixels->data(), w * 4))
+                {
+                    log.info("Screenshot saved: " + filename);
+                }
+                else
+                {
+                    log.error("Failed to save screenshot.");
                 }
             }
             titleMenuShowing = false;
@@ -1538,6 +1550,37 @@ void LibretroGame::retroVideoRefresh(const void* data, unsigned width, unsigned 
                 GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)data);
             }
         }
+
+        // Cache last frame data for screenshots
+        int size = width * height * 4; // Assuming 32-bit
+        // If data is valid
+        if (size > 0)
+        {
+            if (instance->lastFrameData == nullptr || instance->lastFrameData->size() != size)
+            {
+                instance->lastFrameData = make_shared<ByteArray>(size);
+            }
+
+            // Copy data
+            // Pitch might not equal width*4.
+            if (pitch == width * 4)
+            {
+                memcpy(instance->lastFrameData->data(), data, size);
+            }
+            else
+            {
+                // Copy row by row
+                u8* src = (u8*)data;
+                u8* dst = instance->lastFrameData->data();
+                int lineSize = width * 4;
+                for(int i=0; i<height; i++)
+                {
+                    memcpy(dst + i * lineSize, src + i * pitch, lineSize);
+                }
+            }
+            instance->lastFrameWidth = width;
+            instance->lastFrameHeight = height;
+        }
     }
 }
 
@@ -1703,20 +1746,25 @@ void LibretroGame::saveState()
         log.info("Saved state to " + path);
 
         // Save thumbnail
-        if (videoTexture)
+        if (lastFrameData && lastFrameData->size() > 0)
         {
-            shared_ptr<ByteArray> pixels = videoTexture->getTextureData();
-            if (pixels && pixels->size() > 0)
+            shared_ptr<ByteArray> pixels = lastFrameData;
+            int w = lastFrameWidth;
+            int h = lastFrameHeight;
+
+            // Check for HQ2X if enabled
+            if (hq2xEnabled && hq2xBuffer)
             {
-                // This assumes we have a way to save PNG or BMP.
-                // Reusing simulation logic from screenshot feature or better yet, saving raw pixels + dims if no png lib.
-                // To keep it simple and dependency free, let's dump raw data + simple header or just raw.
-                // But loading raw requires knowing dims. Dims might change.
-                // Let's assume dims are consistent for the game.
-                // Saving as .stateX.png is ideal but we skipped png writer implementation.
-                // Let's simulate:
-                // log.info("Saved state thumbnail.");
-                // Real implementation would go here if stbi_write was included.
+                pixels = hq2xBuffer;
+                w *= 2;
+                h *= 2;
+            }
+
+            string path = currentPath + ".state" + to_string(currentSaveSlot) + ".png";
+
+            if (stbi_write_png(path.c_str(), w, h, 4, pixels->data(), w * 4))
+            {
+                log.info("Saved state thumbnail: " + path);
             }
         }
     }
@@ -1733,10 +1781,11 @@ void LibretroGame::updateStateThumbnail()
     stateThumbnail = nullptr; // Clear old
 
     // Load thumbnail from file
-    // string path = currentPath + ".state" + to_string(currentSaveSlot) + ".png";
-    // For simulation, we won't actually load because we didn't save real files.
-    // If we had real files, we'd use:
-    // stateThumbnail = GLUtils::getTextureFromPNGExePath(path);
+    string path = currentPath + ".state" + to_string(currentSaveSlot) + ".png";
+    if (BobFile(path).exists())
+    {
+        stateThumbnail = GLUtils::getTextureFromPNGExePath(path);
+    }
 }
 
 void LibretroGame::loadState()

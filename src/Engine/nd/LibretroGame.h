@@ -199,4 +199,8 @@ private:
     shared_ptr<BobTexture> stateThumbnail = nullptr;
     int lastThumbnailSlot = -1;
     void updateStateThumbnail();
+
+    shared_ptr<ByteArray> lastFrameData = nullptr;
+    int lastFrameWidth = 0;
+    int lastFrameHeight = 0;
 };
