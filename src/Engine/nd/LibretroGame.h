@@ -149,4 +149,20 @@ private:
     bool rewinding = false;
     void doRewind();
     void pushRewindState();
+
+    // Core Associations
+    std::map<string, string> coreAssociations;
+    void loadAssociations();
+    void saveAssociations();
+    string pendingGamePath = "";
+    bool askingToAssociate = false;
+    shared_ptr<BobMenu> associationMenu = nullptr;
+    void updateAssociationMenu();
+    string loadedCorePath = "";
+
+    // CRT Shader
+    bool crtShaderEnabled = false;
+    GLuint crtProgram = 0;
+    void initShaders();
+    void compileShader(GLuint& program, const string& vs, const string& fs);
 };

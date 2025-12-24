@@ -42,6 +42,8 @@ void LibretroGame::init()
     }
 
     initDefaultControls();
+    loadAssociations();
+    initShaders();
 }
 
 void LibretroGame::titleMenuUpdate()
@@ -59,8 +61,10 @@ void LibretroGame::titleMenuUpdate()
         titleMenu->add("Cheats...", "Cheats");
         titleMenu->add("Core Options...", "Core Options");
         titleMenu->add(videoFilterLinear ? "Filter: Linear" : "Filter: Nearest", "VideoFilter");
+        titleMenu->add(crtShaderEnabled ? "Shader: Scanlines" : "Shader: None", "Shader");
         titleMenu->add(fastForward ? "Fast Forward: ON" : "Fast Forward: OFF", "FastForward");
         titleMenu->add("Take Screenshot", "Screenshot");
+        titleMenu->add("Clear Associations", "ClearAssoc");
         titleMenu->add("Resume");
         titleMenu->add("Exit");
     }
@@ -127,6 +131,11 @@ void LibretroGame::titleMenuUpdate()
             videoFilterLinear = !videoFilterLinear;
             titleMenu->getMenuItem("VideoFilter")->setName(videoFilterLinear ? "Filter: Linear" : "Filter: Nearest");
         }
+        else if (titleMenu->isSelectedID("Shader"))
+        {
+            crtShaderEnabled = !crtShaderEnabled;
+            titleMenu->getMenuItem("Shader")->setName(crtShaderEnabled ? "Shader: Scanlines" : "Shader: None");
+        }
         else if (titleMenu->isSelectedID("FastForward"))
         {
             fastForward = !fastForward;
@@ -164,6 +173,12 @@ void LibretroGame::titleMenuUpdate()
                 }
             }
             titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("ClearAssoc"))
+        {
+            coreAssociations.clear();
+            saveAssociations();
+            log.info("Associations cleared.");
         }
         else if (titleMenu->isSelectedID("Resume"))
         {
@@ -337,6 +352,159 @@ int LibretroGame::checkInput()
     // We can't map buttons that aren't exposed by ControlsManager simply.
     // But this covers most.
     return -1;
+}
+
+void LibretroGame::initShaders()
+{
+#ifndef ORBIS
+    // Simple scanline shader
+    // Using compatibility profile inputs (gl_Vertex, gl_MultiTexCoord0) because GLUtils likely uses legacy pipeline.
+    string vs_compat = R"(
+void main() {
+    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    gl_TexCoord[0] = gl_MultiTexCoord0;
+}
+)";
+
+    string fs = R"(
+uniform sampler2D tex;
+uniform float time;
+void main() {
+    vec2 uv = gl_TexCoord[0].xy;
+    vec4 color = texture2D(tex, uv);
+    float scanline = sin(uv.y * 800.0) * 0.1;
+    color.rgb -= scanline;
+    gl_FragColor = color;
+}
+)";
+
+    // Compile
+    compileShader(crtProgram, vs_compat, fs);
+#endif
+}
+
+void LibretroGame::compileShader(GLuint& program, const string& vs, const string& fs)
+{
+#ifndef ORBIS
+    GLint status;
+    GLuint v = glCreateShader(GL_VERTEX_SHADER);
+    const char* v_src = vs.c_str();
+    glShaderSource(v, 1, &v_src, NULL);
+    glCompileShader(v);
+    glGetShaderiv(v, GL_COMPILE_STATUS, &status);
+    if(status == GL_FALSE) {
+        // Log error
+        char buffer[512];
+        glGetShaderInfoLog(v, 512, NULL, buffer);
+        log.error("Vertex shader compile error: " + string(buffer));
+    }
+
+    GLuint f = glCreateShader(GL_FRAGMENT_SHADER);
+    const char* f_src = fs.c_str();
+    glShaderSource(f, 1, &f_src, NULL);
+    glCompileShader(f);
+    glGetShaderiv(f, GL_COMPILE_STATUS, &status);
+    if(status == GL_FALSE) {
+        // Log error
+        char buffer[512];
+        glGetShaderInfoLog(f, 512, NULL, buffer);
+        log.error("Fragment shader compile error: " + string(buffer));
+    }
+
+    program = glCreateProgram();
+    glAttachShader(program, v);
+    glAttachShader(program, f);
+    glLinkProgram(program);
+
+    glDeleteShader(v);
+    glDeleteShader(f);
+#endif
+}
+
+void LibretroGame::loadAssociations()
+{
+    coreAssociations.clear();
+    string path = Main::getPath() + "/system/core_associations.txt";
+    shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
+    if (!data) return;
+
+    string content((char*)data->data(), data->size());
+    stringstream ss(content);
+    string line;
+    while(getline(ss, line))
+    {
+        size_t eq = line.find('=');
+        if (eq != string::npos)
+        {
+            string ext = line.substr(0, eq);
+            string core = line.substr(eq + 1);
+            if (!core.empty() && core.back() == '\r') core.pop_back();
+            coreAssociations[ext] = core;
+        }
+    }
+}
+
+void LibretroGame::saveAssociations()
+{
+    string path = Main::getPath() + "/system/core_associations.txt";
+    stringstream ss;
+    for(auto const& [ext, core] : coreAssociations)
+    {
+        ss << ext << "=" << core << "\n";
+    }
+    string content = ss.str();
+    shared_ptr<ByteArray> data = make_shared<ByteArray>(content.length());
+    memcpy(data->data(), content.c_str(), content.length());
+    FileUtils::saveByteFile(path, data);
+}
+
+void LibretroGame::updateAssociationMenu()
+{
+    if (associationMenu->menuItems->size() == 0)
+    {
+        string ext = "";
+        size_t dot = pendingGamePath.find_last_of(".");
+        if (dot != string::npos) ext = pendingGamePath.substr(dot);
+
+        associationMenu->add("Yes (Remember for " + ext + ")", "Yes");
+        associationMenu->add("No (Just Load)", "No");
+    }
+
+    if (getControlsManager()->miniGame_UP_Pressed()) associationMenu->up();
+    if (getControlsManager()->miniGame_DOWN_Pressed()) associationMenu->down();
+
+    if (getControlsManager()->miniGame_CONFIRM_Pressed())
+    {
+        if (associationMenu->isSelectedID("Yes"))
+        {
+            string ext = "";
+            size_t dot = pendingGamePath.find_last_of(".");
+            if (dot != string::npos) ext = pendingGamePath.substr(dot);
+
+            if (!loadedCorePath.empty())
+            {
+                coreAssociations[ext] = loadedCorePath;
+                saveAssociations();
+            }
+        }
+
+        loadGame(pendingGamePath);
+
+        associationMenu = nullptr;
+        titleMenuShowing = false;
+        askingToAssociate = false;
+        pendingGamePath = "";
+    }
+
+    if (getControlsManager()->miniGame_CANCEL_Pressed())
+    {
+        // Cancel association menu = Just load without associating? Or cancel load?
+        // Let's say cancel load.
+        associationMenu = nullptr;
+        titleMenuShowing = true;
+        askingToAssociate = false;
+        pendingGamePath = "";
+    }
 }
 
 void LibretroGame::parseOptionString(const string& key, const string& value)
@@ -630,15 +798,63 @@ void LibretroGame::updateFileBrowser()
                         if (loadCore(fullPath))
                         {
                             fileBrowserMenu = nullptr;
-                            titleMenuShowing = true;
+
+                            // Check if we were pending a game load
+                            if (!pendingGamePath.empty())
+                            {
+                                // Ask to associate?
+                                askingToAssociate = true;
+                                associationMenu = make_shared<BobMenu>(this, "Associate Core?");
+                                updateAssociationMenu();
+                                // Dont show title menu yet
+                            }
+                            else
+                            {
+                                titleMenuShowing = true;
+                            }
                         }
                     }
                     else
                     {
-                        if (loadGame(fullPath))
+                        // Check association first
+                        string ext = "";
+                        size_t dot = fullPath.find_last_of(".");
+                        if (dot != string::npos) ext = fullPath.substr(dot);
+
+                        if (coreHandle)
                         {
-                            fileBrowserMenu = nullptr;
-                            titleMenuShowing = false; // Start game
+                             // Core loaded, just load game
+                             if (loadGame(fullPath))
+                             {
+                                 fileBrowserMenu = nullptr;
+                                 titleMenuShowing = false;
+                             }
+                        }
+                        else
+                        {
+                            // No core. Check association
+                            if (coreAssociations.count(ext) && BobFile(coreAssociations[ext]).exists())
+                            {
+                                 if (loadCore(coreAssociations[ext]))
+                                 {
+                                     if (loadGame(fullPath))
+                                     {
+                                         fileBrowserMenu = nullptr;
+                                         titleMenuShowing = false;
+                                     }
+                                 }
+                            }
+                            else
+                            {
+                                // No association. Prompt for core.
+                                pendingGamePath = fullPath;
+                                selectingCore = true;
+                                fileBrowserMenu->setName("Select Core for " + selected);
+                                // Need to reset path to core dir? Or keep same?
+                                // Let's keep same for now or go to root.
+                                // Often cores are in specific dir.
+                                // Let's guess user navigates to core.
+                            }
                         }
                     }
                 }
@@ -653,6 +869,9 @@ void LibretroGame::updateFileBrowser()
 
         // Ensure SRAM is saved when returning to menu or changing context
         if (!selectingCore) saveSRAM();
+
+        pendingGamePath = "";
+        askingToAssociate = false;
     }
 }
 
@@ -680,6 +899,8 @@ bool LibretroGame::loadCore(const string& corePath)
         // Log error
         return false;
     }
+
+    loadedCorePath = corePath;
 
 #ifdef __WINDOWS__
     #define LOAD_SYM(x) x = (decltype(x))GetProcAddress((HMODULE)coreHandle, #x)
@@ -843,6 +1064,12 @@ void LibretroGame::update()
         return;
     }
 
+    if (associationMenu)
+    {
+        updateAssociationMenu();
+        return;
+    }
+
     if (!titleMenuShowing)
     {
         if (retro_run)
@@ -949,11 +1176,50 @@ void LibretroGame::render()
         controlsMenu->render();
     }
 
-    if (!titleMenuShowing && !fileBrowserMenu && !coreOptionsMenu && !cheatMenu && !controlsMenu && videoTexture)
+    if (associationMenu)
+    {
+        associationMenu->render();
+    }
+
+    if (!titleMenuShowing && !fileBrowserMenu && !coreOptionsMenu && !cheatMenu && !controlsMenu && !associationMenu && videoTexture)
     {
         // Draw video texture to screen
         // Use GLUtils to draw
+        bool shaderApplied = false;
+        if (crtShaderEnabled && crtProgram != 0)
+        {
+            // Try to use shader
+            // Note: GLUtils might override shader if we call drawTexture.
+            // But we can try to bind it.
+            // Actually, GLUtils::drawTexture uses immediate mode or fixed pipeline or internal shader.
+            // If it uses internal shader, glUseProgram will be overridden.
+            // Let's assume we can set it via GLUtils or just use raw GL if available.
+            // Since we can't easily modify GLUtils here without risk, let's try raw glUseProgram.
+            // If GLUtils resets it, we need another way.
+            // But let's try.
+#ifndef ORBIS
+            glUseProgram(crtProgram);
+            // set uniforms
+            // uniform sampler2D tex; -> default 0
+            // uniform float time;
+            GLint timeLoc = glGetUniformLocation(crtProgram, "time");
+            if(timeLoc != -1) glUniform1f(timeLoc, (float)SDL_GetTicks() / 1000.0f);
+
+            GLint texLoc = glGetUniformLocation(crtProgram, "tex");
+            if(texLoc != -1) glUniform1i(texLoc, 0);
+
+            shaderApplied = true;
+#endif
+        }
+
         GLUtils::drawTexture(videoTexture.get(), 0, 0, 1.0f, videoFilterLinear ? GLUtils::FILTER_LINEAR : GLUtils::FILTER_NEAREST);
+
+        if (shaderApplied)
+        {
+#ifndef ORBIS
+            glUseProgram(0);
+#endif
+        }
     }
 }
 
