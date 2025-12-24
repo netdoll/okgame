@@ -180,4 +180,10 @@ private:
     GLuint crtProgram = 0;
     void initShaders();
     void compileShader(GLuint& program, const string& vs, const string& fs);
+
+    // HQ2X
+    bool hq2xEnabled = false;
+    HQ2X hq2xScaler;
+    shared_ptr<ByteArray> hq2xBuffer = nullptr;
+    shared_ptr<BobTexture> hq2xTexture = nullptr;
 };

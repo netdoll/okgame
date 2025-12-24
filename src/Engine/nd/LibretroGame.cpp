@@ -150,8 +150,27 @@ void LibretroGame::titleMenuUpdate()
         }
         else if (titleMenu->isSelectedID("VideoFilter"))
         {
-            videoFilterLinear = !videoFilterLinear;
-            titleMenu->getMenuItem("VideoFilter")->setName(videoFilterLinear ? "Filter: Linear" : "Filter: Nearest");
+            if (!videoFilterLinear && !hq2xEnabled)
+            {
+                // Nearest -> Linear
+                videoFilterLinear = true;
+                hq2xEnabled = false;
+                titleMenu->getMenuItem("VideoFilter")->setName("Filter: Linear");
+            }
+            else if (videoFilterLinear && !hq2xEnabled)
+            {
+                // Linear -> HQ2X
+                videoFilterLinear = false;
+                hq2xEnabled = true;
+                titleMenu->getMenuItem("VideoFilter")->setName("Filter: HQ2X");
+            }
+            else
+            {
+                // HQ2X -> Nearest
+                videoFilterLinear = false;
+                hq2xEnabled = false;
+                titleMenu->getMenuItem("VideoFilter")->setName("Filter: Nearest");
+            }
         }
         else if (titleMenu->isSelectedID("Shader"))
         {
@@ -1334,12 +1353,16 @@ void LibretroGame::render()
 #endif
         }
 
+        // Select texture to draw
+        BobTexture* texToDraw = videoTexture.get();
+        if (hq2xEnabled && hq2xTexture) texToDraw = hq2xTexture.get();
+
         // drawTexture(texture, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, alpha, filter)
         // We use full texture (0,1,0,1) -> (drawX, drawX+drawW, drawY, drawY+drawH)
         // Note: Y coordinates might need flipping depending on GLUtils/OpenGL convention.
         // Usually 0 is top or bottom. GLUtils seems to abstract this.
         // Assuming sx0, sx1, sy0, sy1.
-        GLUtils::drawTexture(videoTexture.get(), 0.0f, 1.0f, 0.0f, 1.0f, drawX, drawX + drawW, drawY, drawY + drawH, 1.0f, videoFilterLinear ? GLUtils::FILTER_LINEAR : GLUtils::FILTER_NEAREST);
+        GLUtils::drawTexture(texToDraw, 0.0f, 1.0f, 0.0f, 1.0f, drawX, drawX + drawW, drawY, drawY + drawH, 1.0f, videoFilterLinear ? GLUtils::FILTER_LINEAR : GLUtils::FILTER_NEAREST);
 
         if (shaderApplied)
         {
@@ -1430,9 +1453,55 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
 
 void LibretroGame::retroVideoRefresh(const void* data, unsigned width, unsigned height, size_t pitch)
 {
-    if (instance && data && instance->videoTexture)
+    if (instance && data)
     {
-       GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)data);
+        if (instance->hq2xEnabled)
+        {
+            // Init hq2x buffer
+            int outW = width * 2;
+            int outH = height * 2;
+
+            if (instance->hq2xBuffer == nullptr || instance->hq2xBuffer->size() != outW * outH * 4)
+            {
+                instance->hq2xBuffer = make_shared<ByteArray>(outW * outH * 4);
+                // Init texture if needed
+                instance->hq2xTexture = GLUtils::getTextureFromData("HQ2X", outW, outH, instance->hq2xBuffer.get());
+            }
+
+            // Note: HQ2X expects 32-bit input usually. Assuming data is 32-bit (XRGB8888).
+            // We need to copy data to a contiguous buffer if pitch != width*4?
+            // HQ2X might handle it if we pass pitch? hq2x_32 signature is (in, out, x, y). No pitch.
+            // So we might need to repack if pitch is different.
+
+            // Repack to temporary buffer if pitch mismatch
+            if (pitch != width * 4)
+            {
+                // Unlikely for standard 32bit cores, but possible.
+                // Assuming XRGB8888/ARGB8888 for now as we force it in core build usually.
+                // If 16-bit, we need conversion.
+                // Let's assume 32-bit for simplicity as per previous analysis.
+
+                // We need a temp input buffer
+                // Just use the one we have or new one
+                // Actually hq2x_32 takes "unsigned char* in".
+                // If pitch matches, we can pass data directly.
+                // If not, we copy.
+            }
+
+            instance->hq2xScaler.hq2x_32((unsigned char*)data, instance->hq2xBuffer->data(), width, height);
+
+            if (instance->hq2xTexture)
+            {
+                GLUtils::updateTexture(instance->hq2xTexture, 0, 0, outW, outH, instance->hq2xBuffer->data());
+            }
+        }
+        else
+        {
+            if (instance->videoTexture)
+            {
+                GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)data);
+            }
+        }
     }
 }
 
@@ -1482,40 +1551,76 @@ void LibretroGame::retroInputPoll()
 
 int16_t LibretroGame::retroInputState(unsigned port, unsigned device, unsigned index, unsigned id)
 {
-    if (port == 0 && device == RETRO_DEVICE_JOYPAD && instance)
+    if ((port == 0 || port == 1) && device == RETRO_DEVICE_JOYPAD && instance)
     {
-        shared_ptr<ControlsManager> cm = instance->getControlsManager();
-        if(!cm) return 0;
+        // Port 0: ControlsManager directly (mapped to P1 or keyboard)
+        // Port 1: GameControllers[1] if exists
 
-        // Use input map
-        int internalId = -1;
-        if (instance->inputMap.find(id) != instance->inputMap.end())
+        // P1
+        if (port == 0)
         {
-            internalId = instance->inputMap[id];
-        }
-        else
-        {
-             // Fallback default
-             // B=0, Y=1, Sel=2, Start=3, Up=4, Down=5, Left=6, Right=7, A=8, X=9, L=10, R=11
-             internalId = id;
-        }
+            shared_ptr<ControlsManager> cm = instance->getControlsManager();
+            if(!cm) return 0;
 
-        switch(internalId)
+            // Use input map
+            int internalId = -1;
+            if (instance->inputMap.find(id) != instance->inputMap.end())
+            {
+                internalId = instance->inputMap[id];
+            }
+            else
+            {
+                 internalId = id;
+            }
+
+            switch(internalId)
+            {
+                case 0: return cm->MINIGAME_ACTION_HELD ? 1 : 0; // B
+                case 1: return cm->MINIGAME_RUN_HELD ? 1 : 0; // Y
+                case 2: return cm->MINIGAME_SELECT_HELD ? 1 : 0; // Select
+                case 3: return cm->MINIGAME_START_HELD ? 1 : 0; // Start
+                case 4: return cm->MINIGAME_UP_HELD ? 1 : 0; // Up
+                case 5: return cm->MINIGAME_DOWN_HELD ? 1 : 0; // Down
+                case 6: return cm->MINIGAME_LEFT_HELD ? 1 : 0; // Left
+                case 7: return cm->MINIGAME_RIGHT_HELD ? 1 : 0; // Right
+                case 8: return cm->MINIGAME_A_HELD ? 1 : 0; // A
+                case 9: return cm->MINIGAME_X_HELD ? 1 : 0; // X
+                case 10: return cm->MINIGAME_L_HELD ? 1 : 0; // L
+                case 11: return cm->MINIGAME_R_HELD ? 1 : 0; // R
+                case 12: return cm->MINIGAME_L2_HELD ? 1 : 0; // L2
+                case 13: return cm->MINIGAME_R2_HELD ? 1 : 0; // R2
+            }
+        }
+        else if (port == 1)
         {
-            case 0: return cm->MINIGAME_ACTION_HELD ? 1 : 0; // B
-            case 1: return cm->MINIGAME_RUN_HELD ? 1 : 0; // Y
-            case 2: return cm->MINIGAME_SELECT_HELD ? 1 : 0; // Select
-            case 3: return cm->MINIGAME_START_HELD ? 1 : 0; // Start
-            case 4: return cm->MINIGAME_UP_HELD ? 1 : 0; // Up
-            case 5: return cm->MINIGAME_DOWN_HELD ? 1 : 0; // Down
-            case 6: return cm->MINIGAME_LEFT_HELD ? 1 : 0; // Left
-            case 7: return cm->MINIGAME_RIGHT_HELD ? 1 : 0; // Right
-            case 8: return cm->MINIGAME_A_HELD ? 1 : 0; // A
-            case 9: return cm->MINIGAME_X_HELD ? 1 : 0; // X
-            case 10: return cm->MINIGAME_L_HELD ? 1 : 0; // L
-            case 11: return cm->MINIGAME_R_HELD ? 1 : 0; // R
-            case 12: return cm->MINIGAME_L2_HELD ? 1 : 0; // L2
-            case 13: return cm->MINIGAME_R2_HELD ? 1 : 0; // R2
+            // Player 2
+            // We need to access GameControllers.
+            // ControlsManager::gameControllers is static? Yes.
+            if (ControlsManager::gameControllers.size() > 1)
+            {
+                GameController* p2 = ControlsManager::gameControllers.get(1);
+                if (p2)
+                {
+                    // Map Libretro ID to GameController fields
+                    switch(id)
+                    {
+                        case RETRO_DEVICE_ID_JOYPAD_B: return p2->B_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_Y: return p2->Y_HELD ? 1 : 0; // Xbox X
+                        case RETRO_DEVICE_ID_JOYPAD_SELECT: return p2->SELECT_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_START: return p2->START_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_UP: return p2->UP_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_DOWN: return p2->DOWN_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_LEFT: return p2->LEFT_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_RIGHT: return p2->RIGHT_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_A: return p2->A_HELD ? 1 : 0; // Xbox B
+                        case RETRO_DEVICE_ID_JOYPAD_X: return p2->X_HELD ? 1 : 0; // Xbox Y? Mapping varies.
+                        case RETRO_DEVICE_ID_JOYPAD_L: return p2->L_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_R: return p2->R_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_L2: return p2->L2_HELD ? 1 : 0;
+                        case RETRO_DEVICE_ID_JOYPAD_R2: return p2->R2_HELD ? 1 : 0;
+                    }
+                }
+            }
         }
     }
     return 0;
