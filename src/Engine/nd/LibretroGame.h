@@ -85,10 +85,18 @@ private:
 
     shared_ptr<BobTexture> videoTexture = nullptr;
 
-    std::vector<int16_t> audioBuffer;
+    // Audio Ring Buffer
+    const size_t AUDIO_CAPACITY = 1024 * 64;
+    std::vector<int16_t> audioRingBuffer;
+    size_t audioWriteIndex = 0;
+    size_t audioReadIndex = 0;
+    size_t audioBufferSize = 0;
     std::mutex audioMutex;
 
     void checkSaveRAM();
+    int sramSaveInterval = 600;
+    int sramSaveCounter = 0;
+    shared_ptr<ByteArray> lastSramData = nullptr;
     void loadSRAM();
     void saveSRAM();
 

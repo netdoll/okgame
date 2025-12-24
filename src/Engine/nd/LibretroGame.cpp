@@ -41,6 +41,12 @@ void LibretroGame::init()
         // For now, we just point to it.
     }
 
+    // Init audio buffer
+    audioRingBuffer.resize(AUDIO_CAPACITY, 0);
+    audioWriteIndex = 0;
+    audioReadIndex = 0;
+    audioBufferSize = 0;
+
     initDefaultControls();
     loadAssociations();
     initShaders();
@@ -1147,6 +1153,14 @@ void LibretroGame::update()
 
     if (!titleMenuShowing)
     {
+        // Auto-save SRAM
+        sramSaveCounter++;
+        if (sramSaveCounter >= sramSaveInterval)
+        {
+            sramSaveCounter = 0;
+            checkSaveRAM();
+        }
+
         if (retro_run)
         {
             shared_ptr<ControlsManager> cm = getControlsManager();
@@ -1427,10 +1441,15 @@ void LibretroGame::retroAudioSample(int16_t left, int16_t right)
     if (instance)
     {
         std::lock_guard<std::mutex> lock(instance->audioMutex);
-        instance->audioBuffer.push_back(left);
-        instance->audioBuffer.push_back(right);
-        if (instance->audioBuffer.size() > 44100 * 2) {
-             instance->audioBuffer.clear();
+
+        // Check space
+        if (instance->audioBufferSize + 2 <= instance->AUDIO_CAPACITY)
+        {
+            instance->audioRingBuffer[instance->audioWriteIndex] = left;
+            instance->audioWriteIndex = (instance->audioWriteIndex + 1) % instance->AUDIO_CAPACITY;
+            instance->audioRingBuffer[instance->audioWriteIndex] = right;
+            instance->audioWriteIndex = (instance->audioWriteIndex + 1) % instance->AUDIO_CAPACITY;
+            instance->audioBufferSize += 2;
         }
     }
 }
@@ -1440,10 +1459,18 @@ size_t LibretroGame::retroAudioSampleBatch(const int16_t* data, size_t frames)
     if (instance)
     {
         std::lock_guard<std::mutex> lock(instance->audioMutex);
-        instance->audioBuffer.insert(instance->audioBuffer.end(), data, data + frames * 2);
-        if (instance->audioBuffer.size() > 44100 * 2) {
-             instance->audioBuffer.clear();
+
+        size_t samples = frames * 2;
+        size_t available = instance->AUDIO_CAPACITY - instance->audioBufferSize;
+
+        if (samples > available) samples = available; // Drop overflow?
+
+        for(size_t i=0; i<samples; i++)
+        {
+            instance->audioRingBuffer[instance->audioWriteIndex] = data[i];
+            instance->audioWriteIndex = (instance->audioWriteIndex + 1) % instance->AUDIO_CAPACITY;
         }
+        instance->audioBufferSize += samples;
     }
     return frames;
 }
@@ -1504,16 +1531,19 @@ void LibretroGame::audioCallback(void *udata, Uint8 *stream, int len)
     std::lock_guard<std::mutex> lock(self->audioMutex);
 
     size_t bytesNeeded = len;
-    size_t bytesAvailable = self->audioBuffer.size() * sizeof(int16_t);
+    size_t samplesNeeded = bytesNeeded / sizeof(int16_t);
+    size_t samplesAvailable = self->audioBufferSize;
 
-    size_t bytesToCopy = (bytesAvailable < bytesNeeded) ? bytesAvailable : bytesNeeded;
+    size_t samplesToCopy = (samplesAvailable < samplesNeeded) ? samplesAvailable : samplesNeeded;
 
-    if (bytesToCopy > 0)
+    int16_t* out = (int16_t*)stream;
+
+    for(size_t i=0; i<samplesToCopy; i++)
     {
-        memcpy(stream, self->audioBuffer.data(), bytesToCopy);
-        size_t samplesConsumed = bytesToCopy / sizeof(int16_t);
-        self->audioBuffer.erase(self->audioBuffer.begin(), self->audioBuffer.begin() + samplesConsumed);
+        out[i] = self->audioRingBuffer[self->audioReadIndex];
+        self->audioReadIndex = (self->audioReadIndex + 1) % self->AUDIO_CAPACITY;
     }
+    self->audioBufferSize -= samplesToCopy;
 }
 
 void LibretroGame::saveState()
@@ -1574,11 +1604,29 @@ string LibretroGame::getSavePath(const string& ext)
 
 void LibretroGame::checkSaveRAM()
 {
-    // Usually called every frame or periodically.
-    // However, since we are implementing manual saveSRAM called on pause/exit,
-    // we might not need this unless we want auto-save.
-    // Some cores expose a dirty flag if we implement RETRO_ENVIRONMENT_GET_VARIABLE
-    // but standard SRAM doesn't always have dirty flags.
+    if (!retro_get_memory_data || !retro_get_memory_size) return;
+
+    size_t size = retro_get_memory_size(RETRO_MEMORY_SAVE_RAM);
+    void* data = retro_get_memory_data(RETRO_MEMORY_SAVE_RAM);
+
+    if (size == 0 || !data) return;
+
+    // Check if we have a shadow copy
+    if (lastSramData == nullptr || lastSramData->size() != size)
+    {
+        lastSramData = make_shared<ByteArray>(size);
+        memcpy(lastSramData->data(), data, size);
+        return; // Initial copy, assume not dirty or loaded from disk already
+    }
+
+    // Compare
+    if (memcmp(lastSramData->data(), data, size) != 0)
+    {
+        // Changed!
+        memcpy(lastSramData->data(), data, size); // Update shadow
+        saveSRAM();
+        log.info("Auto-saved SRAM.");
+    }
 }
 
 void LibretroGame::saveSRAM()
