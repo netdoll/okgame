@@ -60,6 +60,13 @@ void LibretroGame::titleMenuUpdate()
         titleMenu->add("Controls...", "Controls");
         titleMenu->add("Cheats...", "Cheats");
         titleMenu->add("Core Options...", "Core Options");
+
+        string ar = "Core";
+        if (aspectRatioMode == 1) ar = "4:3";
+        else if (aspectRatioMode == 2) ar = "16:9";
+        else if (aspectRatioMode == 3) ar = "Stretch";
+        titleMenu->add("Aspect: " + ar, "Aspect");
+
         titleMenu->add(videoFilterLinear ? "Filter: Linear" : "Filter: Nearest", "VideoFilter");
         titleMenu->add(crtShaderEnabled ? "Shader: Scanlines" : "Shader: None", "Shader");
         titleMenu->add(fastForward ? "Fast Forward: ON" : "Fast Forward: OFF", "FastForward");
@@ -125,6 +132,15 @@ void LibretroGame::titleMenuUpdate()
             coreOptionsMenu = make_shared<BobMenu>(this, "Core Options");
             updateCoreOptionsMenu();
             titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("Aspect"))
+        {
+            aspectRatioMode = (aspectRatioMode + 1) % 4;
+            string ar = "Core";
+            if (aspectRatioMode == 1) ar = "4:3";
+            else if (aspectRatioMode == 2) ar = "16:9";
+            else if (aspectRatioMode == 3) ar = "Stretch";
+            titleMenu->getMenuItem("Aspect")->setName("Aspect: " + ar);
         }
         else if (titleMenu->isSelectedID("VideoFilter"))
         {
@@ -328,9 +344,54 @@ void LibretroGame::updateControlsMenu()
 
     if (getControlsManager()->miniGame_CANCEL_Pressed())
     {
+        saveInputMap();
         controlsMenu = nullptr;
         titleMenuShowing = true;
     }
+}
+
+void LibretroGame::loadInputMap()
+{
+    inputMap.clear();
+    string path = Main::getPath() + "/system/" + getCoreName() + ".remap";
+    shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
+    if (!data)
+    {
+        initDefaultControls();
+        return;
+    }
+
+    string content((char*)data->data(), data->size());
+    stringstream ss(content);
+    string line;
+    while(getline(ss, line))
+    {
+        size_t eq = line.find('=');
+        if (eq != string::npos)
+        {
+            try {
+                unsigned key = stoul(line.substr(0, eq));
+                int val = stoi(line.substr(eq + 1));
+                inputMap[key] = val;
+            } catch(...) {}
+        }
+    }
+
+    if (inputMap.empty()) initDefaultControls();
+}
+
+void LibretroGame::saveInputMap()
+{
+    string path = Main::getPath() + "/system/" + getCoreName() + ".remap";
+    stringstream ss;
+    for(auto const& [key, val] : inputMap)
+    {
+        ss << key << "=" << val << "\n";
+    }
+    string content = ss.str();
+    shared_ptr<ByteArray> data = make_shared<ByteArray>(content.length());
+    memcpy(data->data(), content.c_str(), content.length());
+    FileUtils::saveByteFile(path, data);
 }
 
 int LibretroGame::checkInput()
@@ -546,10 +607,20 @@ void LibretroGame::parseOptionString(const string& key, const string& value)
     coreOptions.push_back(opt);
 }
 
+string LibretroGame::getCoreName()
+{
+    if (loadedCorePath.empty()) return "default";
+    size_t lastSlash = loadedCorePath.find_last_of("/\\");
+    string name = (lastSlash == string::npos) ? loadedCorePath : loadedCorePath.substr(lastSlash + 1);
+    size_t lastDot = name.find_last_of(".");
+    if (lastDot != string::npos) name = name.substr(0, lastDot);
+    return name;
+}
+
 void LibretroGame::loadCoreOptions()
 {
     // Filename: core_name.opt in system dir?
-    string path = Main::getPath() + "/system/core_options.opt";
+    string path = Main::getPath() + "/system/" + getCoreName() + ".opt";
     // Format: key=value
     shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
     if (!data) return;
@@ -587,7 +658,7 @@ void LibretroGame::loadCoreOptions()
 
 void LibretroGame::saveCoreOptions()
 {
-    string path = Main::getPath() + "/system/core_options.opt";
+    string path = Main::getPath() + "/system/" + getCoreName() + ".opt";
     stringstream ss;
     for(const auto& opt : coreOptions)
     {
@@ -945,6 +1016,8 @@ bool LibretroGame::loadCore(const string& corePath)
 
     retro_init();
 
+    loadInputMap();
+
     return true;
 }
 
@@ -1020,6 +1093,8 @@ bool LibretroGame::loadGame(const string& gamePath)
 
     struct retro_system_av_info av_info;
     retro_get_system_av_info(&av_info);
+
+    coreAspectRatio = av_info.geometry.aspect_ratio;
 
     // Initialize videoTexture with av_info geometry
     shared_ptr<ByteArray> emptyData = make_shared<ByteArray>(av_info.geometry.base_width * av_info.geometry.base_height * 4);
@@ -1185,6 +1260,39 @@ void LibretroGame::render()
     {
         // Draw video texture to screen
         // Use GLUtils to draw
+        int screenW = GLUtils::getViewportWidth();
+        int screenH = GLUtils::getViewportHeight();
+
+        float drawX = 0;
+        float drawY = 0;
+        float drawW = (float)screenW;
+        float drawH = (float)screenH;
+
+        if (aspectRatioMode != 3) // Not stretch
+        {
+            float targetAR = coreAspectRatio;
+            if (aspectRatioMode == 1) targetAR = 4.0f / 3.0f;
+            if (aspectRatioMode == 2) targetAR = 16.0f / 9.0f;
+            if (aspectRatioMode == 0 && targetAR <= 0.0f) targetAR = 4.0f / 3.0f; // Default 4:3 if unknown
+
+            float screenAR = (float)screenW / (float)screenH;
+
+            if (screenAR > targetAR) // Screen is wider than game
+            {
+                drawH = (float)screenH;
+                drawW = drawH * targetAR;
+                drawX = (screenW - drawW) / 2.0f;
+                drawY = 0;
+            }
+            else // Screen is taller than game
+            {
+                drawW = (float)screenW;
+                drawH = drawW / targetAR;
+                drawY = (screenH - drawH) / 2.0f;
+                drawX = 0;
+            }
+        }
+
         bool shaderApplied = false;
         if (crtShaderEnabled && crtProgram != 0)
         {
@@ -1212,7 +1320,12 @@ void LibretroGame::render()
 #endif
         }
 
-        GLUtils::drawTexture(videoTexture.get(), 0, 0, 1.0f, videoFilterLinear ? GLUtils::FILTER_LINEAR : GLUtils::FILTER_NEAREST);
+        // drawTexture(texture, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, alpha, filter)
+        // We use full texture (0,1,0,1) -> (drawX, drawX+drawW, drawY, drawY+drawH)
+        // Note: Y coordinates might need flipping depending on GLUtils/OpenGL convention.
+        // Usually 0 is top or bottom. GLUtils seems to abstract this.
+        // Assuming sx0, sx1, sy0, sy1.
+        GLUtils::drawTexture(videoTexture.get(), 0.0f, 1.0f, 0.0f, 1.0f, drawX, drawX + drawW, drawY, drawY + drawH, 1.0f, videoFilterLinear ? GLUtils::FILTER_LINEAR : GLUtils::FILTER_NEAREST);
 
         if (shaderApplied)
         {

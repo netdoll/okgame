@@ -142,6 +142,13 @@ private:
     // Check input for remapping
     int checkInput();
 
+    string getCoreName();
+    void loadInputMap();
+    void saveInputMap();
+
+    int aspectRatioMode = 0; // 0=Core, 1=4:3, 2=16:9, 3=Stretch
+    float coreAspectRatio = 0.0f;
+
     // Rewind support
     std::deque<shared_ptr<ByteArray>> rewindBuffer;
     int rewindInterval = 5; // Frames between saves
