@@ -111,4 +111,18 @@ private:
 
     void updateCoreOptionsMenu();
     shared_ptr<BobMenu> coreOptionsMenu = nullptr;
+
+    struct Cheat {
+        string description;
+        string code;
+        bool enabled = false;
+    };
+    vector<Cheat> cheats;
+    void loadCheats();
+    void applyCheats();
+
+    void updateCheatMenu();
+    shared_ptr<BobMenu> cheatMenu = nullptr;
+
+    int currentSaveSlot = 0;
 };

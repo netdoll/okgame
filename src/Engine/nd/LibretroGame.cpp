@@ -49,8 +49,10 @@ void LibretroGame::titleMenuUpdate()
         titleMenu = make_shared<BobMenu>(this, "Emulator");
         titleMenu->add("Load Core...", "Load Core");
         titleMenu->add("Load Game...", "Load Game");
+        titleMenu->add("State Slot: " + to_string(currentSaveSlot), "StateSlot");
         titleMenu->add("Save State", "Save State");
         titleMenu->add("Load State", "Load State");
+        titleMenu->add("Cheats...", "Cheats");
         titleMenu->add("Core Options...", "Core Options");
         titleMenu->add(fastForward ? "Fast Forward: ON" : "Fast Forward: OFF", "FastForward");
         titleMenu->add("Resume");
@@ -76,6 +78,11 @@ void LibretroGame::titleMenuUpdate()
             updateFileBrowser();
             titleMenuShowing = false;
         }
+        else if (titleMenu->isSelectedID("StateSlot"))
+        {
+            currentSaveSlot = (currentSaveSlot + 1) % 10;
+            titleMenu->getMenuItem("StateSlot")->setName("State Slot: " + to_string(currentSaveSlot));
+        }
         else if (titleMenu->isSelectedID("Save State"))
         {
             saveState();
@@ -84,6 +91,12 @@ void LibretroGame::titleMenuUpdate()
         else if (titleMenu->isSelectedID("Load State"))
         {
             loadState();
+            titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("Cheats"))
+        {
+            cheatMenu = make_shared<BobMenu>(this, "Cheats");
+            updateCheatMenu();
             titleMenuShowing = false;
         }
         else if (titleMenu->isSelectedID("Core Options"))
@@ -256,6 +269,101 @@ void LibretroGame::updateCoreOptionsMenu()
     {
         saveCoreOptions();
         coreOptionsMenu = nullptr;
+        titleMenuShowing = true;
+    }
+}
+
+void LibretroGame::loadCheats()
+{
+    cheats.clear();
+    // Look for .cht file
+    string path = getSavePath("cht");
+    shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
+    if (!data) return;
+
+    string content((char*)data->data(), data->size());
+    stringstream ss(content);
+    string line;
+    while(getline(ss, line))
+    {
+        // Format: description=code
+        size_t eq = line.find('=');
+        if (eq != string::npos)
+        {
+             Cheat c;
+             c.description = line.substr(0, eq);
+             c.code = line.substr(eq + 1);
+             if (!c.code.empty() && c.code.back() == '\r') c.code.pop_back();
+             c.enabled = false;
+             cheats.push_back(c);
+        }
+    }
+}
+
+void LibretroGame::applyCheats()
+{
+    if (!retro_cheat_reset || !retro_cheat_set) return;
+
+    retro_cheat_reset();
+    for(int i=0; i<cheats.size(); i++)
+    {
+        if (cheats[i].enabled)
+        {
+            retro_cheat_set(i, true, cheats[i].code.c_str());
+        }
+    }
+}
+
+void LibretroGame::updateCheatMenu()
+{
+    if (cheatMenu->menuItems->size() == 0)
+    {
+        cheatMenu->add("Back", "Back");
+        cheatMenu->add("Apply Cheats", "Apply");
+        for(int i=0; i<cheats.size(); i++)
+        {
+            string label = (cheats[i].enabled ? "[X] " : "[ ] ") + cheats[i].description;
+            cheatMenu->add(label, to_string(i));
+        }
+    }
+
+    if (getControlsManager()->miniGame_UP_Pressed()) cheatMenu->up();
+    if (getControlsManager()->miniGame_DOWN_Pressed()) cheatMenu->down();
+
+    if (getControlsManager()->miniGame_CONFIRM_Pressed())
+    {
+        shared_ptr<BobMenu::MenuItem> item = cheatMenu->getSelectedMenuItem();
+        if (item)
+        {
+            if (item->id == "Back")
+            {
+                cheatMenu = nullptr;
+                titleMenuShowing = true;
+            }
+            else if (item->id == "Apply")
+            {
+                applyCheats();
+                cheatMenu = nullptr;
+                titleMenuShowing = true; // or stay?
+            }
+            else
+            {
+                // Toggle cheat
+                try {
+                    int idx = stoi(item->id);
+                    if (idx >= 0 && idx < cheats.size())
+                    {
+                        cheats[idx].enabled = !cheats[idx].enabled;
+                        item->setName((cheats[idx].enabled ? "[X] " : "[ ] ") + cheats[idx].description);
+                    }
+                } catch(...) {}
+            }
+        }
+    }
+
+    if (getControlsManager()->miniGame_CANCEL_Pressed())
+    {
+        cheatMenu = nullptr;
         titleMenuShowing = true;
     }
 }
@@ -443,6 +551,9 @@ bool LibretroGame::loadGame(const string& gamePath)
     // Try to load SRAM
     loadSRAM();
 
+    // Load cheats
+    loadCheats();
+
     return true;
 }
 
@@ -459,6 +570,12 @@ void LibretroGame::update()
     if (coreOptionsMenu)
     {
         updateCoreOptionsMenu();
+        return;
+    }
+
+    if (cheatMenu)
+    {
+        updateCheatMenu();
         return;
     }
 
@@ -495,7 +612,12 @@ void LibretroGame::render()
         coreOptionsMenu->render();
     }
 
-    if (!titleMenuShowing && !fileBrowserMenu && !coreOptionsMenu && videoTexture)
+    if (cheatMenu)
+    {
+        cheatMenu->render();
+    }
+
+    if (!titleMenuShowing && !fileBrowserMenu && !coreOptionsMenu && !cheatMenu && videoTexture)
     {
         // Draw video texture to screen
         // Use GLUtils to draw
@@ -679,7 +801,7 @@ void LibretroGame::saveState()
     if (retro_serialize(data->data(), size))
     {
         // Save to file
-        string path = currentPath + ".state";
+        string path = currentPath + ".state" + to_string(currentSaveSlot);
         FileUtils::saveByteFile(path, data);
         log.info("Saved state to " + path);
     }
@@ -693,7 +815,7 @@ void LibretroGame::loadState()
 {
     if (!retro_serialize_size || !retro_unserialize) return;
 
-    string path = currentPath + ".state";
+    string path = currentPath + ".state" + to_string(currentSaveSlot);
     shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
 
     if (data && data->size() > 0)
