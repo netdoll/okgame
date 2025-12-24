@@ -40,6 +40,8 @@ void LibretroGame::init()
         // mkdir? BobFile doesn't have mkdir, but let's assume it might be needed.
         // For now, we just point to it.
     }
+
+    initDefaultControls();
 }
 
 void LibretroGame::titleMenuUpdate()
@@ -49,11 +51,14 @@ void LibretroGame::titleMenuUpdate()
         titleMenu = make_shared<BobMenu>(this, "Emulator");
         titleMenu->add("Load Core...", "Load Core");
         titleMenu->add("Load Game...", "Load Game");
+        titleMenu->add("Reset", "Reset");
         titleMenu->add("State Slot: " + to_string(currentSaveSlot), "StateSlot");
         titleMenu->add("Save State", "Save State");
         titleMenu->add("Load State", "Load State");
+        titleMenu->add("Controls...", "Controls");
         titleMenu->add("Cheats...", "Cheats");
         titleMenu->add("Core Options...", "Core Options");
+        titleMenu->add(videoFilterLinear ? "Filter: Linear" : "Filter: Nearest", "VideoFilter");
         titleMenu->add(fastForward ? "Fast Forward: ON" : "Fast Forward: OFF", "FastForward");
         titleMenu->add("Resume");
         titleMenu->add("Exit");
@@ -78,6 +83,11 @@ void LibretroGame::titleMenuUpdate()
             updateFileBrowser();
             titleMenuShowing = false;
         }
+        else if (titleMenu->isSelectedID("Reset"))
+        {
+            resetGame();
+            titleMenuShowing = false;
+        }
         else if (titleMenu->isSelectedID("StateSlot"))
         {
             currentSaveSlot = (currentSaveSlot + 1) % 10;
@@ -93,6 +103,12 @@ void LibretroGame::titleMenuUpdate()
             loadState();
             titleMenuShowing = false;
         }
+        else if (titleMenu->isSelectedID("Controls"))
+        {
+            controlsMenu = make_shared<BobMenu>(this, "Controls");
+            updateControlsMenu();
+            titleMenuShowing = false;
+        }
         else if (titleMenu->isSelectedID("Cheats"))
         {
             cheatMenu = make_shared<BobMenu>(this, "Cheats");
@@ -104,6 +120,11 @@ void LibretroGame::titleMenuUpdate()
             coreOptionsMenu = make_shared<BobMenu>(this, "Core Options");
             updateCoreOptionsMenu();
             titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("VideoFilter"))
+        {
+            videoFilterLinear = !videoFilterLinear;
+            titleMenu->getMenuItem("VideoFilter")->setName(videoFilterLinear ? "Filter: Linear" : "Filter: Nearest");
         }
         else if (titleMenu->isSelectedID("FastForward"))
         {
@@ -121,6 +142,167 @@ void LibretroGame::titleMenuUpdate()
             titleMenuShowing = false; // Just hide for now
         }
     }
+}
+
+void LibretroGame::resetGame()
+{
+    if (retro_reset) retro_reset();
+}
+
+void LibretroGame::initDefaultControls()
+{
+    if (inputMap.empty())
+    {
+        inputMap[RETRO_DEVICE_ID_JOYPAD_B] = 0;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_Y] = 1;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_SELECT] = 2;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_START] = 3;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_UP] = 4;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_DOWN] = 5;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_LEFT] = 6;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_RIGHT] = 7;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_A] = 8;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_X] = 9;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_L] = 10;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_R] = 11;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_L2] = 12;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_R2] = 13;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_L3] = 14;
+        inputMap[RETRO_DEVICE_ID_JOYPAD_R3] = 15;
+    }
+}
+
+void LibretroGame::updateControlsMenu()
+{
+    if (waitingForInput)
+    {
+        // Polling loop
+        int pressed = checkInput();
+        if (pressed != -1)
+        {
+            // Set mapping
+            // Warning: We are mapping LibretroID -> InternalID.
+            // But checkInput returns InternalID.
+            // So we need to find which LibretroID we are editing.
+            // Actually, the menu should list Libretro IDs and we assign Internal IDs to them.
+            inputMap[remapId] = pressed;
+            waitingForInput = false;
+            controlsMenu->clear(); // Refresh names
+        }
+        return;
+    }
+
+    if (controlsMenu->menuItems->size() == 0)
+    {
+        controlsMenu->add("Back", "Back");
+        controlsMenu->add("Reset to Default", "Default");
+
+        // List buttons
+        // Helper to get name
+        auto getName = [](unsigned id) -> string {
+            switch(id) {
+                case RETRO_DEVICE_ID_JOYPAD_B: return "B";
+                case RETRO_DEVICE_ID_JOYPAD_Y: return "Y";
+                case RETRO_DEVICE_ID_JOYPAD_SELECT: return "SELECT";
+                case RETRO_DEVICE_ID_JOYPAD_START: return "START";
+                case RETRO_DEVICE_ID_JOYPAD_UP: return "UP";
+                case RETRO_DEVICE_ID_JOYPAD_DOWN: return "DOWN";
+                case RETRO_DEVICE_ID_JOYPAD_LEFT: return "LEFT";
+                case RETRO_DEVICE_ID_JOYPAD_RIGHT: return "RIGHT";
+                case RETRO_DEVICE_ID_JOYPAD_A: return "A";
+                case RETRO_DEVICE_ID_JOYPAD_X: return "X";
+                case RETRO_DEVICE_ID_JOYPAD_L: return "L";
+                case RETRO_DEVICE_ID_JOYPAD_R: return "R";
+                case RETRO_DEVICE_ID_JOYPAD_L2: return "L2";
+                case RETRO_DEVICE_ID_JOYPAD_R2: return "R2";
+                default: return "Unknown";
+            }
+        };
+
+        auto getMappedName = [](int id) -> string {
+             switch(id) {
+                 case 0: return "Action/B";
+                 case 1: return "Run/A";
+                 case 2: return "Select";
+                 case 3: return "Start";
+                 case 4: return "Up";
+                 case 5: return "Down";
+                 case 6: return "Left";
+                 case 7: return "Right";
+                 case 8: return "A";
+                 case 9: return "X";
+                 case 10: return "L";
+                 case 11: return "R";
+                 case 12: return "L2";
+                 case 13: return "R2";
+                 default: return "None";
+             }
+        };
+
+        for(auto const& [key, val] : inputMap)
+        {
+            // key is libretro id, val is internal
+            string label = getName(key) + ": " + getMappedName(val);
+            controlsMenu->add(label, to_string(key));
+        }
+    }
+
+    if (getControlsManager()->miniGame_UP_Pressed()) controlsMenu->up();
+    if (getControlsManager()->miniGame_DOWN_Pressed()) controlsMenu->down();
+
+    if (getControlsManager()->miniGame_CONFIRM_Pressed())
+    {
+        shared_ptr<BobMenu::MenuItem> item = controlsMenu->getSelectedMenuItem();
+        if (item)
+        {
+            if (item->id == "Back")
+            {
+                controlsMenu = nullptr;
+                titleMenuShowing = true;
+            }
+            else if (item->id == "Default")
+            {
+                inputMap.clear();
+                initDefaultControls();
+                controlsMenu->clear();
+            }
+            else
+            {
+                try {
+                   remapId = stoi(item->id);
+                   waitingForInput = true;
+                   item->setName("Press a button...");
+                } catch(...) {}
+            }
+        }
+    }
+
+    if (getControlsManager()->miniGame_CANCEL_Pressed())
+    {
+        controlsMenu = nullptr;
+        titleMenuShowing = true;
+    }
+}
+
+int LibretroGame::checkInput()
+{
+    shared_ptr<ControlsManager> cm = getControlsManager();
+    if (cm->miniGame_ACTION_Pressed()) return 0;
+    if (cm->miniGame_RUN_Pressed()) return 1;
+    if (cm->miniGame_SELECT_Pressed()) return 2;
+    if (cm->miniGame_START_Pressed()) return 3;
+    if (cm->miniGame_UP_Pressed()) return 4;
+    if (cm->miniGame_DOWN_Pressed()) return 5;
+    if (cm->miniGame_LEFT_Pressed()) return 6;
+    if (cm->miniGame_RIGHT_Pressed()) return 7;
+    if (cm->miniGame_A_Pressed()) return 8;
+    if (cm->miniGame_X_Pressed()) return 9;
+    if (cm->miniGame_L_Pressed()) return 10;
+    if (cm->miniGame_R_Pressed()) return 11;
+
+    // We can't map buttons that aren't exposed by ControlsManager simply.
+    // But this covers most.
+    return -1;
 }
 
 void LibretroGame::parseOptionString(const string& key, const string& value)
@@ -579,6 +761,12 @@ void LibretroGame::update()
         return;
     }
 
+    if (controlsMenu)
+    {
+        updateControlsMenu();
+        return;
+    }
+
     if (!titleMenuShowing)
     {
         if (retro_run)
@@ -617,11 +805,16 @@ void LibretroGame::render()
         cheatMenu->render();
     }
 
-    if (!titleMenuShowing && !fileBrowserMenu && !coreOptionsMenu && !cheatMenu && videoTexture)
+    if (controlsMenu)
+    {
+        controlsMenu->render();
+    }
+
+    if (!titleMenuShowing && !fileBrowserMenu && !coreOptionsMenu && !cheatMenu && !controlsMenu && videoTexture)
     {
         // Draw video texture to screen
         // Use GLUtils to draw
-        GLUtils::drawTexture(videoTexture.get(), 0, 0, 1.0f, GLUtils::FILTER_NEAREST);
+        GLUtils::drawTexture(videoTexture.get(), 0, 0, 1.0f, videoFilterLinear ? GLUtils::FILTER_LINEAR : GLUtils::FILTER_NEAREST);
     }
 }
 
@@ -749,20 +942,35 @@ int16_t LibretroGame::retroInputState(unsigned port, unsigned device, unsigned i
         shared_ptr<ControlsManager> cm = instance->getControlsManager();
         if(!cm) return 0;
 
-        switch(id)
+        // Use input map
+        int internalId = -1;
+        if (instance->inputMap.find(id) != instance->inputMap.end())
         {
-            case RETRO_DEVICE_ID_JOYPAD_B: return cm->MINIGAME_ACTION_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_Y: return cm->MINIGAME_RUN_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_SELECT: return cm->MINIGAME_SELECT_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_START: return cm->MINIGAME_START_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_UP: return cm->MINIGAME_UP_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_DOWN: return cm->MINIGAME_DOWN_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_LEFT: return cm->MINIGAME_LEFT_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_RIGHT: return cm->MINIGAME_RIGHT_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_A: return cm->MINIGAME_A_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_X: return cm->MINIGAME_X_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_L: return cm->MINIGAME_L_HELD ? 1 : 0;
-            case RETRO_DEVICE_ID_JOYPAD_R: return cm->MINIGAME_R_HELD ? 1 : 0;
+            internalId = instance->inputMap[id];
+        }
+        else
+        {
+             // Fallback default
+             // B=0, Y=1, Sel=2, Start=3, Up=4, Down=5, Left=6, Right=7, A=8, X=9, L=10, R=11
+             internalId = id;
+        }
+
+        switch(internalId)
+        {
+            case 0: return cm->MINIGAME_ACTION_HELD ? 1 : 0; // B
+            case 1: return cm->MINIGAME_RUN_HELD ? 1 : 0; // Y
+            case 2: return cm->MINIGAME_SELECT_HELD ? 1 : 0; // Select
+            case 3: return cm->MINIGAME_START_HELD ? 1 : 0; // Start
+            case 4: return cm->MINIGAME_UP_HELD ? 1 : 0; // Up
+            case 5: return cm->MINIGAME_DOWN_HELD ? 1 : 0; // Down
+            case 6: return cm->MINIGAME_LEFT_HELD ? 1 : 0; // Left
+            case 7: return cm->MINIGAME_RIGHT_HELD ? 1 : 0; // Right
+            case 8: return cm->MINIGAME_A_HELD ? 1 : 0; // A
+            case 9: return cm->MINIGAME_X_HELD ? 1 : 0; // X
+            case 10: return cm->MINIGAME_L_HELD ? 1 : 0; // L
+            case 11: return cm->MINIGAME_R_HELD ? 1 : 0; // R
+            case 12: return cm->MINIGAME_L2_HELD ? 1 : 0; // L2
+            case 13: return cm->MINIGAME_R2_HELD ? 1 : 0; // R2
         }
     }
     return 0;

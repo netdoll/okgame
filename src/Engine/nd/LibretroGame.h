@@ -125,4 +125,20 @@ private:
     shared_ptr<BobMenu> cheatMenu = nullptr;
 
     int currentSaveSlot = 0;
+
+    bool videoFilterLinear = false;
+    void resetGame();
+
+    // Input mapping
+    // We map Libretro ID (e.g. RETRO_DEVICE_ID_JOYPAD_B) to our internal ID
+    // 0=B, 1=Y, 2=Select, 3=Start, 4=Up, 5=Down, 6=Left, 7=Right, 8=A, 9=X, 10=L, 11=R
+    std::map<unsigned, int> inputMap;
+    void initDefaultControls();
+    void updateControlsMenu();
+    shared_ptr<BobMenu> controlsMenu = nullptr;
+    bool waitingForInput = false;
+    unsigned remapId = 0;
+
+    // Check input for remapping
+    int checkInput();
 };
