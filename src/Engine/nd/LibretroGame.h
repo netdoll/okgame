@@ -94,4 +94,21 @@ private:
 
     // Helper to get save path
     string getSavePath(const string& ext);
+
+    struct CoreOption {
+        string key;
+        string description;
+        vector<string> values;
+        int currentIndex = 0;
+    };
+    vector<CoreOption> coreOptions;
+    bool variablesUpdated = false;
+    bool fastForward = false;
+
+    void parseOptionString(const string& key, const string& value);
+    void loadCoreOptions();
+    void saveCoreOptions();
+
+    void updateCoreOptionsMenu();
+    shared_ptr<BobMenu> coreOptionsMenu = nullptr;
 };

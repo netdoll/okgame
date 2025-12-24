@@ -51,6 +51,8 @@ void LibretroGame::titleMenuUpdate()
         titleMenu->add("Load Game...", "Load Game");
         titleMenu->add("Save State", "Save State");
         titleMenu->add("Load State", "Load State");
+        titleMenu->add("Core Options...", "Core Options");
+        titleMenu->add(fastForward ? "Fast Forward: ON" : "Fast Forward: OFF", "FastForward");
         titleMenu->add("Resume");
         titleMenu->add("Exit");
     }
@@ -84,6 +86,17 @@ void LibretroGame::titleMenuUpdate()
             loadState();
             titleMenuShowing = false;
         }
+        else if (titleMenu->isSelectedID("Core Options"))
+        {
+            coreOptionsMenu = make_shared<BobMenu>(this, "Core Options");
+            updateCoreOptionsMenu();
+            titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("FastForward"))
+        {
+            fastForward = !fastForward;
+            titleMenu->getMenuItem("FastForward")->setName(fastForward ? "Fast Forward: ON" : "Fast Forward: OFF");
+        }
         else if (titleMenu->isSelectedID("Resume"))
         {
             if (retro_run) titleMenuShowing = false;
@@ -94,6 +107,156 @@ void LibretroGame::titleMenuUpdate()
             // nD->setGame(nullptr); // ?
             titleMenuShowing = false; // Just hide for now
         }
+    }
+}
+
+void LibretroGame::parseOptionString(const string& key, const string& value)
+{
+    // value format: "Description; option1|option2|option3"
+    size_t semi = value.find(';');
+    if (semi == string::npos) return;
+
+    CoreOption opt;
+    opt.key = key;
+    opt.description = value.substr(0, semi);
+    string rest = value.substr(semi + 1);
+
+    // Split by |
+    // Note: space usually after ;
+    if (rest.length() > 0 && rest[0] == ' ') rest = rest.substr(1);
+
+    size_t start = 0;
+    size_t end = rest.find('|');
+    while (end != string::npos)
+    {
+        opt.values.push_back(rest.substr(start, end - start));
+        start = end + 1;
+        end = rest.find('|', start);
+    }
+    opt.values.push_back(rest.substr(start));
+
+    // Check if exists
+    for(auto& existing : coreOptions)
+    {
+        if(existing.key == key)
+        {
+            // Update definition but keep value if valid?
+            // Usually core sets vars once. Assuming override.
+            existing = opt;
+            return;
+        }
+    }
+    coreOptions.push_back(opt);
+}
+
+void LibretroGame::loadCoreOptions()
+{
+    // Filename: core_name.opt in system dir?
+    string path = Main::getPath() + "/system/core_options.opt";
+    // Format: key=value
+    shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(path);
+    if (!data) return;
+
+    string content((char*)data->data(), data->size());
+    stringstream ss(content);
+    string line;
+    while(getline(ss, line))
+    {
+        size_t eq = line.find('=');
+        if (eq != string::npos)
+        {
+            string key = line.substr(0, eq);
+            string val = line.substr(eq + 1);
+            // clean up CR
+            if (!val.empty() && val.back() == '\r') val.pop_back();
+
+            for(auto& opt : coreOptions)
+            {
+                if (opt.key == key)
+                {
+                    for(int i=0; i<opt.values.size(); i++)
+                    {
+                        if (opt.values[i] == val)
+                        {
+                            opt.currentIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void LibretroGame::saveCoreOptions()
+{
+    string path = Main::getPath() + "/system/core_options.opt";
+    stringstream ss;
+    for(const auto& opt : coreOptions)
+    {
+        if (opt.values.size() > 0)
+        {
+            ss << opt.key << "=" << opt.values[opt.currentIndex] << "\n";
+        }
+    }
+    string content = ss.str();
+
+    shared_ptr<ByteArray> data = make_shared<ByteArray>(content.length());
+    memcpy(data->data(), content.c_str(), content.length());
+    FileUtils::saveByteFile(path, data);
+
+    variablesUpdated = true;
+}
+
+void LibretroGame::updateCoreOptionsMenu()
+{
+    if (coreOptionsMenu->menuItems->size() == 0)
+    {
+        coreOptionsMenu->add("Back", "Back");
+        for(const auto& opt : coreOptions)
+        {
+            // Display: Description: CurrentValue
+            string label = opt.description + ": " + (opt.values.size() > 0 ? opt.values[opt.currentIndex] : "N/A");
+            coreOptionsMenu->add(label, opt.key);
+        }
+    }
+
+    if (getControlsManager()->miniGame_UP_Pressed()) coreOptionsMenu->up();
+    if (getControlsManager()->miniGame_DOWN_Pressed()) coreOptionsMenu->down();
+
+    if (getControlsManager()->miniGame_CONFIRM_Pressed())
+    {
+        shared_ptr<BobMenu::MenuItem> item = coreOptionsMenu->getSelectedMenuItem();
+        if (item)
+        {
+            if (item->id == "Back")
+            {
+                saveCoreOptions();
+                coreOptionsMenu = nullptr;
+                titleMenuShowing = true;
+            }
+            else
+            {
+                // Cycle option
+                for(auto& opt : coreOptions)
+                {
+                    if (opt.key == item->id)
+                    {
+                        opt.currentIndex = (opt.currentIndex + 1) % opt.values.size();
+                        item->setName(opt.description + ": " + opt.values[opt.currentIndex]);
+                        variablesUpdated = true; // Mark updated immediately? or on save?
+                        // Core might need restart or check update callback.
+                    }
+                }
+            }
+        }
+    }
+
+    if (getControlsManager()->miniGame_CANCEL_Pressed())
+    {
+        saveCoreOptions();
+        coreOptionsMenu = nullptr;
+        titleMenuShowing = true;
     }
 }
 
@@ -293,11 +456,18 @@ void LibretroGame::update()
         return; // Don't run game while browsing
     }
 
+    if (coreOptionsMenu)
+    {
+        updateCoreOptionsMenu();
+        return;
+    }
+
     if (!titleMenuShowing)
     {
         if (retro_run)
         {
-            retro_run();
+            int frames = fastForward ? 4 : 1;
+            for(int i=0; i<frames; i++) retro_run();
             // Periodically check/save SRAM?
             // For now, let's just save on menu open or exit
         }
@@ -320,7 +490,12 @@ void LibretroGame::render()
         fileBrowserMenu->render();
     }
 
-    if (!titleMenuShowing && !fileBrowserMenu && videoTexture)
+    if (coreOptionsMenu)
+    {
+        coreOptionsMenu->render();
+    }
+
+    if (!titleMenuShowing && !fileBrowserMenu && !coreOptionsMenu && videoTexture)
     {
         // Draw video texture to screen
         // Use GLUtils to draw
@@ -362,6 +537,44 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
             // Let's use current ROM directory for now or just return null to indicate "same as ROM"
             *dir = NULL;
             return true;
+        }
+        case RETRO_ENVIRONMENT_SET_VARIABLES:
+        {
+            const struct retro_variable *vars = (const struct retro_variable *)data;
+            if (vars)
+            {
+                while (vars->key && vars->value)
+                {
+                    instance->parseOptionString(vars->key, vars->value);
+                    vars++;
+                }
+                instance->loadCoreOptions(); // Load saved preferences
+            }
+            return true;
+        }
+        case RETRO_ENVIRONMENT_GET_VARIABLE:
+        {
+            struct retro_variable *var = (struct retro_variable *)data;
+            if (var && var->key)
+            {
+                for (auto& opt : instance->coreOptions)
+                {
+                    if (opt.key == var->key)
+                    {
+                        var->value = opt.values[opt.currentIndex].c_str();
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+        case RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE:
+        {
+             bool *result = (bool*)data;
+             if (result) *result = instance->variablesUpdated;
+             instance->variablesUpdated = false;
+             return true;
         }
         // Handle other environment calls
     }
