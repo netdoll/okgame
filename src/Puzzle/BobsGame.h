@@ -74,14 +74,14 @@ public:
 	shared_ptr<BobTexture> gearsTexture = nullptr;
 	shared_ptr<BobTexture> chartTexture = nullptr;
 
-	static BobTexture* upperLeft;
-	static BobTexture* top;
-	static BobTexture* upperRight;
-	static BobTexture* left;
-	static BobTexture* right;
-	static BobTexture* lowerLeft;
-	static BobTexture* bottom;
-	static BobTexture* lowerRight;
+	static shared_ptr<BobTexture> upperLeft;
+	static shared_ptr<BobTexture> top;
+	static shared_ptr<BobTexture> upperRight;
+	static shared_ptr<BobTexture> left;
+	static shared_ptr<BobTexture> right;
+	static shared_ptr<BobTexture> lowerLeft;
+	static shared_ptr<BobTexture> bottom;
+	static shared_ptr<BobTexture> lowerRight;
 
 	shared_ptr<GameLogic> getPlayer1Game();
 	shared_ptr<PuzzlePlayer> getPlayer1();

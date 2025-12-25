@@ -8,5 +8,6 @@ xcopy /v .\bobsgame.bmp "..\..\Desktop\bob's game"
 xcopy /v .\version.txt "..\..\Desktop\bob's game"
 xcopy /v .\LICENSE "..\..\Desktop\bob's game"
 xcopy /v /e .\data "..\..\Desktop\bob's game\data"
+xcopy /v /e /i .\resources\presets "..\..\Desktop\bob's game\data\presets"
 
 pause

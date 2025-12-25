@@ -9,14 +9,14 @@
 Logger BobsGame::log = Logger("BobsGame");
 //BobsGame* BobsGame::b = nullptr;
 
-BobTexture* BobsGame::upperLeft = nullptr;
-BobTexture* BobsGame::top = nullptr;
-BobTexture* BobsGame::upperRight = nullptr;
-BobTexture* BobsGame::left = nullptr;
-BobTexture* BobsGame::right = nullptr;
-BobTexture* BobsGame::lowerLeft = nullptr;
-BobTexture* BobsGame::bottom = nullptr;
-BobTexture* BobsGame::lowerRight = nullptr;
+shared_ptr<BobTexture> BobsGame::upperLeft = nullptr;
+shared_ptr<BobTexture> BobsGame::top = nullptr;
+shared_ptr<BobTexture> BobsGame::upperRight = nullptr;
+shared_ptr<BobTexture> BobsGame::left = nullptr;
+shared_ptr<BobTexture> BobsGame::right = nullptr;
+shared_ptr<BobTexture> BobsGame::lowerLeft = nullptr;
+shared_ptr<BobTexture> BobsGame::bottom = nullptr;
+shared_ptr<BobTexture> BobsGame::lowerRight = nullptr;
 
 bool BobsGame::_gotIncomingGamesFromServer = false;
 mutex BobsGame::_gotIncomingGamesFromServer_Mutex;
@@ -117,6 +117,38 @@ void BobsGame::init()
 	
 
 	visualizer = make_shared<libprojectM::ProjectM>();
+	
+	// Set texture paths
+	vector<string> texturePaths;
+	string texturePathDev = Main::getPath() + "resources/presets/presets-milkdrop-texture-pack/textures";
+	string texturePathProd = Main::getPath() + "data/presets/presets-milkdrop-texture-pack/textures";
+	
+	if (BobFile(texturePathDev).exists()) {
+		texturePaths.push_back(texturePathDev);
+	}
+	if (BobFile(texturePathProd).exists()) {
+		texturePaths.push_back(texturePathProd);
+	}
+	
+	if (!texturePaths.empty()) {
+		visualizer->SetTexturePaths(texturePaths);
+		log.info("Set visualizer texture paths");
+	}
+
+	// Load a default preset
+	string presetPath = Main::getPath() + "resources/presets/presets-milkdrop-original/Milkdrop-Original/Geiss - Reaction Diffusion 2.milk";
+	// Check if file exists, if not try data path
+	if (!BobFile(presetPath).exists()) {
+		presetPath = Main::getPath() + "data/presets/presets-milkdrop-original/Milkdrop-Original/Geiss - Reaction Diffusion 2.milk";
+	}
+	
+	if (BobFile(presetPath).exists()) {
+		visualizer->LoadPresetFile(presetPath, false);
+		log.info("Loaded visualizer preset: " + presetPath);
+	} else {
+		log.error("Could not find visualizer preset: " + presetPath);
+	}
+
     AudioManager::setVisualizer(visualizer);
 
 	log.debug("Init Player");

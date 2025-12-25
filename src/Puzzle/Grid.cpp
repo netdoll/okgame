@@ -2907,14 +2907,14 @@ void Grid::renderBorder()
 	}
 
 
-	GLUtils::drawTexture(BobsGame::upperLeft, leftX0, leftX1, topY0, topY1, a, f);
-	GLUtils::drawTexture(BobsGame::top, leftX1, rightX0, topY0, topY1, a, f);
-	GLUtils::drawTexture(BobsGame::upperRight, rightX0, rightX1, topY0, topY1, a, f);
-	GLUtils::drawTexture(BobsGame::left, leftX0, leftX1, topY1, bottomY0, a, f);
-	GLUtils::drawTexture(BobsGame::right, rightX0, rightX1, topY1, bottomY0, a, f);
-	GLUtils::drawTexture(BobsGame::lowerLeft, leftX0, leftX1, bottomY0, bottomY1, a, f);
-	GLUtils::drawTexture(BobsGame::lowerRight, rightX0, rightX1, bottomY0, bottomY1, a, f);
-	GLUtils::drawTexture(BobsGame::bottom, leftX1, rightX0, bottomY0, bottomY1, a, f);
+	GLUtils::drawTexture(BobsGame::upperLeft.get(), leftX0, leftX1, topY0, topY1, a, f);
+	GLUtils::drawTexture(BobsGame::top.get(), leftX1, rightX0, topY0, topY1, a, f);
+	GLUtils::drawTexture(BobsGame::upperRight.get(), rightX0, rightX1, topY0, topY1, a, f);
+	GLUtils::drawTexture(BobsGame::left.get(), leftX0, leftX1, topY1, bottomY0, a, f);
+	GLUtils::drawTexture(BobsGame::right.get(), rightX0, rightX1, topY1, bottomY0, a, f);
+	GLUtils::drawTexture(BobsGame::lowerLeft.get(), leftX0, leftX1, bottomY0, bottomY1, a, f);
+	GLUtils::drawTexture(BobsGame::lowerRight.get(), rightX0, rightX1, bottomY0, bottomY1, a, f);
+	GLUtils::drawTexture(BobsGame::bottom.get(), leftX1, rightX0, bottomY0, bottomY1, a, f);
 
 
 
