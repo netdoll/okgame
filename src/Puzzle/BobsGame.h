@@ -658,6 +658,7 @@ public:
 	static shared_ptr<libprojectM::ProjectM> visualizer;
 	static vector<string> presetFiles;
 	static int currentPresetIndex;
+	static int projectMPresetSwitchTimer;
 	void initProjectM();
 	void updateProjectMControls();
 public:

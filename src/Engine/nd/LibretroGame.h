@@ -30,6 +30,7 @@ public:
 
     bool loadCore(const string& corePath);
     bool loadGame(const string& gamePath);
+    void unloadGame();
 
     virtual void titleMenuUpdate() override;
 
@@ -184,7 +185,8 @@ private:
     void updateRecentMenu();
 
     // CRT Shader
-    bool crtShaderEnabled = false;
+    //bool crtShaderEnabled = false;
+    int crtShaderMode = 0; // 0=None, 1=Scanline, 2=Curved
     GLuint crtProgram = 0;
     void initShaders();
     void compileShader(GLuint& program, const string& vs, const string& fs);

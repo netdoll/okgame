@@ -43,6 +43,7 @@ ArrayList<string> BobsGame::activityStream;
 shared_ptr<libprojectM::ProjectM> BobsGame::visualizer = nullptr;
 vector<string> BobsGame::presetFiles;
 int BobsGame::currentPresetIndex = 0;
+int BobsGame::projectMPresetSwitchTimer = 0;
 
 
 
@@ -1163,6 +1164,23 @@ void BobsGame::updateProjectMControls()
             size_t slash = name.find_last_of("/\\");
             if(slash != string::npos) name = name.substr(slash+1);
             getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 60, 3000, "Preset: " + name, 24, true, BobColor::white);
+        }
+    }
+
+    // Autopilot
+    projectMPresetSwitchTimer--;
+    if (projectMPresetSwitchTimer <= 0)
+    {
+        // Switch preset every 15 seconds
+        projectMPresetSwitchTimer = 60 * 15;
+
+        // Next
+        if (!presetFiles.empty())
+        {
+            currentPresetIndex = (currentPresetIndex + 1) % presetFiles.size();
+            visualizer->LoadPresetFile(presetFiles[currentPresetIndex], true);
+
+            // Don't show caption in autopilot mode to avoid clutter
         }
     }
 

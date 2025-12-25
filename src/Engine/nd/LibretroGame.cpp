@@ -79,7 +79,12 @@ void LibretroGame::titleMenuUpdate()
         titleMenu->add("Aspect: " + ar, "Aspect");
 
         titleMenu->add(videoFilterLinear ? "Filter: Linear" : "Filter: Nearest", "VideoFilter");
-        titleMenu->add(crtShaderEnabled ? "Shader: Scanlines" : "Shader: None", "Shader");
+
+        string shaderName = "Shader: None";
+        if (crtShaderMode == 1) shaderName = "Shader: Scanlines";
+        if (crtShaderMode == 2) shaderName = "Shader: Curved";
+        titleMenu->add(shaderName, "Shader");
+
         titleMenu->add(fastForward ? "Fast Forward: ON" : "Fast Forward: OFF", "FastForward");
         titleMenu->add("Take Screenshot", "Screenshot");
         titleMenu->add("Clear Associations", "ClearAssoc");
@@ -185,8 +190,12 @@ void LibretroGame::titleMenuUpdate()
         }
         else if (titleMenu->isSelectedID("Shader"))
         {
-            crtShaderEnabled = !crtShaderEnabled;
-            titleMenu->getMenuItem("Shader")->setName(crtShaderEnabled ? "Shader: Scanlines" : "Shader: None");
+            // Cycle: None -> Scanlines -> Curved
+            crtShaderMode = (crtShaderMode + 1) % 3;
+            string name = "Shader: None";
+            if (crtShaderMode == 1) name = "Shader: Scanlines";
+            if (crtShaderMode == 2) name = "Shader: Curved";
+            titleMenu->getMenuItem("Shader")->setName(name);
         }
         else if (titleMenu->isSelectedID("FastForward"))
         {
@@ -247,11 +256,25 @@ void LibretroGame::titleMenuUpdate()
         }
         else if (titleMenu->isSelectedID("Exit"))
         {
-            // Exit logic (e.g. return to ND menu)
-            // nD->setGame(nullptr); // ?
-            titleMenuShowing = false; // Just hide for now
+            // Exit logic
+            unloadGame();
+            titleMenuShowing = true; // Just hide for now
         }
     }
+}
+
+void LibretroGame::unloadGame()
+{
+    if (retro_unload_game) retro_unload_game();
+
+    // Clean up textures
+    videoTexture = nullptr;
+    hq2xTexture = nullptr;
+    hq2xBuffer = nullptr;
+    lastFrameData = nullptr;
+
+    // Unhook music
+    Mix_HookMusic(NULL, NULL);
 }
 
 void LibretroGame::resetGame()
@@ -475,11 +498,34 @@ void main() {
     string fs = R"(
 uniform sampler2D tex;
 uniform float time;
+uniform int curved;
+
 void main() {
     vec2 uv = gl_TexCoord[0].xy;
+
+    if (curved > 0)
+    {
+        // Curved CRT effect
+        vec2 d = abs(uv - 0.5);
+        d *= d;
+        uv -= 0.5;
+        uv *= 1.0 + (d.y * 0.03 + d.x * 0.04); // distortion
+        uv += 0.5;
+
+        // Vignette at edges if out of bounds
+        if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0)
+        {
+            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+            return;
+        }
+    }
+
     vec4 color = texture2D(tex, uv);
+
+    // Scanlines
     float scanline = sin(uv.y * 800.0) * 0.1;
     color.rgb -= scanline;
+
     gl_FragColor = color;
 }
 )";
@@ -1375,7 +1421,7 @@ void LibretroGame::render()
         }
 
         bool shaderApplied = false;
-        if (crtShaderEnabled && crtProgram != 0)
+        if (crtShaderMode > 0 && crtProgram != 0)
         {
             // Try to use shader
             // Note: GLUtils might override shader if we call drawTexture.
@@ -1396,6 +1442,9 @@ void LibretroGame::render()
 
             GLint texLoc = glGetUniformLocation(crtProgram, "tex");
             if(texLoc != -1) glUniform1i(texLoc, 0);
+
+            GLint curvedLoc = glGetUniformLocation(crtProgram, "curved");
+            if(curvedLoc != -1) glUniform1i(curvedLoc, (crtShaderMode == 2) ? 1 : 0);
 
             shaderApplied = true;
 #endif
