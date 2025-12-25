@@ -40,13 +40,13 @@ This session focused on modernizing the BobsGame engine memory management, repai
 
 ## Next Steps
 1.  **Build Libretro Cores**: Create a build process (CMake or script) to compile specific Libretro cores (e.g., `gambatte`, `fceumm`) located in `lib/` so they can be loaded by `LibretroGame`.
-2.  **Libretro UI**: Implement a file browser or ROM selector within `LibretroGame::update` to allow the user to load a core/ROM when the "Emulator" app is opened.
-3.  **Input/Audio Bridging (Libretro)**: Complete the `retro_input_state` and `retro_audio_sample` callbacks in `LibretroGame` to fully bridge controls and sound.
-4.  **Testing**: Verify visualizer performance and libretro core compatibility.
+2.  **Testing**: Verify visualizer performance and libretro core compatibility.
 
 ## Session Update (v0.1.3)
 *   **Documentation**: `LLM_INSTRUCTIONS.md` and `VERSION.md` are now the source of truth.
 *   **Submodules**: `lib/CLove` was removed from the index due to configuration errors.
 *   **Versioning**: Version bumped to 0.1.3.
 *   **Refactoring**: `BobsGame` static textures are now `std::shared_ptr`.
+*   **Libretro UI**: Implemented file browser and core/game loading logic in `LibretroGame.cpp`.
+
 
