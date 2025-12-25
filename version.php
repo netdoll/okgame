@@ -1,12 +1,11 @@
 <?php 
 
 header('Content-Type: text/plain');
-$fh = fopen("version.txt", 'r');
-$pageText = fread($fh, 25000);
-echo $pageText;//nl2br($pageText);
-fclose($fh);
+// Read version from VERSION.md
+$version = trim(file_get_contents("VERSION.md"));
+echo $version;
 
-
+// Stats tracking (legacy)
 $hit_count=0;
 $statfile = @fopen("stats/count".date("Ymd").".txt","a+");
 @rewind($statfile);
@@ -17,3 +16,4 @@ $hit_count++;
 $statfile = @fopen("stats/count".date("Ymd").".txt","w+");
 @fwrite($statfile, $hit_count);
 @fclose($statfile);
+?>

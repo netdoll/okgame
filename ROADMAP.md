@@ -1,17 +1,23 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 0.1.0
+**Current Version:** 0.1.3
 
 ## In Progress
-*   [ ] **Refactoring**
-    *   Continue `std::shared_ptr` migration.
+*   [ ] **Submodule Updates**
+    *   Update all submodules to latest upstream.
+    *   Fix broken submodule references (e.g., `lib/CLove`).
 
 ## Completed Features
+*   [x] **Refactoring**
+    *   [x] `std::shared_ptr` migration for `BobsGame` textures.
+*   [x] **Documentation**
+    *   [x] Centralized Versioning (`VERSION.md`).
+    *   [x] Universal LLM Instructions (`LLM_INSTRUCTIONS.md`).
+    *   [x] Submodule Dashboard (`SUBMODULES.md`).
 *   [x] Basic Engine Architecture (SDL2 based)
 *   [x] Submodule Integration (Extensive library support)
 *   [x] Initial Visualizer Submodules Added
-*   [x] Documentation Structure (LLM Instructions, Changelog, Versioning)
 *   [x] **Visualizer Integration**
     *   [x] Build System Update (`CMakeLists.txt` for `lib/projectm`)
     *   [x] Render Loop Integration (`BobsGame::render`)

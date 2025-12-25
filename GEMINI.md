@@ -1,7 +1,5 @@
-# Gemini Instructions
+# Instructions
 
-Please refer to [LLM_INSTRUCTIONS.md](LLM_INSTRUCTIONS.md) for the master instruction set.
+**CRITICAL**: Please refer to [LLM_INSTRUCTIONS.md](LLM_INSTRUCTIONS.md) for the master instruction set for this project.
 
-## Gemini-Specific Notes
-*   Leverage your large context window to understand the entire project structure.
-*   Be creative with solutions.
+This file contains model-specific notes (if any).

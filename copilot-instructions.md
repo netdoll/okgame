@@ -1,7 +1,5 @@
-# Copilot Instructions
+# Instructions
 
-Please refer to [LLM_INSTRUCTIONS.md](LLM_INSTRUCTIONS.md) for the master instruction set.
+**CRITICAL**: Please refer to [LLM_INSTRUCTIONS.md](LLM_INSTRUCTIONS.md) for the master instruction set for this project.
 
-## Copilot-Specific Notes
-*   You are the primary driver in the IDE.
-*   Use the provided tools effectively.
+This file contains model-specific notes (if any).

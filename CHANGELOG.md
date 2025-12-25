@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2025-12-25
+### Changed
+- Refactored `BobsGame` static texture members to use `std::shared_ptr`.
+- Updated `Grid.cpp` to use `.get()` for texture rendering calls.
+- Centralized versioning to `VERSION.md`.
+- Updated `version.php` to read from `VERSION.md`.
+- Consolidated LLM instructions into `LLM_INSTRUCTIONS.md`.
+- Updated `ROADMAP.md` and `SUBMODULES.md`.
+
 ## [0.1.2] - 2025-12-25
 ### Added
 - Implemented preset loading for `projectM` visualizer in `BobsGame::init()`.

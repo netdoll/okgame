@@ -1,7 +1,5 @@
-# GPT Instructions
+# Instructions
 
-Please refer to [LLM_INSTRUCTIONS.md](LLM_INSTRUCTIONS.md) for the master instruction set.
+**CRITICAL**: Please refer to [LLM_INSTRUCTIONS.md](LLM_INSTRUCTIONS.md) for the master instruction set for this project.
 
-## GPT-Specific Notes
-*   Focus on code generation and refactoring.
-*   Follow the "Chain of Thought" process.
+This file contains model-specific notes (if any).
