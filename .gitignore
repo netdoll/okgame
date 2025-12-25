@@ -3,10 +3,8 @@ build/
 .vs/
 lib/
 resources/
-bin/
-build/
-.vs/
-lib/
-resources/
 resources/presets/
 resources/
+lib/projectm/
+lib/gambatte-libretro/
+lib/libretro-common/
