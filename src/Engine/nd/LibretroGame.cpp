@@ -1,9 +1,8 @@
-#include \
-stdafx.h\
-#include \LibretroGame.h\
-#include \src/Utility/ControlsManager.h\
-#include \src/Utility/gl/GLUtils.h\
-#include \src/Utility/audio/AudioManager.h\
+#include "stdafx.h"
+#include "LibretroGame.h"
+#include "src/Utility/ControlsManager.h"
+#include "src/Utility/gl/GLUtils.h"
+#include "src/Utility/audio/AudioManager.h"
 
 LibretroGame* LibretroGame::instance = nullptr;
 
@@ -38,15 +37,11 @@ void LibretroGame::titleMenuUpdate()
 {
     if (titleMenu == nullptr)
     {
-        titleMenu = make_shared<BobMenu>(this, \Emulator\);
-        titleMenu->add(\Load
-Core...\, \Load
-Core\);
-        titleMenu->add(\Load
-Game...\, \Load
-Game\);
-        titleMenu->add(\Resume\);
-        titleMenu->add(\Exit\);
+        titleMenu = make_shared<BobMenu>(this, "Emulator");
+        titleMenu->add("Load Core...", "Load Core");
+        titleMenu->add("Load Game...", "Load Game");
+        titleMenu->add("Resume");
+        titleMenu->add("Exit");
     }
 
     if (getControlsManager()->miniGame_UP_Pressed()) titleMenu->up();
@@ -54,29 +49,25 @@ Game\);
 
     if (getControlsManager()->miniGame_CONFIRM_Pressed())
     {
-        if (titleMenu->isSelectedID(\Load
-Core\))
+        if (titleMenu->isSelectedID("Load Core"))
         {
             selectingCore = true;
-            fileBrowserMenu = make_shared<BobMenu>(this, \Select
-Core\);
+            fileBrowserMenu = make_shared<BobMenu>(this, "Select Core");
             updateFileBrowser();
             titleMenuShowing = false;
         }
-        else if (titleMenu->isSelectedID(\Load
-Game\))
+        else if (titleMenu->isSelectedID("Load Game"))
         {
             selectingCore = false;
-            fileBrowserMenu = make_shared<BobMenu>(this, \Select
-Game\);
+            fileBrowserMenu = make_shared<BobMenu>(this, "Select Game");
             updateFileBrowser();
             titleMenuShowing = false;
         }
-        else if (titleMenu->isSelectedID(\Resume\))
+        else if (titleMenu->isSelectedID("Resume"))
         {
             if (retro_run) titleMenuShowing = false;
         }
-        else if (titleMenu->isSelectedID(\Exit\))
+        else if (titleMenu->isSelectedID("Exit"))
         {
             // Exit logic (e.g. return to ND menu)
             // nD->setGame(nullptr); // ?
@@ -89,10 +80,10 @@ void LibretroGame::updateFileBrowser()
 {
     if (fileBrowserMenu->menuItems->size() == 0)
     {
-        fileBrowserMenu->add(\..\, \..\);
+        fileBrowserMenu->add("..", "..");
         BobFile dir(currentPath);
         vector<string> files = dir.list();
-        for (const string;& f : files)
+        for (const string& f : files)
         {
             fileBrowserMenu->add(f, f);
         }
@@ -107,16 +98,16 @@ void LibretroGame::updateFileBrowser()
         if (item)
         {
             string selected = item->id;
-            if (selected == \..\)
+            if (selected == "..")
             {
                 // Go up directory
-                size_t pos = currentPath.find_last_of(\/\\\\\);
+                size_t pos = currentPath.find_last_of("/\\");
                 if (pos != string::npos) currentPath = currentPath.substr(0, pos);
                 fileBrowserMenu->clear();
             }
             else
             {
-                string fullPath = currentPath + \/\ + selected;
+                string fullPath = currentPath + "/" + selected;
                 BobFile f(fullPath);
                 if (f.isDirectory())
                 {
@@ -248,7 +239,7 @@ bool LibretroGame::loadGame(const string& gamePath)
 
     // Initialize videoTexture with av_info geometry
     shared_ptr<ByteArray> emptyData = make_shared<ByteArray>(av_info.geometry.base_width * av_info.geometry.base_height * 4);
-    videoTexture = GLUtils::getTextureFromData(\Libretro\, av_info.geometry.base_width, av_info.geometry.base_height, emptyData.get());
+    videoTexture = GLUtils::getTextureFromData("Libretro", av_info.geometry.base_width, av_info.geometry.base_height, emptyData.get());
 
     Mix_HookMusic(audioCallback, this);
 
@@ -280,7 +271,7 @@ void LibretroGame::update()
 
 void LibretroGame::render()
 {
-    if (titleMenuShowing ; titleMenu)
+    if (titleMenuShowing && titleMenu)
     {
         titleMenu->render();
     }
@@ -322,7 +313,7 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
 
 void LibretroGame::retroVideoRefresh(const void* data, unsigned width, unsigned height, size_t pitch)
 {
-    if (instance ; data ; instance->videoTexture)
+    if (instance && data && instance->videoTexture)
     {
        GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)data);
     }
@@ -361,7 +352,7 @@ void LibretroGame::retroInputPoll()
 
 int16_t LibretroGame::retroInputState(unsigned port, unsigned device, unsigned index, unsigned id)
 {
-    if (port == 0 ; device == RETRO_DEVICE_JOYPAD ; instance)
+    if (port == 0 && device == RETRO_DEVICE_JOYPAD && instance)
     {
         shared_ptr<ControlsManager> cm = instance->getControlsManager();
         if(!cm) return 0;

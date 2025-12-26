@@ -1,9 +1,12 @@
 set(CMAKE_VERBOSE_MAKEFILE ON)
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 project(bobsgame)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fpermissive")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 -fpermissive")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${bobsgame_SOURCE_DIR}/cmake")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
 
@@ -12,13 +15,22 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
 #find_file(SDL2_INCLUDE_DIR NAME SDL.h HINTS SDL2)
 #find_library(SDL2_LIBRARY NAME SDL2)
 
-find_package(OpenGL)
-find_package(SDL2)
-find_package(SDL2_image)
-find_package(SDL2_mixer)
-find_package(SDL2_ttf)
-find_package(SDL2_net)
-find_package(Boost)
+#find_package(OpenGL)
+#find_package(SDL2)
+#find_package(SDL2_image)
+#find_package(SDL2_mixer)
+#find_package(SDL2_ttf)
+#find_package(SDL2_net)
+#find_package(Boost)
+
+add_subdirectory(lib/SDL)
+add_subdirectory(lib/SDL_image)
+add_subdirectory(lib/SDL_mixer)
+add_subdirectory(lib/SDL_ttf)
+add_subdirectory(lib/SDL_net)
+add_subdirectory(lib/poco)
+add_subdirectory(lib/GWEN/gwen)
+
 #find_library(OPENGL REQUIRED GL)
 #find_library(SDL2 REQUIRED sdl2)
 #find_library(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
@@ -32,17 +44,16 @@ include_directories(
         ${SDL2_MIXER_INCLUDE_DIR}
         ${SDL2_TTF_INCLUDE_DIR}
         ${SDL2_NET_INCLUDE_DIR}
-        ${bobsgame_SOURCE_DIR}/lib/glew-2.0.0/include
         ${bobsgame_SOURCE_DIR}/lib
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Foundation/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/JSON/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Net/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Util/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/XML/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Zip/include
+        ${bobsgame_SOURCE_DIR}/lib/poco/Foundation/include
+        ${bobsgame_SOURCE_DIR}/lib/poco/JSON/include
+        ${bobsgame_SOURCE_DIR}/lib/poco/Net/include
+        ${bobsgame_SOURCE_DIR}/lib/poco/Util/include
+        ${bobsgame_SOURCE_DIR}/lib/poco/XML/include
+        ${bobsgame_SOURCE_DIR}/lib/poco/Zip/include
         ${bobsgame_SOURCE_DIR}/lib/miniz-master
         ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
-        ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
+        ${bobsgame_SOURCE_DIR}/lib/GWEN/gwen/include
         ${bobsgame_SOURCE_DIR}/lib/projectm/src
         ${bobsgame_SOURCE_DIR}/lib/libretro-common/include
         #${bobsgame_SOURCE_DIR}/lib/boost_1_62_0
@@ -52,59 +63,13 @@ include_directories(
 )
 
 
-link_directories(
-        #${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64
-        #${Boost_LIBRARY_DIRS}
-        /usr/local/lib
-        #${bobsgame_SOURCE_DIR}/linux
 
-)
 
 #add_definitions(-DBOOST_ALL_NO_LIB=1)# -DBOOST_ALL_DYN_LINK -DBOOST_LOG_DYN_LINK)
 add_definitions(-DBOOST_LIB_DIAGNOSTIC=1)
 
 
-link_libraries(
-        ${OPENGL_gl_LIBRARY}
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_MIXER_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_NET_LIBRARY}
 
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libCppUnit.so.1
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoFoundation.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoJSON.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoNet.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoUtil.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoXML.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoZip.so.48
-
-
-        ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/lib/linux/gmake/libgwen_static.a
-        ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/lib/linux/gmake/libGWEN-Renderer-OpenGL_TruetypeFont.a
-       # libCppUnit.so.1
-       # libPocoFoundation.so.45
-       # libPocoJSON.so.45
-       # libPocoNet.so.45
-       # libPocoUtil.so.45
-       # libPocoXML.so.45
-       # libPocoZip.so.45
-
-        #${bobsgame_SOURCE_DIR}/linux/libCppUnit.so.1
-        #${bobsgame_SOURCE_DIR}/linux/libPocoFoundation.so.45
-        #${bobsgame_SOURCE_DIR}/linux/libPocoJSON.so.45
-        #${bobsgame_SOURCE_DIR}/linux/libPocoNet.so.45
-        #${bobsgame_SOURCE_DIR}/linux/libPocoUtil.so.45
-        #${bobsgame_SOURCE_DIR}/linux/libPocoXML.so.45
-        #${bobsgame_SOURCE_DIR}/linux/libPocoZip.so.45
-        #${Boost_SERIALIZATION_LIBRARY}
-        #/usr/local/lib/libboost_serialization.a
-        #/usr/local/lib/libboost_serialization.so.1.62.0
-        #libboost_serialization.so.1.62.0
-        boost_serialization
-        #${bobsgame_SOURCE_DIR}/linux/libboost_serialization.so.1.62.0
-)
 
 
 
@@ -122,36 +87,33 @@ set(SOURCE_FILES
         stdafx.h
         bobtypes.h
         #    targetver.h
-        lib/glew-2.0.0/include/GL/eglew.h
-        lib/glew-2.0.0/include/GL/glew.h
-        lib/glew-2.0.0/include/GL/glxew.h
-        #    lib/glew-2.0.0/include/GL/wglew.h
-        lib/glew-2.0.0/src/glew.c
+        #lib/glew-2.0.0/include/GL/eglew.h
+        lib/GWEN/gwen/include/GL/glew.h
+        lib/GWEN/gwen/Renderers/OpenGL/glew.c
         lib/HQ2X/HQ2X.cpp
         lib/HQ2X/HQ2X.h
-        lib/DG_misc.h
-        lib/SDL_platform.h
-        lib/SDL_stbimage.h
-        lib/stb_image.h
-        lib/stb_image_resize.h
-        lib/stb_image_write.h
-        lib/stb_truetype.h
-        lib/stb_vorbis.c
+        lib/Snippets/DG_misc.h
+        lib/SDL/include/SDL_platform.h
+        lib/Snippets/SDL_stbimage.h
+        lib/stb/stb_image.h
+        lib/stb/deprecated/stb_image_resize.h
+        lib/stb/stb_image_write.h
+        lib/stb/stb_truetype.h
+        lib/stb/stb_vorbis.c
         #lib/minilzo-2.09/minilzo.c
         lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp
-        lib/md5.cpp
-        lib/md5.h
-        lib/lz4-1.7.5/lib/lz4.c
-        lib/lz4-1.7.5/lib/lz4.h
-        lib/lz4-1.7.5/lib/lz4frame.c
-        lib/lz4-1.7.5/lib/lz4frame.h
-        lib/lz4-1.7.5/lib/lz4frame_static.h
-        lib/lz4-1.7.5/lib/lz4hc.c
-        lib/lz4-1.7.5/lib/lz4hc.h
-        lib/lz4-1.7.5/lib/lz4opt.h
-        lib/lz4-1.7.5/lib/xxhash.c
-        lib/lz4-1.7.5/lib/xxhash.h
-        #lib/miniz-master/miniz.c
+        lib/md5-c/md5.c
+        lib/md5-c/md5.h
+        lib/lz4-java/src/lz4/lib/lz4.c
+        lib/lz4-java/src/lz4/lib/lz4.h
+        lib/lz4-java/src/lz4/lib/lz4frame.c
+        lib/lz4-java/src/lz4/lib/lz4frame.h
+        lib/lz4-java/src/lz4/lib/lz4frame_static.h
+        lib/lz4-java/src/lz4/lib/lz4hc.c
+        lib/lz4-java/src/lz4/lib/lz4hc.h
+        lib/lz4-java/src/lz4/lib/xxhash.c
+        lib/lz4-java/src/lz4/lib/xxhash.h
+        lib/miniz/miniz.c
     src/Engine/cinematics/CinematicsManager.cpp
     src/Engine/cinematics/CinematicsManager.h
     src/Engine/cinematics/Letterbox.cpp
@@ -489,10 +451,35 @@ set(SOURCE_FILES
 
 
 
+add_library(glew STATIC
+    lib/GWEN/gwen/Renderers/OpenGL/glew.c
+    lib/GWEN/gwen/include/GL/glew.h
+)
+target_include_directories(glew PUBLIC lib/GWEN/gwen/include)
+target_compile_definitions(glew PUBLIC GLEW_STATIC)
+
+add_library(GLEW::glew ALIAS glew)
+add_library(GLEW::glew_s ALIAS glew)
+set(STD_FILESYSTEM_EXISTS TRUE CACHE BOOL "" FORCE)
 add_subdirectory(lib/projectm)
 add_subdirectory(lib/gambatte-libretro)
 add_executable(bobsgame ${SOURCE_FILES})
-target_link_libraries(bobsgame projectM)
+target_link_libraries(bobsgame
+        SDL2::SDL2
+        SDL2_image::SDL2_image
+        SDL2_mixer::SDL2_mixer
+        SDL2_ttf::SDL2_ttf
+        SDL2_net::SDL2_net
+        Poco::Foundation
+        Poco::Net
+        Poco::Util
+        Poco::XML
+        Poco::JSON
+        Poco::Zip
+        GWEN_static
+        GWEN_opengl
+        projectM
+)
 
 
 
