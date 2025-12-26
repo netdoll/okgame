@@ -1,0 +1,4 @@
+C:/Users/hyper/workspace/okgame/CMakeFiles/ALL_BUILD.dir
+C:/Users/hyper/workspace/okgame/CMakeFiles/ZERO_CHECK.dir
+C:/Users/hyper/workspace/okgame/lib/gambatte-libretro/CMakeFiles/gambatte_libretro.dir
+C:/Users/hyper/workspace/okgame/lib/gambatte-libretro/CMakeFiles/ALL_BUILD.dir

@@ -900,3 +900,102 @@ cl : command line warning D9002: ignoring unknown option '-fpermissive' [C:\User
   xmltok_impl.c
   xmltok_ns.c
   Generating Code...
+  _BUNDLED_EXPAT.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\poco\dependencies\expat\_BUNDLED_EXPAT.dir\Release\_BUNDLED_EXPAT.lib
+  Building Custom Rule C:/Users/hyper/workspace/okgame/lib/poco/XML/CMakeLists.txt
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30159 for x64
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /IC:\Users\hyper\workspace\okgame\lib\poco\XML\include /IC:\Users\hyper\workspace\okgame\lib\poco\XML\src /IC:\Users\hyper\workspace\okgame\lib\poco\dependencies\expat\src /IC:\Users\hyper\workspace\okgame\lib\poco\Foundation\include /W3 /WX- /diagnostics:column /O2 /Ob2 /D _WINDLL /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D POCO_DLL /D POCO_CMAKE /D XML_DTD /D XML_GE /D XML_STATIC /D UTF8PROC_STATIC /D POCO_ENABLE_CPP20 /D POCO_OS_FAMILY_WINDOWS /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /D XML_EXPORTS /EHsc /MD /GR /std:c++20 /Fo"XML.dir\Release\\" /Fd"XML.dir\Release\vc142.pdb" /external:W3 /TP /errorReport:queue  -fpermissive /Zc:__cplusplus C:\Users\hyper\workspace\okgame\lib\poco\XML\src\AbstractContainerNode.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\AbstractNode.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Attr.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\AttrMap.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Attributes.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\AttributesImpl.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\CDATASection.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\CharacterData.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\ChildNodesList.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Comment.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\ContentHandler.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DOMBuilder.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DOMException.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DOMImplementation.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DOMObject.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DOMParser.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DOMSerializer.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DOMWriter.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DTDHandler.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DTDMap.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DeclHandler.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DefaultHandler.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Document.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DocumentEvent.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DocumentFragment.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\DocumentType.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Element.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\ElementsByTagNameList.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Entity.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\EntityReference.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\EntityResolver.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\EntityResolverImpl.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\ErrorHandler.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Event.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\EventDispatcher.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\EventException.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\EventListener.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\EventTarget.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\InputSource.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\LexicalHandler.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Locator.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\LocatorImpl.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\MutationEvent.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Name.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NamePool.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NamedNodeMap.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NamespaceStrategy.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NamespaceSupport.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Node.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NodeAppender.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NodeFilter.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NodeIterator.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\NodeList.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Notation.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\ParserEngine.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\ProcessingInstruction.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\QName.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\SAXException.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\SAXParser.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\Text.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\TreeWalker.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\ValueTraits.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\WhitespaceFilter.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLException.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLFilter.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLFilterImpl.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLReader.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLStreamParser.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLStreamParserException.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLString.cpp C:\Users\hyper\workspace\okgame\lib\poco\XML\src\XMLWriter.cpp
+cl : command line warning D9002: ignoring unknown option '-fpermissive' [C:\Users\hyper\workspace\okgame\build\lib\poco\XML\XML.vcxproj]
+  AbstractContainerNode.cpp
+  AbstractNode.cpp
+  Attr.cpp
+  AttrMap.cpp
+  Attributes.cpp
+  AttributesImpl.cpp
+  CDATASection.cpp
+  CharacterData.cpp
+  ChildNodesList.cpp
+  Comment.cpp
+  ContentHandler.cpp
+  DOMBuilder.cpp
+  DOMException.cpp
+  DOMImplementation.cpp
+  DOMObject.cpp
+  DOMParser.cpp
+  DOMSerializer.cpp
+  DOMWriter.cpp
+  DTDHandler.cpp
+  DTDMap.cpp
+  Generating Code...
+  Compiling...
+  DeclHandler.cpp
+  DefaultHandler.cpp
+  Document.cpp
+  DocumentEvent.cpp
+  DocumentFragment.cpp
+  DocumentType.cpp
+  Element.cpp
+  ElementsByTagNameList.cpp
+  Entity.cpp
+  EntityReference.cpp
+  EntityResolver.cpp
+  EntityResolverImpl.cpp
+  ErrorHandler.cpp
+  Event.cpp
+  EventDispatcher.cpp
+  EventException.cpp
+  EventListener.cpp
+  EventTarget.cpp
+  InputSource.cpp
+  LexicalHandler.cpp
+  Generating Code...
+  Compiling...
+  Locator.cpp
+  LocatorImpl.cpp
+  MutationEvent.cpp
+  Name.cpp
+  NamePool.cpp
+  NamedNodeMap.cpp
+  NamespaceStrategy.cpp
+  NamespaceSupport.cpp
+  Node.cpp
+  NodeAppender.cpp
+  NodeFilter.cpp
+  NodeIterator.cpp
+  NodeList.cpp
+  Notation.cpp
+  ParserEngine.cpp
+  ProcessingInstruction.cpp
+  QName.cpp
+  SAXException.cpp
+  SAXParser.cpp
+  Text.cpp
+  Generating Code...
+  Compiling...
+  TreeWalker.cpp
+  ValueTraits.cpp
+  WhitespaceFilter.cpp
+  XMLException.cpp
+  XMLFilter.cpp
+  XMLFilterImpl.cpp
+  XMLReader.cpp
+  XMLStreamParser.cpp
+  XMLStreamParserException.cpp
+  XMLString.cpp
+  XMLWriter.cpp
+  Generating Code...
+     Creating library C:/Users/hyper/workspace/okgame/build/lib/PocoXML.lib and object C:/Users/hyper/workspace/okgame/build/lib/PocoXML.exp
+  XML.vcxproj -> C:\Users\hyper\workspace\okgame\build\bin\PocoXML.dll
+  Building Custom Rule C:/Users/hyper/workspace/okgame/lib/poco/Util/CMakeLists.txt
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30159 for x64
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /IC:\Users\hyper\workspace\okgame\lib\poco\Util\include /IC:\Users\hyper\workspace\okgame\lib\poco\Util\src /IC:\Users\hyper\workspace\okgame\lib\poco\Foundation\include /IC:\Users\hyper\workspace\okgame\lib\poco\XML\include /IC:\Users\hyper\workspace\okgame\lib\poco\JSON\include /W3 /WX- /diagnostics:column /O2 /Ob2 /D _WINDLL /D _UNICODE /D UNICODE /D WIN32 /D _WINDOWS /D NDEBUG /D POCO_DLL /D POCO_CMAKE /D UTF8PROC_STATIC /D POCO_ENABLE_CPP20 /D POCO_OS_FAMILY_WINDOWS /D UNICODE /D _UNICODE /D "CMAKE_INTDIR=\"Release\"" /D Util_EXPORTS /EHsc /MD /GR /std:c++20 /Fo"Util.dir\Release\\" /Fd"Util.dir\Release\vc142.pdb" /external:W3 /TP /errorReport:queue  -fpermissive /Zc:__cplusplus C:\Users\hyper\workspace\okgame\lib\poco\Util\src\AbstractConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\Application.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\ConfigurationMapper.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\ConfigurationView.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\FilesystemConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\HelpFormatter.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\IniFileConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\IntValidator.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\JSONConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\LayeredConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\LocalConfigurationView.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\LoggingConfigurator.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\LoggingSubsystem.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\MapConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\Option.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\OptionCallback.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\OptionException.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\OptionProcessor.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\OptionSet.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\PropertyFileConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\RegExpValidator.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\ServerApplication.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\Subsystem.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\SystemConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\Timer.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\TimerTask.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\Validator.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\WinRegistryConfiguration.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\WinRegistryKey.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\WinService.cpp C:\Users\hyper\workspace\okgame\lib\poco\Util\src\XMLConfiguration.cpp
+cl : command line warning D9002: ignoring unknown option '-fpermissive' [C:\Users\hyper\workspace\okgame\build\lib\poco\Util\Util.vcxproj]
+  AbstractConfiguration.cpp
+  Application.cpp
+  ConfigurationMapper.cpp
+  ConfigurationView.cpp
+  FilesystemConfiguration.cpp
+  HelpFormatter.cpp
+  IniFileConfiguration.cpp
+  IntValidator.cpp

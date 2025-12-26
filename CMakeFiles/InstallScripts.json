@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/hyper/workspace/okgame/cmake_install.cmake",
+		"C:/Users/hyper/workspace/okgame/lib/gambatte-libretro/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
