@@ -71,7 +71,7 @@ typedef char GLchar;
 #endif
 	
 #ifndef GL_GLEXT_LEGACY
-#include <OpenGL/glext.h>
+//#include <OpenGL/glext.h>
 #endif
 
 /* For compatibility with OpenGL v1.0 */

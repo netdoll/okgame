@@ -999,3 +999,51 @@ cl : command line warning D9002: ignoring unknown option '-fpermissive' [C:\User
   HelpFormatter.cpp
   IniFileConfiguration.cpp
   IntValidator.cpp
+  JSONConfiguration.cpp
+  LayeredConfiguration.cpp
+  LocalConfigurationView.cpp
+  LoggingConfigurator.cpp
+  LoggingSubsystem.cpp
+  MapConfiguration.cpp
+  Option.cpp
+  OptionCallback.cpp
+  OptionException.cpp
+  OptionProcessor.cpp
+  OptionSet.cpp
+  PropertyFileConfiguration.cpp
+  Generating Code...
+  Compiling...
+  RegExpValidator.cpp
+  ServerApplication.cpp
+  Subsystem.cpp
+  SystemConfiguration.cpp
+  Timer.cpp
+  TimerTask.cpp
+  Validator.cpp
+  WinRegistryConfiguration.cpp
+  WinRegistryKey.cpp
+  WinService.cpp
+  XMLConfiguration.cpp
+  Generating Code...
+     Creating library C:/Users/hyper/workspace/okgame/build/lib/PocoUtil.lib and object C:/Users/hyper/workspace/okgame/build/lib/PocoUtil.exp
+  Util.vcxproj -> C:\Users\hyper\workspace\okgame\build\bin\PocoUtil.dll
+  Zip.vcxproj -> C:\Users\hyper\workspace\okgame\build\bin\PocoZip.dll
+  Building Custom Rule C:/Users/hyper/workspace/okgame/CMakeLists.txt
+  glew.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\glew.lib
+  Audio.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\Audio\Audio.dir\Release\Audio.lib
+  hlslparser.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectm\vendor\hlslparser\hlslparser.dir\Release\hlslparser.lib
+  projectM_eval.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectM_eval.lib
+  MilkdropPreset.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\MilkdropPreset\MilkdropPreset.dir\Release\MilkdropPreset.lib
+  SOIL2.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectm\vendor\SOIL2\SOIL2.dir\Release\SOIL2.lib
+  Renderer.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\Renderer\Renderer.dir\Release\Renderer.lib
+  UserSprites.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\UserSprites\UserSprites.dir\Release\UserSprites.lib
+  projectM_main.vcxproj -> C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\projectM_main.dir\Release\projectM_main.lib
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30159 for x64
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /IC:\Users\hyper\workspace\okgame\lib /IC:\Users\hyper\workspace\okgame\lib\poco\Foundation\include /IC:\Users\hyper\workspace\okgame\lib\poco\JSON\include /IC:\Users\hyper\workspace\okgame\lib\poco\Net\include /IC:\Users\hyper\workspace\okgame\lib\poco\Util\include /IC:\Users\hyper\workspace\okgame\lib\poco\XML\include /IC:\Users\hyper\workspace\okgame\lib\poco\Zip\include /I"C:\Users\hyper\workspace\okgame\lib\miniz-master" /I"C:\Users\hyper\workspace\okgame\lib\minilzo-2.09" /IC:\Users\hyper\workspace\okgame\lib\GWEN\gwen\include /IC:\Users\hyper\workspace\okgame\lib\projectm\src /I"C:\Users\hyper\workspace\okgame\lib\libretro-common\include" /IC:\Users\hyper\workspace\okgame /IC:\Users\hyper\workspace\okgame\build\lib\projectm\include /IC:\Users\hyper\workspace\okgame\lib\projectm\src\api\include /IC:\Users\hyper\workspace\okgame\build\lib\projectm\src\api\include /W3 /WX- /diagnostics:column /O2 /Ob2 /D _WINDLL /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D BOOST_LIB_DIAGNOSTIC=1 /D "DATADIR_PATH=\"\"" /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D STBI_NO_DDS /D GLEW_STATIC /D "CMAKE_INTDIR=\"Release\"" /D projectM_EXPORTS /EHsc /MD /GR /std:c++17 /Fo"projectM.dir\Release\\" /Fd"projectM.dir\Release\vc142.pdb" /external:W3 /TP /FIconfig.h /errorReport:queue  -fpermissive C:\Users\hyper\workspace\okgame\build\lib\projectm\dummy.cpp
+cl : command line warning D9002: ignoring unknown option '-fpermissive' [C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\projectM.vcxproj]
+  dummy.cpp
+LINK : warning LNK4044: unrecognized option '/Wl,-rpath,'$ORIGIN/libs:$$ORIGIN/libs/''; ignored [C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\projectM.vcxproj]
+     Creating library C:/Users/hyper/workspace/okgame/build/lib/projectM-4.lib and object C:/Users/hyper/workspace/okgame/build/lib/projectM-4.exp
+LINK : warning LNK4217: symbol '??0FrameAudioData@Audio@libprojectM@@QEAA@XZ (public: __cdecl libprojectM::Audio::FrameAudioData::FrameAudioData(void))' defined in 'PresetFactory.obj' is imported by 'PresetState.obj' in function '"public: __cdecl libprojectM::MilkdropPreset::PresetState::PresetState(void)" (??0PresetState@MilkdropPreset@libprojectM@@QEAA@XZ)' [C:\Users\hyper\workspace\okgame\build\lib\projectm\src\libprojectM\projectM.vcxproj]
+  projectM.vcxproj -> C:\Users\hyper\workspace\okgame\build\bin\projectM-4.dll

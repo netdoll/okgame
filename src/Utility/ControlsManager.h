@@ -7,7 +7,9 @@
 #pragma once
 #include "bobtypes.h"
 #include "src/main.h"
+#ifdef ORBIS
 #include "input_output_devices/api_pad_mouse/basic/api_mouse.h"
+#endif
 
 class Logger;
 

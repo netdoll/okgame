@@ -1,4 +1,5 @@
 #pragma once
+#define NOMINMAX
 #ifndef bobstdafx_h
 #define bobstdafx_h
 

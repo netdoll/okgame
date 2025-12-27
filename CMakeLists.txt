@@ -30,6 +30,7 @@ add_subdirectory(lib/SDL_ttf)
 add_subdirectory(lib/SDL_net)
 add_subdirectory(lib/poco)
 add_subdirectory(lib/GWEN/gwen)
+add_subdirectory(lib/boost)
 
 #find_library(OPENGL REQUIRED GL)
 #find_library(SDL2 REQUIRED sdl2)
@@ -37,7 +38,34 @@ add_subdirectory(lib/GWEN/gwen)
 #find_library(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
 #find_library(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
 
-include_directories(
+#include_directories(
+#        ${OPENGL_INCLUDE_DIR}
+#        ${SDL2_INCLUDE_DIR}
+#        ${SDL2_IMAGE_INCLUDE_DIR}
+#        ${SDL2_MIXER_INCLUDE_DIR}
+#        ${SDL2_TTF_INCLUDE_DIR}
+#        ${SDL2_NET_INCLUDE_DIR}
+#        ${bobsgame_SOURCE_DIR}/lib
+#        ${bobsgame_SOURCE_DIR}/lib/poco/Foundation/include
+#        ${bobsgame_SOURCE_DIR}/lib/poco/JSON/include
+#        ${bobsgame_SOURCE_DIR}/lib/poco/Net/include
+#        ${bobsgame_SOURCE_DIR}/lib/poco/Util/include
+#        ${bobsgame_SOURCE_DIR}/lib/poco/XML/include
+#        ${bobsgame_SOURCE_DIR}/lib/poco/Zip/include
+#        ${bobsgame_SOURCE_DIR}/lib/miniz-master
+#        ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
+#        ${bobsgame_SOURCE_DIR}/lib/GWEN/gwen/include
+#        ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
+#        ${bobsgame_SOURCE_DIR}/lib/projectm/src
+#        ${bobsgame_SOURCE_DIR}/lib/libretro-common/include
+#        #${bobsgame_SOURCE_DIR}/lib/boost_1_62_0
+#        ${Boost_INCLUDE_DIR}
+#        ${bobsgame_SOURCE_DIR}/lib/boost
+#        ${bobsgame_SOURCE_DIR}
+#
+#)
+
+set(BOBSGAME_INCLUDE_DIRS
         ${OPENGL_INCLUDE_DIR}
         ${SDL2_INCLUDE_DIR}
         ${SDL2_IMAGE_INCLUDE_DIR}
@@ -54,19 +82,20 @@ include_directories(
         ${bobsgame_SOURCE_DIR}/lib/miniz-master
         ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
         ${bobsgame_SOURCE_DIR}/lib/GWEN/gwen/include
+        ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
         ${bobsgame_SOURCE_DIR}/lib/projectm/src
         ${bobsgame_SOURCE_DIR}/lib/libretro-common/include
         #${bobsgame_SOURCE_DIR}/lib/boost_1_62_0
         ${Boost_INCLUDE_DIR}
+        ${bobsgame_SOURCE_DIR}/lib/boost
         ${bobsgame_SOURCE_DIR}
-
 )
 
 
 
 
 #add_definitions(-DBOOST_ALL_NO_LIB=1)# -DBOOST_ALL_DYN_LINK -DBOOST_LOG_DYN_LINK)
-add_definitions(-DBOOST_LIB_DIAGNOSTIC=1)
+add_definitions(-DBOOST_LIB_DIAGNOSTIC=1 -DNOMINMAX)
 
 
 
@@ -464,6 +493,7 @@ set(STD_FILESYSTEM_EXISTS TRUE CACHE BOOL "" FORCE)
 add_subdirectory(lib/projectm)
 add_subdirectory(lib/gambatte-libretro)
 add_executable(bobsgame ${SOURCE_FILES})
+target_include_directories(bobsgame PRIVATE ${BOBSGAME_INCLUDE_DIRS})
 target_link_libraries(bobsgame
         SDL2::SDL2
         SDL2_image::SDL2_image
@@ -479,6 +509,7 @@ target_link_libraries(bobsgame
         GWEN_static
         GWEN_opengl
         projectM
+        Boost::serialization
 )
 
 

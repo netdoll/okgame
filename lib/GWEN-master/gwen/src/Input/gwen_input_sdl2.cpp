@@ -32,6 +32,7 @@
 
 #include "Gwen/Gwen.h"
 #include "Gwen/Input/gwen_input_sdl2.h"
+#include "Gwen/InputHandler.h"
 
 #include "SDL.h"
 
@@ -48,6 +49,7 @@ GwenSDL2::GwenSDL2()
 void GwenSDL2::Initialize(Controls::Canvas* canvas)
 {
     _canvas = canvas;
+    Gwen::Input::RegisterCanvas(_canvas);
 }
 
 bool GwenSDL2::ProcessEvent(const SDL_Event& the_event)
@@ -65,63 +67,63 @@ bool GwenSDL2::ProcessEvent(const SDL_Event& the_event)
             SDL_KeyboardEvent keyboard_event = the_event.key;
             SDL_Scancode scancode = keyboard_event.keysym.scancode;
 
-            int key = Gwen::Key::INVALID;
+            int key = Gwen::Key::Invalid;
             switch (scancode)
             {
             case SDL_SCANCODE_RETURN:
             case SDL_SCANCODE_KP_ENTER:
-                key = Gwen::Key::RETURN;
+                key = Gwen::Key::Return;
                 break;
             case SDL_SCANCODE_BACKSPACE:
-                key = Gwen::Key::BACKSPACE;
+                key = Gwen::Key::Backspace;
                 break;
             case SDL_SCANCODE_DELETE:
-                key = Gwen::Key::DEL;
+                key = Gwen::Key::Delete;
                 break;
             case SDL_SCANCODE_LEFT:
-                key = Gwen::Key::LEFT;
+                key = Gwen::Key::Left;
                 break;
             case SDL_SCANCODE_RIGHT:
-                key = Gwen::Key::RIGHT;
+                key = Gwen::Key::Right;
                 break;
             case SDL_SCANCODE_LSHIFT:
-                key = Gwen::Key::SHIFT;
+                key = Gwen::Key::Shift;
                 break;
             case SDL_SCANCODE_RSHIFT:
-                key = Gwen::Key::SHIFT;
+                key = Gwen::Key::Shift;
                 break;
             case SDL_SCANCODE_TAB:
-                key = Gwen::Key::TAB;
+                key = Gwen::Key::Tab;
                 break;
             case SDL_SCANCODE_SPACE:
-                key = Gwen::Key::SPACE;
+                key = Gwen::Key::Space;
                 break;
             case SDL_SCANCODE_HOME:
-                key = Gwen::Key::HOME;
+                key = Gwen::Key::Home;
                 break;
             case SDL_SCANCODE_END:
-                key = Gwen::Key::END;
+                key = Gwen::Key::End;
                 break;
             case SDL_SCANCODE_LCTRL:
-                key = Gwen::Key::CONTROL;
+                key = Gwen::Key::Control;
                 break;
             case SDL_SCANCODE_RCTRL:
-                key = Gwen::Key::CONTROL;
+                key = Gwen::Key::Control;
                 break;
             case SDL_SCANCODE_UP:
-                key = Gwen::Key::UP;
+                key = Gwen::Key::Up;
                 break;
             case SDL_SCANCODE_DOWN:
-                key = Gwen::Key::DOWN;
+                key = Gwen::Key::Down;
                 break;
             case SDL_SCANCODE_ESCAPE:
-                key = Gwen::Key::ESCAPE;
+                key = Gwen::Key::Escape;
                 break;
             case SDL_SCANCODE_LALT:
-                key = Gwen::Key::ALT;
+                key = Gwen::Key::Alt;
                 break;
             case SDL_SCANCODE_RALT:
-                key = Gwen::Key::ALT;
+                key = Gwen::Key::Alt;
                 break;
 
             //
@@ -159,18 +161,18 @@ bool GwenSDL2::ProcessEvent(const SDL_Event& the_event)
                 return false;
             };
 
-            return _canvas->InputKey(key, keyboard_event.state != 0);
+            return Gwen::Input::OnKeyEvent(key, keyboard_event.state != 0);
         };
     case SDL_TEXTINPUT:
         {
             // TODO: This will probably need fixing for UTF-8.
             char character = the_event.text.text[0];
-            return _canvas->InputCharacter(character);
+            return Gwen::Input::OnCharacter(character);
         };
     case SDL_MOUSEMOTION:
         {
             SDL_MouseMotionEvent mouse_motion_event = the_event.motion;
-            return _canvas->InputMouseMoved(mouse_motion_event.x, mouse_motion_event.y, mouse_motion_event.xrel, mouse_motion_event.yrel);
+            return Gwen::Input::OnMouseMoved(mouse_motion_event.x, mouse_motion_event.y, mouse_motion_event.xrel, mouse_motion_event.yrel, nullptr);
         };
     case SDL_MOUSEBUTTONDOWN:
     case SDL_MOUSEBUTTONUP:
@@ -193,12 +195,12 @@ bool GwenSDL2::ProcessEvent(const SDL_Event& the_event)
                 return false;
             };
 
-            return _canvas->InputMouseButton(button, mouse_button_event.state != 0);
+            return Gwen::Input::OnMouseButton(button, mouse_button_event.state != 0);
         };
     case SDL_MOUSEWHEEL:
         {
             SDL_MouseWheelEvent mouse_wheel_event = the_event.wheel;
-            return _canvas->InputMouseWheel(mouse_wheel_event.y);
+            return Gwen::Input::OnMouseWheel(mouse_wheel_event.y);
         };
     default:
         {
