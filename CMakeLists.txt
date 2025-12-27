@@ -492,6 +492,10 @@ add_library(GLEW::glew_s ALIAS glew)
 set(STD_FILESYSTEM_EXISTS TRUE CACHE BOOL "" FORCE)
 add_subdirectory(lib/projectm)
 add_subdirectory(lib/gambatte-libretro)
+set_target_properties(gambatte_libretro PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cores"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cores"
+)
 add_executable(bobsgame ${SOURCE_FILES})
 target_include_directories(bobsgame PRIVATE ${BOBSGAME_INCLUDE_DIRS})
 target_link_libraries(bobsgame

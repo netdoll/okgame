@@ -3,8 +3,31 @@
 #include "src/Utility/ControlsManager.h"
 #include "src/Utility/gl/GLUtils.h"
 #include "src/Utility/audio/AudioManager.h"
+#include <cstdarg>
 
 LibretroGame* LibretroGame::instance = nullptr;
+
+static void retroLogCallback(enum retro_log_level level, const char *fmt, ...)
+{
+    char buffer[4096];
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(buffer, sizeof(buffer), fmt, args);
+    va_end(args);
+
+    string msg(buffer);
+    // Remove newline at end if present
+    if (!msg.empty() && msg.back() == '\n') msg.pop_back();
+
+    switch (level)
+    {
+        case RETRO_LOG_DEBUG: LibretroGame::log.debug(msg); break;
+        case RETRO_LOG_INFO: LibretroGame::log.info(msg); break;
+        case RETRO_LOG_WARN: LibretroGame::log.warn(msg); break;
+        case RETRO_LOG_ERROR: LibretroGame::log.error(msg); break;
+        default: LibretroGame::log.info(msg); break;
+    }
+}
 
 LibretroGame::LibretroGame(ND* nD) : NDGameEngine(nD)
 {
@@ -31,6 +54,9 @@ void LibretroGame::init()
     super::init();
     titleMenuShowing = true;
     currentPath = Main::getPath();
+    
+    BobFile(Main::getPath() + "data/libretro/system").createDirectories();
+    BobFile(Main::getPath() + "data/libretro/saves").createDirectories();
 }
 
 void LibretroGame::titleMenuUpdate()
@@ -165,7 +191,7 @@ bool LibretroGame::loadCore(const string& corePath)
 
     if (!coreHandle)
     {
-        // Log error
+        log.error("Failed to load core: " + corePath);
         return false;
     }
 
@@ -201,7 +227,11 @@ bool LibretroGame::loadCore(const string& corePath)
     LOAD_SYM(retro_get_memory_data);
     LOAD_SYM(retro_get_memory_size);
 
-    if (!retro_init) return false;
+    if (!retro_init) 
+    {
+        log.error("Failed to load retro_init symbol");
+        return false;
+    }
 
     retro_set_environment(retroEnvironment);
     retro_set_video_refresh(retroVideoRefresh);
@@ -231,6 +261,7 @@ bool LibretroGame::loadGame(const string& gamePath)
 
     if (!retro_load_game(&info))
     {
+        log.error("Failed to load game: " + gamePath);
         return false;
     }
 
@@ -240,6 +271,11 @@ bool LibretroGame::loadGame(const string& gamePath)
     // Initialize videoTexture with av_info geometry
     shared_ptr<ByteArray> emptyData = make_shared<ByteArray>(av_info.geometry.base_width * av_info.geometry.base_height * 4);
     videoTexture = GLUtils::getTextureFromData("Libretro", av_info.geometry.base_width, av_info.geometry.base_height, emptyData.get());
+
+    if (retro_set_controller_port_device)
+    {
+        retro_set_controller_port_device(0, RETRO_DEVICE_JOYPAD);
+    }
 
     Mix_HookMusic(audioCallback, this);
 
@@ -284,7 +320,22 @@ void LibretroGame::render()
     if (!titleMenuShowing && !fileBrowserMenu && videoTexture)
     {
         // Draw video texture to screen
-        GLUtils::drawTexture(videoTexture.get(), 0, 0, 1.0f, GLUtils::FILTER_NEAREST);
+        float screenW = (float)GLUtils::getViewportWidth();
+        float screenH = (float)GLUtils::getViewportHeight();
+        
+        float texW = (float)videoTexture->getImageWidth();
+        float texH = (float)videoTexture->getImageHeight();
+        
+        if (texW > 0 && texH > 0)
+        {
+            float scale = min(screenW / texW, screenH / texH);
+            float w = texW * scale;
+            float h = texH * scale;
+            float x = (screenW - w) / 2.0f;
+            float y = (screenH - h) / 2.0f;
+            
+            GLUtils::drawTexture(videoTexture.get(), x, x + w, y, y + h, 1.0f, GLUtils::FILTER_NEAREST);
+        }
     }
 }
 
@@ -295,8 +346,8 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
         case RETRO_ENVIRONMENT_GET_LOG_INTERFACE:
         {
             struct retro_log_callback *cb = (struct retro_log_callback *)data;
-            // cb->log = ...; // Implement log callback
-            break;
+            cb->log = retroLogCallback;
+            return true;
         }
         case RETRO_ENVIRONMENT_GET_CAN_DUPE:
             *(bool*)data = true;
@@ -306,6 +357,26 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
             const enum retro_pixel_format *fmt = (enum retro_pixel_format *)data;
             if (instance) instance->pixelFormat = *fmt;
             return true;
+        }
+        case RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY:
+        {
+            const char** dir = (const char**)data;
+            static string sysDir = Main::getPath() + "data/libretro/system";
+            *dir = sysDir.c_str();
+            return true;
+        }
+        case RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY:
+        {
+            const char** dir = (const char**)data;
+            static string saveDir = Main::getPath() + "data/libretro/saves";
+            *dir = saveDir.c_str();
+            return true;
+        }
+        case RETRO_ENVIRONMENT_GET_VARIABLE:
+        {
+            // struct retro_variable *var = (struct retro_variable *)data;
+            // log.debug("RETRO_ENVIRONMENT_GET_VARIABLE: " + string(var->key));
+            return false;
         }
     }
     return false;
