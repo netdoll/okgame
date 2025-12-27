@@ -211,8 +211,8 @@ public:
 
 	virtual int finalize(void);
 
-#endif
 };
+#endif
 
 
 
