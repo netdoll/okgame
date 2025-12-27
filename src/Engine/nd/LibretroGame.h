@@ -81,6 +81,7 @@ private:
     size_t (*retro_get_memory_size)(unsigned id) = nullptr;
 
     shared_ptr<BobTexture> videoTexture = nullptr;
+    enum retro_pixel_format pixelFormat = RETRO_PIXEL_FORMAT_0RGB1555;
 
     std::vector<int16_t> audioBuffer;
     std::mutex audioMutex;

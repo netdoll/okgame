@@ -304,7 +304,7 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
         case RETRO_ENVIRONMENT_SET_PIXEL_FORMAT:
         {
             const enum retro_pixel_format *fmt = (enum retro_pixel_format *)data;
-            // Handle pixel format
+            if (instance) instance->pixelFormat = *fmt;
             return true;
         }
     }
@@ -315,7 +315,83 @@ void LibretroGame::retroVideoRefresh(const void* data, unsigned width, unsigned 
 {
     if (instance && data && instance->videoTexture)
     {
-       GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)data);
+        static std::vector<u32> conversionBuffer;
+        if (conversionBuffer.size() < width * height) conversionBuffer.resize(width * height);
+        u32* output = conversionBuffer.data();
+
+        if (instance->pixelFormat == RETRO_PIXEL_FORMAT_XRGB8888)
+        {
+            // XRGB8888 (0x00RRGGBB) -> LE: BB GG RR XX
+            // GL_RGBA expects RR GG BB AA
+            // Need to swap B and R, and set A to FF
+            
+            const u32* input = (const u32*)data;
+            unsigned pitchPixels = pitch / 4;
+
+            for (unsigned y = 0; y < height; y++)
+            {
+                const u32* line = input + y * pitchPixels;
+                for (unsigned x = 0; x < width; x++)
+                {
+                    u32 pixel = line[x];
+                    u8 r = (pixel >> 16) & 0xFF;
+                    u8 g = (pixel >> 8) & 0xFF;
+                    u8 b = pixel & 0xFF;
+                    
+                    // Output: 0xAABBGGRR (LE) -> RR GG BB AA
+                    output[y * width + x] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+                }
+            }
+            GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)output);
+        }
+        else if (instance->pixelFormat == RETRO_PIXEL_FORMAT_RGB565)
+        {
+            // RGB565 -> RGBA8888
+            unsigned pitchPixels = pitch / 2;
+            
+            for (unsigned y = 0; y < height; y++)
+            {
+                const u16* line = (const u16*)((const u8*)data + y * pitch);
+                for (unsigned x = 0; x < width; x++)
+                {
+                    u16 pixel = line[x];
+                    u8 r = (pixel >> 11) & 0x1F;
+                    u8 g = (pixel >> 5) & 0x3F;
+                    u8 b = pixel & 0x1F;
+                    
+                    r = (r << 3) | (r >> 2);
+                    g = (g << 2) | (g >> 4);
+                    b = (b << 3) | (b >> 2);
+                    
+                    output[y * width + x] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+                }
+            }
+            GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)output);
+        }
+        else if (instance->pixelFormat == RETRO_PIXEL_FORMAT_0RGB1555)
+        {
+             // 0RGB1555 -> RGBA8888
+             unsigned pitchPixels = pitch / 2;
+
+             for (unsigned y = 0; y < height; y++)
+             {
+                 const u16* line = (const u16*)((const u8*)data + y * pitch);
+                 for (unsigned x = 0; x < width; x++)
+                 {
+                     u16 pixel = line[x];
+                     u8 r = (pixel >> 10) & 0x1F;
+                     u8 g = (pixel >> 5) & 0x1F;
+                     u8 b = pixel & 0x1F;
+
+                     r = (r << 3) | (r >> 2);
+                     g = (g << 3) | (g >> 2);
+                     b = (b << 3) | (b >> 2);
+
+                     output[y * width + x] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+                 }
+             }
+             GLUtils::updateTexture(instance->videoTexture, 0, 0, width, height, (u8*)output);
+        }
     }
 }
 
