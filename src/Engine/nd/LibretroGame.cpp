@@ -1543,6 +1543,12 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
              instance->variablesUpdated = false;
              return true;
         }
+        case RETRO_ENVIRONMENT_GET_RUMBLE_INTERFACE:
+        {
+            struct retro_rumble_interface *rumble = (struct retro_rumble_interface *)data;
+            rumble->set_rumble_state = retroSetRumbleState;
+            return true;
+        }
         // Handle other environment calls
     }
     return false;
@@ -1679,7 +1685,43 @@ void LibretroGame::retroInputPoll()
 
 int16_t LibretroGame::retroInputState(unsigned port, unsigned device, unsigned index, unsigned id)
 {
-    if ((port == 0 || port == 1) && device == RETRO_DEVICE_JOYPAD && instance)
+    if (instance == nullptr) return 0;
+
+    if (device == RETRO_DEVICE_ANALOG)
+    {
+        // Analog Input
+        // For Port 0 (P1), we need to access the first controller if available
+        if (ControlsManager::gameControllers.size() > port)
+        {
+            GameController* g = ControlsManager::gameControllers.get(port);
+            if(g)
+            {
+                SDL_GameController* controller = ControlsManager::controllersByJoystickID.get(g->id);
+                if(controller)
+                {
+                    SDL_GameControllerAxis axis = SDL_CONTROLLER_AXIS_INVALID;
+                    if (index == RETRO_DEVICE_INDEX_ANALOG_LEFT)
+                    {
+                        if (id == RETRO_DEVICE_ID_ANALOG_X) axis = SDL_CONTROLLER_AXIS_LEFTX;
+                        else if (id == RETRO_DEVICE_ID_ANALOG_Y) axis = SDL_CONTROLLER_AXIS_LEFTY;
+                    }
+                    else if (index == RETRO_DEVICE_INDEX_ANALOG_RIGHT)
+                    {
+                        if (id == RETRO_DEVICE_ID_ANALOG_X) axis = SDL_CONTROLLER_AXIS_RIGHTX;
+                        else if (id == RETRO_DEVICE_ID_ANALOG_Y) axis = SDL_CONTROLLER_AXIS_RIGHTY;
+                    }
+
+                    if (axis != SDL_CONTROLLER_AXIS_INVALID)
+                    {
+                        return SDL_GameControllerGetAxis(controller, axis);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    if ((port == 0 || port == 1) && device == RETRO_DEVICE_JOYPAD)
     {
         // Port 0: ControlsManager directly (mapped to P1 or keyboard)
         // Port 1: GameControllers[1] if exists
@@ -1752,6 +1794,59 @@ int16_t LibretroGame::retroInputState(unsigned port, unsigned device, unsigned i
         }
     }
     return 0;
+}
+
+bool LibretroGame::retroSetRumbleState(unsigned port, enum retro_rumble_effect effect, uint16_t strength)
+{
+    if (instance == nullptr) return false;
+
+    // Check if controller exists
+    if (ControlsManager::gameControllers.size() > port)
+    {
+        GameController* g = ControlsManager::gameControllers.get(port);
+        if (g)
+        {
+            shared_ptr<ControlsManager> cm = instance->getControlsManager();
+            if (cm)
+            {
+                // Effect mapping? Libretro has STRONG and WEAK.
+                // SDL haptic rumble is mono strength (0.0 to 1.0).
+                // We can just use the strength directly if we support it.
+                // Or maybe mix?
+                // For simplicity, we just play rumble.
+                // If strength is 0, we should stop it.
+
+                if (strength == 0)
+                {
+                    // To stop, we play 0 strength?
+                    // ControlsManager::doHaptic uses SDL_HapticRumblePlay.
+                    // Playing 0 strength usually stops/overrides current rumble on simple rumble devices.
+                    cm->doHaptic(g, 0, 0);
+                }
+                else
+                {
+                    // strength is 0-65535.
+                    // SDL_HapticRumblePlay takes 0.0-1.0.
+                    // doHaptic takes int magnitude (mapped to 0-1 by /32767.0f in doHaptic impl).
+                    // So we pass strength/2 or check implementation.
+                    // ControlsManager.cpp: SDL_HapticRumblePlay(g->haptic, (float)magnitude/32767.0f, length);
+                    // So if we pass 65535, it will be > 1.0, clipped to 1.0.
+                    // So we can just pass strength / 2 to be safe for 32767 max?
+                    // Actually doHaptic uses signed int, but libretro uses uint16.
+                    // Max uint16 is 65535. 32767 is max signed 16-bit.
+                    // So passing 65535/2 = 32767.
+
+                    // Duration: Continuous until stopped? Libretro doesn't specify duration, assumes state.
+                    // So we play for a long time (e.g. 5000ms) and update frequently.
+                    // If update comes with 0, we stop.
+
+                    cm->doHaptic(g, 5000, strength / 2);
+                }
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void LibretroGame::audioCallback(void *udata, Uint8 *stream, int len)
