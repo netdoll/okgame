@@ -77,7 +77,7 @@ public:
 
 	Map* getMap();
 
-	virtual Map* getCurrentMap() override;
+	virtual shared_ptr<Map> getCurrentMap() override;
 
 	bool getWasAddedToQueue();
 

@@ -233,7 +233,7 @@ Map* BobEvent::getMap()
 	return getCurrentMap();
 }
 
-Map* BobEvent::getCurrentMap()
+shared_ptr<Map> BobEvent::getCurrentMap()
 { //=========================================================================================================================
 	log.warn("Don't use getCurrentMap() in Events!");
 	return ServerObject::getCurrentMap();

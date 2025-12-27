@@ -50,6 +50,6 @@ public:
 
 	virtual void deleteFromMapEntityListAndReleaseTexture() override;
 
-	virtual void render(float alpha, BobTexture* texture, BobTexture* shadowTexture) override;
+	virtual void render(float alpha, std::shared_ptr<BobTexture> texture, std::shared_ptr<BobTexture> shadowTexture) override;
 };
 

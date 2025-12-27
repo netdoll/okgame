@@ -184,14 +184,9 @@ shared_ptr<CinematicsManager> EnginePart::getCinematicsManager()
 	return getEngine()->cinematicsManager;
 }
 
-Map* EnginePart::getCurrentMap()
+shared_ptr<Map> EnginePart::getCurrentMap()
 {
-	Map* m = getEngine()->mapManager->currentMap;
-//	if (m == nullptr)
-//	{
-//		m = new Map(e, new MapData(-1, "none", 0, 0));
-//	}
-	return m;
+	return getEngine()->mapManager->currentMap;
 }
 
 

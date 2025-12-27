@@ -164,7 +164,7 @@ public:
 
 	virtual void render(float alpha, std::shared_ptr<BobTexture> texture, std::shared_ptr<BobTexture> shadowTexture);
 
-	virtual std::shared_ptr<Map> getCurrentMap();
+	virtual shared_ptr<Map> getCurrentMap();
 
 	std::shared_ptr<Map> getMap();
 

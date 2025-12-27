@@ -508,7 +508,7 @@ void RamioGuy::move(int direction, float floatPixels)
 	}
 }
 
-void RamioGuy::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
+void RamioGuy::render(float alpha, std::shared_ptr<BobTexture> texture, std::shared_ptr<BobTexture> shadowTexture)
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();
@@ -549,7 +549,7 @@ void RamioGuy::render(float alpha, BobTexture* texture, BobTexture* shadowTextur
 		y1 = (float)(y0 + getHeight() * zoom);
 
 
-		GLUtils::drawTexture(texture, tx0, tx1, ty0, ty1, x0, x1, y0, y1, alpha, GLUtils::FILTER_NEAREST);
+		GLUtils::drawTexture(texture.get(), tx0, tx1, ty0, ty1, x0, x1, y0, y1, alpha, GLUtils::FILTER_NEAREST);
 	}
 }
 

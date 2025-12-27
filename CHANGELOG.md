@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2025-12-27
+### Fixed
+- Refactored `EnginePart::getCurrentMap` and `Entity::getCurrentMap` to return `std::shared_ptr<Map>`.
+- Updated `BobEvent`, `Cameraman`, `RandomCharacter` to match the new `getCurrentMap` signature.
+- Updated `RamioGuy::render` and `ScreenSprite::render` to use `std::shared_ptr<BobTexture>`.
+- Fixed `Gwen` `GetModuleFileNameW` error by using `GetModuleFileNameA`.
+- Fixed `Map.h` include path for `CTPL`.
+
+## [0.1.4] - 2025-12-27
+### Fixed
+- Fixed build error in `ProjectM.hpp` (missing include `Renderer/RenderContext.hpp`).
+- Fixed build error in `Entity.h` (covariant return type mismatch).
+- Fixed `ControlsManager.h` syntax error.
+- Fixed `BobSprite.h` include path.
+
 ## [0.1.3] - 2025-12-25
 ### Changed
 - Refactored `BobsGame` static texture members to use `std::shared_ptr`.

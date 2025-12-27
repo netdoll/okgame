@@ -6,7 +6,7 @@
 
 #pragma once
 #include "bobtypes.h"
-#include "CTPL-master/ctpl_stl.h"
+#include "CTPL/ctpl_stl.h"
 
 class Logger;
 

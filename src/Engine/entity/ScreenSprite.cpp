@@ -150,7 +150,7 @@ void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 	}
 }
 
-void ScreenSprite::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
+void ScreenSprite::render(float alpha, std::shared_ptr<BobTexture> texture, std::shared_ptr<BobTexture> shadowTexture)
 { //=========================================================================================================================
 
 
@@ -201,7 +201,7 @@ void ScreenSprite::render(float alpha, BobTexture* texture, BobTexture* shadowTe
 		y1 = (float)(y0 + getHeight());
 
 
-		GLUtils::drawTexture(texture, tx0, tx1, ty0, ty1, x0, x1, y0, y1, alpha, GLUtils::FILTER_NEAREST);
+		GLUtils::drawTexture(texture.get(), tx0, tx1, ty0, ty1, x0, x1, y0, y1, alpha, GLUtils::FILTER_NEAREST);
 	}
 }
 

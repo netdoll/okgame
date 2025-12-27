@@ -112,7 +112,7 @@ public:
 	//Map* getMap();
 
 
-	Map* getCurrentMap();
+	shared_ptr<Map> getCurrentMap();
 
 
 	void render(float alpha);

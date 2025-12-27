@@ -88,7 +88,7 @@ public:
 	shared_ptr<EventManager> getEventManager();
 	shared_ptr<CinematicsManager> getCinematicsManager();
 
-	virtual Map* getCurrentMap();
+	virtual shared_ptr<Map> getCurrentMap();
 
 	shared_ptr<ControlsManager> getControlsManager();
 

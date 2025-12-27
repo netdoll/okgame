@@ -55,7 +55,7 @@ void Cameraman::initCurrentAnimationFromSprite()
 //	return getMapManager()->getCurrentMap();
 //}
 
-Map* Cameraman::getCurrentMap()
+shared_ptr<Map> Cameraman::getCurrentMap()
 { //=========================================================================================================================
 
 	return getMapManager()->getCurrentMap();

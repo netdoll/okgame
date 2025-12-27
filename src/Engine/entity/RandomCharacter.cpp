@@ -230,7 +230,7 @@ RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int sp
 	setY(mapY - (getMiddleY() - getY()));
 }
 
-Map* RandomCharacter::getCurrentMap()
+shared_ptr<Map> RandomCharacter::getCurrentMap()
 { //=========================================================================================================================
 
 
