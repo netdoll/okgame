@@ -50,7 +50,9 @@ public:
 
 private:
     void* coreHandle = nullptr;
+    long long lastFrameTime = 0;
     double accumulatedTime = 0;
+    double fps = 60.0;
 
     // Core callbacks
     static bool retroEnvironment(unsigned cmd, void* data);

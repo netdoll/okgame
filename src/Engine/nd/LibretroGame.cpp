@@ -94,7 +94,12 @@ void LibretroGame::titleMenuUpdate()
         }
         else if (titleMenu->isSelectedID("Resume"))
         {
-            if (retro_run) titleMenuShowing = false;
+            if (retro_run) 
+            {
+                titleMenuShowing = false;
+                lastFrameTime = 0;
+                accumulatedTime = 0;
+            }
         }
         else if (titleMenu->isSelectedID("Save State"))
         {
@@ -280,6 +285,9 @@ bool LibretroGame::loadGame(const string& gamePath)
     struct retro_system_av_info av_info;
     retro_get_system_av_info(&av_info);
 
+    fps = av_info.timing.fps;
+    if (fps <= 0.0) fps = 60.0;
+
     // Initialize videoTexture with av_info geometry
     shared_ptr<ByteArray> emptyData = make_shared<ByteArray>(av_info.geometry.base_width * av_info.geometry.base_height * 4);
     videoTexture = GLUtils::getTextureFromData("Libretro", av_info.geometry.base_width, av_info.geometry.base_height, emptyData.get());
@@ -291,6 +299,9 @@ bool LibretroGame::loadGame(const string& gamePath)
 
     currentGamePath = gamePath;
     loadSRAM();
+    
+    lastFrameTime = 0;
+    accumulatedTime = 0;
 
     Mix_HookMusic(audioCallback, this);
 
@@ -387,7 +398,23 @@ void LibretroGame::update()
     {
         if (retro_run)
         {
-            retro_run();
+            long long currentTime = System::currentHighResTimer();
+            if (lastFrameTime == 0) lastFrameTime = currentTime;
+            
+            double delta = System::getTicksBetweenTimes(lastFrameTime, currentTime);
+            lastFrameTime = currentTime;
+            
+            accumulatedTime += delta;
+            
+            if (accumulatedTime > 200.0) accumulatedTime = 200.0;
+
+            double frameTime = 1000.0 / fps;
+            
+            while (accumulatedTime >= frameTime)
+            {
+                retro_run();
+                accumulatedTime -= frameTime;
+            }
         }
         else
         {
@@ -465,8 +492,12 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
         }
         case RETRO_ENVIRONMENT_GET_VARIABLE:
         {
-            // struct retro_variable *var = (struct retro_variable *)data;
-            // log.debug("RETRO_ENVIRONMENT_GET_VARIABLE: " + string(var->key));
+            struct retro_variable *var = (struct retro_variable *)data;
+            if (instance && instance->variables.count(var->key))
+            {
+                var->value = instance->variables[var->key].c_str();
+                return true;
+            }
             return false;
         }
     }
@@ -475,8 +506,14 @@ bool LibretroGame::retroEnvironment(unsigned cmd, void* data)
 
 void LibretroGame::retroVideoRefresh(const void* data, unsigned width, unsigned height, size_t pitch)
 {
-    if (instance && data && instance->videoTexture)
+    if (instance && data)
     {
+        if (!instance->videoTexture || instance->videoTexture->getImageWidth() != width || instance->videoTexture->getImageHeight() != height)
+        {
+             shared_ptr<ByteArray> emptyData = make_shared<ByteArray>(width * height * 4);
+             instance->videoTexture = GLUtils::getTextureFromData("Libretro", width, height, emptyData.get());
+        }
+
         static std::vector<u32> conversionBuffer;
         if (conversionBuffer.size() < width * height) conversionBuffer.resize(width * height);
         u32* output = conversionBuffer.data();
