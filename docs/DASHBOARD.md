@@ -8,6 +8,7 @@
 - Analog Input & Rumble: Implemented.
 
 ## Pending Tasks
-- [ ] Merge into `main`.
-- [ ] Verify build on clean environment.
-- [ ] Address potential performance bottlenecks in `std::shared_ptr` usage in hot loops.
+- [x] **Submission**: Code submitted to `refactor-memory-features-complete` branch.
+- [ ] **Build Verification**: Requires external execution due to sandbox limitations.
+- [ ] **Merge**: Pending user approval.
+- [ ] **Performance**: Address potential bottlenecks in `std::shared_ptr` usage in hot loops (Future Work).
