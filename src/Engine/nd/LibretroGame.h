@@ -30,17 +30,27 @@ public:
 
     bool loadCore(const string& corePath);
     bool loadGame(const string& gamePath);
+    void unloadGame();
+    void loadSRAM();
+    void saveSRAM();
+
+    void saveState(int slot);
+    void loadState(int slot);
 
     virtual void titleMenuUpdate() override;
 
     shared_ptr<BobMenu> fileBrowserMenu = nullptr;
     string currentPath = "";
+    string currentGamePath = "";
     bool selectingCore = false;
 
     void updateFileBrowser();
 
+    std::map<string, string> variables;
+
 private:
     void* coreHandle = nullptr;
+    double accumulatedTime = 0;
 
     // Core callbacks
     static bool retroEnvironment(unsigned cmd, void* data);

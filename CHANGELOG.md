@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2025-12-27
+### Changed
+- Updated all submodules to latest versions (merged upstream changes).
+- Fixed `lib/SDL`, `lib/SDL_image`, `lib/SDL_mixer`, `lib/SDL_ttf`, `lib/SDL_net` to track `SDL2` branch to avoid conflicts with SDL3.
+- Updated `SUBMODULES.md` with detailed version and date information.
+- Merged feature branches into main.
+
 ## [0.1.5] - 2025-12-27
 ### Fixed
 - Refactored `EnginePart::getCurrentMap` and `Entity::getCurrentMap` to return `std::shared_ptr<Map>`.

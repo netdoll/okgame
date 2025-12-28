@@ -1,14 +1,15 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 0.1.3
+**Current Version:** 0.1.6
 
 ## In Progress
-*   [ ] **Submodule Updates**
-    *   Update all submodules to latest upstream.
-    *   Fix broken submodule references (e.g., `lib/CLove`).
+*   [ ] **Continuous Integration/Deployment setup**
 
 ## Completed Features
+*   [x] **Submodule Updates**
+    *   [x] Update all submodules to latest upstream.
+    *   [x] Fix broken submodule references (e.g., `lib/CLove`).
 *   [x] **Refactoring**
     *   [x] `std::shared_ptr` migration for `BobsGame` textures.
 *   [x] **Documentation**

@@ -37,6 +37,7 @@ LibretroGame::LibretroGame(ND* nD) : NDGameEngine(nD)
 LibretroGame::~LibretroGame()
 {
     Mix_HookMusic(NULL, NULL);
+    unloadGame();
     if (coreHandle)
     {
         if (retro_deinit) retro_deinit();
@@ -67,6 +68,8 @@ void LibretroGame::titleMenuUpdate()
         titleMenu->add("Load Core...", "Load Core");
         titleMenu->add("Load Game...", "Load Game");
         titleMenu->add("Resume");
+        titleMenu->add("Save State", "Save State");
+        titleMenu->add("Load State", "Load State");
         titleMenu->add("Exit");
     }
 
@@ -93,11 +96,20 @@ void LibretroGame::titleMenuUpdate()
         {
             if (retro_run) titleMenuShowing = false;
         }
+        else if (titleMenu->isSelectedID("Save State"))
+        {
+            saveState(0);
+            titleMenuShowing = false;
+        }
+        else if (titleMenu->isSelectedID("Load State"))
+        {
+            loadState(0);
+            titleMenuShowing = false;
+        }
         else if (titleMenu->isSelectedID("Exit"))
         {
-            // Exit logic (e.g. return to ND menu)
-            // nD->setGame(nullptr); // ?
-            titleMenuShowing = false; // Just hide for now
+            unloadGame();
+            nD->setGame(nullptr);
         }
     }
 }
@@ -277,9 +289,88 @@ bool LibretroGame::loadGame(const string& gamePath)
         retro_set_controller_port_device(0, RETRO_DEVICE_JOYPAD);
     }
 
+    currentGamePath = gamePath;
+    loadSRAM();
+
     Mix_HookMusic(audioCallback, this);
 
     return true;
+}
+
+void LibretroGame::unloadGame()
+{
+    if (retro_unload_game)
+    {
+        saveSRAM();
+        retro_unload_game();
+    }
+    currentGamePath = "";
+}
+
+void LibretroGame::loadSRAM()
+{
+    if (!retro_get_memory_data || !retro_get_memory_size) return;
+
+    void* data = retro_get_memory_data(RETRO_MEMORY_SAVE_RAM);
+    size_t size = retro_get_memory_size(RETRO_MEMORY_SAVE_RAM);
+
+    if (data && size > 0)
+    {
+        string savePath = Main::getPath() + "data/libretro/saves/" + FileUtils::getFileNameWithoutExtension(currentGamePath) + ".srm";
+        shared_ptr<ByteArray> fileData = FileUtils::loadByteFileFromExePath(savePath);
+        if (fileData && fileData->size() == size)
+        {
+            memcpy(data, fileData->data(), size);
+            log.info("Loaded SRAM from " + savePath);
+        }
+    }
+}
+
+void LibretroGame::saveSRAM()
+{
+    if (!retro_get_memory_data || !retro_get_memory_size) return;
+
+    void* data = retro_get_memory_data(RETRO_MEMORY_SAVE_RAM);
+    size_t size = retro_get_memory_size(RETRO_MEMORY_SAVE_RAM);
+
+    if (data && size > 0)
+    {
+        string savePath = Main::getPath() + "data/libretro/saves/" + FileUtils::getFileNameWithoutExtension(currentGamePath) + ".srm";
+        FileUtils::saveByteFile(savePath, (u8*)data, size);
+        log.info("Saved SRAM to " + savePath);
+    }
+}
+
+void LibretroGame::saveState(int slot)
+{
+    if (!retro_serialize_size || !retro_serialize) return;
+
+    size_t size = retro_serialize_size();
+    if (size == 0) return;
+
+    shared_ptr<ByteArray> data = make_shared<ByteArray>(size);
+    if (retro_serialize(data->data(), size))
+    {
+        string savePath = Main::getPath() + "data/libretro/saves/" + FileUtils::getFileNameWithoutExtension(currentGamePath) + ".state" + to_string(slot);
+        FileUtils::saveByteFile(savePath, data);
+        log.info("Saved state to " + savePath);
+    }
+}
+
+void LibretroGame::loadState(int slot)
+{
+    if (!retro_unserialize) return;
+
+    string savePath = Main::getPath() + "data/libretro/saves/" + FileUtils::getFileNameWithoutExtension(currentGamePath) + ".state" + to_string(slot);
+    shared_ptr<ByteArray> data = FileUtils::loadByteFileFromExePath(savePath);
+    
+    if (data && data->size() > 0)
+    {
+        if (retro_unserialize(data->data(), data->size()))
+        {
+            log.info("Loaded state from " + savePath);
+        }
+    }
 }
 
 void LibretroGame::update()

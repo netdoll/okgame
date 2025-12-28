@@ -492,6 +492,7 @@
     <ClInclude Include="src\Engine\rpg\Item.h" />
     <ClInclude Include="src\Engine\MiniGameEngine.h" />
     <ClInclude Include="src\Engine\nd\GameDataLoader.h" />
+    <ClInclude Include="src\Engine\nd\LibretroGame.h" />
     <ClInclude Include="src\Engine\nd\ND.h" />
     <ClInclude Include="src\Engine\nd\NDGameEngine.h" />
     <ClInclude Include="src\Engine\nd\ndmenu\NDMenu.h" />
@@ -801,6 +802,7 @@
     <ClCompile Include="src\Engine\rpg\Item.cpp" />
     <ClCompile Include="src\Engine\MiniGameEngine.cpp" />
     <ClCompile Include="src\Engine\nd\GameDataLoader.cpp" />
+    <ClCompile Include="src\Engine\nd\LibretroGame.cpp" />
     <ClCompile Include="src\Engine\nd\ND.cpp" />
     <ClCompile Include="src\Engine\nd\NDGameEngine.cpp" />
     <ClCompile Include="src\Engine\nd\ndmenu\NDMenu.cpp" />

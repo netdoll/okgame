@@ -64,6 +64,11 @@ void NDMenu::init()
 
 	wheel->init();
 
+	if (nD->libretroGame != nullptr)
+	{
+		NDMenuWheel::wheelItems.add(1, make_shared<NDMenuWheelItem>(this, nD->libretroGame, "Emulator", make_shared<BobColor>(*BobColor::blue)));
+	}
+
 	background->init();
 
 	getAudioManager()->playMusic("nDMenuBackgroundMusic", 1.0f, 1.0f, true);
