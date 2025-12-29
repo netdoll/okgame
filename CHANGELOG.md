@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.8.6] - 2024-05-22
+
+### Added
+- **Economy:** Added `lib/bobcoin` submodule. This implements the new in-game currency based on a Solana/Monero hybrid with "Proof-of-Exercise" mining.
+- **Documentation:** Created `docs/AGENTS_COMMON.md` to standardize instructions across all AI assistants. Updated `AGENTS.md`, `CLAUDE.md`, etc.
+- **Versioning:** Introduced `VERSION.md` as the single source of truth for the project version.
+
+### Changed
+- **Documentation:** Updated `docs/PROJECT_STRUCTURE.md` to include `bobcoin`.
+- **System:** Updated build system to acknowledge the new submodule (pending CMake integration).
+
 ## [0.8.5] - 2024-05-22
 
 ### Added

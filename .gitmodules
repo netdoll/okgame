@@ -280,3 +280,6 @@
 [submodule "lib/defold-astar"]
 	path = lib/defold-astar
 	url = https://github.com/selimanac/defold-astar
+[submodule "lib/bobcoin"]
+	path = lib/bobcoin
+	url = https://github.com/robertpelloni/bobcoin

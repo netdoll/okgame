@@ -1,60 +1,37 @@
-# Handoff Documentation (Final)
+# Handoff Documentation (Updated)
 
 ## Session Summary
-This session successfully completed a comprehensive refactor of the BobsGame engine, transitioning from manual memory management to C++ smart pointers, and fully implementing two major features: **Libretro Frontend** and **ProjectM Visualization**. The project is now modernized and ready for deployment.
+This session standardized the AI agent workflow, implemented global versioning, and integrated the `bobcoin` submodule to kickstart the in-game economy.
 
 ## Completed Tasks
 
-### 1. Memory Management Refactoring (Completed)
-*   **System-Wide Smart Pointers**: Replaced raw pointers with `std::shared_ptr` and `std::weak_ptr` across all subsystems (`Engine`, `Map`, `Entity`, `Audio`, `Network`).
-*   **Container Modernization**: Updated `ArrayList`, `HashMap`, and `Hashtable` to handle smart pointers, ensuring RAII compliance and preventing memory leaks.
-*   **Resource Management**: Implemented automatic memory management for `BobTexture`, `AudioFile`, and other resources.
+### 1. Standardization & Documentation
+*   **Agent Protocols**: Created `docs/AGENTS_COMMON.md` serving as the single source of truth for all AI models. Updated `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `GPT.md`, and `copilot-instructions.md` to reference it.
+*   **Versioning**: Created `VERSION.md` (v0.8.6) to centrally manage the project version.
+*   **Project Structure**: Updated `docs/PROJECT_STRUCTURE.md` to list the new `bobcoin` submodule and explain the directory layout.
 
-### 2. Feature Implementation (Completed)
-*   **Libretro Frontend (`LibretroGame`)**:
-    *   **Core Loading**: Dynamic loading of Libretro cores (`.so`/`.dll`).
-    *   **State Management**: Full Save/Load State support with thumbnails and slots.
-    *   **Rewind**: Real-time gameplay rewind functionality.
-    *   **Video Enhancements**: Integrated CRT Shaders (Scanline, Curved) and HQ2X software upscaling.
-    *   **Input**: Configurable input mapping (including Analog) and Rumble support.
-    *   **SRAM**: Auto-saving of battery-backed RAM.
-*   **ProjectM Visualization**:
-    *   **Integration**: Fully integrated `libprojectM` into the rendering pipeline.
-    *   **Control**: Added keyboard controls (F3/F4/F5) for preset cycling and an "Autopilot" mode.
-    *   **Audio**: Connected audio stream via SDL_mixer callback for reactive visuals.
+### 2. Feature Integration (Bobcoin)
+*   **Submodule**: Added `lib/bobcoin` (from `https://github.com/robertpelloni/bobcoin`) as a git submodule.
+*   **Roadmap**: Updated `docs/ROADMAP.md` and `docs/DASHBOARD.md` to reflect the new Economy feature goals (Wallet, Mining, Decentralization).
 
-### 3. Build & Configuration (Completed)
-*   **Build System**: Updated `CMakeLists.txt` to link `projectM`, `Libretro`, and all new source files.
-*   **Dependencies**: Configured `.gitmodules` to include necessary libraries.
-*   **Documentation**: Added `DASHBOARD.md`, `ROADMAP.md`, `CHANGELOG.md`, `DESIGN_NOTES.md`, and `PROJECT_STRUCTURE.md`.
+### 3. Build & Configuration
+*   **Changelog**: Updated `CHANGELOG.md` with version 0.8.6 details.
+*   **Git**: Staged all documentation and configuration changes.
 
 ## Current State
-*   **Branch**: `refactor-memory-features-final-docs` contains the final, merged code and documentation.
-*   **Build Status**: The build configuration is verified correct (`CMakeLists.txt`), but local compilation was skipped due to environment limitations.
-*   **Sandbox Note**: A known limitation in the development environment prevented `git` operations on the large changeset (>120 files). The `submit` tool was used to bypass this.
+*   **Branch**: `feature-bobcoin-agents-docs` contains the latest changes.
+*   **Bobcoin**: The submodule is present in `lib/bobcoin`, but not yet linked in `CMakeLists.txt` or instantiated in the Engine.
 
 ## Next Steps for the Developer
-1.  **Pull & Update**:
-    ```bash
-    git checkout refactor-memory-features-final-docs
-    git submodule update --init --recursive
-    ```
-2.  **Build**:
-    ```bash
-    mkdir build && cd build
-    cmake ..
-    make -j4
-    ```
-3.  **Run**:
-    *   Launch `bobsgame`.
-    *   Navigate to **ND -> Emulator** to test Libretro.
-    *   Press **F3/F4** during gameplay to test ProjectM visualizer.
+1.  **Bobcoin Implementation**:
+    *   Add `add_subdirectory(lib/bobcoin)` to `CMakeLists.txt`.
+    *   Create a wrapper class (e.g., `BobcoinManager`) to interface with the library.
+    *   Implement "Proof-of-Exercise" mining logic hooked into the input system (DDR pad/sensors).
+2.  **Versioning Integration**:
+    *   Modify `src/Utility/System.cpp` to read the version string from `VERSION.md` at runtime, or generate a header file during build.
+3.  **Merge**:
+    *   Merge `feature-bobcoin-agents-docs` into `main`.
+    *   Run `git submodule update --init --recursive`.
 
-## Known Issues / Recommendations
-*   **Logo Contrast**: As noted in `DESIGN_NOTES.md`, the `bobsgame.png` logo has low contrast. Consider adding a drop shadow.
-*   **Performance**: Monitor `std::shared_ptr` usage in hot loops (e.g., particle systems) for overhead. Consider `unique_ptr` optimization where shared ownership is not strictly required.
-
-## Memory Dump
-*   **Key Patterns**: Used `std::enable_shared_from_this` for `Entity` to safely pass `shared_ptr` to subsystems.
-*   **Refactor Strategy**: Replaced `new Class()` with `make_shared<Class>()` and stored in `ArrayList<shared_ptr<Class>>`.
-*   **Build Fixes**: Explicitly added `OKGame` source files to CMake to resolve linker errors.
+## Vision Recap
+The project is evolving into a decentralized platform where the "BobsGame" engine serves as a node. The `bobcoin` integration is critical for the "Play-to-Earn" (or "Exercise-to-Earn") economy.

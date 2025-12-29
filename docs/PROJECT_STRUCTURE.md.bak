@@ -19,7 +19,6 @@ The following external libraries are linked as git submodules in `lib/`.
 
 | Submodule | Path | URL | Description |
 | :--- | :--- | :--- | :--- |
-| **Bobcoin** | `lib/bobcoin` | `https://github.com/robertpelloni/bobcoin` | In-game economy token (Solana/Monero hybrid) |
 | **ProjectM** | `lib/projectm` | `https://github.com/robertpelloni/projectm` | Music Visualizer Engine |
 | **MilkDrop3** | `lib/MilkDrop3` | `https://github.com/robertpelloni/MilkDrop3` | MilkDrop3 Implementation |
 | **Gambatte** | `lib/gambatte-libretro` | `https://github.com/libretro/gambatte-libretro` | GameBoy Color Emulator Core |
