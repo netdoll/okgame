@@ -21,14 +21,14 @@ public:
 	//Button* yesButton = nullptr;
 	//Button* noButton = nullptr;
 
-	shared_ptr<FriendCharacter> friendCharacter = nullptr;
+	FriendCharacter* friendCharacter = nullptr;
 	string gameName = "";
 
 	long long notificationCreatedTime = 0;
 
 	//Label* timeLeftLabel = nullptr;
 
-	GameChallengeNotificationPanel(shared_ptr<FriendCharacter> friend_in, const string& gameName);
+	GameChallengeNotificationPanel(FriendCharacter* friend_in, const string& gameName);
 
 	virtual void update() override;
 

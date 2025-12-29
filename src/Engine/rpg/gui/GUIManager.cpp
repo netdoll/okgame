@@ -41,10 +41,10 @@ GUIManager::GUIManager(BGClientEngine* g)
 	//glClear(GL_COLOR_BUFFER_BIT);
 
 
-	stuffMenu = make_shared<StuffMenu>();
-	playerEditMenu = make_shared<PlayerEditMenu>();
-	gameStore = make_shared<GameStore>();
-	keyboardScreen = make_shared<KeyboardMenuPanel>();
+	stuffMenu = new StuffMenu();
+	playerEditMenu = new PlayerEditMenu();
+	gameStore = new GameStore();
+	keyboardScreen = new KeyboardMenuPanel();
 	//
 	//   
 	//   stuffMenuGUI = new GUI(stuffMenu, GLUtils::TWLrenderer);
@@ -87,7 +87,7 @@ void GUIManager::update()
 
 	for (int i = 0; i < gameChallenges->size(); i++)
 	{
-		shared_ptr<GameChallengeNotificationPanel> g = gameChallenges->get(i);
+		GameChallengeNotificationPanel* g = gameChallenges->get(i);
 		g->update();
 	}
 }
@@ -138,9 +138,9 @@ void GUIManager::render()
 }
 
 //The following method was originally marked 'synchronized':
-shared_ptr<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(shared_ptr<FriendCharacter> friend_in, const string& gameName)
+GameChallengeNotificationPanel* GUIManager::makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName)
 { //=========================================================================================================================
-	shared_ptr<GameChallengeNotificationPanel> g = make_shared<GameChallengeNotificationPanel>(friend_in, gameName);
+	GameChallengeNotificationPanel* g = new GameChallengeNotificationPanel(friend_in, gameName);
 	gameChallenges->add(g);
 
 	//   GUI* gui = new GUI(g, GLUtils::TWLrenderer);
@@ -152,7 +152,7 @@ shared_ptr<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotifica
 	return g;
 }
 
-void GUIManager::removeGameNotification(shared_ptr<GameChallengeNotificationPanel> g)
+void GUIManager::removeGameNotification(GameChallengeNotificationPanel* g)
 { //=========================================================================================================================
 
 	for (int i = 0; i < gameChallenges->size(); i++)

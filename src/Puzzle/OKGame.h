@@ -6,7 +6,7 @@
 
 #pragma once
 #include <string>
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "GameLogic.h"
 #include "GameType.h"
 #include "GameSequence.h"

@@ -78,19 +78,19 @@ public:
 	int getMinutesSinceLastHere();
 
 	Engine* getEngine();
-	shared_ptr<Cameraman> getCameraman();
-	shared_ptr<MapManager> getMapManager();
-	shared_ptr<SpriteManager> getSpriteManager();
-	shared_ptr<ActionManager> getActionManager();
-	shared_ptr<TextManager> getTextManager();
-	shared_ptr<AudioManager> getAudioManager();
-	virtual shared_ptr<CaptionManager> getCaptionManager();
-	shared_ptr<EventManager> getEventManager();
-	shared_ptr<CinematicsManager> getCinematicsManager();
+	Cameraman* getCameraman();
+	MapManager* getMapManager();
+	SpriteManager* getSpriteManager();
+	ActionManager* getActionManager();
+	TextManager* getTextManager();
+	AudioManager* getAudioManager();
+	virtual CaptionManager* getCaptionManager();
+	EventManager* getEventManager();
+	CinematicsManager* getCinematicsManager();
 
 	virtual Map* getCurrentMap();
 
-	shared_ptr<ControlsManager> getControlsManager();
+	ControlsManager* getControlsManager();
 
 	//static void setClientGameEngine(BGClientEngine* gameEngine);
 
@@ -112,7 +112,7 @@ public:
 	//The following method was originally marked 'synchronized':
 	static GameSave getGameSave();
 
-	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e);
+	virtual bool udpPeerMessageReceived(UDPPeerConnection* c, string e);
 	//
 	//	public String getIDString()
 	//	{

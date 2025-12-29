@@ -221,11 +221,11 @@ public:
 
 #ifndef ORBIS
 private:
-	shared_ptr<IPaddress> _peerIPAddress_S = nullptr;
+	IPaddress* _peerIPAddress_S = nullptr;
 	int _peerPort_S = -1;
 	mutex _peerIPAddress_Mutex;
 public:
-	shared_ptr<IPaddress> getPeerIPAddress_S()
+	IPaddress* getPeerIPAddress_S()
 	{
 		lock_guard<mutex> lock(_peerIPAddress_Mutex);
 		return _peerIPAddress_S;
@@ -242,16 +242,17 @@ public:
 #endif
 			if (_peerIPAddress_S != nullptr)
 			{
+				delete _peerIPAddress_S;
 				_peerIPAddress_S = nullptr;
 			}
 			_peerPort_S = port;
 		}
 		else
 		{
-			_peerIPAddress_S = make_shared<IPaddress>();
+			_peerIPAddress_S = new IPaddress();
 			_peerPort_S = port;
 
-			if (SDLNet_ResolveHost(_peerIPAddress_S.get(), ipAddressString.c_str(), port) < 0)
+			if (SDLNet_ResolveHost(_peerIPAddress_S, ipAddressString.c_str(), port) < 0)
 			{
 				threadLogWarn_S("Could not resolve peer host: " + string(SDLNet_GetError()));
 				SDL_ClearError();
@@ -267,56 +268,56 @@ public:
 	//------------------------------------
 
 private:
-	queue<string> _packetMessageQueue;
+	queue<string> *_packetMessageQueue = new queue<string>();
 	mutex _packetMessageQueue_Mutex;
 public:
 	string packetMessageQueueFront_S()
 	{
 		lock_guard<mutex> lock(_packetMessageQueue_Mutex);
-		return _packetMessageQueue.front();
+		return _packetMessageQueue->front();
 	}
 	int packetMessageQueueSize_S()
 	{
 		lock_guard<mutex> lock(_packetMessageQueue_Mutex);
-		return (int)_packetMessageQueue.size();
+		return (int)_packetMessageQueue->size();
 	}
 	void packetMessageQueuePop_S()
 	{
 		lock_guard<mutex> lock(_packetMessageQueue_Mutex);
-		_packetMessageQueue.pop();
+		_packetMessageQueue->pop();
 	}
 	void packetMessageQueuePush_S(string p)
 	{
 		lock_guard<mutex> lock(_packetMessageQueue_Mutex);
-		_packetMessageQueue.push(p);
+		_packetMessageQueue->push(p);
 	}
 
 	//------------------------------------
 
 #ifndef ORBIS
 private:
-	queue<UDPpacket*> _sentPacketQueue;
+	queue<UDPpacket*> *_sentPacketQueue = new queue<UDPpacket*>();
 	mutex _sentPacketQueue_Mutex;
 public:
 	UDPpacket* sentPacketQueueFront_S()
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
-		return _sentPacketQueue.front();
+		return _sentPacketQueue->front();
 	}
 	int sentPacketQueueSize_S()
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
-		return (int)_sentPacketQueue.size();
+		return (int)_sentPacketQueue->size();
 	}
 	void sentPacketQueuePop_S()
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
-		_sentPacketQueue.pop();
+		_sentPacketQueue->pop();
 	}
 	void sentPacketQueuePush_S(UDPpacket* p)
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
-		_sentPacketQueue.push(p);
+		_sentPacketQueue->push(p);
 	}
 
 #else
@@ -326,28 +327,28 @@ public:
 	//------------------------------------
 
 private:
-	queue<string> _unjoinedMessageQueue;
+	queue<string> *_unjoinedMessageQueue = new queue<string>();
 	mutex _unjoinedMessageQueue_Mutex;
 public:
 	string unjoinedMessageQueueFront_S()
 	{
 		lock_guard<mutex> lock(_unjoinedMessageQueue_Mutex);
-		return _unjoinedMessageQueue.front();
+		return _unjoinedMessageQueue->front();
 	}
 	int unjoinedMessageQueueSize_S()
 	{
 		lock_guard<mutex> lock(_unjoinedMessageQueue_Mutex);
-		return (int)_unjoinedMessageQueue.size();
+		return (int)_unjoinedMessageQueue->size();
 	}
 	void unjoinedMessageQueuePop_S()
 	{
 		lock_guard<mutex> lock(_unjoinedMessageQueue_Mutex);
-		_unjoinedMessageQueue.pop();
+		_unjoinedMessageQueue->pop();
 	}
 	void unjoinedMessageQueuePush_S(string p)
 	{
 		lock_guard<mutex> lock(_unjoinedMessageQueue_Mutex);
-		_unjoinedMessageQueue.push(p);
+		_unjoinedMessageQueue->push(p);
 	}
 	//------------------------------------
 private:
@@ -519,8 +520,8 @@ private:
 		long long timeGotACK = 0;
 	};
 	typedef HashMap<long long, long long> HashMapLongLongLongLong;
-	HashMapLongLongLongLong _frameSentTimes;
-	ArrayList<long long> _frameRoundaboutTicks;
+	HashMapLongLongLongLong *_frameSentTimes = new HashMapLongLongLongLong();
+	ArrayList<long long> *_frameRoundaboutTicks = new ArrayList<long long>();
 	//------------------------------------
 	//thread only functions
 	//------------------------------------

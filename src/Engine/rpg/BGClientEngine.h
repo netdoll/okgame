@@ -38,19 +38,19 @@ public:
 	ConsoleText* playerMapText = nullptr;// = Console::debug("playerMapText");
 	ConsoleText* playerScreenText = nullptr;// = Console::debug("playerScreenText");
 
-	shared_ptr<GUIManager> guiManager = nullptr;
-	shared_ptr<BobStatusBar> statusBar = nullptr;
-	shared_ptr<Wallet> wallet = nullptr;
+	GUIManager* guiManager = nullptr;
+	BobStatusBar* statusBar = nullptr;
+	Wallet* wallet = nullptr;
 
-	shared_ptr<Clock> clock = nullptr;
+	Clock* clock = nullptr;
 
-	shared_ptr<Player> normalPlayer = nullptr;
-	shared_ptr<Player> player = nullptr;
+	Player* normalPlayer = nullptr;
+	Player* player = nullptr;
 
-	shared_ptr<FriendManager> friendManager = nullptr;
+	FriendManager* friendManager = nullptr;
 
-	shared_ptr<ND> nD = nullptr;
-	shared_ptr<StadiumScreen> stadiumScreen = nullptr;
+	ND* nD = nullptr;
+	StadiumScreen* stadiumScreen = nullptr;
 
 	bool controlsEnabled = true;
 	bool playerExistsInMap = true;

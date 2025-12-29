@@ -107,10 +107,10 @@ void Player::handleAreas()
 	//   {
 	//      Area* a = aEnum->nextElement();
 
-	ArrayList<Area*> areas = getMap()->currentState->areaByNameHashtable.getAllValues();
-	for (int i=0;i<areas.size();i++)
+	ArrayList<Area*> *areas = getMap()->currentState->areaByNameHashtable.getAllValues();
+	for (int i=0;i<areas->size();i++)
 	{
-		Area* a = areas.get(i);
+		Area* a = areas->get(i);
 
 		if (a->isXYXYTouchingMyBoundary(getLeft(), getTop(), getRight(), getBottom()))
 		{

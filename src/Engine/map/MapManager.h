@@ -14,16 +14,16 @@ class Logger;
 class MapManager : public EnginePart
 {
 public:
-	ArrayList<shared_ptr<Map>> mapList;
-	HashMap<string, shared_ptr<Map>> mapByNameHashMap;//new HashMap<string, Map*>();
-	HashMap<int, shared_ptr<Map>> mapByIDHashMap;//new HashMap<int, Map*>();
+	ArrayList<Map*> mapList;
+	HashMap<string, Map*> mapByNameHashMap;//new HashMap<string, Map*>();
+	HashMap<int, Map*> mapByIDHashMap;//new HashMap<int, Map*>();
 
 	static Logger log;
 	
 
-	shared_ptr<Map> currentMap = nullptr;
+	Map* currentMap = nullptr;
 private:
-	shared_ptr<Map> lastMap = nullptr;
+	Map* lastMap = nullptr;
 
 
 	//	private final KahluaConverterManager converterManager = new KahluaConverterManager();
@@ -76,11 +76,11 @@ public:
 
 
 
-	shared_ptr<Door> doorEntered = nullptr;
-	shared_ptr<Door> doorExited = nullptr;
+	Door* doorEntered = nullptr;
+	Door* doorExited = nullptr;
 
-	shared_ptr<WarpArea> warpEntered = nullptr;
-	shared_ptr<WarpArea> warpExited = nullptr;
+	WarpArea* warpEntered = nullptr;
+	WarpArea* warpExited = nullptr;
 
 
 	float drawAngle = 0; //TODO
@@ -172,42 +172,42 @@ public:
 	void changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixelsHQ, bool updateGameSave);
 
 
-	void changeMap(shared_ptr<Map> m, int mapXTiles1X, int mapYTiles1X);
+	void changeMap(Map* m, int mapXTiles1X, int mapYTiles1X);
 
 
-	void changeMap(shared_ptr<Map> m, shared_ptr<Door> door);
+	void changeMap(Map* m, Door* door);
 
 
-	void changeMap(shared_ptr<Map> m, shared_ptr<Area> area);
+	void changeMap(Map* m, Area* area);
 
 
-	void changeMap(shared_ptr<Map> m, shared_ptr<WarpArea> area);
+	void changeMap(Map* m, WarpArea* area);
 
 
 	void changeMap(const string& mapName, const string& areaName);
 
 
-	shared_ptr<Map> getMapByIDBlockUntilLoaded(int id);
+	Map* getMapByIDBlockUntilLoaded(int id);
 
 
-	shared_ptr<Map> getMapByNameBlockUntilLoaded(const string& name);
+	Map* getMapByNameBlockUntilLoaded(const string& name);
 
 
 	void requestMapDataIfNotLoadedYet(const string& name);
 
 
-	shared_ptr<MapState> getMapStateByID(int id);
+	MapState* getMapStateByID(int id);
 
 
-	shared_ptr<Area> getAreaByID(int id);
+	Area* getAreaByID(int id);
 
 
-	shared_ptr<Entity> getEntityByID(int id);
+	Entity* getEntityByID(int id);
 
 
-	shared_ptr<Light> getLightByID(int id);
+	Light* getLightByID(int id);
 
 
-	shared_ptr<Door> getDoorByID(int id);
+	Door* getDoorByID(int id);
 };
 

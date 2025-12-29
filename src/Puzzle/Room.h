@@ -166,8 +166,8 @@ public:
 
 
 	//don't export
-	shared_ptr<GameSequence> gameSequence = nullptr;
-	shared_ptr<UDPPeerConnection> hostPeer = nullptr;
+	GameSequence *gameSequence = nullptr;
+	UDPPeerConnection *hostPeer = nullptr;
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -362,9 +362,9 @@ public:
 
 
 	//=========================================================================================================================
-	static shared_ptr<Room> decodeRoomData(string s, bool decodeGameSequenceXML)
+	static Room* decodeRoomData(string s, bool decodeGameSequenceXML)
 	{//=========================================================================================================================
-		shared_ptr<Room> newRoom = make_shared<Room>();
+		Room *newRoom = new Room();
 		newRoom->decode(s, decodeGameSequenceXML);
 		return newRoom;
 	}
@@ -654,7 +654,7 @@ public:
 		{
 			if (multiplayer_ZippedGameSequenceString.length() > 0)
 			{
-				shared_ptr<GameSequence> gs(NetworkGameSequence::fromBase64GZippedXML(multiplayer_ZippedGameSequenceString));
+				NetworkGameSequence *gs = NetworkGameSequence::fromBase64GZippedXML(multiplayer_ZippedGameSequenceString);
 
 				if (gs == nullptr)
 				{

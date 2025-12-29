@@ -25,7 +25,7 @@ MiniGameEngine::~MiniGameEngine()
 	log.debug("~MiniGameEngine()");
 #endif
 
-	//delete gameDataLoader;
+	delete gameDataLoader;
 }
 //=========================================================================================================================
 void MiniGameEngine::init()
@@ -39,7 +39,7 @@ void MiniGameEngine::init()
 
 	setupMenus();
 
-	this->gameDataLoader = make_shared<GameDataLoader>(this);
+	this->gameDataLoader = new GameDataLoader(this);
 
 }
 
@@ -179,19 +179,19 @@ void MiniGameEngine::unloadTitleMenuTextures()
 {//=========================================================================================================================
 	if(titleMenuTextures!= nullptr && titleMenuTextures->size()>0)
 	{
-		//for (int i = 0; i < numTitleMenuTextureFrames; i++)
-		//{
-			//titleMenuTextures->get(i)->release();
-			//delete titleMenuTextures->get(i);
-		//}
+		for (int i = 0; i < numTitleMenuTextureFrames; i++)
+		{
+			titleMenuTextures->get(i)->release();
+			delete titleMenuTextures->get(i);
+		}
 		
 		titleMenuTextures->clear();
 	}
 
 	if (titleMenuTexture != nullptr)
 	{
-		//titleMenuTexture->release();
-		//delete titleMenuTexture;
+		titleMenuTexture->release();
+		delete titleMenuTexture;
 		titleMenuTexture = nullptr;
 	}
 
@@ -209,7 +209,7 @@ void MiniGameEngine::titleMenuUpdate()
 
 	if (titleMenu == nullptr)
 	{
-		titleMenu = make_shared<BobMenu>(this,"");
+		titleMenu = new BobMenu(this,"");
 
 		//pressEnterCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y-60, -1, "Press Enter to begin", oswald_24, infoColor, clearColor, RenderOrder::OVER_GUI);
 		//pressEnterCaption->flashing = true;
@@ -270,7 +270,7 @@ void MiniGameEngine::titleMenuUpdate()
 
 			if (titleMenu != nullptr)
 			{
-				//delete titleMenu;
+				delete titleMenu;
 				titleMenu = nullptr;
 			}
 		}
@@ -281,7 +281,7 @@ void MiniGameEngine::titleMenuUpdate()
 void MiniGameEngine::titleMenuRender()
 { //=========================================================================================================================
 
-	shared_ptr<BobTexture> t = nullptr;
+	BobTexture *t = nullptr;
 
 	if (titleMenuTextures != nullptr && titleMenuTextures->size()>0)t = titleMenuTextures->get(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
@@ -300,7 +300,7 @@ void MiniGameEngine::pauseMenuUpdate()
 
 	if (pauseMenu == nullptr)
 	{
-		pauseMenu = make_shared<BobMenu>(this,"Pause");
+		pauseMenu = new BobMenu(this,"Pause");
 
 		pauseMenu->add("Back To Game");
 		pauseMenu->add("Quit Game And Return To Title Screen");
@@ -350,7 +350,7 @@ void MiniGameEngine::pauseMenuUpdate()
 
 		if (pauseMenu != nullptr)
 		{
-			//delete pauseMenu;
+			delete pauseMenu;
 			pauseMenu = nullptr;
 		}
 	}
@@ -378,15 +378,15 @@ void MiniGameEngine::multiplayerScreenUpdate()
 
 		for (int i = 0; i < onlineFriends.size(); i++)
 		{
-			shared_ptr<UDPPeerConnection> f = onlineFriends.get(i);
+			UDPPeerConnection* f = onlineFriends.get(i);
 			int y = (onlineFriendCaptions->size() + 1) * 20;
 
-			shared_ptr<Caption> c = shared_ptr<Caption>(getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, f->getFriendData_S().characterName, 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI));
+			Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, f->getFriendData_S().characterName, 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI);
 			onlineFriendCaptions->add(c);
 		}
 
 		int y = (onlineFriendCaptions->size() + 1) * 20;
-		shared_ptr<Caption> c = shared_ptr<Caption>(getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI));
+		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI);
 		onlineFriendCaptions->add(c);
 	}
 
@@ -421,7 +421,7 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		}
 		else
 		{
-			shared_ptr<UDPPeerConnection> f = onlineFriends.get(multiplayerScreenCursorPosition);
+			UDPPeerConnection* f = onlineFriends.get(multiplayerScreenCursorPosition);
 			this->connection = f;
 			//BobNet::addEngineToForwardMessagesTo(this);
 
@@ -459,7 +459,7 @@ void MiniGameEngine::multiplayerScreenRender()
 
 	super::render(); //captions
 
-	shared_ptr<BobTexture> t = BobMenu::cursorTexture;
+	BobTexture* t = BobMenu::cursorTexture;
 
 	if (t != nullptr && onlineFriendCaptions->size() > 0)
 	{
@@ -479,7 +479,7 @@ void MiniGameEngine::multiplayerScreenRender()
 		float sy0 = onlineFriendCaptions->get(multiplayerScreenCursorPosition)->screenY + 2;
 		float sy1 = sy0 + 16;
 
-		GLUtils::drawTexture(t.get(), tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
+		GLUtils::drawTexture(t, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
 	}
 }
 
@@ -524,11 +524,11 @@ void MiniGameEngine::waitingForFriendScreenUpdate()
 		//waitingForFriendCaptions = new ArrayList<Caption*>();
 
 		int y = (waitingForFriendCaptions->size() + 1) * 20;
-		shared_ptr<Caption> c = shared_ptr<Caption>(getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Sending game request...", 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI));
+		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Sending game request...", 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI);
 		waitingForFriendCaptions->add(c);
 
 		y = (waitingForFriendCaptions->size() + 1) * 20;
-		c = shared_ptr<Caption>(getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI));
+		c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI);
 		waitingForFriendCaptions->add(c);
 	}
 
@@ -622,7 +622,7 @@ void MiniGameEngine::waitingForFriendScreenRender()
 
 	super::render(); //captions
 
-	shared_ptr<BobTexture> t = BobMenu::cursorTexture;
+	BobTexture* t = BobMenu::cursorTexture;
 
 	if (t != nullptr && waitingForFriendCaptions->size() > 0)
 	{
@@ -642,7 +642,7 @@ void MiniGameEngine::waitingForFriendScreenRender()
 		float sy0 = waitingForFriendCaptions->get(1)->screenY + 2;
 		float sy1 = sy0 + 16;
 
-		GLUtils::drawTexture(t.get(), tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
+		GLUtils::drawTexture(t, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
 	}
 }
 
@@ -666,7 +666,7 @@ void MiniGameEngine::tryToCloseGame()
 //	this->connection = connection;
 //	//this.multiplayer = true;
 //}
-bool MiniGameEngine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
+bool MiniGameEngine::udpPeerMessageReceived(UDPPeerConnection *c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //=========================================================================================================================
 
 	string s = e;// static_cast<string>(e->getMessage());

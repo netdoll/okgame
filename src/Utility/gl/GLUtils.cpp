@@ -26,7 +26,7 @@ Logger GLUtils::log = Logger("GLUtils");
 //#include "../../../lib/SDL_stbimage.h"
 //#define STB_IMAGE_IMPLEMENTATION
 
-HashMap<string, shared_ptr<BobTexture>> GLUtils::textureCache;
+HashMap<string, BobTexture*> GLUtils::textureCache;
 
 //-----------------------------------------------
 //OLD STUFF
@@ -120,12 +120,12 @@ float GLUtils::ZOOMto = 1.0f;
 bool GLUtils::antiAlias = true;
 int GLUtils::texturesLoaded = 0;
 long long GLUtils::textureBytesLoaded = 0;
-shared_ptr<BobTexture> GLUtils::blankTexture = nullptr;
-shared_ptr<BobTexture> GLUtils::boxTexture = nullptr;
+BobTexture* GLUtils::blankTexture = nullptr;
+BobTexture* GLUtils::boxTexture = nullptr;
 float GLUtils::globalDrawScale = 1.0f;
 
 
-shared_ptr<BobTexture> GLUtils::rect = nullptr;
+BobTexture* GLUtils::rect = nullptr;
 
 
 //static float* boxBuffer = BufferUtils.newFloatBuffer(12);
@@ -4285,7 +4285,7 @@ GLuint GLUtils::createTextureID()
 
 //#ifndef ORBIS
 //===========================================================================================================================
-shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_Surface* surfacein)
+BobTexture* GLUtils::loadTextureFromSurface(string textureName, SDL_Surface* surfacein)
 {//===========================================================================================================================
 
 #ifndef ORBIS
@@ -4296,7 +4296,7 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 
 	if (textureCache.containsKey(textureName))
 	{
-		shared_ptr<BobTexture> tex = textureCache.get(textureName);
+		BobTexture *tex = textureCache.get(textureName);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -4305,7 +4305,7 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 
 #ifndef ORBIS
 	GLuint textureID = createTextureID();
-	shared_ptr<BobTexture> bt = make_shared<BobTexture>(textureName, textureID);
+	BobTexture *bt = new BobTexture(textureName, textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 
@@ -4390,9 +4390,9 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
 #else
 
-	shared_ptr<ByteArray> data = make_shared<ByteArray>((u8*)surface->pixels, texWidth*texHeight * 4);
+	ByteArray* data = new ByteArray((u8*)surface->pixels, texWidth*texHeight * 4);
 
-	shared_ptr<BobTexture> bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, texWidth, texHeight, data.get());
+	BobTexture *bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, texWidth, texHeight, data);
 
 	bt->setImageWidth(imageWidth);
 	bt->setImageHeight(imageHeight);
@@ -4408,7 +4408,7 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 #ifdef ORBIS
 
 	data->bytes = nullptr;
-	//delete data;
+	delete data;
 #endif
 
 	//tex->setCacheName(filename);
@@ -4428,13 +4428,13 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 }
 
 //=========================================================================================================================
-shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data)
+BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data)
 {//=========================================================================================================================
 
 
 	if (textureCache.containsKey(textureName))
 	{
-		shared_ptr<BobTexture> tex = textureCache.get(textureName);
+		BobTexture *tex = textureCache.get(textureName);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -4448,7 +4448,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 
 
 	GLuint textureID = createTextureID();
-	shared_ptr<BobTexture> bt = make_shared<BobTexture>(textureName, textureID);
+	BobTexture *bt = new BobTexture(textureName, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -4476,7 +4476,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 
 
 
-	shared_ptr<ByteArray> t = make_shared<ByteArray>(texWidth*texHeight * 4);
+	ByteArray* t = new ByteArray(texWidth*texHeight * 4);
 
 	for (int y = 0; y<imageHeight; y++)
 		for (int x = 0; x<imageWidth; x++)
@@ -4489,7 +4489,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 		}
 	GLUtils::setDefaultTextureParams();
 
-	//data = t.get();
+	data = t;
 
 	/*
 	void glTexImage2D(GLenum target,
@@ -4504,9 +4504,9 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 	*/
 	GLint level = 0;
 	GLint border = 0;
-	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, t->data());
+	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, data->data());
 
-	//delete t;
+	delete t;
 
 
 	//tex->setCacheName(textureName);
@@ -4520,7 +4520,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 
 
 
-	shared_ptr<BobTexture> bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, imageWidth, imageHeight, data);
+	BobTexture *bt = createBobTextureFromRGBAData(Main::getBaseService()->m_resourceManager.m_graphicsLoader, textureName, imageWidth, imageHeight, data);
 
 
 
@@ -4541,22 +4541,11 @@ shared_ptr<BobTexture> GLUtils::getTextureFromData(string textureName, int image
 	
 }
 
-//=========================================================================================================================
-void GLUtils::updateTexture(shared_ptr<BobTexture> texture, int x, int y, int w, int h, u8* data)
-{//=========================================================================================================================
-#ifndef ORBIS
-	if (texture == nullptr) return;
-	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
-	// Assumes RGBA 32-bit data
-	glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, data);
-#endif
-}
-
 
 
 
 //=========================================================================================================================
-shared_ptr<BobTexture> GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+BobTexture *GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
@@ -4565,7 +4554,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromPNGExePath(string filename)// , co
 
 }
 //=========================================================================================================================
-shared_ptr<BobTexture> GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
@@ -4573,7 +4562,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 
 	if (textureCache.containsKey(filename))
 	{
-		shared_ptr<BobTexture> tex = textureCache.get(filename);
+		BobTexture *tex = textureCache.get(filename);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -4588,7 +4577,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 	glEnable(GL_TEXTURE_2D);
 
 	GLuint textureID = createTextureID();
-	shared_ptr<BobTexture> bt = make_shared<BobTexture>(filename, textureID);
+	BobTexture *bt = new BobTexture(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -4754,7 +4743,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 
 #ifdef ORBIS
 
-shared_ptr<BobTexture> GLUtils::createBobTextureFromRGBAData(sce::SampleUtil::Graphics::GraphicsLoader *loader, string textureName, int imageWidth, int imageHeight, ByteArray* data)
+BobTexture *GLUtils::createBobTextureFromRGBAData(sce::SampleUtil::Graphics::GraphicsLoader *loader, string textureName, int imageWidth, int imageHeight, ByteArray* data)
 {
 
 	//	ssgi::ImageFile imageFile;
@@ -4790,7 +4779,7 @@ shared_ptr<BobTexture> GLUtils::createBobTextureFromRGBAData(sce::SampleUtil::Gr
 	//imageFile.close();
 
 
-	shared_ptr<BobTexture> bt = make_shared<BobTexture>(textureName, 0);
+	BobTexture *bt = new BobTexture(textureName, 0);
 
 	bt->imageHeight = imageHeight;
 	bt->imageWidth = imageWidth;

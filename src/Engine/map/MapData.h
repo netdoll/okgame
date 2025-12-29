@@ -186,11 +186,11 @@ private:
 
 	//these are ASSET lists only populated with objectDatas to convert into JSON and fill the regular Map lists at runtime with.
 	
-	ArrayList<shared_ptr<MapStateData>> stateDataList;
+	ArrayList<MapStateData*>* stateDataList = new ArrayList<MapStateData*>();
 	
-	ArrayList<shared_ptr<EventData>> eventDataList;
+	ArrayList<EventData*>* eventDataList = new ArrayList<EventData*>();
 	
-	ArrayList<shared_ptr<DoorData>> doorDataList;
+	ArrayList<DoorData*>* doorDataList = new ArrayList<DoorData*>();
 
 
 public:
@@ -240,9 +240,9 @@ public:
 	int getHeightPixelsHQ();
 
 
-	ArrayList<shared_ptr<MapStateData>>* getStateDataList();
-	ArrayList<shared_ptr<EventData>>* getEventDataList();
-	ArrayList<shared_ptr<DoorData>>* getDoorDataList();
+	ArrayList<MapStateData*>* getStateDataList();
+	ArrayList<EventData*>* getEventDataList();
+	ArrayList<DoorData*>* getDoorDataList();
 
 
 	void setGroundLayerMD5(const string& s);

@@ -5,7 +5,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fpermissive")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${bobsgame_SOURCE_DIR}/cmake")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/linux")
 
 
 
@@ -32,18 +32,17 @@ include_directories(
         ${SDL2_MIXER_INCLUDE_DIR}
         ${SDL2_TTF_INCLUDE_DIR}
         ${SDL2_NET_INCLUDE_DIR}
-        ${bobsgame_SOURCE_DIR}/lib/glew/include
+        ${bobsgame_SOURCE_DIR}/lib/glew-2.0.0/include
         ${bobsgame_SOURCE_DIR}/lib
-        ${bobsgame_SOURCE_DIR}/lib/poco/Foundation/include
-        ${bobsgame_SOURCE_DIR}/lib/poco/JSON/include
-        ${bobsgame_SOURCE_DIR}/lib/poco/Net/include
-        ${bobsgame_SOURCE_DIR}/lib/poco/Util/include
-        ${bobsgame_SOURCE_DIR}/lib/poco/XML/include
-        ${bobsgame_SOURCE_DIR}/lib/poco/Zip/include
-        ${bobsgame_SOURCE_DIR}/lib/miniz
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Foundation/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/JSON/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Net/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Util/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/XML/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Zip/include
+        ${bobsgame_SOURCE_DIR}/lib/miniz-master
+        ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
-        ${bobsgame_SOURCE_DIR}/lib/projectm/src
-        ${bobsgame_SOURCE_DIR}/lib/libretro-common/include
         #${bobsgame_SOURCE_DIR}/lib/boost_1_62_0
         ${Boost_INCLUDE_DIR}
         ${bobsgame_SOURCE_DIR}
@@ -71,13 +70,13 @@ link_libraries(
         ${SDL2_TTF_LIBRARY}
         ${SDL2_NET_LIBRARY}
 
-        ${bobsgame_SOURCE_DIR}/lib/poco/lib/Linux/x86_64/libCppUnit.so.1
-        ${bobsgame_SOURCE_DIR}/lib/poco/lib/Linux/x86_64/libPocoFoundation.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco/lib/Linux/x86_64/libPocoJSON.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco/lib/Linux/x86_64/libPocoNet.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco/lib/Linux/x86_64/libPocoUtil.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco/lib/Linux/x86_64/libPocoXML.so.48
-        ${bobsgame_SOURCE_DIR}/lib/poco/lib/Linux/x86_64/libPocoZip.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libCppUnit.so.1
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoFoundation.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoJSON.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoNet.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoUtil.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoXML.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoZip.so.48
 
 
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/lib/linux/gmake/libgwen_static.a
@@ -239,8 +238,6 @@ set(SOURCE_FILES
     src/Engine/nd/ramio/RamioMoneyBlock.h
     src/Engine/nd/GameDataLoader.cpp
     src/Engine/nd/GameDataLoader.h
-    src/Engine/nd/LibretroGame.cpp
-    src/Engine/nd/LibretroGame.h
     src/Engine/nd/ND.cpp
     src/Engine/nd/ND.h
     src/Engine/nd/NDGameEngine.cpp
@@ -413,12 +410,6 @@ set(SOURCE_FILES
     src/Puzzle/GameLogic.h
     src/Puzzle/Grid.cpp
     src/Puzzle/Grid.h
-    src/Puzzle/OKGame.cpp
-    src/Puzzle/OKGame.h
-    src/Puzzle/OKGameMenus.cpp
-    src/Puzzle/OKGameNetwork.cpp
-    src/Engine/stadium/OKGameStadium.cpp
-    src/Engine/stadium/OKGameStadium.h
     src/Puzzle/Piece.cpp
     src/Puzzle/Piece.h
     src/Puzzle/GameType.cpp
@@ -429,8 +420,8 @@ set(SOURCE_FILES
     src/Puzzle/Stats/UserStatsForSpecificGameAndDifficulty.h
     src/Utility/audio/AudioManager.cpp
     src/Utility/audio/AudioManager.h
-    src/Utility/audio/Music.cpp
-    src/Utility/audio/Music.h
+    #src/Utility/audio/Music.cpp
+    #src/Utility/audio/Music.h
     #src/Utility/audio/MusicData.cpp
     #src/Utility/audio/MusicData.h
     src/Utility/audio/Sound.cpp
@@ -488,12 +479,7 @@ set(SOURCE_FILES
 
 
 
-add_subdirectory(lib/projectm)
-add_subdirectory(lib/gambatte-libretro)
 add_executable(bobsgame ${SOURCE_FILES})
-target_link_libraries(bobsgame projectM)
-target_include_directories(bobsgame PRIVATE lib/poco/Foundation/include)
-target_include_directories(bobsgame PRIVATE lib/poco/Zip/include)
 
 
 

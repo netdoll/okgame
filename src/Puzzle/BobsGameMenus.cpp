@@ -376,7 +376,7 @@ void BobsGame::titleMenuUpdate()
 	
 	if (titleMenu == nullptr)
 	{
-		titleMenu = make_shared<BobMenu>(this, "");
+		titleMenu = new BobMenu(this, "");
 		titleMenu->spacing = 1.2f;
 		
 		titleMenu->addInfo("Connecting to server...","Login");
@@ -462,7 +462,7 @@ void BobsGame::titleMenuUpdate()
 		if (titleMenu != nullptr)
 		{
 			titleMenuCursorPosition = titleMenu->cursorPosition;
-			//delete titleMenu;
+			delete titleMenu;
 			titleMenu = nullptr;
 		}
 	}
@@ -495,7 +495,7 @@ void BobsGame::startScreenMenuUpdate()
 
 	if (startScreenMenu == nullptr)
 	{
-		startScreenMenu = make_shared<BobMenu>(this, "");
+		startScreenMenu = new BobMenu(this, "");
 		startScreenMenu->spacing = 1.2f;
 		startScreenMenu->setFontSize(32);
 
@@ -524,7 +524,7 @@ void BobsGame::startScreenMenuUpdate()
 
 	if (infoMenu == nullptr)
 	{
-		infoMenu = make_shared<BobMenu>(this, "");
+		infoMenu = new BobMenu(this, "");
 		infoMenu->center = false;
 		infoMenu->setFontSize(10);
 		infoMenu->outline = false;
@@ -538,7 +538,7 @@ void BobsGame::startScreenMenuUpdate()
 
 //	if (patreonMenu == nullptr)
 //	{
-//		patreonMenu = make_shared<BobMenu>(this, "");
+//		patreonMenu = new BobMenu(this, "");
 //		patreonMenu->center = false;
 //		patreonMenu->font = 10;
 //		patreonMenu->outline = false;
@@ -548,7 +548,7 @@ void BobsGame::startScreenMenuUpdate()
 
 	if (forumMenu == nullptr)
 	{
-		forumMenu = make_shared<BobMenu>(this, "");
+		forumMenu = new BobMenu(this, "");
 		forumMenu->center = false;
 		forumMenu->setFontSize(10);
 		forumMenu->outline = false;
@@ -579,7 +579,7 @@ void BobsGame::startScreenMenuUpdate()
 							
 		if (activityMenu == nullptr)
 		{
-			activityMenu = make_shared<BobMenu>(this, "", "Activity Stream");
+			activityMenu = new BobMenu(this, "", "Activity Stream");
 			activityMenu->spacing = 1.2f;
 			activityMenu->setFontSize(14);
 			activityMenu->center = false;
@@ -709,27 +709,27 @@ void BobsGame::startScreenMenuUpdate()
 			if(startScreenMenu!=nullptr)
 			{
 				startScreenMenuCursorPosition = startScreenMenu->cursorPosition;
-				//delete startScreenMenu;
+				delete startScreenMenu;
 				startScreenMenu = nullptr;
 			}
 			if (infoMenu != nullptr)
 			{
-				//delete infoMenu;
+				delete infoMenu;
 				infoMenu = nullptr;
 			}
 			if (patreonMenu != nullptr)
 			{
-				//delete patreonMenu;
+				delete patreonMenu;
 				patreonMenu = nullptr;
 			}
 			if (forumMenu != nullptr)
 			{
-				//delete forumMenu;
+				delete forumMenu;
 				forumMenu = nullptr;
 			}
 			if (activityMenu != nullptr)
 			{
-				//delete activityMenu;
+				delete activityMenu;
 				activityMenu = nullptr;				
 			}
 		}
@@ -792,7 +792,7 @@ void BobsGame::gettingGamesFromServerMenuUpdate()
 
 	if (gettingGamesFromServerMenu == nullptr)
 	{
-		gettingGamesFromServerMenu = make_shared<BobMenu>(this, "");
+		gettingGamesFromServerMenu = new BobMenu(this, "");
 		gettingGamesFromServerMenu->spacing = 1.2f;
 		gettingGamesFromServerMenu->setFontSize(24);
 		gettingGamesFromServerMenu->addInfo("Downloading games from server...","Downloading");
@@ -851,7 +851,7 @@ void BobsGame::pauseMenuUpdate()
 
 	if(pauseMenu == nullptr)
 	{
-		pauseMenu = make_shared<BobMenu>(this,"Paused");
+		pauseMenu = new BobMenu(this,"Paused");
 
 		pauseMenu->add("Back To Game", "Back To Game");
 		settingsMenuInit(pauseMenu, false);
@@ -936,7 +936,7 @@ void BobsGame::pauseMenuUpdate()
 		if (pauseMenu != nullptr)
 		{
 			pauseMenuCursorPosition = pauseMenu->cursorPosition;
-			//delete pauseMenu;
+			delete pauseMenu;
 			pauseMenu = nullptr;
 		}
 	}
@@ -987,7 +987,7 @@ void BobsGame::controllerMenuUpdate()
 		//Testing... Press Esc to stop.
 		//Create custom mapping
 
-		controllerMenu = make_shared<BobMenu>(this, "Controller Test");
+		controllerMenu = new BobMenu(this, "Controller Test");
 		controllerMenu->addInfo("Game controllers should be automatically detected.");
 #ifdef _WINDOWS_
 		controllerMenu->addInfo("If your controller does not work, try downloading x360ce.");
@@ -1110,7 +1110,7 @@ void BobsGame::controllerMenuUpdate()
 			if (controllerMenu != nullptr)
 			{
 				controllerMenuCursorPosition = controllerMenu->cursorPosition;
-				//delete controllerMenu;
+				delete controllerMenu;
 				controllerMenu = nullptr;
 			}
 		}
@@ -1267,7 +1267,7 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 	{
 		if (p->menu == nullptr)
 		{
-			p->menu = make_shared<BobMenu>(this, "");
+			p->menu = new BobMenu(this, "");
 
 			p->menu->add("Back To Game", "Back To Game", BobColor::white);
 			settingsMenuInit(p->menu, false);
@@ -1404,7 +1404,7 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 
 //			if(deletePlayer)
 //			{
-//				//delete p;
+//				delete p;
 //				return false;
 //			}
 //			return true;
@@ -1440,7 +1440,7 @@ void BobsGame::loginMenuUpdate()
 
 	if (loginMenu == nullptr)
 	{
-		loginMenu = make_shared<BobMenu>(this, "Login");
+		loginMenu = new BobMenu(this, "Login");
 		//loginMenu->center = false;
 		loginMenu->add("Username or Email: " + userNameOrEmailText,"Username or Email", BobMenu::statusColor);
 		loginMenu->add("Password: " + passwordStarsText, "Password", BobMenu::statusColor);
@@ -1576,7 +1576,7 @@ void BobsGame::loginMenuUpdate()
 		if (loginMenu != nullptr)
 		{
 			loginMenuCursorPosition = loginMenu->cursorPosition;
-			//delete loginMenu;
+			delete loginMenu;
 			loginMenu = nullptr;
 		}
 
@@ -1639,7 +1639,7 @@ void BobsGame::createAccountMenuUpdate()
 				userNameText = userNameOrEmailText;
 		}
 
-		createAccountMenu = make_shared<BobMenu>(this, "Create Account");
+		createAccountMenu = new BobMenu(this, "Create Account");
 		//createAccountMenu->center = false;
 		createAccountMenu->add("Username: " + userNameText, "Username");
 		createAccountMenu->add("Email: " + emailText, "Email");
@@ -1766,7 +1766,7 @@ void BobsGame::createAccountMenuUpdate()
 
 		if(createAccountMenu != nullptr)
 		{
-			//delete createAccountMenu;
+			delete createAccountMenu;
 			createAccountMenu = nullptr;
 		}
 
@@ -1826,7 +1826,6 @@ void BobsGame::settingsMenuInit(BobMenu* m, bool isSettingsMenu)
 	if (isSettingsMenu)m->add("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"), "Censor");
 	if (isSettingsMenu)m->add("Hide Chat: " + string(Main::globalSettings->hideChat ? "On" : "Off"), "Hide Chat");
 	if (isSettingsMenu)m->add("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"), "Hide Notifications");
-	if (isSettingsMenu)m->add("Enable Visualizer: " + string(Main::globalSettings->bobsGame_enableVisualizer ? "On" : "Off"), "Enable Visualizer");
 
 	m->add("Defaults");
 }
@@ -1849,7 +1848,6 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m, bool isSettingsMenu)
 	if (isSettingsMenu)Main::globalSettings->censorBadWords = gs.censorBadWords;
 	if (isSettingsMenu)Main::globalSettings->hideChat = gs.hideChat;
 	if (isSettingsMenu)Main::globalSettings->hideNotifications = gs.hideNotifications;
-	if (isSettingsMenu)Main::globalSettings->bobsGame_enableVisualizer = gs.bobsGame_enableVisualizer;
 
 	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
 	m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
@@ -1863,7 +1861,6 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m, bool isSettingsMenu)
 	if (isSettingsMenu)m->getMenuItemByID("Censor")->setText("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"));
 	if (isSettingsMenu)m->getMenuItemByID("Hide Chat")->setText("Hide Chat: " + string(Main::globalSettings->hideChat ? "On" : "Off"));
 	if (isSettingsMenu)m->getMenuItemByID("Hide Notifications")->setText("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"));
-	if (isSettingsMenu)m->getMenuItemByID("Enable Visualizer")->setText("Enable Visualizer: " + string(Main::globalSettings->bobsGame_enableVisualizer ? "On" : "Off"));
 
 }
 
@@ -1948,21 +1945,6 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 			Main::globalSettings->hideNotifications = !Main::globalSettings->hideNotifications;
 
 			m->getMenuItemByID("Hide Notifications")->setText("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"));
-		}
-	}
-
-	if (m->isSelectedID("Enable Visualizer"))
-	{
-		long long startTime = timeLastChangedSetting;
-		long long currentTime = System::currentHighResTimer();
-		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-
-		if (ticksPassed > 15)
-		{
-			timeLastChangedSetting = currentTime;
-			Main::globalSettings->bobsGame_enableVisualizer = !Main::globalSettings->bobsGame_enableVisualizer;
-
-			m->getMenuItemByID("Enable Visualizer")->setText("Enable Visualizer: " + string(Main::globalSettings->bobsGame_enableVisualizer ? "On" : "Off"));
 		}
 	}
 
@@ -2165,7 +2147,7 @@ void BobsGame::globalSettingsMenuUpdate()
 
 	if (globalSettingsMenu == nullptr)
 	{
-		globalSettingsMenu = make_shared<BobMenu>(this, "Global Settings");
+		globalSettingsMenu = new BobMenu(this, "Global Settings");
 
 		settingsMenuInit(globalSettingsMenu, true);
 		globalSettingsMenu->add("Back To Title Screen", "Back To Title Screen");
@@ -2235,7 +2217,7 @@ void BobsGame::globalSettingsMenuUpdate()
 		if (globalSettingsMenu != nullptr)
 		{
 			globalSettingsMenuCursorPosition = globalSettingsMenu->cursorPosition;
-			//delete globalSettingsMenu;
+			delete globalSettingsMenu;
 			globalSettingsMenu = nullptr;
 		}
 
@@ -2277,7 +2259,7 @@ void BobsGame::whichStatsMiniMenuUpdate()
 	//populate leaderBoardMiniMenu
 	if (whichStatsMiniMenu == nullptr)
 	{
-		whichStatsMiniMenu = make_shared<BobMenu>(this, "");
+		whichStatsMiniMenu = new BobMenu(this, "");
 		whichStatsMiniMenu->center = false;
 		whichStatsMiniMenu->setFontSize(12);
 
@@ -2354,7 +2336,7 @@ void BobsGame::whichStatsMiniMenuUpdate()
 
 		if (whichStatsMiniMenu != nullptr)
 		{
-			//delete whichStatsMiniMenu;
+			delete whichStatsMiniMenu;
 			whichStatsMiniMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -2369,7 +2351,7 @@ void BobsGame::statsMenuUpdate()
 
 	if (statsMenu == nullptr)
 	{
-		statsMenu = make_shared<BobMenu>(this, "Stats And Leaderboards");
+		statsMenu = new BobMenu(this, "Stats And Leaderboards");
 		statsMenu->center = false;
 
 		statsMenu->add("Leaderboard Type: ", "Stats Type");
@@ -2557,7 +2539,7 @@ void BobsGame::statsMenuUpdate()
 
 	if (yourStatsMenu == nullptr)
 	{
-		yourStatsMenu = make_shared<BobMenu>(this, "", "Your Stats");
+		yourStatsMenu = new BobMenu(this, "", "Your Stats");
 		yourStatsMenu->center = false;
 		yourStatsMenu->setFontSize(14);
 		yourStatsMenu->outline = false;
@@ -2571,7 +2553,7 @@ void BobsGame::statsMenuUpdate()
 
 	if (leaderBoardMenu == nullptr)
 	{
-		leaderBoardMenu = make_shared<BobMenu>(this, "", "High Scores");
+		leaderBoardMenu = new BobMenu(this, "", "High Scores");
 		leaderBoardMenu->center = false;
 		leaderBoardMenu->setFontSize(14);
 		leaderBoardMenu->outline = false;
@@ -2622,17 +2604,17 @@ void BobsGame::statsMenuUpdate()
 		if (statsMenu != nullptr)
 		{
 			statsMenuCursorPosition = statsMenu->cursorPosition;
-			//delete statsMenu;
+			delete statsMenu;
 			statsMenu = nullptr;
 		}
 		if (yourStatsMenu != nullptr)
 		{
-			//delete yourStatsMenu;
+			delete yourStatsMenu;
 			yourStatsMenu = nullptr;
 		}
 		if (leaderBoardMenu != nullptr)
 		{
-			//delete leaderBoardMenu;
+			delete leaderBoardMenu;
 			leaderBoardMenu = nullptr;
 		}
 
@@ -2761,7 +2743,7 @@ void BobsGame::saveRoomConfigMenuUpdate()
 	{
 		chatEnabled = false;
 
-		saveRoomConfigMenu = make_shared<BobMenu>(this, "");
+		saveRoomConfigMenu = new BobMenu(this, "");
 		saveRoomConfigMenu->center = false;
 		//saveRoomConfigMenu->outline = false;
 
@@ -2859,7 +2841,7 @@ void BobsGame::saveRoomConfigMenuUpdate()
 		if (saveRoomConfigMenu != nullptr)
 		{
 			saveRoomConfigMenuCursorPosition = saveRoomConfigMenu->cursorPosition;
-			//delete saveRoomConfigMenu;
+			delete saveRoomConfigMenu;
 			saveRoomConfigMenu = nullptr;
 		}
 	}
@@ -2872,7 +2854,7 @@ void BobsGame::loadRoomConfigMenuUpdate()
 
 	if (loadRoomConfigMenu == nullptr)
 	{
-		loadRoomConfigMenu = make_shared<BobMenu>(this, "");
+		loadRoomConfigMenu = new BobMenu(this, "");
 		loadRoomConfigMenu->center = false;
 		//loadRoomConfigMenu->outline = false;
 
@@ -2938,7 +2920,7 @@ void BobsGame::loadRoomConfigMenuUpdate()
 		if (loadRoomConfigMenu != nullptr)
 		{
 			loadRoomConfigMenuCursorPosition = loadRoomConfigMenu->cursorPosition;
-			//delete loadRoomConfigMenu;
+			delete loadRoomConfigMenu;
 			loadRoomConfigMenu = nullptr;
 		}
 	}
@@ -2953,7 +2935,7 @@ void BobsGame::gameObjectiveMenuUpdate()
 	const string ENDLESS = "Endless Mode";
 	if (gameObjectiveMenu == nullptr)
 	{
-		gameObjectiveMenu = make_shared<BobMenu>(this, "");
+		gameObjectiveMenu = new BobMenu(this, "");
 		//gameObjectiveMenu->outline = false;
 
 		gameObjectiveMenu->add(PLAY_TO_CREDITS_LEVEL);
@@ -2997,7 +2979,7 @@ void BobsGame::gameObjectiveMenuUpdate()
 		if (gameObjectiveMenu != nullptr)
 		{
 			gameObjectiveMenuCursorPosition = gameObjectiveMenu->cursorPosition;
-			//delete gameObjectiveMenu;
+			delete gameObjectiveMenu;
 			gameObjectiveMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -3015,7 +2997,7 @@ void BobsGame::sendGarbageToMenuUpdate()
 
 	if (sendGarbageToMenu == nullptr)
 	{
-		sendGarbageToMenu = make_shared<BobMenu>(this, "");
+		sendGarbageToMenu = new BobMenu(this, "");
 		//sendGarbageToMenu->outline = false;
 
 
@@ -3060,7 +3042,7 @@ void BobsGame::sendGarbageToMenuUpdate()
 		if (sendGarbageToMenu != nullptr)
 		{
 			sendGarbageToMenuCursorPosition = sendGarbageToMenu->cursorPosition;
-			//delete sendGarbageToMenu;
+			delete sendGarbageToMenu;
 			sendGarbageToMenu = nullptr;
 		}
 	}
@@ -3168,7 +3150,7 @@ void BobsGame::roomOptionsMenuUpdate()
 	{
 		if (descriptionCaption != nullptr) { delete descriptionCaption; descriptionCaption = nullptr; }
 		descriptionCaption = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 18, false, BobColor::darkGray, BobColor::clear);
-		roomOptionsMenu = make_shared<BobMenu>(this, "");
+		roomOptionsMenu = new BobMenu(this, "");
 		roomOptionsMenu->center = false;
 		roomOptionsMenu->setFontSize(24);
 		//roomOptionsMenu->outline = false;
@@ -3617,7 +3599,7 @@ void BobsGame::roomOptionsMenuUpdate()
 			if (roomOptionsMenu != nullptr)
 			{
 				roomOptionsMenuCursorPosition = roomOptionsMenu->cursorPosition;
-				//delete roomOptionsMenu;
+				delete roomOptionsMenu;
 				roomOptionsMenu = nullptr;
 			}
 		}
@@ -3636,7 +3618,7 @@ void BobsGame::gameSetupMenuUpdate()
 
 		errorLabel = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 16, false, BobColor::red, BobColor::clear);
 
-		gameSetupMenu = make_shared<BobMenu>(this, "Setup Game Options");
+		gameSetupMenu = new BobMenu(this, "Setup Game Options");
 		gameSetupMenu->center = false;
 
 		gameSetupMenu->add("Start Game", "Start Game", BobColor::green);
@@ -3795,7 +3777,7 @@ void BobsGame::gameSetupMenuUpdate()
 
 	if (yourStatsMenu == nullptr)
 	{
-		yourStatsMenu = make_shared<BobMenu>(this, "", "Your Stats");
+		yourStatsMenu = new BobMenu(this, "", "Your Stats");
 		yourStatsMenu->center = false;
 		yourStatsMenu->setFontSize(14);
 		yourStatsMenu->outline = false;
@@ -3809,7 +3791,7 @@ void BobsGame::gameSetupMenuUpdate()
 
 	if (leaderBoardMenu == nullptr)
 	{
-		leaderBoardMenu = make_shared<BobMenu>(this, "", "High Scores");
+		leaderBoardMenu = new BobMenu(this, "", "High Scores");
 		leaderBoardMenu->center = false;
 		leaderBoardMenu->setFontSize(14);
 		leaderBoardMenu->outline = false;
@@ -4127,19 +4109,19 @@ void BobsGame::gameSetupMenuUpdate()
 			if (gameSetupMenu != nullptr)
 			{
 				gameSetupMenuCursorPosition = gameSetupMenu->cursorPosition;
-				//delete gameSetupMenu;
+				delete gameSetupMenu;
 				gameSetupMenu = nullptr;
 			}
 
 			if (yourStatsMenu != nullptr)
 			{
-				//delete yourStatsMenu;
+				delete yourStatsMenu;
 				yourStatsMenu = nullptr;
 			}
 
 			if (leaderBoardMenu != nullptr)
 			{
-				//delete leaderBoardMenu;
+				delete leaderBoardMenu;
 				leaderBoardMenu = nullptr;
 			}
 		}
@@ -4265,7 +4247,7 @@ void BobsGame::selectGameSequenceOrSingleGameTypeMenuUpdate()
 
 	if (selectGameSequenceOrSingleGameTypeMenu == nullptr)
 	{
-		selectGameSequenceOrSingleGameTypeMenu = make_shared<BobMenu>(this, "");
+		selectGameSequenceOrSingleGameTypeMenu = new BobMenu(this, "");
 
 		if(localMultiplayer || networkMultiplayer)
 		{
@@ -4362,7 +4344,7 @@ void BobsGame::selectGameSequenceOrSingleGameTypeMenuUpdate()
 		if (selectGameSequenceOrSingleGameTypeMenu != nullptr)
 		{
 			selectGameSequenceOrSingleGameTypeMenuCursorPosition = selectGameSequenceOrSingleGameTypeMenu->cursorPosition;
-			//delete selectGameSequenceOrSingleGameTypeMenu;
+			delete selectGameSequenceOrSingleGameTypeMenu;
 			selectGameSequenceOrSingleGameTypeMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -4395,7 +4377,7 @@ void BobsGame::selectGameSequenceMenuUpdate()
 
 	if (selectGameSequenceMenu == nullptr)
 	{
-		selectGameSequenceMenu = make_shared<BobMenu>(this, "");
+		selectGameSequenceMenu = new BobMenu(this, "");
 		selectGameSequenceMenu->center = false;
 		selectGameSequenceMenu->outline = false;
 
@@ -4424,7 +4406,7 @@ void BobsGame::selectGameSequenceMenuUpdate()
 	{
 		for (int i = 0; i<loadedGameSequences.size(); i++)
 		{
-			shared_ptr<GameSequence> g = loadedGameSequences.get(i);
+			GameSequence *g = loadedGameSequences.get(i);
 			if (selectGameSequenceMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 				if(statsMenuShowing)
@@ -4434,8 +4416,8 @@ void BobsGame::selectGameSequenceMenuUpdate()
 				}
 				else
 				{
-					currentRoom->gameSequence = g.get();
-					getPlayer1Game()->currentGameSequence = g.get();
+					currentRoom->gameSequence = g;
+					getPlayer1Game()->currentGameSequence = g;
 
 					gameSequenceOptionsMenuShowing = true;
 				}
@@ -4458,7 +4440,7 @@ void BobsGame::selectGameSequenceMenuUpdate()
 		if (selectGameSequenceMenu != nullptr)
 		{
 			selectGameSequenceMenuCursorPosition = selectGameSequenceMenu->cursorPosition;
-			//delete selectGameSequenceMenu;
+			delete selectGameSequenceMenu;
 			selectGameSequenceMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -4494,7 +4476,7 @@ void BobsGame::gameSequenceOptionsMenuUpdate()
 
 	if (gameSequenceOptionsMenu == nullptr)
 	{
-		gameSequenceOptionsMenu = make_shared<BobMenu>(this,"");
+		gameSequenceOptionsMenu = new BobMenu(this,"");
 
 		gameSequenceOptionsMenu->add(RANDOMIZE_SEQUENCE);
 		gameSequenceOptionsMenu->add(PLAY_THROUGH_SEQUENCE_IN_ORDER);
@@ -4552,7 +4534,7 @@ void BobsGame::gameSequenceOptionsMenuUpdate()
 		if (gameSequenceOptionsMenu != nullptr)
 		{
 			gameSequenceOptionsMenuCursorPosition = gameSequenceOptionsMenu->cursorPosition;
-			//delete gameSequenceOptionsMenu;
+			delete gameSequenceOptionsMenu;
 			gameSequenceOptionsMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -4599,64 +4581,64 @@ double BobsGame::wilsonScore(double up, double total, double confidence)
 }
 
 //=========================================================================================================================
-ArrayList<pair<shared_ptr<GameType>,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
+ArrayList<pair<GameType*,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameType>, pair<string, BobColor*>>> gamesStringColor;
+	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor;
 
 //	for (int i = 0; i<loadedGameTypes.size(); i++)
 //	{
-//		shared_ptr<GameType> g = loadedGameTypes.get(i);
+//		GameType *g = loadedGameTypes.get(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
 //			BobColor *color = BobColor::darkGreen;
 //			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name,color);
-//			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g.get(), stringColorPair);
+//			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
 //			gamesStringColor.add(gameTypeStringColorPairPair);
 //		}
 //	}
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType> g = loadedGameTypes.get(i);
+		GameType *g = loadedGameTypes.get(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			BobColor *color = BobColor::purple;
 			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g.get(), stringColorPair);
+			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
 			gamesStringColor.add(gameTypeStringColorPairPair);
 		}
 	}
 
-	ArrayList<shared_ptr<GameType>> downloadedGames;
+	ArrayList<GameType*> downloadedGames;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType> g = loadedGameTypes.get(i);
+		GameType *g = loadedGameTypes.get(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
 			downloadedGames.add(g);
 		}
 	}
 
-	multimap<double, shared_ptr<GameType>> games;
+	multimap<double, GameType*> games;
 	for (int i = 0; i < downloadedGames.size(); i++)
 	{
-		shared_ptr<GameType> g = downloadedGames.get(i);
+		GameType *g = downloadedGames.get(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
 		double score = wilsonScore(up, total);
 
-		games.insert(std::pair<double, shared_ptr<GameType>>(score, g));
+		games.insert(std::pair<double, GameType*>(score, g));
 	}
 
 	long long currentSecondsSinceEpoch = (long long)time(nullptr);
 
-	multimap<double, shared_ptr<GameType>>::iterator pos;
+	multimap<double, GameType*>::iterator pos;
 	for (pos = games.begin(); pos != games.end(); ++pos)
 	{
-		shared_ptr<GameType> g = pos->second;
+		GameType *g = pos->second;
 
 		long long secondsSinceEpoch = g->dateCreated / 1000;
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
@@ -4666,7 +4648,7 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,BobColor*>>> BobsGame::getSorted
 
 		BobColor *color = BobColor::darkGray;
 		pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-		pair<shared_ptr<GameType>, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<shared_ptr<GameType>, pair<string, BobColor*>>(g, stringColorPair);
+		pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
 		gamesStringColor.add(gameTypeStringColorPairPair);
 	}
 
@@ -4675,64 +4657,64 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,BobColor*>>> BobsGame::getSorted
 }
 
 //=========================================================================================================================
-ArrayList<pair<shared_ptr<GameSequence>, pair<string, BobColor*>>> BobsGame::getSortedGameSequences()
+ArrayList<pair<GameSequence*, pair<string, BobColor*>>> BobsGame::getSortedGameSequences()
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameSequence>, pair<string, BobColor*>>> gamesStringColor;
+	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor;
 
 //	for (int i = 0; i<loadedGameSequences.size(); i++)
 //	{
-//		shared_ptr<GameSequence> g = loadedGameSequences.get(i);
+//		GameSequence *g = loadedGameSequences.get(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
 //			BobColor *color = BobColor::darkGreen;
 //			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-//			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g.get(), stringColorPair);
+//			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
 //			gamesStringColor.add(gameSequenceStringColorPairPair);
 //		}
 //	}
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence> g = loadedGameSequences.get(i);
+		GameSequence *g = loadedGameSequences.get(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			BobColor *color = BobColor::purple;
 			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g.get(), stringColorPair);
+			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
 			gamesStringColor.add(gameSequenceStringColorPairPair);
 		}
 	}
 
-	ArrayList<shared_ptr<GameSequence>> downloadedGames;
+	ArrayList<GameSequence*> downloadedGames;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence> g = loadedGameSequences.get(i);
+		GameSequence *g = loadedGameSequences.get(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
 			downloadedGames.add(g);
 		}
 	}
 
-	multimap<double, shared_ptr<GameSequence>> games;
+	multimap<double, GameSequence*> games;
 	for (int i = 0; i < downloadedGames.size(); i++)
 	{
-		shared_ptr<GameSequence> g = downloadedGames.get(i);
+		GameSequence *g = downloadedGames.get(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
 		double score = wilsonScore(up, total);
 
-		games.insert(std::pair<double, shared_ptr<GameSequence>>(score, g));
+		games.insert(std::pair<double, GameSequence*>(score, g));
 	}
 
 	long long currentSecondsSinceEpoch = (long long)time(nullptr);
 
-	multimap<double, shared_ptr<GameSequence>>::iterator pos;
+	multimap<double, GameSequence*>::iterator pos;
 	for (pos = games.begin(); pos != games.end(); ++pos)
 	{
-		shared_ptr<GameSequence> g = pos->second;
+		GameSequence *g = pos->second;
 
 		long long secondsSinceEpoch = g->dateCreated / 1000;
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
@@ -4742,7 +4724,7 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, BobColor*>>> BobsGame::get
 
 		BobColor *color = BobColor::darkGray;
 		pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-		pair<shared_ptr<GameSequence>, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<shared_ptr<GameSequence>, pair<string, BobColor*>>(g, stringColorPair);
+		pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
 		gamesStringColor.add(gameSequenceStringColorPairPair);
 	}
 
@@ -4761,11 +4743,11 @@ void BobsGame::populateGameTypesMenu(BobMenu *menu)
 	//use smaller font
 	//username - game name - upvotes/downvotes
 
-	ArrayList<pair<shared_ptr<GameType>, pair<string, BobColor*>>> gamesStringColor = getSortedGameTypes();
+	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor = getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<shared_ptr<GameType>, pair<string, BobColor*>> gameTypeStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameType> g = gameTypeStringColorPairPair.first;
+		pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		GameType *g = gameTypeStringColorPairPair.first;
 		pair<string, BobColor*> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
@@ -4781,11 +4763,11 @@ void BobsGame::populateGameTypesMenu(BobMenu *menu)
 void BobsGame::populateGameSequencesMenu(BobMenu *menu)
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameSequence>, pair<string, BobColor*>>> gamesStringColor = getSortedGameSequences();
+	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor = getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<shared_ptr<GameSequence>, pair<string, BobColor*>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameSequence> g = gameSequenceStringColorPairPair.first;
+		pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		GameSequence *g = gameSequenceStringColorPairPair.first;
 		pair<string, BobColor*> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
@@ -5219,7 +5201,7 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 
 	if (selectSingleGameTypeMenu == nullptr)
 	{
-		selectSingleGameTypeMenu = make_shared<BobMenu>(this, "");
+		selectSingleGameTypeMenu = new BobMenu(this, "");
 		selectSingleGameTypeMenu->center = false;
 		selectSingleGameTypeMenu->setFontSize(14);
 		selectSingleGameTypeMenu->outline = false;
@@ -5323,7 +5305,7 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 
 		for (int i = 0; i<loadedGameTypes.size(); i++)
 		{
-			shared_ptr<GameType> g = loadedGameTypes.get(i);
+			GameType *g = loadedGameTypes.get(i);
 			if (selectSingleGameTypeMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 
@@ -5363,7 +5345,7 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 		if (selectSingleGameTypeMenu != nullptr)
 		{
 			selectSingleGameTypeMenuCursorPosition = selectSingleGameTypeMenu->cursorPosition;
-			//delete selectSingleGameTypeMenu;
+			delete selectSingleGameTypeMenu;
 			selectSingleGameTypeMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -5384,7 +5366,7 @@ void BobsGame::difficultyMenuUpdate()
 
 	if (difficultyMenu == nullptr)
 	{
-		difficultyMenu = make_shared<BobMenu>(this, "");
+		difficultyMenu = new BobMenu(this, "");
 		difficultyMenu->center = false;
 
 		if (localMultiplayer || networkMultiplayer)
@@ -5498,7 +5480,7 @@ void BobsGame::difficultyMenuUpdate()
 		if (difficultyMenu != nullptr)
 		{
 			difficultyMenuCursorPosition = difficultyMenu->cursorPosition;
-			//delete difficultyMenu;
+			delete difficultyMenu;
 			difficultyMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -5523,12 +5505,12 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 		if(networkMultiplayer)
 		{
-			multiplayerOptionsMenu = make_shared<BobMenu>(this, "Set Network Multiplayer Room Options");
+			multiplayerOptionsMenu = new BobMenu(this, "Set Network Multiplayer Room Options");
 			//multiplayerOptionsMenu->center = false;
 		}
 		else
 		{
-			multiplayerOptionsMenu = make_shared<BobMenu>(this, "Set Local Multiplayer Options");
+			multiplayerOptionsMenu = new BobMenu(this, "Set Local Multiplayer Options");
 			//multiplayerOptionsMenu->center = false;
 		}
 
@@ -5893,7 +5875,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 			if (multiplayerOptionsMenu != nullptr)
 			{
 				multiplayerOptionsMenuCursorPosition = multiplayerOptionsMenu->cursorPosition;
-				//delete multiplayerOptionsMenu;
+				delete multiplayerOptionsMenu;
 				multiplayerOptionsMenu = nullptr;
 			}
 		}
@@ -5989,16 +5971,16 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 
 	if (localMultiplayerPlayerJoinMenu == nullptr)
 	{
-		localMultiplayerPlayerJoinMenu = make_shared<BobMenu>(this, "Local Multiplayer Host/Join Menu");
+		localMultiplayerPlayerJoinMenu = new BobMenu(this, "Local Multiplayer Host/Join Menu");
 		localMultiplayerPlayerJoinMenu->addInfo("Press the Space key or A on your controller to join");
 		localMultiplayerPlayerJoinMenu->addInfo("Press Esc or Select on your controller to return to Title Screen");
 
 		players.deleteAll();
 //		while (players.size()>0)
 //		{
-//			shared_ptr<PuzzlePlayer> p = players.get(players.size() - 1);
+//			PuzzlePlayer *p = players.get(players.size() - 1);
 //			players.removeAt(players.size() - 1);
-//			//delete p;
+//			delete p;
 //		}
 	}
 
@@ -6012,7 +5994,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 	bool ready = true;
 	for (int i = 0; i<players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer> p = players.get(i);
+		PuzzlePlayer *p = players.get(i);
 		if (p->confirmed == false)
 		{
 			ready = false;
@@ -6092,12 +6074,12 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 			bool alreadyInUse = false;
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer> p = players.get(i);
+				PuzzlePlayer *p = players.get(i);
 				if (p->useKeyboard)alreadyInUse = true;
 			}
 			if (!alreadyInUse)
 			{
-				shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+				PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 				p->useKeyboard = true;
 				players.add(p);
 				p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
@@ -6108,11 +6090,11 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 	{
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer> p = players.get(i);
+			PuzzlePlayer *p = players.get(i);
 			if (p->useKeyboard)
 			{
 				players.removeAt(i);
-				//delete p;
+				delete p;
 				i = 0;
 			}
 		}
@@ -6129,13 +6111,13 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 				bool alreadyInUse = false;
 				for (int i = 0; i < players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 					if (p->gameController == g)alreadyInUse = true;
 				}
 
 				if (!alreadyInUse)
 				{
-					shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+					PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 					p->gameController = g;
 					players.add(p);
 					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
@@ -6147,11 +6129,11 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer> p = players.get(i);
+				PuzzlePlayer *p = players.get(i);
 				if (p->gameController == g)
 				{
 					players.removeAt(i);
-					//delete p;
+					delete p;
 					i = 0;
 				}
 			}
@@ -6172,7 +6154,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 
 		if (localMultiplayerPlayerJoinMenu != nullptr)
 		{
-			//delete localMultiplayerPlayerJoinMenu;
+			delete localMultiplayerPlayerJoinMenu;
 			localMultiplayerPlayerJoinMenu = nullptr;
 		}
 
@@ -6196,7 +6178,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuRender()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer> p = players.get(i);
+		PuzzlePlayer *p = players.get(i);
 
 		BobTexture *t = nullptr;
 
@@ -6281,7 +6263,7 @@ void BobsGame::playerDifficultyMiniMenuUpdate(PuzzlePlayer *p)
 
 		if (p->menu == nullptr)
 		{
-			p->menu = make_shared<BobMenu>(this, "");
+			p->menu = new BobMenu(this, "");
 			p->menu->center = false;
 			p->menu->setFontSize(12);
 			GameType g;
@@ -6376,7 +6358,7 @@ void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 	{
 		if (p->menu == nullptr)
 		{
-			p->menu = make_shared<BobMenu>(this, "");
+			p->menu = new BobMenu(this, "");
 			p->menu->center = false;
 			p->menu->setFontSize(14);
 			p->menu->outline = false;
@@ -6529,10 +6511,10 @@ void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 					for (int i = 0; i<loadedGameSequences.size(); i++)
 					{
 
-						shared_ptr<GameSequence> gs = loadedGameSequences.get(i);
+						GameSequence *gs = loadedGameSequences.get(i);
 						if (p->menu->isSelectedID(gs->uuid))
 						{
-							game->currentGameSequence = gs.get();
+							game->currentGameSequence = gs;
 							p->gameSequenceOptionsMiniMenuShowing = true;
 						}
 					}
@@ -6563,7 +6545,7 @@ void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 
 					for (int i = 0; i<loadedGameTypes.size(); i++)
 					{
-						shared_ptr<GameType> g = loadedGameTypes.get(i);
+						GameType *g = loadedGameTypes.get(i);
 						if (p->menu->isSelectedID(g->uuid))
 						{
 							game->currentGameSequence = new GameSequence();

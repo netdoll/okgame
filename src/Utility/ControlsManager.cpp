@@ -278,13 +278,14 @@ void ControlsManager::cleanup()
 
 	if (controllersByJoystickID.size()>0)
 	{
-		ArrayList<SDL_GameController*> controllers = controllersByJoystickID.getAllValues();
+		ArrayList<SDL_GameController*> *controllers = controllersByJoystickID.getAllValues();
 
-		for (int i = 0; i < controllers.size(); i++)
+		for (int i = 0; i < controllers->size(); i++)
 		{
-			SDL_GameController *controller = controllers.get(i);
+			SDL_GameController *controller = controllers->get(i);
 			SDL_GameControllerClose(controller);
 		}
+		delete controllers;
 	}
 	//controllersByJoystickNum->clear();
 	controllersByJoystickID.clear();

@@ -20,7 +20,7 @@ class ConsoleText
 public:
 	static Logger log;
 
-	shared_ptr<Caption> caption = nullptr;
+	Caption* caption = nullptr;
 
 	bool alwaysOnBottom = false;
 
@@ -31,14 +31,14 @@ public:
 
 	int ticks = -1;
 
-	BobColor color = *BobColor::white;
+	BobColor* color = nullptr;
 
-	//static BobColor* defaultColor;
+	static BobColor* defaultColor;
 
 	bool isDebug = false;
 
 	ConsoleText();
-	ConsoleText(const string& s, BobColor c, int x, int y, int ticks, bool isDebug);
+	ConsoleText(const string& s, BobColor* c, int x, int y, int ticks, bool isDebug);
 	float getWidth();
 	float getHeight();
 };

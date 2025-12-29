@@ -51,7 +51,7 @@ private:
 
 
 public:
-	deque<shared_ptr<PathTile>> pathTiles;
+	deque<PathTile*>* pathTiles = new deque<PathTile*>();
 
 
 	TilePath();// PathFinder* outerInstance);
@@ -60,7 +60,7 @@ public:
 	int getLength();
 
 
-	shared_ptr<PathTile> getTileForPathIndex(int index);
+	PathTile* getTileForPathIndex(int index);
 
 
 	int getTileXForPathIndex(int index);
@@ -92,7 +92,7 @@ public:
 	/// <summary>
 	/// The list of elements </summary>
 private:
-	ArrayList<shared_ptr<PotentialTile>> list;
+	ArrayList<PotentialTile*>* list = new ArrayList<PotentialTile*>();
 
 
 	/// <summary>
@@ -100,7 +100,7 @@ private:
 	/// </summary>
 	/// <returns> The first element from the list </returns>
 public:
-	shared_ptr<PotentialTile> first();
+	PotentialTile* first();
 
 
 	/// <summary>
@@ -109,16 +109,16 @@ public:
 	void clear();
 
 
-	void addAndSort(shared_ptr<PotentialTile> o);
+	void addAndSort(PotentialTile* o);
 
 
-	void remove(shared_ptr<PotentialTile> o);
+	void remove(PotentialTile* o);
 
 
 	int size();
 
 
-	bool contains(shared_ptr<PotentialTile> o);
+	bool contains(PotentialTile* o);
 };
 
 class PotentialTile
@@ -177,15 +177,15 @@ private:
 
 
 public:
-	shared_ptr<TilePath> path = nullptr;
+	TilePath* path = nullptr;
 
 private:
-	ArrayList<shared_ptr<PotentialTile>> blockedPotentialTilesList;
-	SortedList openPotentialTilesList;
+	ArrayList<PotentialTile*>* blockedPotentialTilesList = new ArrayList<PotentialTile*>();
+	SortedList* openPotentialTilesList = new SortedList();
 
 	//ArrayList<ArrayList<PotentialTile*>*>* potentialTiles = new ArrayList<ArrayList<PotentialTile*>*>();
-	vector<shared_ptr<PotentialTile>> potentialTiles;
-	vector<bool> checkedTileArray;
+	vector<PotentialTile*> *potentialTiles = nullptr;
+	bool* checkedTileArray = nullptr;
 
 
 	int maxSearchDistance = 0;
@@ -204,7 +204,7 @@ public:
 
 
 	//=========================================================================================================================
-	shared_ptr<TilePath> findPath(int startTileX, int startTileY, int toTileX, int toTileY);
+	TilePath* findPath(int startTileX, int startTileY, int toTileX, int toTileY);
 
 
 	//=========================================================================================================================

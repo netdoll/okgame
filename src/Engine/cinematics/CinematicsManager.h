@@ -24,10 +24,10 @@ public:
 	static Logger log;
 
 
-	shared_ptr<Letterbox> letterbox = nullptr;
-	shared_ptr<ScreenOverlay> screenOverlayOverLights = nullptr;
-	shared_ptr<ScreenOverlay> screenOverlayUnderLights = nullptr;
-	shared_ptr<ScreenOverlay> screenOverlayGroundLayer = nullptr;
+	Letterbox* letterbox = nullptr;
+	ScreenOverlay* screenOverlayOverLights = nullptr;
+	ScreenOverlay* screenOverlayUnderLights = nullptr;
+	ScreenOverlay* screenOverlayGroundLayer = nullptr;
 
 
 	//TODO: probably want to organize these effects in a linked list or something

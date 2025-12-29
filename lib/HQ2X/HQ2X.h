@@ -33,10 +33,8 @@ private:
 
 	bool Diff(int w1, int w2);
 
-public:
 	void hq2x_32(unsigned char* in, unsigned char* out, int Xres, int Yres);
 
-private:
 	void InitLUTs();
 
 	int RGB8888toRGB565(int rgb);

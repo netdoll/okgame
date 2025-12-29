@@ -1,8 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [0.8.5] - 2024-05-22
 
 ### Added
+- **Documentation:** Added `PROJECT_STRUCTURE.md` detailing directory layout and submodules.
 - **Memory Management:** Replaced raw pointers with `std::shared_ptr` throughout the Engine.
 - **ProjectM:** Integrated `libprojectM` for music visualization. Added `projectMPresetSwitchTimer` for autopilot.
 - **Libretro:** Added full Libretro frontend support (`LibretroGame`).

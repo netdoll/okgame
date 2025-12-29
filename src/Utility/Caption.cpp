@@ -75,13 +75,13 @@ void Caption::setText(const string& text, bool force)
 	{
 		//Main::log.debug("Caption::setText release");
 		texture->release();
-		//delete texture;
+		delete texture;
 		texture = nullptr;
 	}
 
 
-	if (isTTF)initTTF(e, fixedPosition, screenX, screenY, ticksToRemain, text, fontSize, &textColor, &textBGColor, layer, scale, entity, area, outline);
-	else init(e, fixedPosition, screenX, screenY, ticksToRemain, text, font, &textColor, &textAAColor, &textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
+	if (isTTF)initTTF(e, fixedPosition, screenX, screenY, ticksToRemain, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
+	else init(e, fixedPosition, screenX, screenY, ticksToRemain, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 
 
 	updateScreenXY();
@@ -90,7 +90,7 @@ void Caption::setText(const string& text, bool force)
 //=========================================================================================================================
 BobColor* Caption::getTextColor()
 {//=========================================================================================================================
-	return &textColor;
+	return textColor;
 
 
 }
@@ -101,7 +101,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 {//=========================================================================================================================
 
 
-	if ((fg != nullptr && *fg == this->textColor) && (bg != nullptr && *bg == this->textBGColor) && (font->outlined == true || (aa != nullptr && *aa == this->textAAColor)))
+	if ((fg!=nullptr && *fg == *this->textColor) && (bg!=nullptr && *bg == *this->textBGColor) && (font->outlined==true || aa == this->textAAColor))
 	{
 		return;
 	}
@@ -114,61 +114,81 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 	//color 1 = getText color
 	//color 2 = antialiasing color
 
-	BobColor tempFG = this->textColor;
-	BobColor tempBG = this->textBGColor;
-	BobColor tempAA = this->textAAColor;
+	BobColor* tempFG = this->textColor;
+	BobColor* tempBG = this->textBGColor;
+	BobColor* tempAA = this->textAAColor;
 
 
 	if (fg != nullptr)
 	{
-		tempFG = *fg;
+		tempFG = fg;
 	}
 
 	if (bg != nullptr)
 	{
-		tempBG = *bg;
+		tempBG = bg;
 	}
 
 	if (aa != nullptr)
 	{
-		tempAA = *aa;
+		tempAA = aa;
 	}
 	else
 	{
 
-		if (font->outlined == true) { tempAA = *BobColor::black; }
+		if (font->outlined == true) { tempAA = BobColor::black; }
 		else
-			if (tempBG == *BobColor::white)
+		if (tempBG == BobColor::white)
+		{
+			tempAA = new BobColor(*fg);
+			tempAA->lighter();
+			tempAA->lighter();
+			tempAA->lighter();
+
+			//				if(textColor==Color.BLACK)this.textAAColor=Color.LIGHTERGRAY;
+			//				if(textColor==Color.GRAY)this.textAAColor=Color.LIGHTERGRAY;
+			//
+			//				if(textColor==Color.GREEN)this.textAAColor=Color.LIGHTGREEN;
+			//				if(textColor==Color.BLUE)this.textAAColor=Color.LIGHTBLUE;
+			//				if(textColor==Color.PURPLE)this.textAAColor=Color.LIGHTPURPLE;
+			//				if(textColor==Color.PINK)this.textAAColor=Color.LIGHTPINK;
+			//				if(textColor==Color.RED)this.textAAColor=Color.LIGHTRED;
+			//				if(textColor==Color.ORANGE)this.textAAColor=Color.LIGHTORANGE;
+			//				if(textColor==Color.YELLOW)this.textAAColor=Color.LIGHTYELLOW;
+		}
+		else
+		{
+			if (tempBG == BobColor::black) //||textBGColor==Color.CLEAR)
 			{
-				tempFG = *fg;
-				tempAA = tempFG;
-				tempAA.lighter();
-				tempAA.lighter();
-				tempAA.lighter();
+				tempAA = new BobColor(*fg);
+				tempAA->darker();
+				tempAA->darker();
+				tempAA->darker();
+
+				//				if(textColor==Color.WHITE)this.textAAColor=Color.DARKGRAY;
+				//				if(textColor==Color.GRAY)this.textAAColor=Color.DARKERGRAY;
+				//
+				//				if(textColor==Color.GREEN)this.textAAColor=Color.DARKERGREEN;
+				//				if(textColor==Color.BLUE)this.textAAColor=Color.DARKBLUE;
+				//				if(textColor==Color.PURPLE)this.textAAColor=Color.DARKPURPLE;
+				//				if(textColor==Color.PINK)this.textAAColor=Color.DARKPINK;
+				//				if(textColor==Color.RED)this.textAAColor=Color.DARKRED;
+				//				if(textColor==Color.ORANGE)this.textAAColor=Color.DARKORANGE;
+				//				if(textColor==Color.YELLOW)this.textAAColor=Color.DARKYELLOW;
 			}
 			else
 			{
-				if (tempBG == *BobColor::black) //||textBGColor==Color.CLEAR)
+				if (tempBG == BobColor::clear)
 				{
-					tempFG = *fg;
-					tempAA = tempFG;
-					tempAA.darker();
-					tempAA.darker();
-					tempAA.darker();
-				}
-				else
-				{
-					if (tempBG == *BobColor::clear)
-					{
-						tempAA = BobColor((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f) * 255);
-					}
+					tempAA = new BobColor((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f)*255);
 				}
 			}
+		}
 	}
 
 	if (initialized == true) //don't replace the getText if we haven't drawn the bitmap yet
 	{
-		if (tempFG != this->textColor || tempBG != this->textBGColor || (aa != nullptr && tempAA != this->textAAColor)) //dont replace if the colors havent changed
+		if (*tempFG != *this->textColor || *tempBG != *this->textBGColor || (tempAA!=nullptr && *tempAA != *this->textAAColor)) //dont replace if the colors havent changed
 		{
 			this->textColor = tempFG;
 			this->textBGColor = tempBG;
@@ -233,7 +253,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 	{
 		//Main::log.debug("Caption::initTTF release");
 		texture->release();
-		//delete texture;
+		delete texture;
 		texture = nullptr;
 	}
 
@@ -804,20 +824,20 @@ void Caption::init(Engine* g, Position fixedPosition, float screenX, float scree
 	{
 		//Main::log.debug("Caption::init release");
 		texture->release();
-		//delete texture;
+		delete texture;
 		texture = nullptr;
 	}
 
 	if (textureByteArray != nullptr)
 	{
-		//delete textureByteArray;
+		delete textureByteArray;
 		textureByteArray = nullptr;
 	}
 
 
 
 	//textureByteArray->data() = (u8*)malloc(sizeof(u8)*texWidth * texHeight * 4);
-	textureByteArray = make_shared<ByteArray>(texWidth * texHeight * 4);
+	textureByteArray = new ByteArray(texWidth * texHeight * 4);
 
 
 	for (int i = 0; i < texWidth * texHeight; i++)
@@ -867,8 +887,8 @@ void Caption::init(Engine* g, Position fixedPosition, float screenX, float scree
 	drawText();
 
 
-	this->texture = GLUtils::getTextureFromData("Caption " + this->text + " " + to_string(rand()) + "." + to_string(rand()) + "." + to_string(rand()), texWidth, texHeight, textureByteArray.get());
-	//delete textureByteArray;
+	this->texture = GLUtils::getTextureFromData("Caption " + this->text + " " + to_string(rand()) + "." + to_string(rand()) + "." + to_string(rand()), texWidth, texHeight, textureByteArray);
+	delete textureByteArray;
 	textureByteArray = nullptr;
 
 
@@ -1291,149 +1311,149 @@ void Caption::parseOptions(const string& optionBuffer)
 
 	if (optionBuffer.compare("BLACK") == 0)
 	{
-		textBGColor = *BobColor::white;
-		textColor = *BobColor::black;
-		textAAColor = *BobColor::lightGray;
+		textBGColor = BobColor::white;
+		textColor = BobColor::black;
+		textAAColor = BobColor::lightGray;
 	}
 	else
 	{
 		if (optionBuffer.compare("WHITE") == 0)
 		{
-			textBGColor = *BobColor::black;
-			textColor = *BobColor::white;
-			textAAColor = *BobColor::gray;
+			textBGColor = BobColor::black;
+			textColor = BobColor::white;
+			textAAColor = BobColor::gray;
 		}
 		else
 		{
 			if (optionBuffer.compare("GRAY") == 0)
 			{
-				textColor = *BobColor::gray;
-				if (textBGColor == *BobColor::black)
+				textColor = BobColor::gray;
+				if (textBGColor == BobColor::black)
 				{
-					textAAColor = *BobColor::darkGray;
+					textAAColor = BobColor::darkGray;
 				}
-				else if (textBGColor == *BobColor::white)
+				else if (textBGColor == BobColor::white)
 				{
-					textAAColor = *BobColor::lightGray;
+					textAAColor = BobColor::lightGray;
 				}
 			}
 			else
 			{
 				if (optionBuffer.compare("RED") == 0)
 				{
-					textColor = *BobColor::red;
-					if (textBGColor == *BobColor::black)
+					textColor = BobColor::red;
+					if (textBGColor == BobColor::black)
 					{
-						textAAColor = *BobColor::darkRed;
+						textAAColor = BobColor::darkRed;
 					}
-					else if (textBGColor == *BobColor::white)
+					else if (textBGColor == BobColor::white)
 					{
-						textAAColor = *BobColor::lightRed;
+						textAAColor = BobColor::lightRed;
 					}
 				}
 				else
 				{
 					if (optionBuffer.compare("ORANGE") == 0)
 					{
-						textColor = *BobColor::orange;
-						if (textBGColor == *BobColor::black)
+						textColor = BobColor::orange;
+						if (textBGColor == BobColor::black)
 						{
-							textAAColor = *BobColor::darkOrange;
+							textAAColor = BobColor::darkOrange;
 						}
-						else if (textBGColor == *BobColor::white)
+						else if (textBGColor == BobColor::white)
 						{
-							textAAColor = *BobColor::lightOrange;
+							textAAColor = BobColor::lightOrange;
 						}
 					}
 					else
 					{
 						if (optionBuffer.compare("YELLOW") == 0)
 						{
-							textColor = *BobColor::yellow;
-							if (textBGColor == *BobColor::black)
+							textColor = BobColor::yellow;
+							if (textBGColor == BobColor::black)
 							{
-								textAAColor = *BobColor::darkYellow;
+								textAAColor = BobColor::darkYellow;
 							}
-							else if (textBGColor == *BobColor::white)
+							else if (textBGColor == BobColor::white)
 							{
-								textAAColor = *BobColor::lightYellow;
+								textAAColor = BobColor::lightYellow;
 							}
 						}
 						else
 						{
 							if (optionBuffer.compare("GREEN") == 0)
 							{
-								textColor = *BobColor::green;
-								if (textBGColor == *BobColor::black)
+								textColor = BobColor::green;
+								if (textBGColor == BobColor::black)
 								{
-									textAAColor = *BobColor::darkGreen;
+									textAAColor = BobColor::darkGreen;
 								}
-								else if (textBGColor == *BobColor::white)
+								else if (textBGColor == BobColor::white)
 								{
-									textAAColor = *BobColor::lightGreen;
+									textAAColor = BobColor::lightGreen;
 								}
 							}
 							else
 							{
 								if (optionBuffer.compare("BLUE") == 0)
 								{
-									textColor = *BobColor::blue;
-									if (textBGColor == *BobColor::black)
+									textColor = BobColor::blue;
+									if (textBGColor == BobColor::black)
 									{
-										textAAColor = *BobColor::darkBlue;
+										textAAColor = BobColor::darkBlue;
 									}
-									else if (textBGColor == *BobColor::white)
+									else if (textBGColor == BobColor::white)
 									{
-										textAAColor = *BobColor::lightBlue;
+										textAAColor = BobColor::lightBlue;
 									}
 								}
 								else
 								{
 									if (optionBuffer.compare("PURPLE") == 0)
 									{
-										textColor = *BobColor::purple;
-										if (textBGColor == *BobColor::black)
+										textColor = BobColor::purple;
+										if (textBGColor == BobColor::black)
 										{
-											textAAColor = *BobColor::darkPurple;
+											textAAColor = BobColor::darkPurple;
 										}
-										else if (textBGColor == *BobColor::white)
+										else if (textBGColor == BobColor::white)
 										{
-											textAAColor = *BobColor::lightPurple;
+											textAAColor = BobColor::lightPurple;
 										}
 									}
 									else
 									{
 										if (optionBuffer.compare("PINK") == 0)
 										{
-											textColor = *BobColor::pink;
-											if (textBGColor == *BobColor::black)
+											textColor = BobColor::pink;
+											if (textBGColor == BobColor::black)
 											{
-												textAAColor = *BobColor::darkPink;
+												textAAColor = BobColor::darkPink;
 											}
-											else if (textBGColor == *BobColor::white)
+											else if (textBGColor == BobColor::white)
 											{
-												textAAColor = *BobColor::lightPink;
+												textAAColor = BobColor::lightPink;
 											}
 										}
 										else
 										{
 											if (optionBuffer.compare("BGBLACK") == 0)
 											{
-												textBGColor = *BobColor::black;
+												textBGColor = BobColor::black;
 												//TODO: if(textColor==COLOR)textAAColor=DARKCOLOR;
 											}
 											else
 											{
 												if (optionBuffer.compare("BGWHITE") == 0)
 												{
-													textBGColor = *BobColor::white;
+													textBGColor = BobColor::white;
 													//if(textColor==COLOR)textAAColor=LIGHTCOLOR;
 												}
 												else
 												{
 													if (optionBuffer.compare("BGCLEAR") == 0)
 													{
-														textBGColor = *BobColor::clear;
+														textBGColor = BobColor::clear;
 														//if(textColor==COLOR)textAAColor=LIGHTCOLOR;
 													}
 													else
@@ -1473,13 +1493,23 @@ int Caption::getLetterPixelColor(int letterIndex, int y, int xInLetter, bool bla
 	return index;
 }
 
-void Caption::setPixel(int index, BobColor c)
+void Caption::setPixel(int index, BobColor* c)
 { //=========================================================================================================================
 
-	textureByteArray->data()[index + 0] = static_cast<u8>(c.ri());
-	textureByteArray->data()[index + 1] = static_cast<u8>(c.gi());
-	textureByteArray->data()[index + 2] = static_cast<u8>(c.bi());
-	textureByteArray->data()[index + 3] = static_cast<u8>(c.ai());
+	if (c == nullptr)
+	{
+		log.error("setPixel Color c was null, should never happen!");
+		return;
+	}
+
+
+	textureByteArray->data()[index + 0] = static_cast<u8>(c->ri());
+	textureByteArray->data()[index + 1] = static_cast<u8>(c->gi());
+	textureByteArray->data()[index + 2] = static_cast<u8>(c->bi());
+	textureByteArray->data()[index + 3] = static_cast<u8>(c->ai());
+
+
+
 }
 
 
@@ -1627,19 +1657,19 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 			index = getLetterPixelColor(letterIndex, y - 1, xInLetter, blank);
 		}
 
-		BobColor c;
+		BobColor* c = nullptr;
 
 		if (index == 0)
 		{
-			c = textBGColor;
+			c = new BobColor(*textBGColor);
 		}
 		else if (index == 1)
 		{
-			c = textColor;
+			c = new BobColor(*textColor);
 		}
 		else if (index == 2)
 		{
-			c = textAAColor;
+			c = new BobColor(*textAAColor);
 		}
 		else if (index > 2) //additional aa pixels, use the color value to set the opacity
 		{
@@ -1658,10 +1688,10 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 				a = 0;
 			}
 
-			a *= textAAColor.ai();
+			a *= textAAColor->ai();
 
 			//Color* tc = textColor;
-			c = BobColor(textColor.ri(), textColor.gi(), textColor.bi(), a);
+			c = new BobColor(textColor->ri(), textColor->gi(), textColor->bi(), a);
 		}
 
 
@@ -1669,12 +1699,13 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 		{
 			if ((index > 0) && y < maxCharHeight * 0.75f && (index != 2 || outlined == false))
 			{
-				u8 r = (int)(min(255, (int)(c.ri() + (((float)(maxCharHeight - y) / (float)(maxCharHeight)) * 255.0f))));
-				u8 g = (int)(min(255, (int)(c.gi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight)) * 255.0f))));
-				u8 b = (int)(min(255, (int)(c.bi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight)) * 255.0f))));
-				u8 a = c.ai();
+				u8 r = (int)(min(255, (int)(c->ri() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
+				u8 g = (int)(min(255, (int)(c->gi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
+				u8 b = (int)(min(255, (int)(c->bi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
+				u8 a = c->ai();
 
-				c = BobColor(r, g, b, a);
+				if (c != nullptr)delete c;
+				c = new BobColor(r, g, b, a);
 			}
 		}
 
@@ -1689,6 +1720,8 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 
 			setPixel((lineIndex + yIndex + xIndex) * 4, c);
 		}
+		if (c != nullptr)
+			delete c;
 	}
 }
 
@@ -1940,7 +1973,7 @@ void Caption::update()
 		{
 			//Main::log.debug("Caption::update release");
 			texture->release();
-			//delete texture;
+			delete texture;
 			texture = nullptr;
 		}
 

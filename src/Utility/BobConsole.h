@@ -61,9 +61,9 @@ class Console
 public:
 	static Logger log;
 
-	static shared_ptr<CaptionManager> captionManager;
+	static CaptionManager* captionManager;
 
-	shared_ptr<ArrayList<shared_ptr<ConsoleText>>> consoleTextList = nullptr;
+	ArrayList<ConsoleText*>* consoleTextList = nullptr;
 	mutex _consoleTextList_Mutex;
 
 	static bool showConsole;
@@ -77,14 +77,14 @@ public:
 
 	void pruneChats(int max);
 
-	shared_ptr<ConsoleText> error(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
-	shared_ptr<ConsoleText> debug(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
+	ConsoleText* error(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
+	ConsoleText* debug(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
 
 	/// <summary>
 	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	shared_ptr<ConsoleText> add(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr, bool isDebug = false);
-	shared_ptr<ConsoleText> add(const string& s, int ticks, BobColor* c);
-	shared_ptr<ConsoleText> add(const string& s, BobColor* c);
+	ConsoleText* add(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr, bool isDebug = false);
+	ConsoleText* add(const string& s, int ticks, BobColor* c);
+	ConsoleText* add(const string& s, BobColor* c);
 
 
 

@@ -28,14 +28,14 @@ public:
 	static Logger log;
 
 
-	shared_ptr<FriendsPanel> friendsPanel = nullptr;
-	shared_ptr<DebugInfoPanel> debugInfoPanel = nullptr;
-	shared_ptr<StatusPanel> statusPanel = nullptr;
-	shared_ptr<MessagesPanel> messagesPanel = nullptr;
-	shared_ptr<ItemsPanel> itemsPanel = nullptr;
-	shared_ptr<LogsPanel> logsPanel = nullptr;
-	shared_ptr<ControlsPanel> controlsPanel = nullptr;
-	shared_ptr<SettingsPanel> settingsPanel = nullptr;
+	FriendsPanel* friendsPanel = nullptr;
+	DebugInfoPanel* debugInfoPanel = nullptr;
+	StatusPanel* statusPanel = nullptr;
+	MessagesPanel* messagesPanel = nullptr;
+	ItemsPanel* itemsPanel = nullptr;
+	LogsPanel* logsPanel = nullptr;
+	ControlsPanel* controlsPanel = nullptr;
+	SettingsPanel* settingsPanel = nullptr;
 
 
 	//ArrayList<ToggleButton*> stuffMenuTabs;

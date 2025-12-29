@@ -1449,7 +1449,7 @@ void Character::setShowAccountType(bool b)
 	}
 }
 
-void Character::setCharacterNameAndCaption(BobColor nameColor, const string& name, BobColor accountTypeNameColor, const string& accountTypeName)
+void Character::setCharacterNameAndCaption(BobColor* nameColor, const string& name, BobColor* accountTypeNameColor, const string& accountTypeName)
 { //=========================================================================================================================
 
 	this->nameColor = nameColor;
@@ -1463,9 +1463,9 @@ void Character::setCharacterNameAndCaption(BobColor nameColor, const string& nam
 		{
 			if (name != "" && name.length() > 0)
 			{
-				nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, name, BobFont::font_normal_16_outlined_smooth, &this->nameColor);
+				nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, name, BobFont::font_normal_16_outlined_smooth, nameColor);
 			}
-			if(nameCaption)nameCaption->setEntity(this);
+			nameCaption->setEntity(this);
 		}
 		else
 		{
@@ -1488,9 +1488,9 @@ void Character::setCharacterNameAndCaption(BobColor nameColor, const string& nam
 		{
 			if (accountTypeName != "" && accountTypeName.length() > 0)
 			{
-				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, accountTypeName, BobFont::font_normal_8_outlined, &this->accountTypeNameColor);
+				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, accountTypeName, BobFont::font_normal_8_outlined, accountTypeNameColor);
 			}
-			if(accountTypeCaption)accountTypeCaption->setEntity(this);
+			nameCaption->setEntity(this);
 		}
 		else
 		{
@@ -1687,7 +1687,7 @@ int Character::walkToXYWithPathFinding(float x, float y)
 
 		if (pathfinder == nullptr)
 		{
-			pathfinder = make_shared<PathFinder>(this, getMiddleX(), getMiddleY(), (float)x, (float)y, getMap()->getWidthTiles1X(), getMap()->getHeightTiles1X());
+			pathfinder = new PathFinder(this, getMiddleX(), getMiddleY(), (float)x, (float)y, getMap()->getWidthTiles1X(), getMap()->getHeightTiles1X());
 		}
 
 		if (pathfinder != nullptr)
@@ -1732,7 +1732,7 @@ int Character::walkToXYWithPathFinding(float x, float y)
 				{
 					there_yet = 1;
 					pathPosition = 0;
-					//delete pathfinder;
+					delete pathfinder;
 					pathfinder = nullptr;
 
 					finalPathX = x;
@@ -1751,7 +1751,7 @@ int Character::walkToXYWithPathFinding(float x, float y)
 
 					pathPosition = 0;
 
-					//delete pathfinder;
+					delete pathfinder;
 					pathfinder = nullptr;
 
 					if (pathTried > 3)

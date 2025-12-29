@@ -6,7 +6,6 @@
 #include "bobtypes.h"
 #include "src/Utility/HashMap.h"
 #include "src/Utility/ArrayList.h"
-#include <memory>
 
 
 #ifdef ORBIS
@@ -41,11 +40,11 @@ private:
 public:
 	static int texturesLoaded;
 	static long long textureBytesLoaded;
-	static shared_ptr<BobTexture> blankTexture;
-	static shared_ptr<BobTexture> boxTexture;
+	static BobTexture* blankTexture;
+	static BobTexture* boxTexture;
 
 	static float globalDrawScale;
-	static shared_ptr<BobTexture> rect;
+	static BobTexture* rect;
 
 
 	static GLfloat* box;
@@ -91,7 +90,7 @@ public:
 	static EGLSurface surface;
 	static EGLDisplay display;
 
-	static shared_ptr<BobTexture> createBobTextureFromRGBAData(sce::SampleUtil::Graphics::GraphicsLoader *loader, string textureName, int imageWidth, int imageHeight, ByteArray* data);
+	static BobTexture *createBobTextureFromRGBAData(sce::SampleUtil::Graphics::GraphicsLoader *loader, string textureName, int imageWidth, int imageHeight, ByteArray* data);
 #endif
 
 
@@ -103,21 +102,20 @@ public:
 	static uint32_t gmask;
 	static uint32_t bmask;
 	static uint32_t amask;
-	static shared_ptr<BobTexture> loadTextureFromSurface(string filename, SDL_Surface* surface);
+	static BobTexture* loadTextureFromSurface(string filename, SDL_Surface* surface);
 
 	GLUtils();
 	static void bindTexture(BobTexture* bob_texture);
 	static void old_clear();
 	static void old_render();
 
-	static HashMap<string, shared_ptr<BobTexture>> textureCache;
+	static HashMap<string, BobTexture*> textureCache;
 	static void clearCache(const string &name);// Remove a particular named image from the cache
 	static void clearCache();
 	
-	static shared_ptr<BobTexture> getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data);
-	static void updateTexture(shared_ptr<BobTexture> texture, int x, int y, int w, int h, u8* data);
-	static shared_ptr<BobTexture> getTextureFromPNGAbsolutePath(string filename);
-	static shared_ptr<BobTexture> getTextureFromPNGExePath(string filename);
+	static BobTexture *getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data);
+	static BobTexture *getTextureFromPNGAbsolutePath(string filename);
+	static BobTexture *getTextureFromPNGExePath(string filename);
 
 	static void draw_black_overlay();
 	static void gl_draw_sprites(int layer);

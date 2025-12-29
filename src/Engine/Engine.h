@@ -51,18 +51,18 @@ public:
 
 	static Logger log;
 
-	shared_ptr<AudioManager> audioManager = nullptr;
-	shared_ptr<Cameraman> cameraman = nullptr;
-	shared_ptr<SpriteManager> spriteManager = nullptr;
-	shared_ptr<ActionManager> actionManager = nullptr;
-	shared_ptr<MapManager> mapManager = nullptr;
-	shared_ptr<CinematicsManager> cinematicsManager = nullptr;
-	shared_ptr<CaptionManager> captionManager = nullptr;
-	shared_ptr<TextManager> textManager = nullptr;
-	shared_ptr<EventManager> eventManager = nullptr;
+	AudioManager* audioManager = nullptr;
+	Cameraman* cameraman = nullptr;
+	SpriteManager* spriteManager = nullptr;
+	ActionManager* actionManager = nullptr;
+	MapManager* mapManager = nullptr;
+	CinematicsManager* cinematicsManager = nullptr;
+	CaptionManager* captionManager = nullptr;
+	TextManager* textManager = nullptr;
+	EventManager* eventManager = nullptr;
 
 
-	static ArrayList<shared_ptr<UDPPeerConnection>> onlineFriends;
+	static ArrayList<UDPPeerConnection*> onlineFriends;
 
 	double engineSpeed = 1.0;
 
@@ -92,17 +92,17 @@ public:
 	void updateChatConsole();
 
 protected:
-	shared_ptr<ControlsManager> controlsManager = nullptr;
-	shared_ptr<ControlsManager> chatControlsManager = nullptr;
-	shared_ptr<ControlsManager> activeControlsManager = nullptr;
+	ControlsManager* controlsManager = nullptr;
+	ControlsManager* chatControlsManager = nullptr;
+	ControlsManager* activeControlsManager = nullptr;
 	bool chatEnabled = true;
 	bool chatFocused = false;
 	bool textStarted = false;
 
-	shared_ptr<ConsoleText> chatConsoleText = nullptr;
+	ConsoleText* chatConsoleText = nullptr;
 public:
-	shared_ptr<ControlsManager> getControlsManager();
-	shared_ptr<ControlsManager> getActiveControlsManager();
+	ControlsManager* getControlsManager();
+	ControlsManager* getActiveControlsManager();
 
 	//static void setClientGameEngine(BGClientEngine* gameEngine);
 	static BGClientEngine* getClientGameEngine();
@@ -123,7 +123,7 @@ public:
 
 	int getHeight();
 
-	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s);
+	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s);
 	virtual bool serverMessageReceived(string cs);
 
 
@@ -141,16 +141,16 @@ public:
 	bool debugLayerEnabled = false;
 
 	//DebugText cameraSpeedText = DebugConsole.add("cameraSpeedText");
-	shared_ptr<ConsoleText> zoomText = nullptr;// Console::debug("zoomText");
+	ConsoleText* zoomText = nullptr;// Console::debug("zoomText");
 
-	shared_ptr<ConsoleText> mapCamText = nullptr;// = Console::debug("mapCamText");
-	shared_ptr<ConsoleText> mapScreenText = nullptr;// = Console::debug("mapScreenText");
+	ConsoleText* mapCamText = nullptr;// = Console::debug("mapCamText");
+	ConsoleText* mapScreenText = nullptr;// = Console::debug("mapScreenText");
 
-	shared_ptr<ConsoleText> mapSizeText = nullptr;// = Console::debug("mapSizeText");
-	shared_ptr<ConsoleText> resolutionText = nullptr;// = Console::debug("resolutionText");
+	ConsoleText* mapSizeText = nullptr;// = Console::debug("mapSizeText");
+	ConsoleText* resolutionText = nullptr;// = Console::debug("resolutionText");
 
-	shared_ptr<ConsoleText> textText = nullptr;// = Console::debug("textText");
-	shared_ptr<ConsoleText> textOptionText = nullptr;// = Console::debug("textOptionText");
+	ConsoleText* textText = nullptr;// = Console::debug("textText");
+	ConsoleText* textOptionText = nullptr;// = Console::debug("textOptionText");
 
 	Engine();
 	virtual ~Engine();
@@ -160,16 +160,16 @@ public:
 	virtual void updateDebugText();
 	void* getGameObjectByTYPEIDName(const string& typeIDName);
 
-	shared_ptr<Cameraman> getCameraman();
-	shared_ptr<MapManager> getMapManager();
-	shared_ptr<SpriteManager> getSpriteManager();
-	shared_ptr<ActionManager> getActionManager();
-	shared_ptr<TextManager> getTextManager();
-	shared_ptr<AudioManager> getAudioManager();
-	shared_ptr<CaptionManager> getCaptionManager();
-	shared_ptr<EventManager> getEventManager();
+	Cameraman* getCameraman();
+	MapManager* getMapManager();
+	SpriteManager* getSpriteManager();
+	ActionManager* getActionManager();
+	TextManager* getTextManager();
+	AudioManager* getAudioManager();
+	CaptionManager* getCaptionManager();
+	EventManager* getEventManager();
 
-	shared_ptr<CinematicsManager> getCinematicsManager();
+	CinematicsManager* getCinematicsManager();
 	Map* getCurrentMap();
 
 public:

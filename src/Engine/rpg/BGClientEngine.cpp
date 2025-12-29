@@ -11,7 +11,6 @@
 
 
 #include "BGClientEngine.h"
-#include "../nd/LibretroGame.h"
 #include "../../Utility/FileUtils.h"
 
 Logger BGClientEngine::log = Logger("BGClientEngine");
@@ -48,20 +47,20 @@ void BGClientEngine::init()
 #endif
 	
 
-	clock = make_shared<Clock>(this);
+	clock = new Clock(this);
 
-	player = make_shared<Player>(this);
+	player = new Player(this);
 	normalPlayer = player;
 
-	guiManager = make_shared<GUIManager>(this);
+	guiManager = new GUIManager(this);
 
-	statusBar = make_shared<BobStatusBar>(this);
-	wallet = make_shared<Wallet>(this);
+	statusBar = new BobStatusBar(this);
+	wallet = new Wallet(this);
 
-	friendManager = make_shared<FriendManager>(this);
+	friendManager = new FriendManager(this);
 
-	nD = make_shared<ND>();
-	stadiumScreen = make_shared<StadiumScreen>(this);
+	nD = new ND();
+	stadiumScreen = new StadiumScreen(this);
 
 
 	if (Main::previewClientInEditor == false)
@@ -79,28 +78,26 @@ void BGClientEngine::init()
 
 	nD->init();
 
-	shared_ptr<NDMenu> nDMenu = make_shared<NDMenu>(nD.get());
+	NDMenu* nDMenu = new NDMenu(nD);
 	nDMenu->init();
 	
 
-	shared_ptr<BobsGame> bobsgame = make_shared<BobsGame>(nD.get());
+	BobsGame* bobsgame = new BobsGame(nD);
 	bobsgame->init();
 	
 
-	shared_ptr<Ping> ping = make_shared<Ping>(nD.get());
+	Ping* ping = new Ping(nD);
 	ping->init();
 	
 
-	shared_ptr<Ramio> ramio = make_shared<Ramio>(nD.get());
+	Ramio* ramio = new Ramio(nD);
 	ramio->init();
 	
-	shared_ptr<LibretroGame> libretro = make_shared<LibretroGame>(nD.get());
-	libretro->init();
 
-	nDMenu->addGame(ping, "Ping", make_shared<BobColor>(*BobColor::blue));
-	nDMenu->addGame(ramio,"Ramio", make_shared<BobColor>(*BobColor::red));
-	nDMenu->addGame(bobsgame,"\"bob's game\"", make_shared<BobColor>(*BobColor::green));
-	nDMenu->addGame(libretro, "Emulator", make_shared<BobColor>(*BobColor::magenta));
+
+	nDMenu->addGame(ping, "Ping", BobColor::blue);
+	nDMenu->addGame(ramio,"Ramio",BobColor::red);
+	nDMenu->addGame(bobsgame,"\"bob's game\"",BobColor::green);
 
 	nD->setGame(nDMenu);
 
@@ -120,7 +117,7 @@ void BGClientEngine::init()
 	//mapManager.changeMap("TOWNPets4Less",53,110);
 	//mapManager.changeMap("TOWNMovieTheatreMensBathroom",53,110);
 
-	cameraman->setTarget(player.get());
+	cameraman->setTarget(player);
 
 
 	//can't remember why i did this, to fix gui stuff???
@@ -1198,7 +1195,7 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(Sprite* s)
 { //=========================================================================================================================
 
 
-	shared_ptr<Player> p = make_shared<Player>(this, s->getName());
+	Player* p = new Player(this, s->getName());
 
 	p->update();
 
@@ -1219,7 +1216,7 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(Sprite* s)
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)
 	{
-		getCameraman()->setTarget(p.get());
+		getCameraman()->setTarget(p);
 	}
 
 	player = p;
@@ -1239,7 +1236,7 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)
 	{
-		getCameraman()->setTarget(normalPlayer.get());
+		getCameraman()->setTarget(normalPlayer);
 	}
 
 	player = normalPlayer;
@@ -1249,12 +1246,12 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 Clock* BGClientEngine::getClock()
 {
-	return clock.get();
+	return clock;
 }
 
 GUIManager* BGClientEngine::getGUIManager()
 {
-	return guiManager.get();
+	return guiManager;
 }
 
 StuffMenu* BGClientEngine::getStuffMenu()
@@ -1274,27 +1271,27 @@ PlayerEditMenu* BGClientEngine::getPlayerEditMenu()
 
 Player* BGClientEngine::getPlayer()
 {
-	return player.get();
+	return player;
 }
 
 ND* BGClientEngine::getND()
 {
-	return nD.get();
+	return nD;
 }
 
 Wallet* BGClientEngine::getWallet()
 {
-	return wallet.get();
+	return wallet;
 }
 
 FriendManager* BGClientEngine::getFriendManager()
 {
-	return friendManager.get();
+	return friendManager;
 }
 
 BobStatusBar* BGClientEngine::getBobStatusBar()
 {
-	return statusBar.get();
+	return statusBar;
 }
 
 NotificationManager* BGClientEngine::getNotificationManager()

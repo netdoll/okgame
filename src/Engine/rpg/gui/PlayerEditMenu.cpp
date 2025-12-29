@@ -464,10 +464,10 @@ PlayerEditMenu::AddressInfo::AddressInfo()
 {
 }
 
-shared_ptr<PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const string& address)
+PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string& address)
 { //=========================================================================================================================
 
-	shared_ptr<AddressInfo> a = make_shared<AddressInfo>();
+	AddressInfo* a = new AddressInfo();
 
 
 	// URL prefix to the geocoder
@@ -761,9 +761,9 @@ shared_ptr<PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(c
 	return a;
 }
 
-shared_ptr<PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const string& address)
+PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const string& address)
 { //=========================================================================================================================
-	shared_ptr<AddressInfo> a = make_shared<AddressInfo>();
+	AddressInfo* a = new AddressInfo();
 
 
 	// URL prefix to the geocoder
@@ -1668,7 +1668,7 @@ void PlayerEditMenu::update()
 		{
 			playerNameCaption->setToFadeOutAndBeDeleted();
 			//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-			playerNameCaption = nullptr;
+			delete playerNameCaption;
 		}
 	}
 }

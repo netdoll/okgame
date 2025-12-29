@@ -50,21 +50,17 @@
 //#include <iomanip>
 #include <string>
 
-#include <vector>
+//#include <vector>
 //#include <deque>
-#include <algorithm>
+//#include <algorithm>
 //#include <unordered_map>
 //#include <utility>
 //#include <limits>
 //#include <random>
 //#include <fstream>
-#include <memory>
+//#include <memory>
 //#include <cmath>
 
-using namespace std;
-
-template<typename T> using sp = std::shared_ptr<T>;
-template<typename T, typename... Args> inline sp<T> ms(Args&&... args) { return std::make_shared<T>(std::forward<Args>(args)...); }
 
 typedef signed char			int8;
 typedef signed short		int16;
@@ -298,108 +294,72 @@ typedef unsigned char u8;
 
 class ByteArray
 {
-private:
-	std::vector<u8> v;
 public:
 	u8* bytes = nullptr;
 	unsigned int len = 0;
+public:
 
 	ByteArray(u8* bytes, unsigned int len)
 	{
-		if (bytes && len > 0)
-		{
-			v.assign(bytes, bytes + len);
-		}
-		this->bytes = v.data();
-		this->len = (unsigned int)v.size();
+		this->bytes = bytes;
+		this->len = len;
 	}
 
 	ByteArray(unsigned int len)
 	{
-		v.resize(len, 0);
-		this->bytes = v.data();
+		this->bytes = (u8*)calloc(len, 1);// new u8[len];
 		this->len = len;
 	}
 
-	ByteArray(const ByteArray& other)
+	~ByteArray()
 	{
-		v = other.v;
-		bytes = v.data();
-		len = (unsigned int)v.size();
-	}
-
-	ByteArray& operator=(const ByteArray& other)
-	{
-		if (this != &other)
+		if (bytes != nullptr)
 		{
-			v = other.v;
-			bytes = v.data();
-			len = (unsigned int)v.size();
+			free(bytes);
+			//delete[] bytes;
 		}
-		return *this;
 	}
 
 	u8* data()
 	{
-		return v.data();
+		return bytes;
 	}
 
 	long long size()
 	{
-		return v.size();
+		return len;
 	}
 };
 
 class IntArray
 {
-private:
-	std::vector<unsigned int> v;
-public:
 	unsigned int* ints = nullptr;
 	unsigned int len = 0;
+public:
 
 	IntArray(unsigned int* ints, unsigned int len)
 	{
-		if (ints && len > 0)
-		{
-			v.assign(ints, ints + len);
-		}
-		this->ints = v.data();
-		this->len = (unsigned int)v.size();
+		this->ints = ints;
+		this->len = len;
 	}
 	IntArray(unsigned int len)
 	{
-		v.resize(len, 0);
-		this->ints = v.data();
+		this->ints = (unsigned int*)calloc(len*4, 4);// new int[len];
 		this->len = len;
 	}
-
-	IntArray(const IntArray& other)
+	~IntArray()
 	{
-		v = other.v;
-		ints = v.data();
-		len = (unsigned int)v.size();
+		free(ints);
+		//delete[] ints;
 	}
-
-	IntArray& operator=(const IntArray& other)
-	{
-		if (this != &other)
-		{
-			v = other.v;
-			ints = v.data();
-			len = (unsigned int)v.size();
-		}
-		return *this;
-	}
-
 	unsigned int* data()
 	{
-		return v.data();
+		return ints;
 	}
 
 	long long size()
 	{
-		return v.size();
+		return len;
 	}
 };
 

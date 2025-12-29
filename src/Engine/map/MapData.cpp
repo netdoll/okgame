@@ -264,9 +264,9 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t,"}") == false)
 	{
-		shared_ptr<MapStateData> data = make_shared<MapStateData>();
+		MapStateData *data = new MapStateData();
 		t = data->initFromString(t);
-		stateDataList.add(data);
+		stateDataList->add(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -275,9 +275,9 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t, "}") == false)
 	{
-		shared_ptr<EventData> data = make_shared<EventData>();
+		EventData *data = new EventData();
 		t = data->initFromString(t);
-		eventDataList.add(data);
+		eventDataList->add(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -286,9 +286,9 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t,"}") == false)
 	{
-		shared_ptr<DoorData> data = make_shared<DoorData>();
+		DoorData *data = new DoorData();
 		t = data->initFromString(t);
-		doorDataList.add(data);
+		doorDataList->add(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -439,19 +439,19 @@ int MapData::getHeightPixelsHQ()
 	return getHeightTiles1X() * 8 * 2;
 }
 
-ArrayList<shared_ptr<MapStateData>>* MapData::getStateDataList()
+ArrayList<MapStateData*>* MapData::getStateDataList()
 {
-	return &stateDataList;
+	return stateDataList;
 }
 
-ArrayList<shared_ptr<EventData>>* MapData::getEventDataList()
+ArrayList<EventData*>* MapData::getEventDataList()
 {
-	return &eventDataList;
+	return eventDataList;
 }
 
-ArrayList<shared_ptr<DoorData>>* MapData::getDoorDataList()
+ArrayList<DoorData*>* MapData::getDoorDataList()
 {
-	return &doorDataList;
+	return doorDataList;
 }
 
 void MapData::setGroundLayerMD5(const string& s)

@@ -31,7 +31,7 @@ public:
 
 	int animationDirection = 0;
 
-	std::shared_ptr<PathFinder> pathfinder = nullptr;
+	PathFinder* pathfinder = nullptr;
 
 	int pathPosition = 0;
 
@@ -48,13 +48,13 @@ public:
 	std::shared_ptr<BobTexture> uniqueTexture = nullptr;
 
 	bool showName = false;
-	std::shared_ptr<Caption> nameCaption = nullptr;
+	Caption* nameCaption = nullptr;
 
 	bool showAccountType = false;
-	std::shared_ptr<Caption> accountTypeCaption = nullptr;
+	Caption* accountTypeCaption = nullptr;
 
-	BobColor nameColor = *BobColor::white;
-	BobColor accountTypeNameColor = *BobColor::white;
+	BobColor* nameColor = BobColor::white;
+	BobColor* accountTypeNameColor = BobColor::white;
 	string accountTypeName = "";
 
 	bool isMale = false;
@@ -99,7 +99,7 @@ public:
 
 	void setShowAccountType(bool b);
 
-	void setCharacterNameAndCaption(BobColor nameColor, const string& name, BobColor accountTypeNameColor, const string& accountTypeName);
+	void setCharacterNameAndCaption(BobColor* nameColor, const string& name, BobColor* accountTypeNameColor, const string& accountTypeName);
 
 	ArrayList<std::shared_ptr<Entity>>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 

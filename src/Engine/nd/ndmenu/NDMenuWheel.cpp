@@ -24,7 +24,7 @@ NDMenuWheel::NDMenuWheel(Engine* g)
 	this->e = g;
 }
 
-ArrayList<shared_ptr<NDMenuWheelItem>> NDMenuWheel::wheelItems;
+ArrayList<NDMenuWheelItem*>* NDMenuWheel::wheelItems = new ArrayList<NDMenuWheelItem*>();
 int NDMenuWheel::CLOCKWISE = 0;
 int NDMenuWheel::COUNTERCLOCKWISE = 1;
 float NDMenuWheel::highlightColor = 0;
@@ -64,14 +64,14 @@ void NDMenuWheel::init()
 	NDMenuWheelItem::wheelItemGlossyOverlayTexture = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/glossyOverlay.png");
 
 
-	wheelItems.add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "GameStore", make_shared<BobColor>(*BobColor::magenta)));
-	wheelItems.add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "Settings", make_shared<BobColor>(*BobColor::green)));
+	wheelItems->add(new NDMenuWheelItem(getEngine(), nullptr, "GameStore", BobColor::magenta));
+	wheelItems->add(new NDMenuWheelItem(getEngine(), nullptr, "Settings", BobColor::green));
 }
 
-void NDMenuWheel::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color)
+void NDMenuWheel::addGame(NDGameEngine* game, const string& name, BobColor* color)
 { //=========================================================================================================================
 
-	wheelItems.add(make_shared<NDMenuWheelItem>(getEngine(), game, name, color));
+	wheelItems->add(new NDMenuWheelItem(getEngine(), game, name, color));
 
 
 	//------------------------------------------
@@ -116,13 +116,13 @@ void NDMenuWheel::render()
 	//draw each wheel item
 	//------------------------------------------
 
-	for (int c = 0; c < wheelItems.size(); c++)
+	for (int c = 0; c < wheelItems->size(); c++)
 	{
-		wheelItems.get(c)->render(c == selectedWheelItem);
+		wheelItems->get(c)->render(c == selectedWheelItem);
 	}
 
 
-	shared_ptr<NDMenuWheelItem> selected = wheelItems.get(selectedWheelItem);
+	NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
 	//------------------------------------------
 	//draw selection box
 	//------------------------------------------
@@ -154,7 +154,7 @@ void NDMenuWheel::spinWheel(int dir)
 		//wheelSpinDirection=wheelClockwise;
 		selectedWheelItem++;
 
-		if (selectedWheelItem >= wheelItems.size())
+		if (selectedWheelItem >= wheelItems->size())
 		{
 			selectedWheelItem = 0;
 		}
@@ -170,7 +170,7 @@ void NDMenuWheel::spinWheel(int dir)
 
 			if (selectedWheelItem < 0)
 			{
-				selectedWheelItem = wheelItems.size() - 1;
+				selectedWheelItem = wheelItems->size() - 1;
 			}
 
 			wheelSoundQueue++;
@@ -201,7 +201,7 @@ void NDMenuWheel::update()
 	}
 
 
-	shared_ptr<NDMenuWheelItem> selected = wheelItems.get(selectedWheelItem);
+	NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
 
 
 	float screenMiddleY = (float)(GLUtils::getViewportHeight() / 2);
@@ -245,9 +245,9 @@ void NDMenuWheel::update()
 		if (wheelMiddleY > screenMiddleY) //wheelSpinDirection==wheelClockwise)
 		{
 			wheelSpinDirection = NDMenuWheel::CLOCKWISE;
-			for (int c = 0; c < wheelItems.size(); c++)
+			for (int c = 0; c < wheelItems->size(); c++)
 			{
-				wheelItems.get(c)->y -= amt;
+				wheelItems->get(c)->y -= amt;
 			}
 
 			//SWI.y-=wheelTicksPassed*getDistanceToCenter()/300.0f;
@@ -256,9 +256,9 @@ void NDMenuWheel::update()
 		if (wheelMiddleY < screenMiddleY) //wheelSpinDirection==wheelCounterClockwise)
 		{
 			wheelSpinDirection = NDMenuWheel::COUNTERCLOCKWISE;
-			for (int c = 0; c < wheelItems.size(); c++)
+			for (int c = 0; c < wheelItems->size(); c++)
 			{
-				wheelItems.get(c)->y += amt;
+				wheelItems->get(c)->y += amt;
 			}
 			//SWI.y+=wheelTicksPassed*getDistanceToCenter()/300.0f;
 			//if(SWI.getMiddleY()>screenMiddleY)SWI.y=screenMiddleY-(wheelItemHeight/2.0f);
@@ -284,20 +284,20 @@ void NDMenuWheel::update()
 		//------------------------------------------
 
 
-		shared_ptr<NDMenuWheelItem> bottomItem = wheelItems.get(0);
-		shared_ptr<NDMenuWheelItem> topItem = bottomItem;
+		NDMenuWheelItem* bottomItem = wheelItems->get(0);
+		NDMenuWheelItem* topItem = bottomItem;
 
-		for (int c = 0; c < wheelItems.size(); c++)
+		for (int c = 0; c < wheelItems->size(); c++)
 		{
 			//if(c==selectedWheelItem)continue;
 
-			if (wheelItems.get(c)->y > bottomItem->y)
+			if (wheelItems->get(c)->y > bottomItem->y)
 			{
-				bottomItem = wheelItems.get(c);
+				bottomItem = wheelItems->get(c);
 			}
-			if (wheelItems.get(c)->y < topItem->y)
+			if (wheelItems->get(c)->y < topItem->y)
 			{
-				topItem = wheelItems.get(c);
+				topItem = wheelItems->get(c);
 			}
 		}
 		//------------------------------------------
@@ -391,20 +391,20 @@ void NDMenuWheel::update()
 	}
 
 
-	for (int c = 0; c < wheelItems.size(); c++)
+	for (int c = 0; c < wheelItems->size(); c++)
 	{
 		//------------------------------------------
 		//set position
 		//------------------------------------------
 
 		//tempWheelItemXY.y = wheelItem->get(c).y;//(y%cart_size_y)+((c-1)*cart_size_y);
-		wheelItems.get(c)->x = (float)((GLUtils::getViewportWidth() / 2.0f) + 25.0f - (40.0f * (sin((float)(((wheelItems.get(c)->y + 2.0f)) / 66.0f)))));
+		wheelItems->get(c)->x = (float)((GLUtils::getViewportWidth() / 2.0f) + 25.0f - (40.0f * (sin((float)(((wheelItems->get(c)->y + 2.0f)) / 66.0f)))));
 	}
 
 	//------------------------------------------
 	//slide out selected item
 	//------------------------------------------
-	wheelItems.get(selectedWheelItem)->x -= cartSlideX;
+	wheelItems->get(selectedWheelItem)->x -= cartSlideX;
 
 
 	if (selectionColorSpinEnabled == true)

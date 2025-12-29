@@ -22,19 +22,19 @@ public:
 	static Logger log;
 
 
-	shared_ptr<StuffMenu> stuffMenu = nullptr;
+	StuffMenu* stuffMenu = nullptr;
 	//GUI* stuffMenuGUI = nullptr;
 
-	shared_ptr<GameStore> gameStore = nullptr;
+	GameStore* gameStore = nullptr;
 	//GUI* gameStoreGUI = nullptr;
 
-	shared_ptr<PlayerEditMenu> playerEditMenu = nullptr;
+	PlayerEditMenu* playerEditMenu = nullptr;
 	//GUI* playerEditGUI = nullptr;
 
-	shared_ptr<ArrayList<shared_ptr<GameChallengeNotificationPanel>>> gameChallenges = make_shared<ArrayList<shared_ptr<GameChallengeNotificationPanel>>>();
+	ArrayList<GameChallengeNotificationPanel*>* gameChallenges = new ArrayList<GameChallengeNotificationPanel*>();
 	//ArrayList<GUI*> gameChallengesGUIs;
 
-	shared_ptr<KeyboardMenuPanel> keyboardScreen = nullptr;
+	KeyboardMenuPanel* keyboardScreen = nullptr;
 	//GUI* keyboardScreenGUI = nullptr;
 
 
@@ -71,10 +71,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	shared_ptr<GameChallengeNotificationPanel> makeGameChallengeNotification(shared_ptr<FriendCharacter> friend_in, const string& gameName);
+	GameChallengeNotificationPanel* makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName);
 
 
-	void removeGameNotification(shared_ptr<GameChallengeNotificationPanel> g);
+	void removeGameNotification(GameChallengeNotificationPanel* g);
 
 
 	void cleanup();

@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
 //------------------------------------------------------------------------------
@@ -11,7 +11,6 @@
 #include "GameSequence.h"
 #include "Stats/UserStatsForSpecificGameAndDifficulty.h"
 #include "Stats/LeaderBoardAndHighScoreBoardEntry.h"
-#include <memory>
 
 class PuzzlePlayer;
 class Logger;
@@ -170,7 +169,7 @@ public:
 	//static BobColor noColor;
 	//static ArrayList<BobColor> emptyColors;
 
-	shared_ptr<GameSequence> currentGameSequence = nullptr;
+	GameSequence *currentGameSequence = nullptr;
 	PuzzlePlayer* player = nullptr;
 
 public:
@@ -180,13 +179,13 @@ public:
 	//virtual CaptionManager* getCaptionManager() override;
 
 	
-	ArrayList<shared_ptr<GameType>> gameTypeRandomBag;
-	shared_ptr<GameType> currentGameType = nullptr;//currentGameType
+	ArrayList<GameType*> gameTypeRandomBag;
+	GameType* currentGameType = nullptr;//currentGameType
 
-	shared_ptr<Grid> grid = nullptr;
+	Grid* grid = nullptr;
 
 	BobsGame* getBobsGame();
-	shared_ptr<Room> getRoom();
+	Room* getRoom();
 
 	int blockWidth = 1;
 	int blockHeight = 1;
@@ -199,7 +198,7 @@ public:
 
 	void initializeRandomGenerator();
 	void fillGameTypeRandomBag();
-	shared_ptr<GameType> getGameTypeFromRandomBag();
+	GameType* getGameTypeFromRandomBag();
 
 	bool dontResetNextPieces = false;
 
@@ -379,8 +378,8 @@ private:
 	bool checkForChainAgainIfNoBlocksPopping = false;
 
 public:
-	void setGameType(shared_ptr<GameType> gameType);
-	shared_ptr<DifficultyType> getCurrentDifficulty();
+	void setGameType(GameType* gameType);
+	DifficultyType* getCurrentDifficulty();
 private:
 	void initGame();
 
@@ -524,74 +523,74 @@ private:
 	int mediumCaptionFontSize = 0;// = BobFont::font_normal_16_outlined_smooth;
 
 public:
-	shared_ptr<Caption> levelCaption = nullptr;
+	Caption* levelCaption = nullptr;
 	string levelCaptionText = "levelCaptionText";
 
-	shared_ptr<Caption> gameTypeCaption = nullptr;
-	shared_ptr<Caption> rulesCaption1 = nullptr;
-	shared_ptr<Caption> rulesCaption2 = nullptr;
-	shared_ptr<Caption> rulesCaption3 = nullptr;
+	Caption* gameTypeCaption = nullptr;
+	Caption* rulesCaption1 = nullptr;
+	Caption* rulesCaption2 = nullptr;
+	Caption* rulesCaption3 = nullptr;
 
-	shared_ptr<Caption> difficultyCaption = nullptr;
+	Caption* difficultyCaption = nullptr;
 	//string difficultyCaptionText = "difficultyCaptionText";
 
-	shared_ptr<Caption> stopCounterCaption = nullptr;
+	Caption* stopCounterCaption = nullptr;
 	string stopCounterCaptionText = "Go!";
 
-	shared_ptr<Caption> xCaption = nullptr;
-	shared_ptr<Caption> yCaption = nullptr;
-	shared_ptr<Caption> lineDropTicksCaption = nullptr;
-	shared_ptr<Caption> lockDelayCaption = nullptr;
-	shared_ptr<Caption> spawnDelayCaption = nullptr;
-	shared_ptr<Caption> lineClearDelayCaption = nullptr;
-	shared_ptr<Caption> gravityCaption = nullptr;
-	shared_ptr<Caption> rotationCaption = nullptr;
-	shared_ptr<Caption> holdCaption = nullptr;
-	shared_ptr<Caption> nextCaption = nullptr;
+	Caption* xCaption = nullptr;
+	Caption* yCaption = nullptr;
+	Caption* lineDropTicksCaption = nullptr;
+	Caption* lockDelayCaption = nullptr;
+	Caption* spawnDelayCaption = nullptr;
+	Caption* lineClearDelayCaption = nullptr;
+	Caption* gravityCaption = nullptr;
+	Caption* rotationCaption = nullptr;
+	Caption* holdCaption = nullptr;
+	Caption* nextCaption = nullptr;
 
-	shared_ptr<Caption> totalLinesClearedCaption = nullptr;
-	shared_ptr<Caption> totalBlocksClearedCaption = nullptr;
-	shared_ptr<Caption> totalPiecesMadeCaption = nullptr;
+	Caption* totalLinesClearedCaption = nullptr;
+	Caption* totalBlocksClearedCaption = nullptr;
+	Caption* totalPiecesMadeCaption = nullptr;
 
-	shared_ptr<Caption> linesClearedThisGameCaption = nullptr;
-	shared_ptr<Caption> blocksClearedThisGameCaption = nullptr;
-	shared_ptr<Caption> piecesMadeThisGameCaption = nullptr;
+	Caption* linesClearedThisGameCaption = nullptr;
+	Caption* blocksClearedThisGameCaption = nullptr;
+	Caption* piecesMadeThisGameCaption = nullptr;
 
-	shared_ptr<Caption> blocksInGridCaption = nullptr;
-	shared_ptr<Caption> currentChainCaption = nullptr;
-	shared_ptr<Caption> currentComboCaption = nullptr;
-	shared_ptr<Caption> comboChainTotalCaption = nullptr;
-	shared_ptr<Caption> seedCaption = nullptr;
-	shared_ptr<Caption> bgCaption = nullptr;
+	Caption* blocksInGridCaption = nullptr;
+	Caption* currentChainCaption = nullptr;
+	Caption* currentComboCaption = nullptr;
+	Caption* comboChainTotalCaption = nullptr;
+	Caption* seedCaption = nullptr;
+	Caption* bgCaption = nullptr;
 
-	shared_ptr<Caption> piecesToLevelUpThisLevelCaption = nullptr;
-	shared_ptr<Caption> piecesLeftToLevelUpCaption = nullptr;
+	Caption* piecesToLevelUpThisLevelCaption = nullptr;
+	Caption* piecesLeftToLevelUpCaption = nullptr;
 
 private:
-	shared_ptr<ArrayList<shared_ptr<Caption>>> infoCaptions = make_shared<ArrayList<shared_ptr<Caption>>>();
-	shared_ptr<ArrayList<shared_ptr<Caption>>> announcementCaptions = make_shared<ArrayList<shared_ptr<Caption>>>();
+	ArrayList<Caption*>* infoCaptions = new ArrayList<Caption*>();
+	ArrayList<Caption*>* announcementCaptions = new ArrayList<Caption*>();
 
 public:
-	shared_ptr<Caption> totalTicksPassedCaption = nullptr;
+	Caption* totalTicksPassedCaption = nullptr;
 private:
 	int timeCaptionStandardizedWidth = 0;
 
 public:
-	shared_ptr<Caption> pressStartCaption = nullptr;
-	shared_ptr<Caption> waitingForPlayerCaption = nullptr;
-	shared_ptr<Caption> creditsCaption = nullptr;
-	shared_ptr<Caption> deadCaption = nullptr;
-	shared_ptr<Caption> winCaption = nullptr;
-	shared_ptr<Caption> loseCaption = nullptr;
-	shared_ptr<Caption> garbageWaitCaption = nullptr;
+	Caption* pressStartCaption = nullptr;
+	Caption* waitingForPlayerCaption = nullptr;
+	Caption* creditsCaption = nullptr;
+	Caption* deadCaption = nullptr;
+	Caption* winCaption = nullptr;
+	Caption* loseCaption = nullptr;
+	Caption* garbageWaitCaption = nullptr;
 
-	shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty> myHighScore = nullptr;
+	BobsGameUserStatsForSpecificGameAndDifficulty *myHighScore = nullptr;
 	BobsGameLeaderBoardAndHighScoreBoard::BobsGameLeaderBoardAndHighScoreBoardEntry *currentLeaderboardEntry = nullptr;
 	bool triedToGetHighScore = false;
-	shared_ptr<Caption> scoreBarTypeCaption = nullptr;
-	shared_ptr<Caption> myScoreBarCaption = nullptr;
-	shared_ptr<Caption> myHighScoreBarCaption = nullptr;
-	shared_ptr<Caption> leaderboardBarCaption = nullptr;
+	Caption* scoreBarTypeCaption = nullptr;
+	Caption* myScoreBarCaption = nullptr;
+	Caption* myHighScoreBarCaption = nullptr;
+	Caption* leaderboardBarCaption = nullptr;
 
 	//lines cleared
 	//blocks cleared
@@ -629,7 +628,7 @@ private:
 	void makeAnnouncementCaption(const string& text, BobColor* color);
 	void makeRandomLevelUpCaption();
 	void updateCaptionFadeValues();
-	shared_ptr<Caption> makeInfoCaption(const string& text);
+	Caption* makeInfoCaption(const string& text);
 
 public:
 	void deleteAllCaptions();

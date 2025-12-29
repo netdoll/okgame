@@ -71,9 +71,9 @@ public:
 	bool outline = false;
 
 private:
-	BobColor textBGColor = *BobColor::black;
-	BobColor textColor = *BobColor::white;
-	BobColor textAAColor = *BobColor::gray;
+	BobColor* textBGColor = BobColor::black;
+	BobColor* textColor = BobColor::white;
+	BobColor* textAAColor = BobColor::gray;
 
 public:
 	float screenX = 0;
@@ -120,8 +120,8 @@ private:
 	bool initialized = false;
 
 public:
-	shared_ptr<BobTexture> texture = nullptr;
-	shared_ptr<ByteArray> textureByteArray = nullptr;
+	BobTexture* texture = nullptr;
+	ByteArray* textureByteArray = nullptr;
 	int texWidth = 0;
 	int texHeight = 0;
 
@@ -155,7 +155,7 @@ private:
 	void drawText();
 	void parseOptions(const string& optionBuffer);
 	int getLetterPixelColor(int letterIndex, int y, int xInLetter, bool blank);
-	void setPixel(int index, BobColor c);
+	void setPixel(int index, BobColor* c);
 public:
 	float getAlphaTo();
 	float getAlpha();

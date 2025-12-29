@@ -199,7 +199,7 @@ bool UDPPeerConnection::_ensureSocketIsOpen()
 
 			//SDLNet_UDP_SetPacketLoss(getSocket_S(), 20);
 
-			int channel = SDLNet_UDP_Bind(getSocket_S(), -1, getPeerIPAddress_S().get());
+			int channel = SDLNet_UDP_Bind(getSocket_S(), -1, getPeerIPAddress_S());
 			if (channel < 0)
 			{
 				threadLogError_S("Could not bind socket: " + string(SDLNet_GetError()) + string(SDL_GetError()));
@@ -381,20 +381,20 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 									SDLNet_FreePacket(q);
 									//lastSentPacketTime = System::currentHighResTimer();
 
-									if (_frameSentTimes.containsKey(queuedID))
+									if (_frameSentTimes->containsKey(queuedID))
 									{
-										long long timeSentPacket = _frameSentTimes.get(queuedID);
-										_frameSentTimes.removeAt(queuedID);
+										long long timeSentPacket = _frameSentTimes->get(queuedID);
+										_frameSentTimes->removeAt(queuedID);
 
 										long long roundaboutTicks = (long long)System::getTicksBetweenTimes(timeSentPacket, System::currentHighResTimer());
-										_frameRoundaboutTicks.add(roundaboutTicks);
+										_frameRoundaboutTicks->add(roundaboutTicks);
 
 										long long totalRoundaboutTicks = 0;
-										for (int i = 0; i < _frameRoundaboutTicks.size(); i++)
+										for (int i = 0; i < _frameRoundaboutTicks->size(); i++)
 										{
-											totalRoundaboutTicks += _frameRoundaboutTicks.get(i);
+											totalRoundaboutTicks += _frameRoundaboutTicks->get(i);
 										}
-										setAverageRoundaboutTicks_S(totalRoundaboutTicks / _frameRoundaboutTicks.size());
+										setAverageRoundaboutTicks_S(totalRoundaboutTicks / _frameRoundaboutTicks->size());
 									}
 								}
 								else
@@ -499,7 +499,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 UDPpacket* UDPPeerConnection::makePacket(string s)
 {//===============================================================================================
 
-	shared_ptr<IPaddress> peerAddress = getPeerIPAddress_S();
+	IPaddress* peerAddress = getPeerIPAddress_S();
 	if (peerAddress == nullptr)
 	{
 		threadLogWarn_S("peerAddress was null.");
@@ -657,9 +657,9 @@ void UDPPeerConnection::_writeQueuedPackets()
 
 			if (packetID != -1)
 			{
-				if (_frameSentTimes.containsKey(packetID) == false)
+				if (_frameSentTimes->containsKey(packetID) == false)
 				{
-					_frameSentTimes.put(packetID, currentTime);
+					_frameSentTimes->put(packetID, currentTime);
 				}
 			}
 		}
@@ -906,7 +906,7 @@ void UDPPeerConnection::writeUnreliable_S(string s)
 	}
 
 #ifndef ORBIS
-	shared_ptr<IPaddress> peerAddress = getPeerIPAddress_S();
+	IPaddress* peerAddress = getPeerIPAddress_S();
 	if (peerAddress == nullptr)
 	{
 		threadLogWarn_S("peerAddress was null.");

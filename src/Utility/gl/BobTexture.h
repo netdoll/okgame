@@ -42,7 +42,6 @@ class Logger;
 //#ifndef ORBIS
 	public:
 		BobTexture(const string &ref, GLuint textureID);
-		~BobTexture();
 
 		GLuint getTextureID();
 
@@ -119,5 +118,5 @@ class Logger;
 
 
 	public:
-		sp<ByteArray> getTextureData();
+		ByteArray* getTextureData();
 	};

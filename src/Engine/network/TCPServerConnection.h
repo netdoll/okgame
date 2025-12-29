@@ -69,7 +69,7 @@ public:
 
 	bool _requestedClientLocation = false;
 	string clientLocation = "";
-	shared_ptr<ServerStats> serverStats = nullptr;
+	ServerStats* serverStats = nullptr;
 
 
 	bool threadStarted = false;
@@ -96,7 +96,7 @@ private:
 	int _couldNotOpenConnectionToLoadBalancerCount = 0;
 
 #ifndef ORBIS
-	shared_ptr<IPaddress> _loadBalancerAddress = nullptr;
+	IPaddress * _loadBalancerAddress = nullptr;
 #else
 
 #endif
@@ -238,28 +238,28 @@ public:
 	//------------------------------------
 
 private:
-	queue<string> _incomingMessageQueue;
+	queue<string> *_incomingMessageQueue = new queue<string>();
 	mutex _incomingMessageQueue_Mutex;
 public:
 	string incomingMessageQueueFront_S()
 	{
 		lock_guard<mutex> lock(_incomingMessageQueue_Mutex);
-		return _incomingMessageQueue.front();
+		return _incomingMessageQueue->front();
 	}
 	int incomingMessageQueueSize_S()
 	{
 		lock_guard<mutex> lock(_incomingMessageQueue_Mutex);
-		return (int)_incomingMessageQueue.size();
+		return (int)_incomingMessageQueue->size();
 	}
 	void incomingMessageQueuePop_S()
 	{
 		lock_guard<mutex> lock(_incomingMessageQueue_Mutex);
-		_incomingMessageQueue.pop();
+		_incomingMessageQueue->pop();
 	}
 	void incomingMessageQueuePush_S(string &p)
 	{
 		lock_guard<mutex> lock(_incomingMessageQueue_Mutex);
-		_incomingMessageQueue.push(p);
+		_incomingMessageQueue->push(p);
 	}
 	//------------------------------------
 
@@ -306,14 +306,14 @@ public:
 	//------------------------------------
 
 #ifndef ORBIS
-	shared_ptr<IPaddress> _serverAddress = nullptr;
+	IPaddress * _serverAddress = nullptr;
 	mutex _serverAddress_Mutex;
-	shared_ptr<IPaddress> getServerAddress_S()
+	IPaddress* getServerAddress_S()
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		return _serverAddress;
 	}
-	void setServerAddress_S(shared_ptr<IPaddress> b)
+	void setServerAddress_S(IPaddress *b)
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		_serverAddress = b;
@@ -323,7 +323,7 @@ public:
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		if (_serverAddress != nullptr)
 		{
-			//delete _serverAddress;
+			delete _serverAddress;
 			_serverAddress = nullptr;
 		}
 	}

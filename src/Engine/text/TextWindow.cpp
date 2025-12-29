@@ -286,7 +286,7 @@ void TextWindow::updateSpriteWindowTexture()
 { //=========================================================================================================================
 
 
-	sp<ByteArray> oldtex = spriteWindowTexture->getTextureData();
+	ByteArray* oldtex = spriteWindowTexture->getTextureData();
 	int size_x = spriteWindowTexture->getTextureWidth();
 	int size_y = spriteWindowTexture->getTextureHeight();
 

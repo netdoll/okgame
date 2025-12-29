@@ -5,7 +5,6 @@
 
 #pragma once
 #include "bobtypes.h"
-#include <memory>
 class Logger;
 
 
@@ -20,38 +19,38 @@ public:
 
 	static Logger log;
 
-	//ArrayList<shared_ptr<BobEvent>> cutsceneEventList;//project events and unattached events
-	ArrayList<shared_ptr<BobEvent>> eventList;//all events get put here for global lookup
-	ArrayList<shared_ptr<Dialogue>> dialogueList;
-	ArrayList<shared_ptr<GameString>> gameStringList;
-	ArrayList<shared_ptr<Flag>> flagList;
-	ArrayList<shared_ptr<Skill>> skillList;
-	ArrayList<shared_ptr<Item>> itemList;
+	//ArrayList<BobEvent*> cutsceneEventList;//project events and unattached events
+	ArrayList<BobEvent*> eventList;//all events get put here for global lookup
+	ArrayList<Dialogue*> dialogueList;
+	ArrayList<GameString*> gameStringList;
+	ArrayList<Flag*> flagList;
+	ArrayList<Skill*> skillList;
+	ArrayList<Item*> itemList;
 
-	ArrayList<shared_ptr<BobEvent>> runningEventQueue;
+	ArrayList<BobEvent*> runningEventQueue;
 
 	EventManager(Engine* g);
 
 
 	void update();
 
-	void addToEventQueueIfNotThere(shared_ptr<BobEvent> event);
+	void addToEventQueueIfNotThere(BobEvent* event);
 
-	bool isEventInQueue(shared_ptr<BobEvent> event);
+	bool isEventInQueue(BobEvent* event);
 
 	void unloadCurrentMapEvents();
 
-	shared_ptr<Item> getItemByID(int id);
+	Item* getItemByID(int id);
 
-	shared_ptr<Dialogue> getDialogueByIDCreateIfNotExist(int id);
+	Dialogue* getDialogueByIDCreateIfNotExist(int id);
 
-	//shared_ptr<BobEvent> getCutsceneEventByID(int id);
-	shared_ptr<BobEvent> getEventByIDCreateIfNotExist(int id);
+	//BobEvent* getCutsceneEventByID(int id);
+	BobEvent* getEventByIDCreateIfNotExist(int id);
 
-	shared_ptr<Skill> getSkillByIDCreateIfNotExist(int id);
+	Skill* getSkillByIDCreateIfNotExist(int id);
 
-	shared_ptr<GameString> getGameStringByIDCreateIfNotExist(int id);
+	GameString* getGameStringByIDCreateIfNotExist(int id);
 
-	shared_ptr<Flag> getFlagByIDCreateIfNotExist(int id);
+	Flag* getFlagByIDCreateIfNotExist(int id);
 };
 

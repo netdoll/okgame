@@ -30,15 +30,15 @@ const string BobsGame::netCommand_FORFEIT = "FORFEIT:";
 void BobsGame::sendAllJoinedPeers(const string& s)
 {//=========================================================================================================================
 
-	for (int i = 0; i<joinedPeers.size(); i++)
+	for (int i = 0; i<joinedPeers->size(); i++)
 	{
-		shared_ptr<UDPPeerConnection> c = joinedPeers.get(i);
+		UDPPeerConnection *c = joinedPeers->get(i);
 		c->writeReliable_S("BOBSGAME:" + s + ":"+ BobNet::endline);
 	}
 }
 
 //=========================================================================================================================
-void BobsGame::sendPeer(shared_ptr<UDPPeerConnection> c, const string& s)
+void BobsGame::sendPeer(UDPPeerConnection *c, const string& s)
 {//=========================================================================================================================
 	c->writeReliable_S("BOBSGAME:" + s + ":" + BobNet::endline);
 }
@@ -50,7 +50,7 @@ void BobsGame::sendAllPeers(const string& s)
 }
 
 //=========================================================================================================================
-void BobsGame::tellAllPeersOneOfMyPlayersForfeitsGame(shared_ptr<PuzzlePlayer> p)
+void BobsGame::tellAllPeersOneOfMyPlayersForfeitsGame(PuzzlePlayer *p)
 {//=========================================================================================================================
 
 	sendAllJoinedPeers(lobbyCommand_PLAYERFORFEIT + p->getID());
@@ -89,7 +89,7 @@ void BobsGame::tellAllPeersIAmPlayingAGame()
 }
 
 //=========================================================================================================================
-void BobsGame::tellAllJoinedPeersThatANewPeerHasJoinedMyHostedGame(shared_ptr<UDPPeerConnection> c)
+void BobsGame::tellAllJoinedPeersThatANewPeerHasJoinedMyHostedGame(UDPPeerConnection *c)
 {//=========================================================================================================================
 	sendAllJoinedPeers(lobbyCommand_JOINEDPEER + to_string(c->peerUserID));
 }
@@ -113,37 +113,37 @@ void BobsGame::tellAllJoinedPeersIHaveLeftTheGame()
 }
 
 //=========================================================================================================================
-void BobsGame::tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(shared_ptr<PuzzlePlayer> p)
+void BobsGame::tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(PuzzlePlayer *p)
 {//=========================================================================================================================
 	sendAllJoinedPeers(lobbyCommand_PLAYERLEAVE + p->getID());
 }
 
 //=========================================================================================================================
-void BobsGame::tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(shared_ptr<PuzzlePlayer> p)
+void BobsGame::tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(PuzzlePlayer *p)
 {//=========================================================================================================================
 	sendAllJoinedPeers(lobbyCommand_PLAYERJOIN + p->getID());
 }
 
 //=========================================================================================================================
-void BobsGame::tellPeerThatOtherPeerHasJoined(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<UDPPeerConnection> joinedPeer)
+void BobsGame::tellPeerThatOtherPeerHasJoined(UDPPeerConnection* peerToTell, UDPPeerConnection* joinedPeer)
 {//=========================================================================================================================
 	sendPeer(peerToTell,lobbyCommand_JOINEDPEER + to_string(joinedPeer->peerUserID));
 }
 
 //=========================================================================================================================
-void BobsGame::tellPeerThatIHaveJoined(shared_ptr<UDPPeerConnection> peerToTell)
+void BobsGame::tellPeerThatIHaveJoined(UDPPeerConnection* peerToTell)
 {//=========================================================================================================================
 	sendPeer(peerToTell, lobbyCommand_JOINEDPEER + to_string(getUserID_S()));
 }
 
 //=========================================================================================================================
-void BobsGame::tellPeerThatPlayerHasJoined(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer> p)
+void BobsGame::tellPeerThatPlayerHasJoined(UDPPeerConnection* peerToTell, PuzzlePlayer *p)
 {//=========================================================================================================================
 	sendPeer(peerToTell, lobbyCommand_PLAYERJOIN + p->getID());
 }
 
 //=========================================================================================================================
-void BobsGame::tellPeerThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer> p)
+void BobsGame::tellPeerThatPlayerHasConfirmedAndSendGameSequence(UDPPeerConnection* peerToTell, PuzzlePlayer *p)
 {//=========================================================================================================================
 
 	NetworkGameSequence ngs = NetworkGameSequence(*p->gameLogic->currentGameSequence);
@@ -152,7 +152,7 @@ void BobsGame::tellPeerThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<UDPP
 }
 
 //=========================================================================================================================
-void BobsGame::tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<PuzzlePlayer> p)
+void BobsGame::tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(PuzzlePlayer *p)
 {//=========================================================================================================================
 
 	NetworkGameSequence ngs = NetworkGameSequence(*p->gameLogic->currentGameSequence);
@@ -218,7 +218,7 @@ void BobsGame::getUserIDAndRandomSeedAndUUIDFromPlayerIDString(string s, long lo
 }
 
 //=========================================================================================================================
-bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
+bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 {//=========================================================================================================================
 
 	if (String::startsWith(s, "BOBSGAME:"))
@@ -245,7 +245,7 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 		if (String::startsWith(command, lobbyCommand_PEERGAMEJOIN))
 		{
 
-			shared_ptr<UDPPeerConnection> newPeer = c;
+			UDPPeerConnection *newPeer = c;
 
 			if (hosting)
 			{
@@ -255,9 +255,9 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 
 				//tell the new peer about all the other peers
 				//need the host to send the other network players userIDs to each other to add each other as peers because they might not be friends
-				for (int i = 0; i < joinedPeers.size(); i++)
+				for (int i = 0; i < joinedPeers->size(); i++)
 				{
-					shared_ptr<UDPPeerConnection> existingPeer = joinedPeers.get(i);
+					UDPPeerConnection *existingPeer = joinedPeers->get(i);
 					tellPeerThatOtherPeerHasJoined(newPeer,existingPeer);
 				}
 
@@ -268,7 +268,7 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 				//tell this new peer about all of our local players
 				for (int i = 0; i<players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 					if (p->isNetworkPlayer() == false)
 					{
 						tellPeerThatPlayerHasJoined(newPeer, p);
@@ -281,24 +281,24 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 				}
 			}
 
-			if (joinedPeers.contains(newPeer) == false)joinedPeers.add(c);
+			if (joinedPeers->contains(newPeer) == false)joinedPeers->add(c);
 
 			return true;
 		}
 
 		if (String::startsWith(command, lobbyCommand_PEERGAMELEAVE))
 		{
-			while (joinedPeers.contains(c) == true)joinedPeers.remove(c);
+			while (joinedPeers->contains(c) == true)joinedPeers->remove(c);
 
 //			for (int i = 0; i<players.size(); i++)
 //			{
-//				shared_ptr<PuzzlePlayer> p = players.get(i);
+//				PuzzlePlayer *p = players.get(i);
 //				if (p->peerConnection == c)
 //				{
 //					p->game->dead = true;
 ////					players.removeAt(i);
 ////					i--;
-////					//delete p;
+////					delete p;
 //				}
 //			}
 
@@ -325,12 +325,12 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 
 			if (getUserID_S() == peerUserID)found = true;
 
-			shared_ptr<UDPPeerConnection> peer = nullptr;
+			UDPPeerConnection *peer = nullptr;
 
 			//look through udpConnectionsList and see if this exists
 			for (int i = 0; i < BobNet::udpConnections.size(); i++)
 			{
-				shared_ptr<UDPPeerConnection> p = BobNet::udpConnections.get(i);
+				UDPPeerConnection *p = BobNet::udpConnections.get(i);
 				if (p->peerUserID == peerUserID)
 				{
 					found = true;
@@ -339,14 +339,14 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 			}
 			if (!found)
 			{
-				peer = make_shared<UDPPeerConnection>(peerUserID, UDPPeerConnection::ANON_TYPE);
+				peer = new UDPPeerConnection(peerUserID, UDPPeerConnection::ANON_TYPE);
 				BobNet::udpConnections.add(peer);
 			}
 
 			//tell this new peer about all of our local players
 			for (int i = 0; i<players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer> p = players.get(i);
+				PuzzlePlayer *p = players.get(i);
 				if (p->isNetworkPlayer() == false)
 				{
 					tellPeerThatPlayerHasJoined(peer, p);
@@ -359,7 +359,7 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 				}
 			}
 
-			if (joinedPeers.contains(c) == false)joinedPeers.add(c);
+			if (joinedPeers->contains(c) == false)joinedPeers->add(c);
 
 			return true;
 		}
@@ -401,12 +401,12 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 				bool found = false;
 				for (int i = 0; i < players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 					if (p->getID() == playerIDString)found = true;
 				}
 				if (!found)
 				{
-					shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, randomSeed));
+					PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, randomSeed));
 					p->gameLogic->uuid = uuid;
 					p->gameLogic->isNetworkPlayer = true;
 					p->peerConnection = c;
@@ -428,14 +428,14 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 				//support disconnected
 				for (int i = 0; i < players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 
 					if (p->getID() == playerIDString)
 					{
 						found = true;
 						players.removeAt(i);
 						i--;
-						////delete p;
+						delete p;
 					}
 				}
 				if (!found)
@@ -448,7 +448,7 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 				//support disconnected
 				for (int i = 0; i < players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 
 					if(p->peerConnection == c && p->getID() == playerIDString)
 					{
@@ -474,7 +474,7 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 				bool found = false;
 				for (int i = 0; i < players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 					if (p->getID() == playerIDString)
 					{
 						found = true;
@@ -523,7 +523,7 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 
 				BobNet::myStatus = BobNet::status_AVAILABLE;
 
-				joinedPeers.clear();
+				joinedPeers->clear();
 
 				hostStartedGame = false;
 				networkMultiplayerLobbyMenuShowing = true;
@@ -623,7 +623,7 @@ bool BobsGame::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 			bool found = false;
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer> p = players.get(i);
+				PuzzlePlayer *p = players.get(i);
 				if (p->getID() == playerIDString)
 				{
 					found = true;
@@ -2070,7 +2070,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 	bool allPlayersConfirmed = true;
 	for (int i = 0; i<players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer> p = players.get(i);
+		PuzzlePlayer *p = players.get(i);
 		if (p->confirmed == false)
 		{
 			allPlayersConfirmed = false;
@@ -2130,7 +2130,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 			{
 				for(int i=0;i<players.size();i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 					if(p->isNetworkPlayer()==false)
 					{
 						add = false;
@@ -2144,13 +2144,13 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 				bool alreadyInUse = false;
 				for (int i = 0; i < players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer> p = players.get(i);
+					PuzzlePlayer *p = players.get(i);
 					if (p->useKeyboard)alreadyInUse = true;
 				}
 				if (!alreadyInUse)
 				{
 
-					shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+					PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 					p->useKeyboard = true;
 					
 					if (players.size()>0)
@@ -2176,13 +2176,13 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 	{
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer> p = players.get(i);
+			PuzzlePlayer *p = players.get(i);
 			if (p->useKeyboard)
 			{
 				tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 
 				players.removeAt(i);
-				//delete p;
+				delete p;
 				i = 0;
 			}
 		}
@@ -2205,7 +2205,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 				{
 					for (int i = 0; i<players.size(); i++)
 					{
-						shared_ptr<PuzzlePlayer> p = players.get(i);
+						PuzzlePlayer *p = players.get(i);
 						if (p->isNetworkPlayer() == false)
 						{
 							add = false;
@@ -2219,13 +2219,13 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 					bool alreadyInUse = false;
 					for (int i = 0; i < players.size(); i++)
 					{
-						shared_ptr<PuzzlePlayer> p = players.get(i);
+						PuzzlePlayer *p = players.get(i);
 						if (p->gameController == g)alreadyInUse = true;
 					}
 
 					if (!alreadyInUse)
 					{
-						shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+						PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 						p->gameController = g;
 						if (players.size()>0)
 						{
@@ -2250,13 +2250,13 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer> p = players.get(i);
+				PuzzlePlayer *p = players.get(i);
 				if (p->gameController == g)
 				{
 					tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 					
 					players.removeAt(i);
-					//delete p;
+					delete p;
 					i = 0;
 				}
 			}
@@ -2421,7 +2421,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuRender()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer> p = players.get(i);
+		PuzzlePlayer *p = players.get(i);
 
 		BobTexture *t = nullptr;
 

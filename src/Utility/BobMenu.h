@@ -10,7 +10,6 @@
 #include "Color.h"
 #include "Caption.h"
 #include "gl/GLUtils.h"
-#include <memory>
 
 
 //class BobSubMenu;
@@ -45,18 +44,18 @@ public:
 
 	BobColor* defaultMenuColor = nullptr;
 
-	shared_ptr<Caption> titleCaption = nullptr;
-	shared_ptr<Caption> subtitleCaption = nullptr;
+	Caption* titleCaption = nullptr;
+	Caption* subtitleCaption = nullptr;
 	
 	bool outline = true;
 	
 	bool scaleFontSizeToFit = true;
 
 	int cursorPosition = 0;
-	static shared_ptr<BobTexture> rectangleCursorTexture;
-	static shared_ptr<BobTexture> cursorTexture;
-	static shared_ptr<BobTexture> upCursorTexture;
-	static shared_ptr<BobTexture> downCursorTexture;
+	static BobTexture* rectangleCursorTexture;
+	static BobTexture* cursorTexture;
+	static BobTexture* upCursorTexture;
+	static BobTexture* downCursorTexture;
 	static long long cursorInOutToggleTicks;
 	static bool cursorInOutToggle;
 	static int lastMX;
@@ -77,7 +76,7 @@ public:
 	
 	static ArrayList<BobMenu*> activeMenus;
 
-	shared_ptr<BobTexture> graphic = nullptr;
+	BobTexture *graphic = nullptr;
 	int filter = GLUtils::FILTER_NEAREST;
 	float spacing = 1.0f;
 	bool center = true;
@@ -90,7 +89,7 @@ public:
 	class MenuItem
 	{//=========================================================================================================================
 	public:
-		shared_ptr<Caption> caption = nullptr;
+		Caption* caption = nullptr;
 		string id = "";
 		BobColor *color = nullptr;
 		bool hidden = false;
@@ -110,9 +109,9 @@ public:
 		void setText(string s);
 	};
 
-	ArrayList<shared_ptr<MenuItem>> menuItems;
+	ArrayList<MenuItem*> menuItems;
 
-	shared_ptr<MenuItem> topMenuItemDrawn = nullptr;
+	MenuItem* topMenuItemDrawn = nullptr;
 
 	int lastWidth = 0;
 	int lastHeight = 0;
@@ -120,7 +119,7 @@ public:
 	BobMenu(Engine *g, string title = "", string subtitle = "");
 	~BobMenu();
 
-	void setGraphic(shared_ptr<BobTexture> t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
+	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
 	void clear();
 	void setAllCaptionsToFullAlpha();
 	static void update(Engine *g, int ticksPassed);
@@ -131,9 +130,9 @@ public:
 
 	void up(bool noSound = false);
 	void down(bool noSound = false);
-	shared_ptr<MenuItem> addInfo(string caption, string id = "", BobColor *color = nullptr);
-	shared_ptr<MenuItem> add(string caption, string id = "", BobColor *color = nullptr);
-	shared_ptr<MenuItem> addYesNo(string caption, bool yesNo);
+	MenuItem* addInfo(string caption, string id = "", BobColor *color = nullptr);
+	MenuItem* add(string caption, string id = "", BobColor *color = nullptr);
+	MenuItem* addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
 	ArrayList<string> getArrayListOfMenuItemIDs();
@@ -156,9 +155,9 @@ public:
 	void setAllVisible();
 	bool isSelectedID(string id, bool clicked = false, int mx = 0, int my = 0);
 	void setSelectedID(string id);
-	shared_ptr<Caption> getCaptionByID(string id);
-	shared_ptr<MenuItem> getMenuItemByID(string id);
-	shared_ptr<MenuItem> getSelectedMenuItem();
+	Caption* getCaptionByID(string id);
+	MenuItem* getMenuItemByID(string id);
+	MenuItem* getSelectedMenuItem();
 
 	void setFontSize(int size);
 

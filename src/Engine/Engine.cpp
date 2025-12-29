@@ -20,7 +20,7 @@ long long Engine::totalTicks = 0;
 long long Engine::ticksThisSecond = 0;
 int Engine::framesSkipped = 0;
 
-ArrayList<shared_ptr<UDPPeerConnection>> Engine::onlineFriends;
+ArrayList<UDPPeerConnection*> Engine::onlineFriends;
 
 
 //=========================================================================================================================
@@ -38,6 +38,16 @@ Engine::~Engine()
 #ifdef _DEBUG
 	log.debug("~Engine()");
 #endif
+	delete audioManager;
+	delete spriteManager;
+	delete mapManager;
+	delete cinematicsManager;
+	delete captionManager;
+	delete textManager;
+	delete eventManager;
+	delete cameraman;
+	delete actionManager;
+	delete controlsManager;
 }
 
 //=========================================================================================================================
@@ -52,18 +62,18 @@ void Engine::init()
 
 
 
-	audioManager = make_shared<AudioManager>(this);
-	spriteManager = make_shared<SpriteManager>(this);
-	mapManager = make_shared<MapManager>(this);
-	cinematicsManager = make_shared<CinematicsManager>(this);
-	captionManager = make_shared<CaptionManager>(this);
-	textManager = make_shared<TextManager>(this);
-	eventManager = make_shared<EventManager>(this);
-	cameraman = make_shared<Cameraman>(this);
-	actionManager = make_shared<ActionManager>(this);
+	audioManager = new AudioManager(this);
+	spriteManager = new SpriteManager(this);
+	mapManager = new MapManager(this);
+	cinematicsManager = new CinematicsManager(this);
+	captionManager = new CaptionManager(this);
+	textManager = new TextManager(this);
+	eventManager = new EventManager(this);
+	cameraman = new Cameraman(this);
+	actionManager = new ActionManager(this);
 
-	controlsManager = make_shared<ControlsManager>();
-	chatControlsManager = make_shared<ControlsManager>();
+	controlsManager = new ControlsManager();
+	chatControlsManager = new ControlsManager();
 
 	activeControlsManager = controlsManager;
 
@@ -90,7 +100,7 @@ void Engine::update()
 	onlineFriends.clear();
 	for (int i = 0; i < (int)BobNet::udpConnections.size(); i++)
 	{
-		shared_ptr<UDPPeerConnection> f = BobNet::udpConnections.get(i);
+		UDPPeerConnection* f = BobNet::udpConnections.get(i);
 		if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true && f->peerStatus == BobNet::status_AVAILABLE)
 		{
 			if (onlineFriends.contains(f) == false)
@@ -292,113 +302,113 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	//global objects
 	if (String::startsWith(typeIDName, "MAP."))
 	{
-		return getMapManager()->getMapByIDBlockUntilLoaded(id).get();
+		return getMapManager()->getMapByIDBlockUntilLoaded(id);
 	}
 	if (String::startsWith(typeIDName, "SPRITE."))
 	{
-		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id).get();
+		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "DIALOGUE."))
 	{
-		return getEventManager()->getDialogueByIDCreateIfNotExist(id).get();
+		return getEventManager()->getDialogueByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "CUTSCENEEVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
+		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "EVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
+		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "FLAG."))
 	{
-		return getEventManager()->getFlagByIDCreateIfNotExist(id).get();
+		return getEventManager()->getFlagByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "SKILL."))
 	{
-		return getEventManager()->getSkillByIDCreateIfNotExist(id).get();
+		return getEventManager()->getSkillByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "GAMESTRING."))
 	{
-		return getEventManager()->getGameStringByIDCreateIfNotExist(id).get();
+		return getEventManager()->getGameStringByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "MUSIC."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "SOUND."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
 	}
 
 
 	//map objects (will only exist within the current map)
 	if (String::startsWith(typeIDName, "STATE."))
 	{
-		return getMapManager()->getMapStateByID(id).get();
+		return getMapManager()->getMapStateByID(id);
 	}
 	if (String::startsWith(typeIDName, "ENTITY."))
 	{
-		return getMapManager()->getEntityByID(id).get();
+		return getMapManager()->getEntityByID(id);
 	}
 	if (String::startsWith(typeIDName, "AREA."))
 	{
-		return getMapManager()->getAreaByID(id).get();
+		return getMapManager()->getAreaByID(id);
 	}
 	if (String::startsWith(typeIDName, "LIGHT."))
 	{
-		return getMapManager()->getLightByID(id).get();
+		return getMapManager()->getLightByID(id);
 	}
 	if (String::startsWith(typeIDName, "DOOR."))
 	{
-		return getMapManager()->getDoorByID(id).get();
+		return getMapManager()->getDoorByID(id);
 	}
 
 
 	return nullptr;
 }
 
-shared_ptr<Cameraman> Engine::getCameraman()
+Cameraman* Engine::getCameraman()
 {
 	return cameraman;
 }
 
-shared_ptr<MapManager> Engine::getMapManager()
+MapManager* Engine::getMapManager()
 {
 	return mapManager;
 }
 
-shared_ptr<SpriteManager> Engine::getSpriteManager()
+SpriteManager* Engine::getSpriteManager()
 {
 	return spriteManager;
 }
 
-shared_ptr<ActionManager> Engine::getActionManager()
+ActionManager* Engine::getActionManager()
 {
 	return actionManager;
 }
 
-shared_ptr<TextManager> Engine::getTextManager()
+TextManager* Engine::getTextManager()
 {
 	return textManager;
 }
 
-shared_ptr<AudioManager> Engine::getAudioManager()
+AudioManager* Engine::getAudioManager()
 {
 	return audioManager;
 }
 
-shared_ptr<CaptionManager> Engine::getCaptionManager()
+CaptionManager* Engine::getCaptionManager()
 {
 	return captionManager;
 }
 
-shared_ptr<EventManager> Engine::getEventManager()
+EventManager* Engine::getEventManager()
 {
 	return eventManager;
 }
 
-shared_ptr<CinematicsManager> Engine::getCinematicsManager()
+CinematicsManager* Engine::getCinematicsManager()
 {
 	return cinematicsManager;
 }
@@ -519,12 +529,12 @@ void Engine::setButtonStates()
 	getActiveControlsManager()->setButtonStates();
 }
 
-shared_ptr<ControlsManager> Engine::getControlsManager()
+ControlsManager* Engine::getControlsManager()
 {
 	return controlsManager;
 }
 
-shared_ptr<ControlsManager> Engine::getActiveControlsManager()
+ControlsManager* Engine::getActiveControlsManager()
 {
 	return activeControlsManager;
 }
@@ -569,7 +579,7 @@ int Engine::getHeight()
 	return GLUtils::getViewportHeight();
 }
 
-bool Engine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
+bool Engine::udpPeerMessageReceived(UDPPeerConnection* c, string s)
 {
 	return false;
 }

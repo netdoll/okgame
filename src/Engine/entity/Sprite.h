@@ -28,7 +28,7 @@ public:
 	sp<Event> event = nullptr;
 
 	//static sp<ExecutorService>generatePNGExecutorService;
-	static shared_ptr<ctpl::thread_pool> generatePNGThreadPool;
+	static ctpl::thread_pool* generatePNGThreadPool;
 
 
 	sp<IntArray> indexDataIntArray = nullptr;

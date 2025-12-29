@@ -39,7 +39,7 @@ private:
 	bool on = false;
 
 
-	BobColor color;
+	BobColor* color = BobColor::black;
 
 	int ticksSlideDuration = 0;
 

@@ -89,7 +89,7 @@ public:
 	int pantsColorIndex = 0;
 	int shoeColorIndex = 0;
 
-	shared_ptr<Caption> playerNameCaption = nullptr;
+	Caption* playerNameCaption = nullptr;
 
 	bool initRandom = false;
 
@@ -149,9 +149,9 @@ public:
 	};
 
 public:
-	shared_ptr<AddressInfo> queryYahooGeocodingAPI(const string& address);
+	AddressInfo* queryYahooGeocodingAPI(const string& address);
 
-	shared_ptr<AddressInfo> queryGoogleGeocodingAPI(const string& address);
+	AddressInfo* queryGoogleGeocodingAPI(const string& address);
 
 	void doOKButton();
 

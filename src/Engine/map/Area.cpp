@@ -457,10 +457,10 @@ void Area::renderDebugBoxes()
 			//            }
 			//         }
 
-			ArrayList<Area*> areas = map->currentState->areaByNameHashtable.getAllValues();
-			for (int n = 0; n<areas.size(); n++)
+			ArrayList<Area*> *areas = map->currentState->areaByNameHashtable.getAllValues();
+			for (int n = 0; n<areas->size(); n++)
 			{
-				Area* a = areas.get(n);
+				Area* a = areas->get(n);
 
 				if (connectionTYPEIDList()->get(i) == a->getTYPEIDString())
 				{
