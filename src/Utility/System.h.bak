@@ -15,7 +15,7 @@ class System
 public:
 
 	//const static char pathSeparator = '/';
-	
+
 	static Logger log;
 
 //	string sessionToken = "";
@@ -104,8 +104,6 @@ public:
 	static string glRenderer;
 	static string shaderVersion;
 	static string glExtensions;
-
-	static string bobVersion;
 
 	static void initSystemInfo();
 	static void initClockAndTimeZone();
@@ -213,7 +211,7 @@ private:
 	static long long lastRenderHighResTime; //Sys.getTime();
 	static long long currentHighResTime;
 
-	
+
 	static int updatesThisSecond;
 	static int rendersThisSecond;
 	static long long lastSecondTime;
@@ -223,7 +221,7 @@ private:
 	static long long totalRenderTicks;//only for whilefix and no vsync
 	static int rendersSkipped;
 	static int updatesSkipped;
-	
+
 
 
 public:
@@ -241,7 +239,7 @@ public:
 
 	static double getTicksBetweenTimes(long long start, long long finish);
 	static long long currentHighResTimer();
-	
+
 	static int getTotalRenderTicksPassed();
 	static void resetTotalRenderTicksPassed();
 
@@ -251,4 +249,3 @@ public:
 
 	static long long getPerformanceCounter();
 };
-

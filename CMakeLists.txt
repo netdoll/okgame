@@ -481,6 +481,15 @@ set(SOURCE_FILES
 
 add_executable(bobsgame ${SOURCE_FILES})
 
+# Deploy VERSION.md to the output directory
+add_custom_command(
+    TARGET bobsgame POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_SOURCE_DIR}/VERSION.md
+        $<TARGET_FILE_DIR:bobsgame>/VERSION.md
+    COMMENT "Copying VERSION.md to output directory"
+)
+
 
 
 
