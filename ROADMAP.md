@@ -1,12 +1,16 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 0.1.7
+**Current Version:** 0.1.8
 
 ## In Progress
-*   [ ] **Continuous Integration/Deployment setup**
+*   [ ] **Split large files** (BobsGameMenus.cpp, CustomGameEditor.cpp, GameLogic.cpp)
 
 ## Completed Features
+*   [x] **CI/CD Pipeline (0.1.8)**
+    *   [x] GitHub Actions workflow for Windows (VS2022) and Linux (GCC)
+    *   [x] Submodule and build caching
+    *   [x] Artifact upload for build outputs
 *   [x] **Documentation Overhaul (0.1.7)**
     *   [x] Comprehensive AGENTS.md with architecture, conventions, code map.
     *   [x] Subdirectory AGENTS.md for Engine, Puzzle, Utility.
@@ -48,7 +52,7 @@
 *   [ ] Split large files: BobsGameMenus.cpp (212KB), CustomGameEditor.cpp (220KB), GameLogic.cpp (163KB)
 *   [ ] Add namespaces to codebase
 *   [ ] Clean up remaining raw pointers in networking code
-*   [ ] Add CI/CD pipeline
+*   [x] ~~Add CI/CD pipeline~~ (completed 0.1.8)
 
 ## Maintenance
 *   [ ] Update all submodules to latest upstream.

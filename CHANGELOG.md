@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2025-01-11
+### Added
+- GitHub Actions CI/CD pipeline (.github/workflows/build.yml)
+- Windows build with VS2022, Ninja, MSVC
+- Linux build with GCC, Ninja, ccache
+- Submodule and build caching for faster CI runs
+- Concurrency control to cancel stale builds
+
 ## [0.1.7] - 2025-01-11
 ### Added
 - Comprehensive AGENTS.md with full project documentation (architecture, conventions, code map).
