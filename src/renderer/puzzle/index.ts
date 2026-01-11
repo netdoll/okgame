@@ -44,3 +44,9 @@ export type {
   DifficultyLevel,
   GameTypeConfig,
 } from './GameType';
+
+export { PuzzleGame, GameState, MovementType } from './PuzzleGame';
+export type { InputState, PuzzleGameEvents, PuzzleGameConfig } from './PuzzleGame';
+
+export { PuzzleRenderer } from './PuzzleRenderer';
+export type { PuzzleRendererConfig } from './PuzzleRenderer';
