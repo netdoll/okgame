@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2025-01-11
+### Added
+- Comprehensive AGENTS.md with full project documentation (architecture, conventions, code map).
+- Subdirectory AGENTS.md files for src/Engine/, src/Puzzle/, src/Utility/.
+- Complete SUBMODULES.md dashboard documenting all 89 submodules with versions.
+- Created .github/copilot-instructions.md for VS Code Copilot integration.
+
+### Changed
+- Rewrote CLAUDE.md, GEMINI.md, GPT.md to reference LLM_INSTRUCTIONS.md as master.
+- Standardized LLM instruction files with role-specific focus areas.
+
 ## [0.1.6] - 2025-12-27
 ### Changed
 - Updated all submodules to latest versions (merged upstream changes).

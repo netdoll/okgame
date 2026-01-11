@@ -1,12 +1,17 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 0.1.6
+**Current Version:** 0.1.7
 
 ## In Progress
 *   [ ] **Continuous Integration/Deployment setup**
 
 ## Completed Features
+*   [x] **Documentation Overhaul (0.1.7)**
+    *   [x] Comprehensive AGENTS.md with architecture, conventions, code map.
+    *   [x] Subdirectory AGENTS.md for Engine, Puzzle, Utility.
+    *   [x] Complete SUBMODULES.md dashboard (89 submodules).
+    *   [x] Standardized LLM instruction files.
 *   [x] **Submodule Updates**
     *   [x] Update all submodules to latest upstream.
     *   [x] Fix broken submodule references (e.g., `lib/CLove`).
@@ -38,6 +43,12 @@
     *   Android, iOS, and Browser support.
 *   **Tournament Features**
     *   Ladders, regional and global.
+
+## Technical Debt
+*   [ ] Split large files: BobsGameMenus.cpp (212KB), CustomGameEditor.cpp (220KB), GameLogic.cpp (163KB)
+*   [ ] Add namespaces to codebase
+*   [ ] Clean up remaining raw pointers in networking code
+*   [ ] Add CI/CD pipeline
 
 ## Maintenance
 *   [ ] Update all submodules to latest upstream.
