@@ -50,3 +50,6 @@ export type { InputState, PuzzleGameEvents, PuzzleGameConfig } from './PuzzleGam
 
 export { PuzzleRenderer } from './PuzzleRenderer';
 export type { PuzzleRendererConfig } from './PuzzleRenderer';
+
+export { PuzzleScene } from './PuzzleScene';
+export type { PuzzleSceneConfig, PuzzleKeyBindings } from './PuzzleScene';
