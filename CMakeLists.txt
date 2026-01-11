@@ -402,6 +402,10 @@ set(SOURCE_FILES
     src/Puzzle/GameSequenceEditor.h
     src/Puzzle/GameSequenceEditor.cpp
     src/Puzzle/GameLogic.cpp
+    src/Puzzle/GameLogicChains.cpp
+    src/Puzzle/GameLogicGarbage.cpp
+    src/Puzzle/GameLogicNetwork.cpp
+    src/Puzzle/GameLogicRender.cpp
     src/Puzzle/GameLogic.h
     src/Puzzle/Grid.cpp
     src/Puzzle/Grid.h
