@@ -24,8 +24,6 @@ log.html
 src/Puzzle/Legacy.h
 _just steam.bat
 
-
-
 # Compiled Object files
 *.slo
 *.lo
@@ -38,7 +36,27 @@ _just steam.bat
 *.pch
 *.ipch
 
-
 ORBIS_Debug/bobsgame.elf
 /build_game
-/build_game
+
+# Node.js / TypeScript
+node_modules/
+dist/
+release/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+Thumbs.db
