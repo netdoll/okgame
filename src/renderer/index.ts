@@ -24,11 +24,12 @@ async function main(): Promise<void> {
     document.body.appendChild(app.canvas);
   }
 
+  const game = new Game(app);
+
   window.addEventListener('resize', () => {
-    app.renderer.resize(window.innerWidth, window.innerHeight);
+    game.resize(window.innerWidth, window.innerHeight);
   });
 
-  const game = new Game(app);
   await game.init();
   game.start();
 }
