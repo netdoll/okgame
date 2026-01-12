@@ -7,6 +7,7 @@ import { Button, ButtonStyle } from '../ui/Button';
 import { PuzzleScene, PuzzleSceneConfig } from '../puzzle';
 import { GameType, GameTypes } from '../puzzle';
 import { Key } from '../input/InputManager';
+import { OptionsScene } from './OptionsScene';
 
 // ============================================================
 // Types
@@ -266,7 +267,11 @@ export class MainMenuScene extends Scene {
             this.menuConfig.onOptions();
             return;
         }
-        console.log('Options not yet implemented');
+        const optionsScene = new OptionsScene({
+            name: 'options',
+            app: this.app,
+        });
+        StateManager.push(optionsScene);
     }
 
     // ============================================================

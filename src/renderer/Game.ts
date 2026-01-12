@@ -1,177 +1,162 @@
-import { Application, Ticker, Container, Sprite as PIXISprite, Assets, Text, TextStyle } from 'pixi.js';
+import { Application, Ticker, Container } from 'pixi.js';
 import { EventEmitter } from 'eventemitter3';
 import { Camera } from './graphics/Camera';
 import { StateManager } from './state/StateManager';
 import { InputManager } from './input/InputManager';
+import { AudioManager } from './audio/AudioManager';
+import { MainMenuScene } from './scenes/MainMenuScene';
+
+export interface GameConfig {
+    skipMenu?: boolean;
+}
 
 export interface GameEvents {
-  'scene:change': (sceneName: string) => void;
-  'game:pause': () => void;
-  'game:resume': () => void;
-  'camera:zoom': (zoom: number) => void;
+    'scene:change': (sceneName: string) => void;
+    'game:pause': () => void;
+    'game:resume': () => void;
 }
 
 export class Game extends EventEmitter<GameEvents> {
-  private app: Application;
-  private isRunning: boolean = false;
-  private isPaused: boolean = false;
+    private app: Application;
+    private config: GameConfig;
+    private isRunning = false;
+    private isPaused = false;
 
-  private _camera: Camera;
-  private worldContainer: Container;
-  private demoSprite: PIXISprite | null = null;
+    private _camera: Camera;
+    private worldContainer: Container;
 
-  constructor(app: Application) {
-    super();
-    this.app = app;
+    constructor(app: Application, config: GameConfig = {}) {
+        super();
+        this.app = app;
+        this.config = config;
 
-    this.worldContainer = new Container();
-    this.app.stage.addChild(this.worldContainer);
+        this.worldContainer = new Container();
+        this.app.stage.addChild(this.worldContainer);
 
-    this._camera = new Camera(this.worldContainer, {
-      viewportWidth: app.screen.width,
-      viewportHeight: app.screen.height,
-      defaultZoom: 2.0,
-      minZoom: 0.5,
-      maxZoom: 4.0,
-    });
-  }
-
-  async init(): Promise<void> {
-    console.log('Game initializing...');
-    
-    InputManager.init();
-    
-    this.app.ticker.add(this.update, this);
-    this.app.ticker.stop();
-
-    await this.loadDemo();
-    this.setupControls();
-
-    console.log('Game initialized');
-  }
-
-  private async loadDemo(): Promise<void> {
-    try {
-      const texture = await Assets.load('/theme/bobcorp.png');
-      this.demoSprite = new PIXISprite(texture);
-      this.demoSprite.anchor.set(0.5);
-      this.demoSprite.position.set(0, 0);
-      this.worldContainer.addChild(this.demoSprite);
-
-      this._camera.centerOn(0, 0);
-
-      const style = new TextStyle({
-        fontFamily: 'Arial',
-        fontSize: 14,
-        fill: 0xffffff,
-      });
-      const helpText = new Text({
-        text: 'Controls: Arrow keys = pan, +/- = zoom, Space = shake, R = reset',
-        style,
-      });
-      helpText.position.set(10, 10);
-      this.app.stage.addChild(helpText);
-
-      console.log('Demo loaded: bobcorp.png');
-    } catch (err) {
-      console.error('Failed to load demo texture:', err);
+        this._camera = new Camera(this.worldContainer, {
+            viewportWidth: app.screen.width,
+            viewportHeight: app.screen.height,
+            defaultZoom: 1.0,
+            minZoom: 0.5,
+            maxZoom: 4.0,
+        });
     }
-  }
 
-  private setupControls(): void {
-    const moveSpeed = 5;
-    const keys = new Set<string>();
+    async init(): Promise<void> {
+        console.log('Game initializing...');
 
-    window.addEventListener('keydown', (e) => {
-      keys.add(e.key);
+        InputManager.init();
+        await this.loadAudioAssets();
 
-      if (e.key === '=' || e.key === '+') {
-        this._camera.zoomIn();
-      } else if (e.key === '-') {
-        this._camera.zoomOut();
-      } else if (e.key === ' ') {
-        this._camera.setShake(500, 10, 10);
-      } else if (e.key === 'r' || e.key === 'R') {
-        this._camera.centerOn(0, 0);
-        this._camera.zoom = 2.0;
-      }
-    });
+        this.app.ticker.add(this.update, this);
+        this.app.ticker.stop();
 
-    window.addEventListener('keyup', (e) => {
-      keys.delete(e.key);
-    });
+        if (!this.config.skipMenu) {
+            this.showMainMenu();
+        }
 
-    this.app.ticker.add(() => {
-      if (keys.has('ArrowLeft')) this._camera.x -= moveSpeed;
-      if (keys.has('ArrowRight')) this._camera.x += moveSpeed;
-      if (keys.has('ArrowUp')) this._camera.y -= moveSpeed;
-      if (keys.has('ArrowDown')) this._camera.y += moveSpeed;
-    });
-  }
+        console.log('Game initialized');
+    }
 
-  start(): void {
-    if (this.isRunning) return;
-    console.log('Game starting...');
-    this.isRunning = true;
-    this.app.ticker.start();
-  }
+    private async loadAudioAssets(): Promise<void> {
+        const soundAssets = [
+            { name: 'menu_move', src: '/audio/sfx/menu_move.wav' },
+            { name: 'menu_select', src: '/audio/sfx/menu_select.wav' },
+            { name: 'pause', src: '/audio/sfx/pause.wav' },
+            { name: 'piece_move', src: '/audio/sfx/piece_move.wav' },
+            { name: 'piece_rotate', src: '/audio/sfx/piece_rotate.wav' },
+            { name: 'piece_drop', src: '/audio/sfx/piece_drop.wav' },
+            { name: 'piece_lock', src: '/audio/sfx/piece_lock.wav' },
+            { name: 'line_clear', src: '/audio/sfx/line_clear.wav' },
+            { name: 'tetris', src: '/audio/sfx/tetris.wav' },
+            { name: 'level_up', src: '/audio/sfx/level_up.wav' },
+            { name: 'game_over', src: '/audio/sfx/game_over.wav' },
+        ];
 
-  stop(): void {
-    if (!this.isRunning) return;
-    console.log('Game stopping...');
-    this.isRunning = false;
-    this.app.ticker.stop();
-  }
+        const musicAssets = [
+            { name: 'menu_music', src: '/audio/music/menu.mp3' },
+            { name: 'game_music', src: '/audio/music/game.mp3' },
+        ];
 
-  pause(): void {
-    if (this.isPaused) return;
-    this.isPaused = true;
-    this.emit('game:pause');
-  }
+        for (const asset of [...soundAssets, ...musicAssets]) {
+            try {
+                AudioManager.load(asset.name, asset.src);
+            } catch {
+                console.warn(`Audio asset not found: ${asset.src}`);
+            }
+        }
+    }
 
-  resume(): void {
-    if (!this.isPaused) return;
-    this.isPaused = false;
-    this.emit('game:resume');
-  }
+    private showMainMenu(): void {
+        const menuScene = new MainMenuScene({
+            name: 'main-menu',
+            app: this.app,
+        });
+        StateManager.push(menuScene);
+    }
 
-  private update(ticker: Ticker): void {
-    if (this.isPaused) return;
-    const deltaMs = ticker.deltaMS;
-    const dt = deltaMs / 1000;
-    
-    InputManager.update();
-    StateManager.update(dt);
-    
-    this._camera.update(deltaMs);
-  }
+    start(): void {
+        if (this.isRunning) return;
+        console.log('Game starting...');
+        this.isRunning = true;
+        this.app.ticker.start();
+    }
 
-  get width(): number {
-    return this.app.screen.width;
-  }
+    stop(): void {
+        if (!this.isRunning) return;
+        console.log('Game stopping...');
+        this.isRunning = false;
+        this.app.ticker.stop();
+    }
 
-  get height(): number {
-    return this.app.screen.height;
-  }
+    pause(): void {
+        if (this.isPaused) return;
+        this.isPaused = true;
+        this.emit('game:pause');
+    }
 
-  get stage() {
-    return this.app.stage;
-  }
+    resume(): void {
+        if (!this.isPaused) return;
+        this.isPaused = false;
+        this.emit('game:resume');
+    }
 
-  get renderer() {
-    return this.app.renderer;
-  }
+    private update(ticker: Ticker): void {
+        if (this.isPaused) return;
+        const dt = ticker.deltaMS / 1000;
 
-  get camera(): Camera {
-    return this._camera;
-  }
+        InputManager.update();
+        StateManager.update(dt);
 
-  get world(): Container {
-    return this.worldContainer;
-  }
+        this._camera.update(ticker.deltaMS);
+    }
 
-  resize(width: number, height: number): void {
-    this.app.renderer.resize(width, height);
-    this._camera.resize(width, height);
-  }
+    resize(width: number, height: number): void {
+        this.app.renderer.resize(width, height);
+        this._camera.resize(width, height);
+    }
+
+    get width(): number {
+        return this.app.screen.width;
+    }
+
+    get height(): number {
+        return this.app.screen.height;
+    }
+
+    get stage(): Container {
+        return this.app.stage;
+    }
+
+    get camera(): Camera {
+        return this._camera;
+    }
+
+    get world(): Container {
+        return this.worldContainer;
+    }
+
+    get pixi(): Application {
+        return this.app;
+    }
 }
