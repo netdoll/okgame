@@ -1,10 +1,13 @@
 import { Application } from 'pixi.js';
 import { Scene, SceneConfig } from '../state/Scene';
+import { StateManager } from '../state/StateManager';
 import { InputManager, Key } from '../input/InputManager';
 import { AudioManager } from '../audio/AudioManager';
 import { PuzzleGame, GameState, MovementType } from './PuzzleGame';
 import { PuzzleRenderer } from './PuzzleRenderer';
 import { GameType, GameTypes } from './GameType';
+import { PauseOverlay } from '../scenes/PauseOverlay';
+import { GameOverScene, GameStats } from '../scenes/GameOverScene';
 
 export interface PuzzleSceneConfig extends SceneConfig {
   gameType?: GameType;
@@ -42,6 +45,7 @@ export class PuzzleScene extends Scene {
   private game: PuzzleGame;
   private renderer: PuzzleRenderer;
   private bindings: PuzzleKeyBindings;
+  private pauseOverlay: PauseOverlay | null = null;
 
   private gameType: GameType;
   private startLevel: number;
@@ -52,6 +56,7 @@ export class PuzzleScene extends Scene {
   private readonly TICK_DURATION: number = 1000 / this.TICK_RATE;
 
   private soundsLoaded: boolean = false;
+  private gameTime: number = 0;
 
   constructor(config: PuzzleSceneConfig, bindings?: Partial<PuzzleKeyBindings>) {
     super(config);
@@ -78,11 +83,23 @@ export class PuzzleScene extends Scene {
     this.container.addChild(this.renderer.container);
 
     this.centerRenderer();
+    this.createPauseOverlay();
     this.loadSounds();
     this.setupGameEvents();
 
     this.game.init();
     this.game.start();
+  }
+
+  private createPauseOverlay(): void {
+    this.pauseOverlay = new PauseOverlay({
+      width: this.width,
+      height: this.height,
+      onResume: () => this.resumeGame(),
+      onRestart: () => this.restartFromPause(),
+      onQuit: () => this.quitToMenu(),
+    });
+    this.container.addChild(this.pauseOverlay.container);
   }
 
   private centerRenderer(): void {
@@ -150,7 +167,47 @@ export class PuzzleScene extends Scene {
 
     this.game.on('gameOver', () => {
       this.playSound('puzzle_gameover');
+      this.showGameOver();
     });
+  }
+
+  private showGameOver(): void {
+    const stats: GameStats = {
+      score: this.game.score,
+      level: this.game.currentLevel,
+      lines: this.game.linesClearedTotal,
+      time: this.gameTime,
+      gameType: this.gameType,
+    };
+
+    const gameOverScene = new GameOverScene({
+      name: 'game-over',
+      app: this.app,
+      stats,
+      onReplay: () => {
+        StateManager.pop();
+        this.restart();
+      },
+      onMainMenu: () => {
+        StateManager.clear();
+      },
+    });
+
+    StateManager.push(gameOverScene);
+  }
+
+  private resumeGame(): void {
+    this.game.resume();
+    this.pauseOverlay?.hide();
+  }
+
+  private restartFromPause(): void {
+    this.pauseOverlay?.hide();
+    this.restart();
+  }
+
+  private quitToMenu(): void {
+    StateManager.pop();
   }
 
   private playSound(name: string): void {
@@ -160,6 +217,15 @@ export class PuzzleScene extends Scene {
   }
 
   protected onUpdate(dt: number): void {
+    if (this.pauseOverlay?.visible) {
+      this.pauseOverlay.update();
+      return;
+    }
+
+    if (this.game.state === GameState.PLAYING) {
+      this.gameTime += dt;
+    }
+
     this.tickAccumulator += dt;
 
     while (this.tickAccumulator >= this.TICK_DURATION) {
@@ -175,8 +241,9 @@ export class PuzzleScene extends Scene {
     if (InputManager.isKeyPressed(this.bindings.pause)) {
       if (this.game.state === GameState.PLAYING) {
         this.game.pause();
+        this.pauseOverlay?.show();
       } else if (this.game.state === GameState.PAUSED) {
-        this.game.resume();
+        this.resumeGame();
       }
       return;
     }
@@ -201,6 +268,7 @@ export class PuzzleScene extends Scene {
   }
 
   restart(): void {
+    this.gameTime = 0;
     this.game.init();
     this.game.start();
   }
@@ -216,5 +284,6 @@ export class PuzzleScene extends Scene {
   protected async destroy(): Promise<void> {
     this.game.removeAllListeners();
     this.renderer.destroy();
+    this.pauseOverlay?.destroy();
   }
 }
