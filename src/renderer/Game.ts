@@ -1,6 +1,8 @@
 import { Application, Ticker, Container, Sprite as PIXISprite, Assets, Text, TextStyle } from 'pixi.js';
 import { EventEmitter } from 'eventemitter3';
 import { Camera } from './graphics/Camera';
+import { StateManager } from './state/StateManager';
+import { InputManager } from './input/InputManager';
 
 export interface GameEvents {
   'scene:change': (sceneName: string) => void;
@@ -36,6 +38,9 @@ export class Game extends EventEmitter<GameEvents> {
 
   async init(): Promise<void> {
     console.log('Game initializing...');
+    
+    InputManager.init();
+    
     this.app.ticker.add(this.update, this);
     this.app.ticker.stop();
 
@@ -133,6 +138,11 @@ export class Game extends EventEmitter<GameEvents> {
   private update(ticker: Ticker): void {
     if (this.isPaused) return;
     const deltaMs = ticker.deltaMS;
+    const dt = deltaMs / 1000;
+    
+    InputManager.update();
+    StateManager.update(dt);
+    
     this._camera.update(deltaMs);
   }
 
