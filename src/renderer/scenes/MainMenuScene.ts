@@ -8,6 +8,7 @@ import { PuzzleScene, PuzzleSceneConfig } from '../puzzle';
 import { GameType, GameTypes } from '../puzzle';
 import { Key } from '../input/InputManager';
 import { OptionsScene } from './OptionsScene';
+import { HighScoresScene } from './HighScoresScene';
 
 // ============================================================
 // Types
@@ -165,6 +166,7 @@ export class MainMenuScene extends Scene {
             { label: 'Modern Mode', action: () => this.startGame(GameTypes.MODERN) },
             { label: 'Puyo Mode', action: () => this.startGame(GameTypes.PUYO) },
             { label: 'Columns Mode', action: () => this.startGame(GameTypes.COLUMNS) },
+            { label: 'High Scores', action: () => this.openHighScores() },
             { label: 'Options', action: () => this.openOptions() },
         ];
 
@@ -272,6 +274,14 @@ export class MainMenuScene extends Scene {
             app: this.app,
         });
         StateManager.push(optionsScene);
+    }
+
+    private openHighScores(): void {
+        const highScoresScene = new HighScoresScene({
+            name: 'high-scores',
+            app: this.app,
+        });
+        StateManager.push(highScoresScene);
     }
 
     // ============================================================
