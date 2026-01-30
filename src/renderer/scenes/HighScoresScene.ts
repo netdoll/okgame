@@ -5,6 +5,7 @@ import { InputManager, Key } from '../input/InputManager';
 import { AudioManager } from '../audio/AudioManager';
 import { Button, ButtonStyle } from '../ui/Button';
 import { HighScoreManager, HighScore, GameMode } from '../data/HighScoreManager';
+import { SceneTransition } from '../state/SceneTransition';
 
 export interface HighScoresSceneConfig extends SceneConfig {
     initialMode?: GameMode;
@@ -241,9 +242,7 @@ export class HighScoresScene extends Scene {
 
     private updateModeTabs(): void {
         for (let i = 0; i < this.modeButtons.length; i++) {
-            const isSelected = i === this.selectedModeIndex;
-            this.modeButtons[i].container.alpha = isSelected ? 1.0 : 0.6;
-            this.modeButtons[i].container.scale.set(isSelected ? 1.05 : 1.0);
+            this.modeButtons[i].selected = i === this.selectedModeIndex;
         }
     }
 
@@ -274,7 +273,7 @@ export class HighScoresScene extends Scene {
         if (this.sceneConfig.onBack) {
             this.sceneConfig.onBack();
         } else {
-            StateManager.pop();
+            SceneTransition.popWithFade(this.app);
         }
     }
 

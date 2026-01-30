@@ -1,10 +1,12 @@
-import { Graphics, Text, TextStyle } from 'pixi.js';
+import { Container, Graphics, Text, TextStyle } from 'pixi.js';
 import { Scene, SceneConfig } from '../state/Scene';
 import { StateManager } from '../state/StateManager';
 import { InputManager, Key } from '../input/InputManager';
 import { AudioManager } from '../audio/AudioManager';
 import { Button, ButtonStyle } from '../ui/Button';
 import { GameType } from '../puzzle';
+import { HighScoreManager, GameMode } from '../data/HighScoreManager';
+import { SceneTransition } from '../state/SceneTransition';
 
 export interface GameStats {
     score: number;
@@ -12,6 +14,7 @@ export interface GameStats {
     lines: number;
     time: number;
     gameType: GameType;
+    gameMode?: GameMode;
 }
 
 export interface GameOverSceneConfig extends SceneConfig {
@@ -25,6 +28,8 @@ interface MenuItem {
     action: () => void;
 }
 
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ';
+
 export class GameOverScene extends Scene {
     private gameOverConfig: GameOverSceneConfig;
 
@@ -37,23 +42,49 @@ export class GameOverScene extends Scene {
 
     private animationTime = 0;
 
+    private isHighScore = false;
+    private nameEntry: string[] = ['A', 'A', 'A'];
+    private nameIndex = 0;
+    private nameTexts: Text[] = [];
+    private nameEntryContainer!: Container;
+    private nameEntryMode = false;
+    private highScoreText!: Text;
+
     constructor(config: GameOverSceneConfig) {
         super(config);
         this.gameOverConfig = config;
     }
 
     protected create(): void {
+        const gameMode = this.gameOverConfig.stats.gameMode ?? 'marathon';
+        this.isHighScore = HighScoreManager.isHighScore(
+            this.gameOverConfig.stats.score,
+            gameMode
+        );
+
         this.createBackground();
         this.createTitle();
         this.createStats();
-        this.createMenu();
+
+        if (this.isHighScore) {
+            this.nameEntryMode = true;
+            this.createNameEntry();
+        } else {
+            this.createMenu();
+        }
+
         this.playGameOverSound();
     }
 
     public onUpdate(dt: number): void {
         this.animationTime += dt;
         this.updateAnimations();
-        this.handleInput();
+
+        if (this.nameEntryMode) {
+            this.handleNameEntryInput();
+        } else {
+            this.handleInput();
+        }
     }
 
     private createBackground(): void {
@@ -64,7 +95,7 @@ export class GameOverScene extends Scene {
 
         const panel = new Graphics();
         const panelWidth = 400;
-        const panelHeight = 450;
+        const panelHeight = this.isHighScore ? 500 : 450;
         const panelX = (this.width - panelWidth) / 2;
         const panelY = (this.height - panelHeight) / 2;
         panel.roundRect(panelX, panelY, panelWidth, panelHeight, 16);
@@ -78,15 +109,18 @@ export class GameOverScene extends Scene {
             fontFamily: 'Arial Black, Arial, sans-serif',
             fontSize: 42,
             fontWeight: 'bold',
-            fill: [0xff4444, 0xff8888],
-            stroke: { color: 0x440000, width: 4 },
+            fill: this.isHighScore ? [0xffd700, 0xffaa00] : [0xff4444, 0xff8888],
+            stroke: { color: this.isHighScore ? 0x442200 : 0x440000, width: 4 },
             letterSpacing: 4,
         });
 
-        this.titleText = new Text({ text: 'GAME OVER', style: titleStyle });
+        this.titleText = new Text({
+            text: this.isHighScore ? 'NEW HIGH SCORE!' : 'GAME OVER',
+            style: titleStyle
+        });
         this.titleText.anchor.set(0.5);
         this.titleText.x = this.centerX;
-        this.titleText.y = this.height * 0.28;
+        this.titleText.y = this.height * 0.25;
         this.container.addChild(this.titleText);
     }
 
@@ -113,8 +147,8 @@ export class GameOverScene extends Scene {
             fill: 0xffffff,
         });
 
-        const startY = this.height * 0.38;
-        const spacing = 50;
+        const startY = this.height * 0.34;
+        const spacing = 45;
 
         for (let i = 0; i < statLines.length; i++) {
             const stat = statLines[i];
@@ -133,6 +167,125 @@ export class GameOverScene extends Scene {
             this.container.addChild(valueText);
             this.statsTexts.push(valueText);
         }
+    }
+
+    private createNameEntry(): void {
+        this.nameEntryContainer = new Container();
+        this.container.addChild(this.nameEntryContainer);
+
+        const promptStyle = new TextStyle({
+            fontFamily: 'Arial, sans-serif',
+            fontSize: 20,
+            fill: 0xffd700,
+            letterSpacing: 2,
+        });
+
+        const promptText = new Text({ text: 'ENTER YOUR NAME', style: promptStyle });
+        promptText.anchor.set(0.5);
+        promptText.x = this.centerX;
+        promptText.y = this.height * 0.58;
+        this.nameEntryContainer.addChild(promptText);
+
+        const letterStyle = new TextStyle({
+            fontFamily: 'Arial Black, Arial, sans-serif',
+            fontSize: 48,
+            fontWeight: 'bold',
+            fill: 0xffffff,
+        });
+
+        const letterSpacing = 60;
+        const startX = this.centerX - letterSpacing;
+
+        for (let i = 0; i < 3; i++) {
+            const letterText = new Text({ text: this.nameEntry[i], style: letterStyle });
+            letterText.anchor.set(0.5);
+            letterText.x = startX + i * letterSpacing;
+            letterText.y = this.height * 0.66;
+            this.nameEntryContainer.addChild(letterText);
+            this.nameTexts.push(letterText);
+
+            const underline = new Graphics();
+            underline.rect(startX + i * letterSpacing - 20, this.height * 0.71, 40, 4);
+            underline.fill(i === this.nameIndex ? 0xffd700 : 0x4a6a8a);
+            this.nameEntryContainer.addChild(underline);
+        }
+
+        const hintStyle = new TextStyle({
+            fontFamily: 'Arial, sans-serif',
+            fontSize: 14,
+            fill: 0x6688aa,
+        });
+
+        const hintText = new Text({
+            text: '↑↓ Change Letter   ←→ Move   Enter to Confirm',
+            style: hintStyle
+        });
+        hintText.anchor.set(0.5);
+        hintText.x = this.centerX;
+        hintText.y = this.height * 0.76;
+        this.nameEntryContainer.addChild(hintText);
+
+        this.updateNameEntryVisuals();
+    }
+
+    private updateNameEntryVisuals(): void {
+        for (let i = 0; i < this.nameTexts.length; i++) {
+            this.nameTexts[i].text = this.nameEntry[i];
+            this.nameTexts[i].style.fill = i === this.nameIndex ? 0xffd700 : 0xffffff;
+            this.nameTexts[i].scale.set(i === this.nameIndex ? 1.1 : 1.0);
+        }
+    }
+
+    private handleNameEntryInput(): void {
+        if (InputManager.isKeyPressed(Key.Up) || InputManager.isKeyPressed(Key.W)) {
+            this.changeNameLetter(1);
+        } else if (InputManager.isKeyPressed(Key.Down) || InputManager.isKeyPressed(Key.S)) {
+            this.changeNameLetter(-1);
+        } else if (InputManager.isKeyPressed(Key.Left) || InputManager.isKeyPressed(Key.A)) {
+            this.moveNameCursor(-1);
+        } else if (InputManager.isKeyPressed(Key.Right) || InputManager.isKeyPressed(Key.D)) {
+            this.moveNameCursor(1);
+        } else if (InputManager.isActionPressed() || InputManager.isStartPressed()) {
+            this.confirmName();
+        }
+    }
+
+    private changeNameLetter(delta: number): void {
+        const currentIndex = ALPHABET.indexOf(this.nameEntry[this.nameIndex]);
+        const newIndex = (currentIndex + delta + ALPHABET.length) % ALPHABET.length;
+        this.nameEntry[this.nameIndex] = ALPHABET[newIndex];
+        this.updateNameEntryVisuals();
+        this.playMoveSound();
+    }
+
+    private moveNameCursor(delta: number): void {
+        const newIndex = this.nameIndex + delta;
+        if (newIndex >= 0 && newIndex < 3) {
+            this.nameIndex = newIndex;
+            this.updateNameEntryVisuals();
+            this.playMoveSound();
+        }
+    }
+
+    private confirmName(): void {
+        const name = this.nameEntry.join('').trim() || 'AAA';
+        const stats = this.gameOverConfig.stats;
+        const gameMode = stats.gameMode ?? 'marathon';
+
+        HighScoreManager.addScore(
+            name,
+            stats.score,
+            stats.level,
+            stats.lines,
+            stats.time,
+            stats.gameType,
+            gameMode
+        );
+
+        this.playSelectSound();
+        this.nameEntryMode = false;
+        this.nameEntryContainer.visible = false;
+        this.createMenu();
     }
 
     private createMenu(): void {
@@ -154,8 +307,8 @@ export class GameOverScene extends Scene {
             borderRadius: 8,
         };
 
-        const startY = this.height * 0.72;
-        const spacing = 60;
+        const startY = this.isHighScore ? this.height * 0.78 : this.height * 0.72;
+        const spacing = 55;
 
         for (let i = 0; i < this.menuItems.length; i++) {
             const item = this.menuItems[i];
@@ -185,6 +338,11 @@ export class GameOverScene extends Scene {
 
     private updateAnimations(): void {
         this.titleText.scale.set(1 + Math.sin(this.animationTime * 2) * 0.03);
+
+        if (this.nameEntryMode && this.nameTexts[this.nameIndex]) {
+            const pulse = 1.1 + Math.sin(this.animationTime * 4) * 0.05;
+            this.nameTexts[this.nameIndex].scale.set(pulse);
+        }
     }
 
     private handleInput(): void {
@@ -218,7 +376,7 @@ export class GameOverScene extends Scene {
         if (this.gameOverConfig.onReplay) {
             this.gameOverConfig.onReplay();
         } else {
-            StateManager.pop();
+            SceneTransition.popWithFade(this.app);
         }
     }
 

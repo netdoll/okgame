@@ -8,9 +8,11 @@ import { PuzzleRenderer } from './PuzzleRenderer';
 import { GameType, GameTypes } from './GameType';
 import { PauseOverlay } from '../scenes/PauseOverlay';
 import { GameOverScene, GameStats } from '../scenes/GameOverScene';
+import { GameMode } from '../data/HighScoreManager';
 
 export interface PuzzleSceneConfig extends SceneConfig {
   gameType?: GameType;
+  gameMode?: GameMode;
   startLevel?: number;
   seed?: number;
 }
@@ -48,6 +50,7 @@ export class PuzzleScene extends Scene {
   private pauseOverlay: PauseOverlay | null = null;
 
   private gameType: GameType;
+  private gameMode: GameMode;
   private startLevel: number;
   private seed?: number;
 
@@ -61,6 +64,7 @@ export class PuzzleScene extends Scene {
   constructor(config: PuzzleSceneConfig, bindings?: Partial<PuzzleKeyBindings>) {
     super(config);
     this.gameType = config.gameType ?? GameTypes.MODERN;
+    this.gameMode = config.gameMode ?? 'marathon';
     this.startLevel = config.startLevel ?? 1;
     this.seed = config.seed;
     this.bindings = { ...DEFAULT_BINDINGS, ...bindings };
@@ -178,6 +182,7 @@ export class PuzzleScene extends Scene {
       lines: this.game.linesClearedTotal,
       time: this.gameTime,
       gameType: this.gameType,
+      gameMode: this.gameMode,
     };
 
     const gameOverScene = new GameOverScene({

@@ -5,6 +5,8 @@ import { Block, AnimationState } from './Block';
 import { GameType, GameTypes, DifficultyLevel } from './GameType';
 import { BlockTypes } from './BlockType';
 
+import { GameMode } from '../data/HighScoreManager';
+
 // ============================================================
 // Types & Enums
 // ============================================================
@@ -60,6 +62,7 @@ export interface PuzzleGameEvents {
 
 export interface PuzzleGameConfig {
   gameType?: GameType;
+  gameMode?: GameMode;
   seed?: number;
   startLevel?: number;
 }
@@ -97,6 +100,7 @@ const SRS_WALL_KICKS_I: Record<string, Array<{ x: number; y: number }>> = {
 export class PuzzleGame extends EventEmitter<PuzzleGameEvents> {
   readonly grid: Grid;
   readonly gameType: GameType;
+  readonly gameMode: GameMode;
 
   private _state: GameState = GameState.IDLE;
 
@@ -175,6 +179,7 @@ export class PuzzleGame extends EventEmitter<PuzzleGameEvents> {
   constructor(config?: PuzzleGameConfig) {
     super();
     this.gameType = config?.gameType ?? GameTypes.MODERN;
+    this.gameMode = config?.gameMode ?? 'marathon';
     this.currentLevel = config?.startLevel ?? 1;
     this.rngSeed = config?.seed ?? Date.now();
     this.rng = this.createRng(this.rngSeed);
@@ -348,6 +353,11 @@ export class PuzzleGame extends EventEmitter<PuzzleGameEvents> {
       this.currentLevel++;
       this.currentDropSpeed = this.gameType.getDropSpeedForLevel(this.currentLevel);
       this.emit('levelUp', this.currentLevel);
+    }
+
+    // Check Win Conditions
+    if (this.gameMode === 'sprint' && this.linesClearedTotal >= 40) {
+      this.win();
     }
   }
 
@@ -761,6 +771,15 @@ export class PuzzleGame extends EventEmitter<PuzzleGameEvents> {
   update(): void {
     if (this._state === GameState.PAUSED || this._state === GameState.IDLE) {
       return;
+    }
+
+    // Check time-based win conditions
+    if (this._state === GameState.PLAYING && this.gameMode === 'ultra') {
+      const elapsed = this.getElapsedTime();
+      if (elapsed >= 120000) { // 2 minutes
+        this.win();
+        return;
+      }
     }
 
     this.totalTicks++;

@@ -117,11 +117,7 @@ export class PauseOverlay {
 
     private updateSelection(): void {
         for (let i = 0; i < this.menuButtons.length; i++) {
-            const button = this.menuButtons[i];
-            const isSelected = i === this.selectedIndex;
-            
-            button.container.scale.set(isSelected ? 1.05 : 1.0);
-            button.container.alpha = isSelected ? 1.0 : 0.7;
+            this.menuButtons[i].selected = i === this.selectedIndex;
         }
     }
 

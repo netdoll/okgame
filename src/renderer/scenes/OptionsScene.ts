@@ -4,6 +4,7 @@ import { StateManager } from '../state/StateManager';
 import { InputManager, Key } from '../input/InputManager';
 import { AudioManager } from '../audio/AudioManager';
 import { Button, ButtonStyle } from '../ui/Button';
+import { SceneTransition } from '../state/SceneTransition';
 
 export interface OptionsSceneConfig extends SceneConfig {
     onBack?: () => void;
@@ -191,8 +192,16 @@ export class OptionsScene extends Scene {
         return slider;
     }
 
-    private updateSliderVisual(slider: Slider, trackX: number, trackWidth: number): void {
+    private updateSliderVisual(slider: Slider, trackX: number, trackWidth: number, isSelected: boolean = false): void {
         const fillWidth = trackWidth * slider.value;
+
+        // Redraw track with focus indicator if selected
+        slider.track.clear();
+        slider.track.roundRect(trackX, -4, trackWidth, 8, 4);
+        slider.track.fill(0x2a3a5a);
+        if (isSelected) {
+            slider.track.stroke({ color: 0xffffff, width: 2 });
+        }
 
         slider.fill.clear();
         if (fillWidth > 0) {
@@ -214,9 +223,9 @@ export class OptionsScene extends Scene {
             if (item.type === 'slider' && item.slider) {
                 item.slider.label.style.fill = isSelected ? 0xffffff : 0xaaccee;
                 item.slider.handle.alpha = isSelected ? 1.0 : 0.6;
+                this.updateSliderVisual(item.slider, this.centerX - 20, 200, isSelected);
             } else if (item.type === 'button' && item.button) {
-                item.button.container.scale.set(isSelected ? 1.05 : 1.0);
-                item.button.container.alpha = isSelected ? 1.0 : 0.8;
+                item.button.selected = isSelected;
             }
         }
     }
@@ -264,7 +273,7 @@ export class OptionsScene extends Scene {
         if (newValue !== slider.value) {
             slider.value = newValue;
             slider.onChange(newValue);
-            this.updateSliderVisual(slider, this.centerX - 20, 200);
+            this.updateSliderVisual(slider, this.centerX - 20, 200, true);
         }
     }
 
@@ -272,7 +281,7 @@ export class OptionsScene extends Scene {
         if (this.optionsConfig.onBack) {
             this.optionsConfig.onBack();
         } else {
-            StateManager.pop();
+            SceneTransition.popWithFade(this.app);
         }
     }
 

@@ -24,15 +24,35 @@ export class Game extends EventEmitter<GameEvents> {
 
     private _camera: Camera;
     private worldContainer: Container;
-
+    private mainMenuScene: MainMenuScene | null = null;
+    
     constructor(app: Application, config: GameConfig = {}) {
         super();
         this.app = app;
         this.config = config;
-
+        
         this.worldContainer = new Container();
         this.app.stage.addChild(this.worldContainer);
-
+        
+        this._camera = new Camera(this.worldContainer, {
+            viewportWidth: app.screen.width,
+            viewportHeight: app.screen.height,
+            defaultZoom: 1.0,
+            minZoom: 0.5,
+            maxZoom: 4.0,
+        });
+        
+    // Store main menu scene - create and store it once
+    private mainMenuScene: MainMenuScene | null = null;
+    
+    constructor(app: Application, config: GameConfig = {}) {
+        super();
+        this.app = app;
+        this.config = config;
+        
+        this.worldContainer = new Container();
+        this.app.stage.addChild(this.worldContainer);
+        
         this._camera = new Camera(this.worldContainer, {
             viewportWidth: app.screen.width,
             viewportHeight: app.screen.height,
@@ -42,18 +62,83 @@ export class Game extends EventEmitter<GameEvents> {
         });
     }
 
+    private async createMainMenuScene(): Promise<void> {
+        // Only create if not already created
+        if (this.mainMenuScene !== null) {
+            return;
+        }
+        
+        this.mainMenuScene = new MainMenuScene({
+            name: 'main-menu',
+            app: this.app,
+        });
+        await this.mainMenuScene.create();
+    }
+
+    private showMain(): void {
+        this.showMainMenu();
+    }
+
     async init(): Promise<void> {
         console.log('Game initializing...');
-
         InputManager.init();
-        await this.loadAudioAssets();
-
+        
         this.app.ticker.add(this.update, this);
         this.app.ticker.stop();
-
+        
         if (!this.config.skipMenu) {
+            await this.createMainMenuScene();
             this.showMainMenu();
         }
+        
+        this.isRunning = true;
+        console.log('Game initialized');
+    }
+
+    private createMainMenuScene(): void {
+        this.mainMenuScene.create();
+    }
+
+    private showMainMenu(): void {
+        if (this.isPaused) return;
+        this.isPaused = true;
+        this.emit('game:pause');
+    }
+    
+    async init(): Promise<void> {
+        console.log('Game initializing...');
+        InputManager.init();
+        
+        this.app.ticker.add(this.update, this);
+        this.app.ticker.stop();
+        
+        this.createMainMenuScene();
+        
+        await this.loadAudioAssets();
+        
+        this.showMainMenu();
+        
+        console.log('Game initialized');
+    }
+
+    async init(): Promise<void> {
+        console.log('Game initializing...');
+        InputManager.init();
+        
+        this.app.ticker.add(this.update, this);
+        this.app.ticker.stop();
+        
+        if (!this.config.skipMenu) {
+            const menuScene = new MainMenuScene({
+                name: 'main-menu',
+                app: this.app,
+            });
+            await menuScene.create();
+            StateManager.push(menuScene);
+        }
+        
+        console.log('Game initialized');
+    }
 
         console.log('Game initialized');
     }
@@ -87,12 +172,44 @@ export class Game extends EventEmitter<GameEvents> {
         }
     }
 
+    private showMain(): void {
+        if (this.isPaused) return;
+        this.isPaused = true;
+        this.emit('game:pause');
+    }
+
     private showMainMenu(): void {
         const menuScene = new MainMenuScene({
             name: 'main-menu',
             app: this.app,
         });
+        await menuScene.create();
         StateManager.push(menuScene);
+        this.isPaused = false;
+        this.emit('game:resume');
+    }
+
+    async init(): Promise<void> {
+        console.log('Game initializing...');
+        InputManager.init();
+        
+        this.app.ticker.add(this.update, this);
+        this.app.ticker.stop();
+        
+        if (!this.config.skipMenu) {
+            await this.createMainMenuScene();
+        }
+        
+        this.isRunning = true;
+        console.log('Game initialized');
+    }
+
+    private async createMainMenuScene(): Promise<void> {
+        this.mainMenuScene = new MainMenuScene({
+            name: 'main-menu',
+            app: this.app,
+        });
+        await this.mainMenuScene.create();
     }
 
     start(): void {

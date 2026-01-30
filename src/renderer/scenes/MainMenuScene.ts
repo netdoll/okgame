@@ -9,13 +9,15 @@ import { GameType, GameTypes } from '../puzzle';
 import { Key } from '../input/InputManager';
 import { OptionsScene } from './OptionsScene';
 import { HighScoresScene } from './HighScoresScene';
+import { GameMode } from '../data/HighScoreManager';
+import { SceneTransition } from '../state/SceneTransition';
 
 // ============================================================
 // Types
 // ============================================================
 
 export interface MainMenuSceneConfig extends SceneConfig {
-    onStartGame?: (gameType: GameType) => void;
+    onStartGame?: (gameType: GameType, gameMode: GameMode) => void;
     onOptions?: () => void;
 }
 
@@ -34,7 +36,9 @@ export class MainMenuScene extends Scene {
     private titleText!: Text;
     private subtitleText!: Text;
     private menuButtons: Button[] = [];
+    private modeButtons: Button[] = [];
     private selectedIndex = 0;
+    private selectedCategoryIndex = 0;
     
     private background!: Graphics;
     private particles: Particle[] = [];
@@ -42,6 +46,13 @@ export class MainMenuScene extends Scene {
     
     private titleBounce = 0;
     private menuItems: MenuItem[] = [];
+
+    private readonly categories: GameMode[] = ['marathon', 'sprint', 'ultra'];
+    private readonly categoryLabels: Record<GameMode, string> = {
+        marathon: 'MARATHON',
+        sprint: 'SPRINT',
+        ultra: 'ULTRA',
+    };
 
     constructor(config: MainMenuSceneConfig) {
         super(config);
@@ -56,8 +67,55 @@ export class MainMenuScene extends Scene {
         this.createBackground();
         this.createParticles();
         this.createTitle();
+        this.createCategorySelector();
         this.createMenu();
         this.playMenuMusic();
+    }
+
+    private createCategorySelector(): void {
+        const tabStyle: ButtonStyle = {
+            width: 120,
+            height: 36,
+            backgroundColor: 0x1a2a4a,
+            backgroundColorHover: 0x2a4a6a,
+            backgroundColorPressed: 0x0a1a3a,
+            borderColor: 0x4a6a8a,
+            borderWidth: 2,
+            textColor: 0xffffff,
+            fontSize: 14,
+            borderRadius: 18,
+        };
+
+        const startX = this.centerX - (this.categories.length * 130) / 2 + 65;
+        const y = this.height * 0.38;
+
+        for (let i = 0; i < this.categories.length; i++) {
+            const mode = this.categories[i];
+            const button = new Button(this.categoryLabels[mode], tabStyle);
+            button.setPosition(startX + i * 130, y);
+            button.onClick(() => {
+                this.selectCategory(i);
+                this.playMoveSound();
+            });
+
+            this.container.addChild(button.container);
+            this.modeButtons.push(button);
+        }
+
+        this.updateCategoryVisuals();
+    }
+
+    private selectCategory(index: number): void {
+        this.selectedCategoryIndex = index;
+        this.updateCategoryVisuals();
+    }
+
+    private updateCategoryVisuals(): void {
+        for (let i = 0; i < this.modeButtons.length; i++) {
+            const isSelected = i === this.selectedCategoryIndex;
+            this.modeButtons[i].selected = isSelected;
+            this.modeButtons[i].container.alpha = isSelected ? 1.0 : 0.6;
+        }
     }
 
     public onUpdate(dt: number): void {
@@ -162,29 +220,29 @@ export class MainMenuScene extends Scene {
 
     private createMenu(): void {
         this.menuItems = [
-            { label: 'Classic Mode', action: () => this.startGame(GameTypes.CLASSIC) },
-            { label: 'Modern Mode', action: () => this.startGame(GameTypes.MODERN) },
-            { label: 'Puyo Mode', action: () => this.startGame(GameTypes.PUYO) },
-            { label: 'Columns Mode', action: () => this.startGame(GameTypes.COLUMNS) },
+            { label: 'Classic', action: () => this.startGame(GameTypes.CLASSIC) },
+            { label: 'Modern', action: () => this.startGame(GameTypes.MODERN) },
+            { label: 'Puyo', action: () => this.startGame(GameTypes.PUYO) },
+            { label: 'Columns', action: () => this.startGame(GameTypes.COLUMNS) },
             { label: 'High Scores', action: () => this.openHighScores() },
             { label: 'Options', action: () => this.openOptions() },
         ];
 
         const buttonStyle: ButtonStyle = {
-            width: 280,
-            height: 50,
+            width: 240,
+            height: 44,
             backgroundColor: 0x1a2a4a,
             backgroundColorHover: 0x2a4a6a,
             backgroundColorPressed: 0x0a1a3a,
             borderColor: 0x4a6a8a,
             borderWidth: 2,
             textColor: 0xffffff,
-            fontSize: 22,
+            fontSize: 18,
             borderRadius: 8,
         };
 
-        const startY = this.height * 0.45;
-        const spacing = 65;
+        const startY = this.height * 0.48;
+        const spacing = 58;
 
         for (let i = 0; i < this.menuItems.length; i++) {
             const item = this.menuItems[i];
@@ -204,11 +262,7 @@ export class MainMenuScene extends Scene {
 
     private updateSelection(): void {
         for (let i = 0; i < this.menuButtons.length; i++) {
-            const button = this.menuButtons[i];
-            const isSelected = i === this.selectedIndex;
-            
-            button.container.scale.set(isSelected ? 1.05 : 1.0);
-            button.container.alpha = isSelected ? 1.0 : 0.8;
+            this.menuButtons[i].selected = i === this.selectedIndex;
         }
     }
 
@@ -223,8 +277,24 @@ export class MainMenuScene extends Scene {
             this.moveSelection(1);
         }
 
+        if (InputManager.isKeyPressed(Key.Left) || InputManager.isKeyPressed(Key.A)) {
+            this.moveCategorySelection(-1);
+        } else if (InputManager.isKeyPressed(Key.Right) || InputManager.isKeyPressed(Key.D)) {
+            this.moveCategorySelection(1);
+        }
+
         if (InputManager.isActionPressed() || InputManager.isStartPressed()) {
             this.selectCurrentItem();
+        }
+    }
+
+    private moveCategorySelection(delta: number): void {
+        const prevIndex = this.selectedCategoryIndex;
+        this.selectedCategoryIndex = (this.selectedCategoryIndex + delta + this.categories.length) % this.categories.length;
+        
+        if (prevIndex !== this.selectedCategoryIndex) {
+            this.playMoveSound();
+            this.updateCategoryVisuals();
         }
     }
 
@@ -248,8 +318,10 @@ export class MainMenuScene extends Scene {
     // ============================================================
 
     private startGame(gameType: GameType): void {
+        const gameMode = this.categories[this.selectedCategoryIndex];
+        
         if (this.menuConfig.onStartGame) {
-            this.menuConfig.onStartGame(gameType);
+            this.menuConfig.onStartGame(gameType, gameMode);
             return;
         }
 
@@ -257,11 +329,12 @@ export class MainMenuScene extends Scene {
             name: 'puzzle',
             app: this.app,
             gameType,
+            gameMode,
             startLevel: 1,
         };
 
         const puzzleScene = new PuzzleScene(puzzleConfig);
-        StateManager.push(puzzleScene);
+        SceneTransition.pushWithFade(this.app, puzzleScene);
     }
 
     private openOptions(): void {
@@ -273,15 +346,16 @@ export class MainMenuScene extends Scene {
             name: 'options',
             app: this.app,
         });
-        StateManager.push(optionsScene);
+        SceneTransition.pushWithFade(this.app, optionsScene);
     }
 
     private openHighScores(): void {
         const highScoresScene = new HighScoresScene({
             name: 'high-scores',
             app: this.app,
+            initialMode: this.categories[this.selectedCategoryIndex],
         });
-        StateManager.push(highScoresScene);
+        SceneTransition.pushWithFade(this.app, highScoresScene);
     }
 
     // ============================================================

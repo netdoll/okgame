@@ -50,6 +50,7 @@ export class Button extends EventEmitter<ButtonEvents> {
   private _enabled: boolean = true;
   private _hovered: boolean = false;
   private _pressed: boolean = false;
+  private _selected: boolean = false;
 
   constructor(text: string, style?: Partial<ButtonStyle>) {
     super();
@@ -133,14 +134,36 @@ export class Button extends EventEmitter<ButtonEvents> {
     if (this.style.borderWidth > 0) {
       this.background.roundRect(0, 0, this.style.width, this.style.height, this.style.borderRadius);
       this.background.fill(bgColor);
-      this.background.stroke({ color: this.style.borderColor, width: this.style.borderWidth });
+      this.background.stroke({
+        color: this._selected ? 0xffffff : this.style.borderColor,
+        width: this._selected ? this.style.borderWidth + 1 : this.style.borderWidth
+      });
     } else {
       this.background.roundRect(0, 0, this.style.width, this.style.height, this.style.borderRadius);
       this.background.fill(bgColor);
+      if (this._selected) {
+        this.background.stroke({ color: 0xffffff, width: 2 });
+      }
     }
 
     this.label.style.fill = this._enabled ? this.style.textColor : this.style.textColorDisabled;
+    if (this._selected) {
+      this.container.scale.set(1.05);
+    } else {
+      this.container.scale.set(1.0);
+    }
     this.container.cursor = this._enabled ? 'pointer' : 'default';
+  }
+
+  get selected(): boolean {
+    return this._selected;
+  }
+
+  set selected(value: boolean) {
+    if (this._selected !== value) {
+      this._selected = value;
+      this.draw();
+    }
   }
 
   get text(): string {
