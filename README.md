@@ -1,4 +1,6 @@
-**bob's game** is "Open Source" and "free as in speech" AND "public domain."
+# EXTREME WIP ALPHA DEVELOPED "IN THE OPEN," DON'T BOTHER TRYING TO USE IT UNLESS YOU PLAN ON HACKING ON IT TO GET IT WORKING
+
+**bob's game** is Open Source AND "Open Source" AND "free as in speech" AND "public domain."
 
 That means **do whatever**!
 
