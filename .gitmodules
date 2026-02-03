@@ -37,9 +37,6 @@
 [submodule "lib/nanogui-sdl"]
 	path = lib/nanogui-sdl
 	url = https://gitlab.com/MrPepperoni/nanogui-sdl
-[submodule "lib/nanovg"]
-	path = lib/nanovg
-	url = https://github.com/robertpelloni/nanovg
 [submodule "lib/nngui"]
 	path = lib/nngui
 	url = https://github.com/draekko/nngui
@@ -339,9 +336,6 @@
 [submodule "lib/frontend-sdl-cpp"]
 	path = lib/frontend-sdl-cpp
 	url = https://github.com/robertpelloni/frontend-sdl-cpp
-[submodule "lib/BeatDrop"]
-	path = lib/BeatDrop
-	url = https://github.com/robertpelloni/BeatDrop
 [submodule "lib/milkdrop2"]
 	path = lib/milkdrop2
 	url = https://github.com/projectM-visualizer/milkdrop2
@@ -360,7 +354,6 @@
 [submodule "lib/projectm-eval"]
 	path = lib/projectm-eval
 	url = https://github.com/projectM-visualizer/projectm-eval
-
 [submodule "lib/CLove"]
 	path = lib/CLove
 	url = https://gitlab.com/Murii/CLove
