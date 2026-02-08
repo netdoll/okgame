@@ -356,4 +356,4 @@
 	url = https://github.com/projectM-visualizer/projectm-eval
 [submodule "lib/CLove"]
 	path = lib/CLove
-	url = https://gitlab.com/Murii/CLove
+	url = https://github.com/robertpelloni/CLove.git
