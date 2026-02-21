@@ -122,8 +122,8 @@
 //#include "DG_misc.h"
 //#include "imgui.h"
 
-#pragma warning (push) 
-#pragma warning( disable : 4244 ) 
+#pragma warning (push)
+#pragma warning( disable : 4244 )
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
@@ -138,7 +138,7 @@
 #include <boost/uuid/uuid.hpp>            // uuid class
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
-#pragma warning (pop) 
+#pragma warning (pop)
 
 
 using namespace std;
@@ -352,7 +352,7 @@ struct SPRITE
 enum class RenderOrder
 {
 
-		
+
 		GROUND,
 		ABOVE,
 
@@ -373,7 +373,7 @@ enum class RenderOrder
 				   OVER_TEXT,
 				   OVER_GUI,
 				   CONSOLE,
-	
+
 
 
 };
@@ -422,6 +422,3 @@ public:
    //defines
    //-----------------------------
 #define GL_TEXTURE_CROP_RECT_OES 0
-
-
-

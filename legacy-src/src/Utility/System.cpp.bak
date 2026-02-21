@@ -61,7 +61,6 @@ Logger System::log = Logger("System");
 //string System::shaderVersion = "";
 //string System::glExtensions = "";
 
-string System::bobVersion = "Unknown";
 
 ConsoleText* System::totalRendersText = nullptr;
 ConsoleText* System::totalUpdatesText = nullptr;
@@ -114,29 +113,6 @@ void System::initSystemInfo()
 	start = System::getPerformanceCounter();
 	totalStart = System::getPerformanceCounter();
 
-	// Load Version
-	string versionPath = Main::getPath() + "VERSION.md";
-	shared_ptr<ByteArray> versionData = FileUtils::loadByteFileFromExePath(versionPath);
-	if (versionData && versionData->size() > 0)
-	{
-		string s((char*)versionData->data(), versionData->size());
-		// Trim whitespace
-		size_t first = s.find_first_not_of(" \t\n\r");
-		size_t last = s.find_last_not_of(" \t\n\r");
-		if (first != string::npos && last != string::npos)
-		{
-			bobVersion = s.substr(first, (last - first + 1));
-		}
-		else
-		{
-			bobVersion = s;
-		}
-		log.info("BobsGame Version: " + bobVersion);
-	}
-	else
-	{
-		log.warn("Could not load VERSION.md");
-	}
 
 
 	//audio
@@ -245,7 +221,7 @@ sigar_cpu_info_list_t cpulist;
 sigar_open(&sigar);
 
 status = sigar_cpu_info_list_get(sigar, &cpulist);
-if (status != SIGAR_OK) 
+if (status != SIGAR_OK)
 {
 	printf("sigar_cpu_info_list_get error: %d (%s)\n",
 		status, sigar_strerror(sigar, status));
@@ -266,7 +242,7 @@ else
 
 sigar_mem_t mem;
 status = sigar_mem_get(sigar, &mem);
-if (status != SIGAR_OK) 
+if (status != SIGAR_OK)
 {
 	printf("sigar_mem_get error: %d (%s)\n",
 		status, sigar_strerror(sigar, status));
@@ -286,7 +262,7 @@ else
 
 sigar_sys_info_t sys;
 status = sigar_sys_info_get(sigar, &sys);
-if (status != SIGAR_OK) 
+if (status != SIGAR_OK)
 {
 	printf("sigar_sys_info_get error: %d (%s)\n",
 		status, sigar_strerror(sigar, status));
@@ -307,7 +283,7 @@ else
 
 sigar_proc_mem_t proc;
 status = sigar_proc_mem_get(sigar, sigar_pid_get(sigar), &proc);
-if (status != SIGAR_OK) 
+if (status != SIGAR_OK)
 {
 	printf("sigar_proc_mem_get error: %d (%s)\n",
 		status, sigar_strerror(sigar, status));
@@ -322,7 +298,7 @@ else
 
 //sigar_proc_stat_t procstat;
 //status = sigar_proc_stat_get(sigar, &procstat);
-//if (status != SIGAR_OK) 
+//if (status != SIGAR_OK)
 //{
 //	printf("sigar_proc_stat_get error: %d (%s)\n",
 //		status, sigar_strerror(sigar, status));
@@ -383,8 +359,8 @@ void System::initClockAndTimeZone()
 { //=========================================================================================================================
 
 	log.debug("Init clock");
-	
-	time_t t = time(0); // get time now 
+
+	time_t t = time(0); // get time now
 	struct tm * now = localtime(&t);
 	//cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
 
@@ -397,7 +373,7 @@ void System::initClockAndTimeZone()
 //	//log.info(formattedTime);
 
 	log.info("Local time: "+to_string(now->tm_year + 1900)+"-"+to_string((now->tm_mon + 1))+"-"+to_string(now->tm_mday)+" "+ to_string(now->tm_hour)+":"+ to_string(now->tm_min)+":"+ to_string(now->tm_sec));
-	
+
 	//time zone
 
 
@@ -411,18 +387,18 @@ void System::initClockAndTimeZone()
 //	int responses = 0;
 //		try
 //		{
-//			
+//
 //			responses = client.request("pool.ntp.org");
-//			
+//
 //		}
 //		catch (std::exception& e)
 //		{
 //			log.error("Error getting NTP time: "+string(e.what()));
 //		}
-//	
+//
 //		if(responses>0)
 //		{
-//			
+//
 //		}
 
 
@@ -564,7 +540,7 @@ void System::initTimers()
 	lastRenderHighResTime = highResTimer;
 	lastUpdateHighResTime = highResTimer;
 	lastSecondTime = highResTimer;
-	
+
 
 }
 
@@ -582,7 +558,7 @@ void System::updateRenderTimers()
 
 	highResTimer = getPerformanceCounter();
 
-	
+
 	//get time passed since game started
 	//currentHighResTime = SDL_GetTicks();
 	currentHighResTime = highResTimer;
@@ -614,7 +590,7 @@ void System::updateUpdateTimers()
 
 	lastUpdateHighResTime = currentHighResTime;
 	totalUpdateTicks += ticksPassedThisUpdate;
-	
+
 
 	//if(ticksPassedThisUpdate>17)ticksPassedThisUpdate=17; //TODO: this is frameskip off, basically. game will slow down instead
 	if (ticksPassedThisUpdate > (int)(16 * 1.5))
@@ -740,7 +716,7 @@ void System::updateStats()
 	int ticksPassedThisSecond = (int)(System::getTicksBetweenTimes(lastSecondTime, currentHighResTime));
 	if (ticksPassedThisSecond >= 1000)
 	{
-		
+
 		if (rendersThisSecond>0)averageTicksPerRenderLastSecond = ticksPassedThisSecond / rendersThisSecond;
 		if (updatesThisSecond>0)averageTicksPerUpdateLastSecond = ticksPassedThisSecond / updatesThisSecond;
 
@@ -832,7 +808,7 @@ void System::updateStats()
 			//				GLUtils::SHADER_FBO_SCALE = 0.5f;
 			//				GLUtils::doResize();
 			//			}
-			//			else			
+			//			else
 			//			if (GLUtils::SHADER_FBO_SCALE == 0.5f)
 			//			{
 			//				log.debug("Upscaled shaders to try for higher framerate");
@@ -996,7 +972,7 @@ long long System::getPerformanceCounter()
 
 #endif
 
-	
+
 }
 
 
