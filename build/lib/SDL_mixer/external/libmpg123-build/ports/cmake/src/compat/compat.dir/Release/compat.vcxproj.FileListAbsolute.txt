@@ -1,0 +1,1 @@
+C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\compat\compat.dir\Release\compat.lib

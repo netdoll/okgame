@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.8] - 2025-01-11
+## [0.3.0] - 2026-03-08
+### Added
+- Synchronized Puzzle logic across C++, Java, and TypeScript forks.
+- Ported `GameLogic`, `Grid`, `Block`, `Piece`, and `GameType` properties and methods to Java and TS.
+- Implemented full chain detection logic using `GameType` rules in all forks.
+- Added 25+ standard easing functions to `Easing` class.
+
+### Changed
+- Modernized Java version to Java 21 and LibGDX 1.12.1.
+- Consolidated Java source tree into `src/main/java`.
+- Upgraded C++ version to SDL3 (In Progress).
+- Refactored `Piece` architecture to use static inner classes for `Rotation` and `BlockOffset`.
+
+## [0.2.0] - 2026-03-07
+### Changed
+- Initial consolidation of Java fork.
+- Modernized Networking to Netty 4.
+- Added LibGDX dependency foundation.
+
 ### Added
 - GitHub Actions CI/CD pipeline (.github/workflows/build.yml)
 - Windows build with VS2022, Ninja, MSVC

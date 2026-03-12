@@ -1,4 +1,4 @@
-﻿#include "Gwen/UnitTest/UnitTest.h"
+#include "Gwen/UnitTest/UnitTest.h"
 #include "Gwen/Controls/CollapsibleList.h"
 
 using namespace Gwen;

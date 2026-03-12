@@ -24,8 +24,8 @@
 #ifndef _SDL_IMAGE_H
 #define _SDL_IMAGE_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_version.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_version.h>
 #include <SDL2/begin_code.h>
 
 /* Set up for C function definitions, even when using C++ */

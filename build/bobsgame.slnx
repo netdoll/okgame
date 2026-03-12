@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="26162e4f-4740-3fc7-909d-668660b8e220" DefaultStartup="true">
+		<BuildDependency Project="lib/GWEN-master/gwen/GWEN_opengl.vcxproj"/>
+		<BuildDependency Project="lib/GWEN-master/gwen/GWEN_static.vcxproj"/>
+		<BuildDependency Project="lib/SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL_image/SDL3_image-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/SDL3_mixer-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL_net/SDL3_net-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL/SDL3_test.vcxproj"/>
+		<BuildDependency Project="lib/SDL_ttf/SDL3_ttf-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL/SDL_uclibc.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="bobsgame.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/container/boost_container.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/serialization/boost_serialization.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/system/boost_system.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/thread/boost_thread.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/variant2/boost_variant2.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/serialization/boost_wserialization.vcxproj"/>
+		<BuildDependency Project="glew.vcxproj"/>
+	</Project>
+	<Project Path="lib/GWEN-master/gwen/GWEN_opengl.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ef6b37c9-84f8-35ae-811f-9fbf3204db5f">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/GWEN-master/gwen/GWEN_static.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="cc858a0e-8c9f-3d5c-a9a4-6fc943c881ad">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="88241875-e0e6-336e-811b-9801377774f5">
+		<BuildDependency Project="ALL_BUILD.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="4fab8a39-84f9-38ab-92ec-1288ada445de">
+		<BuildDependency Project="ALL_BUILD.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="lib/SDL/SDL3-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1d42c3fc-4df0-3fec-a6d7-6634f84c795d">
+		<BuildDependency Project="lib/SDL/SDL_uclibc.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_image/SDL3_image-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d1a38ade-6d1f-3eeb-b50f-5d504eb5fe3a">
+		<BuildDependency Project="lib/SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_image/external/libpng-build/png_shared.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_mixer/SDL3_mixer-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ab17c87d-2bb5-3c16-9b3b-6789df1bc7c1">
+		<BuildDependency Project="lib/SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/external/libmpg123-build/ports/cmake/src/libmpg123/libmpg123.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/external/vorbis-build/lib/vorbisfile.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_net/SDL3_net-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c7a03cbf-90e3-3b2c-a32a-e9ccb81dd32e">
+		<BuildDependency Project="lib/SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL/SDL3_test.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1dda94da-4aea-3198-9a4b-2bcdaa3393d0">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_ttf/SDL3_ttf-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8c90f34d-5ef5-3b56-a21d-3271894353a4">
+		<BuildDependency Project="lib/SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_ttf/external/harfbuzz-build/harfbuzz.vcxproj"/>
+		<BuildDependency Project="lib/SDL_ttf/external/plutosvg-guild/plutosvg.vcxproj"/>
+		<BuildDependency Project="lib/SDL_ttf/external/plutovg-build/plutovg.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL/SDL_uclibc.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8263c8dd-e7ba-3c99-b973-487659583533">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="adbba6bc-6e9c-3d8d-87fa-6a03f023ee01"/>
+	<Project Path="bobsgame.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="212ca0e7-9198-3096-99e9-a28f31c69f89">
+		<BuildDependency Project="lib/GWEN-master/gwen/GWEN_static.vcxproj"/>
+		<BuildDependency Project="lib/SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL_image/SDL3_image-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/SDL3_mixer-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL_net/SDL3_net-shared.vcxproj"/>
+		<BuildDependency Project="lib/SDL_ttf/SDL3_ttf-shared.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/container/boost_container.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/serialization/boost_serialization.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/system/boost_system.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/thread/boost_thread.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/assert/boost_assert.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b007c961-1e43-3ef1-8162-7820a8f14f69">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/atomic/boost_atomic.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a9aef882-9d85-378d-a728-2033fe17c24f">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/chrono/boost_chrono.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ac0d0664-3d90-3df3-bd9a-f6f9e94772e4">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/system/boost_system.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/container/boost_container.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="08c309e6-8d32-357c-aed2-5306c6b71fe1">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/core/boost_core.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="bed596fb-54cf-3287-b9e1-3480942701ca">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/date_time/boost_date_time.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3619c289-45a2-32f2-b7e3-238160762a3b">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/container/boost_container.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/unordered/boost_unordered.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/optional/boost_optional.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="556e27a9-2d49-340c-a510-5303245781a4">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/serialization/boost_serialization.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="af5ce4b0-ecdf-36ce-bcad-38d61ee87600">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/container/boost_container.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/system/boost_system.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/thread/boost_thread.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/system/boost_system.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="06279792-056c-3b5f-ad75-ba1e879811d5">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/thread/boost_thread.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7314209b-77ab-305c-80bc-a7e0b54c1d16">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/container/boost_container.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/system/boost_system.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/unordered/boost_unordered.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="328b5e58-f6ee-3355-bff1-0ba2cdd87ce8">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/variant2/boost_variant2.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d7223052-40d2-3c85-98a5-2090e7e5f04a">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/boost/libs/serialization/boost_wserialization.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a6dfff82-c626-3054-9b53-e1f3b571b323">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/container/boost_container.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/core/boost_core.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/serialization/boost_serialization.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/system/boost_system.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/thread/boost_thread.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="lib/boost/libs/variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_mixer/external/libmpg123-build/ports/cmake/src/compat/compat.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a46334c0-85c4-3477-9ae7-d2b5e10c0fb2">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_ttf/external/freetype-build/freetype.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b92ebd2e-d5c4-3815-b661-e9e2c4efc969">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="glew.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="53fda0b2-823a-37c4-8630-e79ba5d6956f">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_ttf/external/harfbuzz-build/harfbuzz.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8cc94e42-9313-3b0f-88c8-737341fc9d83">
+		<BuildDependency Project="lib/SDL_ttf/external/freetype-build/freetype.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_mixer/external/libmpg123-build/ports/cmake/src/libmpg123/libmpg123.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="522ae0cd-0dfc-3f78-93e8-d1a7b87c85a7">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/external/libmpg123-build/ports/cmake/src/compat/compat.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_mixer/external/ogg-build/ogg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7a641a6e-9441-327f-92b5-3e959786a54b">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_ttf/external/plutosvg-guild/plutosvg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b304a60c-2bf2-3b56-9fdb-20c44fea734d">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_ttf/external/harfbuzz-build/harfbuzz.vcxproj"/>
+		<BuildDependency Project="lib/SDL_ttf/external/plutovg-build/plutovg.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_ttf/external/plutovg-build/plutovg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="369abeed-e2e1-3277-b24d-a6889db5c26b">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_image/external/libpng-build/png_genfiles.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b91fa9fc-341c-3a39-8e1a-432ae7a7c88a">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_image/external/libpng-build/png_shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="cb3d42db-095f-35e9-9d7f-de841c2dd157">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_image/external/libpng-build/png_genfiles.vcxproj"/>
+		<BuildDependency Project="lib/SDL_image/external/zlib-build/zlibstatic.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_mixer/external/vorbis-build/lib/vorbis.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e5896116-2096-3442-ac35-760c065874e4">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/external/ogg-build/ogg.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_mixer/external/vorbis-build/lib/vorbisfile.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="51cf0c60-494e-3653-8145-8f724d7917cc">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/external/ogg-build/ogg.vcxproj"/>
+		<BuildDependency Project="lib/SDL_mixer/external/vorbis-build/lib/vorbis.vcxproj"/>
+	</Project>
+	<Project Path="lib/SDL_image/external/zlib-build/zlibstatic.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="60cd1790-b382-3097-a402-3879e8ba6376">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+</Solution>

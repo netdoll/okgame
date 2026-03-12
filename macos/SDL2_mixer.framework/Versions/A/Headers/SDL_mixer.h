@@ -24,11 +24,11 @@
 #ifndef _SDL_MIXER_H
 #define _SDL_MIXER_H
 
-#include <SDL2/SDL_stdinc.h>
-#include <SDL2/SDL_rwops.h>
-#include <SDL2/SDL_audio.h>
-#include <SDL2/SDL_endian.h>
-#include <SDL2/SDL_version.h>
+#include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL_rwops.h>
+#include <SDL3/SDL_audio.h>
+#include <SDL3/SDL_endian.h>
+#include <SDL3/SDL_version.h>
 #include <SDL2/begin_code.h>
 
 /* Set up for C function definitions, even when using C++ */

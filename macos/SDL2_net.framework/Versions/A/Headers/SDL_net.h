@@ -39,9 +39,9 @@ typedef struct SDLNet_version {
 
 #else /* WITHOUT_SDL */
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_endian.h>
-#include <SDL2/SDL_version.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_endian.h>
+#include <SDL3/SDL_version.h>
 
 typedef SDL_version SDLNet_version;
 

@@ -1,0 +1,10 @@
+^C:\USERS\HYPER\WORKSPACE\BG\OKGAME\LIB\SDL_MIXER\EXTERNAL\MPG123\PORTS\CMAKE\SRC\LIBMPG123\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_mixer/external/libmpg123-build/ports/cmake/src/libmpg123/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

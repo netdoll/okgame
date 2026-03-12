@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="26162e4f-4740-3fc7-909d-668660b8e220" DefaultStartup="true">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="src/compat/compat.vcxproj"/>
+		<BuildDependency Project="src/compat/compat_dl.vcxproj"/>
+		<BuildDependency Project="src/compat/compat_str.vcxproj"/>
+		<BuildDependency Project="src/libmpg123/libmpg123.vcxproj"/>
+		<BuildDependency Project="src/libsyn123/libsyn123.vcxproj"/>
+	</Project>
+	<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="88241875-e0e6-336e-811b-9801377774f5">
+		<BuildDependency Project="ALL_BUILD.vcxproj"/>
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="4fab8a39-84f9-38ab-92ec-1288ada445de">
+		<BuildDependency Project="ALL_BUILD.vcxproj"/>
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="../../../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="adbba6bc-6e9c-3d8d-87fa-6a03f023ee01"/>
+	<Project Path="src/compat/compat.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a46334c0-85c4-3477-9ae7-d2b5e10c0fb2">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="src/compat/compat_dl.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5921083f-c27d-3396-993a-7094d796ecd1">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="src/compat/compat_str.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="08f02b0a-2434-3118-b3f9-08dabc0553fc">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="src/libmpg123/libmpg123.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="522ae0cd-0dfc-3f78-93e8-d1a7b87c85a7">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="src/compat/compat.vcxproj"/>
+	</Project>
+	<Project Path="src/libsyn123/libsyn123.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5998ec8d-90fc-3389-9d10-3adbac25384e">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="src/compat/compat_str.vcxproj"/>
+	</Project>
+</Solution>

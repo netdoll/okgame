@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AB17C87D-2BB5-3C16-9B3B-6789DF1BC7C1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>SDL3_mixer-shared</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">SDL3_mixer-shared.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">SDL3_mixerd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SDL3_mixer-shared.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SDL3_mixer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">SDL3_mixer-shared.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">SDL3_mixer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">SDL3_mixer-shared.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">SDL3_mixer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level2</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC="vorbisfile-3d.dll";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC="mpg123-0d.dll";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR="Debug";DLL_EXPORT</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC=\"vorbisfile-3d.dll\";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC=\"mpg123-0d.dll\";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR=\"Debug\";DLL_EXPORT</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\SDL3d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build/lib/SDL3_mixerd.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build/bin/SDL3_mixerd.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>0.1</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level2</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC="vorbisfile-3.dll";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC="mpg123-0.dll";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR="Release";DLL_EXPORT</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC=\"vorbisfile-3.dll\";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC=\"mpg123-0.dll\";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR=\"Release\";DLL_EXPORT</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\SDL3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build/lib/SDL3_mixer.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build/bin/SDL3_mixer.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>0.1</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level2</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC="vorbisfile-3.dll";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC="mpg123-0.dll";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR="MinSizeRel";DLL_EXPORT</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC=\"vorbisfile-3.dll\";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC=\"mpg123-0.dll\";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR=\"MinSizeRel\";DLL_EXPORT</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\SDL3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build/lib/SDL3_mixer.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build/bin/SDL3_mixer.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>0.1</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level2</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC="vorbisfile-3.dll";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC="mpg123-0.dll";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR="RelWithDebInfo";DLL_EXPORT</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BUILD_SDL;SDL_BUILD_MAJOR_VERSION=3;SDL_BUILD_MINOR_VERSION=1;SDL_BUILD_MICRO_VERSION=3;DECODER_OGGVORBIS_STB;DECODER_OGGVORBIS_VORBISFILE;VORBIS_DYNAMIC=\"vorbisfile-3.dll\";DECODER_MP3_DRMP3;DECODER_MP3_MPG123;MPG123_DYNAMIC=\"mpg123-0.dll\";DECODER_MIDI_TIMIDITY;DECODER_WAV;DECODER_AIFF;DECODER_VOC;DECODER_AU;CMAKE_INTDIR=\"RelWithDebInfo\";DLL_EXPORT</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\codecs;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\include-revision;C:\Users\hyper\workspace\bg\okgame\lib\SDL\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\vorbis\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\ogg\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\ogg-build\include;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\..\..\..\src\include;C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\mpg123\ports\cmake\src\libmpg123\..\..\..\..\src\libmpg123;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\SDL3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build/lib/SDL3_mixer.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build/bin/SDL3_mixer.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>0.1</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_mixer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckLinkerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\GetGitRevisionDescription.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PkgConfigHelper.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PrivateSdlFunctions.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlcpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlmanpages.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlplatform.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_mixer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckLinkerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\GetGitRevisionDescription.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PkgConfigHelper.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PrivateSdlFunctions.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlcpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlmanpages.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlplatform.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_mixer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckLinkerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\GetGitRevisionDescription.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PkgConfigHelper.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PrivateSdlFunctions.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlcpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlmanpages.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlplatform.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_mixer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckLinkerFlag.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.2\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\GetGitRevisionDescription.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PkgConfigHelper.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\PrivateSdlFunctions.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlcpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlmanpages.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\cmake\sdlplatform.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\SDL_mixer.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\SDL_mixer_metadata_tags.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\SDL_mixer_spatialization.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_aiff.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_au.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_drflac.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_drmp3.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_flac.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_fluidsynth.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_gme.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_mpg123.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_opus.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_raw.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_sinewave.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_stb_vorbis.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_timidity.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_voc.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_vorbis.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_wav.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_wavpack.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\decoder_xmp.c" />
+    <ResourceCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\version.rc" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\common.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\instrum.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\mix.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\output.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\playmidi.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\readmidi.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\resample.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\tables.c" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\src\timidity\timidity.c" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build\ZERO_CHECK.vcxproj">
+      <Project>{ADBBA6BC-6E9C-3D8D-87FA-6A03F023EE01}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build\lib\SDL\SDL3-shared.vcxproj">
+      <Project>{1D42C3FC-4DF0-3FEC-A6D7-6634F84C795D}</Project>
+      <Name>SDL3-shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\libmpg123\libmpg123.vcxproj">
+      <Project>{522AE0CD-0DFC-3F78-93E8-D1A7B87C85A7}</Project>
+      <Name>libmpg123</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build\lib\SDL_mixer\external\vorbis-build\lib\vorbisfile.vcxproj">
+      <Project>{51CF0C60-494E-3653-8145-8F724D7917CC}</Project>
+      <Name>vorbisfile</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

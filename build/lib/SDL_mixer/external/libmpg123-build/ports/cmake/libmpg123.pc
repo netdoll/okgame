@@ -1,0 +1,12 @@
+prefix=C:/Program Files (x86)/bobsgame
+exec_prefix=C:/Program Files (x86)/bobsgame
+libdir=C:/Program Files (x86)/bobsgame/lib
+includedir=C:/Program Files (x86)/bobsgame/include
+
+Name: libmpg123
+Description: An optimised MPEG Audio decoder
+Requires: 
+Version: 1.33.4
+Libs: -L${libdir} -lmpg123 
+Libs.private:  -lshlwapi
+Cflags: -I${includedir} 
