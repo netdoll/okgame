@@ -16,10 +16,10 @@ Logger ControlsManager::log = Logger("ControlsManager");
 
 int ControlsManager::DEADZONE = 8000;
 
-//HashMap<int,SDL_GameController*> *ControlsManager::controllersByJoystickNum = new HashMap<int,SDL_GameController*>();
+//HashMap<int,SDL_Gamepad*> *ControlsManager::controllersByJoystickNum = new HashMap<int,SDL_Gamepad*>();
 
 #ifndef ORBIS
-HashMap<SDL_JoystickID,SDL_GameController*> ControlsManager::controllersByJoystickID;
+HashMap<SDL_JoystickID,SDL_Gamepad*> ControlsManager::controllersByJoystickID;
 #else
 
 #endif
@@ -188,64 +188,71 @@ void ControlsManager::initControllers()
 
 #ifndef ORBIS
 	string s = Main::getPath();
-	SDL_GameControllerAddMappingsFromFile(string(s+"data/gamecontrollerdb.txt").c_str());
+	SDL_AddGamepadMappingsFromFile(string(s+"data/gamecontrollerdb.txt").c_str());
 	//-----------------------------
 	//set up controllers
 	//-----------------------------
-	for (int i = 0; i<SDL_NumJoysticks(); i++)
+	int n_gamepads = 0;
+	SDL_JoystickID *gamepads = SDL_GetGamepads(&n_gamepads);
+	if (gamepads)
 	{
-		if (SDL_IsGameController(i))
+		for (int i = 0; i < n_gamepads; i++)
 		{
-			SDL_GameController *controller = SDL_GameControllerOpen(i);
-			//controllersByJoystickNum->put(i, controller);
-
-			log.info("Found Controller " + to_string(i) + ": " + string(SDL_GameControllerName(controller)));
-			SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
-
-			log.info("Found Joystick on Controller: " + string(SDL_JoystickName(joy)));
-
-			SDL_JoystickID id = SDL_JoystickInstanceID(joy);
-			controllersByJoystickID.put(id, controller);
-
-
-			GameController* g = new GameController();
-			g->id = id;
-
-			gameControllers.add(g);
-
-			SDL_Haptic *haptic = nullptr;
-			haptic = SDL_HapticOpenFromJoystick(joy);
-			if (haptic != NULL)
+			SDL_JoystickID instance_id = gamepads[i];
+			if (SDL_IsGamepad(instance_id))
 			{
-				log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
-				g->haptic = haptic;
+				SDL_Gamepad *controller = SDL_OpenGamepad(instance_id);
+				//controllersByJoystickNum->put(i, controller);
 
-				SDL_HapticRumbleInit(haptic);
+				log.info("Found Controller " + to_string(i) + ": " + string(SDL_GetGamepadName(controller)));
+				SDL_Joystick *joy = SDL_GetGamepadJoystick(controller);
+
+				log.info("Found Joystick on Controller: " + string(SDL_GetJoystickName(joy)));
+
+				SDL_JoystickID id = SDL_GetJoystickID(joy);
+				controllersByJoystickID.put(id, controller);
 
 
-//				// See if it can do sine waves
-//				if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0)
-//				{
-//					SDL_HapticClose(haptic); // No sine effect
-//					haptic = nullptr;
-//				}
+				GameController* g = new GameController();
+				g->id = id;
+
+				gameControllers.add(g);
+
+				SDL_Haptic *haptic = nullptr;
+				haptic = SDL_HapticOpenFromJoystick(joy);
+				if (haptic != NULL)
+				{
+					log.info("Found Haptic on Controller: " + string(SDL_GetJoystickName(joy)));
+					g->haptic = haptic;
+
+					SDL_HapticRumbleInit(haptic);
+
+
+	//				// See if it can do sine waves
+	//				if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0)
+	//				{
+	//					SDL_HapticClose(haptic); // No sine effect
+	//					haptic = nullptr;
+	//				}
+				}
+
+
+				
+				
+
+				char* mapping = SDL_GetGamepadMapping(controller);
+				log.info("Controller " + to_string(i) + " is mapped as " + string(mapping));
+
+			}
+			else
+			{
+				log.error("Found a controller device but it is not compatible.");
 			}
 
-
-			
-			
-
-			char* mapping = SDL_GameControllerMapping(controller);
-			log.info("Controller " + to_string(i) + " is mapped as " + string(mapping));
-
 		}
-		else
-		{
-			log.error("Found a controller device but it is not compatible.");
-		}
-
+		SDL_free(gamepads);
 	}
-	SDL_JoystickEventState(SDL_ENABLE);
+	//SDL_JoystickEventState(SDL_ENABLE);
 
 #else
 
@@ -278,12 +285,12 @@ void ControlsManager::cleanup()
 
 	if (controllersByJoystickID.size()>0)
 	{
-		ArrayList<SDL_GameController*> controllers = controllersByJoystickID.getAllValues();
+		ArrayList<SDL_Gamepad*> controllers = controllersByJoystickID.getAllValues();
 
 		for (int i = 0; i < controllers.size(); i++)
 		{
-			SDL_GameController *controller = controllers.get(i);
-			SDL_GameControllerClose(controller);
+			SDL_Gamepad *controller = controllers.get(i);
+			SDL_CloseGamepad(controller);
 		}
 	}
 	//controllersByJoystickNum->clear();
@@ -828,28 +835,28 @@ SDL_JoystickNumHats
 SDL_JoystickOpen
 SDL_JoystickUpdate
 
-SDL_GameControllerAddMapping
-SDL_GameControllerAddMappingsFromFile
-SDL_GameControllerAddMappingsFromRW
-SDL_GameControllerClose
-SDL_GameControllerEventState
-SDL_GameControllerFromInstanceID
-SDL_GameControllerGetAttached
-SDL_GameControllerGetAxis
-SDL_GameControllerGetAxisFromString
-SDL_GameControllerGetBindForAxis
-SDL_GameControllerGetBindForButton
-SDL_GameControllerGetButton
-SDL_GameControllerGetButtonFromString
-SDL_GameControllerGetJoystick
-SDL_GameControllerGetStringForAxis
-SDL_GameControllerGetStringForButton
-SDL_GameControllerMapping
-SDL_GameControllerMappingForGUID
-SDL_GameControllerName
-SDL_GameControllerNameForIndex
-SDL_GameControllerOpen
-SDL_GameControllerUpdate
+SDL_GamepadAddMapping
+SDL_GamepadAddMappingsFromFile
+SDL_GamepadAddMappingsFromRW
+SDL_CloseGamepad
+SDL_GamepadEventState
+SDL_GamepadFromInstanceID
+SDL_GamepadGetAttached
+SDL_GamepadGetAxis
+SDL_GamepadGetAxisFromString
+SDL_GamepadGetBindForAxis
+SDL_GamepadGetBindForButton
+SDL_GamepadGetButton
+SDL_GamepadGetButtonFromString
+SDL_GetGamepadJoystick
+SDL_GamepadGetStringForAxis
+SDL_GamepadGetStringForButton
+SDL_GamepadMapping
+SDL_GamepadMappingForGUID
+SDL_GetGamepadName
+SDL_GetGamepadNameForIndex
+SDL_OpenGamepad
+SDL_GamepadUpdate
 
 SDL_ControllerAxisEvent
 SDL_ControllerButtonEvent
@@ -866,7 +873,7 @@ SDL_JoyHatEvent
 //		if (controllersByJoystickNum->size()>0)
 //		{
 //			//these get updated by events automatically
-//			//SDL_GameControllerUpdate();
+//			//SDL_GamepadUpdate();
 //			//SDL_JoystickUpdate();
 //	
 //	
@@ -934,23 +941,23 @@ SDL_JoyHatEvent
 //		}
 //
 
-//bool Up = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_UP);
-//bool Down = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_DOWN);
-//bool Left = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_LEFT);
-//bool Right = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_RIGHT);
-//bool Start = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_START);
-//bool Back = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_BACK);
-//bool LeftShoulder = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_LEFTSHOULDER);
-//bool RightShoulder = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_RIGHTSHOULDER);
-//bool AButton = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_A);
-//bool BButton = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_B);
-//bool XButton = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_X);
-//bool YButton = SDL_GameControllerGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_Y);
+//bool Up = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_UP);
+//bool Down = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_DOWN);
+//bool Left = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_LEFT);
+//bool Right = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_DPAD_RIGHT);
+//bool Start = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_START);
+//bool Back = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_BACK);
+//bool LeftShoulder = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_LEFTSHOULDER);
+//bool RightShoulder = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_RIGHTSHOULDER);
+//bool AButton = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_A);
+//bool BButton = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_B);
+//bool XButton = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_X);
+//bool YButton = SDL_GamepadGetButton(ControllerHandles[ControllerIndex], SDL_CONTROLLER_BGCLIENT_Y);
 //
-//int16 StickX = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTX);
-//int16 StickY = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTY);
+//int16 StickX = SDL_GamepadGetAxis(ControllerHandles[ControllerIndex], SDL_GAMEPAD_AXIS_LEFTX);
+//int16 StickY = SDL_GamepadGetAxis(ControllerHandles[ControllerIndex], SDL_GAMEPAD_AXIS_LEFTY);
 
-//SDL_Joystick *JoystickHandle = SDL_GameControllerGetJoystick(ControllerHandles[ControllerIndex]);
+//SDL_Joystick *JoystickHandle = SDL_GetGamepadJoystick(ControllerHandles[ControllerIndex]);
 //RumbleHandles[ControllerIndex] = SDL_HapticOpenFromJoystick(JoystickHandle);
 //
 //if (SDL_HapticRumbleInit(RumbleHandles[ControllerIndex]) != 0)
@@ -980,22 +987,22 @@ SDL_JoyHatEvent
 
 
 //
-//ArrayList<SDL_GameController*> *c = controllersByJoystickID.getAllValues();
+//ArrayList<SDL_Gamepad*> *c = controllersByJoystickID.getAllValues();
 //
 //for (int i = 0; i < c->size(); i++)
 //{
-//	SDL_GameController* controller = c->get(i);
+//	SDL_Gamepad* controller = c->get(i);
 //
 //
 //	//doesn't work
 //	{
-//		int value = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+//		int value = SDL_GamepadGetAxis(controller, SDL_GAMEPAD_AXIS_LEFTX);
 //		//log.debug("Controller " + to_string(i) + " Axis X Value: "+to_string(value));
 //		if (value >= 20000) { CONTROLLER1_ANALOGLEFT_HELD = true; log.debug("left held"); }
 //		else if (value <= -20000) { CONTROLLER1_ANALOGRIGHT_HELD = true; log.debug("right held"); }
 //		else if (value <= 20000 && value >= -20000) { CONTROLLER1_ANALOGLEFT_HELD = false; CONTROLLER1_ANALOGRIGHT_HELD = false; }
 //
-//		value = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
+//		value = SDL_GamepadGetAxis(controller, SDL_GAMEPAD_AXIS_LEFTY);
 //		if (value >= 20000) { CONTROLLER1_ANALOGUP_HELD = true; log.debug("up held"); }
 //		else if (value <= -20000) { CONTROLLER1_ANALOGDOWN_HELD = true; log.debug("down held"); }
 //		else if (value <= 20000 && value >= -20000) { CONTROLLER1_ANALOGUP_HELD = false; CONTROLLER1_ANALOGDOWN_HELD = false; }
@@ -1003,11 +1010,11 @@ SDL_JoyHatEvent
 //
 //
 //
-//	char* mappingChar = SDL_GameControllerMapping(controller);
+//	char* mappingChar = SDL_GetGamepadMapping(controller);
 //	string mapping = string(mappingChar);
 //	SDL_free(mappingChar);
 //
-//	SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
+//	SDL_Joystick *joy = SDL_GetGamepadJoystick(controller);
 //
 //	int axes = SDL_JoystickNumAxes(joy);
 //
@@ -1053,24 +1060,24 @@ SDL_JoyHatEvent
 		SDL_Event event = events.get(0);
 		events.removeAt(0);
 
-		if (event.type == SDL_CONTROLLERDEVICEADDED) 
+		if (event.type == SDL_EVENT_GAMEPAD_ADDED) 
 		{
-			int joystickDeviceIndex = event.cdevice.which;
-			if (SDL_IsGameController(joystickDeviceIndex))
+			int joystickDeviceIndex = event.gdevice.which;
+			if (SDL_IsGamepad(joystickDeviceIndex))
 			{
 
-				SDL_GameController *controller = SDL_GameControllerOpen(joystickDeviceIndex);
-				SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
+				SDL_Gamepad *controller = SDL_OpenGamepad(joystickDeviceIndex);
+				SDL_Joystick *joy = SDL_GetGamepadJoystick(controller);
 				SDL_JoystickID joystickID = SDL_JoystickInstanceID(joy);
 
 				if (controllersByJoystickID.containsValue(controller) == false)
 				{
 					//controllersByJoystickNum->put(i,controller);
-					log.debug("New Controller Connected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
+					log.debug("New Controller Connected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GetGamepadName(controller)));
 				}
 				else
 				{
-					log.debug("Existing Controller Reconnected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
+					log.debug("Existing Controller Reconnected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GetGamepadName(controller)));
 				}
 
 				controllersByJoystickID.removeAllValues(controller);
@@ -1111,17 +1118,17 @@ SDL_JoyHatEvent
 					//				}
 				}
 
-				char* mapping = SDL_GameControllerMapping(controller);
+				char* mapping = SDL_GetGamepadMapping(controller);
 				log.debug("Controller " + to_string(joystickDeviceIndex) + " is mapped as " + string(mapping));
 
 			}
 
 		}
 		
-			 if (event.type == SDL_CONTROLLERDEVICEREMOVED)
+			 if (event.type == SDL_EVENT_GAMEPAD_REMOVED)
 			 {
-				 SDL_JoystickID joystickID = event.cdevice.which;
-				 SDL_GameController *controller = controllersByJoystickID.get(joystickID);
+				 SDL_JoystickID joystickID = event.gdevice.which;
+				 SDL_Gamepad *controller = controllersByJoystickID.get(joystickID);
 
 				//controllersByJoystickNum->removeAllValues(controller);
 				controllersByJoystickID.removeAllValues(controller);
@@ -1138,40 +1145,40 @@ SDL_JoyHatEvent
 					}
 				}			
 
-				SDL_GameControllerClose(controller);
+				SDL_CloseGamepad(controller);
 
-				log.debug("Controller Removed: " + string(SDL_GameControllerName(controller)));
+				log.debug("Controller Removed: " + string(SDL_GetGamepadName(controller)));
 
 
 			 }
 			 
-			if (event.type == SDL_CONTROLLERBUTTONDOWN)
+			if (event.type == SDL_EVENT_GAMEPAD_BUTTON_DOWN)
 			{
-				int joystickID = event.cbutton.which;
+				int joystickID = event.gbutton.which;
 
 				if (controllersByJoystickID.containsKey(joystickID))
 				{
-					SDL_GameController *controller = controllersByJoystickID.get(joystickID);
-					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
-					int value = event.cbutton.state;
+					SDL_Gamepad *controller = controllersByJoystickID.get(joystickID);
+					SDL_GamepadButton b = (SDL_GamepadButton)event.gbutton.button;
+					int value = event.gbutton.state;
 
 
-					string s = string("Controller Button Down BobEvent: " + string(SDL_GameControllerName(controller)));
-					if (b == SDL_CONTROLLER_BUTTON_A)s += (" Button: SDL_CONTROLLER_BUTTON_A");
-					if (b == SDL_CONTROLLER_BUTTON_B)s += (" Button: SDL_CONTROLLER_BUTTON_B");
-					if (b == SDL_CONTROLLER_BUTTON_X)s += (" Button: SDL_CONTROLLER_BUTTON_X");
-					if (b == SDL_CONTROLLER_BUTTON_Y)s += (" Button: SDL_CONTROLLER_BUTTON_Y");
-					if (b == SDL_CONTROLLER_BUTTON_BACK)s += (" Button: SDL_CONTROLLER_BUTTON_BACK");
-					if (b == SDL_CONTROLLER_BUTTON_GUIDE)s += (" Button: SDL_CONTROLLER_BUTTON_GUIDE");
-					if (b == SDL_CONTROLLER_BUTTON_START)s += (" Button: SDL_CONTROLLER_BUTTON_START");
-					if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)s += (" Button: SDL_CONTROLLER_BUTTON_LEFTSTICK");
-					if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)s += (" Button: SDL_CONTROLLER_BUTTON_RIGHTSTICK");
-					if (b == SDL_CONTROLLER_BUTTON_LEFTSHOULDER)s += (" Button: SDL_CONTROLLER_BUTTON_LEFTSHOULDER");
-					if (b == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)s += (" Button: SDL_CONTROLLER_BUTTON_RIGHTSHOULDER");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_UP)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_UP");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_DOWN)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_DOWN");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_LEFT)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_LEFT");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_RIGHT");
+					string s = string("Controller Button Down BobEvent: " + string(SDL_GetGamepadName(controller)));
+					if (b == SDL_GAMEPAD_BUTTON_SOUTH)s += (" Button: SDL_GAMEPAD_BUTTON_SOUTH");
+					if (b == SDL_GAMEPAD_BUTTON_EAST)s += (" Button: SDL_GAMEPAD_BUTTON_EAST");
+					if (b == SDL_GAMEPAD_BUTTON_WEST)s += (" Button: SDL_GAMEPAD_BUTTON_WEST");
+					if (b == SDL_GAMEPAD_BUTTON_NORTH)s += (" Button: SDL_GAMEPAD_BUTTON_NORTH");
+					if (b == SDL_GAMEPAD_BUTTON_BACK)s += (" Button: SDL_GAMEPAD_BUTTON_BACK");
+					if (b == SDL_GAMEPAD_BUTTON_GUIDE)s += (" Button: SDL_GAMEPAD_BUTTON_GUIDE");
+					if (b == SDL_GAMEPAD_BUTTON_START)s += (" Button: SDL_GAMEPAD_BUTTON_START");
+					if (b == SDL_GAMEPAD_BUTTON_LEFT_STICK)s += (" Button: SDL_GAMEPAD_BUTTON_LEFT_STICK");
+					if (b == SDL_GAMEPAD_BUTTON_RIGHT_STICK)s += (" Button: SDL_GAMEPAD_BUTTON_RIGHT_STICK");
+					if (b == SDL_GAMEPAD_BUTTON_LEFT_SHOULDER)s += (" Button: SDL_GAMEPAD_BUTTON_LEFT_SHOULDER");
+					if (b == SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER)s += (" Button: SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_UP)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_UP");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_DOWN)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_DOWN");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_LEFT)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_LEFT");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_RIGHT)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_RIGHT");
 					s += (" Value:" + to_string(value));
 #ifdef _DEBUG
 					log.debug(s);
@@ -1182,21 +1189,21 @@ SDL_JoyHatEvent
 						GameController *g = gameControllers.get(i);
 						if(g->id == joystickID)
 						{
-							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_B)g->B_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_X)g->X_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_Y)g->Y_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_BACK)g->SELECT_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_GUIDE)g->START_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_START)g->START_HELD = true;
-							//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log.debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
-							//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log.debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
-							if (b == SDL_CONTROLLER_BUTTON_LEFTSHOULDER)g->L_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)g->R_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_UP)g->UP_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_DOWN)g->DOWN_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_LEFT)g->LEFT_HELD = true;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)g->RIGHT_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_SOUTH)g->A_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_EAST)g->B_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_WEST)g->X_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_NORTH)g->Y_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_BACK)g->SELECT_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_GUIDE)g->START_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_START)g->START_HELD = true;
+							//if (b == SDL_GAMEPAD_BUTTON_LEFT_STICK)log.debug("SDL_GAMEPAD_BUTTON_LEFT_STICK");
+							//if (b == SDL_GAMEPAD_BUTTON_RIGHT_STICK)log.debug("SDL_GAMEPAD_BUTTON_RIGHT_STICK");
+							if (b == SDL_GAMEPAD_BUTTON_LEFT_SHOULDER)g->L_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER)g->R_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_UP)g->UP_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_DOWN)g->DOWN_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_LEFT)g->LEFT_HELD = true;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_RIGHT)g->RIGHT_HELD = true;
 						}
 					}
 
@@ -1204,33 +1211,33 @@ SDL_JoyHatEvent
 				
 			}
 			
-			if (event.type == SDL_CONTROLLERBUTTONUP) 
+			if (event.type == SDL_EVENT_GAMEPAD_BUTTON_UP) 
 			{
 
-				int id = event.cbutton.which;
+				int id = event.gbutton.which;
 
 				if (controllersByJoystickID.containsKey(id))
 				{
-					SDL_GameController *controller = controllersByJoystickID.get(id);
-					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
-					int value = event.cbutton.state;
+					SDL_Gamepad *controller = controllersByJoystickID.get(id);
+					SDL_GamepadButton b = (SDL_GamepadButton)event.gbutton.button;
+					int value = event.gbutton.state;
 
-					string s = string("Controller Button Up BobEvent: " + string(SDL_GameControllerName(controller)));
-					if (b == SDL_CONTROLLER_BUTTON_A)s += (" Button: SDL_CONTROLLER_BUTTON_A");
-					if (b == SDL_CONTROLLER_BUTTON_B)s += (" Button: SDL_CONTROLLER_BUTTON_B");
-					if (b == SDL_CONTROLLER_BUTTON_X)s += (" Button: SDL_CONTROLLER_BUTTON_X");
-					if (b == SDL_CONTROLLER_BUTTON_Y)s += (" Button: SDL_CONTROLLER_BUTTON_Y");
-					if (b == SDL_CONTROLLER_BUTTON_BACK)s += (" Button: SDL_CONTROLLER_BUTTON_BACK");
-					if (b == SDL_CONTROLLER_BUTTON_GUIDE)s += (" Button: SDL_CONTROLLER_BUTTON_GUIDE");
-					if (b == SDL_CONTROLLER_BUTTON_START)s += (" Button: SDL_CONTROLLER_BUTTON_START");
-					if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)s += (" Button: SDL_CONTROLLER_BUTTON_LEFTSTICK");
-					if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)s += (" Button: SDL_CONTROLLER_BUTTON_RIGHTSTICK");
-					if (b == SDL_CONTROLLER_BUTTON_LEFTSHOULDER)s += (" Button: SDL_CONTROLLER_BUTTON_LEFTSHOULDER");
-					if (b == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)s += (" Button: SDL_CONTROLLER_BUTTON_RIGHTSHOULDER");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_UP)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_UP");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_DOWN)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_DOWN");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_LEFT)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_LEFT");
-					if (b == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_RIGHT");
+					string s = string("Controller Button Up BobEvent: " + string(SDL_GetGamepadName(controller)));
+					if (b == SDL_GAMEPAD_BUTTON_SOUTH)s += (" Button: SDL_GAMEPAD_BUTTON_SOUTH");
+					if (b == SDL_GAMEPAD_BUTTON_EAST)s += (" Button: SDL_GAMEPAD_BUTTON_EAST");
+					if (b == SDL_GAMEPAD_BUTTON_WEST)s += (" Button: SDL_GAMEPAD_BUTTON_WEST");
+					if (b == SDL_GAMEPAD_BUTTON_Y)s += (" Button: SDL_GAMEPAD_BUTTON_Y");
+					if (b == SDL_GAMEPAD_BUTTON_BACK)s += (" Button: SDL_GAMEPAD_BUTTON_BACK");
+					if (b == SDL_GAMEPAD_BUTTON_GUIDE)s += (" Button: SDL_GAMEPAD_BUTTON_GUIDE");
+					if (b == SDL_GAMEPAD_BUTTON_START)s += (" Button: SDL_GAMEPAD_BUTTON_START");
+					if (b == SDL_GAMEPAD_BUTTON_LEFT_STICK)s += (" Button: SDL_GAMEPAD_BUTTON_LEFT_STICK");
+					if (b == SDL_GAMEPAD_BUTTON_RIGHT_STICK)s += (" Button: SDL_GAMEPAD_BUTTON_RIGHT_STICK");
+					if (b == SDL_GAMEPAD_BUTTON_LEFT_SHOULDER)s += (" Button: SDL_GAMEPAD_BUTTON_LEFT_SHOULDER");
+					if (b == SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER)s += (" Button: SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_UP)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_UP");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_DOWN)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_DOWN");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_LEFT)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_LEFT");
+					if (b == SDL_GAMEPAD_BUTTON_DPAD_RIGHT)s += (" Button: SDL_GAMEPAD_BUTTON_DPAD_RIGHT");
 					s += (" Value:" + to_string(value));
 #ifdef _DEBUG
 					log.debug(s);
@@ -1240,57 +1247,57 @@ SDL_JoyHatEvent
 						GameController *g = gameControllers.get(i);
 						if (g->id == id)
 						{
-							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_B)g->B_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_X)g->X_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_Y)g->Y_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_BACK)g->SELECT_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_GUIDE)g->START_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_START)g->START_HELD = false;
-							//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log.debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
-							//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log.debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
-							if (b == SDL_CONTROLLER_BUTTON_LEFTSHOULDER)g->L_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)g->R_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_UP)g->UP_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_DOWN)g->DOWN_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_LEFT)g->LEFT_HELD = false;
-							if (b == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)g->RIGHT_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_SOUTH)g->A_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_EAST)g->B_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_WEST)g->X_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_Y)g->Y_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_BACK)g->SELECT_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_GUIDE)g->START_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_START)g->START_HELD = false;
+							//if (b == SDL_GAMEPAD_BUTTON_LEFT_STICK)log.debug("SDL_GAMEPAD_BUTTON_LEFT_STICK");
+							//if (b == SDL_GAMEPAD_BUTTON_RIGHT_STICK)log.debug("SDL_GAMEPAD_BUTTON_RIGHT_STICK");
+							if (b == SDL_GAMEPAD_BUTTON_LEFT_SHOULDER)g->L_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER)g->R_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_UP)g->UP_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_DOWN)g->DOWN_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_LEFT)g->LEFT_HELD = false;
+							if (b == SDL_GAMEPAD_BUTTON_DPAD_RIGHT)g->RIGHT_HELD = false;
 						}
 					}
 				}
 				
 			}
 			
-			if (event.type == SDL_CONTROLLERAXISMOTION)
+			if (event.type == SDL_EVENT_GAMEPAD_AXIS_MOTION)
 			{
-				int id = event.caxis.which;
+				int id = event.gaxis.which;
 
 
 				//Unfortunately, this is easier to idenfity because it says "lefttrigger" and is correct, but it ONLY fires an axis down event and not an axis-up event.
 				//Oh, it does register an axis up event, it's just value 0 and not -
 				if (controllersByJoystickID.containsKey(id))
 				{
-					SDL_GameController *controller = controllersByJoystickID.get(id);
-					SDL_GameControllerAxis axis = (SDL_GameControllerAxis)event.caxis.axis;
-					int value = event.caxis.value;
+					SDL_Gamepad *controller = controllersByJoystickID.get(id);
+					SDL_GamepadAxis axis = (SDL_GamepadAxis)event.gaxis.axis;
+					int value = event.gaxis.value;
 
 					if (value<0-DEADZONE || value > DEADZONE || value == 0)
 					{
 
 #ifdef _DEBUG
-						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
-						string s = string("Controller Axis BobEvent: " + string(SDL_GameControllerName(controller)));
-						if (axis == SDL_CONTROLLER_AXIS_LEFTX)s += (" Axis: SDL_CONTROLLER_AXIS_LEFTX");
-						if (axis == SDL_CONTROLLER_AXIS_LEFTY)s += (" Axis: SDL_CONTROLLER_AXIS_LEFTY");
-						if (axis == SDL_CONTROLLER_AXIS_RIGHTX)s += (" Axis: SDL_CONTROLLER_AXIS_RIGHTX");
-						if (axis == SDL_CONTROLLER_AXIS_RIGHTY)s += (" Axis: SDL_CONTROLLER_AXIS_RIGHTY");
-						if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT)s += (" Axis: SDL_CONTROLLER_AXIS_TRIGGERLEFT");
-						if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)s += (" Axis: SDL_CONTROLLER_AXIS_TRIGGERRIGHT");
+						//SDL_GamepadButtonBind bind = SDL_GamepadGetBindForAxis(controller, axis);
+						string s = string("Controller Axis BobEvent: " + string(SDL_GetGamepadName(controller)));
+						if (axis == SDL_GAMEPAD_AXIS_LEFTX)s += (" Axis: SDL_GAMEPAD_AXIS_LEFTX");
+						if (axis == SDL_GAMEPAD_AXIS_LEFTY)s += (" Axis: SDL_GAMEPAD_AXIS_LEFTY");
+						if (axis == SDL_GAMEPAD_AXIS_RIGHTX)s += (" Axis: SDL_GAMEPAD_AXIS_RIGHTX");
+						if (axis == SDL_GAMEPAD_AXIS_RIGHTY)s += (" Axis: SDL_GAMEPAD_AXIS_RIGHTY");
+						if (axis == SDL_GAMEPAD_AXIS_LEFT_TRIGGER)s += (" Axis: SDL_GAMEPAD_AXIS_LEFT_TRIGGER");
+						if (axis == SDL_GAMEPAD_AXIS_RIGHT_TRIGGER)s += (" Axis: SDL_GAMEPAD_AXIS_RIGHT_TRIGGER");
 						s += " Value:" + to_string(value);
 
 						log.debug(s);
-						//log.debug("SDL_GameControllerGetStringForAxis:" + string(SDL_GameControllerGetStringForAxis(axis)));
-						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
+						//log.debug("SDL_GamepadGetStringForAxis:" + string(SDL_GamepadGetStringForAxis(axis)));
+						//SDL_GamepadButtonBind bind = SDL_GamepadGetBindForAxis(controller, axis);
 						//if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS)log.debug("Axis #:"+to_string(bind.value.axis));
 #endif
 
@@ -1301,15 +1308,15 @@ SDL_JoyHatEvent
 							GameController *g = gameControllers.get(i);
 							if (g->id == id)
 							{
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= dz)g->L_HELD = true;
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)g->L_HELD = false;
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= dz)g->R_HELD = true;
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)g->R_HELD = false;
+								if (axis == SDL_GAMEPAD_AXIS_LEFT_TRIGGER&&value >= dz)g->L_HELD = true;
+								if (axis == SDL_GAMEPAD_AXIS_LEFT_TRIGGER&&value < 100)g->L_HELD = false;
+								if (axis == SDL_GAMEPAD_AXIS_RIGHT_TRIGGER&&value >= dz)g->R_HELD = true;
+								if (axis == SDL_GAMEPAD_AXIS_RIGHT_TRIGGER&&value < 100)g->R_HELD = false;
 #ifdef _DEBUG
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value>= dz)log.debug("Controller Axis BobEvent: Left trigger held " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)log.debug("Controller Axis BobEvent: Left trigger released " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value>= dz)log.debug("Controller Axis BobEvent: Right trigger held " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)log.debug("Controller Axis BobEvent: Right trigger released " + to_string(value));
+								if (axis == SDL_GAMEPAD_AXIS_LEFT_TRIGGER&&value>= dz)log.debug("Controller Axis BobEvent: Left trigger held " + to_string(value));
+								if (axis == SDL_GAMEPAD_AXIS_LEFT_TRIGGER&&value < 100)log.debug("Controller Axis BobEvent: Left trigger released " + to_string(value));
+								if (axis == SDL_GAMEPAD_AXIS_RIGHT_TRIGGER&&value>= dz)log.debug("Controller Axis BobEvent: Right trigger held " + to_string(value));
+								if (axis == SDL_GAMEPAD_AXIS_RIGHT_TRIGGER&&value < 100)log.debug("Controller Axis BobEvent: Right trigger released " + to_string(value));
 #endif
 							}
 						}
@@ -1324,25 +1331,25 @@ SDL_JoyHatEvent
 								GameController *g = gameControllers.get(i);
 								if (g->id == id)
 								{
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)g->ANALOGLEFT_HELD = true;
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)g->ANALOGRIGHT_HELD = true;
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)g->ANALOGUP_HELD = true;
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)g->ANALOGDOWN_HELD = true;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value < -dz)g->ANALOGLEFT_HELD = true;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value > dz)g->ANALOGRIGHT_HELD = true;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value < -dz)g->ANALOGUP_HELD = true;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value > dz)g->ANALOGDOWN_HELD = true;
 	#ifdef _DEBUG
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)log.debug("Controller Axis BobEvent: Left held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)log.debug("Controller Axis BobEvent: Right held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)log.debug("Controller Axis BobEvent: Up held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)log.debug("Controller Axis BobEvent: Down held " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value < -dz)log.debug("Controller Axis BobEvent: Left held " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value > dz)log.debug("Controller Axis BobEvent: Right held " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value < -dz)log.debug("Controller Axis BobEvent: Up held " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value > dz)log.debug("Controller Axis BobEvent: Down held " + to_string(value));
 
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Controller Axis BobEvent: Left unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Controller Axis BobEvent: Right unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz && g->ANALOGUP_HELD)log.debug("Controller Axis BobEvent: Up unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Controller Axis BobEvent: Down unpressed " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Controller Axis BobEvent: Left unpressed " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Controller Axis BobEvent: Right unpressed " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value > -dz && g->ANALOGUP_HELD)log.debug("Controller Axis BobEvent: Up unpressed " + to_string(value));
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Controller Axis BobEvent: Down unpressed " + to_string(value));
 	#endif
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz)g->ANALOGLEFT_HELD = false;
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz)g->ANALOGRIGHT_HELD = false;
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz)g->ANALOGUP_HELD = false;
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz)g->ANALOGDOWN_HELD = false;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value > -dz)g->ANALOGLEFT_HELD = false;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTX&&value < dz)g->ANALOGRIGHT_HELD = false;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value > -dz)g->ANALOGUP_HELD = false;
+									if (axis == SDL_GAMEPAD_AXIS_LEFTY&&value < dz)g->ANALOGDOWN_HELD = false;
 								}
 							}
 						}
@@ -1353,7 +1360,7 @@ SDL_JoyHatEvent
 
 			 }
 			
-			 if (event.type == SDL_JOYAXISMOTION)
+			 if (event.type == SDL_EVENT_JOYSTICK_AXIS_MOTION)
 			 {
 				 SDL_JoystickID id = event.jaxis.which;
 				// SDL_Joystick *joy = SDL_JoystickFromInstanceID(id);
@@ -1361,7 +1368,7 @@ SDL_JoyHatEvent
 
 				if (controllersByJoystickID.containsKey(id))
 				{
-					SDL_GameController *controller = controllersByJoystickID.get(id);
+					SDL_Gamepad *controller = controllersByJoystickID.get(id);
 					int axis = event.jaxis.axis;
 					int value = event.jaxis.value;
 					
@@ -1370,28 +1377,28 @@ SDL_JoyHatEvent
 					if (value < 0 - DEADZONE || value > DEADZONE)
 					{
 #ifdef _DEBUG
-						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
-						string s = string("Joystick Axis BobEvent: " + string(SDL_GameControllerName(controller)));
+						//SDL_GamepadButtonBind bind = SDL_GamepadGetBindForAxis(controller, axis);
+						string s = string("Joystick Axis BobEvent: " + string(SDL_GetGamepadName(controller)));
 						s += string(" Axis: "+to_string(axis));
 						s += " Value:" + to_string(value);
 						log.debug(s);
 #endif
 
-						//this is wrong, SDL_CONTROLLER_AXIS_TRIGGERLEFT does not correspond to joystick axis
-						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= 32768)CONTROLLER1_L_HELD = true;
-						//if (axis == SDL_CONTROLLER_AXIS_RIGHTX&&value<=-30000)CONTROLLER1_L_HELD = false;
-						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value<=-30000)CONTROLLER1_L_HELD = false;
-						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= 32768)CONTROLLER1_R_HELD = true;
-						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value<=-30000)CONTROLLER1_R_HELD = false;
+						//this is wrong, SDL_GAMEPAD_AXIS_LEFT_TRIGGER does not correspond to joystick axis
+						//if (axis == SDL_GAMEPAD_AXIS_LEFT_TRIGGER&&value >= 32768)CONTROLLER1_L_HELD = true;
+						//if (axis == SDL_GAMEPAD_AXIS_RIGHTX&&value<=-30000)CONTROLLER1_L_HELD = false;
+						//if (axis == SDL_GAMEPAD_AXIS_LEFT_TRIGGER&&value<=-30000)CONTROLLER1_L_HELD = false;
+						//if (axis == SDL_GAMEPAD_AXIS_RIGHT_TRIGGER&&value >= 32768)CONTROLLER1_R_HELD = true;
+						//if (axis == SDL_GAMEPAD_AXIS_RIGHT_TRIGGER&&value<=-30000)CONTROLLER1_R_HELD = false;
 
-						//SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
+						//SDL_Joystick *joy = SDL_GetGamepadJoystick(controller);
 						//get GUID mapping for axis number
 						//buffer in which to write the ASCII string
 						//int cbGUID = 4096; //the size of pszGUID
 						//SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), pszGUID, cbGUID);
 						//log.debug("GUIDString: " + string(pszGUID));
 
-						char* mappingChar = SDL_GameControllerMapping(controller);
+						char* mappingChar = SDL_GetGamepadMapping(controller);
 						string mapping = string(mappingChar);
 						//log.debug("Mapping String: "+mapping);
 						SDL_free(mappingChar);
@@ -1475,12 +1482,12 @@ SDL_JoyHatEvent
 
 			 }
 			
-			if (event.type == SDL_TEXTINPUT) 
+			if (event.type == SDL_EVENT_TEXT_INPUT) 
 			{
 				text += event.text.text;
 			}
 			
-		if (event.type == SDL_KEYDOWN)
+		if (event.type == SDL_EVENT_KEY_DOWN)
 		{
 			if (event.key.keysym.sym == SDLK_BACKSPACE && text.length() > 0)
 			{
@@ -1580,7 +1587,7 @@ SDL_JoyHatEvent
 			}
 		}
 		
-		if (event.type == SDL_KEYUP)
+		if (event.type == SDL_EVENT_KEY_UP)
 		{
 			//int key = event.key.keysym.sym & ~SDLK_SCANCODE_MASK;
 
@@ -1676,7 +1683,7 @@ SDL_JoyHatEvent
 			}
 		}
 		
-		if (event.type == SDL_MOUSEBUTTONUP)
+		if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)
 		{
 			if(event.button.button == SDL_BUTTON_LEFT)
 			{
@@ -1686,7 +1693,7 @@ SDL_JoyHatEvent
 			}
 		}
 		
-		if (event.type == SDL_MOUSEMOTION)
+		if (event.type == SDL_EVENT_MOUSE_MOTION)
 		{
 
 			MOUSE_X = event.motion.x;
@@ -1698,37 +1705,37 @@ SDL_JoyHatEvent
 
 #ifdef _DEBUG
 			if (event.type == SDL_FIRSTEVENT)							log.debug("SDL_FIRSTEVENT");
-			if (event.type == SDL_QUIT)								log.debug("SDL_QUIT");
+			if (event.type == SDL_EVENT_QUIT)								log.debug("SDL_EVENT_QUIT");
 			if (event.type == SDL_APP_TERMINATING		)			log.debug("SDL_APP_TERMINATING");
 			if (event.type == SDL_APP_LOWMEMORY			)		log.debug("SDL_APP_LOWMEMORY");
 			if (event.type == SDL_APP_WILLENTERBACKGROUND)			log.debug("SDL_APP_WILLENTERBACKGROUND");
 			if (event.type == SDL_APP_DIDENTERBACKGROUND)			log.debug("SDL_APP_DIDENTERBACKGROUND");
 			if (event.type == SDL_APP_WILLENTERFOREGROUND)			log.debug("SDL_APP_WILLENTERFOREGROUND");
 			if (event.type == SDL_APP_DIDENTERFOREGROUND)			log.debug("SDL_APP_DIDENTERFOREGROUND");
-			if (event.type == SDL_WINDOWEVENT			)			log.debug("SDL_WINDOWEVENT");
+			if (event.type >= SDL_EVENT_WINDOW_FIRST && event.type <= SDL_EVENT_WINDOW_LAST )			log.debug("SDL_WINDOWEVENT");
 			if (event.type == SDL_SYSWMEVENT			)			log.debug("SDL_SYSWMEVENT");
-			//if (event.type == SDL_KEYDOWN				)			log.debug("SDL_KEYDOWN");
-			//if (event.type == SDL_KEYUP					)		log.debug("SDL_KEYUP");
+			//if (event.type == SDL_EVENT_KEY_DOWN				)			log.debug("SDL_EVENT_KEY_DOWN");
+			//if (event.type == SDL_EVENT_KEY_UP					)		log.debug("SDL_EVENT_KEY_UP");
 			//if (event.type == SDL_TEXTEDITING			)			log.debug("SDL_TEXTEDITING");
-			//if (event.type == SDL_TEXTINPUT				)		log.debug("SDL_TEXTINPUT");
+			//if (event.type == SDL_EVENT_TEXT_INPUT				)		log.debug("SDL_EVENT_TEXT_INPUT");
 			if (event.type == SDL_KEYMAPCHANGED			)		log.debug("SDL_KEYMAPCHANGED");
-			//if (event.type == SDL_MOUSEMOTION			)			log.debug("SDL_MOUSEMOTION");
+			//if (event.type == SDL_EVENT_MOUSE_MOTION			)			log.debug("SDL_EVENT_MOUSE_MOTION");
 			//if (event.type == SDL_MOUSEBUTTONDOWN		)			log.debug("SDL_MOUSEBUTTONDOWN");
-			//if (event.type == SDL_MOUSEBUTTONUP			)		log.debug("SDL_MOUSEBUTTONUP");
-			//if (event.type == SDL_MOUSEWHEEL			)			log.debug("SDL_MOUSEWHEEL");
-			//if (event.type == SDL_JOYAXISMOTION			)		log.debug("SDL_JOYAXISMOTION");
+			//if (event.type == SDL_EVENT_MOUSE_BUTTON_UP			)		log.debug("SDL_EVENT_MOUSE_BUTTON_UP");
+			//if (event.type == SDL_EVENT_MOUSE_WHEEL			)			log.debug("SDL_EVENT_MOUSE_WHEEL");
+			//if (event.type == SDL_EVENT_JOYSTICK_AXIS_MOTION			)		log.debug("SDL_EVENT_JOYSTICK_AXIS_MOTION");
 			if (event.type == SDL_JOYBALLMOTION			)		log.debug("SDL_JOYBALLMOTION");
 			if (event.type == SDL_JOYHATMOTION			)		log.debug("SDL_JOYHATMOTION");
-			//if (event.type == SDL_JOYBUTTONDOWN			)		log.debug("SDL_JOYBUTTONDOWN");
-			//if (event.type == SDL_JOYBUTTONUP			)			log.debug("SDL_JOYBUTTONUP");
-			if (event.type == SDL_JOYDEVICEADDED		)			log.debug("SDL_JOYDEVICEADDED");
-			if (event.type == SDL_JOYDEVICEREMOVED		)		log.debug("SDL_JOYDEVICEREMOVED");
-			//if (event.type == SDL_CONTROLLERAXISMOTION	)		log.debug("SDL_CONTROLLERAXISMOTION");
-			//if (event.type == SDL_CONTROLLERBUTTONDOWN	)		log.debug("SDL_CONTROLLERBUTTONDOWN");
-			//if (event.type == SDL_CONTROLLERBUTTONUP	)			log.debug("SDL_CONTROLLERBUTTONUP");
-			if (event.type == SDL_CONTROLLERDEVICEADDED	)		log.debug("SDL_CONTROLLERDEVICEADDED");
-			if (event.type == SDL_CONTROLLERDEVICEREMOVED)			log.debug("SDL_CONTROLLERDEVICEREMOVED");
-			if (event.type == SDL_CONTROLLERDEVICEREMAPPED)		log.debug("SDL_CONTROLLERDEVICEREMAPPED");
+			//if (event.type == SDL_EVENT_JOYSTICK_BUTTON_DOWN			)		log.debug("SDL_EVENT_JOYSTICK_BUTTON_DOWN");
+			//if (event.type == SDL_EVENT_JOYSTICK_BUTTON_UP			)			log.debug("SDL_EVENT_JOYSTICK_BUTTON_UP");
+			if (event.type == SDL_EVENT_JOYSTICK_ADDED		)			log.debug("SDL_EVENT_JOYSTICK_ADDED");
+			if (event.type == SDL_EVENT_JOYSTICK_REMOVED		)		log.debug("SDL_EVENT_JOYSTICK_REMOVED");
+			//if (event.type == SDL_EVENT_GAMEPAD_AXIS_MOTION	)		log.debug("SDL_EVENT_GAMEPAD_AXIS_MOTION");
+			//if (event.type == SDL_EVENT_GAMEPAD_BUTTON_DOWN	)		log.debug("SDL_EVENT_GAMEPAD_BUTTON_DOWN");
+			//if (event.type == SDL_EVENT_GAMEPAD_BUTTON_UP	)			log.debug("SDL_EVENT_GAMEPAD_BUTTON_UP");
+			if (event.type == SDL_EVENT_GAMEPAD_ADDED	)		log.debug("SDL_EVENT_GAMEPAD_ADDED");
+			if (event.type == SDL_EVENT_GAMEPAD_REMOVED)			log.debug("SDL_EVENT_GAMEPAD_REMOVED");
+			if (event.type == SDL_EVENT_GAMEPAD_REMAPPED)		log.debug("SDL_EVENT_GAMEPAD_REMAPPED");
 			if (event.type == SDL_FINGERDOWN			)			log.debug("SDL_FINGERDOWN");
 			if (event.type == SDL_FINGERUP				)		log.debug("SDL_FINGERUP");
 			if (event.type == SDL_FINGERMOTION			)		log.debug("SDL_FINGERMOTION");
@@ -1769,8 +1776,8 @@ SDL_JoyHatEvent
 //		if (userInfo.padContext->isButtonDown(ssin::kButtonOptions, ssin::kButtonEventPatternAny))g->SELECT_HELD = true;
 //		if (userInfo.padContext->isButtonDown(ssin::kButtonStart, ssin::kButtonEventPatternAny))g->START_HELD = true;
 //		//if (userInfo.padContext->isButtonDown(ssin::kButtonUp, ssin::kButtonEventPatternAny))g->START_HELD = true;
-//		//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log.debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
-//		//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log.debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
+//		//if (b == SDL_GAMEPAD_BUTTON_LEFT_STICK)log.debug("SDL_GAMEPAD_BUTTON_LEFT_STICK");
+//		//if (b == SDL_GAMEPAD_BUTTON_RIGHT_STICK)log.debug("SDL_GAMEPAD_BUTTON_RIGHT_STICK");
 //		if (userInfo.padContext->isButtonDown(ssin::kButtonL2, ssin::kButtonEventPatternAny))g->L_HELD = true;
 //		if (userInfo.padContext->isButtonDown(ssin::kButtonR2, ssin::kButtonEventPatternAny))g->R_HELD = true;
 //		if (userInfo.padContext->isButtonDown(ssin::kButtonUp, ssin::kButtonEventPatternAny))g->UP_HELD = true;

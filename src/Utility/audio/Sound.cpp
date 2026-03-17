@@ -77,9 +77,8 @@ void Sound::initFromByteData()
 #endif
 #ifdef USE_SDL_MIXER
 
-	SDL_RWops* file = SDL_RWFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
-	mixChunk = Mix_LoadWAV_RW(file, 0);
-	file->close(file);
+	SDL_IOStream* io = SDL_IOFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
+	mixAudio = MIX_LoadAudio_IO(AudioManager::mixer, io, true, true);
 
 #endif
 
@@ -115,7 +114,7 @@ void Sound::update()
 	if (audioFile->getFileExists() == true || audioFile->getByteData() != nullptr)
 	{
 #ifndef ORBIS
-		if (mixChunk == nullptr)initFromByteData();
+		if (mixAudio == nullptr)initFromByteData();
 #else
 
 #endif
@@ -135,7 +134,7 @@ void Sound::update()
 				bool playing = false;
 
 #ifndef ORBIS
-				playing = Mix_Playing(channel);
+				if (mixTrack) playing = MIX_TrackPlaying(mixTrack);
 #else
 
 #endif
@@ -151,7 +150,9 @@ void Sound::update()
 							timesToPlay--;
 
 #ifndef ORBIS
-							channel = Mix_PlayChannel(-1, mixChunk, 0);
+							if (!mixTrack) mixTrack = MIX_CreateTrack(AudioManager::mixer);
+							MIX_SetTrackAudio(mixTrack, mixAudio);
+							MIX_PlayTrack(mixTrack, 0);
 #else
 
 #endif
@@ -165,7 +166,9 @@ void Sound::update()
 					{
 
 #ifndef ORBIS
-						channel = Mix_PlayChannel(-1, mixChunk, 0);
+						if (!mixTrack) mixTrack = MIX_CreateTrack(AudioManager::mixer);
+						MIX_SetTrackAudio(mixTrack, mixAudio);
+						MIX_PlayTrack(mixTrack, 0);
 #else
 
 #endif
@@ -262,8 +265,11 @@ void Sound::playImmediately()
 	AudioManager::soLoud->play(*soLoudWave);
 #endif
 #ifdef USE_SDL_MIXER
-	channel = Mix_PlayChannel(-1, mixChunk, 0);
-	//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
+	if (!mixTrack) mixTrack = MIX_CreateTrack(AudioManager::mixer);
+	MIX_SetTrackAudio(mixTrack, mixAudio);
+	MIX_SetTrackGain(mixTrack, volume);
+	MIX_SetTrackLoops(mixTrack, loop ? -1 : 0);
+	MIX_PlayTrack(mixTrack, 0);
 #endif
 	playingStarted = true;
 
@@ -295,7 +301,7 @@ void Sound::pause()
 { //=========================================================================================================================
 
 #ifndef ORBIS
-	Mix_Pause(channel);
+	if (mixTrack) MIX_PauseTrack(mixTrack);
 #else
 
 #endif
@@ -307,7 +313,7 @@ void Sound::unpause()
 { //=========================================================================================================================
 
 #ifndef ORBIS
-	Mix_Resume(channel);
+	if (mixTrack) MIX_ResumeTrack(mixTrack);
 #else
 
 #endif
@@ -333,11 +339,11 @@ void Sound::stop()
 
 	if (playingStarted)
 	{
-		if (channel != -1)
+		if (mixTrack != nullptr)
 		{
 
 #ifndef ORBIS
-			Mix_HaltChannel(channel);
+			MIX_StopTrack(mixTrack, 0);
 #else
 
 #endif
@@ -346,11 +352,8 @@ void Sound::stop()
 		playingStarted = false;
 	}
 
-	channel = -1;
-
-
-
-
+	// We don't necessarily destroy the track, we can reuse it.
+	// But for simplicity let's leave it.
 }
 
 
@@ -359,6 +362,9 @@ void Sound::stop()
 void Sound::setLoop(bool b)
 { //=========================================================================================================================
 	this->loop = b;
+	#ifdef USE_SDL_MIXER
+	if (mixTrack) MIX_SetTrackLoops(mixTrack, loop ? -1 : 0);
+	#endif
 }
 
 bool Sound::getLoop()
@@ -377,8 +383,7 @@ void Sound::setVolume(float v)
 { //=========================================================================================================================
 	volume = v;
 #ifdef USE_SDL_MIXER
-	if (isPlaying()) Mix_Volume(channel, (int)(volume * 128));
-
+	if (mixTrack) MIX_SetTrackGain(mixTrack, volume);
 #endif
 }
 float Sound::getVolume()

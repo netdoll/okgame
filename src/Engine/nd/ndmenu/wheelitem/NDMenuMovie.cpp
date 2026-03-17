@@ -69,7 +69,7 @@ void NDMenuMovie::init()
 	      {
 	         SDL_Surface* tempSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, movieInfo[m].width, movieInfo[m].height, 32, rmask, gmask, bmask, amask);
 	         movie_YUV_SURFACE[m] = SDL_DisplayFormat(tempSurface);
-	         SDL_FreeSurface(tempSurface);
+	         SDL_DestroySurface(tempSurface);
 	         SMPEG_setdisplay(movie[m], movie_YUV_SURFACE[m], null, null);
 	      }
 	

@@ -389,7 +389,7 @@ void NDMenu::renderVideo()
 	   //movie_selected=selected_wheel_item%4;
 	   movie_frame_num=1;
 	   SMPEG_renderFrame(movie[movie_selected],movie_frame_num);
-	   if(movie_RGBA_SURFACE!=null){SDL_FreeSurface(movie_RGBA_SURFACE);movie_RGBA_SURFACE=null;}
+	   if(movie_RGBA_SURFACE!=null){SDL_DestroySurface(movie_RGBA_SURFACE);movie_RGBA_SURFACE=null;}
 	   movie_render_step=1;
 	}
 	                  */

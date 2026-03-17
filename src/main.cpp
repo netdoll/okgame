@@ -325,7 +325,7 @@ void Main::mainInit()
 
 	loadGlobalSettingsFromXML();
 
-	
+	SteamManager::init();
 
 #ifndef ORBIS
 	if (globalSettings->useXInput == false)SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
@@ -333,7 +333,7 @@ void Main::mainInit()
 
 	log.debug("Init SDL");
 
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD) != 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD) == false)
 	{
 		log.error("SDL_Init error: "+string(SDL_GetError()));
 		exit(2);
@@ -1014,6 +1014,9 @@ void Main::updateMain()
 	
 	processEvents();
 	//GLUtils::e();
+
+	SteamManager::update();
+
 	stateManager->getCurrentState()->updateControls();
 	//GLUtils::e();
 	
@@ -1344,7 +1347,7 @@ void Main::doScreenShotCheck()
 			}
 		SDL_Surface *s = SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask);// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
 		IMG_SavePNG(s, fileName.c_str());
-		SDL_FreeSurface(s);
+		SDL_DestroySurface(s);
 		delete[] buffer;
 		delete[] flipdata;
 #else
@@ -1359,56 +1362,56 @@ void Main::doScreenShotCheck()
 //==========================================================================================================================
 void Main::printEvent(const SDL_Event* e)
 {//==========================================================================================================================
-	if (e->type == SDL_WINDOWEVENT)
+	if (e->type >= SDL_EVENT_WINDOW_FIRST && e->type <= SDL_EVENT_WINDOW_LAST)
 	{
 		string wid = to_string(e->window.windowID);
 
-		switch (e->window.event)
+		switch (e->type)
 		{
-		case SDL_WINDOWEVENT_SHOWN:
+		case SDL_EVENT_WINDOW_SHOWN:
 			log.debug("Window "+wid+" shown");
 			break;
-		case SDL_WINDOWEVENT_HIDDEN:
+		case SDL_EVENT_WINDOW_HIDDEN:
 			log.debug("Window "+wid+" hidden");
 			break;
-		case SDL_WINDOWEVENT_EXPOSED:
+		case SDL_EVENT_WINDOW_EXPOSED:
 			log.debug("Window "+wid+" exposed");
 			break;
-		case SDL_WINDOWEVENT_MOVED:
+		case SDL_EVENT_WINDOW_MOVED:
 			log.debug("Window "+wid+" moved to " + to_string(e->window.data1) + " " + to_string(e->window.data2));
 			break;
-		case SDL_WINDOWEVENT_RESIZED:
+		case SDL_EVENT_WINDOW_RESIZED:
 			log.debug("Window "+wid+" resized to " + to_string(e->window.data1) + " " + to_string(e->window.data2));
 			break;
-		case SDL_WINDOWEVENT_SIZE_CHANGED:
+		case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
 			log.debug("Window "+wid+" size changed to "+to_string(e->window.data1)+" "+to_string(e->window.data2));
 			break;
-		case SDL_WINDOWEVENT_MINIMIZED:
+		case SDL_EVENT_WINDOW_MINIMIZED:
 			log.debug("Window "+wid+" minimized");
 			break;
-		case SDL_WINDOWEVENT_MAXIMIZED:
+		case SDL_EVENT_WINDOW_MAXIMIZED:
 			log.debug("Window "+wid+" maximized");
 			break;
-		case SDL_WINDOWEVENT_RESTORED:
+		case SDL_EVENT_WINDOW_RESTORED:
 			log.debug("Window "+wid+" restored");
 			break;
-		case SDL_WINDOWEVENT_ENTER:
+		case SDL_EVENT_WINDOW_MOUSE_ENTER:
 			log.debug("Mouse entered window "+wid);
 			break;
-		case SDL_WINDOWEVENT_LEAVE:
+		case SDL_EVENT_WINDOW_MOUSE_LEAVE:
 			log.debug("Mouse left window "+wid);
 			break;
-		case SDL_WINDOWEVENT_FOCUS_GAINED:
+		case SDL_EVENT_WINDOW_FOCUS_GAINED:
 			log.debug("Window "+wid+" gained keyboard focus");
 			break;
-		case SDL_WINDOWEVENT_FOCUS_LOST:
+		case SDL_EVENT_WINDOW_FOCUS_LOST:
 			log.debug("Window "+wid+" lost keyboard focus");
 			break;
-		case SDL_WINDOWEVENT_CLOSE:
+		case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
 			log.debug("Window "+wid+" closed");
 			break;
 		default:
-			log.debug("Window "+wid+" got unknown event "+to_string(e->window.event));
+			log.debug("Window "+wid+" got unknown event "+to_string(e->type));
 			break;
 		}
 	}

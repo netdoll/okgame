@@ -377,7 +377,7 @@ void ERROR_draw_error_console()
 
 		if (error_SURFACE != NULL)
 		{
-			SDL_FreeSurface(error_SURFACE);
+			SDL_DestroySurface(error_SURFACE);
 			error_SURFACE = NULL;
 		}
 		if (error_TEXTURE != NULL)
@@ -482,7 +482,7 @@ void DEBUG_draw_overlays()
 
 			if (error_SURFACE != NULL)
 			{
-				SDL_FreeSurface(error_SURFACE);
+				SDL_DestroySurface(error_SURFACE);
 				error_SURFACE = NULL;
 			}
 			if (error_TEXTURE != NULL)
@@ -513,7 +513,7 @@ void DEBUG_draw_text(float screenX0, float screenY0, string text, BobColor* colo
 
 	if (error_SURFACE != NULL)
 	{
-		SDL_FreeSurface(error_SURFACE);
+		SDL_DestroySurface(error_SURFACE);
 		error_SURFACE = NULL;
 	}
 	if (error_TEXTURE != NULL)

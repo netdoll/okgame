@@ -1,0 +1,31 @@
+#ifndef STEAMMANAGER_H
+#define STEAMMANAGER_H
+
+#include "stdafx.h"
+
+#ifdef HAVE_STEAMWORKS
+#include <steam/steam_api.h>
+#endif
+
+class SteamManager {
+public:
+    static void init();
+    static void update();
+    static void shutdown();
+
+    static void setAchievement(const string& id);
+    static void setStat(const string& id, int value);
+    static void setStat(const string& id, float value);
+
+    static bool isSteamRunning();
+    static uint64_t getSteamID();
+    static string getPersonaName();
+
+private:
+#ifdef HAVE_STEAMWORKS
+    // Steam callbacks
+    // STEAM_CALLBACK(SteamManager, onUserStatsReceived, UserStatsReceived_t);
+#endif
+};
+
+#endif

@@ -62,8 +62,8 @@ private:
     static void retroInputPoll();
     static int16_t retroInputState(unsigned port, unsigned device, unsigned index, unsigned id);
 
-    // Audio callback for SDL mixer
-    static void audioCallback(void *udata, Uint8 *stream, int len);
+    SDL_AudioStream* audioStream = nullptr;
+    MIX_Track* audioTrack = nullptr;
 
     // Core API function pointers
     void (*retro_init)(void) = nullptr;

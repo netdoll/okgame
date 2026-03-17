@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-03-17
+
+### Added
+- `SteamManager` in C++ fork (stubbed implementation for Steamworks SDK).
+- `NetworkManager` in Java fork using `socket.io-client-java` for unified multiplayer.
+- `GameLogicListener` interface in Java to match TypeScript `EventEmitter` patterns.
+
+### Fixed
+- Fixed missing `SpriteManager` in `BobsGameStadium.java`.
+- Restored missing `GLUtils.java` drawing methods for broad codebase compatibility.
+- Fixed `SDL_SetWindowFullscreen` parameter change in SDL3.
+
+### Changed
+- Bumped version to 0.5.1.
+- Updated `BobsGame.java` to support optional network initialization.
+
+## [0.5.0] - 2026-03-17
+
+### Added
+- Advanced Java Renderer with Sprite support in LibGDX.
+- Automatic batch/shape state switching in `GLUtils.java` for optimized Java rendering.
+- `NetworkManager` in TypeScript fork using `socket.io-client`.
+- Simple WebSocket server in `bobsgameweb/server` for multiplayer testing.
+- `garbageSent` event in `GameLogic` for multiplayer synchronization.
+
+### Fixed
+- Fixed 10+ TypeScript compilation errors in `bobsgameweb`.
+- Corrected SDL3 Gamepad button/axis constants in `ControlsManager.cpp`.
+- Fixed performance-heavy state switching in Java renderer.
+
+### Changed
+- Bumped version to 0.5.0.
+- Modernized `LibretroGame.cpp` to use `SDL_AudioStream` for better audio quality and compatibility.
+
+## [0.4.0] - 2026-03-16
+
+### Added
+- `GameManager` interface in Java fork to unify `BobsGame` and `BobsGameStadium` engines.
+- SDL3 support in C++ fork (modernized `main.cpp` and `ControlsManager`).
+- Parity fields in Java `BlockType` to match TypeScript and C++ expectations.
+
+### Fixed
+- All compilation errors in `bobsgameonlinejava`.
+- Redundant enum definitions in Java fork (unified into `GameType.java`).
+- SDL3 event and gamepad constant naming in C++ fork.
+
+### Changed
+- Bumped version to 0.4.0.
+- Modernized `ControlsManager` to use `SDL_Gamepad` API.
+
 ## [0.3.0] - 2026-03-08
 ### Added
 - Synchronized Puzzle logic across C++, Java, and TypeScript forks.

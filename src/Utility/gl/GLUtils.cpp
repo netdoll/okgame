@@ -352,7 +352,7 @@ SDL_GetWindowSize(window,&windowWidth,&windowHeight);
 	start = System::getPerformanceCounter();
 
 
-	SDL_ShowCursor(1);
+	SDL_ShowCursor();
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
@@ -2179,9 +2179,7 @@ void GLUtils::toggleFullscreen()
 	fullscreen = !fullscreen;
 
 #ifndef ORBIS
-	if (fullscreen)SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-	else SDL_SetWindowFullscreen(window, 0);
-
+	SDL_SetWindowFullscreen(window, fullscreen);
 #else
 
 
@@ -2712,7 +2710,7 @@ void GLUtils::doResize()
 
 	
 
-	SDL_GL_GetDrawableSize(window, &w, &h);
+	SDL_GetWindowSizeInPixels(window, &w, &h);
 
 
 
@@ -3378,7 +3376,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	// blit text onto its outline 
 	SDL_SetSurfaceBlendMode(fg_surface, SDL_BLENDMODE_BLEND);
 	SDL_BlitSurface(fg_surface, NULL, surface, &rect);
-	SDL_FreeSurface(fg_surface);
+	SDL_DestroySurface(fg_surface);
 
 	if (surface == NULL || surface == nullptr)
 	{
@@ -3389,7 +3387,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	int height = fg_surface->h + OUTLINE_SIZE * 2;
 
 	BobTexture* texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
-	SDL_FreeSurface(surface);
+	SDL_DestroySurface(surface);
 
 
 
@@ -4425,7 +4423,7 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string textureName, SDL_S
 
 	//free temporary surface
 	//if(freeTemp)
-	SDL_FreeSurface(temp);
+	SDL_DestroySurface(temp);
 
 	return bt;
 
@@ -4709,7 +4707,7 @@ shared_ptr<BobTexture> GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 
 #ifndef ORBIS
 	//log.info("SDL_FreeSurface");
-	SDL_FreeSurface(imageSurface);
+	SDL_DestroySurface(imageSurface);
 #else
 	stbi_image_free(data);
 #endif

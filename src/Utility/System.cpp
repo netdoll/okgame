@@ -140,28 +140,25 @@ void System::initSystemInfo()
 
 
 	//audio
-	int numAudioDevices = SDL_GetNumAudioDevices(0);
-	GLUtils::e();
-	for (int i = 0; i < numAudioDevices; i++)
-	{
-		log.info("SDL_GetAudioDeviceName" + to_string(i) + ":" + SDL_GetAudioDeviceName(i, 0));
-		GLUtils::e();
-		//log.info("SDL_GetAudioDeviceStatus" + to_string(i) + ":" + to_string(SDL_GetAudioDeviceStatus(i)));
-		//GLUtils::e();
+	int devices_count = 0;
+	SDL_AudioDeviceID *devices = SDL_GetAudioOutputDevices(&devices_count);
+	if (devices) {
+		for (int i = 0; i < devices_count; i++)
+		{
+			log.info("SDL_AudioOutputDevice" + to_string(i) + ":" + SDL_GetAudioDeviceName(devices[i]));
+		}
+		SDL_free(devices);
 	}
-	GLUtils::e();
 
-	int numAudioDrivers = SDL_GetNumAudioDrivers();
-	for (int i = 0; i < numAudioDrivers; i++)
+	int drivers_count = 0;
+	SDL_GetAudioDrivers(&drivers_count);
+	log.info("SDL_GetNumAudioDrivers:" + to_string(drivers_count));
+	for (int i = 0; i < drivers_count; i++)
 	{
 		log.info("SDL_GetAudioDriver" + to_string(i) + ":" + SDL_GetAudioDriver(i));
 	}
-	GLUtils::e();
 
-	log.info("SDL_GetAudioStatus:" + to_string(SDL_GetAudioStatus()));
-	GLUtils::e();
 	log.info("SDL_GetCurrentAudioDriver:" + string(SDL_GetCurrentAudioDriver()));
-	GLUtils::e();
 
 
 	//os
@@ -188,7 +185,7 @@ void System::initSystemInfo()
 	//window
 	//SDL_GetGrabbedWindow();
 	log.info("SDL_GetWindowBrightness:" + to_string(SDL_GetWindowBrightness(GLUtils::window)));
-	log.info("SDL_GetWindowDisplayIndex:" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
+	log.info("SDL_GetDisplayForWindow:" + to_string(SDL_GetDisplayForWindow(GLUtils::window)));
 	log.info("SDL_GetWindowFlags:" + to_string(SDL_GetWindowFlags(GLUtils::window)));
 	log.info("SDL_GetWindowGrab:" + to_string(SDL_GetWindowGrab(GLUtils::window)));
 	log.info("SDL_GetWindowID:" + to_string(SDL_GetWindowID(GLUtils::window)));
@@ -219,9 +216,17 @@ void System::initSystemInfo()
 
 
 	//video
-	log.info("SDL_GetNumRenderDrivers:" + to_string(SDL_GetNumRenderDrivers()));
-	log.info("SDL_GetNumVideoDisplays:" + to_string(SDL_GetNumVideoDisplays()));
-	log.info("SDL_GetNumVideoDrivers:" + to_string(SDL_GetNumVideoDrivers()));
+	int render_drivers_count = 0;
+	SDL_GetRenderDrivers(&render_drivers_count);
+	log.info("SDL_GetNumRenderDrivers:" + to_string(render_drivers_count));
+
+	int displays_count = 0;
+	SDL_GetDisplays(&displays_count);
+	log.info("SDL_GetNumVideoDisplays:" + to_string(displays_count));
+
+	int video_drivers_count = 0;
+	SDL_GetVideoDrivers(&video_drivers_count);
+	log.info("SDL_GetNumVideoDrivers:" + to_string(video_drivers_count));
 
 	now = System::getPerformanceCounter();
 	log.debug("SDL info took " + to_string((double)((now - start) * 1000) / System::GetPerformanceFrequency()) + "ms");

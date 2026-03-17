@@ -419,7 +419,7 @@ public:
 	ArrayList<SDL_Event> events;
 	//static SDL_Event event;
 	//static HashMap<int,SDL_GameController*> *controllersByJoystickNum;
-	static HashMap<SDL_JoystickID, SDL_GameController*> controllersByJoystickID;
+	static HashMap<SDL_JoystickID, SDL_Gamepad*> controllersByJoystickID;
 
 
 #else

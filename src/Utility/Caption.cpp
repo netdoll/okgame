@@ -314,7 +314,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 		this->width = fg_surface->w + OUTLINE_SIZE * 2;
 		this->height = fg_surface->h + OUTLINE_SIZE * 2;
 
-		SDL_FreeSurface(fg_surface);
+		SDL_DestroySurface(fg_surface);
 
 		if (surface == NULL || surface == nullptr)
 		{
@@ -368,7 +368,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 
 	//Main::log.debug("Caption::initTTF loadTextureFromSurface DONE");
 
-	SDL_FreeSurface(surface);
+	SDL_DestroySurface(surface);
 
 	//Main::log.debug("Caption::initTTF SDL_FreeSurface DONE");
 

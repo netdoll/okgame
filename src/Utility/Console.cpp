@@ -377,7 +377,7 @@ void ERROR_draw_error_console()
 
 		if (error_SURFACE != NULL)
 		{
-			SDL_FreeSurface(error_SURFACE.get());
+			SDL_DestroySurface(error_SURFACE.get());
 			error_SURFACE = NULL;
 		}
 		if (error_TEXTURE != NULL)
@@ -482,7 +482,7 @@ void DEBUG_draw_overlays()
 
 			if (error_SURFACE != NULL)
 			{
-				SDL_FreeSurface(error_SURFACE.get());
+				SDL_DestroySurface(error_SURFACE.get());
 				error_SURFACE = NULL;
 			}
 			if (error_TEXTURE != NULL)
@@ -513,7 +513,7 @@ void DEBUG_draw_text(float screenX0, float screenY0, string text, sp<OKColor> co
 
 	if (error_SURFACE != NULL)
 	{
-		SDL_FreeSurface(error_SURFACE.get());
+		SDL_DestroySurface(error_SURFACE.get());
 		error_SURFACE = NULL;
 	}
 	if (error_TEXTURE != NULL)

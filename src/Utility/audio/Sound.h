@@ -22,13 +22,9 @@ public:
 
 
 
-	int channel = -1;
-
-#ifdef USE_SOLOUD
-	SoLoud::Wav *soLoudWave = nullptr;
-#endif
 #ifdef USE_SDL_MIXER
-	Mix_Chunk* mixChunk = nullptr;
+	MIX_Track* mixTrack = nullptr;
+	MIX_Audio* mixAudio = nullptr;
 #endif
 
 	Sound(Engine* g, shared_ptr<AudioFile> f);

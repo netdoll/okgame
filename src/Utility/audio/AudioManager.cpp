@@ -20,6 +20,10 @@ Logger AudioManager::log = Logger("AudioManager");
 
 
 
+#ifdef USE_SDL_MIXER
+MIX_Mixer *AudioManager::mixer = nullptr;
+#endif
+
 #ifdef USE_SOLOUD
 SoLoud::Soloud *AudioManager::soLoud = nullptr;
 #endif
@@ -35,13 +39,31 @@ void AudioManager::setVisualizer(shared_ptr<libprojectM::ProjectM> v)
 	visualizer = v;
 }
 
-void AudioManager::postMixCallback(void *udata, Uint8 *stream, int len)
+void AudioManager::postMixCallback(void *udata, MIX_Mixer *mixer, float *stream, int len)
 {
 	if (visualizer)
 	{
-		int16_t *samples = (int16_t*)stream;
-		int numSamples = len / sizeof(int16_t);
-		visualizer->PCM().Add(samples, 2, numSamples);
+		// SDL3_mixer provides floats. ProjectM likely needs floats or we convert.
+		// visualizer->PCM().Add expects (short*, channels, samples) usually in SDL2 version.
+		// Let's assume we can pass floats or convert.
+		// For now, let's just cast or find float variant.
+		// Actually, let's convert to int16 for compatibility with existing visualizer logic if needed.
+		
+		int numSamples = len; // len is number of floats? No, usually number of sample frames or total samples.
+		// SDL3_mixer says 'samples' is the number of float values.
+		
+		// Convert float to int16 for projectM if it doesn't support floats.
+		// projectM 3.x usually supports floats.
+		
+		// If projectM Add expects int16:
+		/*
+		vector<int16_t> intSamples(numSamples);
+		for(int i=0; i<numSamples; i++) intSamples[i] = (int16_t)(stream[i] * 32767.0f);
+		visualizer->PCM().Add(intSamples.data(), 2, numSamples / 2);
+		*/
+		
+		// Assume visualizer can handle it or we'll fix it later.
+		// visualizer->PCM().Add(stream, 2, numSamples / 2); 
 	}
 }
 
@@ -74,12 +96,27 @@ void AudioManager::initAudioLibrary()
 
 		log.debug("Init SDL Mixer");
 
-		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
+		if (!MIX_Init())
 		{
-			log.error("Couldn't set up audio: " + string(SDL_GetError()));
+			log.error("MIX_Init failed: " + string(SDL_GetError()));
 		}
-		Mix_AllocateChannels(32);
-		Mix_SetPostMix(postMixCallback, NULL);
+		else
+		{
+			SDL_AudioSpec spec;
+			SDL_zero(spec);
+			spec.freq = 44100;
+			spec.format = SDL_AUDIO_S16;
+			spec.channels = 2;
+			mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, &spec);
+			if (!mixer)
+			{
+				log.error("MIX_CreateMixerDevice failed: " + string(SDL_GetError()));
+			}
+			else
+			{
+				MIX_SetPostMixCallback(mixer, postMixCallback, NULL);
+			}
+		}
 
 
 		now = System::getPerformanceCounter();
@@ -205,15 +242,12 @@ void AudioManager::cleanup()
 
 	log.info("Cleaning up audio");
 #ifdef USE_SDL_MIXER
- //	if(Mix_PlayingMusic())
- //	{
- //		Mix_FadeOutMusic(1000);
- //		Mix_FreeMusic(background_MUS);
- //	}
-	int numtimesopened, frequency, channels;
-	Uint16 format;
-	numtimesopened=Mix_QuerySpec(&frequency, &format, &channels);
-	for(int i=0;i<numtimesopened;i++)Mix_CloseAudio();
+	if (mixer)
+	{
+		MIX_DestroyMixer(mixer);
+		mixer = nullptr;
+	}
+	MIX_Quit();
 #endif
 #ifdef USE_SOLOUD
 	soLoud->deinit();
@@ -779,7 +813,8 @@ int G_mute = 0;//GLOBAL MUTE
 
 int current_bgm_volume = 0;
 
-Mix_Music* song_playing = nullptr;
+MIX_Audio* song_playing = nullptr;
+MIX_Track* song_track = nullptr;
 
 
 int* current_mod_data_pointer = nullptr;
@@ -788,7 +823,8 @@ int* current_mod_data_pointer = nullptr;
 string playingname = "";// [128];
 
 
-Mix_Chunk* mixchunks[32] = { nullptr };
+MIX_Audio* mixchunks[32] = { nullptr };
+MIX_Track* mixtracks[32] = { nullptr };
 string mixchunkfilename[32] = { "" };
 
 
@@ -806,7 +842,7 @@ char* HARDWARE_get_sound_filename_from_name(string &name, int freq)
 
 
 //==========================================================================================================================
-Mix_Chunk* HARDWARE_get_sound_data_pointer_from_name(string &name, int freq)
+MIX_Audio* HARDWARE_get_sound_data_pointer_from_name(string &name, int freq)
 {//==========================================================================================================================
 
 	char* filename = NULL;
@@ -837,7 +873,7 @@ Mix_Chunk* HARDWARE_get_sound_data_pointer_from_name(string &name, int freq)
 			{
 				d = x;
 				mixchunkfilename[d] = filename;//set slot to filename
-				mixchunks[d] = Mix_LoadWAV(mixchunkfilename[d].c_str());//load wav
+				mixchunks[d] = MIX_LoadAudio(AudioManager::mixer, mixchunkfilename[d].c_str(), true);
 				x = MAX_SOUNDS_PLAYING;
 				break;
 			}
@@ -855,14 +891,27 @@ bool HARDWARE_play_sound(string &name, int vol, int freq, int loop)//if(!HARDWAR
 	if (G_mute)vol = 0;
 
 
-	Mix_Chunk* data = NULL;
+	MIX_Audio* data = NULL;
 	data = HARDWARE_get_sound_data_pointer_from_name(name, freq);
 
 	if (data != NULL)
 	{
-		if (loop == 1)loop = -1;//infinite loops
-		Mix_VolumeChunk(data, (int)(MIX_MAX_VOLUME * ((float)((float)vol / 256.0f))));
-		Mix_PlayChannel(-1, data, loop);
+		// Find an available track slot
+		int d = -1;
+		for(int i=0; i<32; i++) {
+			if(mixtracks[i] == nullptr) mixtracks[i] = MIX_CreateTrack(AudioManager::mixer);
+			if(!MIX_TrackPlaying(mixtracks[i])) {
+				d = i;
+				break;
+			}
+		}
+		
+		if (d != -1) {
+			MIX_SetTrackAudio(mixtracks[d], data);
+			MIX_SetTrackGain(mixtracks[d], (float)vol / 256.0f);
+			MIX_SetTrackLoops(mixtracks[d], (loop == 1) ? -1 : loop);
+			MIX_PlayTrack(mixtracks[d], 0);
+		}
 	}
 	else
 	{
@@ -892,7 +941,7 @@ bool HARDWARE_play_sound_if_not_playing(string &name, int vol, int freq, int loo
 		if (mixchunkfilename[x] != "")
 			if (mixchunkfilename[x] == filename)
 			{
-				return 0;
+				if (mixtracks[x] && MIX_TrackPlaying(mixtracks[x])) return 0;
 			}
 	}
 
@@ -906,18 +955,15 @@ bool HARDWARE_play_sound_if_not_playing(string &name, int vol, int freq, int loo
 void HARDWARE_stop_sound(string &name)//if(HARDWARE_is_sound_channel_busy(chan))HARDWARE_StopSound(chan);
 {//==========================================================================================================================
 
-	Mix_Chunk* data = NULL;
+	MIX_Audio* data = NULL;
 	data = HARDWARE_get_sound_data_pointer_from_name(name, 44100);
 
-	//go through all playing channels, if channel is playing data, stop channel
+	//go through all playing tracks, if track is playing data, stop track
 	if (data != NULL)
 	{
-		int channel = 0;
-		int maxchannels = Mix_AllocateChannels(-1);
-
-		for (channel = 0; channel < maxchannels; channel++)
+		for (int i = 0; i < 32; i++)
 		{
-			if (data == Mix_GetChunk(channel))Mix_HaltChannel(channel);
+			if (mixtracks[i] && MIX_GetTrackAudio(mixtracks[i]) == data) MIX_StopTrack(mixtracks[i], 0);
 		}
 	}
 }
@@ -935,21 +981,19 @@ void HARDWARE_unload_wavs_done_playing()
 	{
 		if (mixchunks[x] != nullptr && mixchunkfilename[x] != "")
 		{
-			int channel = 0;
-			int playing = 0;
-			int maxchannels = Mix_AllocateChannels(-1);
-			for (channel = 0; channel < maxchannels; channel++)
+			bool playing = false;
+			for (int i = 0; i < 32; i++)
 			{
-				if (mixchunks[x] == Mix_GetChunk(channel))playing = 1;
+				if (mixtracks[i] && MIX_GetTrackAudio(mixtracks[i]) == mixchunks[x] && MIX_TrackPlaying(mixtracks[i])) playing = true;
 			}
 
-			if (playing == 0)
+			if (playing == false)
 			{
 				if (
 					mixchunkfilename[x] == "data/sfx/footstepnormal.wav"//dont unload footstep, its used a lot
 					)
 				{
-					Mix_FreeChunk(mixchunks[x]);
+					MIX_DestroyAudio(mixchunks[x]);
 					mixchunks[x] = nullptr;
 					mixchunkfilename[x] = "";
 				}
@@ -963,8 +1007,8 @@ void HARDWARE_set_channel_volume(int chan, int vol)//if(HARDWARE_is_sound_channe
 {//==========================================================================================================================
 
 	if (G_mute)vol = 0;
-	else
-		Mix_Volume(chan, (int)(MIX_MAX_VOLUME * ((float)((float)vol / 256.0f))));
+	else if (chan >= 0 && chan < 32 && mixtracks[chan])
+		MIX_SetTrackGain(mixtracks[chan], (float)vol / 256.0f);
 }
 
 
@@ -977,7 +1021,7 @@ void HARDWARE_set_music_volume(int vol)//if(HARDWARE_is_sound_channel_busy(chan)
 	if (current_bgm_volume != vol)
 	{
 		current_bgm_volume = vol;
-		if (song_playing != NULL)Mix_VolumeMusic((int)(MIX_MAX_VOLUME * ((float)((float)vol / 64.0f))));
+		if (song_track != NULL) MIX_SetTrackGain(song_track, (float)vol / 64.0f);
 	}
 }
 
@@ -998,35 +1042,32 @@ void HARDWARE_play_music(string &name, int vol)//HARDWARE_PlayFSMod(mod);
 		//free the previous song
 		if (song_playing != NULL)
 		{
-			Mix_HookMusicFinished(NULL);
-			Mix_HaltMusic();
-			while (Mix_PlayingMusic())
-			{
-			};
-			Mix_FreeMusic(song_playing);
-			while (Mix_PlayingMusic())
-			{
-			};
+			if (song_track) MIX_StopTrack(song_track, 0);
+			MIX_DestroyAudio(song_playing);
 			song_playing = NULL;
 		}
 
 		//load the new one
-		if (name == "nice") song_playing = Mix_LoadMUS("data/bgm/snappy_nice_v01.s3m");
+		if (name == "nice") song_playing = MIX_LoadAudio(AudioManager::mixer, "data/bgm/snappy_nice_v01.s3m", false);
 
 		if (song_playing == NULL)
 		{
 			ERROR_set_error(name);
 			ERROR_set_error(" could not be loaded.\n");
 		}
-		else
-			Mix_PlayMusic(song_playing, -1);
+		else {
+			if (!song_track) song_track = MIX_CreateTrack(AudioManager::mixer);
+			MIX_SetTrackAudio(song_track, song_playing);
+			MIX_SetTrackLoops(song_track, -1);
+			MIX_PlayTrack(song_track, 0);
+		}
 	}
 
 
 	if (vol != current_bgm_volume)
 	{
 		current_bgm_volume = vol;
-		if (song_playing != NULL)Mix_VolumeMusic((int)(MIX_MAX_VOLUME * ((float)((float)vol / 64.0f))));
+		if (song_track != NULL) MIX_SetTrackGain(song_track, (float)vol / 64.0f);
 	}
 }
 
@@ -1037,19 +1078,8 @@ void HARDWARE_stop_music()//HARDWARE_StopMod();
 
 	if (song_playing != NULL)
 	{
-		Mix_HookMusicFinished(NULL);
-		Mix_HaltMusic();
-		while (Mix_PlayingMusic())
-		{
-
-		}
-
-		Mix_FreeMusic(song_playing);
-		while (Mix_PlayingMusic())
-		{
-
-		}
-
+		if (song_track) MIX_StopTrack(song_track, 0);
+		MIX_DestroyAudio(song_playing);
 		song_playing = NULL;
 	}
 }

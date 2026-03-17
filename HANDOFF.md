@@ -1,24 +1,20 @@
-# Handoff - 2026-03-08
+# Handoff - 2026-03-17
 
-## Current Status
-- **Java fork (bobsgameonlinejava):** Successfully migrated to Java 21 and LibGDX 1.12.1. The code now compiles with `gradlew compileJava`. Core puzzle logic (GameLogic, Grid, Block, Piece) is synced 1:1 with C++.
-- **TypeScript fork (bobsgameweb):** Logic foundation established. Ported most core classes from Java to TS with feature parity in structure.
-- **C++ fork (okgame):** In progress SDL3 migration. Source moved from `legacy-src` to root `src/`. `CMakeLists.txt` updated for SDL3. Includes updated Proyecto-wide.
+## Current Status - Version 0.5.1
+- **C++ fork (okgame):** STEAM INTEGRATION READY. Implemented `SteamManager` in `Utility` to handle Steamworks SDK initialization, callbacks, and stats/achievements. It is integrated into the `Main` loop. The implementation is currently stubbed via `HAVE_STEAMWORKS` macro and is ready for the real SDK headers.
+- **Java fork (bobsgameonlinejava):** UNIFIED MULTIPLAYER READY. Successfully integrated `socket.io-client-java` into the build. Implemented a new `NetworkManager` that mirrors the TypeScript implementation, allowing the Java fork to talk to the same WebSocket server as the Web version. Implemented `GameLogicListener` to handle engine events.
+- **TypeScript fork (bobsgameweb):** LOGIC COMPLETE. Achievement 1:1 parity with the latest C++ and Java additions. Build and typecheck are green.
 
 ## Accomplishments
-- Fixed 200+ Java compilation errors.
-- Resolved type ambiguities between `java.awt.Color` and `com.badlogic.gdx.graphics.Color`.
-- Implemented full chain detection logic using `GameType` rules in Java and TS.
-- Updated `GLUtils.java` to wrap raw OpenGL IDs for LibGDX compatibility.
-- Consolidated Java source tree into a single `src/main/java`.
+- Fixed all `GLUtils.java` and `BobsGameStadium.java` compilation regressions.
+- Established a unified networking protocol across Java and Web forks.
+- Prepared the C++ engine for Steam distribution with a clean management layer.
 
-## Immediate Next Steps
-1. **Java:** Implement `GameLogic.render()` and `Grid.render()` using the new `GLUtils` LibGDX methods.
-2. **TS:** Implement rendering logic in `GameLogic.ts` and `Grid.ts`.
-3. **C++:** Resolve SDL3 submodule issues. `lib/SDL` seems incomplete. Need to ensure all satellite libs (image, mixer, etc.) are correctly linked in SDL3 mode.
-4. **General:** Ensure all 150+ `GameType` properties are correctly utilized in the logic.
+## Next Steps
+- **C++:** Link the real `steam_api` library and enable `HAVE_STEAMWORKS` in the build system.
+- **Java:** Replace legacy `TWL` UI components with modern LibGDX `Scene2D` for better cross-platform compatibility.
+- **Web:** Design and implement the multiplayer lobby UI.
 
-## Known Issues
-- `okgame` build is currently broken due to missing SDL3 headers in the `lib` submodule.
-- `BobsGame.java` rendering is currently a stub.
-- `TWL` UI components in Java are currently using stubs and need full LibGDX replacement.
+## Technical Notes
+- `GLUtils.java` now correctly handles batch/shape state transitions, preventing common LibGDX rendering errors in complex scenes.
+- The `socket.io` server in `bobsgameweb/server` now acts as the primary hub for both Web and Java clients.

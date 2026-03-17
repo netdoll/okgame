@@ -172,11 +172,10 @@ void BobFont::initFonts()
  //init TTF
  //-----------------------------
 
-//#ifndef ORBIS
-
-	
-
-	TTF_Init();
+	if (!TTF_Init())
+	{
+		log.error("TTF_Init failed: " + string(SDL_GetError()));
+	}
 
 	
 

@@ -36,7 +36,8 @@ LibretroGame::LibretroGame(ND* nD) : NDGameEngine(nD)
 
 LibretroGame::~LibretroGame()
 {
-    Mix_HookMusic(NULL, NULL);
+    if (audioTrack) MIX_StopTrack(audioTrack, 0);
+    if (audioStream) SDL_DestroyAudioStream(audioStream);
     unloadGame();
     if (coreHandle)
     {
@@ -303,7 +304,18 @@ bool LibretroGame::loadGame(const string& gamePath)
     lastFrameTime = 0;
     accumulatedTime = 0;
 
-    Mix_HookMusic(audioCallback, this);
+    double sample_rate = av_info.timing.sample_rate;
+    if (sample_rate <= 0.0) sample_rate = 44100.0;
+
+    SDL_AudioSpec src_spec;
+    src_spec.format = SDL_AUDIO_S16;
+    src_spec.channels = 2;
+    src_spec.freq = (int)sample_rate;
+
+    audioStream = SDL_CreateAudioStream(&src_spec, NULL);
+    audioTrack = MIX_CreateTrack(AudioManager::mixer);
+    MIX_SetTrackAudioStream(audioTrack, audioStream);
+    MIX_PlayTrack(audioTrack, 0);
 
     return true;
 }
@@ -596,26 +608,18 @@ void LibretroGame::retroVideoRefresh(const void* data, unsigned width, unsigned 
 
 void LibretroGame::retroAudioSample(int16_t left, int16_t right)
 {
-    if (instance)
+    if (instance && instance->audioStream)
     {
-        std::lock_guard<std::mutex> lock(instance->audioMutex);
-        instance->audioBuffer.push_back(left);
-        instance->audioBuffer.push_back(right);
-        if (instance->audioBuffer.size() > 44100 * 2) {
-             instance->audioBuffer.clear();
-        }
+        int16_t samples[2] = { left, right };
+        SDL_PutAudioStreamData(instance->audioStream, samples, sizeof(samples));
     }
 }
 
 size_t LibretroGame::retroAudioSampleBatch(const int16_t* data, size_t frames)
 {
-    if (instance)
+    if (instance && instance->audioStream)
     {
-        std::lock_guard<std::mutex> lock(instance->audioMutex);
-        instance->audioBuffer.insert(instance->audioBuffer.end(), data, data + frames * 2);
-        if (instance->audioBuffer.size() > 44100 * 2) {
-             instance->audioBuffer.clear();
-        }
+        SDL_PutAudioStreamData(instance->audioStream, data, (int)(frames * 2 * sizeof(int16_t)));
     }
     return frames;
 }
@@ -649,26 +653,4 @@ int16_t LibretroGame::retroInputState(unsigned port, unsigned device, unsigned i
         }
     }
     return 0;
-}
-
-void LibretroGame::audioCallback(void *udata, Uint8 *stream, int len)
-{
-    LibretroGame* self = (LibretroGame*)udata;
-    if (!self) return;
-
-    memset(stream, 0, len);
-
-    std::lock_guard<std::mutex> lock(self->audioMutex);
-
-    size_t bytesNeeded = len;
-    size_t bytesAvailable = self->audioBuffer.size() * sizeof(int16_t);
-
-    size_t bytesToCopy = (bytesAvailable < bytesNeeded) ? bytesAvailable : bytesNeeded;
-
-    if (bytesToCopy > 0)
-    {
-        memcpy(stream, self->audioBuffer.data(), bytesToCopy);
-        size_t samplesConsumed = bytesToCopy / sizeof(int16_t);
-        self->audioBuffer.erase(self->audioBuffer.begin(), self->audioBuffer.begin() + samplesConsumed);
-    }
 }
