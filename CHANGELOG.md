@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-03-17
+
+### Added
+- **Java Lobby Leaderboard:** `LobbyScreen.java` in the Java fork now displays real-time high scores for Marathon mode, matching the Web client's functionality.
+- **Improved Matchmaking:** Upgraded `NetworkManager.java` to support fetching leaderboards and handling overloaded room management methods.
+- **Aesthetic Polish:** Added emoji icons (🔒) to password-protected rooms in the Java lobby list for better visual feedback.
+
+### Fixed
+- Improved thread safety in Java network callbacks by ensuring all UI updates are posted to the main application thread.
+
+### Changed
+- Bumped version to 1.5.0.
+
 ## [1.4.0] - 2026-03-17
 
 ### Added
