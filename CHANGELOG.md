@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-03-17
+
+### Added
+- Complete API parity in Java `NetworkManager` including `listRooms`, `createRoom`, `joinRoom`, `sendFrame`, and customizable `on` event listeners.
+- Implemented `GameStateData` POJOs in Java `GameLogic` for robust JSON serialization via Gson.
+- Java `Grid` and `GameLogic` now support full `getState()` and `applyState()` operations matching the Web fork.
+- `BobColor` utility in Java now supports `toInt()` and `fromInt(int)` static parsers for compact color serialization.
+
+### Fixed
+- Re-added `NetworkManager` constructor and `removeListener` cleanup in `GameLogic` to prevent memory leaks during state transitions.
+- Adjusted `Block` initialization in `Grid.applyState` to match correct constructor signatures.
+- Cleaned up obsolete test directories in `bobsgameonlinejava` that referenced missing/refactored internal packages.
+
+### Changed
+- Bumped version to 0.9.0.
+- `NetworkManager` now maintains a HashMap of listeners internally, allowing event subscriptions before socket connection is fully established.
+
 ## [0.8.0] - 2026-03-17
 
 ### Added

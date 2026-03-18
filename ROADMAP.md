@@ -1,11 +1,10 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 0.8.0
+**Current Version:** 0.9.0
 
 ## In Progress
 *   [ ] **Steam Integration Polish** (Replace C++ SDK stubs with real Steamworks binaries)
-*   [ ] **Cross-Platform Matchmaking** (Implement lobby system compatible with all forks)
 *   [ ] **Visualizer Shaders** (Modernize projectM shaders for SDL3 compatibility)
 
 ## Completed Features
@@ -22,3 +21,4 @@
 *   [x] **Advanced Web Lobby** (Connect LobbyScene to actual game rooms and sync seed) - *Completed 0.7.0*
 *   [x] **Opponent Board Rendering** (Visualize opponent state in Web multiplayer) - *Completed 0.8.0*
 *   [x] **High-Frequency Frame Sync** (Networked state synchronization in Web fork) - *Completed 0.8.0*
+*   [x] **Cross-Platform Matchmaking Prep** (Java `NetworkManager` JSON parsing and parity) - *Completed 0.9.0*
