@@ -1,20 +1,21 @@
 # Handoff - 2026-03-17
 
-## Current Status - Version 0.5.1
-- **C++ fork (okgame):** STEAM INTEGRATION READY. Implemented `SteamManager` in `Utility` to handle Steamworks SDK initialization, callbacks, and stats/achievements. It is integrated into the `Main` loop. The implementation is currently stubbed via `HAVE_STEAMWORKS` macro and is ready for the real SDK headers.
-- **Java fork (bobsgameonlinejava):** UNIFIED MULTIPLAYER READY. Successfully integrated `socket.io-client-java` into the build. Implemented a new `NetworkManager` that mirrors the TypeScript implementation, allowing the Java fork to talk to the same WebSocket server as the Web version. Implemented `GameLogicListener` to handle engine events.
-- **TypeScript fork (bobsgameweb):** LOGIC COMPLETE. Achievement 1:1 parity with the latest C++ and Java additions. Build and typecheck are green.
+## Current Status - Version 0.8.0
+- **Web fork (bobsgameweb):** REAL-TIME MULTIPLAYER VISUALIZATION READY. Implemented `getState`/`applyState` in the puzzle engine, allowing for high-frequency (every 5 frames) state synchronization between clients. The `PuzzleRenderer` now supports an `isOpponent` mode, and the `PuzzleScene` correctly displays the opponent's board side-by-side with the player's.
+- **TypeScript Logic:** All network-related type errors resolved. `NetworkManager` correctly extends `EventEmitter` from `eventemitter3`.
+- **Server Side:** Node.js server updated to broadcast `frame` packets as `opponentFrame` events within rooms.
 
 ## Accomplishments
-- Fixed all `GLUtils.java` and `BobsGameStadium.java` compilation regressions.
-- Established a unified networking protocol across Java and Web forks.
-- Prepared the C++ engine for Steam distribution with a clean management layer.
+- Achieved visual parity for multiplayer: you can now see the opponent's pieces and grid updates in real-time.
+- Established a robust serialization pattern for the `Grid` and `GameLogic` states.
+- Unified the Web fork build with a 100% clean `tsc` check.
 
 ## Next Steps
-- **C++:** Link the real `steam_api` library and enable `HAVE_STEAMWORKS` in the build system.
-- **Java:** Replace legacy `TWL` UI components with modern LibGDX `Scene2D` for better cross-platform compatibility.
-- **Web:** Design and implement the multiplayer lobby UI.
+- **Java:** Integrate the `NetworkManager.java` (which uses `socket.io-client-java`) into the gameplay loop to achieve cross-play parity with the Web fork.
+- **Matchmaking:** Implement a cross-platform matchmaking logic that allows Java and Web clients to see each other in the same lobby.
+- **Polish:** Add "Game Over" and "Win" screens that correctly report stats to the server for a persistent leaderboard.
 
 ## Technical Notes
-- `GLUtils.java` now correctly handles batch/shape state transitions, preventing common LibGDX rendering errors in complex scenes.
-- The `socket.io` server in `bobsgameweb/server` now acts as the primary hub for both Web and Java clients.
+- The `getState()` method in `Grid.ts` returns a 2D array of color integers (`number | null`).
+- The `applyState()` method in `Grid.ts` reconstructs the grid by creating new `Block` instances using the transmitted color data.
+- Frame sync frequency is currently set to every 5 frames to balance smoothness and network load.

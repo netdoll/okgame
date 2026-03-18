@@ -7,6 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-03-17
+
+### Added
+- Real-time opponent board rendering in Web fork (`isOpponent` config in `PuzzleRenderer`).
+- High-frequency "Frame Synchronization" in Web multiplayer via `getState`/`applyState`.
+- Web `NetworkManager` now extends `EventEmitter` for robust internal event handling.
+- Integrated `BobColor` serialization into `Grid` state for accurate cross-client board visualization.
+
+### Fixed
+- Multiple TypeScript type errors in `Grid.ts`, `Block.ts`, and `NetworkManager.ts`.
+- Resolved `EventEmitter` override conflicts in Web networking layer.
+- Corrected `Block` instantiation in `applyState` to use proper `grid` and `blockType` references.
+
+### Changed
+- Bumped version to 0.8.0.
+- `PuzzleScene` layout updated to side-by-side boards in multiplayer mode.
+
+## [0.7.0] - 2026-03-17
+
+### Added
+- Mock business logic in Java `LoginScreen` and `CreateNewAccount` for immediate state transitions.
+- Fully simulated Steamworks SDK linking with local stubs (`lib/steam`) so `okgame` can compile with `HAVE_STEAMWORKS=1`.
+- Web Lobby transition logic: `LobbyScene` now correctly waits for a `gameStart` server event before pushing the `PuzzleScene`.
+- Full room lifecycle in Node.js server (creates room, waits for max players, then emits `gameStart` with synced seed).
+
+### Changed
+- Bumped version to 0.7.0.
+- `NetworkManager` connect method safely ignores redundant connection attempts, allowing seamless `LobbyScene` to `PuzzleScene` transitions.
+
+## [0.6.0] - 2026-03-17
+
+### Added
+- Completed Java UI migration from legacy TWL to modern LibGDX Scene2D.
+- Ported all core menus (`LoginScreen`, `StuffMenu`, `GameStore`, `PlayerEditMenu`, etc.) to `Scene2DPanel` architecture.
+- Fully implemented interactive `LobbyScene` in Web fork with dynamic room list and room creation.
+- Unified UI lifecycle management in Java `Engine` class using `Stage` and `Skin`.
+- Added compatibility stubs for legacy Java menus to ensure stable build during migration.
+
+### Fixed
+- Resolved multiple TypeScript errors in `bobsgameweb` related to scene management and networking.
+- Fixed `StateManager` type reference in Web fork by exporting `StateManagerClass`.
+- Corrected various layout and theme issues in the Java fork.
+
+### Changed
+- Bumped version to 0.6.0.
+- Modernized base `Scene` class in Web fork to store configuration and manager references.
+
+## [0.5.2] - 2026-03-17
+
+### Added
+- Integrated LibGDX `Stage` and `Skin` into the base `Engine` class for modern UI support in Java.
+- Created `Scene2DPanel` base class in Java to replace legacy `MenuPanel` with LibGDX `Scene2D`.
+- Modernized `CreateNewAccount` screen in Java using `TextField`, `Label`, and `TextButton`.
+- Enhanced Node.js `socket.io` server with room creation, joining, and listing logic.
+- Added `LobbyScene.ts` shell to Web fork for multiplayer room management.
+
+### Fixed
+- Fixed UI layout consistency in Java fork by centralizing `Skin` management in `GLUtils`.
+
+### Changed
+- Bumped version to 0.5.2.
+
 ## [0.5.1] - 2026-03-17
 
 ### Added

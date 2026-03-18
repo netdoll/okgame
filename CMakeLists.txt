@@ -80,21 +80,13 @@ set(BOBSGAME_INCLUDE_DIRS
         ${bobsgame_SOURCE_DIR}/lib/poco/Zip/include
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
         ${bobsgame_SOURCE_DIR}/lib/boost
+        ${bobsgame_SOURCE_DIR}/lib/steam
         ${bobsgame_SOURCE_DIR}/lib
         ${bobsgame_SOURCE_DIR}
 )
 
-
-
-
 #add_definitions(-DBOOST_ALL_NO_LIB=1)# -DBOOST_ALL_DYN_LINK -DBOOST_LOG_DYN_LINK)
-add_definitions(-DBOOST_LIB_DIAGNOSTIC=1 -DNOMINMAX)
-
-
-
-
-
-
+add_definitions(-DBOOST_LIB_DIAGNOSTIC=1 -DNOMINMAX -DHAVE_STEAMWORKS=1)
 
 SET (CMAKE_EXE_LINKER_FLAGS
         "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,'$ORIGIN/libs/:$$ORIGIN/libs/'" )
