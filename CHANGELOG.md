@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-17
+
+### Added
+- **Matchmaking Persistence:** Implemented robust JSON-based file persistence for leaderboards (`leaderboards.json`) in the Node.js server.
+- **Web Lobby Leaderboard:** `LobbyScene.ts` in the Web fork now requests and displays real-time top scores for Marathon mode next to the active room list.
+- **Cross-Platform Score Reporting:** Both Java and Web clients now automatically send telemetry (`score`, `lines`, `time`) to the server's `reportScore` endpoint when a game over event triggers.
+- **Audio Polish (C++):** Updated `AudioManager.cpp` visualizer callbacks to correctly utilize the new `SDL3_mixer` signature (`MIX_PostMixCallback`) and correctly convert float streams to 16-bit integers.
+
+### Fixed
+- Fixed C++ `AudioManager` buffer iteration handling for `projectM` audio data injections.
+- Addressed potential parsing failures in Node.js server when handling stringified JSON payloads from Java's Gson library.
+
+### Changed
+- Bumped version to 1.1.0.
+
 ## [1.0.0] - 2026-03-17
 
 ### Added

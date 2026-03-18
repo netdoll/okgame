@@ -1,12 +1,11 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 1.0.0
+**Current Version:** 1.1.0
 
 ## In Progress
 *   [ ] **Steam Integration Polish** (Replace C++ SDK stubs with real Steamworks binaries)
 *   [ ] **Visualizer Shaders** (Modernize projectM shaders for SDL3 compatibility)
-*   [ ] **Leaderboards & Stats** (Persistent backend for cross-platform high scores)
 
 ## Completed Features
 *   [x] **Puzzle Parity** (1:1 feature parity across C++, Java, TS) - *Completed 0.3.0*
@@ -24,3 +23,5 @@
 *   [x] **High-Frequency Frame Sync** (Networked state synchronization in Web fork) - *Completed 0.8.0*
 *   [x] **Cross-Platform Matchmaking Prep** (Java `NetworkManager` JSON parsing and parity) - *Completed 0.9.0*
 *   [x] **Full Cross-Platform Play** (Synchronized Java/Web multiplayer with opponent boards) - *Completed 1.0.0*
+*   [x] **Leaderboards & Stats** (Persistent JSON backend for cross-platform high scores) - *Completed 1.1.0*
+*   [x] **Audio Polish** (SDL3_mixer integration finalized with visualizer hooks) - *Completed 1.1.0*

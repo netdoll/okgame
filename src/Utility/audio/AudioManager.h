@@ -40,7 +40,7 @@ public:
 
     static shared_ptr<libprojectM::ProjectM> visualizer;
     static void setVisualizer(shared_ptr<libprojectM::ProjectM> v);
-    static void postMixCallback(void *udata, Uint8 *stream, int len);
+    static void postMixCallback(void *userdata, MIX_Mixer *mixer, const SDL_AudioSpec *spec, float *pcm, int samples);
 
 #ifdef USE_SDL_MIXER
 	static MIX_Mixer *mixer;

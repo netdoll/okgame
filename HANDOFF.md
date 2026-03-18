@@ -1,21 +1,21 @@
 # Handoff - 2026-03-17
 
-## Current Status - Version 1.0.0
-- **Project Milestone Reached:** FULL CROSS-PLATFORM MULTIPLAYER PARITY. Both Java and Web clients can now participate in the same multiplayer rooms via the `socket.io` server with full state synchronization and real-time opponent visualization.
-- **Java fork (bobsgameonlinejava):** OPPONENT RENDERING COMPLETE. The Java client now instantiates a separate `GameLogic` for the network opponent and renders their board in real-time. A new `GameSelector` menu allows users to toggle between offline and online modes.
-- **Web fork (bobsgameweb):** STABLE & SYNCED. Web clients maintain 100% parity with the Java logic and correctly parse stringified JSON payloads from the Java client's Gson emitter.
+## Current Status - Version 1.1.0
+- **Node.js Server:** LEADERBOARDS IMPLEMENTED. The server now features persistent leaderboards across game modes (Marathon, Sprint, Ultra), backed by a `leaderboards.json` file. It receives cross-platform telemetry via `reportScore` and serves live top-10 lists.
+- **Web fork (bobsgameweb):** LOBBY POLISH. `LobbyScene.ts` fetches and displays the live Marathon leaderboard alongside active rooms. The puzzle scene successfully dispatches final stats upon game over.
+- **C++ fork (okgame):** AUDIO POLISH COMPLETE. Realigned the `AudioManager` visualizer callback hooks with the new `SDL3_mixer` signature (`MIX_PostMixCallback`) and correctly handled the translation of float streams to int16 format.
 
 ## Accomplishments
-- Achievement of the "Holy Grail" for this development phase: functional real-time cross-play between Java and TypeScript.
-- Clean separation of local vs. network game logic across both platforms.
-- 100% successful build and typecheck status across the entire Omni-Workspace.
+- Implemented robust and persistent high-score tracking, a critical component of multiplayer persistence.
+- Visually integrated global stats into the Web multiplayer lobby.
+- Addressed low-level audio integration friction in the modernized C++ fork.
+- Handled edge cases with JSON payload parsing in the Node.js server to ensure compatibility with Java's Gson serialization.
 
 ## Next Steps
-- **Production Steamworks:** Replace the C++ `lib/steam` stubs with real SDK binaries and test the in-game overlay.
-- **Matchmaking Persistence:** Expand the Node.js server to support persistent user IDs, leaderboards, and actual matchmaking queues.
-- **Audio Polish:** Finalize the SDL3_mixer integration in C++ and ensure all SFX are triggering correctly in synchronized matches.
+- **Steam Integration Polish:** This is the only remaining major task. Since the SDK is stubbed, we'll need the proprietary Steamworks binaries placed into `okgame/lib/steam` to complete and verify the in-game overlay and achievements.
+- **Visualizer Shaders:** Modernize `projectM` shaders for SDL3 compatibility and link them into the updated graphics pipeline.
+- **Client Settings:** Build out the Settings UI in the Web and Java forks to allow users to set their display names (currently hardcoded as "WebPlayer" and "JavaPlayer" in score reports).
 
 ## Technical Notes
-- The Java client connects to the server and automatically creates a room named "JavaRoom" for testing. 
-- Opponent state is applied via `applyState` which reconstructs the grid and piece data from serialized JSON frames.
-- Frame rate for network sync is 12Hz (every 5 frames at 60fps), providing a balance of fluidity and efficiency.
+- Server gracefully handles both Object payloads (from Web) and stringified JSON payloads (from Java) via a safe `JSON.parse` try/catch block.
+- Leaderboards are restricted to the Top 10 entries per mode and are saved to disk synchronously on every update to ensure no data loss.

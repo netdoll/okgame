@@ -39,7 +39,7 @@ void AudioManager::setVisualizer(shared_ptr<libprojectM::ProjectM> v)
 	visualizer = v;
 }
 
-void AudioManager::postMixCallback(void *udata, MIX_Mixer *mixer, float *stream, int len)
+void AudioManager::postMixCallback(void *userdata, MIX_Mixer *mixer, const SDL_AudioSpec *spec, float *pcm, int samples)
 {
 	if (visualizer)
 	{
@@ -49,18 +49,18 @@ void AudioManager::postMixCallback(void *udata, MIX_Mixer *mixer, float *stream,
 		// For now, let's just cast or find float variant.
 		// Actually, let's convert to int16 for compatibility with existing visualizer logic if needed.
 		
-		int numSamples = len; // len is number of floats? No, usually number of sample frames or total samples.
+		int numSamples = samples; // len is number of floats? No, usually number of sample frames or total samples.
 		// SDL3_mixer says 'samples' is the number of float values.
 		
 		// Convert float to int16 for projectM if it doesn't support floats.
 		// projectM 3.x usually supports floats.
 		
 		// If projectM Add expects int16:
-		/*
+		
 		vector<int16_t> intSamples(numSamples);
-		for(int i=0; i<numSamples; i++) intSamples[i] = (int16_t)(stream[i] * 32767.0f);
-		visualizer->PCM().Add(intSamples.data(), 2, numSamples / 2);
-		*/
+		for(int i=0; i<numSamples; i++) intSamples[i] = (int16_t)(pcm[i] * 32767.0f);
+		visualizer->PCM().Add(intSamples.data(), spec->channels, numSamples / spec->channels);
+		
 		
 		// Assume visualizer can handle it or we'll fix it later.
 		// visualizer->PCM().Add(stream, 2, numSamples / 2); 
