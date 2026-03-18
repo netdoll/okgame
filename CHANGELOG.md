@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-03-18
+
+### Added
+- **C++ Network Engine:** Integrated `Poco::Net::WebSocket` and `Poco::JSON` to build a native C++ `NetworkManager` compatible with the Node.js `socket.io` server.
+- **C++ Matchmaking UI:** Created `GameSelectorMenuPanel` and `LobbyMenuPanel` using the native `BobMenu` UI system.
+- **Unified Multiplayer:** C++ engine now natively supports querying the server for active rooms, creating rooms, and joining rooms across platforms.
+
+### Changed
+- Bumped version to 1.6.0.
+- `okgame/CMakeLists.txt` updated to link `Poco::Net`, `Poco::JSON`, `Poco::Util`, and `Poco::Foundation`.
+- Refactored `NDButton` in C++ to open the new `GameSelector` rather than directly launching the offline engine.
+
 ## [1.5.0] - 2026-03-17
 
 ### Added

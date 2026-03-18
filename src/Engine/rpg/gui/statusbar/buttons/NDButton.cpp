@@ -69,12 +69,19 @@ void NDButton::clicked()
 		return;
 	}
 
-	getND()->toggleActivated();
+	if (getND()->getIsActivated() == true)
+	{
+		getND()->toggleActivated();
+	}
+	else
+	{
+		getGUIManager()->openGameSelectorMenu();
+	}
 }
 
 bool NDButton::isAssociatedMenuActive()
 { //=========================================================================================================================
 
-	return getND()->getIsActivated();
+	return getND()->getIsActivated() || getGUIManager()->gameSelectorMenuPanel->getIsActivated();
 }
 

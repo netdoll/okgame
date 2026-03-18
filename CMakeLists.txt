@@ -235,6 +235,8 @@ set(SOURCE_FILES
     src/Engine/nd/NDGameEngine.h
     src/Engine/network/BobNet.cpp
     src/Engine/network/BobNet.h
+    src/Engine/network/NetworkManager.cpp
+    src/Engine/network/NetworkManager.h
     src/Engine/network/GameSave.cpp
     src/Engine/network/GameSave.h
     src/Engine/network/ServerObject.cpp
@@ -327,7 +329,11 @@ set(SOURCE_FILES
     src/Engine/rpg/gui/MenuPanel.h
     src/Engine/rpg/gui/PlayerEditMenu.cpp
     src/Engine/rpg/gui/PlayerEditMenu.h
-    src/Engine/rpg/BGClientEngine.cpp
+    src/Engine/rpg/gui/GameSelectorMenuPanel.cpp
+    src/Engine/rpg/gui/GameSelectorMenuPanel.h
+    src/Engine/rpg/gui/LobbyMenuPanel.cpp
+    src/Engine/rpg/gui/LobbyMenuPanel.h
+    src/Engine/rpg/Avatar.cpp
     src/Engine/rpg/BGClientEngine.h
     src/Engine/rpg/Clock.cpp
     src/Engine/rpg/Clock.h
@@ -504,11 +510,11 @@ target_link_libraries(bobsgame
         SDL3_mixer::SDL3_mixer
         SDL3_ttf::SDL3_ttf
         SDL3_net::SDL3_net
-        #Poco::Foundation
-        #Poco::Net
-        #Poco::Util
+        Poco::Foundation
+        Poco::Net
+        Poco::JSON
+        Poco::Util
         #Poco::XML
-        #Poco::JSON
         #Poco::Zip
         GWEN_static
         #GWEN_opengl

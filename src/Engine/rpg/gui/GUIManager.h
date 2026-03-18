@@ -13,7 +13,9 @@ class Logger;
 
 
 #include "../../state/KeyboardMenuPanel.h"
-
+class PlayerEditMenu;
+class GameSelectorMenuPanel;
+class LobbyMenuPanel;
 
 class GUIManager : public EnginePart
 {
@@ -30,6 +32,9 @@ public:
 
 	shared_ptr<PlayerEditMenu> playerEditMenu = nullptr;
 	//GUI* playerEditGUI = nullptr;
+
+	shared_ptr<GameSelectorMenuPanel> gameSelectorMenuPanel = nullptr;
+	shared_ptr<LobbyMenuPanel> lobbyMenuPanel = nullptr;
 
 	shared_ptr<ArrayList<shared_ptr<GameChallengeNotificationPanel>>> gameChallenges = make_shared<ArrayList<shared_ptr<GameChallengeNotificationPanel>>>();
 	//ArrayList<GUI*> gameChallengesGUIs;
@@ -111,6 +116,12 @@ public:
 
 
 	void openStuffMenu();
+
+
+	void openGameSelectorMenu();
+
+
+	void openLobbyMenu();
 
 
 	void enableAllMenusAndND();

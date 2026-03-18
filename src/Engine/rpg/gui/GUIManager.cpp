@@ -22,6 +22,9 @@ string GUIManager::buttonTheme = "oppositeThemeButton";
 string GUIManager::checkboxTheme = "checkbox";
 string GUIManager::scrollPaneTheme = "themedScrollPane";
 
+#include "GameSelectorMenuPanel.h"
+#include "LobbyMenuPanel.h"
+
 GUIManager::GUIManager(BGClientEngine* g)
 { //=========================================================================================================================
 
@@ -45,6 +48,8 @@ GUIManager::GUIManager(BGClientEngine* g)
 	playerEditMenu = make_shared<PlayerEditMenu>();
 	gameStore = make_shared<GameStore>();
 	keyboardScreen = make_shared<KeyboardMenuPanel>();
+	gameSelectorMenuPanel = make_shared<GameSelectorMenuPanel>();
+	lobbyMenuPanel = make_shared<LobbyMenuPanel>();
 	//
 	//   
 	//   stuffMenuGUI = new GUI(stuffMenu, GLUtils::TWLrenderer);
@@ -84,6 +89,8 @@ void GUIManager::update()
 	gameStore->update();
 	playerEditMenu->update();
 	keyboardScreen->update();
+	gameSelectorMenuPanel->update();
+	lobbyMenuPanel->update();
 
 	for (int i = 0; i < gameChallenges->size(); i++)
 	{
@@ -305,6 +312,18 @@ void GUIManager::openStuffMenu()
 	stuffMenu->setActivated(true);
 }
 
+void GUIManager::openGameSelectorMenu()
+{ //=========================================================================================================================
+	closeAllMenusAndND();
+	gameSelectorMenuPanel->setActivated(true);
+}
+
+void GUIManager::openLobbyMenu()
+{ //=========================================================================================================================
+	closeAllMenusAndND();
+	lobbyMenuPanel->setActivated(true);
+}
+
 void GUIManager::enableAllMenusAndND()
 { //=========================================================================================================================
 
@@ -312,6 +331,8 @@ void GUIManager::enableAllMenusAndND()
 	getND()->setEnabled(true);
 	gameStore->setEnabled(true);
 	stuffMenu->setEnabled(true);
+	gameSelectorMenuPanel->setEnabled(true);
+	lobbyMenuPanel->setEnabled(true);
 }
 
 void GUIManager::disableAllMenusAndND()
@@ -323,6 +344,8 @@ void GUIManager::disableAllMenusAndND()
 	getND()->setEnabled(false);
 	gameStore->setEnabled(false);
 	stuffMenu->setEnabled(false);
+	gameSelectorMenuPanel->setEnabled(false);
+	lobbyMenuPanel->setEnabled(false);
 }
 
 void GUIManager::closeAllMenusAndND()
@@ -332,5 +355,7 @@ void GUIManager::closeAllMenusAndND()
 	closeND();
 	gameStore->setActivated(false);
 	stuffMenu->setActivated(false);
+	gameSelectorMenuPanel->setActivated(false);
+	lobbyMenuPanel->setActivated(false);
 }
 

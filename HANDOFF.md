@@ -1,19 +1,20 @@
-# Handoff - 2026-03-17
+# Handoff - 2026-03-18
 
-## Current Status - Version 1.5.0
-- **Java fork (bobsgameonlinejava):** LOBBY LEADERBOARD READY. `LobbyScreen.java` now requests and displays real-time high scores for Marathon mode, matching the Web client's functionality. The Java client can now see and join rooms created by Web clients and vice versa.
-- **Matchmaking Persistence:** Both Java and Web clients now fully support private rooms and password protection.
-- **Documentation:** Updated all project tracking files to reflect the completion of the Java Leaderboard and matchmaking polish.
+## Current Status - Version 1.6.0
+- **C++ Network Engine (`okgame`):** IMPLEMENTED POCO WEBSOCKETS. To achieve network parity with the Node.js `socket.io` server, created a native C++ `NetworkManager` utilizing `Poco::Net::WebSocket` and `Poco::JSON`. This connects to the EIO=4 websocket endpoint.
+- **C++ Matchmaking UI:** NATIVE C++ LOBBY. Replicated the matchmaking experience for C++ users by creating `GameSelectorMenuPanel` and `LobbyMenuPanel` using the native `BobMenu` framework.
+- **Unified Multiplayer:** The C++ engine now parses `roomList` broadcasts, creates rooms, and joins rooms identically to the Java and TypeScript forks.
 
 ## Accomplishments
-- Achieved full cross-platform matchmaking parity: rooms, passwords, and leaderboards are now identical between Java and TypeScript.
-- Improved the robustness of the Java networking layer with better thread handling and POJO-based JSON serialization.
+- Extended the cross-platform multiplayer architecture to the final frontier: the native C++ engine.
+- Replaced legacy C++ UI buttons and network stubs with functional matchmaking workflows.
+- Maintained a clean build state across all three primary branches (`okgame`, `bobsgameweb`, `bobsgameonlinejava`).
 
 ## Next Steps
-- **Steam Integration Polish:** Replace the C++ `lib/steam` stubs with real SDK binaries and verify the overlay functionality.
-- **Visualizer Shaders:** Modernize `projectM` shaders for SDL3 compatibility once the submodule is restored and linked.
-- **Web UI Polish:** Improve the visual fidelity of the Web lobby using custom CSS or a UI component library to match the "bob's game" theme.
+- **C++ Cross-Play Verification:** Now that the C++ lobby connects, the final step for networking is to hook the C++ `NetworkManager` up to the C++ `BobsGame` engine and `PuzzleRenderer` to visually verify cross-play against Web/Java clients.
+- **Steam Integration Polish:** The `okgame` CMake configuration successfully links to the newly provided Steamworks SDK v1.64. The application needs to be run and tested to verify the Steam overlay and achievements.
+- **Visualizer Shaders:** The `projectM` submodule needs to be correctly initialized or linked to update the visualizer shaders for SDL3 compatibility.
 
 ## Technical Notes
-- `NetworkManager.java` uses `com.google.gson.reflect.TypeToken` to safely deserialize the room list from the server into a typed `ArrayList`.
-- Polling frequency for both rooms and leaderboards is synced at 5 seconds across all platforms.
+- The C++ `NetworkManager` runs a continuous background `std::thread` to handle the blocking `Poco::Net::WebSocket::receiveFrame` calls, pushing incoming JSON payloads to a thread-safe queue. The main engine thread polls `NetworkManager::update()` to safely process these events.
+- C++ `NetworkManager` manually handles the EIO=4 ping/pong heartbeat (responding to '2' with '3') to keep the `socket.io` connection alive.

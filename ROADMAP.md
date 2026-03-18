@@ -1,7 +1,7 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 1.5.0
+**Current Version:** 1.6.0
 
 ## In Progress
 *   [ ] **Steam Integration Polish** (Replace C++ SDK stubs with real Steamworks binaries)
@@ -29,3 +29,5 @@
 *   [x] **Java Lobby Screen** (Dynamic room listing and joining in Java client) - *Completed 1.3.0*
 *   [x] **Matchmaking UI Polish** (Room creation options, private rooms, passwords) - *Completed 1.4.0*
 *   [x] **Java Lobby Leaderboard** (Real-time Marathon high scores in Java client) - *Completed 1.5.0*
+*   [x] **C++ Network Engine** (Poco WebSockets client mirroring Java/Web) - *Completed 1.6.0*
+*   [x] **C++ Matchmaking UI** (`LobbyMenuPanel` and `GameSelectorMenuPanel`) - *Completed 1.6.0*

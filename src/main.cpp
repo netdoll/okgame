@@ -257,6 +257,7 @@ int Main::clientUDPPortStartRange = BobNet::clientUDPPortStartRange;
 string Main::version = "";
 
 BobNet* Main::bobNet = nullptr;
+NetworkManager* Main::networkManager = nullptr;
 Console* Main::console = nullptr;
 Console* Main::rightConsole = nullptr;
 //AudioManager* Main::audioManager = nullptr;
@@ -583,6 +584,8 @@ void Main::mainInit()
 
 	log.debug("Init BobNet");
 	bobNet = new BobNet();
+
+	networkManager = new NetworkManager();
 
 	
 
@@ -1034,6 +1037,8 @@ void Main::updateMain()
 	
 
 	rightConsole->update();
+
+	if (networkManager) networkManager->update();
 
 	
 	//GLUtils::e();

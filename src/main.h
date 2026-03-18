@@ -34,6 +34,7 @@ class GlowTileBackgroundMenuPanel;
 #include "src/Utility/ArrayList.h"
 
 #include "Engine/network/BobNet.h"
+#include "Engine/network/NetworkManager.h"
 #include "Engine/rpg/BGClientEngine.h"
 #include "Puzzle/GlobalSettings.h"
 
@@ -205,6 +206,7 @@ public:
 	// static AudioUtils* audioUtils;
 
 	static BobNet* bobNet;
+	static NetworkManager* networkManager;
 
 
 
