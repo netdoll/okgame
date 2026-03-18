@@ -1,7 +1,7 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 1.1.0
+**Current Version:** 1.2.0
 
 ## In Progress
 *   [ ] **Steam Integration Polish** (Replace C++ SDK stubs with real Steamworks binaries)
@@ -25,3 +25,4 @@
 *   [x] **Full Cross-Platform Play** (Synchronized Java/Web multiplayer with opponent boards) - *Completed 1.0.0*
 *   [x] **Leaderboards & Stats** (Persistent JSON backend for cross-platform high scores) - *Completed 1.1.0*
 *   [x] **Audio Polish** (SDL3_mixer integration finalized with visualizer hooks) - *Completed 1.1.0*
+*   [x] **Client Settings** (Web Settings UI and unique Java player identity) - *Completed 1.2.0*

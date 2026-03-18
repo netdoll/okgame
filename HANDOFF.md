@@ -1,21 +1,18 @@
 # Handoff - 2026-03-17
 
-## Current Status - Version 1.1.0
-- **Node.js Server:** LEADERBOARDS IMPLEMENTED. The server now features persistent leaderboards across game modes (Marathon, Sprint, Ultra), backed by a `leaderboards.json` file. It receives cross-platform telemetry via `reportScore` and serves live top-10 lists.
-- **Web fork (bobsgameweb):** LOBBY POLISH. `LobbyScene.ts` fetches and displays the live Marathon leaderboard alongside active rooms. The puzzle scene successfully dispatches final stats upon game over.
-- **C++ fork (okgame):** AUDIO POLISH COMPLETE. Realigned the `AudioManager` visualizer callback hooks with the new `SDL3_mixer` signature (`MIX_PostMixCallback`) and correctly handled the translation of float streams to int16 format.
+## Current Status - Version 1.2.0
+- **Web fork (bobsgameweb):** SETTINGS UI IMPLEMENTED. Added `SettingsScene.ts` which provides a simple HTML-over-Canvas input field to set the player's name. This name is persisted via `localStorage` and sent to the server during `reportScore` events at the end of a match.
+- **Java fork (bobsgameonlinejava):** UNIQUE IDENTITIES. The Java `BobsGame` instance now generates a pseudo-random identifier (`JavaPlayer_XXX`) on startup to ensure distinct leaderboard entries during testing.
+- **Documentation:** Updated `CHANGELOG.md` and `ROADMAP.md` to accurately reflect the completion of the Leaderboards and Settings tasks.
 
 ## Accomplishments
-- Implemented robust and persistent high-score tracking, a critical component of multiplayer persistence.
-- Visually integrated global stats into the Web multiplayer lobby.
-- Addressed low-level audio integration friction in the modernized C++ fork.
-- Handled edge cases with JSON payload parsing in the Node.js server to ensure compatibility with Java's Gson serialization.
+- Addressed the final immediate UI requirement for the Web and Java forks by allowing distinct player identities in the global leaderboards.
+- Maintained a clean build state across all three primary branches (`okgame`, `bobsgameweb`, `bobsgameonlinejava`).
 
 ## Next Steps
-- **Steam Integration Polish:** This is the only remaining major task. Since the SDK is stubbed, we'll need the proprietary Steamworks binaries placed into `okgame/lib/steam` to complete and verify the in-game overlay and achievements.
-- **Visualizer Shaders:** Modernize `projectM` shaders for SDL3 compatibility and link them into the updated graphics pipeline.
-- **Client Settings:** Build out the Settings UI in the Web and Java forks to allow users to set their display names (currently hardcoded as "WebPlayer" and "JavaPlayer" in score reports).
+- **Steam Integration Polish:** This task remains blocked until the proprietary Steamworks SDK binaries are placed into `okgame/lib/steam`. Once available, the C++ client needs to be tested with the active Steam overlay.
+- **Visualizer Shaders:** The `projectM` submodules and dependencies appear to be commented out or missing from the current `CMakeLists.txt` build path. Once restored, the shaders need to be audited and updated for `SDL3` compatibility.
 
 ## Technical Notes
-- Server gracefully handles both Object payloads (from Web) and stringified JSON payloads (from Java) via a safe `JSON.parse` try/catch block.
-- Leaderboards are restricted to the Top 10 entries per mode and are saved to disk synchronously on every update to ensure no data loss.
+- Web UI uses `document.createElement('input')` overlaid on the PIXI canvas as a lightweight, accessible way to handle text input without requiring complex web-font rendering. It correctly removes itself in the `destroy()` lifecycle hook.
+- The Node.js server gracefully receives these distinct names and updates `leaderboards.json` accordingly.

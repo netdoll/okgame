@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-03-17
+
+### Added
+- **Client Settings UI:** Added `SettingsScene.ts` to the Web fork to allow users to customize their display name.
+- **LocalStorage Persistence:** Web client now saves and loads the `playerName` via the browser's `localStorage` API.
+- **Java Player Identity:** The Java client now appends a pseudo-random identifier (`JavaPlayer_XXX`) to distinguish multiple instances when reporting scores.
+
+### Changed
+- Bumped version to 1.2.0.
+- Web `MainMenuScene.ts` updated to route the "Settings" button to the new `SettingsScene`.
+
 ## [1.1.0] - 2026-03-17
 
 ### Added
