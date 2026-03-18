@@ -294,3 +294,6 @@
 [submodule "lib/CLove"]
 	path = lib/CLove
 	url = https://github.com/fdefelici/clove-unit
+[submodule "lib/projectm"]
+	path = lib/projectm
+	url = https://github.com/projectM-visualizer/projectm

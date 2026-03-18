@@ -1,20 +1,18 @@
 # Handoff - 2026-03-18
 
-## Current Status - Version 1.6.0
-- **C++ Network Engine (`okgame`):** IMPLEMENTED POCO WEBSOCKETS. To achieve network parity with the Node.js `socket.io` server, created a native C++ `NetworkManager` utilizing `Poco::Net::WebSocket` and `Poco::JSON`. This connects to the EIO=4 websocket endpoint.
-- **C++ Matchmaking UI:** NATIVE C++ LOBBY. Replicated the matchmaking experience for C++ users by creating `GameSelectorMenuPanel` and `LobbyMenuPanel` using the native `BobMenu` framework.
-- **Unified Multiplayer:** The C++ engine now parses `roomList` broadcasts, creates rooms, and joins rooms identically to the Java and TypeScript forks.
+## Current Status - Version 1.7.0
+- **Visualizer Shaders Modernization:** RESOLVED SDL3 COMPATIBILITY. Restored the missing `projectM` submodule to `okgame/lib/projectm`. 
+- **Shader Pipeline:** Modified internal C++ code generation files within the `projectM` source (`MilkdropStaticShaders.cpp.in`, `CopyTexture.cpp`, `TransitionShaderManager.cpp`, and `MilkdropSprite.cpp`) to inject `#version 330 core` rather than the deprecated `#version 330`. This is required by strict modern OpenGL Context Profiles, which SDL3 requests by default on modern operating systems.
+- **Build System:** Re-enabled the `add_subdirectory(lib/projectm)` and linked the library to the `bobsgame` executable in `CMakeLists.txt`.
 
 ## Accomplishments
-- Extended the cross-platform multiplayer architecture to the final frontier: the native C++ engine.
-- Replaced legacy C++ UI buttons and network stubs with functional matchmaking workflows.
-- Maintained a clean build state across all three primary branches (`okgame`, `bobsgameweb`, `bobsgameonlinejava`).
+- Addressed the SDL3 shader compilation failures that occur when legacy `#version 330` headers are used in a strictly enforced Core Profile.
+- Restored the missing visualization dependencies.
 
 ## Next Steps
-- **C++ Cross-Play Verification:** Now that the C++ lobby connects, the final step for networking is to hook the C++ `NetworkManager` up to the C++ `BobsGame` engine and `PuzzleRenderer` to visually verify cross-play against Web/Java clients.
-- **Steam Integration Polish:** The `okgame` CMake configuration successfully links to the newly provided Steamworks SDK v1.64. The application needs to be run and tested to verify the Steam overlay and achievements.
-- **Visualizer Shaders:** The `projectM` submodule needs to be correctly initialized or linked to update the visualizer shaders for SDL3 compatibility.
+- **Steam Integration Polish:** This is the final item on the ROADMAP! The C++ client is configured and linked with the real Steamworks SDK v1.64. The application needs to be launched in an environment where the Steam Client is running to verify that the overlay attaches and achievements trigger.
+- **Cross-Platform Playtest:** Conduct a final real-world playtest connecting a C++, Java, and Web client to the same Node.js server.
 
 ## Technical Notes
-- The C++ `NetworkManager` runs a continuous background `std::thread` to handle the blocking `Poco::Net::WebSocket::receiveFrame` calls, pushing incoming JSON payloads to a thread-safe queue. The main engine thread polls `NetworkManager::update()` to safely process these events.
-- C++ `NetworkManager` manually handles the EIO=4 ping/pong heartbeat (responding to '2' with '3') to keep the `socket.io` connection alive.
+- The `.gitmodules` file did not contain an entry for `projectM`, so it was manually added by cloning the official repository directly into `okgame/lib/projectm`.
+- The shader modifications had to be made directly to the `libprojectM` C++ source code because the shaders are compiled into the binary as static strings using CMake's `@STATIC_SHADER_CONTENTS@` replacements, rather than loaded from `.glsl` files at runtime.

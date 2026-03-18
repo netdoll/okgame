@@ -1,11 +1,10 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 1.6.0
+**Current Version:** 1.7.0
 
 ## In Progress
 *   [ ] **Steam Integration Polish** (Replace C++ SDK stubs with real Steamworks binaries)
-*   [ ] **Visualizer Shaders** (Modernize projectM shaders for SDL3 compatibility)
 
 ## Completed Features
 *   [x] **Puzzle Parity** (1:1 feature parity across C++, Java, TS) - *Completed 0.3.0*
@@ -31,3 +30,4 @@
 *   [x] **Java Lobby Leaderboard** (Real-time Marathon high scores in Java client) - *Completed 1.5.0*
 *   [x] **C++ Network Engine** (Poco WebSockets client mirroring Java/Web) - *Completed 1.6.0*
 *   [x] **C++ Matchmaking UI** (`LobbyMenuPanel` and `GameSelectorMenuPanel`) - *Completed 1.6.0*
+*   [x] **Visualizer Shaders** (Modernize projectM shaders for SDL3 compatibility) - *Completed 1.7.0*

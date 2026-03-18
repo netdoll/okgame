@@ -496,7 +496,7 @@ target_compile_definitions(glew PUBLIC GLEW_STATIC)
 add_library(GLEW::glew ALIAS glew)
 add_library(GLEW::glew_s ALIAS glew)
 set(STD_FILESYSTEM_EXISTS TRUE CACHE BOOL "" FORCE)
-#add_subdirectory(lib/projectm)
+add_subdirectory(lib/projectm)
 #add_subdirectory(lib/gambatte-libretro)
 #set_target_properties(gambatte_libretro PROPERTIES
 #    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cores"
@@ -518,7 +518,7 @@ target_link_libraries(bobsgame
         #Poco::Zip
         GWEN_static
         #GWEN_opengl
-        #projectM
+        projectM
         Boost::serialization
 )
 

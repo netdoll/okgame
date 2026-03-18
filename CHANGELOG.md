@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-03-18
+
+### Added
+- **Visualizer Shaders Modernization:** Restored the `projectM` submodule to the C++ build.
+- **SDL3 Compatibility:** Modernized internal `projectM` shader source generation to use `#version 330 core` (replacing the deprecated `#version 330`), satisfying the strict requirements of modern OpenGL context profiles requested by SDL3.
+
+### Changed
+- Bumped version to 1.7.0.
+- Re-enabled `add_subdirectory(lib/projectm)` and linked the `projectM` target in `okgame/CMakeLists.txt`.
+
 ## [1.6.0] - 2026-03-18
 
 ### Added
