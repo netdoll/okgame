@@ -80,10 +80,21 @@ set(BOBSGAME_INCLUDE_DIRS
         ${bobsgame_SOURCE_DIR}/lib/poco/Zip/include
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
         ${bobsgame_SOURCE_DIR}/lib/boost
-        ${bobsgame_SOURCE_DIR}/lib/steam
+        ${bobsgame_SOURCE_DIR}/lib/steam/public
         ${bobsgame_SOURCE_DIR}/lib
         ${bobsgame_SOURCE_DIR}
 )
+
+# Steamworks Libs
+if(WIN32)
+    set(STEAM_LIB_PATH ${bobsgame_SOURCE_DIR}/lib/steam/redistributable_bin/win64)
+    link_directories(${STEAM_LIB_PATH})
+    set(STEAM_LIBS steam_api64)
+elseif(LINUX)
+    set(STEAM_LIB_PATH ${bobsgame_SOURCE_DIR}/lib/steam/redistributable_bin/linux64)
+    link_directories(${STEAM_LIB_PATH})
+    set(STEAM_LIBS steam_api)
+endif()
 
 #add_definitions(-DBOOST_ALL_NO_LIB=1)# -DBOOST_ALL_DYN_LINK -DBOOST_LOG_DYN_LINK)
 add_definitions(-DBOOST_LIB_DIAGNOSTIC=1 -DNOMINMAX -DHAVE_STEAMWORKS=1)
