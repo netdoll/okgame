@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-03-17
+
+### Added
+- **Full Multiplayer Cross-Play:** Java and Web clients can now play in the same rooms with synchronized PRNG seeds and real-time board visualization.
+- **Java Opponent Board:** Implemented real-time opponent board rendering in the Java fork, side-by-side with the player board.
+- **Java GameSelector Menu:** Created a new `Scene2D` menu in Java to choose between local and network play.
+- **Synchronized Room Lifecycle:** Java client now correctly handles `gameStart` and `joinedRoom` events from the Node.js server.
+- **High-Frequency Sync (Java):** Java `BobsGame` now sends state frames every 5 frames, matching the Web fork's performance.
+
+### Fixed
+- Re-added `removeListener` and optimized `NetworkManager` lifecycle in Java to prevent event duplication.
+- Fixed `NullPointerException` risks in Java `Block` and `Grid` state application.
+- Cleaned up Java `BobsGame` initialization flow to support async network events.
+
+### Changed
+- Bumped version to 1.0.0.
+- Unified the "Multiplayer Lobby" experience across both primary forks.
+
 ## [0.9.0] - 2026-03-17
 
 ### Added
