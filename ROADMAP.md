@@ -1,11 +1,12 @@
 # Project Roadmap
 
 ## Status: Active Development
-**Current Version:** 1.2.0
+**Current Version:** 1.3.0
 
 ## In Progress
 *   [ ] **Steam Integration Polish** (Replace C++ SDK stubs with real Steamworks binaries)
 *   [ ] **Visualizer Shaders** (Modernize projectM shaders for SDL3 compatibility)
+*   [ ] **Matchmaking UI Polish** (Room creation options, private rooms, specific game types)
 
 ## Completed Features
 *   [x] **Puzzle Parity** (1:1 feature parity across C++, Java, TS) - *Completed 0.3.0*
@@ -26,3 +27,4 @@
 *   [x] **Leaderboards & Stats** (Persistent JSON backend for cross-platform high scores) - *Completed 1.1.0*
 *   [x] **Audio Polish** (SDL3_mixer integration finalized with visualizer hooks) - *Completed 1.1.0*
 *   [x] **Client Settings** (Web Settings UI and unique Java player identity) - *Completed 1.2.0*
+*   [x] **Java Lobby Screen** (Dynamic room listing and joining in Java client) - *Completed 1.3.0*

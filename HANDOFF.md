@@ -1,18 +1,20 @@
 # Handoff - 2026-03-17
 
-## Current Status - Version 1.2.0
-- **Web fork (bobsgameweb):** SETTINGS UI IMPLEMENTED. Added `SettingsScene.ts` which provides a simple HTML-over-Canvas input field to set the player's name. This name is persisted via `localStorage` and sent to the server during `reportScore` events at the end of a match.
-- **Java fork (bobsgameonlinejava):** UNIQUE IDENTITIES. The Java `BobsGame` instance now generates a pseudo-random identifier (`JavaPlayer_XXX`) on startup to ensure distinct leaderboard entries during testing.
-- **Documentation:** Updated `CHANGELOG.md` and `ROADMAP.md` to accurately reflect the completion of the Leaderboards and Settings tasks.
+## Current Status - Version 1.3.0
+- **Java fork (bobsgameonlinejava):** LOBBY SCREEN IMPLEMENTED. Added `LobbyScreen.java` which provides full feature parity with the Web lobby, including dynamic room listing, room creation, and seed-synchronized game transitions.
+- **Engine Architecture:** Refactored Java `Engine` and `GUIManager` to use cleaner static accessors, resolving initialization order issues and facilitating cross-component communication.
+- **Network Stability:** Unified the Java and Web clients under a persistent `NetworkManager` architecture that survives scene transitions.
 
 ## Accomplishments
-- Addressed the final immediate UI requirement for the Web and Java forks by allowing distinct player identities in the global leaderboards.
-- Maintained a clean build state across all three primary branches (`okgame`, `bobsgameweb`, `bobsgameonlinejava`).
+- Achieved full functional parity between the Java and Web multiplayer lobbies.
+- Resolved significant technical debt in the Java UI framework by standardizing on the `Scene2DPanel` pattern and lazy-loading GUI components.
+- Validated cross-platform room listing and joining between Java and Web clients.
 
 ## Next Steps
-- **Steam Integration Polish:** This task remains blocked until the proprietary Steamworks SDK binaries are placed into `okgame/lib/steam`. Once available, the C++ client needs to be tested with the active Steam overlay.
-- **Visualizer Shaders:** The `projectM` submodules and dependencies appear to be commented out or missing from the current `CMakeLists.txt` build path. Once restored, the shaders need to be audited and updated for `SDL3` compatibility.
+- **Advanced Matchmaking:** Implement private rooms and game configuration (e.g. starting level, game mode) in the lobby UI.
+- **Steam Integration:** Replace `lib/steam` stubs with actual binaries when ready for distribution.
+- **Aesthetics:** Polish the PIXI.js and Scene2D UI skins to match the original "bob's game" aesthetic.
 
 ## Technical Notes
-- Web UI uses `document.createElement('input')` overlaid on the PIXI canvas as a lightweight, accessible way to handle text input without requiring complex web-font rendering. It correctly removes itself in the `destroy()` lifecycle hook.
-- The Node.js server gracefully receives these distinct names and updates `leaderboards.json` accordingly.
+- Java's `LobbyScreen` polls the server for room updates every 5 seconds to match the Web implementation.
+- All network event callbacks in Java use `Gdx.app.postRunnable` to ensure thread safety when updating the UI or game state.

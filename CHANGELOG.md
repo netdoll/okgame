@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-03-17
+
+### Added
+- **Java Lobby Screen:** Implemented a full-featured `LobbyScreen` in Java using `Scene2D`, featuring dynamic room listing, joining, and creation.
+- **Improved Engine Accessors:** Added static accessors (`Engine.GUIManager()`, `Engine.ND()`) to the base `Engine` class for cleaner inter-component communication in Java.
+- **Global Network Manager:** Refactored the Java client to use a persistent, global `NetworkManager` instance, enabling cross-scene multiplayer state.
+
+### Fixed
+- Resolved circular dependency issues in Java UI initialization by lazy-loading components in `GUIManager`.
+- Corrected button routing in Java `GameSelector` to point to the new `LobbyScreen`.
+- Fixed initialization bugs in Java `Block` and `BobColor` serialization.
+
+### Changed
+- Bumped version to 1.3.0.
+- `LobbyScreen` in Java now polls for room updates every 5 seconds, matching the Web fork's behavior.
+
 ## [1.2.0] - 2026-03-17
 
 ### Added
