@@ -160,12 +160,24 @@ BOOST_CLASS_VERSION(FrameState, 1)
 BOOST_CLASS_TRACKING(FrameState, boost::serialization::track_never)
 
 
+enum class GameState
+{
+	IDLE,
+	READY,
+	PLAYING,
+	PAUSED,
+	GAMEOVER,
+};
+
 //=========================================================================================================================
 class GameLogic : public EnginePart
 {//=========================================================================================================================
 public:
 
 	static Logger log;
+
+	GameState state = GameState::IDLE;
+	long long score = 0;
 
 	//static BobColor noColor;
 	//static ArrayList<BobColor> emptyColors;
@@ -654,6 +666,9 @@ public:
 	int cellH();
 	int gridW();
 	int gridH();
+
+	string getState();
+	void applyState(Poco::JSON::Object::Ptr state);
 
 public:
 

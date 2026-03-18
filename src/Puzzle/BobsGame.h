@@ -105,8 +105,13 @@ public:
 	long long timeRenderBegan = 0;
 
 	virtual bool isNetworkGame() override;
+	void setNetworkGame(bool b) { networkGame = b; }
 	void debugKeys();
 	virtual void update() override;
+
+	shared_ptr<GameLogic> opponentGame = nullptr;
+	bool networkGame = false;
+	int frameCount = 0;
 
 	
 	int shaderCount = rand() % GLUtils::bgShaderCount;

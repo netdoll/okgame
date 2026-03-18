@@ -165,6 +165,65 @@ void BobsGame::init()
 	//	player2.controlledByNetwork = true;
 	//	games.add(player2);
 
+	if (networkGame) {
+		opponentGame = make_shared<GameLogic>(this, 0);
+		opponentGame->isNetworkPlayer = true;
+
+		Main::networkManager->setGame(getPlayer1Game().get());
+		Main::networkManager->setOpponentGame(opponentGame.get());
+
+		Main::networkManager->on("gameStart", [this](Poco::Dynamic::Var args) {
+			try {
+				Poco::JSON::Object::Ptr data = args.extract<Poco::JSON::Object::Ptr>();
+				long long seed = data->getValue<long long>("seed");
+				int level = data->getValue<int>("startLevel");
+				log.info("Network Game starting with seed: " + to_string(seed));
+				getPlayer1Game()->randomSeed = seed;
+				getPlayer1Game()->currentLevel = level;
+				getPlayer1Game()->initGame();
+				getPlayer1Game()->state = GameState::PLAYING;
+			}
+			catch (...) {}
+		});
+
+		Main::networkManager->on("chatMessage", [this](Poco::Dynamic::Var args) {
+			try {
+				Poco::JSON::Object::Ptr data = args.extract<Poco::JSON::Object::Ptr>();
+				string name = data->getValue<string>("name");
+				string msg = data->getValue<string>("message");
+				log.info("CHAT: " + name + ": " + msg);
+				// TODO: Add to a visual chat log
+			}
+			catch (...) {}
+		});
+
+		Main::networkManager->on("opponentFrame", [this](Poco::Dynamic::Var args) {
+			if (opponentGame) {
+				try {
+					string json = args.convert<string>();
+					Poco::JSON::Parser parser;
+					Poco::JSON::Object::Ptr data = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+					opponentGame->applyState(data);
+				}
+				catch (...) {}
+			}
+		});
+	}
+
+}
+
+void BobsGame::update() {
+	super::update();
+
+	if (networkGame) {
+		frameCount++;
+		if (frameCount % 5 == 0) { // 12Hz sync
+			Main::networkManager->sendFrame(getPlayer1Game()->getState());
+		}
+		if (opponentGame) {
+			opponentGame->update(1, 2);
+		}
+	}
 }
 
 //=========================================================================================================================
@@ -216,6 +275,7 @@ void BobsGame::initPlayer()
 //=========================================================================================================================
 bool BobsGame::isMultiplayer()
 {//=========================================================================================================================
+	if (networkGame) return true;
 	if (networkMultiplayer)return true;
 	if (localMultiplayer)return true;
 	if (players.size() > 1)return true;
@@ -227,6 +287,7 @@ bool BobsGame::isMultiplayer()
 //=========================================================================================================================
 bool BobsGame::isNetworkGame()
 {//=========================================================================================================================
+	if (networkGame) return true;
 	for (int i = 0; i < players.size(); i++)
 	{
 		if (players.get(i)->isNetworkPlayer())return true;
@@ -676,6 +737,12 @@ void BobsGame::render()
 			{
 				GLUtils::useShader(0);
 			}
+		}
+
+		if (networkGame && opponentGame) {
+			renderGameIntoFBO(opponentGame, false);
+			GLUtils::setPostColorFilterFBO();
+			GLUtils::drawBobsGameFBO(opponentGame->playingFieldX0, opponentGame->playingFieldX1, opponentGame->playingFieldY0, opponentGame->playingFieldY1);
 		}
 
 

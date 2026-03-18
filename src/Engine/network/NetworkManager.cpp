@@ -89,7 +89,11 @@ void NetworkManager::handleMessage(const std::string& json) {
         Poco::JSON::Array::Ptr arr = result.extract<Poco::JSON::Array::Ptr>();
         
         std::string eventName = arr->get(0).toString();
-        Poco::Dynamic::Var data = arr->get(1);
+        Poco::Dynamic::Var data = (arr->size() > 1) ? arr->get(1) : Poco::Dynamic::Var();
+
+        if (_callbacks.count(eventName)) {
+            _callbacks[eventName](data);
+        }
 
         if (eventName == "roomList") {
             if (roomListCallback) {
@@ -155,6 +159,13 @@ void NetworkManager::sendFrame(const std::string& stateJson) {
     if (!_ws) return;
     std::string msg = "42[\"frame\",\"" + stateJson + "\"]"; // Manual string concat for performance
     _ws->sendFrame(msg.c_str(), msg.length(), Poco::Net::WebSocket::FRAME_TEXT);
+}
+
+void NetworkManager::sendChat(const std::string& message, const std::string& name) {
+    Poco::JSON::Object::Ptr obj = new Poco::JSON::Object();
+    obj->set("message", message);
+    obj->set("name", name);
+    sendEvent("chatMessage", obj);
 }
 
 void NetworkManager::setGame(GameLogic* game) { _game = game; }

@@ -128,6 +128,11 @@ public:
 	void decodeGameSave(string s);
 
 
+    void saveLocal();
+    void loadLocal();
+    void syncWithSteamCloud();
+
+
 	static string getCountryStringFromCode(const string& countryCode);
 
 

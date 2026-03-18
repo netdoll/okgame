@@ -3603,6 +3603,67 @@ int GameLogic::gridH()
 	return currentGameType->gridHeight + GameLogic::aboveGridBuffer;
 }
 
+string GameLogic::getState() {
+    Poco::JSON::Object obj;
+    obj.set("grid", grid->getState());
+    if (currentPiece) {
+        Poco::JSON::Object piece;
+        piece.set("type", currentPiece->pieceType->name);
+        piece.set("x", currentPiece->xGrid);
+        piece.set("y", currentPiece->yGrid);
+        piece.set("rot", currentPiece->currentRotation);
+        obj.set("currentPiece", piece);
+    }
+    obj.set("score", (long long)score);
+    obj.set("level", currentLevel);
+    obj.set("lines", linesClearedTotal);
+    obj.set("state", (int)state);
+    
+    stringstream ss;
+    obj.stringify(ss);
+    return ss.str();
+}
+
+void GameLogic::applyState(Poco::JSON::Object::Ptr stateObj) {
+    if (!stateObj) return;
+    
+    if (stateObj->has("grid")) {
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var result = parser.parse(stateObj->getValue<string>("grid"));
+        grid->applyState(result.extract<Poco::JSON::Array::Ptr>());
+    }
+    
+    score = stateObj->getValue<long long>("score");
+    currentLevel = stateObj->getValue<int>("level");
+    linesClearedTotal = stateObj->getValue<int>("lines");
+    this->state = (GameState)stateObj->getValue<int>("state");
+
+    if (stateObj->has("currentPiece") && !stateObj->get("currentPiece").isEmpty()) {
+        Poco::JSON::Object::Ptr pObj = stateObj->getObject("currentPiece");
+        string typeName = pObj->getValue<string>("type");
+        
+        shared_ptr<PieceType> pt = nullptr;
+        ArrayList<shared_ptr<PieceType>> types = currentGameType->getNormalPieceTypes(getCurrentDifficulty());
+        for (int i = 0; i < types.size(); i++) {
+            if (types.get(i)->name == typeName) {
+                pt = types.get(i);
+                break;
+            }
+        }
+        
+        if (pt) {
+            ArrayList<shared_ptr<BlockType>> bt = currentGameType->getNormalBlockTypes(getCurrentDifficulty());
+            currentPiece = make_shared<Piece>(this, grid.get(), pt, bt);
+            currentPiece->init();
+            currentPiece->xGrid = pObj->getValue<int>("x");
+            currentPiece->yGrid = pObj->getValue<int>("y");
+            currentPiece->currentRotation = pObj->getValue<int>("rot");
+        }
+    } else {
+        currentPiece = nullptr;
+    }
+}
+
 //=========================================================================================================================
 long long GameLogic::ticks()
 {//=========================================================================================================================

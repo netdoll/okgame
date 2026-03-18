@@ -76,3 +76,38 @@ string SteamManager::getPersonaName() {
 #endif
     return "Player";
 }
+
+bool SteamManager::writeCloudFile(const string& filename, const string& data) {
+#ifdef HAVE_STEAMWORKS
+    if (SteamRemoteStorage()) {
+        return SteamRemoteStorage()->FileWrite(filename.c_str(), data.c_str(), (int32)data.length());
+    }
+#endif
+    return false;
+}
+
+string SteamManager::readCloudFile(const string& filename) {
+#ifdef HAVE_STEAMWORKS
+    if (SteamRemoteStorage() && SteamRemoteStorage()->FileExists(filename.c_str())) {
+        int32 size = SteamRemoteStorage()->GetFileSize(filename.c_str());
+        if (size > 0) {
+            char* buffer = new char[size + 1];
+            int32 bytesRead = SteamRemoteStorage()->FileRead(filename.c_str(), buffer, size);
+            buffer[bytesRead] = '\0';
+            string data(buffer);
+            delete[] buffer;
+            return data;
+        }
+    }
+#endif
+    return "";
+}
+
+bool SteamManager::isCloudEnabled() {
+#ifdef HAVE_STEAMWORKS
+    if (SteamRemoteStorage()) {
+        return SteamRemoteStorage()->IsCloudEnabledForAccount();
+    }
+#endif
+    return false;
+}

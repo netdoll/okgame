@@ -16,11 +16,15 @@ public:
 
 private:
     void onRoomListReceived(const std::vector<LobbyRoom>& rooms);
+    void onChatMessageReceived(Poco::Dynamic::Var data);
     void startNetworkGame(long long seed);
 
     std::vector<LobbyRoom> m_rooms;
+    std::vector<std::string> m_chatMessages;
+    std::mutex m_chatMutex;
     std::mutex m_roomMutex;
     bool m_roomsUpdated = false;
+    bool m_chatUpdated = false;
     
     long long m_lastRefreshTime = 0;
 };

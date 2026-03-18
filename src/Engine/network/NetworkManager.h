@@ -42,15 +42,21 @@ public:
     void createRoom(const std::string& name, bool isPrivate = false, const std::string& password = "");
     void joinRoom(const std::string& id, const std::string& password = "");
     void sendFrame(const std::string& stateJson);
+    void sendChat(const std::string& message, const std::string& name);
     void reportScore(const std::string& mode, const std::string& name, long score, int lines, int time);
 
     typedef std::function<void(const std::vector<LobbyRoom>&)> RoomListCallback;
     void setRoomListCallback(RoomListCallback cb) { roomListCallback = cb; }
 
+    typedef std::function<void(Poco::Dynamic::Var)> EventCallback;
+    void on(const std::string& name, EventCallback cb) { _callbacks[name] = cb; }
+
 private:
     void threadLoop();
     void handleMessage(const std::string& msg);
     void sendEvent(const std::string& name, const Poco::JSON::Object::Ptr& data);
+
+    std::map<std::string, EventCallback> _callbacks;
 
     Poco::Net::WebSocket* _ws = nullptr;
     std::thread _thread;

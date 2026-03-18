@@ -3943,12 +3943,52 @@ int Grid::cellH()
 //=========================================================================================================================
 GameType* Grid::getGameType()
 {//=========================================================================================================================
-	return getGameLogic()->currentGameType;
+	return getGameLogic()->currentGameType.get();
 }
 
 //=========================================================================================================================
 GameLogic* Grid::getGameLogic()
 {//=========================================================================================================================
 	return game;
+}
+
+string Grid::getState() {
+    Poco::JSON::Array arr;
+    int h = getHeight();
+    int w = getWidth();
+    for (int y = 0; y < h; y++) {
+        Poco::JSON::Array row;
+        for (int x = 0; x < w; x++) {
+            shared_ptr<Block> b = get(x, y);
+            if (b) row.add(b->getColor().toInt());
+            else row.add(Poco::Dynamic::Var());
+        }
+        arr.add(row);
+    }
+    stringstream ss;
+    arr.stringify(ss);
+    return ss.str();
+}
+
+void Grid::applyState(Poco::JSON::Array::Ptr state) {
+    if (!state) return;
+    int h = (int)state->size();
+    if (h == 0) return;
+    int w = (int)state->getArray(0)->size();
+    reformat(w, h);
+    
+    shared_ptr<BlockType> bt = game->currentGameType->getNormalBlockTypes(game->getCurrentDifficulty()).get(0);
+    
+    for (int y = 0; y < h; y++) {
+        Poco::JSON::Array::Ptr row = state->getArray(y);
+        for (int x = 0; x < w; x++) {
+            if (!row->get(x).isEmpty()) {
+                int colorInt = row->get(x).convert<int>();
+                shared_ptr<Block> b = make_shared<Block>(game, this, nullptr, bt);
+                b->getColor().copyFrom(BobColor::fromInt(colorInt));
+                add(x, y, b);
+            }
+        }
+    }
 }
 

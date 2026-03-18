@@ -21,6 +21,10 @@ public:
     static uint64_t getSteamID();
     static string getPersonaName();
 
+    static bool writeCloudFile(const string& filename, const string& data);
+    static string readCloudFile(const string& filename);
+    static bool isCloudEnabled();
+
 private:
 #ifdef HAVE_STEAMWORKS
     // Steam callbacks

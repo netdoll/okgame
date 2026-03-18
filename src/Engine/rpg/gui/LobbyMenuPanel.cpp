@@ -24,6 +24,19 @@ void LobbyMenuPanel::onRoomListReceived(const std::vector<LobbyRoom>& rooms)
     m_roomsUpdated = true;
 }
 
+void LobbyMenuPanel::onChatMessageReceived(Poco::Dynamic::Var data)
+{
+    try {
+        Poco::JSON::Object::Ptr obj = data.extract<Poco::JSON::Object::Ptr>();
+        std::string name = obj->getValue<std::string>("name");
+        std::string msg = obj->getValue<std::string>("message");
+        std::lock_guard<std::mutex> lock(m_chatMutex);
+        m_chatMessages.push_back(name + ": " + msg);
+        if (m_chatMessages.size() > 5) m_chatMessages.erase(m_chatMessages.begin());
+        m_chatUpdated = true;
+    } catch (...) {}
+}
+
 void LobbyMenuPanel::update()
 {
     MenuPanel::update();
@@ -36,12 +49,17 @@ void LobbyMenuPanel::update()
             {
                 menu = new BobMenu(getEngine(), "Multiplayer Lobby");
                 menu->add("Create Room");
+                menu->add("Send Message");
                 menu->addInfo("--- Rooms ---");
                 menu->add("Back");
                 
                 Main::networkManager->setRoomListCallback([this](const std::vector<LobbyRoom>& rooms){
                     this->onRoomListReceived(rooms);
                 });
+                Main::networkManager->on("chatMessage", [this](Poco::Dynamic::Var data){
+                    this->onChatMessageReceived(data);
+                });
+
                 Main::networkManager->connect("http://localhost:6065");
                 Main::networkManager->listRooms();
                 m_lastRefreshTime = System::getTicks();
@@ -55,15 +73,26 @@ void LobbyMenuPanel::update()
 
             {
                 std::lock_guard<std::mutex> lock(m_roomMutex);
-                if (m_roomsUpdated) {
+                std::lock_guard<std::mutex> lockChat(m_chatMutex);
+                if (m_roomsUpdated || m_chatUpdated) {
                     menu->clear();
                     menu->add("Create Room");
+                    menu->add("Send Message");
+                    
+                    if (!m_chatMessages.empty()) {
+                        menu->addInfo("--- Chat ---");
+                        for (const auto& msg : m_chatMessages) {
+                            menu->addInfo(msg);
+                        }
+                    }
+
                     menu->addInfo("--- Rooms ---");
                     for (const auto& room : m_rooms) {
                         menu->add(room.name + " (" + std::to_string(room.players) + "/" + std::to_string(room.maxPlayers) + ")", room.id);
                     }
                     menu->add("Back");
                     m_roomsUpdated = false;
+                    m_chatUpdated = false;
                 }
             }
 
@@ -84,6 +113,11 @@ void LobbyMenuPanel::update()
                     {
                         Main::networkManager->createRoom("C++ Room");
                     }
+                    else if (menu->isSelectedID("Send Message", clicked, mx, my))
+                    {
+                        // TODO: Open native keyboard and Main::networkManager->sendChat(text, "C++Player");
+                        Main::networkManager->sendChat("Hello from C++!", "C++Player");
+                    }
                     else if (menu->isSelectedID("Back", clicked, mx, my))
                     {
                         setActivated(false);
@@ -91,7 +125,7 @@ void LobbyMenuPanel::update()
                     else {
                         // Check if it's a room ID
                         string id = menu->getSelectedMenuItem()->id;
-                        if (id != "" && id != "Create Room" && id != "Back") {
+                        if (id != "" && id != "Create Room" && id != "Back" && id != "Send Message") {
                             Main::networkManager->joinRoom(id);
                         }
                     }

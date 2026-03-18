@@ -195,5 +195,8 @@ public:
 	int cellH();
 	GameType* getGameType();
 	GameLogic* getGameLogic();
+
+	string getState();
+	void applyState(Poco::JSON::Array::Ptr state);
 };
 

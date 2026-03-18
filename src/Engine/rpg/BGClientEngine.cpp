@@ -1039,6 +1039,7 @@ void BGClientEngine::initializeGameFromSave_S()
 
 
 	setGameInitializedFromSave_S(true);
+    getGameSave_S().syncWithSteamCloud();
 }
 
 //The following method was originally marked 'synchronized':
