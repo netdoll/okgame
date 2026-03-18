@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-03-17
+
+### Added
+- **Matchmaking UI Polish:** Added support for creating and joining private rooms with passwords across both Java and Web clients.
+- **Node.js Server:** Server now properly parses stringified objects when receiving `createRoom` and `joinRoom` events to support multiple client architectures.
+
+### Changed
+- Bumped version to 1.4.0.
+
 ## [1.3.0] - 2026-03-17
 
 ### Added
