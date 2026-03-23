@@ -1,33 +1,29 @@
-# Project Roadmap
+# Project Roadmap: okgame (C++)
 
 ## Status: Active Development
-**Current Version:** 1.7.0
+**Current Version:** 2.0.0
 
 ## In Progress
 *   [ ] **Steam Integration Polish** (Replace C++ SDK stubs with real Steamworks binaries)
+*   [ ] **Performance Profiling** (Identify bottlenecks in high-frequency frame sync)
 
 ## Completed Features
-*   [x] **Puzzle Parity** (1:1 feature parity across C++, Java, TS) - *Completed 0.3.0*
-*   [x] **Java Restoration** (Compilation fixed, Java 21/LibGDX 1.14.0) - *Completed 0.4.0*
-*   [x] **Advanced Java Renderer** (Sprite/Shader support, optimized batching) - *Completed 0.5.0*
-*   [x] **Web Multiplayer Logic** (NetworkManager + socket.io backend) - *Completed 0.5.0*
-*   [x] **SDL3 Transition** (Events, Gamepad, Audio, Video modernized) - *Completed 0.5.0*
-*   [x] **Java WebSocket Integration** (`socket.io-client-java` parity with Web) - *Completed 0.5.1*
-*   [x] **Java UI Modernization** (Complete migration of all menus to `Scene2D`) - *Completed 0.6.0*
-*   [x] **Web Multiplayer Lobby** (Interactive room management in `LobbyScene.ts`) - *Completed 0.6.0*
-*   [x] **Steamworks SDK Stub** (C++ `SteamManager` fully mock-linked) - *Completed 0.7.0*
-*   [x] **Full Feature Java UI** (Mock login/account state transition logic) - *Completed 0.7.0*
-*   [x] **Advanced Web Lobby** (Connect LobbyScene to actual game rooms and sync seed) - *Completed 0.7.0*
-*   [x] **Opponent Board Rendering** (Visualize opponent state in Web multiplayer) - *Completed 0.8.0*
-*   [x] **High-Frequency Frame Sync** (Networked state synchronization in Web fork) - *Completed 0.8.0*
-*   [x] **Cross-Platform Matchmaking Prep** (Java `NetworkManager` JSON parsing and parity) - *Completed 0.9.0*
-*   [x] **Full Cross-Platform Play** (Synchronized Java/Web multiplayer with opponent boards) - *Completed 1.0.0*
-*   [x] **Leaderboards & Stats** (Persistent JSON backend for cross-platform high scores) - *Completed 1.1.0*
-*   [x] **Audio Polish** (SDL3_mixer integration finalized with visualizer hooks) - *Completed 1.1.0*
-*   [x] **Client Settings** (Web Settings UI and unique Java player identity) - *Completed 1.2.0*
-*   [x] **Java Lobby Screen** (Dynamic room listing and joining in Java client) - *Completed 1.3.0*
-*   [x] **Matchmaking UI Polish** (Room creation options, private rooms, passwords) - *Completed 1.4.0*
-*   [x] **Java Lobby Leaderboard** (Real-time Marathon high scores in Java client) - *Completed 1.5.0*
-*   [x] **C++ Network Engine** (Poco WebSockets client mirroring Java/Web) - *Completed 1.6.0*
-*   [x] **C++ Matchmaking UI** (`LobbyMenuPanel` and `GameSelectorMenuPanel`) - *Completed 1.6.0*
-*   [x] **Visualizer Shaders** (Modernize projectM shaders for SDL3 compatibility) - *Completed 1.7.0*
+*   [x] **Unified Release (2.0.0)** (Finalized cross-platform parity and synchronization) - *Completed March 18, 2026*
+*   [x] **Visualizer Shaders (1.7.0)** (Modernize projectM shaders for SDL3 compatibility)
+*   [x] **C++ Matchmaking UI (1.6.0)** (`LobbyMenuPanel` and `GameSelectorMenuPanel`)
+*   [x] **C++ Network Engine (1.6.0)** (Poco WebSockets client mirroring Java/Web)
+*   [x] **Java Lobby Leaderboard (1.5.0)** (Real-time Marathon high scores in Java client)
+*   [x] **Matchmaking UI Polish (1.4.0)** (Room creation options, private rooms, passwords)
+*   [x] **Java Lobby Screen (1.3.0)** (Dynamic room listing and joining in Java client)
+*   [x] **Client Settings (1.2.0)** (Web Settings UI and unique Java player identity)
+*   [x] **Audio Polish (1.1.0)** (SDL3_mixer integration finalized with visualizer hooks)
+*   [x] **Leaderboards & Stats (1.1.0)** (Persistent JSON backend for cross-platform high scores)
+*   [x] **Full Cross-Platform Play (1.0.0)** (Synchronized Java/Web multiplayer with opponent boards)
+*   [x] **Puzzle Parity** (1:1 feature parity across C++, Java, TS)
+*   [x] **SDL3 Transition** (Events, Gamepad, Audio, Video modernized)
+*   [x] **Steam Cloud Save** (Bidirectional synchronization of GameSave data)
+
+## Future Roadmap
+- Tournament mode orchestration.
+- Expanded Visualizer Gallery.
+- Advanced Lua scripting hooks.
