@@ -34,7 +34,7 @@
 #include "Gwen/Input/gwen_input_sdl2.h"
 #include "Gwen/InputHandler.h"
 
-#include "SDL.h"
+#include <SDL3/SDL.h>
 
 namespace Gwen
 {

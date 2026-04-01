@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco\lib\SDL_image\external\zlib-build\test\add_subdirectory_test\build_output\CMakeFiles\4b69f6a7070aa3e0b74875c5aeca4bf5\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{824430F0-D628-3883-9291-53C5C8C4DA6F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\GWEN-master\gwen\build_output\CMakeFiles\9319c66d25ac4c4fe18e9e436c187131\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{2210879F-9687-3C8E-9ED0-6EFC7155F730}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

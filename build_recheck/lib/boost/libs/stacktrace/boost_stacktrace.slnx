@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="../assert/boost_assert.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b24fba8b-c2b3-3ba8-8263-26d2d32f99e7">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../core/boost_core.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c209b925-d8da-338a-82de-dc8996d6a6a3">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="boost_stacktrace_basic.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="4467f26a-ee87-3969-aa81-df07bc5a2dca">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+	</Project>
+	<Project Path="boost_stacktrace_from_exception.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="96fb923f-3e17-3f43-8a38-6e02f884a367">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="boost_stacktrace_windbg.vcxproj"/>
+	</Project>
+	<Project Path="boost_stacktrace_noop.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e84ff2c9-fa91-3350-a75b-1a4845be25a4">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+	</Project>
+	<Project Path="boost_stacktrace_windbg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="0ef485be-000e-3285-bc89-185eed1ac62a">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+	</Project>
+	<Project Path="boost_stacktrace_windbg_cached.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e9d77f32-9380-3574-ba88-40e28c118228">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1326517e-20f5-3f99-a840-d0cca1dca81b" DefaultStartup="true">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="boost_stacktrace_basic.vcxproj"/>
+			<BuildDependency Project="boost_stacktrace_from_exception.vcxproj"/>
+			<BuildDependency Project="boost_stacktrace_noop.vcxproj"/>
+			<BuildDependency Project="boost_stacktrace_windbg.vcxproj"/>
+			<BuildDependency Project="boost_stacktrace_windbg_cached.vcxproj"/>
+		</Project>
+		<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="15376deb-cb9a-3841-a585-5ccd0060dbe4">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5a7dae67-ed67-3258-a3de-bee352bfa768">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7b731cc4-1e77-3fc9-963b-ac41027d6c57"/>
+	</Folder>
+</Solution>

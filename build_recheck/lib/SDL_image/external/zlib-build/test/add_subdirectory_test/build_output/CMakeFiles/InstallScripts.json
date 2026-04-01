@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/cmake_install.cmake",
+		"C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/cmake_install.cmake",
+		"C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/contrib/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

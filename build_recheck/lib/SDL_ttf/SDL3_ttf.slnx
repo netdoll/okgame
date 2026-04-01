@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="../SDL/SDL3-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="df00b489-6f78-390f-a56c-c6aee5ab6c99">
+		<BuildDependency Project="../SDL/SDL_uclibc.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="SDL3_ttf-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="36cc1c34-62fc-3a35-b252-20a675035304">
+		<BuildDependency Project="../SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/harfbuzz-build/harfbuzz.vcxproj"/>
+		<BuildDependency Project="external/plutosvg-guild/plutosvg.vcxproj"/>
+		<BuildDependency Project="external/plutovg-build/plutovg.vcxproj"/>
+	</Project>
+	<Project Path="../SDL/SDL_uclibc.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="586c5f67-909d-333a-8d4f-d7297a2da21b">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/freetype-build/freetype.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="46dbaae6-7e95-3041-8f17-7596f5930690">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/harfbuzz-build/harfbuzz.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e4e3c764-6c7f-3b8f-a2d7-668e37262bfa">
+		<BuildDependency Project="external/freetype-build/freetype.vcxproj"/>
+	</Project>
+	<Project Path="external/plutosvg-guild/plutosvg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e5717ded-9890-3c0b-967b-89b58fcab7c6">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/harfbuzz-build/harfbuzz.vcxproj"/>
+		<BuildDependency Project="external/plutovg-build/plutovg.vcxproj"/>
+	</Project>
+	<Project Path="external/plutovg-build/plutovg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9e9d72b7-59ec-34f6-85c5-5fdb271591af">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1326517e-20f5-3f99-a840-d0cca1dca81b" DefaultStartup="true">
+			<BuildDependency Project="SDL3_ttf-shared.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		</Project>
+		<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="15376deb-cb9a-3841-a585-5ccd0060dbe4">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5a7dae67-ed67-3258-a3de-bee352bfa768">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7b731cc4-1e77-3fc9-963b-ac41027d6c57"/>
+	</Folder>
+</Solution>

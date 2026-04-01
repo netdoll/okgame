@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\basic_text_wiprimitive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\basic_text_woprimitive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\binary_wiarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\binary_woarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\polymorphic_text_wiarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\polymorphic_text_woarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\polymorphic_xml_wiarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\polymorphic_xml_woarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\text_wiarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\text_woarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\xml_wgrammar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\xml_wiarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\src\xml_woarchive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\serialization\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\extra\boost_assert.natvis" />
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\extra\boost_unordered.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6713A9B2-4799-3208-8149-505BE2FEEA76}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

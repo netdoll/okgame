@@ -1,0 +1,10 @@
+^C:\USERS\HYPER\WORKSPACE\BG\OKGAME\LIB\SDL_IMAGE\EXTERNAL\ZLIB\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/zlib-build/test/add_subdirectory_test -BC:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

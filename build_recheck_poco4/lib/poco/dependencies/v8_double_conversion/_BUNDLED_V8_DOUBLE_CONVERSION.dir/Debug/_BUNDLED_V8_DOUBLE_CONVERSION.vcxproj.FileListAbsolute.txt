@@ -1,0 +1,1 @@
+C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\Debug\_BUNDLED_V8_DOUBLE_CONVERSION.lib

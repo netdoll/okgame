@@ -1,0 +1,1 @@
+C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL_mixer\external\libmpg123-build\ports\cmake\src\compat\compat.dir\Debug\compat.lib

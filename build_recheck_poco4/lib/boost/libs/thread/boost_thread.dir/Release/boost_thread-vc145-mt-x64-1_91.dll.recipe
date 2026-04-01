@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\assert\x64\Release\boost_assert</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\core\x64\Release\boost_core</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\boost_atomic-vc145-mt-x64-1_91.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\system\x64\Release\boost_system</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\variant2\x64\Release\boost_variant2</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\boost_chrono-vc145-mt-x64-1_91.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\boost_container-vc145-mt-x64-1_91.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\optional\x64\Release\boost_optional</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\unordered\x64\Release\boost_unordered</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\boost_date_time-vc145-mt-x64-1_91.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\boost_thread-vc145-mt-x64-1_91.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

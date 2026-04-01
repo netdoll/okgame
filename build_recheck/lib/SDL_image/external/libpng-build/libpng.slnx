@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="png-fix-itxt.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6c8d6b12-a99c-3e6e-887a-553b00dfd1fd">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="png_genfiles.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b525c663-9736-3892-ac5f-c541c92b04c0">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="png_shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7ea18d3b-91e9-32c0-9a67-3601d70ba903">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="png_genfiles.vcxproj"/>
+		<BuildDependency Project="../zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="png_static.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="4d95f5ba-6746-32e0-8fd7-aba306b81c84">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="png_genfiles.vcxproj"/>
+		<BuildDependency Project="../zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="pngfix.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="df0b5960-65c6-39f4-92e3-c6eb574ccd54">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="png_shared.vcxproj"/>
+		<BuildDependency Project="../zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="../zlib-build/zlib.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c19ef331-4a5b-3e3f-a461-74f358943185">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1326517e-20f5-3f99-a840-d0cca1dca81b" DefaultStartup="true">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="png-fix-itxt.vcxproj"/>
+			<BuildDependency Project="png_shared.vcxproj"/>
+			<BuildDependency Project="png_static.vcxproj"/>
+			<BuildDependency Project="pngfix.vcxproj"/>
+		</Project>
+		<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="15376deb-cb9a-3841-a585-5ccd0060dbe4">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5a7dae67-ed67-3258-a3de-bee352bfa768">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7b731cc4-1e77-3fc9-963b-ac41027d6c57"/>
+	</Folder>
+</Solution>

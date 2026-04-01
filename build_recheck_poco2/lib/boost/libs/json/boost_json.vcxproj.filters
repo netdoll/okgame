@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\src\src.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json.hpp" />
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\array.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\basic_parser.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\basic_parser_impl.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\conversion.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\debug_printers.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\array.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\buffer.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\chars_format.hpp">
+      <Filter>json\detail\charconv</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\compute_float64.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\config.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\emulated128.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\ascii_number.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\bigint.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\constexpr_feature_detect.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\decimal_to_binary.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\digit_comparison.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\fast_float.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\fast_table.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\float_common.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\fast_float\parse_number.hpp">
+      <Filter>json\detail\charconv\detail\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\from_chars_float_impl.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\from_chars_integer_impl.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\from_chars_result.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\integer_search_trees.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\parser.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\detail\significand_tables.hpp">
+      <Filter>json\detail\charconv\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\from_chars.hpp">
+      <Filter>json\detail\charconv</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\limits.hpp">
+      <Filter>json\detail\charconv</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\config.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\default_resource.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\digest.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\except.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\format.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\gdb_printers.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\handler.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\array.hpp">
+      <Filter>json\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\stack.hpp">
+      <Filter>json\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\literals.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\object.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\parse_into.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\ryu\detail\common.hpp">
+      <Filter>json\detail\ryu\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\ryu\detail\d2s.hpp">
+      <Filter>json\detail\ryu\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\ryu\detail\d2s_full_table.hpp">
+      <Filter>json\detail\ryu\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\ryu\detail\d2s_intrinsics.hpp">
+      <Filter>json\detail\ryu\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\ryu\detail\digit_table.hpp">
+      <Filter>json\detail\ryu\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\ryu\ryu.hpp">
+      <Filter>json\detail\ryu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\sbo_buffer.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\shared_resource.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\sse2.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\stack.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\stream.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\string_impl.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\utf8.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\value.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\value_from.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\value_to.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\writer.hpp">
+      <Filter>json\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\error.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\fwd.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\array.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\conversion.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\error.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\object.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\parse_into.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\serialize.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\serializer.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\string.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\value.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\value_ref.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\visit.hpp">
+      <Filter>json\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\is_deallocate_trivial.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\kind.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\monotonic_resource.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\null_resource.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\object.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\parse.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\parse_into.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\parse_options.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\parser.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\pilfer.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\result_for.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\serialize.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\serialize_options.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\serializer.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\set_pointer_options.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\src.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\static_resource.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\storage_ptr.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\stream_parser.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\string.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\string_view.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\value.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\value_from.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\value_ref.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\value_stack.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\value_to.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\visit.hpp">
+      <Filter>json</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\json.natvis">
+      <Filter>json</Filter>
+    </Natvis>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\extra\boost_assert.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\charconv\impl\from_chars.ipp">
+      <Filter>json\detail\charconv\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\default_resource.ipp">
+      <Filter>json\detail\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\except.ipp">
+      <Filter>json\detail\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\format.ipp">
+      <Filter>json\detail\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\handler.ipp">
+      <Filter>json\detail\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\shared_resource.ipp">
+      <Filter>json\detail\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\stack.ipp">
+      <Filter>json\detail\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\impl\string_impl.ipp">
+      <Filter>json\detail\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\detail\ryu\impl\d2s.ipp">
+      <Filter>json\detail\ryu\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\array.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\error.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\kind.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\monotonic_resource.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\null_resource.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\object.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\parse.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\parser.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\pointer.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\serialize.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\serializer.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\static_resource.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\stream_parser.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\string.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\value.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\value_ref.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\value_stack.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\json\include\boost\json\impl\visit.ipp">
+      <Filter>json\impl</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="json">
+      <UniqueIdentifier>{910B8F5D-DCD6-3818-9F9B-8BA6C77FA401}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail">
+      <UniqueIdentifier>{5F1D031D-6A60-3AB6-A085-F3119E2E16D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\charconv">
+      <UniqueIdentifier>{AF2AA4C0-FDEF-3FAA-9A4F-F1CD5F5A8686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\charconv\detail">
+      <UniqueIdentifier>{0093D559-64D6-302E-80EE-98510EA75ECE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\charconv\detail\fast_float">
+      <UniqueIdentifier>{BC66C22D-63AF-3BE3-8C2E-E5E84DB89AEA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\charconv\impl">
+      <UniqueIdentifier>{C3B53C7F-0A59-3ACD-A52B-E127E7C15C50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\impl">
+      <UniqueIdentifier>{F7A30B88-326C-31C2-A06C-B5BDE27248A5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\ryu">
+      <UniqueIdentifier>{56D24359-29BD-3AB9-9074-CDDA6E4EFA3E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\ryu\detail">
+      <UniqueIdentifier>{09B7C1A5-403D-3D1D-A4C8-3B2A91157146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\detail\ryu\impl">
+      <UniqueIdentifier>{0F56EBD3-B688-3DD3-8DB7-41CA15CD75A2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\impl">
+      <UniqueIdentifier>{C09BE7BB-9230-3429-8422-AD41DC7EC38C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

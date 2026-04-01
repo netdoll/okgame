@@ -14,7 +14,9 @@
 #include "SDL_mixer.h"
 #else
 #endif
+#if HAVE_PROJECTM
 #include "libprojectM/ProjectM.hpp"
+#endif
 
 Logger AudioManager::log = Logger("AudioManager");
 
@@ -41,6 +43,7 @@ void AudioManager::setVisualizer(shared_ptr<libprojectM::ProjectM> v)
 
 void AudioManager::postMixCallback(void *userdata, MIX_Mixer *mixer, const SDL_AudioSpec *spec, float *pcm, int samples)
 {
+#if HAVE_PROJECTM
 	if (visualizer)
 	{
 		// SDL3_mixer provides floats. ProjectM likely needs floats or we convert.
@@ -65,6 +68,7 @@ void AudioManager::postMixCallback(void *userdata, MIX_Mixer *mixer, const SDL_A
 		// Assume visualizer can handle it or we'll fix it later.
 		// visualizer->PCM().Add(stream, 2, numSamples / 2); 
 	}
+#endif
 }
 
 //=========================================================================================================================

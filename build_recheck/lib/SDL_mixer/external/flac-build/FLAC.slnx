@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="../ogg-build/ogg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8f97f400-cecc-3113-953d-f29fceb8b504">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1326517e-20f5-3f99-a840-d0cca1dca81b" DefaultStartup="true">
+			<BuildDependency Project="src/libFLAC/FLAC.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="src/share/getopt/getopt.vcxproj"/>
+			<BuildDependency Project="src/share/grabbag/grabbag.vcxproj"/>
+			<BuildDependency Project="src/share/replaygain_analysis/replaygain_analysis.vcxproj"/>
+			<BuildDependency Project="src/share/replaygain_synthesis/replaygain_synthesis.vcxproj"/>
+			<BuildDependency Project="src/share/utf8/utf8.vcxproj"/>
+		</Project>
+		<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="15376deb-cb9a-3841-a585-5ccd0060dbe4">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5a7dae67-ed67-3258-a3de-bee352bfa768">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7b731cc4-1e77-3fc9-963b-ac41027d6c57"/>
+	</Folder>
+	<Folder Name="/Libraries/">
+		<Project Path="src/libFLAC/FLAC.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="99790bcd-2032-3304-a320-97c63002d957">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="../ogg-build/ogg.vcxproj"/>
+		</Project>
+		<Project Path="src/share/getopt/getopt.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5f531ab4-97a6-3346-97cb-33d20facfd8b">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		</Project>
+		<Project Path="src/share/grabbag/grabbag.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="15ae2358-15d5-3a48-bda7-b3c50b2026c1">
+			<BuildDependency Project="src/libFLAC/FLAC.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="../ogg-build/ogg.vcxproj"/>
+			<BuildDependency Project="src/share/replaygain_analysis/replaygain_analysis.vcxproj"/>
+		</Project>
+		<Project Path="src/share/replaygain_analysis/replaygain_analysis.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="f6d433a5-7090-3bb2-bdd3-a75092ec56be">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		</Project>
+		<Project Path="src/share/replaygain_synthesis/replaygain_synthesis.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b42550e5-f7ec-3d34-a6d3-a6b8071ad543">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		</Project>
+		<Project Path="src/share/utf8/utf8.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3cc0b6be-8550-3882-ae36-1325f0c0ac9f">
+			<BuildDependency Project="src/libFLAC/FLAC.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="src/share/grabbag/grabbag.vcxproj"/>
+			<BuildDependency Project="../ogg-build/ogg.vcxproj"/>
+			<BuildDependency Project="src/share/replaygain_analysis/replaygain_analysis.vcxproj"/>
+		</Project>
+	</Folder>
+</Solution>

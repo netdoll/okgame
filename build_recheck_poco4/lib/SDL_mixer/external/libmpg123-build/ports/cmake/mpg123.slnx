@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="src/compat/compat.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="539c36a3-6fa5-346c-bf81-8910e866b230">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="src/compat/compat_dl.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e07db298-9c7d-349b-ab75-5ee522635bf8">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="src/compat/compat_str.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="094ba07a-acef-3713-8280-ffadc5271d13">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="src/libmpg123/libmpg123.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="75295c1e-e4bc-37be-ac03-879349a5379c">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="src/compat/compat.vcxproj"/>
+	</Project>
+	<Project Path="src/libsyn123/libsyn123.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ccca612d-7461-3a31-891e-671885a8a7aa">
+		<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="src/compat/compat_str.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a9494534-f32a-3e1c-8a61-e375503756d5" DefaultStartup="true">
+			<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="src/compat/compat.vcxproj"/>
+			<BuildDependency Project="src/compat/compat_dl.vcxproj"/>
+			<BuildDependency Project="src/compat/compat_str.vcxproj"/>
+			<BuildDependency Project="src/libmpg123/libmpg123.vcxproj"/>
+			<BuildDependency Project="src/libsyn123/libsyn123.vcxproj"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8a6907a3-acd7-3f9e-b3b7-0a14d2657b1a">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5610042f-18f9-3728-b195-3dff710b8fb7"/>
+	</Folder>
+</Solution>

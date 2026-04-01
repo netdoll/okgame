@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\AbstractConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\Application.cpp">
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\ConfigurationMapper.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\ConfigurationView.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\FastLoggerConfigurator.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\FilesystemConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\HelpFormatter.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\IniFileConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\IntValidator.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\JSONConfiguration.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\LayeredConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\LocalConfigurationView.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\LoggingConfigurator.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\LoggingSubsystem.cpp">
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\MapConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\Option.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\OptionCallback.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\OptionException.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\OptionProcessor.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\OptionSet.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\PropertyFileConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\RegExpValidator.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\ServerApplication.cpp">
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\Subsystem.cpp">
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\SystemConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\Timer.cpp">
+      <Filter>Timer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\TimerTask.cpp">
+      <Filter>Timer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\Validator.cpp">
+      <Filter>Options\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\WinRegistryConfiguration.cpp">
+      <Filter>Windows\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\WinRegistryKey.cpp">
+      <Filter>Windows\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\WinService.cpp">
+      <Filter>Windows\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\src\XMLConfiguration.cpp">
+      <Filter>Configuration\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\AbstractConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\Application.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\ConfigurationMapper.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\ConfigurationView.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\FastLoggerConfigurator.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\FilesystemConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\HelpFormatter.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\IniFileConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\IntValidator.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\JSONConfiguration.h">
+      <Filter>Util\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\LayeredConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\LocalConfigurationView.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\LoggingConfigurator.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\LoggingSubsystem.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\MapConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\Option.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\OptionCallback.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\OptionException.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\OptionProcessor.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\OptionSet.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\PropertyFileConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\RegExpValidator.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\ServerApplication.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\Subsystem.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\SystemConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\Timer.h">
+      <Filter>Timer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\TimerTask.h">
+      <Filter>Timer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\TimerTaskAdapter.h">
+      <Filter>Timer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\Units.h">
+      <Filter>Units\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\Util.h">
+      <Filter>Util\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\Validator.h">
+      <Filter>Options\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\WinRegistryConfiguration.h">
+      <Filter>Windows\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\WinRegistryKey.h">
+      <Filter>Windows\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\WinService.h">
+      <Filter>Windows\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\include\Poco\Util\XMLConfiguration.h">
+      <Filter>Configuration\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Util\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{1812C570-FFF3-306C-B387-5AB3301DCAA6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header Files">
+      <UniqueIdentifier>{47571F93-33AF-3ABD-A598-DF1199077269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source Files">
+      <UniqueIdentifier>{59E8C354-EE5D-3A68-9D38-BFEAB03AF066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration">
+      <UniqueIdentifier>{0C716161-0AB9-3CCE-BF92-349761E00C27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration\Header Files">
+      <UniqueIdentifier>{75D6BB76-5EDC-3764-AC2B-C386201E4356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration\Source Files">
+      <UniqueIdentifier>{3FC8B30B-BCDE-373A-94FE-0359996632E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSON">
+      <UniqueIdentifier>{A4875DE6-312F-312F-8915-780F29009572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSON\Source Files">
+      <UniqueIdentifier>{6405B74C-CAB5-31F4-9D3F-45B7DAACA9F8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Options">
+      <UniqueIdentifier>{50BB5DB1-E00B-3057-8931-13B59E1AF000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Options\Header Files">
+      <UniqueIdentifier>{13E2CB42-1BE0-35E5-8350-552C78F0DB14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Options\Source Files">
+      <UniqueIdentifier>{952B3AC0-A910-3CCC-9498-0B4B06F6F88B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3A88E452-0B12-3406-84A6-2947D1B8DC19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{2FC3A2D8-2735-3890-BCFD-5D0B677F1D06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\Header Files">
+      <UniqueIdentifier>{47292958-6A04-3966-9CAA-9C5EE1D37AA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\Source Files">
+      <UniqueIdentifier>{3BAF2B51-9CBF-3381-B144-67E0C6A163E7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units">
+      <UniqueIdentifier>{92C50ACB-0CC1-31DC-9D1B-97EE837EB40E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units\Header Files">
+      <UniqueIdentifier>{02831C25-23D5-3EAD-92EE-B42B60CF4E8E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{5C09B863-ECAA-3AC9-A95A-6F560C3212F9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Header Files">
+      <UniqueIdentifier>{B11A9C67-21E4-357C-A6C1-F16852263301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{B5AF2577-C9F7-36BF-927A-341AF73A353B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Header Files">
+      <UniqueIdentifier>{754081A9-CD97-39B4-932A-A2F88080C397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Source Files">
+      <UniqueIdentifier>{D443724E-33F8-35F0-99F1-B60ADB12CF69}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-blend.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-canvas.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-font.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-matrix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-paint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-path.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-rasterize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-surface.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-ft-math.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-ft-raster.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-ft-stroker.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\include\plutovg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-ft-math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-ft-raster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-ft-stroker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-ft-types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-stb-image-write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-stb-image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\source\plutovg-stb-truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_ttf\external\plutovg\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{0B95663D-6653-38B9-A4A0-46BFE8148FFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E1F28938-A21E-3252-A5ED-91DEEC8E1871}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

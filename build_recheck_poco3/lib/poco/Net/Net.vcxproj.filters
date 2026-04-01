@@ -1,0 +1,913 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\AbstractHTTPRequestHandler.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\DNS.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\DatagramSocket.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\DatagramSocketImpl.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\DialogSocket.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\EscapeHTMLStream.cpp">
+      <Filter>Mail\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\FTPClientSession.cpp">
+      <Filter>FTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\FTPStreamFactory.cpp">
+      <Filter>FTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\FilePartSource.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTMLForm.cpp">
+      <Filter>HTML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPAuthenticationParams.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPBasicCredentials.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPBufferAllocator.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPChunkedStream.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPClientSession.cpp">
+      <Filter>HTTPClient\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPCookie.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPCredentials.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPDigestCredentials.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPFixedLengthStream.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPHeaderStream.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPIOStream.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPMessage.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPNTLMCredentials.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPReactorServer.cpp">
+      <Filter>Unknown\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPReactorServerSession.cpp">
+      <Filter>Unknown\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPRequest.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPRequestHandler.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPRequestHandlerFactory.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPResponse.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServer.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerConnection.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerConnectionFactory.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerParams.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerRequest.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerRequestImpl.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerResponse.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerResponseImpl.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPServerSession.cpp">
+      <Filter>HTTPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPSession.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPSessionFactory.cpp">
+      <Filter>HTTPClient\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPSessionInstantiator.cpp">
+      <Filter>HTTPClient\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPStream.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HTTPStreamFactory.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\HostEntry.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ICMPClient.cpp">
+      <Filter>ICMP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ICMPEventArgs.cpp">
+      <Filter>ICMP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ICMPPacket.cpp">
+      <Filter>ICMP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ICMPPacketImpl.cpp">
+      <Filter>ICMP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ICMPSocket.cpp">
+      <Filter>ICMP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ICMPSocketImpl.cpp">
+      <Filter>ICMP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ICMPv4PacketImpl.cpp">
+      <Filter>ICMP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\IPAddress.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\IPAddressImpl.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MailMessage.cpp">
+      <Filter>Mail\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MailRecipient.cpp">
+      <Filter>Mail\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MailStream.cpp">
+      <Filter>Mail\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MediaType.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MessageHeader.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MulticastSocket.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MultipartReader.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\MultipartWriter.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NTLMCredentials.cpp">
+      <Filter>NTLM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NTPClient.cpp">
+      <Filter>NTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NTPEventArgs.cpp">
+      <Filter>NTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NTPPacket.cpp">
+      <Filter>NTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NameValueCollection.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\Net.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NetException.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NetworkInterface.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\NullPartHandler.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\OAuth10Credentials.cpp">
+      <Filter>OAuth\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\OAuth20Credentials.cpp">
+      <Filter>OAuth\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\POP3ClientSession.cpp">
+      <Filter>Mail\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\PartHandler.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\PartSource.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\PartStore.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\PollSet.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\QuotedPrintableDecoder.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\QuotedPrintableEncoder.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\RawSocket.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\RawSocketImpl.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\RemoteSyslogChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\RemoteSyslogListener.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SMTPChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SMTPClientSession.cpp">
+      <Filter>Mail\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SSPINTLMCredentials.cpp">
+      <Filter>NTLM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ServerSocket.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\ServerSocketImpl.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\Socket.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketAddress.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketAddressImpl.cpp">
+      <Filter>NetCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketImpl.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketNotification.cpp">
+      <Filter>Reactor\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketNotifier.cpp">
+      <Filter>Reactor\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketProactor.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketReactor.cpp">
+      <Filter>Reactor\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\SocketStream.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\StreamSocket.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\StreamSocketImpl.cpp">
+      <Filter>Sockets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\StringPartSource.cpp">
+      <Filter>Messages\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPReactorAcceptor.cpp">
+      <Filter>Unknown\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPReactorServer.cpp">
+      <Filter>Unknown\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPReactorServerConnection.cpp">
+      <Filter>Unknown\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPServer.cpp">
+      <Filter>TCPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPServerConnection.cpp">
+      <Filter>TCPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPServerConnectionFactory.cpp">
+      <Filter>TCPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPServerDispatcher.cpp">
+      <Filter>TCPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\TCPServerParams.cpp">
+      <Filter>TCPServer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\UDPClient.cpp">
+      <Filter>UDP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\UDPServerParams.cpp">
+      <Filter>UDP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\WebSocket.cpp">
+      <Filter>WebSocket\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\src\WebSocketImpl.cpp">
+      <Filter>WebSocket\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\AbstractHTTPRequestHandler.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\DNS.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\DatagramSocket.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\DatagramSocketImpl.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\DialogSocket.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\EscapeHTMLStream.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\FTPClientSession.h">
+      <Filter>FTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\FTPStreamFactory.h">
+      <Filter>FTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\FilePartSource.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTMLForm.h">
+      <Filter>HTML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPAuthenticationParams.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPBasicCredentials.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPBasicStreamBuf.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPBufferAllocator.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPChunkedStream.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPClientSession.h">
+      <Filter>HTTPClient\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPCookie.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPCredentials.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPDigestCredentials.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPFixedLengthStream.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPHeaderStream.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPIOStream.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPMessage.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPNTLMCredentials.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPObserver.h">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPReactorServer.h">
+      <Filter>Unknown\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPReactorServerSession.h">
+      <Filter>Unknown\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPRequest.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPRequestHandler.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPRequestHandlerFactory.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPResponse.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServer.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerConnection.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerConnectionFactory.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerParams.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerRequest.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerRequestImpl.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerResponse.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerResponseImpl.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPServerSession.h">
+      <Filter>HTTPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPSession.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPSessionFactory.h">
+      <Filter>HTTPClient\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPSessionInstantiator.h">
+      <Filter>HTTPClient\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPStream.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HTTPStreamFactory.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\HostEntry.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ICMPClient.h">
+      <Filter>ICMP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ICMPEventArgs.h">
+      <Filter>ICMP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ICMPPacket.h">
+      <Filter>ICMP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ICMPPacketImpl.h">
+      <Filter>ICMP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ICMPSocket.h">
+      <Filter>ICMP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ICMPSocketImpl.h">
+      <Filter>ICMP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ICMPv4PacketImpl.h">
+      <Filter>ICMP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\IPAddress.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\IPAddressImpl.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MailMessage.h">
+      <Filter>Mail\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MailRecipient.h">
+      <Filter>Mail\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MailStream.h">
+      <Filter>Mail\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MediaType.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MessageHeader.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MultiSocketPoller.h">
+      <Filter>UDP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MulticastSocket.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MultipartReader.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\MultipartWriter.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NTLMCredentials.h">
+      <Filter>NTLM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NTPClient.h">
+      <Filter>NTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NTPEventArgs.h">
+      <Filter>NTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NTPPacket.h">
+      <Filter>NTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NameValueCollection.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\Net.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NetException.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NetworkInterface.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\NullPartHandler.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\OAuth10Credentials.h">
+      <Filter>OAuth\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\OAuth20Credentials.h">
+      <Filter>OAuth\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\POP3ClientSession.h">
+      <Filter>Mail\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ParallelSocketAcceptor.h">
+      <Filter>Reactor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ParallelSocketReactor.h">
+      <Filter>Reactor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\PartHandler.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\PartSource.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\PartStore.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\PollSet.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\QuotedPrintableDecoder.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\QuotedPrintableEncoder.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\RawSocket.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\RawSocketImpl.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\RemoteSyslogChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\RemoteSyslogListener.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SMTPChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SMTPClientSession.h">
+      <Filter>Mail\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SSPINTLMCredentials.h">
+      <Filter>NTLM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ServerSocket.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\ServerSocketImpl.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SingleSocketPoller.h">
+      <Filter>UDP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\Socket.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketAcceptor.h">
+      <Filter>Reactor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketAddress.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketAddressImpl.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketConnector.h">
+      <Filter>Reactor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketDefs.h">
+      <Filter>NetCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketImpl.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketNotification.h">
+      <Filter>Reactor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketNotifier.h">
+      <Filter>Reactor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketProactor.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketReactor.h">
+      <Filter>Reactor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\SocketStream.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\StreamSocket.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\StreamSocketImpl.h">
+      <Filter>Sockets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\StringPartSource.h">
+      <Filter>Messages\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPReactorAcceptor.h">
+      <Filter>Unknown\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPReactorServer.h">
+      <Filter>Unknown\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPReactorServerConnection.h">
+      <Filter>Unknown\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPServer.h">
+      <Filter>TCPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPServerConnection.h">
+      <Filter>TCPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPServerConnectionFactory.h">
+      <Filter>TCPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPServerDispatcher.h">
+      <Filter>TCPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\TCPServerParams.h">
+      <Filter>TCPServer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\UDPClient.h">
+      <Filter>UDP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\UDPHandler.h">
+      <Filter>UDP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\UDPServer.h">
+      <Filter>UDP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\UDPServerParams.h">
+      <Filter>UDP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\UDPSocketReader.h">
+      <Filter>UDP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\WebSocket.h">
+      <Filter>WebSocket\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\include\Poco\Net\WebSocketImpl.h">
+      <Filter>WebSocket\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Net\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\wepoll\_BUNDLED_WEPOLL.dir\$(Configuration)\wepoll.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FTP">
+      <UniqueIdentifier>{7E5AFE8B-0F11-31E0-8C56-6C9D115AABFD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FTP\Header Files">
+      <UniqueIdentifier>{646F6A3D-8046-3AE6-BB92-7DC4DBCCD494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FTP\Source Files">
+      <UniqueIdentifier>{43267268-7049-3EC3-8015-883B0E536B11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTML">
+      <UniqueIdentifier>{A322EF1D-3CCD-312A-83F9-13B3659F4D1F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTML\Header Files">
+      <UniqueIdentifier>{1EC27666-F427-3B24-82F7-6D5FBB041006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTML\Source Files">
+      <UniqueIdentifier>{135F9428-BC56-3EAE-9C26-574AA2DA8497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP">
+      <UniqueIdentifier>{ECDD1ABE-C177-3AE3-8B69-BC8A860EB373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTPClient">
+      <UniqueIdentifier>{4898B1BB-BF40-32E4-8E53-D9D70F8D4BA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTPClient\Header Files">
+      <UniqueIdentifier>{EDA503A3-61D6-36C0-9059-BB248BE2F018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTPClient\Source Files">
+      <UniqueIdentifier>{5430F527-1DD2-3863-AE21-2AA053F82331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTPServer">
+      <UniqueIdentifier>{87CEB730-03E9-3AED-B749-C3EEC94739EC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTPServer\Header Files">
+      <UniqueIdentifier>{376433D3-5DD5-381A-B779-9BADB2BE99B5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTPServer\Source Files">
+      <UniqueIdentifier>{073C1CC7-ADF5-323E-9E9A-F75CFBE66FAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP\Header Files">
+      <UniqueIdentifier>{7DDB0AC6-7FF8-3C5A-B428-FFC9D431A1F4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP\Source Files">
+      <UniqueIdentifier>{2CBA33D9-9567-3E84-B4B7-3614AF74EC8A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ICMP">
+      <UniqueIdentifier>{82FAFB6D-9B4A-3B29-9271-C7477DE2FCBE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ICMP\Header Files">
+      <UniqueIdentifier>{C18F7802-21CB-3AFD-91E6-07D4DFDA1A47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ICMP\Source Files">
+      <UniqueIdentifier>{2B0B404E-14D8-3332-B0F7-1DE7E79BF104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{713EF0BA-C2D0-371A-BF1A-ED7890A63A97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Header Files">
+      <UniqueIdentifier>{F20FC9DE-951E-33C2-A64D-406ADD2004FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Source Files">
+      <UniqueIdentifier>{3B121AB2-6F23-3B6B-AA36-5F94EF87B02B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mail">
+      <UniqueIdentifier>{97F156BE-C626-3247-B5DD-DC4F0AD3506C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mail\Header Files">
+      <UniqueIdentifier>{401BAD1B-CF54-3FE9-AC62-8FAEA57B5D26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mail\Source Files">
+      <UniqueIdentifier>{F23F545D-4997-3ECD-930F-A261B3B4245F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages">
+      <UniqueIdentifier>{C6FABD74-B1A6-36DE-8457-B92053CB81C2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages\Header Files">
+      <UniqueIdentifier>{DD41956B-377B-3DD7-8292-966DE8A937EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages\Source Files">
+      <UniqueIdentifier>{B8E7F595-40BB-3653-9CF0-7E7CE967E9FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NTLM">
+      <UniqueIdentifier>{D1D92E16-FAB5-3CE1-B995-A5372FA9F7A8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NTLM\Header Files">
+      <UniqueIdentifier>{D631590C-803D-3243-8689-F3608A8734FE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NTLM\Source Files">
+      <UniqueIdentifier>{0BCDA587-3A08-3B73-8E00-66489B37CBD8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NTP">
+      <UniqueIdentifier>{F9E76F4E-9EBC-33DC-8FCB-5C97DED505F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NTP\Header Files">
+      <UniqueIdentifier>{84192925-5FF9-3DAC-9280-60C8F2527D6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NTP\Source Files">
+      <UniqueIdentifier>{653638B9-698E-37C0-90D9-181CDE5B51C1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{61CF8C17-0F3B-3A8E-82BA-90B3FCACD095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetCore">
+      <UniqueIdentifier>{117F65B3-D0F8-366D-804B-E2B8F5F23AB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetCore\Header Files">
+      <UniqueIdentifier>{B9E5195F-2A51-3A2A-854F-C9DAD5A8E96F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetCore\Source Files">
+      <UniqueIdentifier>{790A9E6B-39D9-3DDF-85BB-C4CBBB3B3232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Header Files">
+      <UniqueIdentifier>{D7CDAE01-B898-36CC-B19E-E71910A4BF6B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OAuth">
+      <UniqueIdentifier>{A3E234E2-4ED3-3944-831B-6EFB4FB4F2FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OAuth\Header Files">
+      <UniqueIdentifier>{051C2265-A721-3D02-AA76-7ABA13661DCB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OAuth\Source Files">
+      <UniqueIdentifier>{16497FFC-2ECE-30E0-9094-7032992D3B43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object Libraries">
+      <UniqueIdentifier>{7EE855BF-5D14-3F41-A16E-F54DEECC6BAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reactor">
+      <UniqueIdentifier>{9FD9AEE1-EEC6-3674-B618-1031FE4775DE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reactor\Header Files">
+      <UniqueIdentifier>{D3E76052-CE9A-3B61-8BFA-0747C29B5656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reactor\Source Files">
+      <UniqueIdentifier>{9D95627E-7695-30E6-88DF-878730623245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3A88E452-0B12-3406-84A6-2947D1B8DC19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sockets">
+      <UniqueIdentifier>{D882E40F-7C93-3358-B4A7-C1318BC83414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sockets\Header Files">
+      <UniqueIdentifier>{AD84B826-EB37-3736-8B61-8A2100D6B8A2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sockets\Source Files">
+      <UniqueIdentifier>{CF6B4192-DBCE-32EE-8F62-BBAFFAEA8FE2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TCPServer">
+      <UniqueIdentifier>{1C79023B-2AC0-38BD-9E73-E5860856AF4F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TCPServer\Header Files">
+      <UniqueIdentifier>{409ED0AE-607C-31D6-BE51-43544B9CDEC6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TCPServer\Source Files">
+      <UniqueIdentifier>{5AD7DBBE-68D5-32B0-BF87-F1568F299297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UDP">
+      <UniqueIdentifier>{B24CFD90-8F8C-32AB-8039-F135D0A971F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UDP\Header Files">
+      <UniqueIdentifier>{66A9EFA8-C4CA-3F19-921E-531B71EEC653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UDP\Source Files">
+      <UniqueIdentifier>{E6F93B3A-863B-350E-A8EA-E90170946D47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unknown">
+      <UniqueIdentifier>{8B9713E6-A809-3E32-92A2-06F4C7173C5C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unknown\Header Files">
+      <UniqueIdentifier>{418E1D32-AB9B-3B96-899A-BD76E85FEDF8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unknown\Source Files">
+      <UniqueIdentifier>{15DDC0E0-AC2D-3C75-B545-5B5B92CD69DB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WebSocket">
+      <UniqueIdentifier>{C0B37E9D-8DA7-3971-9C5F-467C85F7FF55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WebSocket\Header Files">
+      <UniqueIdentifier>{AD4CE544-56F8-3DC3-8A7D-341A0CB9E90E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WebSocket\Source Files">
+      <UniqueIdentifier>{E3F924CB-7333-3629-8378-97C6A1E13185}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

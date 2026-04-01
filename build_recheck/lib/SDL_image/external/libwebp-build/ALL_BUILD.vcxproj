@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1326517E-20F5-3F99-A840-D0CCA1DCA81B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libwebp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libwebp-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindTIFF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\cmake\FindSDL2.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\WebPConfig.cmake.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\config.h.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\cpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\deps.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\sharpyuv\libsharpyuv.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\demux\libwebpdemux.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebp.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebpdecoder.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\mux\libwebpmux.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libwebp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libwebp-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindTIFF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\cmake\FindSDL2.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\WebPConfig.cmake.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\config.h.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\cpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\deps.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\sharpyuv\libsharpyuv.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\demux\libwebpdemux.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebp.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebpdecoder.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\mux\libwebpmux.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libwebp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libwebp-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindTIFF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\cmake\FindSDL2.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\WebPConfig.cmake.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\config.h.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\cpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\deps.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\sharpyuv\libsharpyuv.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\demux\libwebpdemux.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebp.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebpdecoder.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\mux\libwebpmux.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libwebp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libwebp-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePushCheckState.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindTIFF.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\cmake\FindSDL2.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\WebPConfig.cmake.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\config.h.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\cpu.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\cmake\deps.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\sharpyuv\libsharpyuv.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\demux\libwebpdemux.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebp.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\libwebpdecoder.pc.in;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\src\mux\libwebpmux.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\ZERO_CHECK.vcxproj">
+      <Project>{7B731CC4-1E77-3FC9-963B-AC41027D6C57}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\cwebp.vcxproj">
+      <Project>{1B242F62-21B7-32BE-B1B2-151977752522}</Project>
+      <Name>cwebp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\dwebp.vcxproj">
+      <Project>{6EBD2FA9-4A0B-3465-A3AF-8A725E2677ED}</Project>
+      <Name>dwebp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\exampleutil.vcxproj">
+      <Project>{771D24BC-E3E2-3D53-B9C1-75C079B76050}</Project>
+      <Name>exampleutil</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\extras.vcxproj">
+      <Project>{0D221275-D92D-30EE-9269-48FC949DABE8}</Project>
+      <Name>extras</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\get_disto.vcxproj">
+      <Project>{F38AFEE8-EB30-3BDC-9E1A-56CFF57E2A54}</Project>
+      <Name>get_disto</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\imagedec.vcxproj">
+      <Project>{BCE097FA-5335-34D0-BB30-E50B5A43F00F}</Project>
+      <Name>imagedec</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\imageenc.vcxproj">
+      <Project>{7A2F5384-10E5-3200-AC1B-4588D2BA2C8E}</Project>
+      <Name>imageenc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\imageioutil.vcxproj">
+      <Project>{988CCF99-DE52-31DA-B73D-BC30ABD73782}</Project>
+      <Name>imageioutil</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\img2webp.vcxproj">
+      <Project>{D7EF11A8-0815-346C-99EE-EEBAD8AD85FD}</Project>
+      <Name>img2webp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\libwebpmux.vcxproj">
+      <Project>{FDB05EE8-D3B2-3A41-9B41-932DD66D3525}</Project>
+      <Name>libwebpmux</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\sharpyuv.vcxproj">
+      <Project>{849804B8-207A-3F89-959D-837FFBE00AB1}</Project>
+      <Name>sharpyuv</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webp.vcxproj">
+      <Project>{B39817E7-91BD-3524-8887-924570F85D42}</Project>
+      <Name>webp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webp_quality.vcxproj">
+      <Project>{6EC436F6-DE1B-3B6C-B505-20BD487B00B2}</Project>
+      <Name>webp_quality</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpdecode.vcxproj">
+      <Project>{76291706-5C3B-370B-B019-C96C24172B71}</Project>
+      <Name>webpdecode</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpdecoder.vcxproj">
+      <Project>{DC6B2F8D-8034-3303-A5C0-D877D1A9AF2B}</Project>
+      <Name>webpdecoder</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpdemux.vcxproj">
+      <Project>{DA539B27-FDD0-3104-8726-4BA8EF7E72CB}</Project>
+      <Name>webpdemux</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpdsp.vcxproj">
+      <Project>{A37DC7BE-4741-3A39-AAB8-6D13E00CA2FF}</Project>
+      <Name>webpdsp</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpdspdecode.vcxproj">
+      <Project>{E58772CB-FADB-3641-9110-9D012E9FF6E2}</Project>
+      <Name>webpdspdecode</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpencode.vcxproj">
+      <Project>{DB6E48CB-F50A-3514-94F0-65E15F52E0C9}</Project>
+      <Name>webpencode</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpinfo.vcxproj">
+      <Project>{E467CD67-80F3-3D7A-B848-317C9EBC6D16}</Project>
+      <Name>webpinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webpmux.vcxproj">
+      <Project>{288624CA-BB77-3342-A9D0-5D911EA8EB7C}</Project>
+      <Name>webpmux</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webputils.vcxproj">
+      <Project>{CE12DC98-6F92-3F51-ABDF-D5922A77F40B}</Project>
+      <Name>webputils</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libwebp-build\webputilsdecode.vcxproj">
+      <Project>{442F5460-AA99-3EDE-9D67-21406A77CAE4}</Project>
+      <Name>webputilsdecode</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>

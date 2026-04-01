@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\CMakeFiles\9102c06539814e2c4c296b5165e21e54\uninstall-poco.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\poco\CMakeFiles\uninstall-poco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{41E1241D-593A-3F1B-81FC-D4DF74BA44F7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

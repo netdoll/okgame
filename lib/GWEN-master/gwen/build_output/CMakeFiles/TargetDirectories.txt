@@ -1,0 +1,4 @@
+C:/Users/hyper/workspace/bg/okgame/lib/GWEN-master/gwen/build_output/CMakeFiles/GWEN_static.dir
+C:/Users/hyper/workspace/bg/okgame/lib/GWEN-master/gwen/build_output/CMakeFiles/GWEN_opengl.dir
+C:/Users/hyper/workspace/bg/okgame/lib/GWEN-master/gwen/build_output/CMakeFiles/ALL_BUILD.dir
+C:/Users/hyper/workspace/bg/okgame/lib/GWEN-master/gwen/build_output/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A9494534-F32A-3E1C-8A61-E375503756D5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Diab-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Renesas-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCXXLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCXXCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeRCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeSystem.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Diab-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Renesas-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCXXLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCXXCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeRCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeSystem.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Diab-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Renesas-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCXXLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCXXCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeRCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeSystem.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Diab-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Renesas-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeInspectCXXLinker.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeCXXCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeRCCompiler.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\4.3.0\CMakeSystem.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\ZERO_CHECK.vcxproj">
+      <Project>{5610042F-18F9-3728-B195-3DFF710B8FB7}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\Foundation\Foundation.vcxproj">
+      <Project>{AC97B2D3-1682-3848-BB89-4DAB4AFE45C8}</Project>
+      <Name>Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\GWEN-master\gwen\GWEN_opengl.vcxproj">
+      <Project>{2F6AF011-9938-38D7-B746-7551AEA27D96}</Project>
+      <Name>GWEN_opengl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\GWEN-master\gwen\GWEN_static.vcxproj">
+      <Project>{B9173616-E989-301A-807A-BC91E0D18233}</Project>
+      <Name>GWEN_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\JSON\JSON.vcxproj">
+      <Project>{4C9905A0-B617-325E-86DC-AEC18DCCCD16}</Project>
+      <Name>JSON</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\Net\Net.vcxproj">
+      <Project>{C4AF240B-0993-3C09-BA5A-480A60CFF426}</Project>
+      <Name>Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL\SDL3-shared.vcxproj">
+      <Project>{531EF33C-6522-38D6-B80C-40AB642E8956}</Project>
+      <Name>SDL3-shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL_image\SDL3_image-shared.vcxproj">
+      <Project>{270DEF67-C0E7-3B96-90F8-681ADEE7E8E1}</Project>
+      <Name>SDL3_image-shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL_mixer\SDL3_mixer-shared.vcxproj">
+      <Project>{65293DA7-AD8E-36A8-B022-8AD4A4838484}</Project>
+      <Name>SDL3_mixer-shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL_net\SDL3_net-shared.vcxproj">
+      <Project>{3D0AE79D-7B3F-3870-B26D-0C7841617B85}</Project>
+      <Name>SDL3_net-shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL\SDL3_test.vcxproj">
+      <Project>{081F2C9C-2876-32B0-9AA8-0E0B6D54E447}</Project>
+      <Name>SDL3_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL_ttf\SDL3_ttf-shared.vcxproj">
+      <Project>{BD160A8E-D55A-3DDF-8E41-C7BFBDD16353}</Project>
+      <Name>SDL3_ttf-shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\SDL\SDL_uclibc.vcxproj">
+      <Project>{3C2C0182-6C09-3958-B689-B6FDBF21228E}</Project>
+      <Name>SDL_uclibc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\Util\Util.vcxproj">
+      <Project>{3AC83C64-35D7-3891-B9C5-7A53B71C6574}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bobsgame.vcxproj">
+      <Project>{0E5ADD54-FF1E-3835-B2D4-792736490DB9}</Project>
+      <Name>bobsgame</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\assert\boost_assert.vcxproj">
+      <Project>{7CF802D2-BDE9-3E92-BE04-00D20AC9DFA5}</Project>
+      <Name>boost_assert</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\atomic\boost_atomic.vcxproj">
+      <Project>{AF681B33-972E-35CC-8EA4-E8B77EEAFBE7}</Project>
+      <Name>boost_atomic</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\bloom\boost_bloom.vcxproj">
+      <Project>{D7342A00-083C-3752-8487-E03FC5A1301E}</Project>
+      <Name>boost_bloom</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\charconv\boost_charconv.vcxproj">
+      <Project>{BC8A95EF-B7F5-35AC-8C26-05CB4AA2996A}</Project>
+      <Name>boost_charconv</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\chrono\boost_chrono.vcxproj">
+      <Project>{BA2FE6AC-BFFF-3291-8CCF-52ED426A2C43}</Project>
+      <Name>boost_chrono</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\cobalt\boost_cobalt.vcxproj">
+      <Project>{FA7DFEF7-89C1-3903-BADA-9A11F19D065D}</Project>
+      <Name>boost_cobalt</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\cobalt\boost_cobalt_io.vcxproj">
+      <Project>{2799086A-BCFF-3E7E-9F1F-1752E3FAC3C9}</Project>
+      <Name>boost_cobalt_io</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\cobalt\boost_cobalt_io_ssl.vcxproj">
+      <Project>{750E95B7-037E-3FA6-AA10-F08BBCBC714B}</Project>
+      <Name>boost_cobalt_io_ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\container\boost_container.vcxproj">
+      <Project>{12F5A10F-8725-32CB-B0F3-778D05E1E22F}</Project>
+      <Name>boost_container</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\context\boost_context.vcxproj">
+      <Project>{E7DA26B1-40D0-3765-AF48-6204BD12BC2E}</Project>
+      <Name>boost_context</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\contract\boost_contract.vcxproj">
+      <Project>{DF0AEBD9-7935-3E4F-A371-993F677D141B}</Project>
+      <Name>boost_contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\core\boost_core.vcxproj">
+      <Project>{51581ECF-DF1F-37D3-B47E-BCDF347B1FC3}</Project>
+      <Name>boost_core</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\coroutine\boost_coroutine.vcxproj">
+      <Project>{85A6C69A-3257-3110-912C-AD7AD6EA8A27}</Project>
+      <Name>boost_coroutine</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\date_time\boost_date_time.vcxproj">
+      <Project>{B01F67FC-5A3F-3D8F-A7D9-A32353980898}</Project>
+      <Name>boost_date_time</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\fiber\boost_fiber.vcxproj">
+      <Project>{B092FE59-0B86-33D2-B097-B5E3EC998453}</Project>
+      <Name>boost_fiber</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\fiber\boost_fiber_numa.vcxproj">
+      <Project>{F1FD31C9-FE24-38CF-956C-18CB71F0941D}</Project>
+      <Name>boost_fiber_numa</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\filesystem\boost_filesystem.vcxproj">
+      <Project>{FA0999CF-0D90-3216-A679-6DD8352D7638}</Project>
+      <Name>boost_filesystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\graph\boost_graph.vcxproj">
+      <Project>{DB601EA8-4DCD-3896-BE3A-CEB233A7C37F}</Project>
+      <Name>boost_graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\interprocess\boost_interprocess.vcxproj">
+      <Project>{3C18F270-8B87-395E-8D40-B8E47F508468}</Project>
+      <Name>boost_interprocess</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\iostreams\boost_iostreams.vcxproj">
+      <Project>{3819597E-98FC-33AA-AF83-C5C0105B946B}</Project>
+      <Name>boost_iostreams</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\json\boost_json.vcxproj">
+      <Project>{11923424-5F2A-39FC-8EBE-95C56F13678A}</Project>
+      <Name>boost_json</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\locale\boost_locale.vcxproj">
+      <Project>{38E67E12-8CAB-3612-B18F-61E738CD89F1}</Project>
+      <Name>boost_locale</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\log\boost_log.vcxproj">
+      <Project>{B20E6F9A-5D97-3571-9F81-4E8D2CAC0094}</Project>
+      <Name>boost_log</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\log\boost_log_setup.vcxproj">
+      <Project>{03EA4C5A-C8B2-3926-A7FB-5DAC5DDD6724}</Project>
+      <Name>boost_log_setup</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\math\boost_math.vcxproj">
+      <Project>{167AA3C6-0E6D-3857-A655-5C59C6A93A2B}</Project>
+      <Name>boost_math</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\nowide\boost_nowide.vcxproj">
+      <Project>{1688AD29-EE0B-3441-84C7-1387CBBFFE4F}</Project>
+      <Name>boost_nowide</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\openmethod\boost_openmethod.vcxproj">
+      <Project>{58B27118-5898-3D3C-8950-80920FBE01F3}</Project>
+      <Name>boost_openmethod</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\optional\boost_optional.vcxproj">
+      <Project>{250F167A-D507-3989-BD46-3BA646052B0C}</Project>
+      <Name>boost_optional</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\test\boost_prg_exec_monitor.vcxproj">
+      <Project>{910EFCEB-4ECC-36B2-8E71-76ED65A48603}</Project>
+      <Name>boost_prg_exec_monitor</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\process\boost_process.vcxproj">
+      <Project>{652AA8B4-DC34-34C7-B0FD-ACE6015C416F}</Project>
+      <Name>boost_process</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\program_options\boost_program_options.vcxproj">
+      <Project>{1C0579DE-6937-38B7-8631-69BF7EE48B4C}</Project>
+      <Name>boost_program_options</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\random\boost_random.vcxproj">
+      <Project>{4C0100CA-B0C7-370A-8AFD-D0494E31D750}</Project>
+      <Name>boost_random</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\serialization\boost_serialization.vcxproj">
+      <Project>{53E2D028-B5EA-3333-BEE3-54CDD22E9A74}</Project>
+      <Name>boost_serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\stacktrace\boost_stacktrace_basic.vcxproj">
+      <Project>{AD2AE322-BEA2-33BF-974C-0CFFEF2BA80D}</Project>
+      <Name>boost_stacktrace_basic</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\stacktrace\boost_stacktrace_from_exception.vcxproj">
+      <Project>{C57C35A4-8C92-312B-926F-0BCD4637D52F}</Project>
+      <Name>boost_stacktrace_from_exception</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\stacktrace\boost_stacktrace_noop.vcxproj">
+      <Project>{9AA181AA-C470-320E-8E58-2AF420E5C339}</Project>
+      <Name>boost_stacktrace_noop</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\stacktrace\boost_stacktrace_windbg.vcxproj">
+      <Project>{AD092EFD-083C-3108-90F8-255BDFDDBA34}</Project>
+      <Name>boost_stacktrace_windbg</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\stacktrace\boost_stacktrace_windbg_cached.vcxproj">
+      <Project>{DBEE73C3-FFAF-319C-AF48-A2E423CEC072}</Project>
+      <Name>boost_stacktrace_windbg_cached</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\system\boost_system.vcxproj">
+      <Project>{4B0333B2-17A6-35A3-ACC3-30E251749B34}</Project>
+      <Name>boost_system</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\test\boost_test_exec_monitor.vcxproj">
+      <Project>{E46A04E4-8CD9-3AB7-98CC-20433FD54C05}</Project>
+      <Name>boost_test_exec_monitor</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\thread\boost_thread.vcxproj">
+      <Project>{8B4B1833-2FEC-3473-8EC1-B3B1C0F6D284}</Project>
+      <Name>boost_thread</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\timer\boost_timer.vcxproj">
+      <Project>{F0F8832B-3BAD-348D-A46A-3435AF2BF106}</Project>
+      <Name>boost_timer</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\type_erasure\boost_type_erasure.vcxproj">
+      <Project>{76C936F2-89ED-326B-8D86-673487AC1B71}</Project>
+      <Name>boost_type_erasure</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\test\boost_unit_test_framework.vcxproj">
+      <Project>{1D662D04-0756-33AD-B646-5367A5A2E94D}</Project>
+      <Name>boost_unit_test_framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\unordered\boost_unordered.vcxproj">
+      <Project>{863680CF-8690-30E3-B7E5-56E0BB5794AF}</Project>
+      <Name>boost_unordered</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\url\boost_url.vcxproj">
+      <Project>{6E7D460E-BA0A-35C7-8A03-E8ADA0C7655C}</Project>
+      <Name>boost_url</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\variant2\boost_variant2.vcxproj">
+      <Project>{E33050AF-F914-3ECE-A393-DCEAA28FD58B}</Project>
+      <Name>boost_variant2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\wave\boost_wave.vcxproj">
+      <Project>{385D59E4-D43D-32CC-B153-622397D11EA9}</Project>
+      <Name>boost_wave</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\serialization\boost_wserialization.vcxproj">
+      <Project>{B9084D13-4148-364D-AFE7-6901DD28671E}</Project>
+      <Name>boost_wserialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\glew.vcxproj">
+      <Project>{E1A020FC-9AFC-3800-940A-BB6E82F82F92}</Project>
+      <Name>glew</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\dependencies\quill\quill.vcxproj">
+      <Project>{406EDA3A-E339-3111-9EC0-B57BA9BF753C}</Project>
+      <Name>quill</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>

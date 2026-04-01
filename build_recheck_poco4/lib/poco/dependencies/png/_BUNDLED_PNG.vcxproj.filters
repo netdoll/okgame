@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\png.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngerror.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngget.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngmem.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngpread.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngread.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngrio.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngrtran.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngrutil.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngset.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngtest.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngtrans.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngwio.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngwrite.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngwtran.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngwutil.c">
+      <Filter>png\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\png.h">
+      <Filter>png\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngconf.h">
+      <Filter>png\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngdebug.h">
+      <Filter>png\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pnginfo.h">
+      <Filter>png\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pnglibconf.h">
+      <Filter>png\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngpriv.h">
+      <Filter>png\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\src\pngstruct.h">
+      <Filter>png\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\png\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="png">
+      <UniqueIdentifier>{13F21DEC-B610-3AEA-AC32-F4A0E0D5427C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="png\Header Files">
+      <UniqueIdentifier>{2B5D0A06-3BA3-3213-9DE4-40C1C57114D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="png\Source Files">
+      <UniqueIdentifier>{37A4B507-FCA4-39D9-82F5-88AC26B56351}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

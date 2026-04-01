@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="cwebp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="2ad67655-6462-3f41-b4ee-5b19abf23139">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="exampleutil.vcxproj"/>
+		<BuildDependency Project="imagedec.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+		<BuildDependency Project="webpdemux.vcxproj"/>
+	</Project>
+	<Project Path="dwebp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="fd77c6f4-a81e-36d2-ae32-7f6ca1cc045d">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="exampleutil.vcxproj"/>
+		<BuildDependency Project="imagedec.vcxproj"/>
+		<BuildDependency Project="imageenc.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+		<BuildDependency Project="webpdemux.vcxproj"/>
+	</Project>
+	<Project Path="exampleutil.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c6ec1dcc-f7b5-35f2-8799-3d19fb1aefee">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+	</Project>
+	<Project Path="extras.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="497dbecb-85b6-3583-882c-1b402559bbb8">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+		<BuildDependency Project="webpdspdecode.vcxproj"/>
+	</Project>
+	<Project Path="get_disto.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b1d80b0f-6448-3e34-add5-8aed829f033c">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="imagedec.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+		<BuildDependency Project="webpdemux.vcxproj"/>
+	</Project>
+	<Project Path="imagedec.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d214fb9a-46cc-37de-afc6-be7128408377">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+		<BuildDependency Project="webpdemux.vcxproj"/>
+	</Project>
+	<Project Path="imageenc.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="49b68836-bf0d-3eb8-bb92-81b6ab67e1b1">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+	</Project>
+	<Project Path="imageioutil.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d9a14b83-bb02-33c7-8c17-d4f13124fe3b">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+	</Project>
+	<Project Path="img2webp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a2e6f502-3f8d-3938-a817-e98edf10e227">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="exampleutil.vcxproj"/>
+		<BuildDependency Project="imagedec.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="libwebpmux.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+		<BuildDependency Project="webpdemux.vcxproj"/>
+	</Project>
+	<Project Path="libwebpmux.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="4b3ebd81-0e52-3bb3-b7ff-8db8383c627d">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+	</Project>
+	<Project Path="sharpyuv.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6827e8f8-de8a-3193-bafe-1235070a683e">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="webp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b9ead2e7-2de0-3c35-b6c5-9ade7a3ae925">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webpdecode.vcxproj"/>
+		<BuildDependency Project="webpdsp.vcxproj"/>
+		<BuildDependency Project="webpencode.vcxproj"/>
+		<BuildDependency Project="webputils.vcxproj"/>
+	</Project>
+	<Project Path="webp_quality.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="08531f1b-77c1-3862-bb3d-7d1b65aa1d07">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="exampleutil.vcxproj"/>
+		<BuildDependency Project="extras.vcxproj"/>
+		<BuildDependency Project="imagedec.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+		<BuildDependency Project="webpdemux.vcxproj"/>
+		<BuildDependency Project="webpdspdecode.vcxproj"/>
+	</Project>
+	<Project Path="webpdecode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="75ba5b7c-1562-3e0d-87de-6934791acfa6">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="webpdspdecode.vcxproj"/>
+	</Project>
+	<Project Path="webpdecoder.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="91a075b5-d692-3376-a949-d9af3bf1b798">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="webpdecode.vcxproj"/>
+		<BuildDependency Project="webpdspdecode.vcxproj"/>
+		<BuildDependency Project="webputilsdecode.vcxproj"/>
+	</Project>
+	<Project Path="webpdemux.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a0aeee78-844f-37bb-ade5-a02229b966e9">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+	</Project>
+	<Project Path="webpdsp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="fc2aea21-35e8-3273-adab-4b85ca2088fc">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="webpdspdecode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="80ecb88e-3451-3d58-a628-301fcde42b9c">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="webpencode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="43d9f27f-726a-3757-b503-692486405635">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="webpinfo.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="54f80ffe-f24e-3773-83ca-70eb07eb8582">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="exampleutil.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+	</Project>
+	<Project Path="webpmux.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="55070cad-1250-3312-8a62-169f7087e59b">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="exampleutil.vcxproj"/>
+		<BuildDependency Project="imageioutil.vcxproj"/>
+		<BuildDependency Project="libwebpmux.vcxproj"/>
+		<BuildDependency Project="sharpyuv.vcxproj"/>
+		<BuildDependency Project="webp.vcxproj"/>
+	</Project>
+	<Project Path="webputils.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8bb5af63-346d-3a4e-84c7-d9f85fa3436b">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="webputilsdecode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="2075e4da-5746-3519-bb45-e1614f2c5c23">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a9494534-f32a-3e1c-8a61-e375503756d5" DefaultStartup="true">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="cwebp.vcxproj"/>
+			<BuildDependency Project="dwebp.vcxproj"/>
+			<BuildDependency Project="exampleutil.vcxproj"/>
+			<BuildDependency Project="extras.vcxproj"/>
+			<BuildDependency Project="get_disto.vcxproj"/>
+			<BuildDependency Project="imagedec.vcxproj"/>
+			<BuildDependency Project="imageenc.vcxproj"/>
+			<BuildDependency Project="imageioutil.vcxproj"/>
+			<BuildDependency Project="img2webp.vcxproj"/>
+			<BuildDependency Project="libwebpmux.vcxproj"/>
+			<BuildDependency Project="sharpyuv.vcxproj"/>
+			<BuildDependency Project="webp.vcxproj"/>
+			<BuildDependency Project="webp_quality.vcxproj"/>
+			<BuildDependency Project="webpdecode.vcxproj"/>
+			<BuildDependency Project="webpdecoder.vcxproj"/>
+			<BuildDependency Project="webpdemux.vcxproj"/>
+			<BuildDependency Project="webpdsp.vcxproj"/>
+			<BuildDependency Project="webpdspdecode.vcxproj"/>
+			<BuildDependency Project="webpencode.vcxproj"/>
+			<BuildDependency Project="webpinfo.vcxproj"/>
+			<BuildDependency Project="webpmux.vcxproj"/>
+			<BuildDependency Project="webputils.vcxproj"/>
+			<BuildDependency Project="webputilsdecode.vcxproj"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8a6907a3-acd7-3f9e-b3b7-0a14d2657b1a">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5610042f-18f9-3728-b195-3dff710b8fb7"/>
+	</Folder>
+</Solution>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\extra\boost_bloom.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom.hpp">
+      <Filter>Header Files\boost</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\block.hpp">
+      <Filter>Header Files\boost\bloom</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\avx2.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\block_base.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\block_fpr_base.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\block_ops.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\bloom_printers.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\constexpr_bit_width.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\core.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\fast_multiblock32_avx2.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\fast_multiblock32_neon.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\fast_multiblock32_sse2.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\fast_multiblock64_avx2.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\multiblock_fpr_base.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\mulx64.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\neon.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\sse2.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\detail\type_traits.hpp">
+      <Filter>Header Files\boost\bloom\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\fast_multiblock32.hpp">
+      <Filter>Header Files\boost\bloom</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\fast_multiblock64.hpp">
+      <Filter>Header Files\boost\bloom</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\filter.hpp">
+      <Filter>Header Files\boost\bloom</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bloom\include\boost\bloom\multiblock.hpp">
+      <Filter>Header Files\boost\bloom</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3FA0D6BC-4163-3597-A017-BE9761AED3F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost">
+      <UniqueIdentifier>{BA090140-9E20-317E-8181-6350B679A513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\bloom">
+      <UniqueIdentifier>{C969BF01-8E89-3DC8-B5EE-9CF0708BB44A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\bloom\detail">
+      <UniqueIdentifier>{88F45026-3228-36F6-B498-63521347F7E9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

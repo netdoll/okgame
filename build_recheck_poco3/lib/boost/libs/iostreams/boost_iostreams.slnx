@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="../assert/boost_assert.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="0dac0145-9f75-3d8e-8075-434d5b2ad58a">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../core/boost_core.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="f74c26e8-af39-3a57-96d5-ff1eaea5b17f">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="boost_iostreams.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6add3885-1720-37ad-85c0-8fcfe2037bb5">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="../random/boost_random.vcxproj"/>
+		<BuildDependency Project="../system/boost_system.vcxproj"/>
+		<BuildDependency Project="../variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="../optional/boost_optional.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7f848381-2a7a-36a1-9c2c-ba57a9fb5ef6">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../random/boost_random.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7f8d2cbc-1113-3918-ad12-aca78afe0811">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../system/boost_system.vcxproj"/>
+		<BuildDependency Project="../variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="../system/boost_system.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b3322e93-c0b5-376d-9958-1156dcd5f6d2">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../variant2/boost_variant2.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c95ec7da-67a3-3a82-beac-b2cc580164a8">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e5a47d5a-39e7-3fb8-aa62-59cd810fe2d6" DefaultStartup="true">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="boost_iostreams.vcxproj"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="0e11c310-87ac-33b1-ab4c-19e1f182f13d">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="93809ed7-2775-3f50-a396-b2f99a597836"/>
+	</Folder>
+</Solution>

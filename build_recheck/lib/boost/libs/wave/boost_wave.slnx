@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="../assert/boost_assert.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b24fba8b-c2b3-3ba8-8263-26d2d32f99e7">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../atomic/boost_atomic.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9f2fc9d8-5caa-34c7-851a-2d8213faa2be">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+	</Project>
+	<Project Path="../chrono/boost_chrono.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b2b3e949-e02a-3b5c-bd6c-15d2c55488e8">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../system/boost_system.vcxproj"/>
+		<BuildDependency Project="../variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="../container/boost_container.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="4fd15ae6-0be9-3eae-bc45-d91b2036cdc3">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+	</Project>
+	<Project Path="../core/boost_core.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c209b925-d8da-338a-82de-dc8996d6a6a3">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../date_time/boost_date_time.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7c90413b-d477-32d5-a651-71c1b6abbbb7">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../container/boost_container.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="../unordered/boost_unordered.vcxproj"/>
+	</Project>
+	<Project Path="../filesystem/boost_filesystem.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8ce47bca-fcec-3585-b204-59abab5ba10b">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="../system/boost_system.vcxproj"/>
+		<BuildDependency Project="../variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="../optional/boost_optional.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="57fffcb6-51ed-3f6c-9bc1-cb0014803282">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../serialization/boost_serialization.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="306d79d7-87b1-33a3-9516-4aba32a50eba">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="../chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="../container/boost_container.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="../optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="../system/boost_system.vcxproj"/>
+		<BuildDependency Project="../thread/boost_thread.vcxproj"/>
+		<BuildDependency Project="../unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="../variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="../system/boost_system.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="cc81ae04-fe5a-3a28-8616-621f6972c0a0">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../thread/boost_thread.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="818fbd70-50b4-3912-9477-1f49910dbd08">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="../chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="../container/boost_container.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="../optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="../system/boost_system.vcxproj"/>
+		<BuildDependency Project="../unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="../variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Project Path="../unordered/boost_unordered.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9be1ed04-b517-3399-a975-26d8482fe002">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../variant2/boost_variant2.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="cdce4aff-863f-30e6-8057-1c15366983aa">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="boost_wave.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3311dcaa-7654-3c40-a36b-f91e4f377aeb">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../assert/boost_assert.vcxproj"/>
+		<BuildDependency Project="../atomic/boost_atomic.vcxproj"/>
+		<BuildDependency Project="../chrono/boost_chrono.vcxproj"/>
+		<BuildDependency Project="../container/boost_container.vcxproj"/>
+		<BuildDependency Project="../core/boost_core.vcxproj"/>
+		<BuildDependency Project="../date_time/boost_date_time.vcxproj"/>
+		<BuildDependency Project="../filesystem/boost_filesystem.vcxproj"/>
+		<BuildDependency Project="../optional/boost_optional.vcxproj"/>
+		<BuildDependency Project="../serialization/boost_serialization.vcxproj"/>
+		<BuildDependency Project="../system/boost_system.vcxproj"/>
+		<BuildDependency Project="../thread/boost_thread.vcxproj"/>
+		<BuildDependency Project="../unordered/boost_unordered.vcxproj"/>
+		<BuildDependency Project="../variant2/boost_variant2.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1326517e-20f5-3f99-a840-d0cca1dca81b" DefaultStartup="true">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="boost_wave.vcxproj"/>
+		</Project>
+		<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="15376deb-cb9a-3841-a585-5ccd0060dbe4">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5a7dae67-ed67-3258-a3de-bee352bfa768">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7b731cc4-1e77-3fc9-963b-ac41027d6c57"/>
+	</Folder>
+</Solution>

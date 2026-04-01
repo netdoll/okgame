@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\extra\boost_assert.natvis">
+      <Filter>extra</Filter>
+    </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include\boost\assert.hpp">
+      <Filter>include\boost</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include\boost\assert\source_location.hpp">
+      <Filter>include\boost\assert</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include\boost\current_function.hpp">
+      <Filter>include\boost</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="extra">
+      <UniqueIdentifier>{FB13492B-0F6F-34D6-8B01-833E6B630DE3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{E76C7AAA-4D2D-349B-AC6F-2A33D94725E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\boost">
+      <UniqueIdentifier>{AE222DA0-F1D7-312A-998A-9A4891629336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\boost\assert">
+      <UniqueIdentifier>{75D22A5A-6592-38AE-A5DE-4DDB227BAC7C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

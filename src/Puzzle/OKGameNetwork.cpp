@@ -700,8 +700,9 @@ void OKGame::addToRoomsMenu(sp<Room> c, string name, string id)
 
 	if (filterByKeyword != "")
 	{
-		if (c->room_GameTypeName.find(filterByKeyword) == string::npos)add = false;
-		if (c->room_GameSequenceName.find(filterByKeyword) == string::npos)add = false;
+		bool matchesGameType = c->room_GameTypeName.find(filterByKeyword) != string::npos;
+		bool matchesGameSequence = c->room_GameSequenceName.find(filterByKeyword) != string::npos;
+		if (matchesGameType == false && matchesGameSequence == false)add = false;
 	}
 
 	if (add)roomsMenu->add(name, id);
@@ -759,7 +760,7 @@ void OKGame::populateRoomsMenu()
 
 	if (hidePublicRooms == false)
 	{
-		if (hideFreePlayRooms == false)
+		if (hideFreePlayRooms == false && joiningTournament == false)
 		{
 			roomsMenu->addInfo("Public Free Play Games:");
 			for (int i = 0; i < rooms->size(); i++)
@@ -825,11 +826,11 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 		networkMultiplayerLobbyMenu->addInfo(" ");
 		//networkMultiplayerLobbyMenu->add("Add friends by email address");
 		//networkMultiplayerLobbyMenu->add("Add friends from Gmail");
-		//networkMultiplayerLobbyMenu->add("Add friends from Steam");
-		//networkMultiplayerLobbyMenu->add("Play against people in your area");
-		//networkMultiplayerLobbyMenu->add("Play against people from all over the world");
-		//networkMultiplayerLobbyMenu->add("Compete in global tournament");
-		//networkMultiplayerLobbyMenu->add("See your ranking and stats");
+		networkMultiplayerLobbyMenu->add("Add friends from Steam");
+		networkMultiplayerLobbyMenu->add("Play against people in your area");
+		networkMultiplayerLobbyMenu->add("Play against people from all over the world");
+		networkMultiplayerLobbyMenu->add("Compete in global tournament");
+		networkMultiplayerLobbyMenu->add("See your ranking and stats");
 		//networkMultiplayerLobbyMenu->add("Watch game");
 		networkMultiplayerLobbyMenu->add("Join room");
 		networkMultiplayerLobbyMenu->add("Create new room", "Create room");
@@ -1077,6 +1078,11 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 		yourStatsMenu->clear();
 		leaderBoardMenu->clear();
 
+		yourStatsMenu->addInfo(" ");
+		yourStatsMenu->add("Back to Lobby", "Back");
+		leaderBoardMenu->addInfo(" ");
+		leaderBoardMenu->add("Back to Lobby", "Back");
+
 		if(selectingHostedGame)
 		{
 			for (int i = 0; i < rooms->size(); i++)
@@ -1282,7 +1288,17 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 			}
 			else
 			{
-				if (selectingHostedGame == false)
+				if (seeingStats)
+				{
+					if (getControlsManager()->miniGame_UP_Pressed()) yourStatsMenu->up();
+					if (getControlsManager()->miniGame_DOWN_Pressed()) yourStatsMenu->down();
+				}
+				else if (seeingLeaderboard)
+				{
+					if (getControlsManager()->miniGame_UP_Pressed()) leaderBoardMenu->up();
+					if (getControlsManager()->miniGame_DOWN_Pressed()) leaderBoardMenu->down();
+				}
+				else if (selectingHostedGame == false)
 				{
 					if (getControlsManager()->miniGame_UP_Pressed())
 					{
@@ -1385,19 +1401,47 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 
 						if(yourStatsMenu!=nullptr && yourStatsMenu->getSelectedMenuItem()!=nullptr && yourStatsMenu->isSelectedID(yourStatsMenu->getSelectedMenuItem()->id,clicked,mx,my))
 						{
-							updateStatsMenu = true;
-							whichDifficultyToShow++;
-							rotateLeaderBoardsTime = -5000;
+							if (yourStatsMenu->isSelectedID("Back", clicked, mx, my))
+							{
+								seeingStats = false;
+							}
+							else
+							{
+								updateStatsMenu = true;
+								whichDifficultyToShow++;
+								rotateLeaderBoardsTime = -5000;
+							}
 						}
 						if (leaderBoardMenu != nullptr && leaderBoardMenu->getSelectedMenuItem() != nullptr && leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id,clicked, mx, my))
 						{
-							updateStatsMenu = true;
-							whichLeaderBoardToShow++;
-							rotateLeaderBoardsTime = -5000;
+							if (leaderBoardMenu->isSelectedID("Back", clicked, mx, my))
+							{
+								seeingLeaderboard = false;
+							}
+							else
+							{
+								updateStatsMenu = true;
+								whichLeaderBoardToShow++;
+								rotateLeaderBoardsTime = -5000;
+							}
 						}
 					}
 
-					if (selectingHostedGame == true || (clicked == true && confirm == false))
+					if (seeingStats)
+					{
+						if (yourStatsMenu->isSelectedID("Back", confirm, mx, my))
+						{
+							seeingStats = false;
+						}
+					}
+					else if (seeingLeaderboard)
+					{
+						if (leaderBoardMenu->isSelectedID("Back", confirm, mx, my))
+						{
+							seeingLeaderboard = false;
+						}
+					}
+					else if (selectingHostedGame == true || (clicked == true && confirm == false))
 					{
 
 						{
@@ -1475,6 +1519,60 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 						//	getServerConnection()->linkFacebookAccount(statusLabel, errorLabel);
 						//}
 
+						if (networkMultiplayerLobbyMenu->isSelectedID("Add friends from Steam", clicked, mx, my))
+						{
+							vector<pair<uint64_t, string>> steamFriends = SteamManager::getFriends();
+							if (steamFriends.empty()) {
+								errorLabel->setText("No Steam friends found or Steam not running.");
+							} else {
+								for(auto& f : steamFriends) {
+									getServerConnection()->doAddFriendByUsername(statusLabel, errorLabel, f.second);
+								}
+								statusLabel->setText("Attempted to add " + to_string(steamFriends.size()) + " Steam friends.");
+							}
+						}
+
+						if (networkMultiplayerLobbyMenu->isSelectedID("Play against people in your area", clicked, mx, my))
+						{
+							joiningTournament = false;
+							hidePrivateRooms = true;
+							hidePublicRooms = false;
+							hideFreePlayRooms = false;
+							hideTournamentRooms = true;
+							selectingHostedGame = true;
+							populateRoomsMenu();
+							statusLabel->setText("Regional auto-match is not wired yet. Showing public free play rooms.");
+							errorLabel->setText(" ");
+						}
+
+						if (networkMultiplayerLobbyMenu->isSelectedID("Play against people from all over the world", clicked, mx, my))
+						{
+							joiningTournament = false;
+							hidePrivateRooms = true;
+							hidePublicRooms = false;
+							hideFreePlayRooms = false;
+							hideTournamentRooms = false;
+							selectingHostedGame = true;
+							populateRoomsMenu();
+							statusLabel->setText("Global auto-match is not wired yet. Showing public rooms you can join now.");
+							errorLabel->setText(" ");
+						}
+
+						if (networkMultiplayerLobbyMenu->isSelectedID("Compete in global tournament", clicked, mx, my))
+						{
+							joiningTournament = true;
+							hideTournamentRooms = false;
+							selectingHostedGame = true;
+							populateRoomsMenu();
+						}
+
+						if (networkMultiplayerLobbyMenu->isSelectedID("See your ranking and stats", clicked, mx, my))
+						{
+							seeingStats = true;
+							seeingLeaderboard = false;
+							selectingHostedGame = false;
+						}
+
 						if (networkMultiplayerLobbyMenu->isSelectedID("Add friend by username", clicked, mx, my))
 						{
 							while (friendUserName.find("`") != string::npos)
@@ -1533,6 +1631,15 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 
 				if (getControlsManager()->miniGame_CANCEL_Pressed())
 				{
+					if (seeingStats || seeingLeaderboard || joiningTournament)
+					{
+						seeingStats = false;
+						seeingLeaderboard = false;
+						joiningTournament = false;
+						selectingHostedGame = false;
+						populateRoomsMenu();
+					}
+					else
 					if (selectingHostedGame == true)
 					{
 						selectingHostedGame = false;
@@ -1643,15 +1750,163 @@ void OKGame::networkMultiplayerLobbyMenuRender()
 	int bottomHeight = 0;
 	int leftX = 0;
 	int rightX = 0;
-	networkMultiplayerLobbyMenu->render(0,		 getWidth() / 10 * 1, getHeight(), !selectingHostedGame, &startHeight, &bottomHeight, false, &leftX, &rightX);
+	networkMultiplayerLobbyMenu->render(0,		 getWidth() / 10 * 1, getHeight(), !selectingHostedGame && !seeingStats && !seeingLeaderboard, &startHeight, &bottomHeight, false, &leftX, &rightX);
 	friendsOnlineMenu->render(bottomHeight + 30, getWidth() / 10 * 1, getHeight(), false);
 
-	roomsMenu->render(startHeight, rightX + 50, getHeight(), selectingHostedGame, nullptr, nullptr, false, nullptr, &rightX);
+	if (!seeingStats && !seeingLeaderboard)
+	{
+		roomsMenu->render(startHeight, rightX + 50, getHeight(), selectingHostedGame, nullptr, nullptr, false, nullptr, &rightX);
+	}
 
-	yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false, nullptr, &rightX);
-	leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false);
+	if (seeingStats)
+	{
+		yourStatsMenu->render(startHeight, rightX + 50, getHeight(), true, nullptr, nullptr, false, nullptr, &rightX);
+	}
 
-	if (selectGameSequenceOrSingleGameTypeFilterMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
+	if (seeingLeaderboard)
+	{
+		leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), true);
+	}
+
+	if (seeingTournamentBracket)
+	{
+		tournamentBracketMenu->render(startHeight, rightX + 50, getHeight(), true);
+	}
+	}
+
+	void OKGame::getTournamentBracketFromServer() {
+	if (currentRoom == nullptr) return;
+	getServerConnection()->writeCompressed(BobNet.Bobs_Game_GetTournamentBracketRequest + currentRoom->uuid + BobNet.endline);
+	}
+
+	void OKGame::tournamentBracketMenuUpdate() {
+	if (tournamentBracketMenu == nullptr) {
+		tournamentBracketMenu = ms<OKMenu>(this, "", "Tournament Bracket");
+	}
+
+	string bracketData = getServerConnection()->getAndResetBobsGameGetTournamentBracketResponse_S();
+	if (bracketData != "") {
+		if (bracketData == "NotFound") {
+			tournamentBracketMenu->clear();
+			tournamentBracketMenu->addInfo("Tournament not started yet.");
+		} else {
+			parseTournamentData(bracketData);
+		}
+	}
+
+	if (getControlsManager()->miniGame_CANCEL_Pressed()) {
+		seeingTournamentBracket = false;
+	}
+	}
+
+	void OKGame::parseTournamentData(string s) {
+		currentTournament = ms<Tournament>();
+		// Format: tournamentID|roomUUID|M0:p1ID:p2ID:winnerID:nextMID:final:round;M1:...
+
+		size_t pipe1 = s.find("|");
+		if (pipe1 == string::npos) return;
+		currentTournament->tournamentID = s.substr(0, pipe1);
+		s = s.substr(pipe1 + 1);
+
+		size_t pipe2 = s.find("|");
+		if (pipe2 == string::npos) return;
+		currentTournament->roomUUID = s.substr(0, pipe2);
+		s = s.substr(pipe2 + 1);
+
+		tournamentBracketMenu->clear();
+		tournamentBracketMenu->addInfo("Tournament: " + currentTournament->tournamentID);
+		tournamentBracketMenu->addInfo(" ");
+
+		while (s.find(";") != string::npos) {
+			string matchStr = s.substr(0, s.find(";"));
+			s = s.substr(s.find(";") + 1);
+
+			// matchID:p1ID:p2ID:winnerID:nextMID:final:round
+			vector<string> parts;
+			stringstream ss(matchStr);
+			string item;
+			while (getline(ss, item, ':')) {
+				parts.push_back(item);
+			}
+
+			if (parts.size() >= 7) {
+				TournamentMatch m;
+				m.matchID = parts[0];
+				m.player1ID = stoll(parts[1]);
+				m.player2ID = stoll(parts[2]);
+				m.winnerID = stoll(parts[3]);
+				m.nextMatchID = parts[4];
+				m.isFinal = (parts[5] == "true");
+				m.round = stoi(parts[6]);
+				currentTournament->matches.push_back(m);
+			}
+		}
+
+		// Layout matches
+		int maxRound = 0;
+		for (auto& m : currentTournament->matches) if (m.round > maxRound) maxRound = m.round;
+
+		float colWidth = 200;
+		float rowHeight = 60;
+		float startX = 100;
+		float startY = 200;
+
+		for (int r = 0; r <= maxRound; r++) {
+			int matchInRoundCount = 0;
+			for (auto& m : currentTournament->matches) if (m.round == r) matchInRoundCount++;
+
+			int currentMatchIdx = 0;
+			for (auto& m : currentTournament->matches) {
+				if (m.round == r) {
+					m.x = startX + r * colWidth;
+					// Center the round vertically
+					float totalRoundHeight = matchInRoundCount * rowHeight * pow(2, r);
+					m.y = startY + (currentMatchIdx * rowHeight * pow(2, r)) + (totalRoundHeight / (matchInRoundCount * 2));
+
+					currentMatchIdx++;
+				}
+			}
+		}
+	}
+
+	void OKGame::tournamentBracketMenuRender() {
+		if (!seeingTournamentBracket || currentTournament == nullptr) return;
+
+		float startHeight = 100;
+		float rightX = getWidth() - 100;
+		tournamentBracketMenu->render(startHeight, 50, getHeight(), true);
+
+		for (auto& m : currentTournament->matches) {
+			float x = m.x;
+			float y = m.y;
+			float w = 150;
+			float h = 40;
+
+			GLUtils::drawBox(x, x + w, y, y + h, 255, 255, 255);
+			GLUtils::drawLine(x, y + h / 2, x + w, y + h / 2, 255, 255, 255);
+
+			string p1Name = (m.player1ID != -1) ? "Player " + to_string(m.player1ID) : "TBD";
+			string p2Name = (m.player2ID != -1) ? "Player " + to_string(m.player2ID) : "TBD";
+
+			GLUtils::drawOutlinedString(p1Name, x + 5, y + 5, OKColor::white);
+			GLUtils::drawOutlinedString(p2Name, x + 5, y + h / 2 + 5, OKColor::white);
+
+			if (m.winnerID != -1) {
+				float winnerY = (m.winnerID == m.player1ID) ? y + 5 : y + h / 2 + 5;
+				GLUtils::drawFilledRect(0, 255, 0, x, x + w, winnerY, winnerY + h / 2, 0.3f);
+			}
+
+			// Draw connector to next match
+			if (m.nextMatchID != "") {
+				for (auto& nextM : currentTournament->matches) {
+					if (nextM.matchID == m.nextMatchID) {
+						GLUtils::drawLine(x + w, y + h / 2, nextM.x, nextM.y + h / 2, 255, 255, 255);
+						break;
+					}
+				}
+			}
+		}
+	}	if (selectGameSequenceOrSingleGameTypeFilterMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
 		sp<Caption>c = networkMultiplayerLobbyMenu->getCaptionByID(FilterByGameSequenceOrTypeRooms);
 		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
@@ -1962,7 +2217,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 		string tournament = "Free Play";
 		if (currentRoom->multiplayer_TournamentRoom == true)
 			tournament = "Tournament (Will Affect Player Rankings)";
-		networkMultiplayerRoomRulesMenu->addInfo("Visibility: " + privateOrPublic);
+		networkMultiplayerRoomRulesMenu->addInfo("Mode: " + tournament);
 
 		string maxPlayers = "No Limit";
 		if (currentRoom->multiplayer_MaxPlayers > 1)
@@ -1996,7 +2251,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 		string endOnCredits = "Free Play To Completion";
 		if (currentRoom->endlessMode)endOnCredits = "Endless Mode";
 		if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)endOnCredits = "End On First Completion";
-		networkMultiplayerRoomRulesMenu->addInfo("Finish Rule: " + endWhenLose);
+		networkMultiplayerRoomRulesMenu->addInfo("Finish Rule: " + endOnCredits);
 
 		networkMultiplayerRoomRulesMenu->addInfo(" ");
 		

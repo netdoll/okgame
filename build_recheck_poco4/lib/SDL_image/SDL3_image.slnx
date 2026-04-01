@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="../SDL/SDL3-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="531ef33c-6522-38d6-b80c-40ab642e8956">
+		<BuildDependency Project="../SDL/SDL_uclibc.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="SDL3_image-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="270def67-c0e7-3b96-90f8-681adee7e8e1">
+		<BuildDependency Project="../SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/libwebpmux.vcxproj"/>
+		<BuildDependency Project="external/libpng-build/png_shared.vcxproj"/>
+		<BuildDependency Project="external/libtiff-build/libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webp.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webpdemux.vcxproj"/>
+	</Project>
+	<Project Path="../SDL/SDL_uclibc.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3c2c0182-6c09-3958-b689-b6fdbf21228e">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/libwebpmux.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="4b3ebd81-0e52-3bb3-b7ff-8db8383c627d">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/sharpyuv.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webp.vcxproj"/>
+	</Project>
+	<Project Path="external/libpng-build/png_genfiles.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3013b5e7-d54b-3e37-a496-d03654c77d1f">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libpng-build/png_shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="dfbce2f8-c891-3178-92ef-9ae4f8467039">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libpng-build/png_genfiles.vcxproj"/>
+		<BuildDependency Project="external/zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/sharpyuv.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6827e8f8-de8a-3193-bafe-1235070a683e">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libtiff-build/libtiff/tiff.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="265cc27d-de7c-375b-abc1-143f67c87a7c">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/webp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b9ead2e7-2de0-3c35-b6c5-9ade7a3ae925">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/sharpyuv.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webpdecode.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webpdsp.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webpencode.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webputils.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/webpdecode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="75ba5b7c-1562-3e0d-87de-6934791acfa6">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webpdspdecode.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/webpdemux.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a0aeee78-844f-37bb-ade5-a02229b966e9">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/sharpyuv.vcxproj"/>
+		<BuildDependency Project="external/libwebp-build/webp.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/webpdsp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="fc2aea21-35e8-3273-adab-4b85ca2088fc">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/webpdspdecode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="80ecb88e-3451-3d58-a628-301fcde42b9c">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/webpencode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="43d9f27f-726a-3757-b503-692486405635">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libwebp-build/webputils.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8bb5af63-346d-3a4e-84c7-d9f85fa3436b">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/zlib-build/zlib.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a9ece55d-b46b-3f4b-a8b5-d8e9e8b770f7">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a9494534-f32a-3e1c-8a61-e375503756d5" DefaultStartup="true">
+			<BuildDependency Project="SDL3_image-shared.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8a6907a3-acd7-3f9e-b3b7-0a14d2657b1a">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5610042f-18f9-3728-b195-3dff710b8fb7"/>
+	</Folder>
+</Solution>

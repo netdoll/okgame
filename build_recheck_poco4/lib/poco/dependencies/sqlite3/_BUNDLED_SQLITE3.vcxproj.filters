@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\sqlite3\src\sqlite3.c">
+      <Filter>sqlite3\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\sqlite3\src\sqlite3.h">
+      <Filter>sqlite3\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\sqlite3\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="sqlite3">
+      <UniqueIdentifier>{D426B94F-E61F-35DF-8DCB-232257B80321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlite3\Header Files">
+      <UniqueIdentifier>{16898344-672E-3848-8DFF-38A89EE4AC66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlite3\Source Files">
+      <UniqueIdentifier>{B6D28F96-2176-3917-8B00-2242AE9447F1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

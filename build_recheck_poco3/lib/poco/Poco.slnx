@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="Foundation/Foundation.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="f6e417cc-10f1-3f63-aadf-2d88e0f56b3b">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="dependencies/pcre2/_BUNDLED_PCRE2.vcxproj"/>
+		<BuildDependency Project="dependencies/utf8proc/_BUNDLED_UTF8PROC.vcxproj"/>
+		<BuildDependency Project="dependencies/v8_double_conversion/_BUNDLED_V8_DOUBLE_CONVERSION.vcxproj"/>
+		<BuildDependency Project="dependencies/quill/quill.vcxproj"/>
+		<BuildDependency Project="../SDL_image/external/zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="JSON/JSON.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6c22923e-dfbd-3aa4-9ac6-a4a5ca186883">
+		<BuildDependency Project="Foundation/Foundation.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="dependencies/pdjson/_BUNDLED_PDJSON.vcxproj"/>
+		<BuildDependency Project="dependencies/quill/quill.vcxproj"/>
+	</Project>
+	<Project Path="Net/Net.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5a9af702-dd47-38f3-9232-2fa4b6a1b2fe">
+		<BuildDependency Project="Foundation/Foundation.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="dependencies/wepoll/_BUNDLED_WEPOLL.vcxproj"/>
+		<BuildDependency Project="dependencies/quill/quill.vcxproj"/>
+	</Project>
+	<Project Path="Util/Util.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c7a9eed3-2b5a-3b9c-99e6-5bc638bab3f9">
+		<BuildDependency Project="Foundation/Foundation.vcxproj"/>
+		<BuildDependency Project="JSON/JSON.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="dependencies/quill/quill.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/7zip/_BUNDLED_7ZIP.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e9db5d50-6267-3832-b0d9-c401ffcd5197">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/expat/_BUNDLED_EXPAT.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ade9e0c3-4e6a-36d2-ab4b-946899d3aa63">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/hpdf/_BUNDLED_HPDF.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="be4d9af6-edfd-3668-b2e6-ccd06becb8c7">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../SDL_image/external/libpng-build/png_shared.vcxproj"/>
+		<BuildDependency Project="../SDL_image/external/zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/pcre2/_BUNDLED_PCRE2.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="75649fad-b5b2-3f1b-8680-538096c50b57">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/pdjson/_BUNDLED_PDJSON.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8cd350a8-1daa-36b5-9f7a-96c9730a5e6a">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/png/_BUNDLED_PNG.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="33f09648-a60f-31f0-8211-10b4449ff321">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../SDL_image/external/zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/sqlite3/_BUNDLED_SQLITE3.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6ce67a5a-709d-3165-ad1e-f8924809b689">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/utf8proc/_BUNDLED_UTF8PROC.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="20ea1698-9d39-3c90-99de-00d8615e27a6">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/v8_double_conversion/_BUNDLED_V8_DOUBLE_CONVERSION.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="64814f9e-3988-3460-ae01-db4e36553aea">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/wepoll/_BUNDLED_WEPOLL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7bdf4d81-8555-3ae4-94e7-c5faab1c927f">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/zlib/_BUNDLED_ZLIB.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9fd7b4d6-fa4f-3be7-941f-ae4b21386a95">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../SDL_image/external/libpng-build/png_genfiles.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="65cff4c6-498e-3932-8077-c0955bf68ee2">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../SDL_image/external/libpng-build/png_shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c36a6526-c7d5-38b6-8a52-4d016feaafaa">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../SDL_image/external/libpng-build/png_genfiles.vcxproj"/>
+		<BuildDependency Project="../SDL_image/external/zlib-build/zlib.vcxproj"/>
+	</Project>
+	<Project Path="dependencies/quill/quill.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ba50faea-c520-33cf-90cb-60d4db1ad1c3">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="uninstall-poco.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9e6b847b-7969-37d9-bfcf-c3bb78102199">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="../SDL_image/external/zlib-build/zlib.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="79df4150-aa34-3911-b5c5-ed96cdcc60db">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e5a47d5a-39e7-3fb8-aa62-59cd810fe2d6" DefaultStartup="true">
+			<BuildDependency Project="Foundation/Foundation.vcxproj"/>
+			<BuildDependency Project="JSON/JSON.vcxproj"/>
+			<BuildDependency Project="Net/Net.vcxproj"/>
+			<BuildDependency Project="Util/Util.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="dependencies/quill/quill.vcxproj"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="0e11c310-87ac-33b1-ab4c-19e1f182f13d">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="93809ed7-2775-3f50-a396-b2f99a597836"/>
+	</Folder>
+</Solution>

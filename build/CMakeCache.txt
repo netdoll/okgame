@@ -52,8 +52,15 @@ BOOST_THREAD_THREADAPI:STRING=win32
 //Target Windows API version for Boost
 BOOST_USE_WINAPI_VERSION:STRING=
 
-//Build the library as a shared library
+//Build documentation
+BUILD_DOCS:BOOL=OFF
+
+//Build and install libprojectM as a shared libraries. If OFF,
+// builds as static libraries.
 BUILD_SHARED_LIBS:BOOL=ON
+
+//Build the libprojectM test suite
+BUILD_TESTING:BOOL=OFF
 
 //Value Computed by CMake
 Boost_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build/lib/boost
@@ -83,7 +90,7 @@ CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=C:/Users/hyper/workspace/bg/okgame/b
 CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO:PATH=C:/Users/hyper/workspace/bg/okgame/build/lib
 
 //ASM compiler
-CMAKE_ASM_COMPILER:FILEPATH=C:/Program Files/Microsoft Visual Studio/18/Insiders/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe
+CMAKE_ASM_COMPILER:STRING=C:/Program Files/Microsoft Visual Studio/18/Insiders/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe
 
 //Flags used by the ASM compiler during all build types.
 CMAKE_ASM_FLAGS:STRING=
@@ -279,7 +286,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELEASE:STRING=/INCREMENTAL:NO
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /INCREMENTAL
 
 //Path to a program.
-CMAKE_MT:FILEPATH=CMAKE_MT-NOTFOUND
+CMAKE_MT:FILEPATH=C:/Program Files (x86)/Windows Kits/10/bin/10.0.26100.0/x64/mt.exe
 
 //macOS minimum supported target
 CMAKE_OSX_DEPLOYMENT_TARGET:STRING=13.3
@@ -465,6 +472,10 @@ ENABLE_APACHECONNECTOR:BOOL=OFF
 // (requires Google Benchmark library)
 ENABLE_BENCHMARK:BOOL=OFF
 
+//Force the use of boost::filesystem, even if the compiler supports
+// C++17.
+ENABLE_BOOST_FILESYSTEM:BOOL=OFF
+
 //Set to OFF|ON (default is OFF) to enable additional compiler
 // warnings. Intended primarily for maintainers.
 ENABLE_COMPILER_WARNINGS:BOOL=OFF
@@ -480,6 +491,10 @@ ENABLE_CPPUNIT:BOOL=OFF
 
 //No help, variable specified on the command line.
 ENABLE_CRYPTO:UNINITIALIZED=OFF
+
+//Enable exporting C++ symbols for ProjectM and PCM classes, not
+// only the C API. Warning: This is not very portable.
+ENABLE_CXX_INTERFACE:BOOL=OFF
 
 //No help, variable specified on the command line.
 ENABLE_DATA:UNINITIALIZED=OFF
@@ -502,6 +517,9 @@ ENABLE_DATA_SQLITE_FTS5:BOOL=OFF
 //Enable MS SQL Server big strings
 ENABLE_DATA_SQL_SERVER_BIG_STRINGS:BOOL=ON
 
+//Add "d" (by default) after library names for debug builds.
+ENABLE_DEBUG_POSTFIX:BOOL=ON
+
 //Enable DNSSD
 ENABLE_DNSSD:BOOL=OFF
 
@@ -513,6 +531,10 @@ ENABLE_DNSSD_BONJOUR:BOOL=OFF
 
 //Enable DNSSD Default
 ENABLE_DNSSD_DEFAULT:BOOL=OFF
+
+//Build for web with emscripten. Requires emscripten toolset for
+// building.
+ENABLE_EMSCRIPTEN:BOOL=OFF
 
 //Enable Encodings
 ENABLE_ENCODINGS:BOOL=ON
@@ -529,6 +551,12 @@ ENABLE_FOUNDATION:BOOL=ON
 //Set to OFF|ON (default is OFF) to control build of fuzzing targets
 // for oss-fuzz (Clang compiler is required)
 ENABLE_FUZZING:BOOL=OFF
+
+//Enable OpenGL ES support
+ENABLE_GLES:BOOL=OFF
+
+//Enable installing projectM libraries and headers.
+ENABLE_INSTALL:BOOL=OFF
 
 //Set to OFF|ON (default is OFF) to install CppUnit headers and
 // libraries
@@ -561,6 +589,9 @@ ENABLE_PAGECOMPILER_FILE2PAGE:BOOL=OFF
 //Enable PDF
 ENABLE_PDF:BOOL=OFF
 
+//Enable building the playlist management library
+ENABLE_PLAYLIST:BOOL=ON
+
 //Enable Poco Documentation Generator
 ENABLE_POCODOC:BOOL=OFF
 
@@ -573,8 +604,18 @@ ENABLE_REDIS:UNINITIALIZED=OFF
 //Set to OFF|ON (default is OFF) to control build of POCO samples
 ENABLE_SAMPLES:BOOL=OFF
 
+//Build the SDL2-based developer test UI. Ignored when building
+// with Emscripten or for Android.
+ENABLE_SDL_UI:BOOL=OFF
+
 //Enable SevenZip
 ENABLE_SEVENZIP:BOOL=OFF
+
+//Enable use of system-install GLM library
+ENABLE_SYSTEM_GLM:BOOL=OFF
+
+//Enable use of a system-installed/external projectM-eval library
+ENABLE_SYSTEM_PROJECTM_EVAL:BOOL=ON
 
 //Set to OFF|ON (default is OFF) to control build of POCO tests
 ENABLE_TESTS:BOOL=OFF
@@ -588,6 +629,10 @@ ENABLE_TRACE:BOOL=OFF
 
 //Enable Util
 ENABLE_UTIL:BOOL=ON
+
+//Enables TRACE and DEBUG logging even in release builds, negatively
+// affecting the performance.
+ENABLE_VERBOSE_LOGGING:BOOL=OFF
 
 //Enable XML
 ENABLE_XML:BOOL=ON
@@ -733,7 +778,7 @@ ICU_GENSPREP_EXECUTABLE:FILEPATH=ICU_GENSPREP_EXECUTABLE-NOTFOUND
 ICU_I18N_LIBRARY_DEBUG:FILEPATH=ICU_I18N_LIBRARY_DEBUG-NOTFOUND
 
 //ICU i18n library (release)
-ICU_I18N_LIBRARY_RELEASE:FILEPATH=ICU_I18N_LIBRARY_RELEASE-NOTFOUND
+ICU_I18N_LIBRARY_RELEASE:FILEPATH=C:/Program Files (x86)/Windows Kits/10/Lib/10.0.26100.0/um/x64/icuin.Lib
 
 //ICU icu-config executable
 ICU_ICU-CONFIG_EXECUTABLE:FILEPATH=ICU_ICU-CONFIG_EXECUTABLE-NOTFOUND
@@ -766,7 +811,7 @@ ICU_UCONV_EXECUTABLE:FILEPATH=ICU_UCONV_EXECUTABLE-NOTFOUND
 ICU_UC_LIBRARY_DEBUG:FILEPATH=ICU_UC_LIBRARY_DEBUG-NOTFOUND
 
 //ICU uc library (release)
-ICU_UC_LIBRARY_RELEASE:FILEPATH=ICU_UC_LIBRARY_RELEASE-NOTFOUND
+ICU_UC_LIBRARY_RELEASE:FILEPATH=C:/Program Files (x86)/Windows Kits/10/Lib/10.0.26100.0/um/x64/icuuc.lib
 
 //use special hackery relying on IEEE 754 floating point storage
 // format (to accurately round to 16 bit integer at bit more efficiently
@@ -887,6 +932,12 @@ NO_STRING:BOOL=OFF
 //Path to a file.
 ODBC_INCLUDE_DIR:PATH=ODBC_INCLUDE_DIR-NOTFOUND
 
+//OpenGL library for win32
+OPENGL_gl_LIBRARY:STRING=opengl32
+
+//GLU library for win32
+OPENGL_glu_LIBRARY:STRING=glu32
+
 //Path to a file.
 OPENSSL_APPLINK_SOURCE:FILEPATH=C:/Program Files/OpenSSL-Win64/include/openssl/applink.c
 
@@ -990,6 +1041,18 @@ POCO_UNBUNDLED:UNINITIALIZED=OFF
 
 //Only build portable library API (no off_t, no internal I/O.
 PORTABLE_API:BOOL=OFF
+
+//Executable installation directory, relative to the install prefix.
+PROJECTM_BIN_DIR:STRING=bin
+
+//Header installation directory, relative to the install prefix.
+PROJECTM_INCLUDE_DIR:STRING=include
+
+//Library installation directory, relative to the install prefix.
+PROJECTM_LIB_DIR:STRING=lib
+
+//projectM version control revision number, e.g. Git commit hash
+PROJECTM_VCS_VERSION:STRING=0361ebc4c9ba20f24cc945f8ee5b709360d5f34b
 
 //Value Computed by CMake
 Poco_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build/lib/poco
@@ -1731,11 +1794,50 @@ USE_NEW_HUFFTABLE:BOOL=ON
 //Path to a program.
 YASM_ASSEMBLER:FILEPATH=YASM_ASSEMBLER-NOTFOUND
 
-//Enable Zlib Examples
+//Enable building of Ada bindings
+ZLIB_BUILD_ADA:BOOL=OFF
+
+//Enable building of blast binary
+ZLIB_BUILD_BLAST:BOOL=OFF
+
+//zlib examples
 ZLIB_BUILD_EXAMPLES:BOOL=OFF
+
+//Enable building of IOStream C++ bindings V3
+ZLIB_BUILD_IOSTREAM3:BOOL=OFF
+
+//Enable building of minizip library
+ZLIB_BUILD_MINIZIP:BOOL=OFF
+
+//Enable building of puff decompress library
+ZLIB_BUILD_PUFF:BOOL=OFF
+
+//Enable building zlib shared library
+ZLIB_BUILD_SHARED:BOOL=ON
+
+//Enable building zlib static library
+ZLIB_BUILD_STATIC:BOOL=ON
+
+//Enable Zlib Examples as tests
+ZLIB_BUILD_TESTING:BOOL=ON
+
+//Enable building of testzlib binary
+ZLIB_BUILD_TESTZLIB:BOOL=OFF
+
+//Build the legacy zlib + minizip DLL
+ZLIB_BUILD_ZLIB1_DLL:BOOL=OFF
+
+//zconf.h.cmakein was created
+ZLIB_CONF_WRITTEN:BOOL=TRUE
+
+//The directory containing a CMake configuration file for ZLIB.
+ZLIB_DIR:PATH=C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_image/external/zlib-build
 
 //path of zlib, passed to libpng
 ZLIB_INCLUDE_DIR:STRING=C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/zlib;C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_image/external/zlib-build
+
+//Enable installation of zlib
+ZLIB_INSTALL:BOOL=ON
 
 //No help, variable specified on the command line.
 ZLIB_LIBRARY:UNINITIALIZED=zlib
@@ -1745,6 +1847,18 @@ ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
 
 //Path to a library.
 ZLIB_LIBRARY_RELEASE:FILEPATH=ZLIB_LIBRARY_RELEASE-NOTFOUND
+
+//prefix for all types and library functions, see zconf.h.in
+ZLIB_PREFIX:BOOL=OFF
+
+//Enable build with S390X-CRC32VX implementation
+ZLIB_WITH_CRC32VX:BOOL=OFF
+
+//Enable build of an optimized longest_match for 32 bits x86_64
+ZLIB_WITH_GVMAT64:BOOL=OFF
+
+//Enable build with support for method 9 deflate
+ZLIB_WITH_INFBACK9:BOOL=OFF
 
 //Value Computed by CMake
 bobsgame_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build
@@ -2338,6 +2452,15 @@ libpng_IS_TOP_LEVEL:STATIC=OFF
 libpng_SOURCE_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libpng
 
 //Value Computed by CMake
+libprojectM_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build/lib/projectm
+
+//Value Computed by CMake
+libprojectM_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+libprojectM_SOURCE_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/lib/projectm
+
+//Value Computed by CMake
 mpg123_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_mixer/external/libmpg123-build/ports/cmake
 
 //Value Computed by CMake
@@ -2345,6 +2468,15 @@ mpg123_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 mpg123_SOURCE_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/mpg123/ports/cmake
+
+//Value Computed by CMake
+ogg_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_mixer/external/ogg-build
+
+//Value Computed by CMake
+ogg_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+ogg_SOURCE_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/ogg
 
 //Value Computed by CMake
 plutosvg_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_ttf/external/plutosvg-guild
@@ -2363,6 +2495,9 @@ plutovg_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 plutovg_SOURCE_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/lib/SDL_ttf/external/plutovg
+
+//The directory containing a CMake configuration file for projectM-Eval.
+projectM-Eval_DIR:PATH=projectM-Eval_DIR-NOTFOUND
 
 //Value Computed by CMake
 quill_BINARY_DIR:STATIC=C:/Users/hyper/workspace/bg/okgame/build/lib/poco/dependencies/quill
@@ -2479,9 +2614,9 @@ CMAKE_CACHEFILE_DIR:INTERNAL=c:/Users/hyper/workspace/bg/okgame/build
 //Major version of cmake used to create the current loaded cache
 CMAKE_CACHE_MAJOR_VERSION:INTERNAL=4
 //Minor version of cmake used to create the current loaded cache
-CMAKE_CACHE_MINOR_VERSION:INTERNAL=2
+CMAKE_CACHE_MINOR_VERSION:INTERNAL=3
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=3
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=0
 //Path to CMake executable.
 CMAKE_COMMAND:INTERNAL=C:/Program Files/CMake/bin/cmake.exe
 //Path to cpack program executable.
@@ -2594,7 +2729,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MT
 CMAKE_MT-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=81
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=100
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
 //noop for ranlib
@@ -2613,7 +2748,7 @@ CMAKE_RC_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_RC_FLAGS_RELWITHDEBINFO
 CMAKE_RC_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //Path to CMake installation.
-CMAKE_ROOT:INTERNAL=C:/Program Files/CMake/share/cmake-4.2
+CMAKE_ROOT:INTERNAL=C:/Program Files/CMake/share/cmake-4.3
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS
 CMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG
@@ -2640,6 +2775,10 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Test COMPILER_HAS_DEPRECATED
+COMPILER_HAS_DEPRECATED:INTERNAL=1
+//Test COMPILER_HAS_DEPRECATED_ATTR
+COMPILER_HAS_DEPRECATED_ATTR:INTERNAL=
 //Test COMPILER_SUPPORTS_AVX
 COMPILER_SUPPORTS_AVX:INTERNAL=1
 //Test COMPILER_SUPPORTS_AVX2
@@ -2680,10 +2819,20 @@ CPACK_BINARY_ZIP-ADVANCED:INTERNAL=1
 CPACK_SOURCE_7Z-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CPACK_SOURCE_ZIP
 CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
+//Test CXXFLAG__EHsc_SUPPORTED
+CXXFLAG__EHsc_SUPPORTED:INTERNAL=
+//Test CXXFLAG__GR_SUPPORTED
+CXXFLAG__GR_SUPPORTED:INTERNAL=
+//Test CXXFLAG__W4_SUPPORTED
+CXXFLAG__W4_SUPPORTED:INTERNAL=
 //ADVANCED property for variable: CYGWIN_BAT
 CYGWIN_BAT-ADVANCED:INTERNAL=1
+//Details about finding Git
+FIND_PACKAGE_MESSAGE_DETAILS_Git:INTERNAL=[C:/Program Files/Git/cmd/git.exe][v2.53.0.windows.2()]
 //Details about finding ODBC
 FIND_PACKAGE_MESSAGE_DETAILS_ODBC:INTERNAL=[odbc32.lib][v()]
+//Details about finding OpenGL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[opengl32][ ][v()]
 //Details about finding OpenSSL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[optimized;C:/Program Files/OpenSSL-Win64/lib/VC/x64/MD/libcrypto.lib;debug;C:/Program Files/OpenSSL-Win64/lib/VC/x64/MDd/libcrypto.lib][C:/Program Files/OpenSSL-Win64/include][ ][v3.6.1(1.1.1)]
 //Details about finding Python3
@@ -2828,6 +2977,8 @@ HAVE_SHORT_SIZE:INTERNAL=TRUE
 HAVE_SIGNAL_H:INTERNAL=1
 //Test HAVE_SOLARIS_LD_VERSION_SCRIPT
 HAVE_SOLARIS_LD_VERSION_SCRIPT:INTERNAL=
+//Have include stdarg.h
+HAVE_STDARG_H:INTERNAL=1
 //Have include stdbool.h
 HAVE_STDBOOL_H:INTERNAL=1
 //Have include stddef.h
@@ -2900,6 +3051,8 @@ HAVE_WINDOWS_H:INTERNAL=1
 HAVE_WIN_DL:INTERNAL=1
 //Test HAVE_XINPUT_H
 HAVE_XINPUT_H:INTERNAL=1
+//Test HAVE___ATTR__VIS_HIDDEN
+HAVE___ATTR__VIS_HIDDEN:INTERNAL=
 //ADVANCED property for variable: ICU_DATA_LIBRARY_DEBUG
 ICU_DATA_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ICU_DATA_LIBRARY_RELEASE
@@ -3250,6 +3403,10 @@ MYSQL_LIBRARY-ADVANCED:INTERNAL=1
 ODBC_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //CHECK_TYPE_SIZE: off64_t unknown
 OFF64_T:INTERNAL=
+//ADVANCED property for variable: OPENGL_gl_LIBRARY
+OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glu_LIBRARY
+OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENSSL_INCLUDE_DIR
 OPENSSL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 PC_APACHE2_CFLAGS:INTERNAL=
@@ -3400,12 +3557,16 @@ UINT32_SIZE:INTERNAL=4
 U_INT16_SIZE:INTERNAL=
 //CHECK_TYPE_SIZE: u_int32_t unknown
 U_INT32_SIZE:INTERNAL=
+//ADVANCED property for variable: ZLIB_CONF_WRITTEN
+ZLIB_CONF_WRITTEN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ZLIB_INCLUDE_DIR
 ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ZLIB_LIBRARY_DEBUG
 ZLIB_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ZLIB_LIBRARY_RELEASE
 ZLIB_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_PREFIX
+ZLIB_PREFIX-ADVANCED:INTERNAL=1
 //Have include unistd.h
 Z_HAVE_UNISTD_H:INTERNAL=
 //Have symbol _alloca
@@ -3423,7 +3584,7 @@ _Python3_EXECUTABLE:INTERNAL=C:/Python314/python.exe
 //Path to a program.
 _Python3_EXECUTABLE_DEBUG:INTERNAL=_Python3_EXECUTABLE_DEBUG-NOTFOUND
 //Python3 Properties
-_Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;14;3;64;32;<none>;cp314-win_amd64;;C:\Python314\Lib;C:\Python314\Lib;C:\Python314\Lib\site-packages;C:\Python314\Lib\site-packages
+_Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;14;3;64;32;<none>;cp314-win_amd64;;C:/Python314/Lib;C:/Python314/Lib;C:/Python314/Lib/site-packages;C:/Python314/Lib/site-packages
 _Python3_INTERPRETER_SIGNATURE:INTERNAL=ad8e52ca7057e5821f8cf203a67fd965
 //NumPy reason failure
 _Python3_NumPy_REASON_FAILURE:INTERNAL=

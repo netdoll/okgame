@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1326517E-20F5-3F99-A840-D0CCA1DCA81B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libtiff-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\TestBigEndian.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\cmake\FindWebP.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsCompat.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsVersion.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CXXLibrary.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CompilerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\DeflateCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindCMath.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindDeflate.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJBIG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJPEG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindLERC.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindZSTD.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Findliblzma.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\IncludeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\InternalCodecs.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JBIGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JPEGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LERCCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LZMACodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LargeFileSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LibraryFeatures.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LinkerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\OpenGLChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PixarLogCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PkgConfig.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ProcessorChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Release.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\SymbolChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\TypeSizeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WebPCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WindowsSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ZSTDCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\configure.ac;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\libtiff-4.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libtiff-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\TestBigEndian.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\cmake\FindWebP.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsCompat.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsVersion.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CXXLibrary.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CompilerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\DeflateCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindCMath.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindDeflate.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJBIG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJPEG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindLERC.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindZSTD.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Findliblzma.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\IncludeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\InternalCodecs.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JBIGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JPEGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LERCCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LZMACodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LargeFileSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LibraryFeatures.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LinkerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\OpenGLChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PixarLogCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PkgConfig.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ProcessorChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Release.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\SymbolChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\TypeSizeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WebPCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WindowsSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ZSTDCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\configure.ac;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\libtiff-4.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libtiff-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\TestBigEndian.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\cmake\FindWebP.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsCompat.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsVersion.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CXXLibrary.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CompilerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\DeflateCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindCMath.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindDeflate.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJBIG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJPEG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindLERC.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindZSTD.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Findliblzma.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\IncludeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\InternalCodecs.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JBIGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JPEGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LERCCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LZMACodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LargeFileSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LibraryFeatures.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LinkerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\OpenGLChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PixarLogCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PkgConfig.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ProcessorChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Release.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\SymbolChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\TypeSizeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WebPCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WindowsSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ZSTDCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\configure.ac;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\libtiff-4.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck/lib/SDL_image/external/libtiff-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindGLUT.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\SelectLibraryConfigurations.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\TestBigEndian.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\cmake\FindWebP.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsCompat.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\AutotoolsVersion.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CXXLibrary.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\CompilerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\DeflateCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindCMath.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindDeflate.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJBIG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindJPEG.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindLERC.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\FindZSTD.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Findliblzma.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\IncludeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\InternalCodecs.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JBIGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\JPEGCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LERCCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LZMACodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LargeFileSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LibraryFeatures.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\LinkerChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\OpenGLChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PixarLogCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\PkgConfig.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ProcessorChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\Release.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\SymbolChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\TypeSizeChecks.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WebPCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\WindowsSupport.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\cmake\ZSTDCodec.cmake;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\configure.ac;C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libtiff\libtiff-4.pc.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\ZERO_CHECK.vcxproj">
+      <Project>{7B731CC4-1E77-3FC9-963B-AC41027D6C57}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\contrib\addtiffo\addtiffo.vcxproj">
+      <Project>{CD343BA1-60F0-3312-9BAB-4AD2988B2F8E}</Project>
+      <Name>addtiffo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\fax2ps.vcxproj">
+      <Project>{DD4BBD53-B5DE-3EFC-8051-67EAC5430B5A}</Project>
+      <Name>fax2ps</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\fax2tiff.vcxproj">
+      <Project>{0766286C-F4E1-3639-9E54-B6863DAFC405}</Project>
+      <Name>fax2tiff</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\contrib\iptcutil\iptcutil.vcxproj">
+      <Project>{8BFEDBA3-C363-3D3D-8C3B-8127F7863545}</Project>
+      <Name>iptcutil</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\pal2rgb.vcxproj">
+      <Project>{640EC8DE-BFCC-3622-8F0B-922CC1D2A966}</Project>
+      <Name>pal2rgb</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\ppm2tiff.vcxproj">
+      <Project>{5F03C1F3-C1EB-3D94-9CE9-9FFA53FEAADE}</Project>
+      <Name>ppm2tiff</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\raw2tiff.vcxproj">
+      <Project>{1005914E-4127-3178-8C63-27683FFEB275}</Project>
+      <Name>raw2tiff</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\rgb2ycbcr.vcxproj">
+      <Project>{850E964A-384A-3295-BB9D-54C31E649FB7}</Project>
+      <Name>rgb2ycbcr</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\thumbnail.vcxproj">
+      <Project>{D6D36C61-768E-3B73-A294-AEB944CCBF1E}</Project>
+      <Name>thumbnail</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\libtiff\tiff.vcxproj">
+      <Project>{8A12738E-3290-3F57-A1BC-F821EC465A6C}</Project>
+      <Name>tiff</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\contrib\dbs\tiff-bi.vcxproj">
+      <Project>{26255E08-3433-311C-AACB-5C277E5FF033}</Project>
+      <Name>tiff-bi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\contrib\dbs\tiff-grayscale.vcxproj">
+      <Project>{B9F48A93-41D6-3420-ABDF-BC08A8F9EFC3}</Project>
+      <Name>tiff-grayscale</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\contrib\dbs\tiff-palette.vcxproj">
+      <Project>{E066F672-1ED5-38D6-8F78-3AAF6E6009F5}</Project>
+      <Name>tiff-palette</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\contrib\dbs\tiff-rgb.vcxproj">
+      <Project>{48A7276B-D80B-3E26-BC9E-91B636E588B7}</Project>
+      <Name>tiff-rgb</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiff2bw.vcxproj">
+      <Project>{CC0E8EFE-8B3F-3CD1-9789-D1FA9E4B3A2A}</Project>
+      <Name>tiff2bw</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiff2pdf.vcxproj">
+      <Project>{9818A297-C042-3EDE-B814-AB11F73CF8DF}</Project>
+      <Name>tiff2pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiff2ps.vcxproj">
+      <Project>{6337A3A1-5653-3F8F-A15F-7173D0C67133}</Project>
+      <Name>tiff2ps</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiff2rgba.vcxproj">
+      <Project>{B4F5EC20-C529-3490-9CB1-97BB11062AA5}</Project>
+      <Name>tiff2rgba</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiff_mkg3states.vcxproj">
+      <Project>{CC6959DC-9F47-3FBD-B67C-15734727D383}</Project>
+      <Name>tiff_mkg3states</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\port\tiff_port.vcxproj">
+      <Project>{E35ED0F8-C73D-324A-BD7F-10BD9D46A53B}</Project>
+      <Name>tiff_port</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffcmp.vcxproj">
+      <Project>{430BD7A0-74A1-301B-94F1-5D82CB13BCB9}</Project>
+      <Name>tiffcmp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffcp.vcxproj">
+      <Project>{0CDABE00-607F-3B49-BBD1-0595AF8B0E0F}</Project>
+      <Name>tiffcp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffcrop.vcxproj">
+      <Project>{6DC7B9E9-BD60-3D42-8C9F-2FCA0AC0E39F}</Project>
+      <Name>tiffcrop</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffdither.vcxproj">
+      <Project>{B295864C-6BDE-3ADA-84C4-81D58E95218B}</Project>
+      <Name>tiffdither</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffdump.vcxproj">
+      <Project>{E4DE573E-870F-3799-98F8-2F81085C9687}</Project>
+      <Name>tiffdump</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffinfo.vcxproj">
+      <Project>{5FC5301E-2080-3AAE-913B-354DDD7FB73A}</Project>
+      <Name>tiffinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffmedian.vcxproj">
+      <Project>{B6903A9D-4873-3700-BEA1-953B9A746A73}</Project>
+      <Name>tiffmedian</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffset.vcxproj">
+      <Project>{C05BA7C9-63D4-30B7-99D4-A796E491641F}</Project>
+      <Name>tiffset</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck\lib\SDL_image\external\libtiff-build\tools\tiffsplit.vcxproj">
+      <Project>{69540F60-E442-3452-B4AA-1725CDC44198}</Project>
+      <Name>tiffsplit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>

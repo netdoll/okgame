@@ -2,6 +2,8 @@
 #define STEAMMANAGER_H
 
 #include "stdafx.h"
+#include <vector>
+#include <utility>
 
 #ifdef HAVE_STEAMWORKS
 #include <steam/steam_api.h>
@@ -20,6 +22,8 @@ public:
     static bool isSteamRunning();
     static uint64_t getSteamID();
     static string getPersonaName();
+
+    static vector<pair<uint64_t, string>> getFriends();
 
     static bool writeCloudFile(const string& filename, const string& data);
     static string readCloudFile(const string& filename);

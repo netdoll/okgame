@@ -646,7 +646,6 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 			//if we have server IP here we will break out of the while loop and continue.
 			//otherwise we try again by connecting to the LB again and get a new server.
-			//if (getServerIPAddress_S() == nullptr)return false;
 		}
 
 		//disconnecting from the LB will set the address to null again, so we store it.
@@ -922,6 +921,12 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 	if (String::startsWith(s, BobNet::Chat_Message))
 	{
 		incomingChatMessage(s);
+		return true;
+	}
+
+	if (String::startsWith(s, BobNet::Bobs_Game_GetTournamentBracketResponse))
+	{
+		incomingBobsGameGetTournamentBracketResponse(s);
 		return true;
 	}
 
@@ -1656,6 +1661,13 @@ void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
 
 
 //===============================================================================================
+void TCPServerConnection::incomingBobsGameGetTournamentBracketResponse(string &s)
+{ //=========================================================================================================================
+	s = s.substr(s.find(":") + 1);
+
+	setBobsGameGetTournamentBracketResponse_S(s);
+}
+
 void TCPServerConnection::tellBobsGameRoomHostMyUserID_S(const string& roomUUID)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_TellRoomHostToAddMyUserID+roomUUID +":"+ BobNet::endline);

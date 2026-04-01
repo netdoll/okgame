@@ -13,7 +13,7 @@
 #include <src/Engine/network/GameSave.h>
 #include <src/Engine/network/UDPPeerConnection.h>
 #include <memory>
-#include "libprojectM/ProjectM.hpp"
+namespace libprojectM { class ProjectM; }
 
 class Logger;
 
@@ -106,12 +106,19 @@ public:
 
 	virtual bool isNetworkGame() override;
 	void setNetworkGame(bool b) { networkGame = b; }
+	void setPendingNetworkStart(long long seed, int startLevel, const string& gameMode);
 	void debugKeys();
 	virtual void update() override;
+	void applyPendingNetworkStart();
 
 	shared_ptr<GameLogic> opponentGame = nullptr;
 	bool networkGame = false;
 	int frameCount = 0;
+	bool networkScoreReported = false;
+	string networkGameMode = "network";
+	bool hasPendingNetworkStart = false;
+	long long pendingNetworkSeed = 0;
+	int pendingNetworkStartLevel = 1;
 
 	
 	int shaderCount = rand() % GLUtils::bgShaderCount;

@@ -24,6 +24,8 @@ struct LobbyRoom {
     int players;
     int maxPlayers;
     bool hasPassword;
+    std::string gameMode;
+    int startLevel;
 };
 
 class NetworkManager {
@@ -39,7 +41,7 @@ public:
     void setOpponentGame(GameLogic* opponentGame);
 
     void listRooms();
-    void createRoom(const std::string& name, bool isPrivate = false, const std::string& password = "");
+    void createRoom(const std::string& name, bool isPrivate = false, const std::string& password = "", const std::string& gameMode = "marathon", int startLevel = 1);
     void joinRoom(const std::string& id, const std::string& password = "");
     void sendFrame(const std::string& stateJson);
     void sendChat(const std::string& message, const std::string& name);

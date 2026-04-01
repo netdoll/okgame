@@ -975,6 +975,7 @@ void OKGame::debugKeys()
 void OKGame::update()
 {//=========================================================================================================================
 
+	LuaManager::update();
 
 	if(networkMultiplayerLobbyMenuShowing || networkMultiplayerPlayerJoinMenuShowing)
 	{

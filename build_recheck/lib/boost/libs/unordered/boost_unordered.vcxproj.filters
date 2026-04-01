@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\extra\boost_unordered.natvis">
+      <Filter>extra</Filter>
+    </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_flat_map.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_flat_map_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_flat_set.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_flat_set_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_node_map.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_node_map_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_node_set.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\concurrent_node_set_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\allocator_constructed.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\archive_constructed.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\bad_archive_exception.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\concurrent_static_asserts.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\fca.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\concurrent_table.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\core.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\cumulative_stats.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\element_type.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\flat_map_types.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\flat_set_types.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\ignore_wshadow.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\node_handle.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\node_map_handle.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\node_map_types.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\node_set_handle.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\node_set_types.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\reentrancy_check.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\restore_wshadow.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\rw_spinlock.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\table.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\tuple_rotate_right.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\foa\types_constructibility.hpp">
+      <Filter>include\boost\unordered\detail\foa</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\implementation.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\map.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\mulx.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\narrow_cast.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\opt_storage.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\prime_fmod.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\serialization_version.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\serialize_container.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\serialize_fca_container.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\serialize_tracked_address.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\set.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\static_assert.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\throw_exception.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\type_traits.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\unordered_printers.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\detail\xmx.hpp">
+      <Filter>include\boost\unordered\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\hash_traits.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_flat_map.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_flat_map_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_flat_set.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_flat_set_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_map.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_map_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_node_map.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_node_map_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_node_set.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_node_set_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_set.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered\unordered_set_fwd.hpp">
+      <Filter>include\boost\unordered</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered_map.hpp">
+      <Filter>include\boost</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include\boost\unordered_set.hpp">
+      <Filter>include\boost</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="extra">
+      <UniqueIdentifier>{FB13492B-0F6F-34D6-8B01-833E6B630DE3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{E76C7AAA-4D2D-349B-AC6F-2A33D94725E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\boost">
+      <UniqueIdentifier>{AE222DA0-F1D7-312A-998A-9A4891629336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\boost\unordered">
+      <UniqueIdentifier>{3CCF03F3-64EA-3BF5-888D-EEBABAA108F8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\boost\unordered\detail">
+      <UniqueIdentifier>{1EB8B7DE-C1A5-375C-9F66-D6381FE72E01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\boost\unordered\detail\foa">
+      <UniqueIdentifier>{AC083FAB-CCF1-3800-9986-82C97EB348AD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

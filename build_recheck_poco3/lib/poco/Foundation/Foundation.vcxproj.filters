@@ -1,0 +1,2035 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ASCIIEncoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\AbstractObserver.cpp">
+      <Filter>Notifications\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ActiveDispatcher.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ActiveThreadPool.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ArchiveStrategy.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Ascii.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\AsyncChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\AsyncNotificationCenter.cpp">
+      <Filter>Notifications\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\AtomicCounter.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\AtomicFlag.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Base32Decoder.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Base32Encoder.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Base64Decoder.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Base64Encoder.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\BinaryReader.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\BinaryWriter.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\BufferedBidirectionalStreamBuf.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\BufferedStreamBuf.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Bugcheck.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ByteOrder.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Channel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Checksum.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Clock.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Condition.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Configurable.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ConsoleChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\CountingStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DataURIStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DataURIStreamFactory.cpp">
+      <Filter>URI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DateTime.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DateTimeFormat.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DateTimeFormatter.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DateTimeParser.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Debugger.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DeflatingStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DigestEngine.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DigestStream.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DirectoryIterator.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DirectoryIteratorStrategy.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DirectoryWatcher.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Environment.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Error.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ErrorHandler.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Event.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\EventArgs.cpp">
+      <Filter>Events\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\EventChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\EventLogChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Exception.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FIFOBufferStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FPEnvironment.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FastLogger.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\File.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileStreamFactory.cpp">
+      <Filter>URI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileStreamRWLock.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Format.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Formatter.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FormattingChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Glob.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Hash.cpp">
+      <Filter>Hashing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\HashStatistic.cpp">
+      <Filter>Hashing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\HexBinaryDecoder.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\HexBinaryEncoder.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\IOLock.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\InflatingStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\JSONFormatter.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\JSONString.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Latin1Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Latin2Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Latin9Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\LineEndingConverter.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\LocalDateTime.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\LogFile.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\LogStream.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Logger.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\LoggingFactory.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\LoggingRegistry.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\MD4Engine.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\MD5Engine.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Manifest.cpp">
+      <Filter>SharedLibrary\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\MemoryPool.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\MemoryStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Message.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Mutex.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedEvent.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedMutex.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NestedDiagnosticContext.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Notification.cpp">
+      <Filter>Notifications\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NotificationCenter.cpp">
+      <Filter>Notifications\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NotificationQueue.cpp">
+      <Filter>Notifications\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NullChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NullStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NumberFormatter.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NumberParser.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NumericString.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PIDFile.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Path.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PatternFormatter.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Pipe.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PipeImpl.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PipeStream.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PriorityNotificationQueue.cpp">
+      <Filter>Notifications\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Process.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ProcessRunner.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PurgeStrategy.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RWLock.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Random.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RandomStream.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RefCountedObject.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RegularExpression.cpp">
+      <Filter>RegExp\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RotateStrategy.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Runnable.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SHA1Engine.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SHA2Engine.cpp">
+      <Filter>Crypt\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Semaphore.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedLibrary.cpp">
+      <Filter>SharedLibrary\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedMemory.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SignalHandler.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SimpleFileChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SortedDirectoryIterator.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SplitterChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Stopwatch.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\StreamChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\StreamConverter.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\StreamCopier.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\StreamTokenizer.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\String.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\StringTokenizer.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SynchronizedObject.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Task.cpp">
+      <Filter>Tasks\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TaskManager.cpp">
+      <Filter>Tasks\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TaskNotification.cpp">
+      <Filter>Tasks\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TeeStream.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TemporaryFile.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TextBufferIterator.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TextConverter.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TextEncoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TextIterator.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Thread.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ThreadLocal.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ThreadPool.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ThreadTarget.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\TimedNotificationQueue.cpp">
+      <Filter>Notifications\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Timer.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Timespan.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Timestamp.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Timezone.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Token.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ULID.cpp">
+      <Filter>ULID\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\ULIDGenerator.cpp">
+      <Filter>ULID\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\URI.cpp">
+      <Filter>URI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\URIStreamFactory.cpp">
+      <Filter>URI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\URIStreamOpener.cpp">
+      <Filter>URI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UTF16Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UTF32Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UTF8Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UTF8String.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UUID.cpp">
+      <Filter>UUID\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UUIDGenerator.cpp">
+      <Filter>UUID\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UnbufferedStreamBuf.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Unicode.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\UnicodeConverter.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Var.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\VarHolder.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\VarIterator.cpp">
+      <Filter>Dynamic\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\VarVisitor.cpp">
+      <Filter>Dynamic\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Void.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Windows1250Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Windows1251Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Windows1252Encoding.cpp">
+      <Filter>Text\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\WindowsConsoleChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DirectoryIterator_UNIX.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\DirectoryIterator_WIN32U.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Environment_UNIX.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Environment_VX.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Environment_WIN32U.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Event_POSIX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Event_VX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Event_WIN32.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FPEnvironment_C99.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FPEnvironment_DEC.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FPEnvironment_DUMMY.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FPEnvironment_QNX.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FPEnvironment_SUN.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FPEnvironment_WIN32.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileStreamRWLock_POSIX.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileStreamRWLock_WIN32.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileStream_POSIX.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\FileStream_WIN32.cpp">
+      <Filter>Streams\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\File_UNIX.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\File_VX.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\File_WIN32U.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Mutex_POSIX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Mutex_STD.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Mutex_VX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Mutex_WIN32.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedEvent_Android.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedEvent_UNIX.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedEvent_WIN32U.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedMutex_Android.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedMutex_UNIX.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\NamedMutex_WIN32U.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Path_UNIX.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Path_WIN32U.cpp">
+      <Filter>Filesystem\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PipeImpl_DUMMY.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PipeImpl_POSIX.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\PipeImpl_WIN32.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Process_UNIX.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Process_VX.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Process_WIN32U.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RWLock_Android.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RWLock_POSIX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RWLock_VX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\RWLock_WIN32.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Semaphore_POSIX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Semaphore_VX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Semaphore_WIN32.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedLibrary_HPUX.cpp">
+      <Filter>SharedLibrary\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedLibrary_UNIX.cpp">
+      <Filter>SharedLibrary\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedLibrary_VX.cpp">
+      <Filter>SharedLibrary\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedLibrary_WIN32U.cpp">
+      <Filter>SharedLibrary\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedMemory_DUMMY.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedMemory_POSIX.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SharedMemory_WIN32.cpp">
+      <Filter>Processes\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\SyslogChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Thread_POSIX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Thread_VX.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Thread_WIN32.cpp">
+      <Filter>Threading\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Timezone_UNIX.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Timezone_VX.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\Timezone_WIN32.cpp">
+      <Filter>DateTime\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ASCIIEncoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AbstractCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AbstractDelegate.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AbstractEvent.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AbstractObserver.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AbstractPriorityDelegate.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AbstractStrategy.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AccessExpirationDecorator.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AccessExpireCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AccessExpireLRUCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AccessExpireStrategy.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ActiveDispatcher.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ActiveMethod.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ActiveResult.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ActiveRunnable.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ActiveStarter.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ActiveThreadPool.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Activity.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Alignment.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Any.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ArchiveStrategy.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Array.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Ascii.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AsyncChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AsyncNotificationCenter.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AsyncObserver.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AtomicCounter.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AtomicFlag.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AutoPtr.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\AutoReleasePool.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Base32Decoder.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Base32Encoder.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Base64Decoder.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Base64Encoder.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\BasicEvent.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\BinaryReader.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\BinaryWriter.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Buffer.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\BufferAllocator.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\BufferedBidirectionalStreamBuf.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\BufferedStreamBuf.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Bugcheck.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ByteOrder.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Channel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Checksum.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ClassLibrary.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ClassLoader.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Clock.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Condition.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Config.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Configurable.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ConsoleChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\CountingStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DataURIStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DataURIStreamFactory.h">
+      <Filter>URI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DateTime.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DateTimeFormat.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DateTimeFormatter.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DateTimeParser.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Debugger.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DefaultStrategy.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DeflatingStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Delegate.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DigestEngine.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DigestStream.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DirectoryIterator.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DirectoryIteratorStrategy.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DirectoryIterator_UNIX.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DirectoryIterator_WIN32U.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DirectoryWatcher.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Dynamic\Pair.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Dynamic\Struct.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Dynamic\Var.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Dynamic\VarHolder.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Dynamic\VarIterator.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Dynamic\VarVisitor.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DynamicAny.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DynamicAnyHolder.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DynamicFactory.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\DynamicStruct.h">
+      <Filter>Dynamic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Environment.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Environment_UNIX.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Environment_VX.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Environment_WIN32U.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Error.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ErrorHandler.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Event.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\EventArgs.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\EventChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\EventLogChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Event_POSIX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Event_VX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Event_WIN32.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Exception.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ExpirationDecorator.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Expire.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ExpireCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ExpireLRUCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ExpireStrategy.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FIFOBuffer.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FIFOBufferStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FIFOEvent.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FIFOStrategy.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FPEnvironment.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FPEnvironment_C99.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FPEnvironment_DEC.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FPEnvironment_DUMMY.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FPEnvironment_QNX.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FPEnvironment_SUN.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FPEnvironment_WIN32.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FastLogger.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\File.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileStreamFactory.h">
+      <Filter>URI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileStreamRWLock.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileStreamRWLock_POSIX.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileStreamRWLock_WIN32.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileStream_POSIX.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FileStream_WIN32.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\File_UNIX.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\File_VX.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\File_WIN32U.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Format.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Formatter.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FormattingChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Foundation.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FunctionDelegate.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\FunctionPriorityDelegate.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Glob.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HMACEngine.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Hash.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HashFunction.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HashMap.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HashSet.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HashStatistic.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HashTable.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HexBinaryDecoder.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\HexBinaryEncoder.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\IOLock.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\InflatingStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Instantiator.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\JSONFormatter.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\JSONString.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\KeyValueArgs.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LRUCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LRUStrategy.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Latin1Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Latin2Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Latin9Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LineEndingConverter.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LinearHashTable.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ListMap.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LocalDateTime.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LogFile.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LogStream.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Logger.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LoggingFactory.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\LoggingRegistry.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\MD4Engine.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\MD5Engine.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\MPSCQueue.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Manifest.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\MemoryPool.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\MemoryStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Message.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\MetaObject.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\MetaProgramming.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Mutex.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Mutex_POSIX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Mutex_STD.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Mutex_VX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Mutex_WIN32.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NObserver.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedEvent.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedEvent_Android.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedEvent_UNIX.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedEvent_WIN32U.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedMutex.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedMutex_Android.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedMutex_UNIX.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedMutex_WIN32U.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NamedTuple.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NestedDiagnosticContext.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Notification.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NotificationCenter.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NotificationQueue.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NotificationStrategy.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NullChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NullStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Nullable.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NumberFormatter.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NumberParser.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\NumericString.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ObjectPool.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Observer.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Optional.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\OrderedMap.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\OrderedSet.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PBKDF2Engine.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PIDFile.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Path.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Path_UNIX.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Path_WIN32U.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PatternFormatter.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Pipe.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PipeImpl.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PipeImpl_DUMMY.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PipeImpl_POSIX.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PipeImpl_WIN32.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PipeStream.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Platform.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Platform_POSIX.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Platform_VX.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Platform_WIN32.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Poco.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PriorityDelegate.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PriorityEvent.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PriorityExpire.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PriorityNotificationQueue.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PriorityStrategy.h">
+      <Filter>Events\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Process.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ProcessOptions.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ProcessRunner.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Process_UNIX.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Process_VX.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Process_WIN32U.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\PurgeStrategy.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RWLock.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RWLock_Android.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RWLock_POSIX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RWLock_VX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RWLock_WIN32.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Random.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RandomStream.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RecursiveDirectoryIterator.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RecursiveDirectoryIteratorImpl.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RefCountedObject.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RegularExpression.h">
+      <Filter>RegExp\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RotateStrategy.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Runnable.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\RunnableAdapter.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SHA1Engine.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SHA2Engine.h">
+      <Filter>Crypt\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SPSCQueue.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ScopedLock.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ScopedUnlock.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Semaphore.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Semaphore_POSIX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Semaphore_VX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Semaphore_WIN32.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedLibrary.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedLibrary_HPUX.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedLibrary_UNIX.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedLibrary_VX.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedLibrary_WIN32U.h">
+      <Filter>SharedLibrary\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedMemory.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedMemory_DUMMY.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedMemory_POSIX.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedMemory_WIN32.h">
+      <Filter>Processes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SharedPtr.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SignalHandler.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SimpleFileChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SimpleHashTable.h">
+      <Filter>Hashing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SingletonHolder.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SortedDirectoryIterator.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SplitterChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Stopwatch.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\StrategyCollection.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\StreamChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\StreamConverter.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\StreamCopier.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\StreamTokenizer.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\StreamUtil.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\String.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\StringTokenizer.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SynchronizedObject.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\SyslogChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Task.h">
+      <Filter>Tasks\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TaskManager.h">
+      <Filter>Tasks\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TaskNotification.h">
+      <Filter>Tasks\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TeeStream.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TemporaryFile.h">
+      <Filter>Filesystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TextBufferIterator.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TextConverter.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TextEncoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TextIterator.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Thread.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ThreadLocal.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ThreadPool.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ThreadTarget.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Thread_POSIX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Thread_VX.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Thread_WIN32.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TimedNotificationQueue.h">
+      <Filter>Notifications\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Timer.h">
+      <Filter>Threading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Timespan.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Timestamp.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Timezone.h">
+      <Filter>DateTime\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Token.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Tuple.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\TypeList.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Types.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ULID.h">
+      <Filter>ULID\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ULIDGenerator.h">
+      <Filter>ULID\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\URI.h">
+      <Filter>URI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\URIStreamFactory.h">
+      <Filter>URI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\URIStreamOpener.h">
+      <Filter>URI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UTF16Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UTF32Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UTF8Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UTF8String.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UTFString.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UUID.h">
+      <Filter>UUID\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UUIDGenerator.h">
+      <Filter>UUID\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UnWindows.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UnbufferedStreamBuf.h">
+      <Filter>Streams\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Unicode.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UnicodeConverter.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UniqueAccessExpireCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UniqueAccessExpireLRUCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UniqueAccessExpireStrategy.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UniqueExpireCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UniqueExpireLRUCache.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\UniqueExpireStrategy.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\ValidArgs.h">
+      <Filter>Cache\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Version.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Void.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Windows1250Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Windows1251Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\Windows1252Encoding.h">
+      <Filter>Text\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\include\Poco\WindowsConsoleChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\Foundation\pocomsg.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\src\pocomsg.mc">
+      <Filter>Logging\Message Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\CMakeFiles\6c2b139355ead5ad3359c23a727f9a94\pocomsg.h.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\Foundation\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_auto_possess.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_chartables.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_chkdint.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_compile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_compile_cgroup.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_compile_class.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_config.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_context.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_convert.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_dfa_match.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_error.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_extuni.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_find_bracket.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_maketables.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_match.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_match_data.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_match_next.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_newline.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_ord2utf.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_pattern_info.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_script_run.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_serialize.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_string_utils.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_study.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_substitute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_substring.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_tables.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_ucd.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_valid_utf.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2_xclass.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\$(Configuration)\pcre2posix.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\utf8proc\_BUNDLED_UTF8PROC.dir\$(Configuration)\utf8proc.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\bignum-dtoa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\bignum.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\cached-powers.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\double-to-string.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\fast-dtoa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\fixed-dtoa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\string-to-double.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\dependencies\v8_double_conversion\_BUNDLED_V8_DOUBLE_CONVERSION.dir\$(Configuration)\strtod.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\poco\Foundation\pocomsg.rc">
+      <Filter>Logging\Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{86D748FF-D413-36F0-8C03-46B858852907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cache">
+      <UniqueIdentifier>{9D8B399D-2E41-3340-BBFF-B1D676802A5A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cache\Header Files">
+      <UniqueIdentifier>{A6F9F368-CC3F-3AC9-978B-DFD8C1362056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{C45D52F4-127A-345F-A523-C33D14C0DE75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header Files">
+      <UniqueIdentifier>{301222AA-09BF-3983-BA21-09D039949824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Source Files">
+      <UniqueIdentifier>{8E265765-4D7E-31CF-AD4E-0F52101BFCFD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crypt">
+      <UniqueIdentifier>{3CE8508F-21B1-309A-8289-EBE5FD341FCA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crypt\Header Files">
+      <UniqueIdentifier>{8ACC42AC-029D-3800-9859-C64158B97152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crypt\Source Files">
+      <UniqueIdentifier>{65709A73-D555-3693-BBE2-5EE17F03323F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DateTime">
+      <UniqueIdentifier>{EAD483B1-4255-3F10-830D-2FB7D9D74F5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DateTime\Header Files">
+      <UniqueIdentifier>{DEE2D967-0E67-3124-9830-B1B5E2115084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DateTime\Source Files">
+      <UniqueIdentifier>{32255501-DAAB-38B8-9FE6-09A57F2FAA6B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dynamic">
+      <UniqueIdentifier>{A73C834C-7EAC-3BE7-944F-93B60BADFE47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dynamic\Header Files">
+      <UniqueIdentifier>{B21FA569-CF38-35E0-83F5-9263BB221208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dynamic\Source Files">
+      <UniqueIdentifier>{875BCEDF-7543-3CDD-8F2D-991AE2259326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{6D0B3E59-5725-3B31-8F01-4CF26871C799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events\Header Files">
+      <UniqueIdentifier>{8243726C-94A8-3800-A6D1-1402DAAFD109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events\Source Files">
+      <UniqueIdentifier>{33F0F9FB-C160-3892-BB69-7CA6676AE785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filesystem">
+      <UniqueIdentifier>{55DE2481-50A8-31EB-A0B1-CCA07C42E73B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filesystem\Header Files">
+      <UniqueIdentifier>{E2489D7E-F3C5-3932-B288-364F52B67C4D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filesystem\Source Files">
+      <UniqueIdentifier>{DC2EA649-DFA7-3388-9E91-CFA204CB0244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hashing">
+      <UniqueIdentifier>{6E76B375-9BFE-3BBE-B013-ABA7268F0514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hashing\Header Files">
+      <UniqueIdentifier>{EAF6A918-1E02-30D3-A414-D81F55117172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hashing\Source Files">
+      <UniqueIdentifier>{C8625C78-7A5B-3C11-9B03-DA6B1D99A204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{713EF0BA-C2D0-371A-BF1A-ED7890A63A97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Header Files">
+      <UniqueIdentifier>{F20FC9DE-951E-33C2-A64D-406ADD2004FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Message Files">
+      <UniqueIdentifier>{431C7223-738B-3ED7-95F1-D30AB1E8002C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Resource Files">
+      <UniqueIdentifier>{2109C578-C4D1-3943-A82C-81DF82DF5229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Source Files">
+      <UniqueIdentifier>{3B121AB2-6F23-3B6B-AA36-5F94EF87B02B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notifications">
+      <UniqueIdentifier>{B6886601-846F-3B41-8440-DECFDE92DA1D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notifications\Header Files">
+      <UniqueIdentifier>{9421193E-B231-327C-AE68-28AE43DCB44E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notifications\Source Files">
+      <UniqueIdentifier>{4483F96C-31CE-39FB-A758-848B7DD8FB41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object Libraries">
+      <UniqueIdentifier>{7EE855BF-5D14-3F41-A16E-F54DEECC6BAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processes">
+      <UniqueIdentifier>{F2FF348F-AB02-38B7-96FE-89A1EEFE272A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processes\Header Files">
+      <UniqueIdentifier>{0E22A5DA-EF16-3369-AF0A-496394BE8BF8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processes\Source Files">
+      <UniqueIdentifier>{AB3E291C-A691-336B-B4A0-94993A558EF7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RegExp">
+      <UniqueIdentifier>{68632F1F-6B0B-3FEC-A729-AE329D1C6798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RegExp\Header Files">
+      <UniqueIdentifier>{A8BBECE0-E95E-3FBC-84CE-03413E1E410A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RegExp\Source Files">
+      <UniqueIdentifier>{B2C17D55-D9E5-31C3-9114-127028C388D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3A88E452-0B12-3406-84A6-2947D1B8DC19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedLibrary">
+      <UniqueIdentifier>{F0C227F8-5998-3609-83FC-15010B4AD329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedLibrary\Header Files">
+      <UniqueIdentifier>{21CD8FC3-0606-3686-BEBC-840185290159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedLibrary\Source Files">
+      <UniqueIdentifier>{EEACA694-3BF3-3C2C-BCDE-6D85D2176CE5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Streams">
+      <UniqueIdentifier>{C48BC0D9-1DC7-3025-970D-C79B54CD63DE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Streams\Header Files">
+      <UniqueIdentifier>{FE3DC880-B32F-3E21-9ACE-89F7187E0F4D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Streams\Source Files">
+      <UniqueIdentifier>{804E592E-9E4A-3E50-BA55-C21AFB961EAF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tasks">
+      <UniqueIdentifier>{5315B5A2-52A8-3D6F-BA9F-C505058C3100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tasks\Header Files">
+      <UniqueIdentifier>{F2EEB61E-1BF3-3D3B-90EB-9A7138C62ECE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tasks\Source Files">
+      <UniqueIdentifier>{3882E924-448C-38A4-8135-9CC024578D66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text">
+      <UniqueIdentifier>{2459C7D1-5098-398B-BD1B-53B391FCFE75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text\Header Files">
+      <UniqueIdentifier>{28B80DC4-0096-32D6-91E9-CADD565E321E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text\Source Files">
+      <UniqueIdentifier>{398E87DF-ECF6-365C-BD99-3FDA05201ACA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{7E407775-37E2-3388-8021-B4E98FAE33F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading\Header Files">
+      <UniqueIdentifier>{902A61C9-4E0B-320B-85F1-AF732A6BB8DB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading\Source Files">
+      <UniqueIdentifier>{B3DA0A72-9CAF-3B71-815F-B6750E1D0163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ULID">
+      <UniqueIdentifier>{DACC2CA2-BC47-37A3-8A55-E5121531CFD2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ULID\Header Files">
+      <UniqueIdentifier>{080130AE-E6D7-31BE-9DDE-85DADF1ACD0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ULID\Source Files">
+      <UniqueIdentifier>{AF849316-A33F-3CDC-B709-E9766E5A3F7A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="URI">
+      <UniqueIdentifier>{7664D9A6-7263-3262-8B52-2A9C6AE2AE3D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="URI\Header Files">
+      <UniqueIdentifier>{91893B19-0C9F-32F8-970D-C30782952379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="URI\Source Files">
+      <UniqueIdentifier>{D003E0E0-6329-30BF-ABD5-3CA465A27BE1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UUID">
+      <UniqueIdentifier>{89944531-D506-35A1-8992-C4A1F72F67A5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UUID\Header Files">
+      <UniqueIdentifier>{03996086-4D0C-3169-8456-1F212381BF15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UUID\Source Files">
+      <UniqueIdentifier>{EBDCC385-3121-33EA-8DFE-85E40F5456BA}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

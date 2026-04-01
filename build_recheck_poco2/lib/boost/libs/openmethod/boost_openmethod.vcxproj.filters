@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod.hpp" />
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\core.hpp">
+      <Filter>openmethod</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\default_registry.hpp">
+      <Filter>openmethod</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\detail\ostdstream.hpp">
+      <Filter>openmethod\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\detail\static_list.hpp">
+      <Filter>openmethod\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\initialize.hpp">
+      <Filter>openmethod</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\inplace_vptr.hpp">
+      <Filter>openmethod</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\interop\boost_intrusive_ptr.hpp">
+      <Filter>openmethod\interop</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\interop\std_shared_ptr.hpp">
+      <Filter>openmethod\interop</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\interop\std_unique_ptr.hpp">
+      <Filter>openmethod\interop</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\macros.hpp">
+      <Filter>openmethod</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\default_error_handler.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\fast_perfect_hash.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\static_rtti.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\std_rtti.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\stderr_output.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\throw_error_handler.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\vptr_map.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\policies\vptr_vector.hpp">
+      <Filter>openmethod\policies</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\openmethod\include\boost\openmethod\preamble.hpp">
+      <Filter>openmethod</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="openmethod">
+      <UniqueIdentifier>{0D1361D3-7708-3CF2-A4DF-A0265683A03D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="openmethod\detail">
+      <UniqueIdentifier>{6E043155-6BA7-3849-95C4-9CB864DF1347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="openmethod\interop">
+      <UniqueIdentifier>{7BCFA2A9-14C1-3504-B26D-45D6BB7C7455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="openmethod\policies">
+      <UniqueIdentifier>{B537A3F7-FEE1-3B93-B98C-DE8457907696}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,1 @@
+C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\dependencies\pdjson\_BUNDLED_PDJSON.dir\Release\_BUNDLED_PDJSON.lib

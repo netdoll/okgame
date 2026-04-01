@@ -327,6 +327,7 @@ void Main::mainInit()
 	loadGlobalSettingsFromXML();
 
 	SteamManager::init();
+	LuaManager::init();
 
 #ifndef ORBIS
 	if (globalSettings->useXInput == false)SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");

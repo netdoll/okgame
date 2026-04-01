@@ -1,0 +1,12 @@
+prefix=C:/Program Files/bobsgame
+exec_prefix=C:/Program Files/bobsgame
+libdir=C:/Program Files/bobsgame/lib
+includedir=C:/Program Files/bobsgame/include
+
+Name: FLAC
+Description: Free Lossless Audio Codec Library
+Version: 1.5.0
+Requires.private: 
+Libs: -L${libdir} -lFLAC
+Libs.private: -lm 
+Cflags: -I${includedir}

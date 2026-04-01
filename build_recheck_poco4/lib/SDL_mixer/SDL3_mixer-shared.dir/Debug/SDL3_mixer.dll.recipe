@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\x64\Debug\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\ogg.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\objs\Debug\FLAC.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\SDL3.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\gme.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\mpg123.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\vorbis.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\vorbisfile.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\wavpackdll.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\libxmp.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Debug\SDL3_mixer.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

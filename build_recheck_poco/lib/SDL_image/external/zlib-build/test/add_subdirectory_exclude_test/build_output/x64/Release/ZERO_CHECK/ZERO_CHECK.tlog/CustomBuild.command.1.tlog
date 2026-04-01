@@ -1,0 +1,10 @@
+^C:\USERS\HYPER\WORKSPACE\BG\OKGAME\BUILD_RECHECK_POCO\LIB\SDL_IMAGE\EXTERNAL\ZLIB-BUILD\TEST\ADD_SUBDIRECTORY_EXCLUDE_TEST\BUILD_OUTPUT\CMAKEFILES\865D5EB73AF4ADDC1D4AA9071DBBD259\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame/build_recheck_poco/lib/SDL_image/external/zlib-build/test/add_subdirectory_exclude_test -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco/lib/SDL_image/external/zlib-build/test/add_subdirectory_exclude_test/build_output --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco/lib/SDL_image/external/zlib-build/test/add_subdirectory_exclude_test/build_output/zlib_find_package_test.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

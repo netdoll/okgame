@@ -1,0 +1,22 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.3/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CPack.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CPackComponent.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckIncludeFileCXX.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckTypeSize.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/FindCygwin.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/InstallRequiredSystemLibraries.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/WriteBasicConfigVersionFile.cmake
+C:/Program Files/CMake/share/cmake-4.3/Templates/CPackConfig.cmake.in
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/CMakeFiles/cmake.verify_globs
+C:/Users/hyper/workspace/bg/okgame/lib/poco/CMakeLists.txt
+C:/Users/hyper/workspace/bg/okgame/lib/poco/cmake/CXX2x.cmake
+C:/Users/hyper/workspace/bg/okgame/lib/poco/cmake/DefinePlatformSpecific.cmake
+C:/Users/hyper/workspace/bg/okgame/lib/poco/cmake/PocoCompilerSelect.cmake
+C:/Users/hyper/workspace/bg/okgame/lib/poco/cmake/PocoConfig.cmake.in
+C:/Users/hyper/workspace/bg/okgame/lib/poco/cmake/PocoMacros.cmake
+C:/Users/hyper/workspace/bg/okgame/lib/poco/cmake/cmake_uninstall.cmake.in
+C:/Users/hyper/workspace/bg/okgame/lib/poco/cmake/test_compiler_cxx20.cpp

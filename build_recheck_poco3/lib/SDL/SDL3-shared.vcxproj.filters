@@ -1,0 +1,1943 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\cmake_pch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_assert.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_error.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_guid.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_hashtable.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_hints.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_list.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_log.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_properties.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_utils.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\atomic\SDL_atomic.c">
+      <Filter>src\atomic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\atomic\SDL_spinlock.c">
+      <Filter>src\atomic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audio.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audiocvt.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audiodev.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audioqueue.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audioresample.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audiotypecvt.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_mixer.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_wave.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\camera\SDL_camera.c">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\SDL_core_unsupported.c">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\cpuinfo\SDL_cpuinfo.c">
+      <Filter>src\cpuinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dynapi\SDL_dynapi.c">
+      <Filter>src\dynapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_categories.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_clipboardevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_displayevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_dropevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_events.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_eventwatch.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keyboard.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keymap.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keysym_to_keycode.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keysym_to_scancode.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_mouse.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_pen.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_quit.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_scancode_tables.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_touch.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_windowevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\imKStoUCS.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\filesystem\SDL_filesystem.c">
+      <Filter>src\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\SDL_gpu.c">
+      <Filter>src\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\xr\SDL_gpu_openxr.c">
+      <Filter>src\gpu\xr</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\xr\SDL_openxrdyn.c">
+      <Filter>src\gpu\xr</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\SDL_haptic.c">
+      <Filter>src\haptic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi.c">
+      <Filter>src\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\io\SDL_asyncio.c">
+      <Filter>src\io</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\io\SDL_iostream.c">
+      <Filter>src\io</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\io\generic\SDL_asyncio_generic.c">
+      <Filter>src\io\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_gamepad.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_joystick.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_steam_virtual_gamepad.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\controller_type.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\locale\SDL_locale.c">
+      <Filter>src\locale</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\main\SDL_main_callbacks.c">
+      <Filter>src\main</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\main\SDL_runapp.c">
+      <Filter>src\main</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\misc\SDL_libusb.c">
+      <Filter>src\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\misc\SDL_url.c">
+      <Filter>src\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\power\SDL_power.c">
+      <Filter>src\power</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\SDL_render.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\SDL_render_unsupported.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\SDL_yuv_sw.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d\SDL_render_d3d.c">
+      <Filter>src\render\direct3d</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d\SDL_shaders_d3d.c">
+      <Filter>src\render\direct3d</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d11\SDL_render_d3d11.c">
+      <Filter>src\render\direct3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d11\SDL_shaders_d3d11.c">
+      <Filter>src\render\direct3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\SDL_render_d3d12.c">
+      <Filter>src\render\direct3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\SDL_shaders_d3d12.c">
+      <Filter>src\render\direct3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\gpu\SDL_pipeline_gpu.c">
+      <Filter>src\render\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\gpu\SDL_render_gpu.c">
+      <Filter>src\render\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\gpu\SDL_shaders_gpu.c">
+      <Filter>src\render\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\ngage\SDL_render_ngage.c">
+      <Filter>src\render\ngage</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengl\SDL_render_gl.c">
+      <Filter>src\render\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengl\SDL_shaders_gl.c">
+      <Filter>src\render\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengles2\SDL_render_gles2.c">
+      <Filter>src\render\opengles2</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengles2\SDL_shaders_gles2.c">
+      <Filter>src\render\opengles2</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\ps2\SDL_render_ps2.c">
+      <Filter>src\render\ps2</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\psp\SDL_render_psp.c">
+      <Filter>src\render\psp</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_blendfillrect.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_blendline.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_blendpoint.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_drawline.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_drawpoint.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_render_sw.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_triangle.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vitagxm\SDL_render_vita_gxm.c">
+      <Filter>src\render\vitagxm</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vitagxm\SDL_render_vita_gxm_memory.c">
+      <Filter>src\render\vitagxm</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vitagxm\SDL_render_vita_gxm_tools.c">
+      <Filter>src\render\vitagxm</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vulkan\SDL_render_vulkan.c">
+      <Filter>src\render\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vulkan\SDL_shaders_vulkan.c">
+      <Filter>src\render\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\sensor\SDL_sensor.c">
+      <Filter>src\sensor</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_crc16.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_crc32.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_getenv.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_iconv.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_malloc.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_memcpy.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_memmove.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_memset.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_mslibc.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_murmur3.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_qsort.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_random.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_stdlib.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_string.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_strtokr.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\storage\SDL_storage.c">
+      <Filter>src\storage</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\SDL_thread.c">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\time\SDL_time.c">
+      <Filter>src\time</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\timer\SDL_timer.c">
+      <Filter>src\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_RLEaccel.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_0.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_1.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_A.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_N.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_auto.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_copy.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_slow.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_bmp.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_clipboard.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_egl.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_fillrect.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_pixels.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_rect.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_rotate.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_stb.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_stretch.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_surface.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_video.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_video_unsupported.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_vulkan_utils.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_yuv.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_lsx.c">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_sse.c">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_std.c">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\dummy\SDL_dummyaudio.c">
+      <Filter>src\audio\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\disk\SDL_diskaudio.c">
+      <Filter>src\audio\disk</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\camera\dummy\SDL_camera_dummy.c">
+      <Filter>src\camera\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\virtual\SDL_virtualjoystick.c">
+      <Filter>src\joystick\virtual</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\dummy\SDL_nullevents.c">
+      <Filter>src\video\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\dummy\SDL_nullframebuffer.c">
+      <Filter>src\video\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\dummy\SDL_nullvideo.c">
+      <Filter>src\video\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_gameinput.cpp">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_hid.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_immdevice.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_windows.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_xinput.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\pch.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\pch_cpp.cpp">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\main\windows\SDL_sysmain_runapp.c">
+      <Filter>src\main\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\io\windows\SDL_asyncio_windows_ioring.c">
+      <Filter>src\io\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\misc\windows\SDL_sysurl.c">
+      <Filter>src\misc\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\directsound\SDL_directsound.c">
+      <Filter>src\audio\directsound</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\wasapi\SDL_wasapi.c">
+      <Filter>src\audio\wasapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsclipboard.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsevents.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsframebuffer.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsgameinput.cpp">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowskeyboard.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsmessagebox.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsmodes.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsmouse.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsopengl.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsopengles.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsrawinput.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsshape.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsvideo.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsvulkan.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowswindow.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\generic\SDL_syscond.c">
+      <Filter>src\thread\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\generic\SDL_sysrwlock.c">
+      <Filter>src\thread\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\windows\SDL_syscond_cv.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\windows\SDL_sysmutex.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\windows\SDL_sysrwlock_srw.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\windows\SDL_syssem.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\windows\SDL_systhread.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\windows\SDL_systls.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\sensor\windows\SDL_windowssensor.c">
+      <Filter>src\sensor\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\power\windows\SDL_syspower.c">
+      <Filter>src\power\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\locale\windows\SDL_syslocale.c">
+      <Filter>src\locale\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\filesystem\windows\SDL_sysfilesystem.c">
+      <Filter>src\filesystem\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\filesystem\windows\SDL_sysfsops.c">
+      <Filter>src\filesystem\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\storage\generic\SDL_genericstorage.c">
+      <Filter>src\storage\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\storage\steam\SDL_steamstorage.c">
+      <Filter>src\storage\steam</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\time\windows\SDL_systime.c">
+      <Filter>src\time\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\timer\windows\SDL_systimer.c">
+      <Filter>src\timer\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\loadso\windows\SDL_sysloadso.c">
+      <Filter>src\loadso\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\tray\windows\SDL_tray.c">
+      <Filter>src\tray\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_8bitdo.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_combined.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_flydigi.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_gamecube.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_gamesir.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_gip.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_lg4ff.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_luna.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_ps3.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_ps4.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_ps5.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_rumble.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_shield.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_sinput.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_stadia.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_steam.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_steam_hori.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_steam_triton.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_steamdeck.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_switch.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_switch2.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_wii.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_xbox360.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_xbox360w.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_xboxone.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapi_zuiki.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_hidapijoystick.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\hidapi\SDL_report_descriptor.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\hidapi\SDL_hidapihaptic.c">
+      <Filter>src\haptic\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\hidapi\SDL_hidapihaptic_lg4ff.c">
+      <Filter>src\haptic\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_dinputjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_rawinputjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_windows_gaming_input.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_windowsjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_xinputjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\gdk\SDL_gameinputjoystick.cpp">
+      <Filter>src\joystick\gdk</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\windows\SDL_dinputhaptic.c">
+      <Filter>src\haptic\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\windows\SDL_windowshaptic.c">
+      <Filter>src\haptic\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\camera\mediafoundation\SDL_camera_mediafoundation.c">
+      <Filter>src\camera\mediafoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dialog\SDL_dialog.c">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dialog\SDL_dialog_utils.c">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dialog\windows\SDL_windowsdialog.c">
+      <Filter>src\dialog\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\process\SDL_process.c">
+      <Filter>src\process</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\process\windows\SDL_windowsprocess.c">
+      <Filter>src\process\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenevents.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenframebuffer.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenopengles.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenvideo.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenvulkan.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenwindow.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\tray\SDL_tray_utils.c">
+      <Filter>src\tray</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\d3d12\SDL_gpu_d3d12.c">
+      <Filter>src\gpu\d3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\vulkan\SDL_gpu_vulkan.c">
+      <Filter>src\gpu\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\main\generic\SDL_sysmain_callbacks.c">
+      <Filter>src\main\generic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_assert_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_error_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_hashtable.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_hints_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_internal.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_list.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_log_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_properties_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\SDL_utils_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audio_c.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audio_channel_converters.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audiodev_c.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audioqueue.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_audioresample.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_sysaudio.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\SDL_wave.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\camera\SDL_camera_c.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\camera\SDL_syscamera.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\SDL_core_unsupported.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\cpuinfo\SDL_cpuinfo_c.h">
+      <Filter>src\cpuinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dynapi\SDL_dynapi.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dynapi\SDL_dynapi_overrides.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dynapi\SDL_dynapi_procs.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\dynapi\SDL_dynapi_unsupported.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_categories_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_clipboardevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_displayevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_dropevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_events_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_eventwatch_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keyboard_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keymap_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keysym_to_keycode_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_keysym_to_scancode_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_mouse_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_pen_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_scancode_tables_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_touch_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\SDL_windowevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\blank_cursor.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\default_cursor.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\imKStoUCS.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\scancodes_darwin.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\scancodes_linux.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\scancodes_windows.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\events\scancodes_xfree86.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\filesystem\SDL_filesystem_c.h">
+      <Filter>src\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\filesystem\SDL_sysfilesystem.h">
+      <Filter>src\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\SDL_sysgpu.h">
+      <Filter>src\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\xr\SDL_gpu_openxr.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\xr\SDL_openxr_internal.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\xr\SDL_openxrdyn.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\xr\SDL_openxrsym.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\SDL_haptic_c.h">
+      <Filter>src\haptic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\SDL_syshaptic.h">
+      <Filter>src\haptic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_android.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_c.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_ios.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_libusb.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_linux.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_mac.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_netbsd.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_steamxbox.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\hidapi\SDL_hidapi_windows.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\io\SDL_asyncio_c.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\io\SDL_iostream_c.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\io\SDL_sysasyncio.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_gamepad_c.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_gamepad_db.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_joystick_c.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_steam_virtual_gamepad.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\SDL_sysjoystick.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\controller_list.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\controller_type.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\usb_ids.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\locale\SDL_syslocale.h">
+      <Filter>src\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\main\SDL_main_callbacks.h">
+      <Filter>src\main</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\misc\SDL_libusb.h">
+      <Filter>src\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\misc\SDL_sysurl.h">
+      <Filter>src\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\power\SDL_syspower.h">
+      <Filter>src\power</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\SDL_d3dmath.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\SDL_render_debug_font.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\SDL_sysrender.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\SDL_yuv_sw_c.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d\D3D9_PixelShader_Palette.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d\D3D9_PixelShader_Palette_Linear.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d\D3D9_PixelShader_Palette_Nearest.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d\D3D9_PixelShader_YUV.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d\SDL_shaders_d3d.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d11\D3D11_PixelShader_Advanced.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d11\D3D11_PixelShader_Colors.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d11\D3D11_PixelShader_Textures.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d11\D3D11_VertexShader.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d11\SDL_shaders_d3d11.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_PixelShader_Advanced.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_PixelShader_Colors.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_PixelShader_Textures.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_RootSig_Advanced.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_RootSig_Color.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_RootSig_Texture.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_VertexShader_Advanced.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_VertexShader_Color.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\D3D12_VertexShader_Texture.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\SDL_render_d3d12_xbox.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\direct3d12\SDL_shaders_d3d12.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\gpu\SDL_gpu_util.h">
+      <Filter>src\render\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\gpu\SDL_pipeline_gpu.h">
+      <Filter>src\render\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\gpu\SDL_shaders_gpu.h">
+      <Filter>src\render\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\metal\SDL_shaders_metal_ios.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\metal\SDL_shaders_metal_iphonesimulator.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\metal\SDL_shaders_metal_macos.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\metal\SDL_shaders_metal_tvos.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\metal\SDL_shaders_metal_tvsimulator.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\ngage\SDL_render_ngage_c.h">
+      <Filter>src\render\ngage</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengl\SDL_glfuncs.h">
+      <Filter>src\render\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengl\SDL_shaders_gl.h">
+      <Filter>src\render\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengles2\SDL_gles2funcs.h">
+      <Filter>src\render\opengles2</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\opengles2\SDL_shaders_gles2.h">
+      <Filter>src\render\opengles2</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\psp\SDL_render_psp_c.h">
+      <Filter>src\render\psp</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_blendfillrect.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_blendline.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_blendpoint.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_draw.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_drawline.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_drawpoint.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_render_sw_c.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\software\SDL_triangle.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vitagxm\SDL_render_vita_gxm_memory.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vitagxm\SDL_render_vita_gxm_shaders.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vitagxm\SDL_render_vita_gxm_tools.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vitagxm\SDL_render_vita_gxm_types.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vulkan\SDL_shaders_vulkan.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vulkan\VULKAN_PixelShader_Advanced.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vulkan\VULKAN_PixelShader_Colors.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vulkan\VULKAN_PixelShader_Textures.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\render\vulkan\VULKAN_VertexShader.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\sensor\SDL_sensor_c.h">
+      <Filter>src\sensor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\sensor\SDL_syssensor.h">
+      <Filter>src\sensor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_casefolding.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_getenv_c.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_sysstdlib.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\stdlib\SDL_vacopy.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\storage\SDL_sysstorage.h">
+      <Filter>src\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\SDL_systhread.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\SDL_thread_c.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\time\SDL_time_c.h">
+      <Filter>src\time</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\timer\SDL_timer_c.h">
+      <Filter>src\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_RLEaccel_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_auto.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_copy.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_blit_slow.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_clipboard_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_egl_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_pixels_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_rect_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_rect_impl.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_rotate.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_stb_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_surface_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_sysvideo.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_video_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_video_unsupported.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_vulkan_internal.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\SDL_yuv_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\miniz.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\stb_image.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_common.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_internal.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_lsx.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_lsx_func.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_sse.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_sse_func.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_std.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\yuv2rgb\yuv_rgb_std_func.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\dummy\SDL_dummyaudio.h">
+      <Filter>src\audio\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\disk\SDL_diskaudio.h">
+      <Filter>src\audio\disk</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\virtual\SDL_virtualjoystick_c.h">
+      <Filter>src\joystick\virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\dummy\SDL_nullevents_c.h">
+      <Filter>src\video\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\dummy\SDL_nullframebuffer_c.h">
+      <Filter>src\video\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\dummy\SDL_nullvideo.h">
+      <Filter>src\video\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_directx.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_gameinput.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_hid.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_immdevice.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_windows.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\SDL_xinput.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\directsound\SDL_directsound.h">
+      <Filter>src\audio\directsound</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\audio\wasapi\SDL_wasapi.h">
+      <Filter>src\audio\wasapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_msctf.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsclipboard.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsevents.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsframebuffer.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsgameinput.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowskeyboard.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsmessagebox.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsmodes.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsmouse.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsopengl.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsopengles.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsrawinput.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsshape.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsvideo.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowsvulkan.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\SDL_windowswindow.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\windows\wmmsg.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\generic\SDL_syscond_c.h">
+      <Filter>src\thread\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\thread\generic\SDL_sysrwlock_c.h">
+      <Filter>src\thread\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\sensor\windows\SDL_windowssensor.h">
+      <Filter>src\sensor\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\storage\steam\SDL_steamstorage_proc.h">
+      <Filter>src\storage\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_dinputjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_rawinputjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_windowsjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\joystick\windows\SDL_xinputjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\windows\SDL_dinputhaptic_c.h">
+      <Filter>src\haptic\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\haptic\windows\SDL_windowshaptic_c.h">
+      <Filter>src\haptic\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenevents_c.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenframebuffer_c.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenopengles.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenvideo.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenvulkan.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\video\offscreen\SDL_offscreenwindow.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\d3d12\D3D12_Blit.h">
+      <Filter>src\gpu\d3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\gpu\vulkan\SDL_gpu_vulkan_vkfuncs.h">
+      <Filter>src\gpu\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_assert.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_asyncio.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_atomic.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_audio.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_begin_code.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_bits.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_blendmode.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_camera.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_clipboard.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_close_code.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_copying.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_cpuinfo.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_dialog.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_dlopennote.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_egl.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_endian.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_error.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_events.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_filesystem.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_gamepad.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_gpu.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_guid.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_haptic.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_hidapi.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_hints.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_init.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_intrin.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_iostream.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_joystick.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_keyboard.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_keycode.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_loadso.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_locale.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_log.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_main.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_main_impl.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_messagebox.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_metal.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_misc.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_mouse.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_mutex.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_oldnames.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengl.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengl_glext.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengles.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengles2.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengles2_gl2.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengles2_gl2ext.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengles2_gl2platform.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_opengles2_khrplatform.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_openxr.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_pen.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_pixels.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_platform.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_platform_defines.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_power.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_process.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_properties.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_rect.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_render.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_scancode.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_sensor.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_stdinc.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_storage.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_surface.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_system.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_thread.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_time.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_timer.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_touch.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_tray.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_version.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_video.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\include\SDL3\SDL_vulkan.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\include-revision\SDL3\SDL_revision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\Debug\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\Release\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\MinSizeRel\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\MinSizeRel\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\RelWithDebInfo\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL\CMakeFiles\SDL3-shared.dir\RelWithDebInfo\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL\src\core\windows\version.rc">
+      <Filter>src\core\windows</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3FA42C35-3E78-3C65-B175-4CEFBE506E22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{CD7150AD-3BAB-3B47-A904-96B1D71786F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{A1B0F1F1-5337-3699-AE2C-5E0B6F4550CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{F0DD3A43-6A58-3680-B456-ED842E0AEFFA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\SDL3">
+      <UniqueIdentifier>{4CF3103D-8019-321B-BE75-AF0EAD43087E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{7391C6C6-1223-3AEE-B82C-138ED098D076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\atomic">
+      <UniqueIdentifier>{DF7A3118-E61C-35F8-BC62-E3812D040A0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio">
+      <UniqueIdentifier>{8EEB6894-DDF3-36CB-A000-823C469E525C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\directsound">
+      <UniqueIdentifier>{5194758F-AEB8-36A3-AF0F-AEC132E21457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\disk">
+      <UniqueIdentifier>{FD378545-E4AD-3F90-BD97-416CC9BA488C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\dummy">
+      <UniqueIdentifier>{0CC17130-B778-3AD1-BEE9-529C7A004094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\wasapi">
+      <UniqueIdentifier>{9069FA2E-B524-345F-BCE3-CD77BE8FD9E4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera">
+      <UniqueIdentifier>{EDD417F2-EFFB-3245-A73A-FD6B9DA9F587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera\dummy">
+      <UniqueIdentifier>{67F4B3A2-96E4-3685-B6F6-B39D394D6B78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera\mediafoundation">
+      <UniqueIdentifier>{F87697A7-07DA-3C22-921A-B2299F05D2A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{1A50173D-00A5-35B8-AEF7-D86F13346995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\windows">
+      <UniqueIdentifier>{54B8CB56-8C3E-325C-B465-86B1345AC896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cpuinfo">
+      <UniqueIdentifier>{7903E321-990F-3248-8E58-ED8714D68925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dialog">
+      <UniqueIdentifier>{13929FCA-8280-3BA0-BF70-BF27E9C901D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dialog\windows">
+      <UniqueIdentifier>{637FD72A-DF7B-35D5-9CBF-F798F4D63381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dynapi">
+      <UniqueIdentifier>{11BDADB8-87E9-3105-B14B-35487BC8B5BD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\events">
+      <UniqueIdentifier>{63156D1D-97BB-31CD-BFAA-6650AA58FD4B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\filesystem">
+      <UniqueIdentifier>{6BC371A4-95B5-3DF1-9C76-48447CF1CEEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\filesystem\windows">
+      <UniqueIdentifier>{4F75C6A6-E9FC-3534-8259-0464C30A2439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu">
+      <UniqueIdentifier>{2A18F2E1-3E60-3DE0-AE80-B5614DCC1D55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu\d3d12">
+      <UniqueIdentifier>{0F1EB5E8-2A34-3D00-9896-4D50D0C7DF52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu\vulkan">
+      <UniqueIdentifier>{EF68CA11-5DCF-3939-B1DD-0C0906A20554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu\xr">
+      <UniqueIdentifier>{1BA7F1D0-9F23-3D07-BCCA-EBD443BD49EB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\haptic">
+      <UniqueIdentifier>{5128EDE7-528A-3C84-A7BC-06B1E20CD4D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\haptic\hidapi">
+      <UniqueIdentifier>{7621490A-4EAC-3F3A-8B36-C20D2B242748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\haptic\windows">
+      <UniqueIdentifier>{9778C072-E0F8-3F12-B66F-6937B8BBC624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hidapi">
+      <UniqueIdentifier>{AAC1E0E8-3D88-3512-9F27-84179BB35E5C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io">
+      <UniqueIdentifier>{AB72C418-C025-3B1F-948C-2B6095EC36F9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io\generic">
+      <UniqueIdentifier>{F6165B01-C209-365F-B510-6A23A2A66341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io\windows">
+      <UniqueIdentifier>{9AAC9FBA-62A9-3013-AB66-F3190CB55BBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick">
+      <UniqueIdentifier>{F0B9A7EA-577C-3700-95CE-98A3204CC8D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick\gdk">
+      <UniqueIdentifier>{58489B61-6BFC-39D3-B5AE-77BCA054A609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick\hidapi">
+      <UniqueIdentifier>{E78E9772-47C8-3DDF-85D7-76DA1E1EBDFD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick\virtual">
+      <UniqueIdentifier>{2B65FF10-A0C5-327A-B4B4-97BA0BB4AA10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick\windows">
+      <UniqueIdentifier>{81306F7A-4F24-3D91-B391-B3DAA014444B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\loadso">
+      <UniqueIdentifier>{0D249E19-8867-380B-9616-96BDC3042E5B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\loadso\windows">
+      <UniqueIdentifier>{D379234D-B09E-34C0-9DAF-060E84507F59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\locale">
+      <UniqueIdentifier>{D23B129E-9DBE-3718-A18D-FA361C53CF2A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\locale\windows">
+      <UniqueIdentifier>{8137718B-C7EB-3728-A11B-C540DAEF1788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main">
+      <UniqueIdentifier>{10DFC44F-2969-3EB0-B3FA-D1B00D122A93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main\generic">
+      <UniqueIdentifier>{0D909C04-EF10-3856-B458-9778328EF976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main\windows">
+      <UniqueIdentifier>{DDDC53D2-885D-31F4-AAA9-DCCDE6DCDEEC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\misc">
+      <UniqueIdentifier>{C749F1DA-38EA-36A4-A4F7-55220F11FFAA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\misc\windows">
+      <UniqueIdentifier>{B54CD49E-AF75-3E02-8C52-3D14825E8AFA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\power">
+      <UniqueIdentifier>{7B245A76-1D92-353A-AEC2-ED58DAE2C426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\power\windows">
+      <UniqueIdentifier>{9AA8FAB5-3635-3CDA-A2F3-A55F3A54EBFC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\process">
+      <UniqueIdentifier>{B066F421-897C-3D81-B9D5-A9326BD6DC3A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\process\windows">
+      <UniqueIdentifier>{7696248D-30F3-36B2-B305-E202E056C77B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{B286A595-96ED-3E1D-8D29-CE829EF078E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\direct3d">
+      <UniqueIdentifier>{26A35D07-609C-3D31-9F77-B597A212E1A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\direct3d11">
+      <UniqueIdentifier>{1411ADD9-8654-3C85-9CF3-F89EC34880E4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\direct3d12">
+      <UniqueIdentifier>{45031838-686E-36BE-B3EC-455981F14AFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\gpu">
+      <UniqueIdentifier>{7A04D6C8-26D1-3307-8D16-0B1DC7B34685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\metal">
+      <UniqueIdentifier>{D7D2F998-F28F-34F0-B503-7E47A1D0C202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\ngage">
+      <UniqueIdentifier>{CF09D54C-3FE7-3357-8859-ACBC4F1656F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\opengl">
+      <UniqueIdentifier>{86893CF2-FF95-3AFA-9D25-7E982549E0FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\opengles2">
+      <UniqueIdentifier>{9208E5CB-BEB3-344E-99D9-C5763943875B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\ps2">
+      <UniqueIdentifier>{1FD687CB-CEC6-3DE8-81B4-D4F9B6A32E35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\psp">
+      <UniqueIdentifier>{F7562C4B-EC72-35B9-BED5-A634946A849F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\software">
+      <UniqueIdentifier>{5B961B46-8E6B-375E-A5C6-26B28C7F19C9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\vitagxm">
+      <UniqueIdentifier>{007FB7E0-3915-3086-B923-6927409E4652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\vulkan">
+      <UniqueIdentifier>{6A78D668-AEB6-3B4B-A15A-38273284D321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sensor">
+      <UniqueIdentifier>{C5466B29-D2C6-30B3-A979-78DAC3CEF866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sensor\windows">
+      <UniqueIdentifier>{9B0A3C13-F8DF-36C6-93B5-748273403BDC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\stdlib">
+      <UniqueIdentifier>{B5EF131D-C3D8-3048-AFF2-E3FD36A2E6F9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\storage">
+      <UniqueIdentifier>{BBE15A88-5F19-3B38-9A08-E00A624E1E77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\storage\generic">
+      <UniqueIdentifier>{51D985F7-A121-3853-BC88-0CA7861FB831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\storage\steam">
+      <UniqueIdentifier>{48BE88CE-A39C-3F4E-BD0E-D3F47457CC6B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread">
+      <UniqueIdentifier>{2B9BB25B-F425-324E-A998-866EDC908337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread\generic">
+      <UniqueIdentifier>{B3B729BC-4C3F-3BB8-AC37-B2F5F2A7C8FC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread\windows">
+      <UniqueIdentifier>{866BB181-E192-3437-995C-6D4DE55C452E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\time">
+      <UniqueIdentifier>{73C73F9B-4217-3928-BAAC-7B8EA6991CDD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\time\windows">
+      <UniqueIdentifier>{CA768B5E-1A98-34F6-8778-2A031B88528A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\timer">
+      <UniqueIdentifier>{0586E7D1-FD6E-3246-882B-D6B587F3A653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\timer\windows">
+      <UniqueIdentifier>{5606831F-4282-335E-BC38-935F00C5BFBA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tray">
+      <UniqueIdentifier>{089AEA14-010C-3461-AEF1-D3C43D7760A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tray\windows">
+      <UniqueIdentifier>{DD21282B-34C2-3561-9B04-769FD9CF1A32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video">
+      <UniqueIdentifier>{5AECAA8F-2550-3308-B501-ED00F26620D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\dummy">
+      <UniqueIdentifier>{954DA7BA-75B1-3E1A-8295-D7B90935FC63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\offscreen">
+      <UniqueIdentifier>{D0F52D49-C72A-394D-94D4-D5C953C9F490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\windows">
+      <UniqueIdentifier>{20AFA87B-54B1-3765-B3AD-8F1D0729C6FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\yuv2rgb">
+      <UniqueIdentifier>{71D88A67-8A2E-32C8-BC93-9D338FB465E8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,14 @@
+# libvorbisenc pkg-config source file
+
+prefix=C:/Program Files/bobsgame
+exec_prefix=C:/Program Files/bobsgame/bin
+libdir=C:/Program Files/bobsgame/lib
+includedir=C:/Program Files/bobsgame/include
+
+Name: vorbisenc
+Description: vorbisenc is a library that provides a convenient API for setting up an encoding environment using libvorbis
+Version: 1.3.7
+Requires.private: vorbis
+Conflicts:
+Libs: -L${libdir} -lvorbisenc
+Cflags: -I${includedir}

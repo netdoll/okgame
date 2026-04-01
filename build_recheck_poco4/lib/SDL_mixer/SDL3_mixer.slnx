@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="../SDL/SDL3-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="531ef33c-6522-38d6-b80c-40ab642e8956">
+		<BuildDependency Project="../SDL/SDL_uclibc.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="SDL3_mixer-shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="65293da7-ad8e-36a8-b022-8ad4a4838484">
+		<BuildDependency Project="external/flac-build/src/libFLAC/FLAC.vcxproj"/>
+		<BuildDependency Project="../SDL/SDL3-shared.vcxproj"/>
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libgme-build/gme/gme_shared.vcxproj"/>
+		<BuildDependency Project="external/libmpg123-build/ports/cmake/src/libmpg123/libmpg123.vcxproj"/>
+		<BuildDependency Project="external/vorbis-build/lib/vorbisfile.vcxproj"/>
+		<BuildDependency Project="external/wavpack-build/wavpack.vcxproj"/>
+		<BuildDependency Project="external/libxmp-build/xmp_shared.vcxproj"/>
+	</Project>
+	<Project Path="../SDL/SDL_uclibc.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3c2c0182-6c09-3958-b689-b6fdbf21228e">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libmpg123-build/ports/cmake/src/compat/compat.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="539c36a3-6fa5-346c-bf81-8910e866b230">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libgme-build/gme/gme_shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="76b69f1b-a395-3b9e-841c-73a721064306">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libmpg123-build/ports/cmake/src/libmpg123/libmpg123.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="75295c1e-e4bc-37be-ac03-879349a5379c">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/libmpg123-build/ports/cmake/src/compat/compat.vcxproj"/>
+	</Project>
+	<Project Path="external/ogg-build/ogg.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="52b219ca-97a0-3439-901c-1dd22787f38f">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/vorbis-build/lib/vorbis.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="dd68a176-3553-39d9-b4c0-aa23761f577a">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/ogg-build/ogg.vcxproj"/>
+	</Project>
+	<Project Path="external/vorbis-build/lib/vorbisfile.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9a8cb4ab-473a-39b6-a767-fc4773de8dad">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="external/ogg-build/ogg.vcxproj"/>
+		<BuildDependency Project="external/vorbis-build/lib/vorbis.vcxproj"/>
+	</Project>
+	<Project Path="external/wavpack-build/wavpack.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7336900b-c9ec-3823-9d52-da01f0898a4e">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="external/libxmp-build/xmp_shared.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a07877ba-d31f-35fa-ac1e-b2fe2578adde">
+		<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a9494534-f32a-3e1c-8a61-e375503756d5" DefaultStartup="true">
+			<BuildDependency Project="SDL3_mixer-shared.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8a6907a3-acd7-3f9e-b3b7-0a14d2657b1a">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5610042f-18f9-3728-b195-3dff710b8fb7"/>
+	</Folder>
+	<Folder Name="/Libraries/">
+		<Project Path="external/flac-build/src/libFLAC/FLAC.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="67cf1857-c7c8-369e-86b4-162ce8f8421c">
+			<BuildDependency Project="../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="external/ogg-build/ogg.vcxproj"/>
+		</Project>
+	</Folder>
+</Solution>

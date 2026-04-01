@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 -fpermissive")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${bobsgame_SOURCE_DIR}/cmake")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
+set(CMAKE_SKIP_INSTALL_RULES ON CACHE BOOL "Skip third-party install/export rules for local validation builds" FORCE)
 
 
 
@@ -24,11 +25,34 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
 #find_package(Boost)
 
 add_subdirectory(lib/SDL)
+set(ZLIB_INSTALL OFF CACHE BOOL "Disable zlib install/export generation for local okgame builds" FORCE)
+set(SDLIMAGE_AVIF OFF CACHE BOOL "Disable AVIF support for local okgame builds" FORCE)
+set(SDLIMAGE_AVIF_SAVE OFF CACHE BOOL "Disable AVIF save support for local okgame builds" FORCE)
+set(CMAKE_FIND_PACKAGE_PREFER_CONFIG OFF CACHE BOOL "Prefer module mode so vendored SDL_image zlib resolves cleanly" FORCE)
 add_subdirectory(lib/SDL_image)
+set(BUILD_PROGRAMS OFF CACHE BOOL "Disable FLAC/mpg123 tool builds for local okgame validation" FORCE)
+set(BUILD_EXAMPLES OFF CACHE BOOL "Disable FLAC examples for local okgame validation" FORCE)
+set(BUILD_DOCS OFF CACHE BOOL "Disable FLAC docs for local okgame validation" FORCE)
+set(INSTALL_MANPAGES OFF CACHE BOOL "Disable FLAC manpage installation for local okgame validation" FORCE)
+set(INSTALL_PKGCONFIG_MODULES OFF CACHE BOOL "Disable FLAC pkg-config install for local okgame validation" FORCE)
+set(INSTALL_CMAKE_CONFIG_MODULE OFF CACHE BOOL "Disable FLAC CMake package install for local okgame validation" FORCE)
+set(INSTALL_DOCS OFF CACHE BOOL "Disable ogg doc installation for local okgame validation" FORCE)
+set(INSTALL_PKG_CONFIG_MODULE OFF CACHE BOOL "Disable ogg pkg-config install for local okgame validation" FORCE)
+set(INSTALL_CMAKE_PACKAGE_MODULE OFF CACHE BOOL "Disable ogg CMake package install for local okgame validation" FORCE)
+set(SDLMIXER_OPUS OFF CACHE BOOL "Disable Opus support for local okgame builds" FORCE)
 add_subdirectory(lib/SDL_mixer)
 add_subdirectory(lib/SDL_ttf)
 add_subdirectory(lib/SDL_net)
-#add_subdirectory(lib/poco)
+set(POCO_MINIMAL_BUILD ON CACHE BOOL "Build only the Poco components needed by okgame" FORCE)
+set(ENABLE_FOUNDATION ON CACHE BOOL "Enable Poco Foundation" FORCE)
+set(ENABLE_JSON ON CACHE BOOL "Enable Poco JSON" FORCE)
+set(ENABLE_NET ON CACHE BOOL "Enable Poco Net" FORCE)
+set(ENABLE_UTIL ON CACHE BOOL "Enable Poco Util" FORCE)
+set(ENABLE_XML OFF CACHE BOOL "Disable optional Poco XML for local okgame builds" FORCE)
+set(ENABLE_NETSSL OFF CACHE BOOL "Disable optional Poco NetSSL for local okgame builds" FORCE)
+set(ENABLE_CRYPTO OFF CACHE BOOL "Disable optional Poco Crypto for local okgame builds" FORCE)
+set(ENABLE_JWT OFF CACHE BOOL "Disable optional Poco JWT for local okgame builds" FORCE)
+add_subdirectory(lib/poco)
 add_subdirectory(lib/GWEN-master/gwen)
 add_subdirectory(lib/boost)
 
@@ -80,7 +104,9 @@ set(BOBSGAME_INCLUDE_DIRS
         ${bobsgame_SOURCE_DIR}/lib/poco/Zip/include
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
         ${bobsgame_SOURCE_DIR}/lib/boost
+        ${bobsgame_SOURCE_DIR}/lib/CTPL
         ${bobsgame_SOURCE_DIR}/lib/steam/public
+        ${bobsgame_SOURCE_DIR}/lib/CLove/src/3rdparty/lua
         ${bobsgame_SOURCE_DIR}/lib
         ${bobsgame_SOURCE_DIR}
 )
@@ -97,7 +123,7 @@ elseif(LINUX)
 endif()
 
 #add_definitions(-DBOOST_ALL_NO_LIB=1)# -DBOOST_ALL_DYN_LINK -DBOOST_LOG_DYN_LINK)
-add_definitions(-DBOOST_LIB_DIAGNOSTIC=1 -DNOMINMAX -DHAVE_STEAMWORKS=1)
+add_definitions(-DBOOST_LIB_DIAGNOSTIC=1 -DNOMINMAX -DHAVE_STEAMWORKS=1 -DHAVE_LUA=1 -DLUA_ANSI)
 
 SET (CMAKE_EXE_LINKER_FLAGS
         "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,'$ORIGIN/libs/:$$ORIGIN/libs/'" )
@@ -333,7 +359,6 @@ set(SOURCE_FILES
     src/Engine/rpg/gui/GameSelectorMenuPanel.h
     src/Engine/rpg/gui/LobbyMenuPanel.cpp
     src/Engine/rpg/gui/LobbyMenuPanel.h
-    src/Engine/rpg/Avatar.cpp
     src/Engine/rpg/BGClientEngine.h
     src/Engine/rpg/Clock.cpp
     src/Engine/rpg/Clock.h
@@ -496,7 +521,14 @@ target_compile_definitions(glew PUBLIC GLEW_STATIC)
 add_library(GLEW::glew ALIAS glew)
 add_library(GLEW::glew_s ALIAS glew)
 set(STD_FILESYSTEM_EXISTS TRUE CACHE BOOL "" FORCE)
-add_subdirectory(lib/projectm)
+option(ENABLE_PROJECTM "Enable projectM visualizer integration" ON)
+set(ENABLE_PROJECTM_AVAILABLE OFF)
+if(ENABLE_PROJECTM AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib/projectm/vendor/projectm-eval/CMakeLists.txt")
+    add_subdirectory(lib/projectm)
+    set(ENABLE_PROJECTM_AVAILABLE ON)
+else()
+    message(WARNING "projectM disabled for this build because lib/projectm/vendor/projectm-eval is unavailable.")
+endif()
 #add_subdirectory(lib/gambatte-libretro)
 #set_target_properties(gambatte_libretro PROPERTIES
 #    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cores"
@@ -518,9 +550,17 @@ target_link_libraries(bobsgame
         #Poco::Zip
         GWEN_static
         #GWEN_opengl
-        projectM
         Boost::serialization
+        ${STEAM_LIBS}
 )
+if(ENABLE_PROJECTM_AVAILABLE)
+    target_link_libraries(bobsgame projectM)
+endif()
+if(ENABLE_PROJECTM_AVAILABLE)
+    target_compile_definitions(bobsgame PRIVATE HAVE_PROJECTM=1)
+else()
+    target_compile_definitions(bobsgame PRIVATE HAVE_PROJECTM=0)
+endif()
 
 # Deploy VERSION.md to the output directory
 add_custom_command(

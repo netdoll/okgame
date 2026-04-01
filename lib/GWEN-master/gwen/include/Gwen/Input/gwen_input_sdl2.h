@@ -34,7 +34,7 @@
 #include "Gwen/Controls/Canvas.h"
 #include "Gwen/Input/gwen_input_base.h"
 
-#include "SDL.h"
+#include <SDL3/SDL.h>
 
 namespace Gwen
 {

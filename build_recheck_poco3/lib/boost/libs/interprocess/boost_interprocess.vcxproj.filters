@@ -1,0 +1,589 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\extra\boost_interprocess.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\adaptive_pool.hpp">
+      <Filter>Header Files\boost\interprocess\allocators</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\allocator.hpp">
+      <Filter>Header Files\boost\interprocess\allocators</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\cached_adaptive_pool.hpp">
+      <Filter>Header Files\boost\interprocess\allocators</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\cached_node_allocator.hpp">
+      <Filter>Header Files\boost\interprocess\allocators</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\detail\adaptive_node_pool.hpp">
+      <Filter>Header Files\boost\interprocess\allocators\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\detail\allocator_common.hpp">
+      <Filter>Header Files\boost\interprocess\allocators\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\detail\node_pool.hpp">
+      <Filter>Header Files\boost\interprocess\allocators\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\detail\node_tools.hpp">
+      <Filter>Header Files\boost\interprocess\allocators\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\node_allocator.hpp">
+      <Filter>Header Files\boost\interprocess\allocators</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\private_adaptive_pool.hpp">
+      <Filter>Header Files\boost\interprocess\allocators</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\allocators\private_node_allocator.hpp">
+      <Filter>Header Files\boost\interprocess\allocators</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\anonymous_shared_memory.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\allocation_type.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\containers_fwd.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\deque.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\flat_map.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\flat_set.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\list.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\map.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\pair.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\set.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\slist.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\stable_vector.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\string.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\vector.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\containers\version_type.hpp">
+      <Filter>Header Files\boost\interprocess\containers</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\creation_tags.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\atomic.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\cast_tags.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\char_wchar_holder.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\config_begin.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\config_end.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\config_external_begin.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\config_external_end.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\file_locking_helpers.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\file_wrapper.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\intermodule_singleton.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\intermodule_singleton_common.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\interprocess_tester.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\managed_global_memory.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\managed_memory_impl.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\managed_open_or_create_impl.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\math_functions.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\min_max.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\move.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\mpl.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\named_proxy.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\nothrow.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\os_file_functions.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\os_thread_functions.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\pointer_type.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\portable_intermodule_singleton.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\robust_emulation.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\segment_manager_helper.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\shared_dir_helpers.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\simple_swap.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\std_fwd.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\timed_utils.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\transform_iterator.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\type_traits.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\utilities.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\variadic_templates_tools.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\win32_api.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\windows_intermodule_singleton.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\workaround.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\detail\xsi_shared_memory_file_wrapper.hpp">
+      <Filter>Header Files\boost\interprocess\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\errors.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\exceptions.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\file_mapping.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\indexes\flat_map_index.hpp">
+      <Filter>Header Files\boost\interprocess\indexes</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\indexes\iset_index.hpp">
+      <Filter>Header Files\boost\interprocess\indexes</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\indexes\iunordered_set_index.hpp">
+      <Filter>Header Files\boost\interprocess\indexes</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\indexes\map_index.hpp">
+      <Filter>Header Files\boost\interprocess\indexes</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\indexes\null_index.hpp">
+      <Filter>Header Files\boost\interprocess\indexes</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\interprocess_fwd.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\interprocess_printers.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\ipc\message_queue.hpp">
+      <Filter>Header Files\boost\interprocess\ipc</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\managed_external_buffer.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\managed_heap_memory.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\managed_mapped_file.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\managed_shared_memory.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\managed_windows_shared_memory.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\managed_xsi_shared_memory.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\mapped_region.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\mem_algo\detail\mem_algo_common.hpp">
+      <Filter>Header Files\boost\interprocess\mem_algo\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\mem_algo\detail\simple_seq_fit_impl.hpp">
+      <Filter>Header Files\boost\interprocess\mem_algo\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\mem_algo\rbtree_best_fit.hpp">
+      <Filter>Header Files\boost\interprocess\mem_algo</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\mem_algo\simple_seq_fit.hpp">
+      <Filter>Header Files\boost\interprocess\mem_algo</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\offset_ptr.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\permissions.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\segment_manager.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\shared_memory_object.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\deleter.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\detail\bad_weak_ptr.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\detail\shared_count.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\detail\sp_counted_base.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\detail\sp_counted_base_atomic.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\detail\sp_counted_impl.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\enable_shared_from_this.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\intrusive_ptr.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\scoped_ptr.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\shared_ptr.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\unique_ptr.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\smart_ptr\weak_ptr.hpp">
+      <Filter>Header Files\boost\interprocess\smart_ptr</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\streams\bufferstream.hpp">
+      <Filter>Header Files\boost\interprocess\streams</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\streams\vectorstream.hpp">
+      <Filter>Header Files\boost\interprocess\streams</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\cv_status.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\detail\common_algorithms.hpp">
+      <Filter>Header Files\boost\interprocess\sync\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\detail\condition_algorithm_8a.hpp">
+      <Filter>Header Files\boost\interprocess\sync\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\detail\condition_any_algorithm.hpp">
+      <Filter>Header Files\boost\interprocess\sync\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\detail\locks.hpp">
+      <Filter>Header Files\boost\interprocess\sync\detail</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\file_lock.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\interprocess_condition.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\interprocess_condition_any.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\interprocess_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\interprocess_recursive_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\interprocess_semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\interprocess_sharable_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\interprocess_upgradable_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\lock_options.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\mutex_family.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\named_condition.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\named_condition_any.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\named_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\named_recursive_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\named_semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\named_sharable_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\named_upgradable_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\null_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\condition.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\named_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\named_semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\pthread_helpers.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\recursive_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\semaphore_wrapper.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\posix\timepoint_to_timespec.hpp">
+      <Filter>Header Files\boost\interprocess\sync\posix</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\scoped_lock.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\sharable_lock.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\shm\named_condition.hpp">
+      <Filter>Header Files\boost\interprocess\sync\shm</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\shm\named_condition_any.hpp">
+      <Filter>Header Files\boost\interprocess\sync\shm</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\shm\named_creation_functor.hpp">
+      <Filter>Header Files\boost\interprocess\sync\shm</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\shm\named_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\shm</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\shm\named_recursive_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\shm</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\shm\named_semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync\shm</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\shm\named_upgradable_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\shm</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\spin\condition.hpp">
+      <Filter>Header Files\boost\interprocess\sync\spin</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\spin\interprocess_barrier.hpp">
+      <Filter>Header Files\boost\interprocess\sync\spin</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\spin\mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\spin</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\spin\recursive_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\spin</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\spin\semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync\spin</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\spin\wait.hpp">
+      <Filter>Header Files\boost\interprocess\sync\spin</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\upgradable_lock.hpp">
+      <Filter>Header Files\boost\interprocess\sync</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\condition.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\named_condition.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\named_condition_any.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\named_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\named_recursive_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\named_semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\named_sync.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\recursive_mutex.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\semaphore.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\sync_utils.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\winapi_mutex_wrapper.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\winapi_semaphore_wrapper.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\sync\windows\winapi_wrapper_common.hpp">
+      <Filter>Header Files\boost\interprocess\sync\windows</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\timed_utils.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\windows_shared_memory.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\xsi_key.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\interprocess\include\boost\interprocess\xsi_shared_memory.hpp">
+      <Filter>Header Files\boost\interprocess</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3FA42C35-3E78-3C65-B175-4CEFBE506E22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost">
+      <UniqueIdentifier>{0EB2D1C8-9B0F-3D94-B810-4BD7DE86BBC9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess">
+      <UniqueIdentifier>{9C6E4578-0FFE-3EAC-830B-858F5C49BBA2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\allocators">
+      <UniqueIdentifier>{C0968633-50DE-3BB3-B4FF-F41DEF102842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\allocators\detail">
+      <UniqueIdentifier>{3A58D4F9-4B0A-3069-BEF3-E2AF8C05D257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\containers">
+      <UniqueIdentifier>{4D114989-8A82-3045-8895-68F5DF029F2F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\detail">
+      <UniqueIdentifier>{70BBED54-5459-3890-9A8E-9F6C0388FFF4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\indexes">
+      <UniqueIdentifier>{F668A012-DC9A-3C9A-90AA-BF357CD69326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\ipc">
+      <UniqueIdentifier>{9F4DB81B-584F-355C-ADB7-62473CE5C7FC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\mem_algo">
+      <UniqueIdentifier>{3374B7ED-2901-3F60-ABB3-69FCF15A2CEC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\mem_algo\detail">
+      <UniqueIdentifier>{67D104B9-8D4A-3250-A814-BDE1478A7028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\smart_ptr">
+      <UniqueIdentifier>{3C9AC0F1-2432-3D93-B6FE-3B293746729F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\smart_ptr\detail">
+      <UniqueIdentifier>{3F22FB2F-353C-318A-8B85-1E0933C670F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\streams">
+      <UniqueIdentifier>{F2F7F4DF-3E5B-3CAA-A58D-7C16161E0C06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\sync">
+      <UniqueIdentifier>{AFF2B969-56BC-3728-B574-6A1DE7DBE965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\sync\detail">
+      <UniqueIdentifier>{5CBEBC68-ABD1-3FE5-B840-B3819F7760BF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\sync\posix">
+      <UniqueIdentifier>{A7C6F593-5B3E-3FFA-B4F2-C2FCBA131F1C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\sync\shm">
+      <UniqueIdentifier>{849F41E7-09DF-3071-9EF3-8650F12F578E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\sync\spin">
+      <UniqueIdentifier>{1499A9A6-35F8-35FD-A8A5-CE9F9F1B88D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\interprocess\sync\windows">
+      <UniqueIdentifier>{E8BCD7AE-A117-3B66-A1D3-4F6F6732BA00}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

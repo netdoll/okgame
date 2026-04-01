@@ -121,6 +121,10 @@ const string BobNet::Bobs_Game_ActivityStream_Request = "Bobs_Game_ActivityStrea
 const string BobNet::Bobs_Game_ActivityStream_Response = "Bobs_Game_ActivityStream_Response:";
 const string BobNet::Bobs_Game_ActivityStream_Update = "Bobs_Game_ActivityStream_Update:";
 
+const string BobNet::Bobs_Game_GetTournamentBracketRequest = "Bobs_Game_GetTournamentBracketRequest:";
+const string BobNet::Bobs_Game_GetTournamentBracketResponse = "Bobs_Game_GetTournamentBracketResponse:";
+const string BobNet::Bobs_Game_UpdateTournamentMatchWinnerRequest = "Bobs_Game_UpdateTournamentMatchWinnerRequest:";
+
 
 const string BobNet::Bobs_Game_GetHighScoresAndLeaderboardsRequest = "Bobs_Game_GetHighScoresAndLeaderboardsRequest:";
 const string BobNet::Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched = "Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched:";

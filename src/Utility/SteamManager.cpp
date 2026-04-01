@@ -3,21 +3,27 @@
 
 void SteamManager::init() {
 #ifdef HAVE_STEAMWORKS
-    // Replace with your real App ID if you have one, or use a steam_appid.txt file
-    // if (SteamAPI_RestartAppIfNecessary(k_uAppIdInvalid)) { 
-    //     exit(1);
-    // }
+    // Use Spacewar AppID (480) for development if no real AppID is provided
+    uint32 appID = 480; 
+
+    if (SteamAPI_RestartAppIfNecessary(appID)) {
+        exit(1);
+    }
 
     if (!SteamAPI_Init()) {
         Main::log.error("SteamAPI_Init() failed");
         return;
     }
-    Main::log.info("Steam initialized successfully");
+    Main::log.info("Steam initialized successfully with AppID 480");
+
+    // Request user stats and achievements
+    if (SteamUserStats()) {
+        SteamUserStats()->RequestCurrentStats();
+    }
 #else
     //Main::log.info("Steam support not compiled in");
 #endif
 }
-
 void SteamManager::update() {
 #ifdef HAVE_STEAMWORKS
     SteamAPI_RunCallbacks();
@@ -71,10 +77,25 @@ uint64_t SteamManager::getSteamID() {
 string SteamManager::getPersonaName() {
 #ifdef HAVE_STEAMWORKS
     if (SteamFriends()) {
-        return string(SteamFriends()->GetPersonaName());
+        return SteamFriends()->GetPersonaName();
     }
 #endif
-    return "Player";
+    return "Unknown";
+}
+
+vector<pair<uint64_t, string>> SteamManager::getFriends() {
+    vector<pair<uint64_t, string>> friends;
+#ifdef HAVE_STEAMWORKS
+    if (SteamFriends()) {
+        int friendCount = SteamFriends()->GetFriendCount(k_EFriendFlagImmediate);
+        for (int i = 0; i < friendCount; i++) {
+            CSteamID friendID = SteamFriends()->GetFriendByIndex(i, k_EFriendFlagImmediate);
+            string name = SteamFriends()->GetFriendPersonaName(friendID);
+            friends.push_back({friendID.ConvertToUint64(), name});
+        }
+    }
+#endif
+    return friends;
 }
 
 bool SteamManager::writeCloudFile(const string& filename, const string& data) {

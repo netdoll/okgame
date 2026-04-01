@@ -1,0 +1,10 @@
+^C:\USERS\HYPER\WORKSPACE\BG\OKGAME\BUILD\CMAKEFILES\B752E02CEA9D0AA010234BDE3B4B3A5A\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/hyper/workspace/bg/okgame/build/bobsgame.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

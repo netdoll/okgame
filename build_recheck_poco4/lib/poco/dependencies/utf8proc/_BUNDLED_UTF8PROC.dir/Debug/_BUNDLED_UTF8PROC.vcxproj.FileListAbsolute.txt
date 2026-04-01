@@ -1,0 +1,1 @@
+C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\dependencies\utf8proc\_BUNDLED_UTF8PROC.dir\Debug\_BUNDLED_UTF8PROC.lib

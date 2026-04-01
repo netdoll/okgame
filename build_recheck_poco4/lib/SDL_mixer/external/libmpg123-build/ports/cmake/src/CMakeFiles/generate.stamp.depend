@@ -1,0 +1,15 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckFunctionExists.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckIncludeFileCXX.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckIncludeFiles.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckSymbolExists.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckTypeSize.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/TestBigEndian.cmake
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/CMakeFiles/cmake.verify_globs
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/mpg123/ports/cmake/cmake/CheckCPUArch.c.in
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/mpg123/ports/cmake/cmake/CheckCPUArch.cmake
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/mpg123/ports/cmake/src/CMakeLists.txt
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/mpg123/ports/cmake/src/config.cmake.h.in

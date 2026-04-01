@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\wepoll\src\wepoll.c">
+      <Filter>wepoll\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\wepoll\src\wepoll.h">
+      <Filter>wepoll\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\wepoll\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="wepoll">
+      <UniqueIdentifier>{A312F689-677E-3671-9B26-69C937D35653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wepoll\Header Files">
+      <UniqueIdentifier>{7150FD94-48BC-36D3-9D42-01B1B5CBE8AA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wepoll\Source Files">
+      <UniqueIdentifier>{011DB080-B560-3652-9669-94AFED4D5553}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

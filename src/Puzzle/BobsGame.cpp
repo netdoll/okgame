@@ -1,4 +1,7 @@
 #include "stdafx.h"
+#if HAVE_PROJECTM
+#include "libprojectM/ProjectM.hpp"
+#endif
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
@@ -43,6 +46,27 @@ ArrayList<string> BobsGame::activityStream;
 
 
 #include "Stats/GameStats.h"
+
+void BobsGame::setPendingNetworkStart(long long seed, int startLevel, const string& gameMode)
+{
+	hasPendingNetworkStart = true;
+	pendingNetworkSeed = seed;
+	pendingNetworkStartLevel = startLevel;
+	networkGameMode = gameMode;
+}
+
+void BobsGame::applyPendingNetworkStart()
+{
+	if (hasPendingNetworkStart == false)return;
+
+	networkScoreReported = false;
+	log.info("Network Game starting with seed: " + to_string(pendingNetworkSeed));
+	getPlayer1Game()->randomSeed = pendingNetworkSeed;
+	getPlayer1Game()->currentLevel = pendingNetworkStartLevel;
+	getPlayer1Game()->initGame();
+	getPlayer1Game()->state = GameState::PLAYING;
+	hasPendingNetworkStart = false;
+}
 
 //=========================================================================================================================
 BobsGame::BobsGame()
@@ -116,6 +140,7 @@ void BobsGame::init()
 	initAssets();
 	
 
+#if HAVE_PROJECTM
 	visualizer = make_shared<libprojectM::ProjectM>();
 	
 	// Set texture paths
@@ -149,7 +174,11 @@ void BobsGame::init()
 		log.error("Could not find visualizer preset: " + presetPath);
 	}
 
-    AudioManager::setVisualizer(visualizer);
+	AudioManager::setVisualizer(visualizer);
+#else
+	AudioManager::setVisualizer(nullptr);
+	log.info("projectM visualizer disabled for this build.");
+#endif
 
 	log.debug("Init Player");
 	initPlayer();
@@ -166,6 +195,8 @@ void BobsGame::init()
 	//	games.add(player2);
 
 	if (networkGame) {
+		networkScoreReported = false;
+		if (hasPendingNetworkStart == false)networkGameMode = "network";
 		opponentGame = make_shared<GameLogic>(this, 0);
 		opponentGame->isNetworkPlayer = true;
 
@@ -177,11 +208,10 @@ void BobsGame::init()
 				Poco::JSON::Object::Ptr data = args.extract<Poco::JSON::Object::Ptr>();
 				long long seed = data->getValue<long long>("seed");
 				int level = data->getValue<int>("startLevel");
-				log.info("Network Game starting with seed: " + to_string(seed));
-				getPlayer1Game()->randomSeed = seed;
-				getPlayer1Game()->currentLevel = level;
-				getPlayer1Game()->initGame();
-				getPlayer1Game()->state = GameState::PLAYING;
+				if (data->has("gameMode"))networkGameMode = data->getValue<string>("gameMode");
+				else networkGameMode = "network";
+				setPendingNetworkStart(seed, level, networkGameMode);
+				applyPendingNetworkStart();
 			}
 			catch (...) {}
 		});
@@ -200,20 +230,30 @@ void BobsGame::init()
 		Main::networkManager->on("opponentFrame", [this](Poco::Dynamic::Var args) {
 			if (opponentGame) {
 				try {
-					string json = args.convert<string>();
-					Poco::JSON::Parser parser;
-					Poco::JSON::Object::Ptr data = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+					Poco::JSON::Object::Ptr data = nullptr;
+					if (args.type() == typeid(string)) {
+						string json = args.convert<string>();
+						Poco::JSON::Parser parser;
+						data = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+					}
+					else if (!args.isEmpty()) {
+						data = args.extract<Poco::JSON::Object::Ptr>();
+					}
 					opponentGame->applyState(data);
 				}
 				catch (...) {}
 			}
 		});
+
+		applyPendingNetworkStart();
 	}
 
 }
 
 void BobsGame::update() {
 	super::update();
+
+	LuaManager::update();
 
 	if (networkGame) {
 		frameCount++;
@@ -222,6 +262,23 @@ void BobsGame::update() {
 		}
 		if (opponentGame) {
 			opponentGame->update(1, 2);
+		}
+
+		shared_ptr<GameLogic> playerGame = getPlayer1Game();
+		if (Main::networkManager != nullptr && playerGame != nullptr && networkScoreReported == false) {
+			if ((playerGame->won || playerGame->lost || playerGame->complete || playerGame->died) && playerGame->timeEnded != 0) {
+				string playerName = getUserName_S();
+				if (playerName == "")playerName = "C++Player";
+
+				int elapsedMs = 0;
+				if (playerGame->timeStarted != 0 && playerGame->timeEnded >= playerGame->timeStarted) {
+					elapsedMs = (int)System::getTicksBetweenTimes(playerGame->timeStarted, playerGame->timeEnded);
+				}
+
+				Main::networkManager->reportScore(networkGameMode, playerName, playerGame->score, playerGame->linesClearedTotal, elapsedMs);
+				networkScoreReported = true;
+				log.info("Reported network score for " + playerName + " in mode " + networkGameMode);
+			}
 		}
 	}
 }
@@ -957,10 +1014,10 @@ void BobsGame::debugKeys()
 //=========================================================================================================================
 void BobsGame::update()
 {//=========================================================================================================================
-	
 
-	if(networkMultiplayerLobbyMenuShowing || networkMultiplayerPlayerJoinMenuShowing)
-	{
+	LuaManager::update();
+
+	if(networkMultiplayerLobbyMenuShowing || networkMultiplayerPlayerJoinMenuShowing)	{
 		if (music!=nullptr && music->isPlaying() == true)
 		{
 			music->pause();

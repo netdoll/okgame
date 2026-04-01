@@ -1,0 +1,1 @@
+C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\dependencies\pcre2\_BUNDLED_PCRE2.dir\Release\_BUNDLED_PCRE2.lib

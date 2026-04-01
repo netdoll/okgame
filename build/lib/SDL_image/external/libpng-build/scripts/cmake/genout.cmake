@@ -25,7 +25,7 @@ set(INCDIR "C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_image/external/libp
 set(PNG_PREFIX "")
 set(PNGLIB_MAJOR "1")
 set(PNGLIB_MINOR "6")
-set(PNGLIB_VERSION "1.6.55")
+set(PNGLIB_VERSION "1.6.56")
 set(ZLIBINCDIR "C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/zlib;C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_image/external/zlib-build")
 
 set(PLATFORM_C_FLAGS)

@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7E31F560-99D9-36EA-A0CB-19686928705F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco2 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/boost/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostInstall.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostMessage.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostRoot.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco2 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/boost/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostInstall.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostMessage.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostRoot.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco2 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/boost/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostInstall.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostMessage.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostRoot.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco2 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/boost/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\CMakeFiles\cmake.verify_globs;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostInstall.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostMessage.cmake;C:\Users\hyper\workspace\bg\okgame\lib\boost\tools\cmake\include\BoostRoot.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\ZERO_CHECK.vcxproj">
+      <Project>{AA3D58B0-8D7D-3604-9CC3-6AD246443146}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\assert\boost_assert.vcxproj">
+      <Project>{24547861-DAD5-3D04-B4D9-F3B49308DCEF}</Project>
+      <Name>boost_assert</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\atomic\boost_atomic.vcxproj">
+      <Project>{19FFC896-10AD-3BCC-B130-0517494A3DFF}</Project>
+      <Name>boost_atomic</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\bloom\boost_bloom.vcxproj">
+      <Project>{22D396AC-19CF-3FC9-B55A-FB6AD57FC0A4}</Project>
+      <Name>boost_bloom</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\charconv\boost_charconv.vcxproj">
+      <Project>{DE28172B-C4F9-30B0-95D2-392D581156B7}</Project>
+      <Name>boost_charconv</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\chrono\boost_chrono.vcxproj">
+      <Project>{645BA41F-CC0B-3FAA-8B7F-C3A13DE08203}</Project>
+      <Name>boost_chrono</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\cobalt\boost_cobalt.vcxproj">
+      <Project>{4F40FF84-28C3-3222-BFC4-942CF15A7785}</Project>
+      <Name>boost_cobalt</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\cobalt\boost_cobalt_io.vcxproj">
+      <Project>{3D45D196-C7AE-305F-A9DC-31DA303C72D2}</Project>
+      <Name>boost_cobalt_io</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\cobalt\boost_cobalt_io_ssl.vcxproj">
+      <Project>{F236C4AC-3370-3247-8261-3B4A1614717D}</Project>
+      <Name>boost_cobalt_io_ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\container\boost_container.vcxproj">
+      <Project>{E05400F4-3390-368F-92F8-522027C72FEF}</Project>
+      <Name>boost_container</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\context\boost_context.vcxproj">
+      <Project>{32EDB3EB-C0FA-3866-A5CB-9AEBE3208DE1}</Project>
+      <Name>boost_context</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\contract\boost_contract.vcxproj">
+      <Project>{C3870627-FAE4-39CF-903E-CF897ABE55C7}</Project>
+      <Name>boost_contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\core\boost_core.vcxproj">
+      <Project>{A523F041-E165-3DC6-9CF2-779943BD2175}</Project>
+      <Name>boost_core</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\coroutine\boost_coroutine.vcxproj">
+      <Project>{69C8794C-7C38-3D3A-BE03-F3F5110D4532}</Project>
+      <Name>boost_coroutine</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\date_time\boost_date_time.vcxproj">
+      <Project>{B160597E-151F-3786-8DE6-080736EA001E}</Project>
+      <Name>boost_date_time</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\fiber\boost_fiber.vcxproj">
+      <Project>{02A35DEC-63DF-3550-A573-7CCC33E754F2}</Project>
+      <Name>boost_fiber</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\fiber\boost_fiber_numa.vcxproj">
+      <Project>{118FEF16-85E9-35FD-981C-CD1C87841DAE}</Project>
+      <Name>boost_fiber_numa</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\filesystem\boost_filesystem.vcxproj">
+      <Project>{8EFFB2F3-54D1-3FCC-B899-AEA0B2C8E32C}</Project>
+      <Name>boost_filesystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\graph\boost_graph.vcxproj">
+      <Project>{B7047577-2B74-389F-A4C5-6495548E91F6}</Project>
+      <Name>boost_graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\interprocess\boost_interprocess.vcxproj">
+      <Project>{806CF88B-AB6C-3239-A993-EE65B42CA14A}</Project>
+      <Name>boost_interprocess</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\iostreams\boost_iostreams.vcxproj">
+      <Project>{A8455979-8AC1-308A-A1A6-26DD55B196B9}</Project>
+      <Name>boost_iostreams</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\json\boost_json.vcxproj">
+      <Project>{8C1D4EB5-3A35-36B4-815D-63BD80CA2D21}</Project>
+      <Name>boost_json</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\locale\boost_locale.vcxproj">
+      <Project>{D4CADAB5-72B7-3A18-A0F2-DEB4B4A2B9E0}</Project>
+      <Name>boost_locale</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\log\boost_log.vcxproj">
+      <Project>{21E680A8-167D-36EA-A89D-CD18711F2FA9}</Project>
+      <Name>boost_log</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\log\boost_log_setup.vcxproj">
+      <Project>{66D4DB1C-86EC-3630-B166-315E3CB934CF}</Project>
+      <Name>boost_log_setup</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\math\boost_math.vcxproj">
+      <Project>{CBE6BF0E-FA88-3F00-B3F2-657C200B4A43}</Project>
+      <Name>boost_math</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\nowide\boost_nowide.vcxproj">
+      <Project>{7C7CDECE-3061-3AC9-82EE-E5B40513DDC7}</Project>
+      <Name>boost_nowide</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\openmethod\boost_openmethod.vcxproj">
+      <Project>{2108B91F-3508-3F4E-9482-BC94E25AC4AA}</Project>
+      <Name>boost_openmethod</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\optional\boost_optional.vcxproj">
+      <Project>{55EDB2C3-90BD-3EA6-9920-D12F1D3697E1}</Project>
+      <Name>boost_optional</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\test\boost_prg_exec_monitor.vcxproj">
+      <Project>{253274FF-0DD9-3FF1-9A48-21D7B701F061}</Project>
+      <Name>boost_prg_exec_monitor</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\process\boost_process.vcxproj">
+      <Project>{18FB0CB9-1FD3-37EE-A31C-16D195B0BC20}</Project>
+      <Name>boost_process</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\program_options\boost_program_options.vcxproj">
+      <Project>{5CC32E78-8C9F-342A-BD2A-BBEC3EE9FC26}</Project>
+      <Name>boost_program_options</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\random\boost_random.vcxproj">
+      <Project>{087AA6D9-6136-3A3D-84C6-83931F1C8C9F}</Project>
+      <Name>boost_random</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\serialization\boost_serialization.vcxproj">
+      <Project>{13B64EBB-7197-3DC0-A49B-2EE5A2091A05}</Project>
+      <Name>boost_serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\stacktrace\boost_stacktrace_basic.vcxproj">
+      <Project>{86E5B5A7-8C6D-3C3C-937D-ED833C05AC20}</Project>
+      <Name>boost_stacktrace_basic</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\stacktrace\boost_stacktrace_from_exception.vcxproj">
+      <Project>{2A5B9D77-2768-3BA2-827A-AACFA997B5ED}</Project>
+      <Name>boost_stacktrace_from_exception</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\stacktrace\boost_stacktrace_noop.vcxproj">
+      <Project>{6AB50644-22C3-308D-BE59-423674D9F758}</Project>
+      <Name>boost_stacktrace_noop</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\stacktrace\boost_stacktrace_windbg.vcxproj">
+      <Project>{82D959B4-ECF0-3A5E-843E-4A58C82D2E23}</Project>
+      <Name>boost_stacktrace_windbg</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\stacktrace\boost_stacktrace_windbg_cached.vcxproj">
+      <Project>{61D9EE6F-BB52-30CA-B7D5-27482B63A851}</Project>
+      <Name>boost_stacktrace_windbg_cached</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\system\boost_system.vcxproj">
+      <Project>{FB669455-9645-3742-AB0E-DDF5C661066A}</Project>
+      <Name>boost_system</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\test\boost_test_exec_monitor.vcxproj">
+      <Project>{0182516B-35DB-3455-A681-3522B76094C5}</Project>
+      <Name>boost_test_exec_monitor</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\thread\boost_thread.vcxproj">
+      <Project>{1FD39003-8214-3013-B4B6-2FC38320EF3B}</Project>
+      <Name>boost_thread</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\timer\boost_timer.vcxproj">
+      <Project>{3C895ED3-14CD-37AD-B875-9DD4DE1A75EA}</Project>
+      <Name>boost_timer</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\type_erasure\boost_type_erasure.vcxproj">
+      <Project>{B4725F46-279A-3FB2-9732-693C563BA3E4}</Project>
+      <Name>boost_type_erasure</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\test\boost_unit_test_framework.vcxproj">
+      <Project>{97454CEB-2FD4-32DF-83A1-F8BE8D568FCC}</Project>
+      <Name>boost_unit_test_framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\unordered\boost_unordered.vcxproj">
+      <Project>{A8D20B81-C9D6-325F-8286-36642B015C48}</Project>
+      <Name>boost_unordered</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\url\boost_url.vcxproj">
+      <Project>{DC5AA842-8B68-3744-ACE0-38B6445E4660}</Project>
+      <Name>boost_url</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\variant2\boost_variant2.vcxproj">
+      <Project>{848D8882-B3DC-350B-B8C8-9E137B8C5A5F}</Project>
+      <Name>boost_variant2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\wave\boost_wave.vcxproj">
+      <Project>{F7FCAE3E-0E9D-31D9-AAC6-2872F76E64B8}</Project>
+      <Name>boost_wave</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco2\lib\boost\libs\serialization\boost_wserialization.vcxproj">
+      <Project>{B4A0D039-DD1A-3E00-9BF0-0E27CDD951CD}</Project>
+      <Name>boost_wserialization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>

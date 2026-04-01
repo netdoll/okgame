@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/CMakeFiles/cmake.verify_globs
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/libgme/gme/CMakeLists.txt
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/libgme/gme/gme_types.h.in
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/libgme/gme/libgme.pc.in

@@ -1,0 +1,13 @@
+prefix=C:/Program Files/bobsgame
+exec_prefix=${prefix}
+libdir=C:/Program Files/bobsgame/lib
+includedir=C:/Program Files/bobsgame/include
+
+Name: libxmp
+Description: Xmp module player library
+Version: 4.7.0
+
+Requires:
+Libs: -L${libdir} -lxmp
+Cflags: -I${includedir}
+Libs.private: 

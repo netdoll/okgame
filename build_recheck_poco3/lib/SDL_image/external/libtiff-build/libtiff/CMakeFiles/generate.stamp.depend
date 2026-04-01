@@ -1,0 +1,6 @@
+# CMake generation dependency list for this directory.
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco3/CMakeFiles/cmake.verify_globs
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/libtiff/CMakeLists.txt
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/libtiff/tif_config.h.cmake.in
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/libtiff/tiffconf.h.cmake.in
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_image/external/libtiff/libtiff/tiffvers.h.cmake.in

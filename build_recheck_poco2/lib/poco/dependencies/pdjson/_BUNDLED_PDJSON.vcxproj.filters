@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\pdjson\src\pdjson.c">
+      <Filter>pdjson\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\pdjson\src\pdjson.h">
+      <Filter>pdjson\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\pdjson\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="pdjson">
+      <UniqueIdentifier>{8EBF7D72-CDD5-36EF-B773-85CE6B108DAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pdjson\Header Files">
+      <UniqueIdentifier>{A1AF1069-EE44-389E-A1CF-07262E2DE0E3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pdjson\Source Files">
+      <UniqueIdentifier>{99CA3E7B-18DF-3E29-A150-E3DCF59783B3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

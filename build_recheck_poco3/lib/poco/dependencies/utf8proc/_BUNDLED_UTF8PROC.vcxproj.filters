@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\utf8proc\src\utf8proc.c">
+      <Filter>utf8proc\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\utf8proc\src\utf8proc.h">
+      <Filter>utf8proc\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\utf8proc\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="utf8proc">
+      <UniqueIdentifier>{96137202-7E2E-3065-8443-A65AD19A8CA9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utf8proc\Header Files">
+      <UniqueIdentifier>{08AB93E1-CB2A-3EBA-BCED-14A0DFA371D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utf8proc\Source Files">
+      <UniqueIdentifier>{509BB57B-C40F-3867-B308-0DD249CD0F6A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

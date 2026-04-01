@@ -261,6 +261,38 @@ public:
 	//sp<Caption>onlineFriendsLabel = nullptr;
 	int networkMultiplayerLobbyMenuCursorPosition = 0;
 	bool selectingHostedGame = false;
+	struct TournamentMatch {
+		string matchID;
+		long long player1ID = -1;
+		long long player2ID = -1;
+		long long winnerID = -1;
+		string nextMatchID = "";
+		bool isFinal = false;
+		int round = 0;
+
+		float x = 0;
+		float y = 0;
+		sp<Caption> player1Caption = nullptr;
+		sp<Caption> player2Caption = nullptr;
+	};
+
+	struct Tournament {
+		string tournamentID;
+		string roomUUID;
+		vector<TournamentMatch> matches;
+		map<long long, string> playerNames;
+	};
+
+	sp<Tournament> currentTournament = nullptr;
+
+	bool seeingStats = false;
+	bool seeingLeaderboard = false;
+	bool joiningTournament = false;
+	bool seeingTournamentBracket = false;
+	sp<OKMenu> tournamentBracketMenu = nullptr;
+	void tournamentBracketMenuUpdate();
+	void tournamentBracketMenuRender();
+	void getTournamentBracketFromServer();
 	//sp<UDPPeerConnection>hostPeer = nullptr;
 	sp<vector<sp<UDPPeerConnection>>>joinedPeers;// = ms<vector><sp<UDPPeerConnection>>();
 	bool hostStartedGame = false;

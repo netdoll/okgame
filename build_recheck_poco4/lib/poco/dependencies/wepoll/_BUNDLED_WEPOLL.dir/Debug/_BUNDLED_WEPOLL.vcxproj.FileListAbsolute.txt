@@ -1,0 +1,1 @@
+C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\dependencies\wepoll\_BUNDLED_WEPOLL.dir\Debug\_BUNDLED_WEPOLL.lib

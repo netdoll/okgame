@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F1FD31C9-FE24-38CF-956C-18CB71F0941D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>boost_fiber_numa</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">boost_fiber_numa.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">boost_fiber_numa-vc145-mt-gd-x64-1_91d</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">boost_fiber_numa.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">boost_fiber_numa-vc145-mt-x64-1_91</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">boost_fiber_numa.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">boost_fiber_numa-vc145-mt-x64-1_91</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">boost_fiber_numa.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">boost_fiber_numa-vc145-mt-x64-1_91</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -fpermissive</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="Debug";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR=\"Debug\";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <MASM>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="Debug";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <IncludePaths>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(IncludePaths)</IncludePaths>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\..\boost_fiber-vc145-mt-gd-x64-1_91d.lib;..\..\..\boost_filesystem-vc145-mt-gd-x64-1_91d.lib;..\..\..\boost_context-vc145-mt-gd-x64-1_91d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost_fiber_numa-vc145-mt-gd-x64-1_91d.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/bin/boost_fiber_numa-vc145-mt-gd-x64-1_91d.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>1.91</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -fpermissive</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="Release";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR=\"Release\";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <MASM>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="Release";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <IncludePaths>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(IncludePaths)</IncludePaths>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\..\boost_fiber-vc145-mt-x64-1_91.lib;..\..\..\boost_filesystem-vc145-mt-x64-1_91.lib;..\..\..\boost_context-vc145-mt-x64-1_91.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost_fiber_numa-vc145-mt-x64-1_91.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/bin/boost_fiber_numa-vc145-mt-x64-1_91.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>1.91</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -fpermissive</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="MinSizeRel";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR=\"MinSizeRel\";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <MASM>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="MinSizeRel";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <IncludePaths>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(IncludePaths)</IncludePaths>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\..\boost_fiber-vc145-mt-x64-1_91.lib;..\..\..\boost_filesystem-vc145-mt-x64-1_91.lib;..\..\..\boost_context-vc145-mt-x64-1_91.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost_fiber_numa-vc145-mt-x64-1_91.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/bin/boost_fiber_numa-vc145-mt-x64-1_91.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>1.91</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -fpermissive</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="RelWithDebInfo";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR=\"RelWithDebInfo\";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <MASM>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_FIBER_NO_LIB;BOOST_FIBER_SOURCE;BOOST_FIBERS_SOURCE;BOOST_FIBER_DYN_LINK;BOOST_FIBERS_DYN_LINK;BOOST_CONTEXT_NO_LIB=;BOOST_CONTEXT_DYN_LINK=;BOOST_CONTEXT_EXPORT=EXPORT;BOOST_FILESYSTEM_NO_LIB;BOOST_FILESYSTEM_DYN_LINK=1;CMAKE_INTDIR="RelWithDebInfo";boost_fiber_numa_EXPORTS</PreprocessorDefinitions>
+      <IncludePaths>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(IncludePaths)</IncludePaths>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\config\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\context\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\core\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\throw_exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mp11\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\pool\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\integer\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\type_traits\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\winapi\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\predef\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\smart_ptr\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\intrusive\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\move\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\algorithm\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\array\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\bind\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\concept_check\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\preprocessor\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\exception\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\tuple\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\iterator\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\detail\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fusion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\container_hash\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\describe\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\function_types\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\mpl\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\utility\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\io\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\typeof\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\functional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\optional\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\range\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\conversion\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\regex\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\filesystem\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\system\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\compat\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include;C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\format\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\..\boost_fiber-vc145-mt-x64-1_91.lib;..\..\..\boost_filesystem-vc145-mt-x64-1_91.lib;..\..\..\boost_context-vc145-mt-x64-1_91.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost_fiber_numa-vc145-mt-x64-1_91.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/bin/boost_fiber_numa-vc145-mt-x64-1_91.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+      <Version>1.91</Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/libs/fiber/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost/libs/fiber/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\fiber\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/libs/fiber/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost/libs/fiber/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\fiber\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/libs/fiber/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost/libs/fiber/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\fiber\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/hyper/workspace/bg/okgame/lib/boost/libs/fiber/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hyper/workspace/bg/okgame -BC:/Users/hyper/workspace/bg/okgame/build_recheck_poco4 --check-stamp-file C:/Users/hyper/workspace/bg/okgame/build_recheck_poco4/lib/boost/libs/fiber/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\fiber\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\src\numa\windows\pin_thread.cpp" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\src\numa\windows\topology.cpp" />
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\fiber\src\numa\algo\work_stealing.cpp" />
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\assert\extra\boost_assert.natvis">
+    </Natvis>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\unordered\extra\boost_unordered.natvis">
+    </Natvis>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\ZERO_CHECK.vcxproj">
+      <Project>{5610042F-18F9-3728-B195-3DFF710B8FB7}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\assert\boost_assert.vcxproj">
+      <Project>{7CF802D2-BDE9-3E92-BE04-00D20AC9DFA5}</Project>
+      <Name>boost_assert</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\context\boost_context.vcxproj">
+      <Project>{E7DA26B1-40D0-3765-AF48-6204BD12BC2E}</Project>
+      <Name>boost_context</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\core\boost_core.vcxproj">
+      <Project>{51581ECF-DF1F-37D3-B47E-BCDF347B1FC3}</Project>
+      <Name>boost_core</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\fiber\boost_fiber.vcxproj">
+      <Project>{B092FE59-0B86-33D2-B097-B5E3EC998453}</Project>
+      <Name>boost_fiber</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\filesystem\boost_filesystem.vcxproj">
+      <Project>{FA0999CF-0D90-3216-A679-6DD8352D7638}</Project>
+      <Name>boost_filesystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\optional\boost_optional.vcxproj">
+      <Project>{250F167A-D507-3989-BD46-3BA646052B0C}</Project>
+      <Name>boost_optional</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\system\boost_system.vcxproj">
+      <Project>{4B0333B2-17A6-35A3-ACC3-30E251749B34}</Project>
+      <Name>boost_system</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\unordered\boost_unordered.vcxproj">
+      <Project>{863680CF-8690-30E3-B7E5-56E0BB5794AF}</Project>
+      <Name>boost_unordered</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\boost\libs\variant2\boost_variant2.vcxproj">
+      <Project>{E33050AF-F914-3ECE-A393-DCEAA28FD58B}</Project>
+      <Name>boost_variant2</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>

@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\extras\extras.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\extras\quality_estimate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\extras\sharpyuv_risk_table.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\extras\extras.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\extras\sharpyuv_risk_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_image\external\libwebp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\alpha_processing.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\cpu.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec_clip_tables.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\filters.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\lossless.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\rescaler.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\upsampling.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\yuv.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\lossless_avx2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\alpha_processing_sse41.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec_sse41.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\lossless_sse41.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\upsampling_sse41.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\yuv_sse41.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\alpha_processing_sse2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec_sse2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\filters_sse2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\lossless_sse2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\rescaler_sse2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\upsampling_sse2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\yuv_sse2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\alpha_processing_neon.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec_neon.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\filters_neon.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\lossless_neon.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\rescaler_neon.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\upsampling_neon.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\yuv_neon.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec_msa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\filters_msa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\lossless_msa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\rescaler_msa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\upsampling_msa.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec_mips32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\rescaler_mips32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\yuv_mips32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\alpha_processing_mips_dsp_r2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\dec_mips_dsp_r2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\filters_mips_dsp_r2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\lossless_mips_dsp_r2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\rescaler_mips_dsp_r2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\upsampling_mips_dsp_r2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_image\external\libwebp-build\webpdspdecode.dir\$(Configuration)\yuv_mips_dsp_r2.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3FA42C35-3E78-3C65-B175-4CEFBE506E22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object Libraries">
+      <UniqueIdentifier>{7EE855BF-5D14-3F41-A16E-F54DEECC6BAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{A1B0F1F1-5337-3699-AE2C-5E0B6F4550CB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

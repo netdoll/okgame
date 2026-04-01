@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\lib\poco\dependencies\quill\x64\Release\quill</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\Release\z.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\PocoFoundation.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hyper\workspace\bg\okgame\build_recheck_poco4\bin\PocoJSON.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

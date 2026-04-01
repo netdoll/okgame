@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\CMakeFiles\e81b4e908447ea6ccaf340a3d5e7f0da\libxmp.3.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\CMakeFiles\5239ae85c2d22f4c1640f48538866254\libxmp_gen_man.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\SDL_mixer\external\libxmp\docs\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\build_recheck_poco3\lib\SDL_mixer\external\libxmp-build\docs\CMakeFiles\libxmp_gen_man" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{86D748FF-D413-36F0-8C03-46B858852907}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

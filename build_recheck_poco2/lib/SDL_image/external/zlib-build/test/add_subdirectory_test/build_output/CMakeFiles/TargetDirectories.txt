@@ -1,0 +1,16 @@
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/CMakeFiles/test_example.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/CMakeFiles/test_example_static.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/CMakeFiles/PACKAGE.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/CMakeFiles/RUN_TESTS.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/CMakeFiles/INSTALL.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/CMakeFiles/ALL_BUILD.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/CMakeFiles/ZERO_CHECK.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/CMakeFiles/zlib.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/CMakeFiles/zlibstatic.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/CMakeFiles/PACKAGE.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/CMakeFiles/RUN_TESTS.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/CMakeFiles/INSTALL.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/CMakeFiles/ALL_BUILD.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/contrib/CMakeFiles/PACKAGE.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/contrib/CMakeFiles/RUN_TESTS.dir
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/lib/SDL_image/external/zlib-build/test/add_subdirectory_test/build_output/zlib/contrib/CMakeFiles/INSTALL.dir

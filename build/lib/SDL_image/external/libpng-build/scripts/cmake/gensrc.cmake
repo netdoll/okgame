@@ -19,7 +19,7 @@ set(BINDIR "C:/Users/hyper/workspace/bg/okgame/build/lib/SDL_image/external/libp
 set(AWK "AWK-NOTFOUND")
 set(DFA_XTRA "")
 set(PNG_PREFIX "")
-set(PNGLIB_VERSION "1.6.55")
+set(PNGLIB_VERSION "1.6.56")
 
 if(OUTPUT MATCHES "(scripts/pnglibconf\\.c)\$")
   # Generate "${BINDIR}/scripts/pnglibconf.c"

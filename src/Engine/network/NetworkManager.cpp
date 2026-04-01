@@ -91,7 +91,8 @@ void NetworkManager::handleMessage(const std::string& json) {
         std::string eventName = arr->get(0).toString();
         Poco::Dynamic::Var data = (arr->size() > 1) ? arr->get(1) : Poco::Dynamic::Var();
 
-        if (_callbacks.count(eventName)) {
+        bool handledByCallback = _callbacks.count(eventName) > 0;
+        if (handledByCallback) {
             _callbacks[eventName](data);
         }
 
@@ -101,20 +102,38 @@ void NetworkManager::handleMessage(const std::string& json) {
                 Poco::JSON::Array::Ptr roomsArr = data.extract<Poco::JSON::Array::Ptr>();
                 for (size_t i = 0; i < roomsArr->size(); ++i) {
                     Poco::JSON::Object::Ptr rObj = roomsArr->getObject(i);
+                    std::string gameMode = "marathon";
+                    if (rObj->has("gameMode"))gameMode = rObj->getValue<std::string>("gameMode");
+
+                    int startLevel = 1;
+                    if (rObj->has("startLevel"))startLevel = rObj->getValue<int>("startLevel");
+
                     rooms.push_back({
                         rObj->getValue<std::string>("id"),
                         rObj->getValue<std::string>("name"),
                         rObj->getValue<int>("players"),
                         rObj->getValue<int>("maxPlayers"),
-                        rObj->getValue<bool>("hasPassword")
+                        rObj->getValue<bool>("hasPassword"),
+                        gameMode,
+                        startLevel
                     });
                 }
                 roomListCallback(rooms);
             }
         } else if (eventName == "garbage" && _game) {
             _game->gotVSGarbageFromOtherPlayer(data.convert<int>());
-        } else if (eventName == "opponentFrame" && _opponentGame) {
-            // TODO: Call _opponentGame->applyState(data)
+        } else if (eventName == "opponentFrame" && _opponentGame && handledByCallback == false) {
+            Poco::JSON::Object::Ptr stateObj = nullptr;
+            if (data.type() == typeid(std::string)) {
+                Poco::JSON::Parser frameParser;
+                stateObj = frameParser.parse(data.convert<std::string>()).extract<Poco::JSON::Object::Ptr>();
+            } else if (!data.isEmpty()) {
+                stateObj = data.extract<Poco::JSON::Object::Ptr>();
+            }
+
+            if (stateObj) {
+                _opponentGame->applyState(stateObj);
+            }
         }
     } catch (...) {}
 }
@@ -140,11 +159,13 @@ void NetworkManager::listRooms() {
     _ws->sendFrame(msg.c_str(), msg.length(), Poco::Net::WebSocket::FRAME_TEXT);
 }
 
-void NetworkManager::createRoom(const std::string& name, bool isPrivate, const std::string& password) {
+void NetworkManager::createRoom(const std::string& name, bool isPrivate, const std::string& password, const std::string& gameMode, int startLevel) {
     Poco::JSON::Object::Ptr obj = new Poco::JSON::Object();
     obj->set("name", name);
     obj->set("isPrivate", isPrivate);
     obj->set("password", password);
+    obj->set("gameMode", gameMode);
+    obj->set("startLevel", startLevel);
     sendEvent("createRoom", obj);
 }
 
@@ -166,6 +187,16 @@ void NetworkManager::sendChat(const std::string& message, const std::string& nam
     obj->set("message", message);
     obj->set("name", name);
     sendEvent("chatMessage", obj);
+}
+
+void NetworkManager::reportScore(const std::string& mode, const std::string& name, long score, int lines, int time) {
+    Poco::JSON::Object::Ptr obj = new Poco::JSON::Object();
+    obj->set("mode", mode);
+    obj->set("name", name);
+    obj->set("score", static_cast<long long>(score));
+    obj->set("lines", lines);
+    obj->set("time", time);
+    sendEvent("reportScore", obj);
 }
 
 void NetworkManager::setGame(GameLogic* game) { _game = game; }

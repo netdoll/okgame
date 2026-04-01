@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\extra\boost_variant2.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include\boost\variant2.hpp">
+      <Filter>Header Files\boost</Filter>
+    </None>
+    <None Include="C:\Users\hyper\workspace\bg\okgame\lib\boost\libs\variant2\include\boost\variant2\variant.hpp">
+      <Filter>Header Files\boost\variant2</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3FA0D6BC-4163-3597-A017-BE9761AED3F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost">
+      <UniqueIdentifier>{BA090140-9E20-317E-8181-6350B679A513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost\variant2">
+      <UniqueIdentifier>{9F4A6A5A-C1D5-3F99-BC58-8B8873C1BE8E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

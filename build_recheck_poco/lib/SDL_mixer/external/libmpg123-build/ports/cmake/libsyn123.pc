@@ -1,0 +1,12 @@
+prefix=C:/Program Files/bobsgame
+exec_prefix=C:/Program Files/bobsgame
+libdir=C:/Program Files/bobsgame/lib
+includedir=C:/Program Files/bobsgame/include
+
+Name: libsyn123
+Description: A signal synthesis library accompanying mpg123
+Requires: 
+Version: 1.33.4
+Libs: -L${libdir} -lsyn123 
+Libs.private: 
+Cflags: -I${includedir} 

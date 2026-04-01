@@ -540,9 +540,37 @@ void GameLogic::renderHighScoreMeters()
 //=========================================================================================================================
 void GameLogic::showResultsRanking()
 {//=========================================================================================================================
+	int centerX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2));
+	int startY = (GLUtils::getViewportHeight() / 2) - 100;
 
+	string title = "GAME OVER";
+	if (getBobsGame()->joiningTournament) title = "TOURNAMENT RESULTS";
+	if (won) title = "YOU WIN!";
 
+	sp<Caption> titleCap = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, startY, -1, title, resultCaptionFontSize, true, BobColor::yellow, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+	titleCap->screenX = centerX - titleCap->getWidth() / 2;
 
+	startY += 60;
+	string scoreStr = "Score: " + to_string(score);
+	sp<Caption> scoreCap = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, startY, -1, scoreStr, 24, true, BobColor::white, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+	scoreCap->screenX = centerX - scoreCap->getWidth() / 2;
+
+	startY += 30;
+	string levelStr = "Level: " + to_string(currentLevel);
+	sp<Caption> levelCap = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, startY, -1, levelStr, 24, true, BobColor::white, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+	levelCap->screenX = centerX - levelCap->getWidth() / 2;
+
+	startY += 30;
+	string linesStr = "Lines: " + to_string(linesClearedTotal);
+	sp<Caption> linesCap = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, startY, -1, linesStr, 24, true, BobColor::white, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+	linesCap->screenX = centerX - linesCap->getWidth() / 2;
+
+	if (getBobsGame()->joiningTournament) {
+		startY += 40;
+		string rankStr = "Final Rank: #1"; // TODO: Get actual rank from server
+		sp<Caption> rankCap = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, startY, -1, rankStr, 28, true, BobColor::green, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+		rankCap->screenX = centerX - rankCap->getWidth() / 2;
+	}
 }
 
 //=========================================================================================================================

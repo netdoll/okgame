@@ -889,6 +889,7 @@ public:
 	void sendBobsGameRoomListRequest_S();
 	void incomingBobsGameRoomListResponse(string &s);
 	void incomingBobsGameNewRoomCreatedUpdate(string &s);
+	void incomingBobsGameGetTournamentBracketResponse(string &s);
 	void tellBobsGameRoomHostMyUserID_S(const string& roomUUID);
 	void tellServerBobsGameHostingPublicGameUpdate_S(const string& roomDescription);
 	void tellServerBobsGameIHaveCanceledTheGame_S(const string& roomUUID);
@@ -924,6 +925,24 @@ public:
 		lock_guard<mutex> lock(_bobsGameRoomListResponse_Mutex);
 		string s = _bobsGameRoomListResponse;
 		_bobsGameRoomListResponse = "";
+		return s;
+	}
+	//------------------------------------
+	//------------------------------------
+	private:
+		string _bobsGameGetTournamentBracketResponse = "";
+		mutex _bobsGameGetTournamentBracketResponse_Mutex;
+public:
+	void setBobsGameGetTournamentBracketResponse_S(string s)
+	{
+		lock_guard<mutex> lock(_bobsGameGetTournamentBracketResponse_Mutex);
+		_bobsGameGetTournamentBracketResponse = s;
+	}
+	string getAndResetBobsGameGetTournamentBracketResponse_S()
+	{
+		lock_guard<mutex> lock(_bobsGameGetTournamentBracketResponse_Mutex);
+		string s = _bobsGameGetTournamentBracketResponse;
+		_bobsGameGetTournamentBracketResponse = "";
 		return s;
 	}
 	//------------------------------------

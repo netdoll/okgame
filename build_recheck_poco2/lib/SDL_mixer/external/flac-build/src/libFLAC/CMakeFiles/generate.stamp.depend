@@ -1,0 +1,8 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckCSourceCompiles.cmake
+C:/Users/hyper/workspace/bg/okgame/build_recheck_poco2/CMakeFiles/cmake.verify_globs
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/flac/cmake/CheckA64NEON.cmake
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/flac/cmake/CheckCPUArch.c.in
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/flac/cmake/CheckCPUArch.cmake
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/flac/src/libFLAC/CMakeLists.txt
+C:/Users/hyper/workspace/bg/okgame/lib/SDL_mixer/external/flac/src/libFLAC/flac.pc.in

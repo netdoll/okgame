@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="contrib/addtiffo/addtiffo.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="cd343ba1-60f0-3312-9bab-4ad2988b2f8e">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/fax2ps.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="dd4bbd53-b5de-3efc-8051-67eac5430b5a">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/fax2tiff.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="0766286c-f4e1-3639-9e54-b6863dafc405">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="contrib/iptcutil/iptcutil.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8bfedba3-c363-3d3d-8c3b-8127f7863545">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/pal2rgb.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="640ec8de-bfcc-3622-8f0b-922cc1d2a966">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/ppm2tiff.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5f03c1f3-c1eb-3d94-9ce9-9ffa53feaade">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/raw2tiff.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1005914e-4127-3178-8c63-27683ffeb275">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/rgb2ycbcr.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="850e964a-384a-3295-bb9d-54c31e649fb7">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/thumbnail.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d6d36c61-768e-3b73-a294-aeb944ccbf1e">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="libtiff/tiff.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8a12738e-3290-3f57-a1bc-f821ec465a6c">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="contrib/dbs/tiff-bi.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="26255e08-3433-311c-aacb-5c277e5ff033">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="contrib/dbs/tiff-grayscale.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b9f48a93-41d6-3420-abdf-bc08a8f9efc3">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="contrib/dbs/tiff-palette.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e066f672-1ed5-38d6-8f78-3aaf6e6009f5">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="contrib/dbs/tiff-rgb.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="48a7276b-d80b-3e26-bc9e-91b636e588b7">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiff2bw.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="cc0e8efe-8b3f-3cd1-9789-d1fa9e4b3a2a">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiff2pdf.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9818a297-c042-3ede-b814-ab11f73cf8df">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiff2ps.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6337a3a1-5653-3f8f-a15f-7173d0c67133">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiff2rgba.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b4f5ec20-c529-3490-9cb1-97bb11062aa5">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiff_faxtable.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a8a67dfd-dad6-30db-b0ba-ff764633fc47">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="tools/tiff_mkg3states.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="tools/tiff_mkg3states.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="cc6959dc-9f47-3fbd-b67c-15734727d383">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="port/tiff_port.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e35ed0f8-c73d-324a-bd7f-10bd9d46a53b">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="tiff_release.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e5bcd3ad-f877-3a45-b65b-231317eb76fb">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="tools/tiffcmp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="430bd7a0-74a1-301b-94f1-5d82cb13bcb9">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffcp.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="0cdabe00-607f-3b49-bbd1-0595af8b0e0f">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffcrop.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6dc7b9e9-bd60-3d42-8c9f-2fca0ac0e39f">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffdither.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b295864c-6bde-3ada-84c4-81d58e95218b">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffdump.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e4de573e-870f-3799-98f8-2f81085c9687">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffinfo.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5fc5301e-2080-3aae-913b-354ddd7fb73a">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffmedian.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b6903a9d-4873-3700-bea1-953b9a746a73">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffset.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="c05ba7c9-63d4-30b7-99d4-a796e491641f">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Project Path="tools/tiffsplit.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="69540f60-e442-3452-b4aa-1725cdc44198">
+		<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="libtiff/tiff.vcxproj"/>
+		<BuildDependency Project="port/tiff_port.vcxproj"/>
+	</Project>
+	<Folder Name="/CMakePredefinedTargets/">
+		<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1326517e-20f5-3f99-a840-d0cca1dca81b" DefaultStartup="true">
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<BuildDependency Project="contrib/addtiffo/addtiffo.vcxproj"/>
+			<BuildDependency Project="tools/fax2ps.vcxproj"/>
+			<BuildDependency Project="tools/fax2tiff.vcxproj"/>
+			<BuildDependency Project="contrib/iptcutil/iptcutil.vcxproj"/>
+			<BuildDependency Project="tools/pal2rgb.vcxproj"/>
+			<BuildDependency Project="tools/ppm2tiff.vcxproj"/>
+			<BuildDependency Project="tools/raw2tiff.vcxproj"/>
+			<BuildDependency Project="tools/rgb2ycbcr.vcxproj"/>
+			<BuildDependency Project="tools/thumbnail.vcxproj"/>
+			<BuildDependency Project="libtiff/tiff.vcxproj"/>
+			<BuildDependency Project="contrib/dbs/tiff-bi.vcxproj"/>
+			<BuildDependency Project="contrib/dbs/tiff-grayscale.vcxproj"/>
+			<BuildDependency Project="contrib/dbs/tiff-palette.vcxproj"/>
+			<BuildDependency Project="contrib/dbs/tiff-rgb.vcxproj"/>
+			<BuildDependency Project="tools/tiff2bw.vcxproj"/>
+			<BuildDependency Project="tools/tiff2pdf.vcxproj"/>
+			<BuildDependency Project="tools/tiff2ps.vcxproj"/>
+			<BuildDependency Project="tools/tiff2rgba.vcxproj"/>
+			<BuildDependency Project="tools/tiff_mkg3states.vcxproj"/>
+			<BuildDependency Project="port/tiff_port.vcxproj"/>
+			<BuildDependency Project="tools/tiffcmp.vcxproj"/>
+			<BuildDependency Project="tools/tiffcp.vcxproj"/>
+			<BuildDependency Project="tools/tiffcrop.vcxproj"/>
+			<BuildDependency Project="tools/tiffdither.vcxproj"/>
+			<BuildDependency Project="tools/tiffdump.vcxproj"/>
+			<BuildDependency Project="tools/tiffinfo.vcxproj"/>
+			<BuildDependency Project="tools/tiffmedian.vcxproj"/>
+			<BuildDependency Project="tools/tiffset.vcxproj"/>
+			<BuildDependency Project="tools/tiffsplit.vcxproj"/>
+		</Project>
+		<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="15376deb-cb9a-3841-a585-5ccd0060dbe4">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="PACKAGE.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5a7dae67-ed67-3258-a3de-bee352bfa768">
+			<BuildDependency Project="ALL_BUILD.vcxproj"/>
+			<BuildDependency Project="../../../../ZERO_CHECK.vcxproj"/>
+			<Build Solution="Debug|*" Project="false"/>
+			<Build Solution="Release|*" Project="false"/>
+			<Build Solution="MinSizeRel|*" Project="false"/>
+			<Build Solution="RelWithDebInfo|*" Project="false"/>
+		</Project>
+		<Project Path="../../../../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7b731cc4-1e77-3fc9-963b-ac41027d6c57"/>
+	</Folder>
+</Solution>

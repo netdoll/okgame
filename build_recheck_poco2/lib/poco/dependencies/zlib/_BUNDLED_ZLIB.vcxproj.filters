@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\adler32.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\compress.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\crc32.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\deflate.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\infback.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\inffast.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\inflate.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\inftrees.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\trees.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\zutil.c">
+      <Filter>zlib\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\crc32.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\deflate.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\gzguts.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\inffast.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\inffixed.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\inflate.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\inftrees.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\trees.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\zconf.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\zlib.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\src\zutil.h">
+      <Filter>zlib\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hyper\workspace\bg\okgame\lib\poco\dependencies\zlib\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{B7A1AC46-93E7-3F52-AA16-59C81DB0A0E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib\Header Files">
+      <UniqueIdentifier>{65330A92-44A5-3DB4-82AE-6AAD891B3845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib\Source Files">
+      <UniqueIdentifier>{BB62103E-E3F6-3F55-A505-1103B3CA4D91}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
