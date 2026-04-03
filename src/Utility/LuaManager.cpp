@@ -143,6 +143,61 @@ static int l_get_piece_info(lua_State* L) {
     return 0;
 }
 
+static int l_get_hold_piece(lua_State* L) {
+    if (Main::gameEngine && Main::gameEngine->getPlayer1Game()) {
+        shared_ptr<Piece> p = Main::gameEngine->getPlayer1Game()->holdPiece;
+        if (p) {
+            lua_pushstring(L, p->pieceType->name.c_str());
+            return 1;
+        }
+    }
+    lua_pushnil(L);
+    return 1;
+}
+
+static int l_get_next_pieces(lua_State* L) {
+    if (Main::gameEngine && Main::gameEngine->getPlayer1Game()) {
+        auto nextQueue = Main::gameEngine->getPlayer1Game()->nextPieces;
+        lua_newtable(L);
+        for (size_t i = 0; i < nextQueue.size(); i++) {
+            lua_pushinteger(L, i + 1);
+            lua_pushstring(L, nextQueue.get(i)->pieceType->name.c_str());
+            lua_settable(L, -3);
+        }
+        return 1;
+    }
+    lua_pushnil(L);
+    return 1;
+}
+
+// RPG / Map functions
+static int l_get_current_map_name(lua_State* L) {
+    if (Main::mapManager && Main::mapManager->currentMap && Main::mapManager->currentMap->mapData) {
+        lua_pushstring(L, Main::mapManager->currentMap->mapData->name.c_str());
+        return 1;
+    }
+    lua_pushnil(L);
+    return 1;
+}
+
+static int l_get_player_x(lua_State* L) {
+    if (Main::gameEngine && Main::gameEngine->getPlayer()) {
+        lua_pushnumber(L, Main::gameEngine->getPlayer()->x());
+        return 1;
+    }
+    lua_pushnil(L);
+    return 1;
+}
+
+static int l_get_player_y(lua_State* L) {
+    if (Main::gameEngine && Main::gameEngine->getPlayer()) {
+        lua_pushnumber(L, Main::gameEngine->getPlayer()->y());
+        return 1;
+    }
+    lua_pushnil(L);
+    return 1;
+}
+
 // Audio functions
 static int l_play_sound(lua_State* L) {
     const char* name = luaL_checkstring(L, 1);
@@ -201,6 +256,11 @@ void LuaManager::registerEngineBindings() {
     lua_register(L, "shakeScreen", l_shake_screen);
     lua_register(L, "wiggleScreen", l_wiggle_screen);
     lua_register(L, "getPieceInfo", l_get_piece_info);
+    lua_register(L, "getHoldPiece", l_get_hold_piece);
+    lua_register(L, "getNextPieces", l_get_next_pieces);
+    lua_register(L, "getCurrentMapName", l_get_current_map_name);
+    lua_register(L, "getPlayerX", l_get_player_x);
+    lua_register(L, "getPlayerY", l_get_player_y);
     
     lua_register(L, "playSound", l_play_sound);
     lua_register(L, "playMusic", l_play_music);
