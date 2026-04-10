@@ -7,6 +7,264 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.27] - 2026-04-06
+
+### Added
+- **Native Unified Template Library Plan (Local Pending Patch):** The pending native editor notes now track a unified "Template Library" surface mixing built-ins, saved slots, and history, so the C++ editor can mirror the newly shipped web and Java template-ecosystem workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.27`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these unified-library follow-ups can be committed.
+
+## [2.0.26] - 2026-04-06
+
+### Added
+- **Native Template-to-Slot Shortcut Plan (Local Pending Patch):** The pending native editor notes now track direct built-in-template slot saves so the C++ editor can mirror the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.26`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these template-slot follow-ups can be committed.
+
+## [2.0.25] - 2026-04-06
+
+### Added
+- **Native Template Browser Plan (Local Pending Patch):** The pending native editor notes now track a browsable built-in template catalog so the C++ editor can mirror the newly shipped web and Java preset-summary workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.25`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these template-browser follow-ups can be committed.
+
+## [2.0.24] - 2026-04-06
+
+### Added
+- **Native Compact Preset Family Plan (Local Pending Patch):** The pending native editor notes now track grouped preset families plus curated starter templates so the C++ editor can mirror the newly shipped web and Java preset-browsing workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.24`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these preset-family follow-ups can be committed.
+
+## [2.0.23] - 2026-04-06
+
+### Added
+- **Native Saved Template Slot Summary Plan (Local Pending Patch):** The pending native editor notes now track compact saved-template slot summaries so the C++ editor can match the newly shipped web and Java template-recognition workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.23`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these saved-template UX follow-ups can be committed.
+
+## [2.0.22] - 2026-04-05
+
+### Added
+- **Native Conversion-Pair Editing Plan (Local Pending Patch):** The pending native editor notes now track focused first-pass touching-block conversion authoring so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.22`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these conversion-pair follow-ups can be committed.
+
+## [2.0.21] - 2026-04-05
+
+### Added
+- **Native Advanced Field-Effect Toggle Plan (Local Pending Patch):** The pending native editor notes now track engine-backed field-effect toggles for gravity-ignore and field-wide color effects so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.21`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these field-effect follow-ups can be committed.
+
+## [2.0.20] - 2026-04-05
+
+### Added
+- **Native Block Gameplay Hooks Plan (Local Pending Patch):** The pending native editor notes now track reward-piece assignment plus focused chain-behavior hooks for selected blocks so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.20`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these gameplay-hook follow-ups can be committed.
+
+## [2.0.19] - 2026-04-05
+
+### Added
+- **Native Richer Block Color Set Editing Plan (Local Pending Patch):** The pending native editor notes now track multi-color block palette authoring so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.19`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these richer block palette follow-ups can be committed.
+
+## [2.0.18] - 2026-04-05
+
+### Added
+- **Native Deeper Block Rule Editing Plan (Local Pending Patch):** The pending native editor notes now track focused second-pass block-rule controls like special colors, special chance/frequency, flashing, match-any-color, and counter behavior so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.18`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these deeper block-rule follow-ups can be committed.
+
+## [2.0.17] - 2026-04-05
+
+### Added
+- **Native Block Type / Color Controls Plan (Local Pending Patch):** The pending native editor notes now track focused block authoring controls and piece block override assignment so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.17`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these block-authoring follow-ups can be committed.
+
+## [2.0.16] - 2026-04-05
+
+### Added
+- **Native Recent Action Breadcrumbs Plan (Local Pending Patch):** The pending native editor notes now track a bounded recent-action panel for meaningful editor operations so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.16`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these breadcrumb-workflow follow-ups can be committed.
+
+## [2.0.15] - 2026-04-05
+
+### Added
+- **Native Center-All Helper Plan (Local Pending Patch):** The pending native editor notes now track one-click centering of every rotation in the selected piece so the C++ editor can align with the newly shipped web and Java geometry workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.15`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these center-all follow-ups can be committed.
+
+## [2.0.14] - 2026-04-05
+
+### Added
+- **Native Recent Share / Import History Plan (Local Pending Patch):** The pending native editor notes now track bounded recent-history recall for imported/shared rulesets so the C++ editor can align with the newly shipped web and Java workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.14`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these history-workflow follow-ups can be committed.
+
+## [2.0.12] - 2026-04-05
+
+### Added
+- **Native Empty Rotation Cleanup Plan (Local Pending Patch):** The pending native editor notes now track one-click empty-rotation cleanup so the C++ editor can align with the newly shipped web and Java cleanup workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.12`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these cleanup follow-ups can be committed.
+
+## [2.0.8] - 2026-04-05
+
+### Added
+- **Native Preset Shortcut Plan (Local Pending Patch):** The pending native editor notes now track one-click classic preset buttons so the C++ editor can align with the newly shipped web and Java shortcut workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.8`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these shortcut-workflow follow-ups can be committed.
+
+## [2.0.7] - 2026-04-05
+
+### Added
+- **Native Preset Slot Plan (Local Pending Patch):** The pending native editor notes now track quick preset save/load slots so the C++ editor can stay aligned with the newly shipped web and Java iteration workflow once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.7`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these editor workflow follow-ups can be committed.
+
+## [2.0.6] - 2026-04-05
+
+### Added
+- **Native Movement / Randomizer Toggle Plan (Local Pending Patch):** The pending native editor notes now track parity for next-piece, hold-piece, bag/randomizer, hard-drop punch-through, and movement/kick rule toggles so the C++ port can align with the newly shipped web and Java editors once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.6`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these editor-authoring follow-ups can be committed.
+
+## [2.0.5] - 2026-04-05
+
+### Added
+- **Native Advanced Rule Toggle Plan (Local Pending Patch):** The pending native editor notes now track parity for advanced gameplay-rule toggles so the C++ port can align with the newly shipped web and Java editors once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.5`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these editor-authoring follow-ups can be committed.
+
+## [2.0.4] - 2026-04-05
+
+### Added
+- **Native Rotation Overview (Local Pending Patch):** The pending native custom editor patch is now documented to include direct rotation-overview navigation so it can stay aligned with the web and Java editors once the lock clears.
+
+### Changed
+- Bumped local version to `2.0.4`.
+
+### Validation
+- Native repo is still waiting on the existing workspace submodule lock before these follow-up editor UX changes can be committed.
+
+## [2.0.3] - 2026-04-05
+
+### Added
+- **Native Duplication Workflow (Local Pending Patch):** The local native custom editor patch now includes duplicate-piece and duplicate-rotation controls so parity stays aligned with the web and Java editors.
+
+### Changed
+- Bumped local version to `2.0.3`.
+
+### Validation
+- Native git remains blocked by the existing workspace submodule lock, so this duplication patch is documented locally and waiting to be committed.
+
+## [2.0.2] - 2026-04-05
+
+### Added
+- **Native Delete Controls:** The local native custom editor patch now includes remove-piece and remove-rotation controls alongside the earlier add/clear/navigation actions.
+
+### Changed
+- Bumped local version to `2.0.2`.
+- Native editor state now recovers selection after destructive edits.
+
+### Validation
+- Ran `git diff --check` on the custom editor source files after the follow-up patch.
+
+## [2.0.1] - 2026-04-05
+
+### Added
+- **Native Custom Piece Editing:** `src/Puzzle/CustomGameEditor.cpp` now supports live piece creation, rotation creation, rotation clearing, piece/rotation navigation, and an interactive 4x4 cell grid for editing rotation block offsets.
+- **Editor State Summary:** Added native labels showing current piece, current rotation, total piece count, total rotation count, current filled-cell count, and key rule summary fields.
+
+### Fixed
+- **Header / Implementation Drift:** `src/Puzzle/CustomGameEditor.h` now correctly declares `CustomGameEditorControl`, matching the existing implementation and references in `BobsGame.h` / `OKGame.h`.
+
+### Changed
+- Bumped version to `2.0.1`.
+
+### Validation
+- Ran `git diff --check` against `src/Puzzle/CustomGameEditor.h` and `src/Puzzle/CustomGameEditor.cpp` with no whitespace/errors reported.
+
 ## [1.7.0] - 2026-03-18
 
 ### Added
