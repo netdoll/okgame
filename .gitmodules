@@ -135,9 +135,6 @@
 [submodule "lib/vorbis"]
 	path = lib/vorbis
 	url = https://github.com/libsdl-org/vorbis
-[submodule "lib/brotli"]
-	path = lib/brotli
-	url = https://github.com/libsdl-org/brotli
 [submodule "lib/WavPack"]
 	path = lib/WavPack
 	url = https://github.com/libsdl-org/WavPack
