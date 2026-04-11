@@ -280,6 +280,3 @@
 	path = lib/projectm
 	url = https://github.com/robertpelloni/projectm
 
-[submodule "lib/MilkDrop-MusicVisualizer"]
-	path = lib/MilkDrop-MusicVisualizer
-	url = https://github.com/robertpelloni/MilkDrop-MusicVisualizer
