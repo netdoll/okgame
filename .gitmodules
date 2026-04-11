@@ -216,9 +216,6 @@
 [submodule "lib/mgba"]
 	path = lib/mgba
 	url = https://github.com/libretro/mgba
-[submodule "lib/libretro-database"]
-	path = lib/libretro-database
-	url = https://github.com/libretro/libretro-database
 [submodule "lib/vbam-libretro"]
 	path = lib/vbam-libretro
 	url = https://github.com/libretro/vbam-libretro
