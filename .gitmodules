@@ -183,9 +183,6 @@
 [submodule "lib/raylib"]
 	path = lib/raylib
 	url = https://github.com/raysan5/raylib
-[submodule "lib/lvgl"]
-	path = lib/lvgl
-	url = https://github.com/lvgl/lvgl
 [submodule "lib/sumatrapdf"]
 	path = lib/sumatrapdf
 	url = https://github.com/sumatrapdfreader/sumatrapdf
