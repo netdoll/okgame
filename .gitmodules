@@ -273,9 +273,6 @@
 [submodule "lib/MilkDrop3"]
 	path = lib/MilkDrop3
 	url = https://github.com/robertpelloni/MilkDrop3
-[submodule "lib/butterchurn"]
-	path = lib/butterchurn
-	url = https://github.com/robertpelloni/butterchurn
 [submodule "lib/projectm"]
 	path = lib/projectm
 	url = https://github.com/robertpelloni/projectm
