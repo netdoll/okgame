@@ -270,9 +270,6 @@
 [submodule "lib/defold-astar"]
 	path = lib/defold-astar
 	url = https://github.com/selimanac/defold-astar
-[submodule "lib/CLove"]
-	path = lib/CLove
-	url = https://github.com/robertpelloni/CLove.git
 [submodule "lib/MilkDrop3"]
 	path = lib/MilkDrop3
 	url = https://github.com/robertpelloni/MilkDrop3
