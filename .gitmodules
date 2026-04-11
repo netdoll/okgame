@@ -207,9 +207,6 @@
 [submodule "lib/melonDS"]
 	path = lib/melonDS
 	url = https://github.com/melonDS-emu/melonDS
-[submodule "lib/desmume"]
-	path = lib/desmume
-	url = https://github.com/TASEmulators/desmume
 [submodule "lib/Genesis-Plus-GX"]
 	path = lib/Genesis-Plus-GX
 	url = https://github.com/ekeeke/Genesis-Plus-GX
@@ -281,7 +278,7 @@
 	url = https://github.com/selimanac/defold-astar
 [submodule "lib/CLove"]
 	path = lib/CLove
-	url = https://github.com/robertpelloni/CLove
+	url = https://github.com/robertpelloni/CLove.git
 [submodule "lib/MilkDrop3"]
 	path = lib/MilkDrop3
 	url = https://github.com/robertpelloni/MilkDrop3
