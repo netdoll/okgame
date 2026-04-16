@@ -1,0 +1,55 @@
+# Build artifacts
+build/
+build_*/
+cmake-build-*/
+*.obj
+*.o
+*.lo
+*.la
+*.ilk
+*.pdb
+*.lib
+*.dll
+*.exe
+*.so
+*.dylib
+*.a
+*.res
+*.manifest
+*.exp
+*.map
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.suo
+*.ncb
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+.idea/
+
+# Dependencies / generated
+node_modules/
+vendor/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temp / backup
+*.bak
+*.tmp
+*.swp
+*~
+NUL
